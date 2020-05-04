@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20e7c0fb_caf50c17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-04T10:34:33Z",
+      "side": 1,
+      "message": "Hmm... but if this is the problem, shouldn\u0027t we instead fix the NetworkAgents and remove the code where CS forcefully adds NOT_SUSPENDED?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 45
+      },
+      "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef7860f_01e891f0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-04T10:34:33Z",
+      "side": 1,
+      "message": "Can this fix, and the test for it, be moved to another CL? I think it\u0027s fine to have this in R since it\u0027s a very minor correctness, but in case there\u0027s any fallout, we\u0027ll want something that can be bisected/reverted/... separately from the SUSPENDED fix.",
+      "range": {
+        "startLine": 7098,
+        "startChar": 0,
+        "endLine": 7105,
+        "endChar": 13
+      },
+      "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04cad6a_771dbddb",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-04T10:34:33Z",
+      "side": 1,
+      "message": "Why all here? The other capabilities are all worst-case.",
+      "range": {
+        "startLine": 356,
+        "startChar": 50,
+        "endLine": 356,
+        "endChar": 53
+      },
+      "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
