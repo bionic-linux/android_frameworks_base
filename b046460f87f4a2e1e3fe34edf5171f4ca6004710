@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5470892_52411c19",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4373,
+      "author": {
+        "id": 1305827
+      },
+      "writtenOn": "2020-05-04T05:40:00Z",
+      "side": 1,
+      "message": "Retry feature is for data call error codes 29,33,55.",
+      "parentUuid": "09bab75f_d09f8910",
+      "range": {
+        "startLine": 4373,
+        "startChar": 51,
+        "endLine": 4373,
+        "endChar": 59
+      },
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "605754c6_7cfee0b2",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7f3e5874_6a1e12ec",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4375,
+      "author": {
+        "id": 1305827
+      },
+      "writtenOn": "2020-05-04T05:40:00Z",
+      "side": 1,
+      "message": "Yes, all these configs are relaed to pdp reject retry feature",
+      "parentUuid": "605754c6_7cfee0b2",
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06a43ca0_57cf7947",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2020-05-01T22:22:44Z",
       "side": 1,
       "message": "As Tyler mentioned, these strings won\u0027t be translated. Looks like these are used in the UI in which case you may want to move them to strings.xml.",
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69ce0d4_2e9dcdbb",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4377,
+      "author": {
+        "id": 1305827
+      },
+      "writtenOn": "2020-05-04T05:40:00Z",
+      "side": 1,
+      "message": "Yes this and the configs below are for popup display on UI. This is just a declaration here, actual values are defined in mcc-mnc config files",
+      "parentUuid": "06a43ca0_57cf7947",
       "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
