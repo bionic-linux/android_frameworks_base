@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "128038dd_a144b95b",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4373,
+      "author": {
+        "id": 1040179
+      },
+      "writtenOn": "2020-05-05T07:55:16Z",
+      "side": 1,
+      "message": "This config is to enable/disable feature. Renamed it by removing error codes",
+      "parentUuid": "14abdd70_bcd8bed9",
+      "range": {
+        "startLine": 4373,
+        "startChar": 51,
+        "endLine": 4373,
+        "endChar": 59
+      },
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "605754c6_7cfee0b2",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
@@ -126,6 +150,24 @@
     },
     {
       "key": {
+        "uuid": "72b55462_9cd180da",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4375,
+      "author": {
+        "id": 1040179
+      },
+      "writtenOn": "2020-05-05T07:55:16Z",
+      "side": 1,
+      "message": "Done. All configs will start with \"config_pdp_reject\"",
+      "parentUuid": "cdeff2aa_768c0c37",
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a43ca0_57cf7947",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
@@ -176,6 +218,24 @@
       "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1410d2_1c9acba2",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4377,
+      "author": {
+        "id": 1040179
+      },
+      "writtenOn": "2020-05-05T07:55:16Z",
+      "side": 1,
+      "message": "Done. Moved the UI dialog related string configs to strings.xml file",
+      "parentUuid": "1047f12f_afe8bebf",
+      "revId": "b046460f87f4a2e1e3fe34edf5171f4ca6004710",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
