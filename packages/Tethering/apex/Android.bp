@@ -36,3 +36,12 @@ android_app_certificate {
     name: "com.android.tethering.certificate",
     certificate: "com.android.tethering",
 }
+
+override_apex {
+    name: "com.android.inprocess.tethering",
+    base: "com.android.tethering",
+    package_name: "com.android.inprocess.tethering",
+    apps: [
+        "InProcessTethering",
+    ],
+}
