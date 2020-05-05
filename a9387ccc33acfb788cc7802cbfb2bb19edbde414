@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc8a84d_1fb2c232",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 4372,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-05-05T20:29:11Z",
+      "side": 1,
+      "message": "Any reason why these are here and not in carrier config?",
+      "revId": "a9387ccc33acfb788cc7802cbfb2bb19edbde414",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
