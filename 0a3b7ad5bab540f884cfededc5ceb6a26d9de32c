@@ -22,6 +22,30 @@
       "revId": "0a3b7ad5bab540f884cfededc5ceb6a26d9de32c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f0e799_9529fe9a",
+        "filename": "media/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-05T12:43:00Z",
+      "side": 1,
+      "message": "This is already fixed in the internal branch. I haven\u0027t cherry-picked all the changes that have gone in since then, I just noticed this one was missing and it impacts some other stuff I need to cherry-pick.",
+      "parentUuid": "59f11cfd_e2508b13",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 68
+      },
+      "revId": "0a3b7ad5bab540f884cfededc5ceb6a26d9de32c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
