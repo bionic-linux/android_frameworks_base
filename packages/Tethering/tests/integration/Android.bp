@@ -63,14 +63,11 @@ android_test {
 // NetworkStackTests.
 android_test {
     name: "TetheringCoverageTests",
-    certificate: "platform",
     platform_apis: true,
     test_suites: ["device-tests", "mts"],
     test_config: "AndroidTest_Coverage.xml",
-    defaults: ["libnetworkstackutilsjni_deps"],
     static_libs: [
         "NetworkStaticLibTestsLib",
-        "NetworkStackTestsLib",
         "TetheringTestsLib",
         "TetheringIntegrationTestsLib",
     ],
@@ -78,8 +75,6 @@ android_test {
         // For mockito extended
         "libdexmakerjvmtiagent",
         "libstaticjvmtiagent",
-        // For NetworkStackUtils included in NetworkStackBase
-        "libnetworkstackutilsjni",
     ],
     compile_multilib: "both",
     manifest: "AndroidManifest_coverage.xml",
