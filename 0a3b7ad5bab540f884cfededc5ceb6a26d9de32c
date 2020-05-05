@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59f11cfd_e2508b13",
+        "filename": "media/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1060104
+      },
+      "writtenOn": "2020-05-05T12:37:58Z",
+      "side": 1,
+      "message": "Is this something we need to fix for  S? If so, please could you provide some more info (a link to the lint failures or a tracking bug describing the problem)? Thanks.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 68
+      },
+      "revId": "0a3b7ad5bab540f884cfededc5ceb6a26d9de32c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
