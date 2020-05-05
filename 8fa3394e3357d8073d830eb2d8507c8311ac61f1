@@ -22,6 +22,30 @@
       "revId": "8fa3394e3357d8073d830eb2d8507c8311ac61f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a59d932_f7d3d076",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-05T03:52:10Z",
+      "side": 1,
+      "message": "Yes but I would not prefer to rely on such precondition.\nAdd null check in isPollingStatsNeeded instead.",
+      "parentUuid": "87fb14bc_2c2ab9af",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 21
+      },
+      "revId": "8fa3394e3357d8073d830eb2d8507c8311ac61f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
