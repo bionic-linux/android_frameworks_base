@@ -150,6 +150,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.util.ArrayList;
@@ -212,6 +214,9 @@ public class TetheringTest {
     private Tethering mTethering;
     private PhoneStateListener mPhoneStateListener;
     private InterfaceConfigurationParcel mInterfaceConfiguration;
+    private TetheringConfiguration mConfig;
+    private EntitlementManager mEntitleMgr;
+    private OffloadController mOffloadCtrl;
 
     private class TestContext extends BroadcastInterceptingContext {
         TestContext(Context base) {
@@ -328,6 +333,12 @@ public class TetheringTest {
         }
 
         @Override
+        public OffloadController getOffloadController(Handler h, SharedLog log) {
+            mOffloadCtrl = spy(super.getOffloadController(h, log));
+            return mOffloadCtrl;
+        }
+
+        @Override
         public UpstreamNetworkMonitor getUpstreamNetworkMonitor(Context ctx,
                 StateMachine target, SharedLog log, int what) {
             mUpstreamNetworkMonitorMasterSM = target;
@@ -352,6 +363,13 @@ public class TetheringTest {
         }
 
         @Override
+        public EntitlementManager getEntitlementManager(Context ctx, StateMachine target,
+                SharedLog log, int what) {
+            mEntitleMgr = spy(super.getEntitlementManager(ctx, target, log, what));
+            return mEntitleMgr;
+        }
+
+        @Override
         public boolean isTetheringSupported() {
             return true;
         }
@@ -359,7 +377,8 @@ public class TetheringTest {
         @Override
         public TetheringConfiguration generateTetheringConfiguration(Context ctx, SharedLog log,
                 int subId) {
-            return new MockTetheringConfiguration(ctx, log, subId);
+            mConfig = spy(new MockTetheringConfiguration(ctx, log, subId));
+            return mConfig;
         }
 
         @Override
@@ -1724,6 +1743,16 @@ public class TetheringTest {
                 upstreamState.linkProperties, upstreamState.networkCapabilities, new Network(101));
         stateMachine.handleUpstreamNetworkMonitorCallback(EVENT_ON_CAPABILITIES, upstreamState2);
         verify(mNotificationUpdater, never()).onUpstreamCapabilitiesChanged(any());
+    }
+
+    @Test
+    public void testDumpTetheringLog() throws Exception {
+        FileDescriptor mockFd = mock(FileDescriptor.class);
+        PrintWriter mockPw = mock(PrintWriter.class);
+        mTethering.dump(mockFd, mockPw, new String[0]);
+        verify(mConfig).dump(any());
+        verify(mEntitleMgr).dump(any());
+        verify(mOffloadCtrl).dump(any());
     }
 
     // TODO: Test that a request for hotspot mode doesn't interfere with an

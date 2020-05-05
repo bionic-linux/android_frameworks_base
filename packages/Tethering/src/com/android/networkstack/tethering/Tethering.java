@@ -62,7 +62,6 @@ import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import static com.android.networkstack.tethering.TetheringNotificationUpdater.DOWNSTREAM_NONE;
 
-import android.app.usage.NetworkStatsManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothPan;
 import android.bluetooth.BluetoothProfile;
@@ -268,12 +267,8 @@ public class Tethering {
         mTetherMasterSM = new TetherMasterSM("TetherMaster", mLooper, deps);
         mTetherMasterSM.start();
 
-        final NetworkStatsManager statsManager =
-                (NetworkStatsManager) mContext.getSystemService(Context.NETWORK_STATS_SERVICE);
         mHandler = mTetherMasterSM.getHandler();
-        mOffloadController = new OffloadController(mHandler,
-                mDeps.getOffloadHardwareInterface(mHandler, mLog), mContext.getContentResolver(),
-                statsManager, mLog);
+        mOffloadController = mDeps.getOffloadController(mHandler, mLog);
         mUpstreamNetworkMonitor = mDeps.getUpstreamNetworkMonitor(mContext, mTetherMasterSM, mLog,
                 TetherMasterSM.EVENT_UPSTREAM_CALLBACK);
         mForwardedDownstreams = new LinkedHashSet<>();
