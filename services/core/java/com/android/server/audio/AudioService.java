@@ -1878,7 +1878,15 @@ public class AudioService extends IAudioService.Stub
                     // Unmute the stream if it was previously muted
                     if (direction == AudioManager.ADJUST_RAISE) {
                         // unmute immediately for volume up
-                        streamState.mute(false);
+                        for (int stream = 0; stream < mStreamStates.length; stream++) {
+                            if (streamTypeAlias == mStreamVolumeAlias[stream]) {
+                                if (!(readCameraSoundForced()
+                                            && (mStreamStates[stream].getStreamType()
+                                                == AudioSystem.STREAM_SYSTEM_ENFORCED))) {
+                                    mStreamStates[stream].mute(false);
+                                }
+                            }
+                        }
                     } else if (direction == AudioManager.ADJUST_LOWER) {
                         if (mIsSingleVolume) {
                             sendMsg(mAudioHandler, MSG_UNMUTE_STREAM, SENDMSG_QUEUE,
@@ -2104,7 +2112,12 @@ public class AudioService extends IAudioService.Stub
         // setting non-zero volume for a muted stream unmutes the stream and vice versa,
         // except for BT SCO stream where only explicit mute is allowed to comply to BT requirements
         if (streamType != AudioSystem.STREAM_BLUETOOTH_SCO) {
-            mStreamStates[stream].mute(index == 0);
+            // As adjustStreamVolume with muteAdjust flags mute/unmutes stream and aliased streams.
+            for (int st = 0; st < mStreamStates.length; st++) {
+                if (streamType == mStreamVolumeAlias[st]) {
+                    mStreamStates[st].mute(index == 0);
+                }
+            }
         }
     }
 
