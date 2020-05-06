@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e7825bc_c4e38b01",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringDependencies.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T03:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c989fd2_ed88e01f",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 28
+      },
+      "revId": "fa612370f72a8a1528e0b735a015301aef5e8163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1382740_900c527b",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "fa612370f72a8a1528e0b735a015301aef5e8163",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0664eb7_075ec7ba",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T03:28:17Z",
+      "side": 1,
+      "message": "If we want to mock objects in the future and just change spy object to mock objects, these code still work well, right ?\nThis code test whether call Tethering#dump would also dump its related class\u0027s dump if they have. If we move the code into their own tests, it is hard to verify this case.",
+      "parentUuid": "c1382740_900c527b",
+      "range": {
+        "startLine": 1755,
+        "startChar": 1,
+        "endLine": 1757,
+        "endChar": 41
+      },
+      "revId": "fa612370f72a8a1528e0b735a015301aef5e8163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
