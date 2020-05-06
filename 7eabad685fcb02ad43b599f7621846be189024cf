@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5bfa43e_34af8b38",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-06T09:21:54Z",
+      "side": 1,
+      "message": "nit: this might confuse people while the override method are not actually static.\nBut per talk I\u0027m fine if there is no better wording.",
+      "range": {
+        "startLine": 305,
+        "startChar": 52,
+        "endLine": 305,
+        "endChar": 66
+      },
+      "revId": "7eabad685fcb02ad43b599f7621846be189024cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
