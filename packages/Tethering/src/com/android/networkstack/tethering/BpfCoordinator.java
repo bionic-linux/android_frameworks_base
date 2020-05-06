@@ -47,11 +47,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.IndentingPrintWriter;
 
 import java.net.Inet6Address;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -341,6 +344,86 @@ public class BpfCoordinator {
             Log.wtf(TAG, "The upstream interface name " + upstreamIface
                     + " is different from the existing interface name "
                     + iface + " for index " + upstreamIfindex);
+        }
+    }
+
+    /**
+     * Dump information.
+     * Note that this may not be called on handler thread. The accessed data members are not
+     * thread-safe. Use try-catch to simply avoid the crash if the map or array is modified
+     * while dumping in bugreport.
+     * TODO: Perhaps use thread-safe protection on the accessed data members.
+     */
+    public void dump(@NonNull IndentingPrintWriter pw) {
+        pw.println("Polling " + (mPollingStarted ? "started" : "not started"));
+        pw.println("Stats provider " + (mStatsProvider != null
+                ? "registered" : "not registered"));
+
+        pw.print("Upstream quota: ");
+        try {
+            pw.println(mInterfaceQuotas.toString());
+        } catch (ConcurrentModificationException e) {
+            pw.println("ConcurrentModificationException");
+        }
+
+        pw.println("Forwarding stats: ");
+        pw.increaseIndent();
+        if (mStats.size() == 0) {
+            pw.println("<no stats>");
+        } else {
+            try {
+                dumpStats(pw);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                pw.println("ArrayIndexOutOfBoundsException");
+            } catch (ConcurrentModificationException e) {
+                pw.println("ConcurrentModificationException");
+            }
+        }
+        pw.decreaseIndent();
+
+        pw.println("Forwarding rules: ");
+        pw.increaseIndent();
+        if (mIpv6ForwardingRules.size() == 0) {
+            pw.println("<no rule>");
+        } else {
+            try {
+                dumpIpv6ForwardingRules(pw);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                pw.println("ArrayIndexOutOfBoundsException");
+            } catch (ConcurrentModificationException e) {
+                pw.println("ConcurrentModificationException");
+            }
+        }
+        pw.decreaseIndent();
+    }
+
+    private void dumpStats(@NonNull IndentingPrintWriter pw) {
+        for (int i = 0; i < mStats.size(); i++) {
+            final int upstreamIfindex = mStats.keyAt(i);
+            final ForwardedStats stats = mStats.get(upstreamIfindex);
+            pw.println(String.format("%d(%s) - %s", upstreamIfindex, mInterfaceNames.get(
+                    upstreamIfindex), stats.toString()));
+        }
+    }
+
+    private void dumpIpv6ForwardingRules(@NonNull IndentingPrintWriter pw) {
+        for (Map.Entry<IpServer, LinkedHashMap<Inet6Address, Ipv6ForwardingRule>> entry :
+                mIpv6ForwardingRules.entrySet()) {
+            IpServer ipServer = entry.getKey();
+            // The rule downstream interface index is paired with the interface name from
+            // IpServer#interfaceName. See #startIPv6, #updateIpv6ForwardingRules in IpServer.
+            final String downstreamIface = ipServer.interfaceName();
+            pw.println("[" + downstreamIface + "]: iif(iface) oif(iface) addr srcmac dstmac");
+
+            pw.increaseIndent();
+            LinkedHashMap<Inet6Address, Ipv6ForwardingRule> rules = entry.getValue();
+            for (Ipv6ForwardingRule rule : rules.values()) {
+                final int upstreamIfindex = rule.upstreamIfindex;
+                pw.println(String.format("%d(%s), %d(%s), %s, %s, %s", upstreamIfindex,
+                        mInterfaceNames.get(upstreamIfindex), rule.downstreamIfindex,
+                        downstreamIface, rule.address, rule.srcMac, rule.dstMac));
+            }
+            pw.decreaseIndent();
         }
     }
 
