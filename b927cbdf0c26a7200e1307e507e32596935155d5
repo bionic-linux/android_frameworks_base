@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abdb6ea7_5563422e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-06T08:05:52Z",
+      "side": 1,
+      "message": "1. IIUC this is not useful except asserting dump is called.\nAlso we don\u0027t really need the numbers except 0 \u0026 1.\n2. And as you might see, if future developer wants to verify another function.\nmore and more counters will be added, and reset() function might be added to reset counters.\nWhich might not be good in long-term and that adds techanical debts.\n3. This solution assumes we are running on the same thread, which is correct for now.\nBut not necessarily true in the future.\n\nSo to address 1, I think it will be more suitable to have \nvoid expectDump(),\nvoid assertNoCallback() or something similar.\n\nWith ArrayTrackRecord structure I think 2 \u0026 3 can also be addressed.\n\nAlternatively, if spy on TetheringConfigure with these functions mocked.\nIt will address 1 \u0026 2, but not 3, but I think it is fine.\n\nThat being said, I think 2 is the most concerned part to me.\nAny thought?",
+      "range": {
+        "startLine": 328,
+        "startChar": 19,
+        "endLine": 328,
+        "endChar": 31
+      },
+      "revId": "b927cbdf0c26a7200e1307e507e32596935155d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
