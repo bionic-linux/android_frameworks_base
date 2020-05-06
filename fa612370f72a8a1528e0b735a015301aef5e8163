@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "26d38de1_54800783",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringDependencies.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T06:39:55Z",
+      "side": 1,
+      "message": "\u003e nit: Should be\n\u003e @NonNull\n\u003e public ....\n\u003e But I\u0027m fine if the linter does not complain.\n\nDone",
+      "parentUuid": "b4708e92_c2fd2589",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 28
+      },
+      "revId": "fa612370f72a8a1528e0b735a015301aef5e8163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1382740_900c527b",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
         "patchSetId": 2

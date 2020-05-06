@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7d88cd0_752830f4",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T06:39:55Z",
+      "side": 1,
+      "message": "Done, I just use a int to count the number of dumps. TetheringTest is run in single thread with TestLooper. So we do not need poll",
+      "parentUuid": "06ce7dfb_798512e9",
+      "range": {
+        "startLine": 383,
+        "startChar": 22,
+        "endLine": 383,
+        "endChar": 25
+      },
+      "revId": "a4eda679f6da199cbf7229e24c012374d428c2e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e44eccb0_45cfa9b3",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a4eda679f6da199cbf7229e24c012374d428c2e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ad31d7_c06cbcba",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T06:39:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e44eccb0_45cfa9b3",
+      "range": {
+        "startLine": 1753,
+        "startChar": 8,
+        "endLine": 1753,
+        "endChar": 22
+      },
+      "revId": "a4eda679f6da199cbf7229e24c012374d428c2e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
