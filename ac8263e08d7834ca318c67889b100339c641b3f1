@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0911a936_49b4686e",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-05-06T06:32:23Z",
+      "side": 0,
+      "message": "This is used by NetworkStackTestsLib. You should remove this as well.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 47
+      },
+      "revId": "ac8263e08d7834ca318c67889b100339c641b3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bd40e2_19dbad00",
+        "filename": "packages/Tethering/tests/integration/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-05-06T06:32:23Z",
+      "side": 0,
+      "message": "Ditto",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 34
+      },
+      "revId": "ac8263e08d7834ca318c67889b100339c641b3f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
