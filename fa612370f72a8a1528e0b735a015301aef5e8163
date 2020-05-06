@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c989fd2_ed88e01f",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringDependencies.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-06T03:12:40Z",
+      "side": 1,
+      "message": "maybe add @NonNull, and add annotations to parameters.",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 28
+      },
+      "revId": "fa612370f72a8a1528e0b735a015301aef5e8163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1382740_900c527b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-06T03:12:40Z",
+      "side": 1,
+      "message": "Is it better to verify these inside their own tests?\nIn those tests the objects already have their initialize code.\nIf so you don\u0027t need to add code to spy and mock their deps.\n\nTo me, add the need of spy might impact the ability of mocking object in future.\nConsider that we\u0027ll need a mocked OffloadController to perform test in TetheringTest in future. Then we could not use that because there is already a spied one.",
+      "range": {
+        "startLine": 1755,
+        "startChar": 1,
+        "endLine": 1757,
+        "endChar": 41
+      },
+      "revId": "fa612370f72a8a1528e0b735a015301aef5e8163",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
