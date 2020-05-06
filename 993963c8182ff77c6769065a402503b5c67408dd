@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c3bef51_ab4feb42",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T08:04:49Z",
+      "side": 1,
+      "message": "There is checkAndNotifyCommonError function inside TetheringService. So I use similar wording here.\nAnd what this function do is:\n1. check no calling mTethering except for isTetherProvisioningRequired because we expect permission failure.\n2. has notify permission failure result when permission failure.\n\nOr do you have better suggestion wording ?",
+      "parentUuid": "e645e330_0fa060fa",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 57
+      },
+      "revId": "993963c8182ff77c6769065a402503b5c67408dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d81927e_d7a1b175",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "993963c8182ff77c6769065a402503b5c67408dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460f001e_d895eb36",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T08:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d81927e_d7a1b175",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "993963c8182ff77c6769065a402503b5c67408dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b28f73d0_28ca317e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T08:04:49Z",
+      "side": 1,
+      "message": "I think the reason network stack need to have dependencies because shell do not have network stack permission. Use adoptShellPermissionIdentity allow us to check \"real\" permission, I think this is better.",
+      "parentUuid": "94d4dba3_61203988",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 70
+      },
+      "revId": "993963c8182ff77c6769065a402503b5c67408dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09d6c031_98eecc59",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "993963c8182ff77c6769065a402503b5c67408dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016d5a0d_b83c5be2",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T08:04:49Z",
+      "side": 1,
+      "message": "I prefer let result be final for each function call instead of reuse result object. It would be more clean and detect misuse error by compiler.",
+      "parentUuid": "09d6c031_98eecc59",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 142,
+        "endChar": 70
+      },
+      "revId": "993963c8182ff77c6769065a402503b5c67408dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
