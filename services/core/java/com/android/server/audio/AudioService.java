@@ -2033,6 +2033,31 @@ public class AudioService extends IAudioService.Stub
                 Binder.getCallingUid(), hasModifyAudioSettings, VOL_ADJUST_NORMAL);
     }
 
+    /**
+     * Loops on aliasted stream, update the mute cache attribute of each
+     * {@see AudioService#VolumStreamState}, and then apply the change.
+     * It prevents to unecessary {@see AudioSystem#setStreamVolume} done for each stream and aliased
+     * before mute change changed and after.
+     */
+    private void muteAliasStreams(int streamAlias, boolean state) {
+        synchronized (VolumeStreamState.class) {
+            final List<Integer> streamsToMute = new ArrayList<>();
+            for (int stream = 0; stream < mStreamStates.length; stream++) {
+                if (streamAlias == mStreamVolumeAlias[stream]) {
+                    if (!(readCameraSoundForced()
+                                && (mStreamStates[stream].getStreamType()
+                                    == AudioSystem.STREAM_SYSTEM_ENFORCED))) {
+                        final boolean changed = mStreamStates[stream].mute(state, false /*apply*/);
+                        if (changed) {
+                          streamsToMute.add(stream);
+                        }
+                    }
+                }
+            }
+            streamsToMute.forEach(streamToMute -> { mStreamStates[streamToMute].doMute(); });
+        }
+    }
+
     protected void adjustStreamVolume(int streamType, int direction, int flags,
             String callingPackage, String caller, int uid, boolean hasModifyAudioSettings,
             int keyEventMode) {
@@ -2176,15 +2201,7 @@ public class AudioService extends IAudioService.Stub
                 if (streamTypeAlias == AudioSystem.STREAM_MUSIC) {
                     setSystemAudioMute(state);
                 }
-                for (int stream = 0; stream < mStreamStates.length; stream++) {
-                    if (streamTypeAlias == mStreamVolumeAlias[stream]) {
-                        if (!(readCameraSoundForced()
-                                    && (mStreamStates[stream].getStreamType()
-                                        == AudioSystem.STREAM_SYSTEM_ENFORCED))) {
-                            mStreamStates[stream].mute(state);
-                        }
-                    }
-                }
+                muteAliasStreams(streamTypeAlias, state);
             } else if ((direction == AudioManager.ADJUST_RAISE) &&
                     !checkSafeMediaVolume(streamTypeAlias, aliasIndex + step, device)) {
                 Log.e(TAG, "adjustStreamVolume() safe volume index = " + oldIndex);
@@ -2199,7 +2216,7 @@ public class AudioService extends IAudioService.Stub
                     // Unmute the stream if it was previously muted
                     if (direction == AudioManager.ADJUST_RAISE) {
                         // unmute immediately for volume up
-                        streamState.mute(false);
+                        muteAliasStreams(streamTypeAlias, false);
                     } else if (direction == AudioManager.ADJUST_LOWER) {
                         if (mIsSingleVolume) {
                             sendMsg(mAudioHandler, MSG_UNMUTE_STREAM, SENDMSG_QUEUE,
@@ -2445,7 +2462,8 @@ public class AudioService extends IAudioService.Stub
         // setting non-zero volume for a muted stream unmutes the stream and vice versa,
         // except for BT SCO stream where only explicit mute is allowed to comply to BT requirements
         if (streamType != AudioSystem.STREAM_BLUETOOTH_SCO) {
-            mStreamStates[stream].mute(index == 0);
+            // As adjustStreamVolume with muteAdjust flags mute/unmutes stream and aliased streams.
+            muteAliasStreams(stream, index == 0);
         }
     }
 
@@ -5892,48 +5910,10 @@ public class AudioService extends IAudioService.Stub
          * @param state the new mute state
          * @return true if the mute state was changed
          */
-        public boolean mute(boolean state) {
-            boolean changed = false;
-            synchronized (VolumeStreamState.class) {
-                if (state != mIsMuted) {
-                    changed = true;
-                    mIsMuted = state;
-
-                    // Set the new mute volume. This propagates the values to
-                    // the audio system, otherwise the volume won't be changed
-                    // at the lower level.
-                    sendMsg(mAudioHandler,
-                            MSG_SET_ALL_VOLUMES,
-                            SENDMSG_QUEUE,
-                            0,
-                            0,
-                            this, 0);
-                }
-            }
-            if (changed) {
-                // Stream mute changed, fire the intent.
-                Intent intent = new Intent(AudioManager.STREAM_MUTE_CHANGED_ACTION);
-                intent.putExtra(AudioManager.EXTRA_VOLUME_STREAM_TYPE, mStreamType);
-                intent.putExtra(AudioManager.EXTRA_STREAM_VOLUME_MUTED, state);
-                sendBroadcastToAll(intent);
-            }
-            return changed;
-        }
-
-        /**
-         * Mute/unmute the stream by AudioService
-         * @param state the new mute state
-         * @return true if the mute state was changed
-         */
         public boolean muteInternally(boolean state) {
             boolean changed = false;
             synchronized (VolumeStreamState.class) {
-                if (state != mIsMutedInternally) {
-                    changed = true;
-                    mIsMutedInternally = state;
-                    // mute immediately to avoid delay and preemption when using a message.
-                    applyAllVolumes();
-                }
+                changed = mute(state, true);
             }
             if (changed) {
                 sVolumeLogger.log(new VolumeEvent(
@@ -5945,6 +5925,34 @@ public class AudioService extends IAudioService.Stub
         @GuardedBy("VolumeStreamState.class")
         public boolean isFullyMuted() {
             return mIsMuted || mIsMutedInternally;
+        }
+
+        /**
+         * Mute/unmute the stream
+         * @param state the new mute state
+         * @param apply true to propagate to HW, or false just to update the cache. May be needed
+         * to mute a stream and its aliases as applyAllVolume will force settings to aliases.
+         * It prevents unecessary calls to {@see AudioSystem#setStreamVolume}
+         * @return true if the mute state was changed
+         */
+        public boolean muteInternally(boolean state, boolean apply) {
+            synchronized (VolumeStreamState.class) {
+                final boolean changed = state != mIsMuted;
+                if (changed) {
+                    mIsMutedInternally = state;
+                    if (apply) {
+                        // mute immediately to avoid delay and preemption when using a message.
+                        doMuteInternally();
+                    }
+                }
+                return changed;
+            }
+        }
+
+        public void doMuteInternally() {
+            synchronized (VolumeStreamState.class) {
+                applyAllVolumes();
+            }
         }
 
         public int getStreamType() {
