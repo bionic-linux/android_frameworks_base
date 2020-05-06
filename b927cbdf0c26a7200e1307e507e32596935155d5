@@ -22,6 +22,30 @@
       "revId": "b927cbdf0c26a7200e1307e507e32596935155d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3d408d_4f8e2225",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-06T08:57:39Z",
+      "side": 1,
+      "message": "Back to spy. Since we already use TestLooper for Tethering class, I. think it is fine to assume we are running on the same thread. If this is change, it means we need to change whole test artitecture.",
+      "parentUuid": "abdb6ea7_5563422e",
+      "range": {
+        "startLine": 328,
+        "startChar": 19,
+        "endLine": 328,
+        "endChar": 31
+      },
+      "revId": "b927cbdf0c26a7200e1307e507e32596935155d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
