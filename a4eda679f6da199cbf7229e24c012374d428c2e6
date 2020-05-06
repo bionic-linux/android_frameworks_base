@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06ce7dfb_798512e9",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-06T05:57:59Z",
+      "side": 1,
+      "message": "It looks weird to me to spy on a mock object.\nIt introduced an additional layer of complexity.\n\nAlternatively, maybe directly use spy on TetheringConfiguration to replace MockTetheringConfiguration if feasible.\nOr add ArrayTrackRecord to it, like TestableNetworkCallback so you don\u0027t have to spy.",
+      "range": {
+        "startLine": 383,
+        "startChar": 22,
+        "endLine": 383,
+        "endChar": 25
+      },
+      "revId": "a4eda679f6da199cbf7229e24c012374d428c2e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44eccb0_45cfa9b3",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-05-06T05:57:59Z",
+      "side": 1,
+      "message": "nit: maybe final?",
+      "range": {
+        "startLine": 1753,
+        "startChar": 8,
+        "endLine": 1753,
+        "endChar": 22
+      },
+      "revId": "a4eda679f6da199cbf7229e24c012374d428c2e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
