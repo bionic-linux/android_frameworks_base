@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e645e330_0fa060fa",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-05-06T06:26:58Z",
+      "side": 1,
+      "message": "Nit: This name seems not match what you are checking.",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 57
+      },
+      "revId": "993963c8182ff77c6769065a402503b5c67408dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d81927e_d7a1b175",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-05-06T06:26:58Z",
+      "side": 1,
+      "message": "You can put this into assertCheckAndNotifyCommonPermissionFail(). But I don\u0027t think you need to reset the mTethering here because you are not verifying same method later.",
+      "range": {
+        "startLine": 137,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "993963c8182ff77c6769065a402503b5c67408dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d4dba3_61203988",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-05-06T06:26:58Z",
+      "side": 1,
+      "message": "Maybe you can have a permission check dependency to control permission like NetworkStackService.\nhttps://source.corp.google.com/aosp-master/packages/modules/NetworkStack/src/com/android/server/NetworkStackService.java;l\u003d117-127",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 70
+      },
+      "revId": "993963c8182ff77c6769065a402503b5c67408dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d6c031_98eecc59",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-05-06T06:26:58Z",
+      "side": 1,
+      "message": "Can\u0027t we just use previous result instead of create a new one?",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 142,
+        "endChar": 70
+      },
+      "revId": "993963c8182ff77c6769065a402503b5c67408dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
