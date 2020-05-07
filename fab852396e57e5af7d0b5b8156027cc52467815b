@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5318e7d9_0f0609c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-07T03:58:33Z",
+      "side": 1,
+      "message": "It\u0027s not very well worded. The problem is really not about the transition, the problem is that the NC are now authoritative but the VPN code hasn\u0027t been updated.\n\nAn immediate translation of the Q logic would be to simply make VPNs always have the NOT_SUSPENDED capability in Vpn.java:285. I believe this is the better behavior, but it is also more dangerous because it is different (VPNs now are sometimes suspended, which Q never had).\n\nReworded the comment to clarify this is actually unrelated to the transition. I can separately pursue fixing the network agents ; most of the fixes are trivial, but there will be a fair number of them.",
+      "parentUuid": "20e7c0fb_caf50c17",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 45
+      },
+      "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef7860f_01e891f0",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "42deea64_4c14636b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7105,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-07T03:58:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ef7860f_01e891f0",
+      "range": {
+        "startLine": 7098,
+        "startChar": 0,
+        "endLine": 7105,
+        "endChar": 13
+      },
+      "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d04cad6a_771dbddb",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8fc707e_faea77da",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-07T03:58:33Z",
+      "side": 1,
+      "message": "The thinking was that a suspended network is a network where data doesn\u0027t flow at the moment, and if the VPN has multiple underlying networks not all of which are suspended data is probably flowing.\n\nThis would be different from the others :\n• a metered network is one that makes the user pay for usage : using multiple networks one of which is metered makes the user pay, making the VPN metered.\n• a roaming network is one where the billing structure don\u0027t reflect the usual, country local rules of the subscription : using multiple networks one of which has this billing structure makes the VPN roaming by that same definition.\n• a congested network is one where traffic is slowed down by the network being unusually loaded : sending on all networks means the traffic will be slowed down by that same fact, making the VPN congested.\n\nThis thinking doesn\u0027t translate as well to the bandwidth parameters, which under this should be maybe a sum, or an average or some function of the underlying networks, but not the min value we are currently taking.\n\nWell, that was the thinking anyway. I don\u0027t feel stronlgy, so changed it to behave worst-case, but if my explanation convinces you we should adopt this different logic for suspended, I\u0027ll happily revert it to the logic in this patchset.",
+      "parentUuid": "d04cad6a_771dbddb",
+      "range": {
+        "startLine": 356,
+        "startChar": 50,
+        "endLine": 356,
+        "endChar": 53
+      },
+      "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
