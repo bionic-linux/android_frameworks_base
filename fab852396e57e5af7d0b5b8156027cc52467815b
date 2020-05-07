@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9f6683fe_e05b227d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-07T04:01:06Z",
+      "side": 1,
+      "message": "(to clarify my comment : by \"I believe this is the better behavior\", I meant I believe the behavior implemented in this patch is better than the Q behavior)",
+      "parentUuid": "5318e7d9_0f0609c1",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 45
+      },
+      "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef7860f_01e891f0",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
