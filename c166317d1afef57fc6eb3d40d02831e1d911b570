@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad938c04_2916e38f",
+        "filename": "packages/Tethering/apex/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-07T05:06:30Z",
+      "side": 1,
+      "message": "Looks like the tethering APK uses \"com.android.networkstack.tethering.inprocess\", and networkstack uses \"com.android.networkstack.inprocess\", so for consistency \"com.android.tethering.inprocess\" would be better ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 42
+      },
+      "revId": "c166317d1afef57fc6eb3d40d02831e1d911b570",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
