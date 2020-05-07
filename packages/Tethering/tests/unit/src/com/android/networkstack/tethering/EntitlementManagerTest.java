@@ -45,7 +45,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.util.SharedLog;
 import android.os.Bundle;
-import android.os.Message;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.os.ResultReceiver;
 import android.os.SystemProperties;
@@ -56,8 +56,6 @@ import android.telephony.CarrierConfigManager;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.android.internal.util.State;
-import com.android.internal.util.StateMachine;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 
 import org.junit.After;
@@ -69,13 +67,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.MockitoSession;
 import org.mockito.quality.Strictness;
 
-import java.util.ArrayList;
-
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public final class EntitlementManagerTest {
 
-    private static final int EVENT_EM_UPDATE = 1;
     private static final String[] PROVISIONING_APP_NAME = {"some", "app"};
     private static final String PROVISIONING_NO_UI_APP_NAME = "no_ui_app";
 
@@ -91,7 +86,6 @@ public final class EntitlementManagerTest {
     private final TestLooper mLooper = new TestLooper();
     private Context mMockContext;
 
-    private TestStateMachine mSM;
     private WrappedEntitlementManager mEnMgr;
     private TetheringConfiguration mConfig;
     private MockitoSession mMockingSession;
@@ -112,9 +106,9 @@ public final class EntitlementManagerTest {
         public int uiProvisionCount = 0;
         public int silentProvisionCount = 0;
 
-        public WrappedEntitlementManager(Context ctx, StateMachine target,
-                SharedLog log, int what) {
-            super(ctx, target, log, what);
+        public WrappedEntitlementManager(Context ctx, Handler h, SharedLog log,
+                Runnable callback) {
+            super(ctx, h, log, callback);
         }
 
         public void reset() {
@@ -169,8 +163,8 @@ public final class EntitlementManagerTest {
         when(mLog.forSubComponent(anyString())).thenReturn(mLog);
 
         mMockContext = new MockContext(mContext);
-        mSM = new TestStateMachine();
-        mEnMgr = new WrappedEntitlementManager(mMockContext, mSM, mLog, EVENT_EM_UPDATE);
+        mEnMgr = new WrappedEntitlementManager(mMockContext, new Handler(mLooper.getLooper()), mLog,
+                () -> { });
         mEnMgr.setOnUiEntitlementFailedListener(mEntitlementFailedListener);
         mConfig = new TetheringConfiguration(mMockContext, mLog, INVALID_SUBSCRIPTION_ID);
         mEnMgr.setTetheringConfigurationFetcher(() -> {
@@ -180,10 +174,6 @@ public final class EntitlementManagerTest {
 
     @After
     public void tearDown() throws Exception {
-        if (mSM != null) {
-            mSM.quit();
-            mSM = null;
-        }
         mMockingSession.finishMocking();
     }
 
@@ -490,33 +480,5 @@ public final class EntitlementManagerTest {
         mLooper.dispatchAll();
         assertEquals(1, mEnMgr.uiProvisionCount);
         verify(mEntitlementFailedListener, times(1)).onUiEntitlementFailed(TETHERING_WIFI);
-    }
-
-    public class TestStateMachine extends StateMachine {
-        public final ArrayList<Message> messages = new ArrayList<>();
-        private final State
-                mLoggingState = new EntitlementManagerTest.TestStateMachine.LoggingState();
-
-        class LoggingState extends State {
-            @Override public void enter() {
-                messages.clear();
-            }
-
-            @Override public void exit() {
-                messages.clear();
-            }
-
-            @Override public boolean processMessage(Message msg) {
-                messages.add(msg);
-                return false;
-            }
-        }
-
-        public TestStateMachine() {
-            super("EntitlementManagerTest.TestStateMachine", mLooper.getLooper());
-            addState(mLoggingState);
-            setInitialState(mLoggingState);
-            super.start();
-        }
     }
 }
