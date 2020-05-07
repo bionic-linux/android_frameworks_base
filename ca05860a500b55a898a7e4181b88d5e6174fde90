@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ecb5ee07_10e37d11",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-07T07:09:58Z",
+      "side": 1,
+      "message": "For better solution: at least we need to define intent string and intent extra or have new API from wifi/wigig(?) framework for tethering to register callback.",
+      "parentUuid": "fbdec5c0_c4db36e5",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99eb7584_d1f1d36a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
