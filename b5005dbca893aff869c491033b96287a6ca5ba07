@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6ec9a1c_ea37d74c",
+        "filename": "core/res/res/values-mcc334-mnc020/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1340374
+      },
+      "writtenOn": "2020-05-07T23:20:05Z",
+      "side": 1,
+      "message": "There appears to be a misspelling in this config value. It\u0027s defined in values/config.xml as `config_pdp_reject_enable_retry`, but there\u0027s an extra `e` in reject here.",
+      "revId": "b5005dbca893aff869c491033b96287a6ca5ba07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
