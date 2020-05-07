@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6adab190_9be6ce6b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-07T06:22:08Z",
+      "side": 1,
+      "message": "I think this won\u0027t compile. Or if it does compile here in AOSP, I don\u0027t think it will compile in R because ConnectivityManager (and in general platform code) cannot access hidden constants in TetheringManager.",
+      "range": {
+        "startLine": 481,
+        "startChar": 46,
+        "endLine": 481,
+        "endChar": 78
+      },
+      "revId": "b1185aa25924634031c09d312c9983e3671f54fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44508319_bf6f6132",
+        "filename": "packages/Tethering/common/TetheringLib/src/android/net/TetheringManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-07T06:22:08Z",
+      "side": 1,
+      "message": "TetheringManager is @SystemApi so you can\u0027t just add this as a public constant, you need to do something like:\n\nmake module-lib-api-update-current-api\n\nI\u0027m not sure if we can do this for R though, since we\u0027re past API freeze. The code might simply not compile. The TetheringManager module surface is updatable, but I don\u0027t yet know what the process is for that.",
+      "range": {
+        "startLine": 178,
+        "startChar": 28,
+        "endLine": 178,
+        "endChar": 43
+      },
+      "revId": "b1185aa25924634031c09d312c9983e3671f54fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

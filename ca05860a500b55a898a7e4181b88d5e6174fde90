@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "fbdec5c0_c4db36e5",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-07T06:22:08Z",
+      "side": 1,
+      "message": "Generally speaking I agree that we shouldn\u0027t be using legacy mechanisms like this. Mark, would moving to the better solution require new APIs?",
+      "parentUuid": "65f09b6c_08acc0da",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99eb7584_d1f1d36a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
