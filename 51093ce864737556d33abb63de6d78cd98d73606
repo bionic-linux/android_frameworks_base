@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3169bd53_62a86833",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-08T05:57:31Z",
+      "side": 1,
+      "message": "Nit: perhaps instead of being here, these comments should replace the comments at line 369?",
+      "range": {
+        "startLine": 356,
+        "startChar": 35,
+        "endLine": 356,
+        "endChar": 78
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6a79cd_8a4e5fe2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5439,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-08T05:57:31Z",
+      "side": 1,
+      "message": "Nit: I think this is unnecessary because NET_CAPABILITY_NOT_SUSPENDED is set by default in the NetworkAgentWrapper constructor. You may want to keep it for readability, or to replace it with a comment.",
+      "range": {
+        "startLine": 5439,
+        "startChar": 40,
+        "endLine": 5439,
+        "endChar": 68
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708c9c10_87883632",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5498,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-08T05:57:31Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 5498,
+        "startChar": 8,
+        "endLine": 5498,
+        "endChar": 70
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ab3783_af20cca2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5512,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-08T05:57:31Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 5512,
+        "startChar": 8,
+        "endLine": 5512,
+        "endChar": 70
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e3f1f4_7847082d",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-08T05:57:31Z",
+      "side": 1,
+      "message": "Should this test have some test coverage for a suspended network as well? I know we have coverage in ConnectivityServiceTest as well, but that is likely harder to read, diagnose, and update than the tests here.",
+      "range": {
+        "startLine": 587,
+        "startChar": 16,
+        "endLine": 587,
+        "endChar": 32
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
