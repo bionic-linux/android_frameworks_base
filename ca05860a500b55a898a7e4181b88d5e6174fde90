@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "454c985c_9ae4c7e4",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-05-08T08:55:17Z",
+      "side": 1,
+      "message": "Based on your comments I consider 2 possible solutions:\n1. Regarding using intent string and extra - I think it is better not to define it as API since this change is only needed temporarily for Android R and in Android S we will hopefully have a better solution which will add wigig support in WIFI framework. The wigig framework is a Qualcomm value-add so it is not possible to expose APIs from there to AOSP. Is it possible to define the intent string and extra in this class locally and give them (hard-coded) values matching the current intent sent by wigig framework? If this is possible we can switch wigig framework to use the standard tethering method like wifi framework does.\n2. If we can keep using the legacy method for Android R, we actually don\u0027t need to use the TETHERING_WIGIG type externally, as we only use the interface name (wigig0) from outside in ConnectivityManager.tether and here the separate interface type is only needed to give a separate subnet to wigig SoftAP for coexisting with WIFI SoftAP. Can we define TETHERING_WIGIG locally here or in TetheringConfiguration (can add a comment in TetheringManager or give it higher number to prevent future conflicts, though we can probably remove it in Android S), that way we can remove the definition from TetheringMangaer/ConnectivityManager and the change will be also simplified further.\n\nWill any of these solutions be acceptable?",
+      "parentUuid": "ecb5ee07_10e37d11",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99eb7584_d1f1d36a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
