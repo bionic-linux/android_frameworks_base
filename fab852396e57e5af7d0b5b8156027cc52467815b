@@ -164,6 +164,30 @@
       "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a0b75ff_2d190922",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-08T05:22:59Z",
+      "side": 1,
+      "message": "That does make sense. It\u0027s effectively making the assumption that a VPN with more than one underlying network will send its traffic to the network(s) that isn\u0027t suspended, but that seems like a reasonable assumption for a VPN that is sophisticated enough to have more than one underlying network at the same time. So maybe \"all\" is actually better here.",
+      "parentUuid": "d8fc707e_faea77da",
+      "range": {
+        "startLine": 356,
+        "startChar": 50,
+        "endLine": 356,
+        "endChar": 53
+      },
+      "revId": "fab852396e57e5af7d0b5b8156027cc52467815b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
