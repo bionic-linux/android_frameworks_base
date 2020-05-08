@@ -16,6 +16,24 @@
       "revId": "b5005dbca893aff869c491033b96287a6ca5ba07",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a5eba2_642613a3",
+        "filename": "core/res/res/values-mcc334-mnc020/config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1040179
+      },
+      "writtenOn": "2020-05-08T05:21:19Z",
+      "side": 1,
+      "message": "Thanks Steven. Somehow i dint see any compilation failure for this in my workspace",
+      "parentUuid": "b6ec9a1c_ea37d74c",
+      "revId": "b5005dbca893aff869c491033b96287a6ca5ba07",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
