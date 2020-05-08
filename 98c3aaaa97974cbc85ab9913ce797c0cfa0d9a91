@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f3d7df_146ec398",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/EntitlementManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-08T02:54:03Z",
+      "side": 1,
+      "message": "Since DumpUtils is not system api, just use ConditionVariable here instead of DumpUtils.dumpAsync()",
+      "range": {
+        "startLine": 487,
+        "startChar": 8,
+        "endLine": 487,
+        "endChar": 67
+      },
+      "revId": "98c3aaaa97974cbc85ab9913ce797c0cfa0d9a91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
