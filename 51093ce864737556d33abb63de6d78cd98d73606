@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "957b286a_693de3f1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-11T01:46:11Z",
+      "side": 1,
+      "message": "Replaced the comments below to clarify but kept these, as I thought the initialization values were difficult to parse for a first reader without them.",
+      "parentUuid": "3169bd53_62a86833",
+      "range": {
+        "startLine": 356,
+        "startChar": 35,
+        "endLine": 356,
+        "endChar": 78
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea6a79cd_8a4e5fe2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "51093ce864737556d33abb63de6d78cd98d73606",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df48512_07e5c81a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5439,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-11T01:46:11Z",
+      "side": 1,
+      "message": "I think I prefer to keep it for readability, as it\u0027s pretty essential in this test. Also we may choose to stop having NetworkAgentWrapper adding it automatically – it was done for backwards compatibility (not doing that would have meant changing hundreds of lines).",
+      "parentUuid": "ea6a79cd_8a4e5fe2",
+      "range": {
+        "startLine": 5439,
+        "startChar": 40,
+        "endLine": 5439,
+        "endChar": 68
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b3371241_5b5c6837",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5498,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-11T01:46:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "708c9c10_87883632",
+      "range": {
+        "startLine": 5498,
+        "startChar": 8,
+        "endLine": 5498,
+        "endChar": 70
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1ab3783_af20cca2",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2c9622aa_1bac9c66",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5512,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-11T01:46:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c1ab3783_af20cca2",
+      "range": {
+        "startLine": 5512,
+        "startChar": 8,
+        "endLine": 5512,
+        "endChar": 70
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e3f1f4_7847082d",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2020-05-08T05:57:31Z",
       "side": 1,
       "message": "Should this test have some test coverage for a suspended network as well? I know we have coverage in ConnectivityServiceTest as well, but that is likely harder to read, diagnose, and update than the tests here.",
+      "range": {
+        "startLine": 587,
+        "startChar": 16,
+        "endLine": 587,
+        "endChar": 32
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee113525_af9ca096",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-05-11T01:46:11Z",
+      "side": 1,
+      "message": "...but doesn\u0027t it with the lines added below ? It does test that no underlying networks mean the VPN is not suspended, that the VPN inherits when only one network is underlying, that it merges them correctly when two underlying networks. Did you mean a more focused test separate from this method, or more test cases than these four ?",
+      "parentUuid": "44e3f1f4_7847082d",
       "range": {
         "startLine": 587,
         "startChar": 16,
