@@ -234,6 +234,30 @@
       "revId": "51093ce864737556d33abb63de6d78cd98d73606",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22843f7d_eb6744d9",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-11T03:15:39Z",
+      "side": 1,
+      "message": "Sorry, I had missed the fact that cell is not suspended.",
+      "parentUuid": "ee113525_af9ca096",
+      "range": {
+        "startLine": 587,
+        "startChar": 16,
+        "endLine": 587,
+        "endChar": 32
+      },
+      "revId": "51093ce864737556d33abb63de6d78cd98d73606",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
