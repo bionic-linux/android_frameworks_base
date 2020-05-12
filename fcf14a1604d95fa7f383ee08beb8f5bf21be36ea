@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46f1fa85_1fcca2a9",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-12T20:35:21Z",
+      "side": 1,
+      "message": "nit:\n\ninteresting case of a problem with @NonNull/@Nullable. How to express the nullability of the contained parcelable?\n\nThere is no way to express \"ParcelableHolder\u003c@NonNull Parcelable\u003e\" currently.",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "fcf14a1604d95fa7f383ee08beb8f5bf21be36ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25c55bb1_f22eb60f",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-12T20:35:21Z",
+      "side": 1,
+      "message": "document invariants (e.g. can they both be non-null? should we assert that in the code? if both are non-null, which should take precedence?)",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "fcf14a1604d95fa7f383ee08beb8f5bf21be36ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8905c728_6cac1a39",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-12T20:35:21Z",
+      "side": 1,
+      "message": "document",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "fcf14a1604d95fa7f383ee08beb8f5bf21be36ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545473fe_8ad0b8fb",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-12T20:35:21Z",
+      "side": 1,
+      "message": "should use same C++ concepts here, otherwise, this doesn\u0027t enforce system/vendor stability",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "fcf14a1604d95fa7f383ee08beb8f5bf21be36ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d44f1b4_510eef88",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-05-12T20:35:21Z",
+      "side": 1,
+      "message": "can we encode this in the interface itself?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 47
+      },
+      "revId": "fcf14a1604d95fa7f383ee08beb8f5bf21be36ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
