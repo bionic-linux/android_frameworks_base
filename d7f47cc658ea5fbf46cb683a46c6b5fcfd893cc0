@@ -22,6 +22,29 @@
       "revId": "d7f47cc658ea5fbf46cb683a46c6b5fcfd893cc0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e174100_d3b8a3ab",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2020-05-12T20:55:53Z",
+      "side": 1,
+      "message": "Won\u0027t this always be UserHandle.SYSTEM?  Is that correct?  Above, it looks like other user IDs can be passed in.",
+      "range": {
+        "startLine": 249,
+        "startChar": 49,
+        "endLine": 249,
+        "endChar": 88
+      },
+      "revId": "d7f47cc658ea5fbf46cb683a46c6b5fcfd893cc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
