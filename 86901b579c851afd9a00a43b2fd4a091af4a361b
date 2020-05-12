@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "516a42bb_1a89a344",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-05-12T15:22:52Z",
+      "side": 1,
+      "message": "Used Parcel and Parcelable directly instead of ParcelableParcel",
+      "parentUuid": "b9d88b32_b95b1db7",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c3ae9ba_0ff2f935",
         "filename": "core/java/android/os/ParcelableHolder.java",
         "patchSetId": 1
@@ -246,6 +270,30 @@
       "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e2ac06_c60c59d5",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-05-12T15:22:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8dee8472_2d74d5ab",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 5
+      },
+      "revId": "86901b579c851afd9a00a43b2fd4a091af4a361b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
