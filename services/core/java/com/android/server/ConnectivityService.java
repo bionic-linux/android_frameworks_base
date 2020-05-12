@@ -5106,14 +5106,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void onPackageAdded(String packageName, int uid) {
-        if (TextUtils.isEmpty(packageName) || uid < 0) {
-            Slog.wtf(TAG, "Invalid package in onPackageAdded: " + packageName + " | " + uid);
-            return;
-        }
-        mPermissionMonitor.onPackageAdded(packageName, uid);
-    }
-
     private void onPackageReplaced(String packageName, int uid) {
         if (TextUtils.isEmpty(packageName) || uid < 0) {
             Slog.wtf(TAG, "Invalid package in onPackageReplaced: " + packageName + " | " + uid);
@@ -5139,7 +5131,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             Slog.wtf(TAG, "Invalid package in onPackageRemoved: " + packageName + " | " + uid);
             return;
         }
-        mPermissionMonitor.onPackageRemoved(uid);
 
         final int userId = UserHandle.getUserId(uid);
         synchronized (mVpns) {
@@ -5189,8 +5180,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 onUserRemoved(userId);
             } else if (Intent.ACTION_USER_UNLOCKED.equals(action)) {
                 onUserUnlocked(userId);
-            } else if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
-                onPackageAdded(packageName, uid);
             } else if (Intent.ACTION_PACKAGE_REPLACED.equals(action)) {
                 onPackageReplaced(packageName, uid);
             } else if (Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
