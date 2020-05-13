@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "53ae2aa5_fe75eefc",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-13T01:39:48Z",
+      "side": 1,
+      "message": "If this is temporary for Android R, maybe option 2 is better.\nFor option 1: If wigig and wifi hotspot can\u0027t enabled at the same time, how about reuse wifi ap state change intent ?\n\nFor option 2: If this is only for R, it is acceptable to use legacy method. We have plan to disable ConnectivityManager#tether(also TetheringManager#tether) in Android S. BTW, we can\u0027t remove definition which is temporary added for WIGIG till Android R is no longer supported. Because tethering module is single branch and updatable by mainline push. When Android S is launch, android R devices still can get new tethering module which is the same as S devices.",
+      "parentUuid": "454c985c_9ae4c7e4",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99eb7584_d1f1d36a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
