@@ -118,7 +118,17 @@ public interface Parcelable {
      * by this Parcelable object instance.
      */
     public @ContentsFlags int describeContents();
-    
+
+    /**
+     * 'Stable' means this parcelable is guaranteed to be stable for multiple years.
+     * WARNING: isStable() is only expected to be overridden by auto-generated code.
+     * @return true if this parcelable is stable.
+     * @hide
+     */
+    default boolean isStable() {
+        return false;
+    }
+
     /**
      * Flatten this object in to a Parcel.
      * 
