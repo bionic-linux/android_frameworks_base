@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a8240c_b498575b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-13T11:12:50Z",
+      "side": 1,
+      "message": "Nit: this is disjoint from the test below (no prerequisite to do one before the other), so I think it would be better in a separate test method, like testTether_NoPermission - this is actually testing something different.\n(Then you don\u0027t need diffent result/result2 either)",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 57
+      },
+      "revId": "2eadbaf33a9c32409645d377123741cc6bb83638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbbf0af_9ef4ac78",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-13T11:12:50Z",
+      "side": 1,
+      "message": "Is this required just for mTetheringConnector.tether ? It\u0027s not very clear from the current test, and having dropShellPermissionIdentity in tearDown() is a little hard to follow; could you instead have a specific call like:\n\nrunAsTetherPrivileged(() -\u003e mTetheringConnector.tether(...));\n\nwith a function that takes a lambda and does the try/finally ?\n\nIf you don\u0027t like that solution, at least put the adoptShellPermissionIdentity just before the tether() call, and add a comment explaining why it\u0027s necessary",
+      "range": {
+        "startLine": 132,
+        "startChar": 51,
+        "endLine": 132,
+        "endChar": 68
+      },
+      "revId": "2eadbaf33a9c32409645d377123741cc6bb83638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af5a8d2_875ce04a",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-13T11:12:50Z",
+      "side": 1,
+      "message": "Is WRITE_SETTINGS sufficient for this operation ? I think it would be better to test each method with the minimal set of permissions required, to avoid regressions where the permissions are made too restrictive by accident.",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 70
+      },
+      "revId": "2eadbaf33a9c32409645d377123741cc6bb83638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc08b2a_bf527506",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-13T11:12:50Z",
+      "side": 1,
+      "message": "Maybe try also with a permission that\u0027s sufficient when exemptFromEntitlementCheck \u003d\u003d false and verify it fails when exemptFromEntitlementCheck \u003d\u003d true, to make sure it\u0027s really restricted to  TETHER_PRIVILEGED ?",
+      "range": {
+        "startLine": 201,
+        "startChar": 28,
+        "endLine": 201,
+        "endChar": 42
+      },
+      "revId": "2eadbaf33a9c32409645d377123741cc6bb83638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
