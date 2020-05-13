@@ -45,6 +45,30 @@
       "revId": "d7f47cc658ea5fbf46cb683a46c6b5fcfd893cc0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02d4cc4_d7d31c5a",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2020-05-13T02:15:37Z",
+      "side": 1,
+      "message": "Hm, looks to me like it should be mUserId from the next WriteQueueItem. Winson, do you have any ideas on how we should surface this? One option could be to add an isReady() method to WriteQueueItem which checks for isUserUnlocked.",
+      "parentUuid": "4e174100_d3b8a3ab",
+      "range": {
+        "startLine": 249,
+        "startChar": 49,
+        "endLine": 249,
+        "endChar": 88
+      },
+      "revId": "d7f47cc658ea5fbf46cb683a46c6b5fcfd893cc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
