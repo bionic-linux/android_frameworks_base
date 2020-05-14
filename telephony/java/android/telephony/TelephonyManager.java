@@ -9643,12 +9643,14 @@ public class TelephonyManager {
      * Powers down the SIM. SIM must be up prior.
      * @hide
      */
+    @SystemApi
     public static final int CARD_POWER_DOWN = 0;
 
     /**
      * Powers up the SIM normally. SIM must be down prior.
      * @hide
      */
+    @SystemApi
     public static final int CARD_POWER_UP = 1;
 
     /**
@@ -9666,26 +9668,37 @@ public class TelephonyManager {
      * is NOT persistent across boots. On reboot, SIM will power up normally.
      * @hide
      */
+    @SystemApi
     public static final int CARD_POWER_UP_PASS_THROUGH = 2;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = {"CARD_POWER_"},
+            value = {
+                    CARD_POWER_UP,
+                    CARD_POWER_DOWN,
+                    CARD_POWER_UP_PASS_THROUGH
+            })
+    public @interface CardPowerState {}
 
     /**
      * Set SIM card power state.
      *
-     * @param state  State of SIM (power down, power up, pass through)
+     * @param state State of SIM (power down, power up, pass through)
      * @see #CARD_POWER_DOWN
      * @see #CARD_POWER_UP
      * @see #CARD_POWER_UP_PASS_THROUGH
-     * Callers should monitor for {@link TelephonyIntents#ACTION_SIM_STATE_CHANGED}
-     * broadcasts to determine success or failure and timeout if needed.
+     * The {@link #ACTION_SIM_CARD_STATE_CHANGED} broadcast will reflect the changed power state of
+     * the SIM.
      *
      * <p>Requires Permission:
      *   {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
      *
      * {@hide}
-     **/
+     */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
-    public void setSimPowerState(int state) {
+    public void setSimPowerState(@CardPowerState int state) {
         setSimPowerStateForSlot(getSlotIndex(), state);
     }
 
