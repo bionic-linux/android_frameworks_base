@@ -2560,8 +2560,8 @@ public class AudioService extends IAudioService.Stub
         final VolumeGroupState vgs = sVolumeGroupStates.get(volumeGroup);
 
         sVolumeLogger.log(new VolumeEvent(VolumeEvent.VOL_SET_GROUP_VOL, attr, vgs.name(),
-                index/*val1*/, flags/*val2*/, callingPackage));
-
+                index/*val1*/, flags/*val2*/, callingPackage + ", user "
+                + ActivityManager.getCurrentUser()));
         vgs.setVolumeIndex(index, flags);
 
         // For legacy reason, propagate to all streams associated to this volume group
@@ -4137,7 +4137,7 @@ public class AudioService extends IAudioService.Stub
             }
         }
 
-        readVolumeGroupsSettings();
+        readVolumeGroupsSettings(userSwitch);
 
         if (DEBUG_VOL) {
             Log.d(TAG, "Restoring device volume behavior");
@@ -5278,7 +5278,7 @@ public class AudioService extends IAudioService.Stub
         }
         for (int i = 0; i < sVolumeGroupStates.size(); i++) {
             final VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
-            vgs.applyAllVolumes();
+            vgs.applyAllVolumes(false/*userSwitch*/);
         }
     }
 
@@ -5291,14 +5291,17 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
-    private void readVolumeGroupsSettings() {
+    private void readVolumeGroupsSettings(boolean userSwitch) {
         if (DEBUG_VOL) {
-            Log.v(TAG, "readVolumeGroupsSettings");
+            Log.v(TAG, "readVolumeGroupsSettings userSwitch=" + userSwitch);
+        }
+        for (int i = 0; i < sVolumeGroupStates.size(); i++) {
+            sVolumeGroupStates.valueAt(i).clearIndexCache();
         }
         for (int i = 0; i < sVolumeGroupStates.size(); i++) {
             final VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
             vgs.readSettings();
-            vgs.applyAllVolumes();
+            vgs.applyAllVolumes(userSwitch);
         }
     }
 
@@ -5309,7 +5312,7 @@ public class AudioService extends IAudioService.Stub
         }
         for (int i = 0; i < sVolumeGroupStates.size(); i++) {
             final VolumeGroupState vgs = sVolumeGroupStates.valueAt(i);
-            vgs.applyAllVolumes();
+            vgs.applyAllVolumes(false/*userSwitch*/);
         }
     }
 
@@ -5424,7 +5427,7 @@ public class AudioService extends IAudioService.Stub
             // As for VSS, mute shall apply minIndex to all devices found in IndexMap and default.
             if (changed) {
                 mIsMuted = muted;
-                applyAllVolumes();
+                applyAllVolumes(false /*userSwitch*/);
             }
             return changed;
         }
@@ -5545,7 +5548,7 @@ public class AudioService extends IAudioService.Stub
             return (stream != AudioSystem.STREAM_DEFAULT) && (stream < mStreamStates.length);
         }
 
-        public void applyAllVolumes() {
+        public void applyAllVolumes(boolean userSwitch) {
             final String caller = "from vgs";
             synchronized (VolumeStreamState.class) {
                 // apply device specific volumes first
@@ -5589,11 +5592,16 @@ public class AudioService extends IAudioService.Stub
                 // by audio policy manager if no explicit volume is present for a given device type
                 final int index = getIndex(AudioSystem.DEVICE_OUT_DEFAULT);
                 boolean synced = false;
+                final int deviceForVolume = getDeviceForVolume();
+                boolean forceDeviceSync = userSwitch && (mIndexMap.indexOfKey(deviceForVolume) < 0);
                 for (int stream : getLegacyStreamTypes()) {
                     if (isValidStream(stream)) {
                         final boolean streamMuted = mStreamStates[stream].mIsMuted;
                         final int defaultStreamIndex = (mStreamStates[stream].getIndex(
                                         AudioSystem.DEVICE_OUT_DEFAULT) + 5) / 10;
+                        if (forceDeviceSync) {
+                            mStreamStates[stream].setIndex(index * 10, deviceForVolume, caller);
+                        }
                         if (defaultStreamIndex == index && (isMuted() == streamMuted)
                                 && isVssMuteBijective(stream)) {
                             synced = true;
@@ -5616,6 +5624,14 @@ public class AudioService extends IAudioService.Stub
                     setVolumeIndexInt(
                             isMuted() ? mIndexMin : index, AudioSystem.DEVICE_OUT_DEFAULT, 0 /*flags*/);
                 }
+                if (forceDeviceSync) {
+                    if (DEBUG_VOL) {
+                        Log.v(TAG, "applyAllVolumes: forceDeviceSync index " + index
+                                + ", device " + AudioSystem.getOutputDeviceName(deviceForVolume)
+                                + ", group " + mAudioVolumeGroup.name());
+                    }
+                    setVolumeIndexInt(isMuted() ? mIndexMin : index, deviceForVolume, 0);
+                }
             }
         }
 
@@ -5635,6 +5651,10 @@ public class AudioService extends IAudioService.Stub
             if (!success) {
                 Log.e(TAG, "persistVolumeGroup failed for group " +  mAudioVolumeGroup.name());
             }
+        }
+
+        public void clearIndexCache() {
+            mIndexMap.clear();
         }
 
         public void readSettings() {
