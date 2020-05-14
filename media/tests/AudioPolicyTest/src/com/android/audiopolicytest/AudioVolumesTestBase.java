@@ -143,4 +143,14 @@ public class AudioVolumesTestBase extends ActivityInstrumentationTestCase2<Audio
     public static int incrementVolumeIndex(int index, int indexMin, int indexMax) {
         return (index + 1 > indexMax) ? resetVolumeIndex(indexMin, indexMax) : ++index;
     }
+
+    static int getVolumeGroupForStreamType(int stream) {
+        final AudioAttributes aa =
+                AudioProductStrategy.getAudioAttributesForStrategyWithLegacyStreamType(stream);
+        if (aa.equals(new AudioAttributes.Builder().build())) {
+            return AudioVolumeGroup.DEFAULT_VOLUME_GROUP;
+        }
+        return AudioProductStrategy.getVolumeGroupIdForAudioAttributes(
+                aa, false /*fallbackOnDefault*/);
+    }
 }
