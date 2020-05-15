@@ -94,6 +94,30 @@
       "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44956902_cd876680",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2020-05-15T18:37:48Z",
+      "side": 0,
+      "message": "I just meant that selinux rules are static, but user setup is dynamic so I just meant that maybe the kernel could keep a black/whitelist that can be updated as users are added.  But I don\u0027t think I fully understand the constraints, so it was really just a random thought :)",
+      "parentUuid": "3a9a0f07_c75cb88a",
+      "range": {
+        "startLine": 221,
+        "startChar": 35,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
