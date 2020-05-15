@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4fdf059_3ca303cf",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2020-05-15T04:12:12Z",
+      "side": 1,
+      "message": "Probably not a practical issue, but an item whose user isn\u0027t unlocked will block writing any other items if we peek and don\u0027t requeue",
+      "range": {
+        "startLine": 256,
+        "startChar": 43,
+        "endLine": 256,
+        "endChar": 47
+      },
+      "revId": "11e56a2e5a57c2138cf64addbc0b73ee56ce04ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

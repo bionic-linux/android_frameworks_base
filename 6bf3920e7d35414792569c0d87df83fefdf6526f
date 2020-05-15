@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bfc4aca_213f8e12",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2020-05-15T04:12:12Z",
+      "side": 0,
+      "message": "Sorry, just to check back here -- it should be fine to mkdirs now that we check if the user is ready first right?  I wouldn\u0027t be surprised if this dir changes later so having it create the full path seems like the right thing as long as we\u0027re able to do it",
+      "range": {
+        "startLine": 221,
+        "startChar": 35,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
