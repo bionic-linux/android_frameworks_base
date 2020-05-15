@@ -22,6 +22,30 @@
       "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b86bf8_5c63b235",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2020-05-15T15:31:13Z",
+      "side": 0,
+      "message": "Right now my preference would be to mkdir over mkdirs; this class of bug is really hard to catch and track down, and until we have everything locked down with SELinux I\u0027d rather processes were careful about what directories they create. It\u0027s not hard to change back if it turns out to be necessary later.",
+      "parentUuid": "4bfc4aca_213f8e12",
+      "range": {
+        "startLine": 221,
+        "startChar": 35,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
