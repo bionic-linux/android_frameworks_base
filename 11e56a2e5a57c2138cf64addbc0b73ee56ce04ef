@@ -22,6 +22,30 @@
       "revId": "11e56a2e5a57c2138cf64addbc0b73ee56ce04ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763c1d15_f17a0f89",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2020-05-15T16:05:34Z",
+      "side": 1,
+      "message": "Okay, so the items don\u0027t need to be written in order? By requeue did you mean addLast()?\n\nAlso, if we cycle through the unwritten items, should we still be sleeping for 100 ms? Or should we only sleep if we actually call next.write()?\n\nIn Denis\u0027s original implementation, it slept because it was checking the same item repeatedly. If there is only one user, cycling would effectively be the same behavior as checking the same item repeatedly, so maybe we should keep the sleep.",
+      "parentUuid": "f4fdf059_3ca303cf",
+      "range": {
+        "startLine": 256,
+        "startChar": 43,
+        "endLine": 256,
+        "endChar": 47
+      },
+      "revId": "11e56a2e5a57c2138cf64addbc0b73ee56ce04ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
