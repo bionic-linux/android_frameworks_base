@@ -70,6 +70,30 @@
       "revId": "11e56a2e5a57c2138cf64addbc0b73ee56ce04ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc17d0e_7e521591",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2020-05-15T16:44:06Z",
+      "side": 1,
+      "message": "Alright, sounds good. I updated the CL. I agree it\u0027s better to be safe.",
+      "parentUuid": "6fcd676a_d37d85d5",
+      "range": {
+        "startLine": 256,
+        "startChar": 43,
+        "endLine": 256,
+        "endChar": 47
+      },
+      "revId": "11e56a2e5a57c2138cf64addbc0b73ee56ce04ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
