@@ -199,6 +199,8 @@ public class VpnTest {
         when(mContext.getString(R.string.config_customVpnAlwaysOnDisconnectedDialogComponent))
                 .thenReturn(Resources.getSystem().getString(
                         R.string.config_customVpnAlwaysOnDisconnectedDialogComponent));
+        when(mPackageManager.hasSystemFeature(PackageManager.FEATURE_IPSEC_TUNNELS))
+                .thenReturn(true);
         when(mSystemServices.isCallerSystem()).thenReturn(true);
 
         // Used by {@link Notification.Builder}
@@ -693,6 +695,24 @@ public class VpnTest {
 
         final String expected = Credentials.PLATFORM_VPN + primaryUser.id + "_" + TEST_VPN_PKG;
         assertEquals(expected, vpn.getProfileNameForPackage(TEST_VPN_PKG));
+    }
+
+    @Test
+    public void testValidateRequiredFeatures() throws Exception {
+        // Verify that no exception is thrown
+        createVpn(primaryUser.id).validateRequiredFeatures(mVpnProfile);
+    }
+
+    @Test
+    public void testValidateRequiredFeaturesMissingIpsecTunnels() throws Exception {
+        when(mPackageManager.hasSystemFeature(PackageManager.FEATURE_IPSEC_TUNNELS))
+                .thenReturn(false);
+
+        try {
+            createVpn(primaryUser.id).validateRequiredFeatures(mVpnProfile);
+            fail("Expected exception due to missing feature");
+        } catch (UnsupportedOperationException expected) {
+        }
     }
 
     private Vpn createVpnAndSetupUidChecks(int... grantedOps) throws Exception {
