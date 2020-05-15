@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e7239d1_75524b11",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2020-05-15T01:52:11Z",
+      "side": 1,
+      "message": "I don\u0027t think the other WriteQueueItems need to check this.",
+      "range": {
+        "startLine": 291,
+        "startChar": 12,
+        "endLine": 291,
+        "endChar": 24
+      },
+      "revId": "b8f82aea58e6f6d0703d6098a1f0953f740049f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

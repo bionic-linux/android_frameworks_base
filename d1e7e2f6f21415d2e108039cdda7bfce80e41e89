@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf96f51a_ab62cd44",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2020-05-15T01:52:11Z",
+      "side": 1,
+      "message": "Figured I\u0027d update this while we are here. DELAY_MS \u003d 100.",
+      "range": {
+        "startLine": 179,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 40
+      },
+      "revId": "d1e7e2f6f21415d2e108039cdda7bfce80e41e89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0288549d_83316b98",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2020-05-15T01:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6430ac8d_c27d4c82",
+      "range": {
+        "startLine": 225,
+        "startChar": 31,
+        "endLine": 225,
+        "endChar": 44
+      },
+      "revId": "d7f47cc658ea5fbf46cb683a46c6b5fcfd893cc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e174100_d3b8a3ab",
         "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "d7f47cc658ea5fbf46cb683a46c6b5fcfd893cc0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36af437_902d4845",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2020-05-15T01:52:11Z",
+      "side": 1,
+      "message": "Used peek() and pop() instead of pop() and push() if that\u0027s alright.",
+      "parentUuid": "032fa97f_54662fd4",
+      "range": {
+        "startLine": 249,
+        "startChar": 49,
+        "endLine": 249,
+        "endChar": 88
+      },
+      "revId": "d7f47cc658ea5fbf46cb683a46c6b5fcfd893cc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
