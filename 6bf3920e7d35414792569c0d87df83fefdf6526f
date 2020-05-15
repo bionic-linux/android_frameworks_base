@@ -46,6 +46,30 @@
       "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa85e6de_e9aba4a7",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2020-05-15T16:03:35Z",
+      "side": 0,
+      "message": "Ok, yeah we can go with this for now -- it feels like maybe there could be something in the kernel which could throw with a full stack trace on creating a directory for a user that\u0027s not unlocked, otherwise as you mentioned it\u0027s pretty much up to each caller to make sure they are doing the right thing which is a bit fragile",
+      "parentUuid": "55b86bf8_5c63b235",
+      "range": {
+        "startLine": 221,
+        "startChar": 35,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
