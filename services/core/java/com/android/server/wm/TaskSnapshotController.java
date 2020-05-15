@@ -256,6 +256,16 @@ class TaskSnapshotController {
         }
         task.getBounds(mTmpRect);
         mTmpRect.offsetTo(0, 0);
+
+        final AppWindowToken appWindowToken = findAppTokenForSnapshot(task);
+        if (appWindowToken != null) {
+            if (appWindowToken.getConfiguration().orientation
+                    != task.getConfiguration().orientation) {
+                Rect rect = new Rect(mTmpRect);
+                mTmpRect.set(0, 0, rect.bottom, rect.right);
+            }
+        }
+
         final SurfaceControl.ScreenshotGraphicBuffer screenshotBuffer =
                 SurfaceControl.captureLayers(
                         task.getSurfaceControl().getHandle(), mTmpRect, scaleFraction);
