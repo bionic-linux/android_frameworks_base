@@ -310,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "eba4ca84_7e8abdb6",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-05-15T16:18:22Z",
+      "side": 1,
+      "message": "Regarding option 1, wigig framework is independent from wifi framework so wigig and wifi hotspot can be enabled at the same time so we cannot reuse the wifi ap state change.\nI will upload an updated change which implements option#2.",
+      "parentUuid": "53ae2aa5_fe75eefc",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99eb7584_d1f1d36a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
