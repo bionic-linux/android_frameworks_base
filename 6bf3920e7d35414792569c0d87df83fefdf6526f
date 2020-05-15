@@ -70,6 +70,30 @@
       "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9a0f07_c75cb88a",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2020-05-15T18:30:48Z",
+      "side": 0,
+      "message": "The kernel can\u0027t help because it just sees that userspace made an unencrypted directory.  The kernel doesn\u0027t know that the directory is supposed to be encrypted.  Instead, we should do all of (1) this fix to address this specific case, (2) add SELinux rules that limit creating these directories, and (3) make StorageManagerService stop ignoring errors when preparing the user\u0027s storage.",
+      "parentUuid": "fa85e6de_e9aba4a7",
+      "range": {
+        "startLine": 221,
+        "startChar": 35,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "6bf3920e7d35414792569c0d87df83fefdf6526f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
