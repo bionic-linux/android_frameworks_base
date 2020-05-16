@@ -334,6 +334,30 @@
     },
     {
       "key": {
+        "uuid": "f4360eae_25458a30",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-16T05:25:30Z",
+      "side": 1,
+      "message": "If we\u0027re going to temporarily allow this only for R devices, then we should make sure that the code doesn\u0027t work when running on S. Mark, can you help Lior with this? If you don\u0027t know what exact method to do that, you can probably sync up with Remi to find our or, if we don\u0027t have a best practice for that yet, decide together.",
+      "parentUuid": "eba4ca84_7e8abdb6",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99eb7584_d1f1d36a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
