@@ -126,6 +126,16 @@ public class BpfTetheringCoordinator {
             // TODO: Consider make this configurable.
             return DEFAULT_PERFORM_POLL_INTERVAL_MS;
         }
+
+        // Used to get the interface index on current upstream.
+        int getInterfaceIndex(@NonNull String iface) {
+            try {
+                return NetworkInterface.getByName(iface).getIndex();
+            } catch (IOException | NullPointerException e) {
+                // TODO: Consider throwing an exception if get interface index failed.
+                return 0;
+            }
+        }
     }
 
     BpfTetheringCoordinator(@NonNull Handler handler, @NonNull INetd netd,
@@ -289,7 +299,7 @@ public class BpfTetheringCoordinator {
         pw.println("Stats provider " + (mStatsProvider != null ? "registered" : "not registered"));
         String upstream = currentUpstreamInterface();
         if (upstream != null) {
-            final Integer ifindex = getInterfaceIndex(upstream);
+            final Integer ifindex = mDeps.getInterfaceIndex(upstream);
             pw.println("Current IPv6 upstream: [" + upstream + "] (index " + ifindex + ")");
             pw.println("Current client address(es): " + mClientAddresses.toString());
             pw.println("Interface name lookup table: " + mInterfaceNames.toString());
@@ -403,17 +413,6 @@ public class BpfTetheringCoordinator {
                 ? TetheringInterfaceUtils.getIPv6Interface(mUpstreamNetworkState) : null;
     }
 
-    // Used to get the interface index on current upstream.
-    private int getInterfaceIndex(String ifName) {
-        try {
-            return NetworkInterface.getByName(ifName).getIndex();
-        } catch (IOException | NullPointerException e) {
-            // TODO: Consider throwing an exception if get interface index failed.
-            mLog.e("Can't determine interface index for interface " + ifName + " : " + e);
-            return 0;
-        }
-    }
-
     @NonNull
     private Long getQuotaBytes(String iface) {
         final Long limit = mInterfaceQuotas.get(iface);
@@ -441,7 +440,11 @@ public class BpfTetheringCoordinator {
 
         // Set data limit only on a given upstream which has client(s) because it implies the
         // upstream is under tethering.
-        final Integer ifindex = getInterfaceIndex(iface);
+        final int ifindex = mDeps.getInterfaceIndex(iface);
+        if (ifindex == 0) {
+            mLog.e("Can't determine interface index for interface " + iface);
+            return;
+        }
         if (!isAnyClientOnUpstream(ifindex)) return;
 
         final Long quotaBytes = getQuotaBytes(iface);
