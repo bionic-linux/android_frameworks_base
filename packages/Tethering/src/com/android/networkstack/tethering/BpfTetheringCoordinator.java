@@ -121,7 +121,7 @@ public class BpfTetheringCoordinator {
     };
 
     @VisibleForTesting
-    static class Dependencies {
+    abstract static class Dependencies {
         int getPerformPollInterval() {
             // TODO: Consider make this configurable.
             return DEFAULT_PERFORM_POLL_INTERVAL_MS;
@@ -136,16 +136,23 @@ public class BpfTetheringCoordinator {
                 return 0;
             }
         }
+
+        @NonNull abstract Handler getHandler();
+        @NonNull abstract INetd getNetd();
+        @NonNull abstract NetworkStatsManager getNetworkStatsManager();
+        @NonNull abstract SharedLog getSharedLog();
+        @Nullable abstract TetheringConfiguration getTetherConfig();
     }
 
-    BpfTetheringCoordinator(@NonNull Handler handler, @NonNull INetd netd,
-            @NonNull NetworkStatsManager nsm, @NonNull SharedLog log, @NonNull Dependencies deps) {
-        mHandler = handler;
-        mNetd = netd;
-        mLog = log.forSubComponent(TAG);
+    BpfTetheringCoordinator(@NonNull Dependencies deps) {
+        mDeps = deps;
+        mHandler = mDeps.getHandler();
+        mNetd = mDeps.getNetd();
+        mLog = mDeps.getSharedLog().forSubComponent(TAG);
         BpfTetherStatsProvider provider = new BpfTetherStatsProvider();
         try {
-            nsm.registerNetworkStatsProvider(getClass().getSimpleName(), provider);
+            mDeps.getNetworkStatsManager().registerNetworkStatsProvider(
+                    getClass().getSimpleName(), provider);
         } catch (RuntimeException e) {
             // TODO: Perhaps not allow to use BPF offload because the reregistration failure
             // implied that no data limit could be applies on a metered upstream if any.
@@ -153,7 +160,6 @@ public class BpfTetheringCoordinator {
             provider = null;
         }
         mStatsProvider = provider;
-        mDeps = deps;
     }
 
     /**
@@ -163,6 +169,11 @@ public class BpfTetheringCoordinator {
      */
     public void start() {
         if (mStarted) return;
+
+        if (!isOffloadEnabled()) {
+            mLog.i("tethering offload disabled");
+            return;
+        }
 
         mStarted = true;
         maybeSchedulePollingStats();
@@ -217,6 +228,8 @@ public class BpfTetheringCoordinator {
      * TODO: Help IpServer to add forwarding rules.
      */
     public void addForwardingRule(@NonNull Ipv6ForwardingRule rule) {
+        if (!mStarted) return;
+
         int upstreamIfindex = rule.upstreamIfindex;
         HashSet<Inet6Address> clients = mClientAddresses.get(upstreamIfindex);
         if (clients == null) {
@@ -248,6 +261,8 @@ public class BpfTetheringCoordinator {
      * TODO: Help IpServer to remove forwarding rules.
      */
     public void removeForwardingRule(@NonNull Ipv6ForwardingRule rule) {
+        if (!mStarted) return;
+
         int upstreamIfindex = rule.upstreamIfindex;
         HashSet<Inet6Address> clients = mClientAddresses.get(upstreamIfindex);
 
@@ -283,6 +298,8 @@ public class BpfTetheringCoordinator {
      * Note that this can be only called on handler thread.
      */
     public void addUpstreamNameToLookupTable(int upstreamIfindex, String upstreamIface) {
+        if (!mStarted) return;
+
         if (upstreamIfindex <= 0) return;
 
         // The same interface index to name mapping may be added by different IpServer objects or
@@ -295,6 +312,10 @@ public class BpfTetheringCoordinator {
 
     /** Dump information. */
     public void dump(@NonNull IndentingPrintWriter pw) {
+        if (!isOffloadEnabled()) {
+            pw.println("Offload disabled");
+            return;
+        }
         pw.println("Tethering coordinator " + (mStarted ? "started" : "not started"));
         pw.println("Stats provider " + (mStatsProvider != null ? "registered" : "not registered"));
         String upstream = currentUpstreamInterface();
@@ -404,6 +425,11 @@ public class BpfTetheringCoordinator {
             mIfaceStats = mIfaceStats.add(ifaceDiff);
             mUidStats = mUidStats.add(uidDiff);
         }
+    }
+
+    private boolean isOffloadEnabled() {
+        final TetheringConfiguration config = mDeps.getTetherConfig();
+        return (config != null) ? config.enableBpfOffload : true /* default value */;
     }
 
     @Nullable
