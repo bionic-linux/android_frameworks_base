@@ -84,6 +84,9 @@ public class BpfCoordinator {
     @Nullable
     private final BpfTetherStatsProvider mStatsProvider;
 
+    // Indicate the BPF capability by TetheringConfiguration.
+    private boolean mUsingBpf;
+
     // Tracks whether BPF tethering is started or not. This is set by tethering before it
     // starts the first IpServer and is cleared by tethering shortly before the last IpServer
     // is stopped. Note that rule updates (especially deletions, but sometimes additions as
@@ -141,21 +144,29 @@ public class BpfCoordinator {
     };
 
     @VisibleForTesting
-    static class Dependencies {
+    abstract static class Dependencies {
         int getPerformPollInterval() {
             // TODO: Consider make this configurable.
             return DEFAULT_PERFORM_POLL_INTERVAL_MS;
         }
+
+        @NonNull abstract Handler getHandler();
+        @NonNull abstract INetd getNetd();
+        @NonNull abstract NetworkStatsManager getNetworkStatsManager();
+        @NonNull abstract SharedLog getSharedLog();
+        @Nullable abstract TetheringConfiguration getTetherConfig();
     }
 
-    BpfCoordinator(@NonNull Handler handler, @NonNull INetd netd,
-            @NonNull NetworkStatsManager nsm, @NonNull SharedLog log, @NonNull Dependencies deps) {
-        mHandler = handler;
-        mNetd = netd;
-        mLog = log.forSubComponent(TAG);
+    BpfCoordinator(@NonNull Dependencies deps) {
+        mDeps = deps;
+        mHandler = mDeps.getHandler();
+        mNetd = mDeps.getNetd();
+        mLog = mDeps.getSharedLog().forSubComponent(TAG);
+        mUsingBpf = isOffloadEnabled();
         BpfTetherStatsProvider provider = new BpfTetherStatsProvider();
         try {
-            nsm.registerNetworkStatsProvider(getClass().getSimpleName(), provider);
+            mDeps.getNetworkStatsManager().registerNetworkStatsProvider(
+                    getClass().getSimpleName(), provider);
         } catch (RuntimeException e) {
             // TODO: Perhaps not allow to use BPF offload because the reregistration failure
             // implied that no data limit could be applies on a metered upstream if any.
@@ -163,7 +174,6 @@ public class BpfCoordinator {
             provider = null;
         }
         mStatsProvider = provider;
-        mDeps = deps;
     }
 
     /**
@@ -174,6 +184,11 @@ public class BpfCoordinator {
      */
     public void startPolling() {
         if (mPollingStarted) return;
+
+        if (!mUsingBpf) {
+            mLog.i("Offload disabled");
+            return;
+        }
 
         mPollingStarted = true;
         maybeSchedulePollingStats();
@@ -209,6 +224,8 @@ public class BpfCoordinator {
      */
     public void tetherOffloadRuleAdd(
             @NonNull final IpServer ipServer, @NonNull final Ipv6ForwardingRule rule) {
+        if (!mUsingBpf) return;
+
         try {
             // TODO: Perhaps avoid to add a duplicate rule.
             mNetd.tetherOffloadRuleAdd(rule.toTetherOffloadRuleParcel());
@@ -248,6 +265,8 @@ public class BpfCoordinator {
      */
     public void tetherOffloadRuleRemove(
             @NonNull final IpServer ipServer, @NonNull final Ipv6ForwardingRule rule) {
+        if (!mUsingBpf) return;
+
         try {
             // TODO: Perhaps avoid to remove a non-existent rules.
             mNetd.tetherOffloadRuleRemove(rule.toTetherOffloadRuleParcel());
@@ -291,6 +310,8 @@ public class BpfCoordinator {
      * Note that this can be only called on handler thread.
      */
     public void tetherOffloadRuleClear(@NonNull final IpServer ipServer) {
+        if (!mUsingBpf) return;
+
         final LinkedHashMap<Inet6Address, Ipv6ForwardingRule> rules = mIpv6ForwardingRules.get(
                 ipServer);
         if (rules == null) return;
@@ -306,6 +327,8 @@ public class BpfCoordinator {
      * Note that this can be only called on handler thread.
      */
     public void tetherOffloadRuleUpdate(@NonNull final IpServer ipServer, int newUpstreamIfindex) {
+        if (!mUsingBpf) return;
+
         final LinkedHashMap<Inet6Address, Ipv6ForwardingRule> rules = mIpv6ForwardingRules.get(
                 ipServer);
         if (rules == null) return;
@@ -328,6 +351,8 @@ public class BpfCoordinator {
      * Note that this can be only called on handler thread.
      */
     public void addUpstreamNameToLookupTable(int upstreamIfindex, @NonNull String upstreamIface) {
+        if (!mUsingBpf) return;
+
         if (upstreamIfindex == 0 || TextUtils.isEmpty(upstreamIface)) return;
 
         // The same interface index to name mapping may be added by different IpServer objects or
@@ -446,6 +471,11 @@ public class BpfCoordinator {
             mIfaceStats = mIfaceStats.add(ifaceDiff);
             mUidStats = mUidStats.add(uidDiff);
         }
+    }
+
+    private boolean isOffloadEnabled() {
+        final TetheringConfiguration config = mDeps.getTetherConfig();
+        return (config != null) ? config.enableBpfOffload : true /* default value */;
     }
 
     private int getInterfaceIndexFromRules(@NonNull String ifName) {
