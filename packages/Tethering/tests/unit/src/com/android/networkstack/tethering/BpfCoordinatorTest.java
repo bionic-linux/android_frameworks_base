@@ -98,6 +98,24 @@ public class BpfCoordinatorTest {
             int getPerformPollInterval() {
                 return DEFAULT_PERFORM_POLL_INTERVAL_MS;
             }
+            Handler getHandler() {
+                return new Handler(mTestLooper.getLooper());
+            }
+            INetd getNetd() {
+                return mNetd;
+            }
+            NetworkStatsManager getNetworkStatsManager() {
+                return mStatsManager;
+            }
+            SharedLog getSharedLog() {
+                return new SharedLog("test");
+            }
+            TetheringConfiguration getTetherConfig() {
+                // Returning null configuration object is a hack to enable BPF offload.
+                // See BpfCoordinator#isOffloadEnabled.
+                // TODO: Mock TetheringConfiguration to test.
+                return null;
+            }
     };
 
     @Before public void setUp() {
@@ -114,9 +132,7 @@ public class BpfCoordinatorTest {
 
     @NonNull
     private BpfCoordinator makeBpfCoordinator() throws Exception {
-        BpfCoordinator coordinator = new BpfCoordinator(
-                new Handler(mTestLooper.getLooper()), mNetd, mStatsManager, new SharedLog("test"),
-                mDeps);
+        BpfCoordinator coordinator = new BpfCoordinator(mDeps);
         final ArgumentCaptor<BpfCoordinator.BpfTetherStatsProvider>
                 tetherStatsProviderCaptor =
                 ArgumentCaptor.forClass(BpfCoordinator.BpfTetherStatsProvider.class);
