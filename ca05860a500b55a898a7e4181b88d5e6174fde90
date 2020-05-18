@@ -358,6 +358,30 @@
     },
     {
       "key": {
+        "uuid": "5403b4c6_441ec41b",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1601766
+      },
+      "writtenOn": "2020-05-18T18:44:53Z",
+      "side": 1,
+      "message": "In Android S we plan to remove the wigig framework so it should be possible just to revert this change there, assuming we use option #2 and TETHERING_WIGIG is internal (no public API).\nI will hopefully upload an updated change with option #2 in 1-2 days, in the last rebase I noticed lots of changes added to tethering module so I want to make sure the change is still working and not breaking any tests.",
+      "parentUuid": "f4360eae_25458a30",
+      "range": {
+        "startLine": 456,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 64
+      },
+      "revId": "ca05860a500b55a898a7e4181b88d5e6174fde90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99eb7584_d1f1d36a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/TetheringConfiguration.java",
         "patchSetId": 6
