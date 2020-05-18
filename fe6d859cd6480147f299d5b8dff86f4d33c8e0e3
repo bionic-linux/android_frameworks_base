@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "43ff295a_94320946",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-18T06:07:19Z",
+      "side": 1,
+      "message": "Oh right, sorry I missed that. That\u0027s really hard to follow though; \"runTetheringCall\" does not hint that it does that, so you actually need to look at the implementation of all called methods to know that it\u0027s covered.\nMaybe move the verifyNoMoreInteractions in each test method then ? It\u0027s actually not great to have \"verifyNoMoreInteractions\" in \"runTetheringCall\", because you wouldn\u0027t guess that \"runTetheringCall\" does this kind of check from the name.",
+      "parentUuid": "1bf19e8d_9814ff44",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 9
+      },
+      "revId": "fe6d859cd6480147f299d5b8dff86f4d33c8e0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "225926b4_159d572c",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
         "patchSetId": 8
