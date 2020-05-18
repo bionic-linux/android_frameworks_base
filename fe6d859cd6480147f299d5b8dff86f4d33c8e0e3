@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e36511cb_3129b3f9",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-18T03:30:07Z",
+      "side": 1,
+      "message": "Would this also be appropriate ?\nverify(mTethering, never()).tether()",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 9
+      },
+      "revId": "fe6d859cd6480147f299d5b8dff86f4d33c8e0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225926b4_159d572c",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-18T03:30:07Z",
+      "side": 1,
+      "message": "Also:\nverify(mTethering, never()).isTetherProvisioningRequired()\n?",
+      "range": {
+        "startLine": 170,
+        "startChar": 29,
+        "endLine": 170,
+        "endChar": 30
+      },
+      "revId": "fe6d859cd6480147f299d5b8dff86f4d33c8e0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8bd88a_52b6bce2",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-18T03:30:07Z",
+      "side": 1,
+      "message": "Also here, verify(mTethering, never()).untether(any())",
+      "range": {
+        "startLine": 195,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 9
+      },
+      "revId": "fe6d859cd6480147f299d5b8dff86f4d33c8e0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b783285b_8f02f40d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-18T03:30:07Z",
+      "side": 1,
+      "message": "verify(mTethering, never()).isTetherProvisioningRequired()",
+      "range": {
+        "startLine": 199,
+        "startChar": 8,
+        "endLine": 199,
+        "endChar": 9
+      },
+      "revId": "fe6d859cd6480147f299d5b8dff86f4d33c8e0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6db4415_cb865339",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-18T03:30:07Z",
+      "side": 1,
+      "message": "Same comments as above for the verify(never())",
+      "range": {
+        "startLine": 217,
+        "startChar": 16,
+        "endLine": 217,
+        "endChar": 35
+      },
+      "revId": "fe6d859cd6480147f299d5b8dff86f4d33c8e0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
