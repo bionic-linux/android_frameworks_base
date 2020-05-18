@@ -22,6 +22,30 @@
       "revId": "b8f82aea58e6f6d0703d6098a1f0953f740049f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9c57e2_c329bf29",
+        "filename": "services/core/java/com/android/server/wm/TaskSnapshotPersister.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1321491
+      },
+      "writtenOn": "2020-05-18T21:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e7239d1_75524b11",
+      "range": {
+        "startLine": 291,
+        "startChar": 12,
+        "endLine": 291,
+        "endChar": 24
+      },
+      "revId": "b8f82aea58e6f6d0703d6098a1f0953f740049f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
