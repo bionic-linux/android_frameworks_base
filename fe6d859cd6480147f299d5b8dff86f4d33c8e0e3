@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ccf28a17_6586d540",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-05-18T07:14:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43ff295a_94320946",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 9
+      },
+      "revId": "fe6d859cd6480147f299d5b8dff86f4d33c8e0e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "225926b4_159d572c",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringServiceTest.java",
         "patchSetId": 8
