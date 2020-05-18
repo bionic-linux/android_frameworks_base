@@ -333,8 +333,8 @@ public class TetheringTest {
         }
 
         @Override
-        public BpfTetheringCoordinator getBpfTetheringCoordinator(Handler handler, INetd netd,
-                SharedLog log, BpfTetheringCoordinator.Dependencies deps) {
+        public BpfTetheringCoordinator getBpfTetheringCoordinator(
+                BpfTetheringCoordinator.Dependencies deps) {
             return mBpfTetheringCoordinator;
         }
 
