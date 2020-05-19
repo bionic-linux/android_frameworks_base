@@ -124,7 +124,8 @@ public class BpfCoordinator {
     // Store all interface name since boot. Used for lookup what interface name it is from the
     // tether stats got from netd because netd reports interface index to present an interface.
     // TODO: Remove the unused interface name.
-    private final SparseArray<String> mInterfaceNames = new SparseArray<>();
+    @VisibleForTesting
+    final SparseArray<String> mInterfaceNames = new SparseArray<>();
 
     // Map of downstream rule maps. Each of these maps represents the IPv6 forwarding rules for a
     // given downstream. Each map:
@@ -142,7 +143,8 @@ public class BpfCoordinator {
     // rules function without a valid IPv6 downstream interface index even if it may have one
     // before. IpServer would need to call getInterfaceParams() in the constructor instead of when
     // startIpv6() is called, and make mInterfaceParams final.
-    private final HashMap<IpServer, LinkedHashMap<Inet6Address, Ipv6ForwardingRule>>
+    @VisibleForTesting
+    final HashMap<IpServer, LinkedHashMap<Inet6Address, Ipv6ForwardingRule>>
             mIpv6ForwardingRules = new LinkedHashMap<>();
 
     // Runnable that used by scheduling next polling of stats.
@@ -612,7 +614,7 @@ public class BpfCoordinator {
 
     private boolean isOffloadEnabled() {
         final TetheringConfiguration config = mDeps.getTetherConfig();
-        return (config != null) ? config.enableBpfOffload : true /* default value */;
+        return (config != null) ? config.isBpfOffloadEnabled() : true /* default value */;
     }
 
     private int getInterfaceIndexFromRules(@NonNull String ifName) {
