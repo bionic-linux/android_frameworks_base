@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f101183_fbf3afd1",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-05-19T01:30:18Z",
+      "side": 1,
+      "message": "do we need to hold a lock?",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 9
+      },
+      "revId": "2a0f70b1b2ad6b97cdc0b7a3fb56991475ea1594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b4b5fe_f1f6ab1e",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-05-19T01:30:18Z",
+      "side": 1,
+      "message": "possible race condition",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "2a0f70b1b2ad6b97cdc0b7a3fb56991475ea1594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
