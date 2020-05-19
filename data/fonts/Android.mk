@@ -16,7 +16,8 @@ LOCAL_PATH := $(call my-dir)
 
 ##########################################
 # create symlink for given font
-# $(1): new font $(2): link target
+# $(1): new font
+# $(2): link target
 # should be used with eval: $(eval $(call ...))
 define create-font-symlink
 $(PRODUCT_OUT)/system/fonts/$(1) : $(PRODUCT_OUT)/system/fonts/$(2)
@@ -24,9 +25,17 @@ $(PRODUCT_OUT)/system/fonts/$(1) : $(PRODUCT_OUT)/system/fonts/$(2)
 	@mkdir -p $$(dir $$@)
 	@rm -rf $$@
 	$(hide) ln -sf $$(notdir $$<) $$@
-# this magic makes LOCAL_REQUIRED_MODULES work
-ALL_MODULES.$(1).INSTALLED := \
-    $(ALL_MODULES.$(1).INSTALLED) $(PRODUCT_OUT)/system/fonts/$(1)
+
+# This hack creates a PHONY module for the font symlink. This makes
+# LOCAL_REQUIRED_MODULES to work on the symlink module and lets the build system
+# track installed files more accurately via ALL_MODULES* vars.
+# TODO: Don't do this hack
+include $$(CLEAR_VARS)
+LOCAL_MODULE := $(1)
+LOCAL_REQUIRED_MODULES := $(2)
+LOCAL_ADDITIONAL_DEPENDENCIES := $(PRODUCT_OUT)/system/fonts/$(1)
+include $$(BUILD_PHONY_PACKAGE)
+ALL_MODULES.$$(my_register_name).INSTALLED += $(PRODUCT_OUT)/system/fonts/$(1)
 endef
 
 ##########################################
