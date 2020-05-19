@@ -36,6 +36,7 @@ import static com.android.networkstack.tethering.BpfTetheringCoordinator.StatsTy
 
 import static junit.framework.Assert.assertNotNull;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
@@ -82,12 +83,14 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class BpfTetheringCoordinatorTest {
     @Mock private NetworkStatsManager mStatsManager;
     @Mock private INetd mNetd;
+    @Mock private TetheringConfiguration mTetherConfig;
     // Late init since methods must be called by the thread that created this object.
     private TestableNetworkStatsProviderCbBinder mTetherStatsProviderCb;
     private HashMap<String, Integer> mInterfaceIndices = new HashMap<>();
@@ -119,15 +122,13 @@ public class BpfTetheringCoordinatorTest {
                 return new SharedLog("test");
             }
             TetheringConfiguration getTetherConfig() {
-                // Returning null configuration object is a hack to enable BPF offload.
-                // See BpfTetheringCoordinator#isOffloadEnabled.
-                // TODO: Mock TetheringConfiguration to test.
-                return null;
+                return mTetherConfig;
             }
     };
 
     @Before public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(mTetherConfig.isBpfOffloadEnabled()).thenReturn(true /* default value */);
     }
 
     private void waitForIdle() {
@@ -421,5 +422,40 @@ public class BpfTetheringCoordinatorTest {
             inOrder.verify(mNetd).tetherOffloadSetInterfaceQuota(mobileIfIndex, quota);
             inOrder.verifyNoMoreInteractions();
         }
+    }
+
+    @Test
+    public void testTetheringConfigDisableStart() throws Exception {
+        setupFunctioningNetdInterface();
+        when(mTetherConfig.isBpfOffloadEnabled()).thenReturn(false);
+
+        final BpfTetheringCoordinator coordinator = makeBpfTetheringCoordinator();
+        coordinator.start();
+
+        // The tether stats polling task should not be scheduled.
+        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        waitForIdle();
+        verify(mNetd, never()).tetherOffloadGetStats();
+
+        // The interface name lookup table can't be added.
+        final String ethernetIface = "eth1";
+        final Integer ethernetIfIndex = 100;
+        coordinator.addUpstreamNameToLookupTable(ethernetIfIndex, ethernetIface);
+        assertEquals(0, coordinator.mInterfaceNames.size());
+
+        // The rule can't be added.
+        final InetAddress neighA = InetAddresses.parseNumericAddress("2001:db8::1");
+        final MacAddress macA = MacAddress.fromString("00:00:00:00:00:0a");
+        Ipv6ForwardingRule ethernetRuleA = buildTestForwardingRule(ethernetIfIndex, neighA, macA);
+        coordinator.addForwardingRule(ethernetRuleA);
+        assertEquals(0, coordinator.mClientAddresses.size());
+
+        // The rule can't be removed.This is not a realistic case because there should have no
+        // more rule for removal. Verify this just in case.
+        HashSet<Inet6Address> clients = new HashSet<Inet6Address>();
+        clients.add(ethernetRuleA.address);
+        coordinator.mClientAddresses.put(ethernetIfIndex, clients);
+        coordinator.removeForwardingRule(ethernetRuleA);
+        assertEquals(1 /* can't be removed */, coordinator.mClientAddresses.size());
     }
 }
