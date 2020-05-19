@@ -111,12 +111,14 @@ public class BpfTetheringCoordinator {
     // Maps upstream interface index to interface names.
     // Store all interface name since boot. Used for lookup what interface name it is from the
     // tether stats got from netd because netd reports interface index to present an interface.
-    private SparseArray<String> mInterfaceNames = new SparseArray<>();
+    @VisibleForTesting
+    SparseArray<String> mInterfaceNames = new SparseArray<>();
 
     // Maps upstream interface index to the client address which is using on the upstream.
     // Used to monitor if any client is using a given upstream. It helps to do upstream
     // initialization and cleanup. Note that we don't care the client on which downstream.
-    private SparseArray<HashSet<Inet6Address>> mUpstreamClients = new SparseArray<>();
+    @VisibleForTesting
+    SparseArray<HashSet<Inet6Address>> mUpstreamClients = new SparseArray<>();
 
     // Runnable that used by scheduling next polling of stats.
     private final Runnable mScheduledPollingTask = () -> {
@@ -445,7 +447,7 @@ public class BpfTetheringCoordinator {
 
     private boolean isOffloadEnabled() {
         final TetheringConfiguration config = mDeps.getTetherConfig();
-        return (config != null) ? config.enableBpfOffload : true /* default value */;
+        return (config != null) ? config.isBpfOffloadEnabled() : true /* default value */;
     }
 
     @Nullable
