@@ -33,6 +33,8 @@ import static com.android.networkstack.tethering.BpfCoordinator.StatsType.STATS_
 
 import static junit.framework.Assert.assertNotNull;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
@@ -75,6 +77,7 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -85,6 +88,7 @@ public class BpfCoordinatorTest {
     @Mock private NetworkStatsManager mStatsManager;
     @Mock private INetd mNetd;
     @Mock private IpServer mIpServer;
+    @Mock private TetheringConfiguration mTetherConfig;
 
     // Late init since methods must be called by the thread that created this object.
     private TestableNetworkStatsProviderCbBinder mTetherStatsProviderCb;
@@ -111,15 +115,13 @@ public class BpfCoordinatorTest {
                 return new SharedLog("test");
             }
             TetheringConfiguration getTetherConfig() {
-                // Returning null configuration object is a hack to enable BPF offload.
-                // See BpfCoordinator#isOffloadEnabled.
-                // TODO: Mock TetheringConfiguration to test.
-                return null;
+                return mTetherConfig;
             }
     };
 
     @Before public void setUp() {
         MockitoAnnotations.initMocks(this);
+        when(mTetherConfig.isBpfOffloadEnabled()).thenReturn(true /* default value */);
     }
 
     private void waitForIdle() {
@@ -502,5 +504,56 @@ public class BpfCoordinatorTest {
                 new NetworkStats(0L, 2)
                 .addEntry(buildTestEntry(STATS_PER_UID, ethernetIface, 10, 20, 30, 40))
                 .addEntry(buildTestEntry(STATS_PER_UID, mobileIface, 50, 60, 70, 80)));
+    }
+
+    @Test
+    public void testTetheringConfigDisable() throws Exception {
+        setupFunctioningNetdInterface();
+        when(mTetherConfig.isBpfOffloadEnabled()).thenReturn(false);
+
+        final BpfCoordinator coordinator = makeBpfCoordinator();
+        coordinator.startPolling();
+
+        // The tether stats polling task should not be scheduled.
+        mTestLooper.moveTimeForward(DEFAULT_PERFORM_POLL_INTERVAL_MS);
+        waitForIdle();
+        verify(mNetd, never()).tetherOffloadGetStats();
+
+        // The interface name lookup table can't be added.
+        final String iface = "rmnet_data0";
+        final Integer ifIndex = 100;
+        coordinator.addUpstreamNameToLookupTable(ifIndex, iface);
+        assertEquals(0, coordinator.mInterfaceNames.size());
+
+        // The rule can't be added.
+        final InetAddress neigh = InetAddresses.parseNumericAddress("2001:db8::1");
+        final MacAddress mac = MacAddress.fromString("00:00:00:00:00:0a");
+        final Ipv6ForwardingRule rule = buildTestForwardingRule(ifIndex, neigh, mac);
+        coordinator.tetherOffloadRuleAdd(mIpServer, rule);
+        verify(mNetd, never()).tetherOffloadRuleAdd(any());
+        assertEquals(0, coordinator.mIpv6ForwardingRules.size());
+
+        // The rule can't be removed. This is not a realistic case because adding rule is not
+        // allowed. That implies no rule could be removed. Verify this case just in case.
+        LinkedHashMap<Inet6Address, Ipv6ForwardingRule> rules = new LinkedHashMap<Inet6Address,
+                    Ipv6ForwardingRule>();
+        rules.put(rule.address, rule);
+        coordinator.mIpv6ForwardingRules.put(mIpServer, rules);
+        coordinator.tetherOffloadRuleRemove(mIpServer, rule);
+        verify(mNetd, never()).tetherOffloadRuleRemove(any());
+        assertEquals(1 /* can't be removed */, coordinator.mIpv6ForwardingRules.get(mIpServer)
+                .size());
+
+        // The rule can't be cleared.
+        coordinator.tetherOffloadRuleClear(mIpServer);
+        verify(mNetd, never()).tetherOffloadRuleRemove(any());
+        assertEquals(1 /* can't be cleared */, coordinator.mIpv6ForwardingRules.get(mIpServer)
+                .size());
+
+        // The rule can't be updated.
+        coordinator.tetherOffloadRuleUpdate(mIpServer, rule.upstreamIfindex + 1);
+        verify(mNetd, never()).tetherOffloadRuleRemove(any());
+        verify(mNetd, never()).tetherOffloadRuleAdd(any());
+        assertEquals(1 /* not changed */, coordinator.mIpv6ForwardingRules.get(mIpServer).size());
     }
 }
