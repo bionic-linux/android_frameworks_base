@@ -93,6 +93,30 @@
       "revId": "2a0f70b1b2ad6b97cdc0b7a3fb56991475ea1594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8417c34_a2849219",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2020-05-19T02:01:18Z",
+      "side": 1,
+      "message": "I didn\u0027t expect that this class is thread-safe. If we want it to be, marking these two as synchronized may not be enough. Other methods are also relying mParcel and mParcelable.",
+      "parentUuid": "ce7cfc49_b261df1a",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 23
+      },
+      "revId": "2a0f70b1b2ad6b97cdc0b7a3fb56991475ea1594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
