@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa10dc9b_5a47828a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-20T08:43:57Z",
+      "side": 1,
+      "message": "WRITE_SETTINGS",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "2c18fb27c11e92edf5fe30c91095c4b8beda9a8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e58522d_fc736a0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-20T08:43:57Z",
+      "side": 1,
+      "message": "WRITE_SETTINGS",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 17,
+        "endChar": 57
+      },
+      "revId": "2c18fb27c11e92edf5fe30c91095c4b8beda9a8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e247455_a7c18440",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/MockTetheringService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-05-20T08:43:57Z",
+      "side": 1,
+      "message": "Also add a comment that for testing this does not verify the calling package / UID, as calling package could be shell and not match the UID",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "2c18fb27c11e92edf5fe30c91095c4b8beda9a8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
