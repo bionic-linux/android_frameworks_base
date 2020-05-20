@@ -3855,6 +3855,12 @@ public class ConnectivityManager {
      * or the ability to modify system settings as determined by
      * {@link android.provider.Settings.System#canWrite}.</p>
      *
+     * <p>To avoid performance issues due to apps leaking callbacks, the system will limit the
+     * number of outstanding requests to 100 per app (identified by their UID). Requesting a
+     * network with this method will count toward this limit. If this limit is exceeded, an
+     * exception will be thrown. To avoid hitting this issue and to conserve resources, make
+     * sure to unregister the callbacks with {@link #unregisterNetworkCallback}.
+     *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
      *                        the callback must not be shared - it uniquely specifies this request.
@@ -3862,6 +3868,7 @@ public class ConnectivityManager {
      * @throws IllegalArgumentException if {@code request} contains invalid network capabilities.
      * @throws SecurityException if missing the appropriate permissions.
      * @throws RuntimeException if request limit per UID is exceeded.
+     * @throws ServiceSpecificException if the app already has too many callbacks registered.
      */
     public void requestNetwork(@NonNull NetworkRequest request,
             @NonNull NetworkCallback networkCallback) {
@@ -3875,8 +3882,8 @@ public class ConnectivityManager {
      * but runs all the callbacks on the passed Handler.
      *
      * <p>This method has the same permission requirements as
-     * {@link #requestNetwork(NetworkRequest, NetworkCallback)} and throws the same exceptions in
-     * the same conditions.
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback)}, is subject to the same limitations,
+     * and throws the same exceptions in the same conditions.
      *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
@@ -3907,8 +3914,8 @@ public class ConnectivityManager {
      * for that purpose. Calling this method will attempt to bring up the requested network.
      *
      * <p>This method has the same permission requirements as
-     * {@link #requestNetwork(NetworkRequest, NetworkCallback)} and throws the same exceptions in
-     * the same conditions.
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback)}, is subject to the same limitations,
+     * and throws the same exceptions in the same conditions.
      *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
@@ -3934,8 +3941,8 @@ public class ConnectivityManager {
      * on the passed Handler.
      *
      * <p>This method has the same permission requirements as
-     * {@link #requestNetwork(NetworkRequest, NetworkCallback, int)} and throws the same exceptions
-     * in the same conditions.
+     * {@link #requestNetwork(NetworkRequest, NetworkCallback)}, is subject to the same limitations,
+     * and throws the same exceptions in the same conditions.
      *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} to be utilized for this request. Note
@@ -4004,6 +4011,12 @@ public class ConnectivityManager {
      * is unknown prior to bringing up the network so the framework does not
      * know how to go about satisfying a request with these capabilities.
      *
+     * <p>To avoid performance issues due to apps leaking callbacks, the system will limit the
+     * number of outstanding requests to 100 per app (identified by their UID). Requesting a
+     * network with this method will count toward this limit. If this limit is exceeded, an
+     * exception will be thrown. To avoid hitting this issue and to conserve resources, make
+     * sure to unregister the callbacks with {@link #unregisterNetworkCallback}.
+     *
      * <p>This method requires the caller to hold either the
      * {@link android.Manifest.permission#CHANGE_NETWORK_STATE} permission
      * or the ability to modify system settings as determined by
@@ -4016,6 +4029,7 @@ public class ConnectivityManager {
      * @throws IllegalArgumentException if {@code request} contains invalid network capabilities.
      * @throws SecurityException if missing the appropriate permissions.
      * @throws RuntimeException if request limit per UID is exceeded.
+     * @throws ServiceSpecificException if the app already has too many callbacks registered.
      */
     public void requestNetwork(@NonNull NetworkRequest request,
             @NonNull PendingIntent operation) {
@@ -4072,10 +4086,17 @@ public class ConnectivityManager {
      * either the application exits or {@link #unregisterNetworkCallback(NetworkCallback)} is
      * called.
      *
+     * <p>To avoid performance issues due to apps leaking callbacks, the system will limit the
+     * number of outstanding requests to 100 per app (identified by their UID). Registering a
+     * callback with this method will count toward this limit. If this limit is exceeded, an
+     * exception will be thrown. To avoid hitting this issue and to conserve resources, make
+     * sure to unregister the callbacks with {@link #unregisterNetworkCallback}.
+     *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} that the system will call as suitable
      *                        networks change state.
      *                        The callback is invoked on the default internal Handler.
+     * @throws ServiceSpecificException if the app already has too many callbacks registered.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public void registerNetworkCallback(@NonNull NetworkRequest request,
@@ -4089,10 +4110,17 @@ public class ConnectivityManager {
      * either the application exits or {@link #unregisterNetworkCallback(NetworkCallback)} is
      * called.
      *
+     * <p>To avoid performance issues due to apps leaking callbacks, the system will limit the
+     * number of outstanding requests to 100 per app (identified by their UID). Registering a
+     * callback with this method will count toward this limit. If this limit is exceeded, an
+     * exception will be thrown. To avoid hitting this issue and to conserve resources, make
+     * sure to unregister the callbacks with {@link #unregisterNetworkCallback}.
+     *
      * @param request {@link NetworkRequest} describing this request.
      * @param networkCallback The {@link NetworkCallback} that the system will call as suitable
      *                        networks change state.
      * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * @throws ServiceSpecificException if the app already has too many callbacks registered.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public void registerNetworkCallback(@NonNull NetworkRequest request,
@@ -4126,10 +4154,18 @@ public class ConnectivityManager {
      * <p>
      * The request may be released normally by calling
      * {@link #unregisterNetworkCallback(android.app.PendingIntent)}.
+     *
+     * <p>To avoid performance issues due to apps leaking callbacks, the system will limit the
+     * number of outstanding requests to 100 per app (identified by their UID). Registering a
+     * callback with this method will count toward this limit. If this limit is exceeded, an
+     * exception will be thrown. To avoid hitting this issue and to conserve resources, make
+     * sure to unregister the callbacks with {@link #unregisterNetworkCallback}.
+     *
      * @param request {@link NetworkRequest} describing this request.
      * @param operation Action to perform when the network is available (corresponds
      *                  to the {@link NetworkCallback#onAvailable} call.  Typically
      *                  comes from {@link PendingIntent#getBroadcast}. Cannot be null.
+     * @throws ServiceSpecificException if the app already has too many callbacks registered.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public void registerNetworkCallback(@NonNull NetworkRequest request,
@@ -4151,9 +4187,16 @@ public class ConnectivityManager {
      * will continue to be called until either the application exits or
      * {@link #unregisterNetworkCallback(NetworkCallback)} is called.
      *
+     * <p>To avoid performance issues due to apps leaking callbacks, the system will limit the
+     * number of outstanding requests to 100 per app (identified by their UID). Registering a
+     * callback with this method will count toward this limit. If this limit is exceeded, an
+     * exception will be thrown. To avoid hitting this issue and to conserve resources, make
+     * sure to unregister the callbacks with {@link #unregisterNetworkCallback}.
+     *
      * @param networkCallback The {@link NetworkCallback} that the system will call as the
      *                        system default network changes.
      *                        The callback is invoked on the default internal Handler.
+     * @throws ServiceSpecificException if the app already has too many callbacks registered.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public void registerDefaultNetworkCallback(@NonNull NetworkCallback networkCallback) {
@@ -4165,9 +4208,16 @@ public class ConnectivityManager {
      * will continue to be called until either the application exits or
      * {@link #unregisterNetworkCallback(NetworkCallback)} is called.
      *
+     * <p>To avoid performance issues due to apps leaking callbacks, the system will limit the
+     * number of outstanding requests to 100 per app (identified by their UID). Registering a
+     * callback with this method will count toward this limit. If this limit is exceeded, an
+     * exception will be thrown. To avoid hitting this issue and to conserve resources, make
+     * sure to unregister the callbacks with {@link #unregisterNetworkCallback}.
+     *
      * @param networkCallback The {@link NetworkCallback} that the system will call as the
      *                        system default network changes.
      * @param handler {@link Handler} to specify the thread upon which the callback will be invoked.
+     * @throws ServiceSpecificException if the app already has too many callbacks registered.
      */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public void registerDefaultNetworkCallback(@NonNull NetworkCallback networkCallback,
