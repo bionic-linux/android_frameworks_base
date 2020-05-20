@@ -25,6 +25,7 @@ import android.hidl.manager.V1_0.IServiceManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Debug;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.os.IPowerManager;
 import android.os.Looper;
@@ -32,6 +33,7 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.system.OsConstants;
@@ -55,8 +57,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Vector;
 
 /** This class calls its monitor every minute. Killing this process if they don't return **/
 public class Watchdog extends Thread {
@@ -81,6 +85,11 @@ public class Watchdog extends Thread {
     static final int WAITING = 1;
     static final int WAITED_HALF = 2;
     static final int OVERDUE = 3;
+
+    // Track watchdog timeout history and break the crash loop if there is.
+    private static final String PROP_TIMEOUT_HISTORY = "sys.watchdog_timeout_history";
+    private static final int FATAL_LOOP_COUNT = 3;
+    private static final int FATAL_LOOP_WINDOWS_MSECS = TimeUnit.MINUTES.toMillis(10);
 
     // Which native processes to dump into dropbox's stack traces
     public static final String[] NATIVE_STACKS_OF_INTEREST = new String[] {
@@ -671,6 +680,7 @@ public class Watchdog extends Thread {
                 Slog.w(TAG, "*** WATCHDOG KILLING SYSTEM PROCESS: " + subject);
                 WatchdogDiagnostics.diagnoseCheckers(blockedCheckers);
                 Slog.w(TAG, "*** GOODBYE!");
+                if (!Build.IS_USER && isCrashLoopFound()) breakCrashLoop();
                 Process.killProcess(Process.myPid());
                 System.exit(10);
             }
@@ -687,6 +697,57 @@ public class Watchdog extends Thread {
         } catch (IOException e) {
             Slog.w(TAG, "Failed to write to /proc/sysrq-trigger", e);
         }
+    }
+
+    private boolean isCrashLoopFound() {
+        long nowMs;
+        long firstCrashMs;
+        String[] rawCrashHistory;
+        Vector<String> crashHistory;
+
+        // crashHistory = last FATAL_LOOP_COUNT - 1 items in PROP_TIMEOUT_HISTORY + [nowMs].
+        nowMs = SystemClock.elapsedRealtime(); // Time since boot including deep sleep.
+        rawCrashHistory = SystemProperties.get(PROP_TIMEOUT_HISTORY, ",").split(",");
+        crashHistory = new Vector<String>(Arrays.asList(
+                    Arrays.copyOfRange(rawCrashHistory,
+                        Math.max(0, rawCrashHistory.length - FATAL_LOOP_COUNT - 1),
+                        rawCrashHistory.length)));
+        crashHistory.add(String.valueOf(nowMs));
+        SystemProperties.set(PROP_TIMEOUT_HISTORY, String.join(",", crashHistory));
+
+        // Returns false if the device has an active USB connection.
+        try {
+            final String state = FileUtils.readTextFile(
+                    new File("/sys/class/android_usb/android0/state"), 128, "").trim();
+            if ("CONFIGURED".equals(state)) return false;
+        } catch (Throwable t) {
+            Slog.w(TAG, "Failed to determine if device was on USB", t);
+        }
+
+        try {
+            firstCrashMs = Long.parseLong(crashHistory.firstElement());
+        } catch (IndexOutOfBoundsException t) {
+            Slog.w(TAG, "Failed to get first element from {"
+                    + String.join(",", crashHistory) + "}", t);
+            return false;
+        } catch (NumberFormatException t) {
+            Slog.w(TAG, "Failed to parseLong " + crashHistory.firstElement(), t);
+            SystemProperties.set(PROP_TIMEOUT_HISTORY, null);
+            return false;
+        }
+        return crashHistory.size() >= FATAL_LOOP_COUNT
+            && nowMs - firstCrashMs < FATAL_LOOP_WINDOWS_MSECS;
+    }
+
+    private void breakCrashLoop() {
+        try {
+            FileWriter kmsg = new FileWriter("/dev/kmsg_debug");
+            kmsg.write("Fatal reset to escape the system_server crashing loop\n");
+            kmsg.close();
+        } catch (IOException e) {
+            Slog.w(TAG, "Failed to write to kmsg", e);
+        }
+        doSysRq('c');
     }
 
     public static final class OpenFdMonitor {
