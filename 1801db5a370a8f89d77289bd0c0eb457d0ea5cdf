@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d43c6edb_847ff005",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2020-05-21T13:22:46Z",
+      "side": 1,
+      "message": "\"Flag specifying if we should interpret all signal strength as one bar higher\"",
+      "range": {
+        "startLine": 1054,
+        "startChar": 36,
+        "endLine": 1054,
+        "endChar": 78
+      },
+      "revId": "1801db5a370a8f89d77289bd0c0eb457d0ea5cdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeada034_7b2c80f9",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 11
