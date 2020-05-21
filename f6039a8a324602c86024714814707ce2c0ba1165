@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e8ea78e_8d7727f0",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-21T07:12:58Z",
+      "side": 1,
+      "message": "Ideally we\u0027d have a CTS test that confirms that this is the number because different devices might have different limits. Otherwise the documentation might be incorrect. That said, this doesn\u0027t seem likely, so LGTM as is. If we have a CTS test later, so much the better.",
+      "range": {
+        "startLine": 715,
+        "startChar": 41,
+        "endLine": 715,
+        "endChar": 44
+      },
+      "revId": "f6039a8a324602c86024714814707ce2c0ba1165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3866909e_4d4658a1",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-21T07:12:58Z",
+      "side": 1,
+      "message": "This limit is shared with the limit for NetworkRequests/NetworkCallbacks, right? If so, we should say that here (and in the docs for the those APIs as well).",
+      "range": {
+        "startLine": 716,
+        "startChar": 61,
+        "endLine": 716,
+        "endChar": 62
+      },
+      "revId": "f6039a8a324602c86024714814707ce2c0ba1165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4339f2_762a435d",
+        "filename": "core/java/android/net/ConnectivityDiagnosticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-21T07:12:58Z",
+      "side": 1,
+      "message": "This is incorrect. Looking at the ConnectivityManager code, this actually throws an @hidden subclass of RuntimeException called TooManyRequestsException.",
+      "range": {
+        "startLine": 727,
+        "startChar": 15,
+        "endLine": 727,
+        "endChar": 39
+      },
+      "revId": "f6039a8a324602c86024714814707ce2c0ba1165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79d1fc0_d65f5ab1",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3862,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-21T07:12:58Z",
+      "side": 1,
+      "message": "Use:\n\nunregisterNetworkCallback(NetworkCallback)\n\nbecause there is a version that takes a PendingIntent as well.",
+      "range": {
+        "startLine": 3862,
+        "startChar": 53,
+        "endLine": 3862,
+        "endChar": 78
+      },
+      "revId": "f6039a8a324602c86024714814707ce2c0ba1165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d834c78d_69ef3554",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4018,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-21T07:12:58Z",
+      "side": 1,
+      "message": "releaseNetworkRequest(android.app.PendingIntent)",
+      "range": {
+        "startLine": 4018,
+        "startChar": 53,
+        "endLine": 4018,
+        "endChar": 78
+      },
+      "revId": "f6039a8a324602c86024714814707ce2c0ba1165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89805700_c86b2dfc",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4162,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-05-21T07:12:58Z",
+      "side": 1,
+      "message": "Use:\n\nunregisterNetworkCallback(android.app.PendingIntent)\n\nor\n\nreleaseNetworkRequest",
+      "range": {
+        "startLine": 4162,
+        "startChar": 53,
+        "endLine": 4162,
+        "endChar": 78
+      },
+      "revId": "f6039a8a324602c86024714814707ce2c0ba1165",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
