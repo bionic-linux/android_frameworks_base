@@ -27,6 +27,7 @@ import static android.net.NetworkStats.SET_ALL;
 import static android.net.NetworkStats.SET_DEFAULT;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
+import static android.net.NetworkStatsHistory.multiplySafe;
 import static android.net.TrafficStats.UID_REMOVED;
 import static android.text.format.DateUtils.WEEK_IN_MILLIS;
 
@@ -183,35 +184,6 @@ public class NetworkStatsCollection implements FileRotator.Reader {
             }
             return time;
         }
-    }
-
-    /**
-     * Safely multiple a value by a rational.
-     * <p>
-     * Internally it uses integer-based math whenever possible, but switches
-     * over to double-based math if values would overflow.
-     */
-    @VisibleForTesting
-    public static long multiplySafe(long value, long num, long den) {
-        if (den == 0) den = 1;
-        long x = value;
-        long y = num;
-
-        // Logic shamelessly borrowed from Math.multiplyExact()
-        long r = x * y;
-        long ax = Math.abs(x);
-        long ay = Math.abs(y);
-        if (((ax | ay) >>> 31 != 0)) {
-            // Some bits greater than 2^31 that might cause overflow
-            // Check the result using the divide operator
-            // and check for the special case of Long.MIN_VALUE * -1
-            if (((y != 0) && (r / y != x)) ||
-                    (x == Long.MIN_VALUE && y == -1)) {
-                // Use double math to avoid overflowing
-                return (long) (((double) num / den) * value);
-            }
-        }
-        return r / den;
     }
 
     public int[] getRelevantUids(@NetworkStatsAccess.Level int accessLevel) {
