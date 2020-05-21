@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeada034_7b2c80f9",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2020-05-21T13:16:41Z",
+      "side": 1,
+      "message": "change to KEY_INFLATE_SIGNAL_STRENGTH_BOOL",
+      "range": {
+        "startLine": 1059,
+        "startChar": 31,
+        "endLine": 1059,
+        "endChar": 63
+      },
+      "revId": "1801db5a370a8f89d77289bd0c0eb457d0ea5cdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
