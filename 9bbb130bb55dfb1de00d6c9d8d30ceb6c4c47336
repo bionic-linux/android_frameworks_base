@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7253ed3_9e97eab4",
+        "filename": "data/fonts/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2020-05-26T17:24:58Z",
+      "side": 1,
+      "message": "Ideally, if we need to do this, we do it as a real module, not as a side-effect of a phony package:\n\n  include $$(CLEAR_VARS)\n  LOCAL_MODULE :\u003d $(1)\n  LOCAL_MODULE_CLASS :\u003d ETC\n  LOCAL_MODULE_PATH :\u003d $(PRODUCT_OUT)/system/fonts/$(1)\n  LOCAL_REQUIRED_MODULES :\u003d $(2)\n  include $$(BUILD_SYSTEM)/base_rules.mk\n  $$(call symlink-file,,$(2),$$(LOCAL_BUILT_MODULE))\n\nBut that doesn\u0027t work today, since the built -\u003e install copy doesn\u0027t preserve symlinks (it\u0027s not using `cp -P`). Maybe if we fix that for the install action, that\u0027ll make things work better? (We don\u0027t want to do that for all copies, since reads from the source tree should be dereferencing still)",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "9bbb130bb55dfb1de00d6c9d8d30ceb6c4c47336",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
