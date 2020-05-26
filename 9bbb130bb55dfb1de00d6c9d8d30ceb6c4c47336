@@ -22,6 +22,30 @@
       "revId": "9bbb130bb55dfb1de00d6c9d8d30ceb6c4c47336",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce948988_7584c893",
+        "filename": "data/fonts/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-05-26T18:38:13Z",
+      "side": 1,
+      "message": "I guess this built-\u003einstall not working is the reason why we have the original weird hack.\n\nHow about using LOCAL_POST_INSTALL_CMD to force create the installed symlink? Still hacky but at least we don\u0027t need to change base_rules.mk\u0027s install command",
+      "parentUuid": "a7253ed3_9e97eab4",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "9bbb130bb55dfb1de00d6c9d8d30ceb6c4c47336",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
