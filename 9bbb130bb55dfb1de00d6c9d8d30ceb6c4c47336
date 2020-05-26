@@ -46,6 +46,30 @@
       "revId": "9bbb130bb55dfb1de00d6c9d8d30ceb6c4c47336",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15aea71e_dbd17ce6",
+        "filename": "data/fonts/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1074628
+      },
+      "writtenOn": "2020-05-26T19:00:23Z",
+      "side": 1,
+      "message": "This hack went back quite a ways to when make (and later, ninja) didn\u0027t properly support symlinks (though ones of this style usually didn\u0027t cause issues).\n\nUsing LOCAL_POST_INSTALL_CMDS would be a regression to what we\u0027re trying to do here -- to actually define this module in our various build graphs.\n\nWe could fixup the install cp rule to support installing symlinks, but the right thing to do here may be to implement the `symlinks`(-\u003e LOCAL_MODULE_SYMLINKS) property support in `prebuilt_font`, and just move these two definitions into the Roboto-(Regular|Bold).ttf modules.",
+      "parentUuid": "ce948988_7584c893",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "9bbb130bb55dfb1de00d6c9d8d30ceb6c4c47336",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
