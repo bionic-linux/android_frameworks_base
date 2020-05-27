@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "a66545a3_a0e43d2f",
+        "filename": "core/java/android/net/NetworkStatsHistory.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-05-27T19:14:24Z",
+      "side": 1,
+      "message": "Please don\u0027t duplicate this code; you can instead import it from its current location:\n\n    import static com.android.server.net.NetworkStatsCollection.multiplySafe;",
+      "range": {
+        "startLine": 500,
+        "startChar": 0,
+        "endLine": 500,
+        "endChar": 69
+      },
+      "revId": "7261fa1330a6c79647ba68e8b1937219bbeec740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31c06488_3ba9f00e",
         "filename": "core/java/android/net/NetworkStatsHistory.java",
         "patchSetId": 1
