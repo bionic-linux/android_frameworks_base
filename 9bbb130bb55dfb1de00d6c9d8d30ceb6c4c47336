@@ -70,6 +70,30 @@
       "revId": "9bbb130bb55dfb1de00d6c9d8d30ceb6c4c47336",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f86b9e_9fc3e75d",
+        "filename": "data/fonts/Android.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-05-27T09:10:46Z",
+      "side": 1,
+      "message": "SG, filed b/157537895 for this",
+      "parentUuid": "15aea71e_dbd17ce6",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "9bbb130bb55dfb1de00d6c9d8d30ceb6c4c47336",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
