@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cdf7d02_856484de",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/net/SignalStrengthUtil.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2020-05-27T00:31:23Z",
+      "side": 1,
+      "message": "nit: I feel carrierConfigMgr is a better name than cManager.",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "1896df7707c12a83f32b00b2ffea9f86f96a92c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa2dfd6_caaa3719",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/net/SignalStrengthUtil.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2020-05-27T00:31:23Z",
+      "side": 1,
+      "message": "this is a nullable return, that should be handled as well",
+      "range": {
+        "startLine": 32,
+        "startChar": 36,
+        "endLine": 32,
+        "endChar": 77
+      },
+      "revId": "1896df7707c12a83f32b00b2ffea9f86f96a92c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
