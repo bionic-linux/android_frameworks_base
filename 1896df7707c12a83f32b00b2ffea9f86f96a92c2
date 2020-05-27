@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7373ab4_6c0aa798",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/net/SignalStrengthUtil.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2020-05-27T14:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cdf7d02_856484de",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "1896df7707c12a83f32b00b2ffea9f86f96a92c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fa2dfd6_caaa3719",
         "filename": "packages/SettingsLib/src/com/android/settingslib/net/SignalStrengthUtil.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "1896df7707c12a83f32b00b2ffea9f86f96a92c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44338a88_cc5398ef",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/net/SignalStrengthUtil.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2020-05-27T14:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fa2dfd6_caaa3719",
+      "range": {
+        "startLine": 32,
+        "startChar": 36,
+        "endLine": 32,
+        "endChar": 77
+      },
+      "revId": "1896df7707c12a83f32b00b2ffea9f86f96a92c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
