@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "604ea202_c64058bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-05-27T11:30:01Z",
+      "side": 1,
+      "message": "fyi, this looks broken",
+      "range": {
+        "startLine": 13,
+        "startChar": 52,
+        "endLine": 14,
+        "endChar": 54
+      },
+      "revId": "aaff63781af34a375e3e1827dc1ad3df3172c487",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
