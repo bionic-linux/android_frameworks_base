@@ -69,6 +69,30 @@
       "revId": "a98415b043e505d631126cbb8f163d21eea4461d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2a15d8_17c33c45",
+        "filename": "core/java/android/os/ParcelableHolder.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2020-05-27T08:35:00Z",
+      "side": 1,
+      "message": "right, writeParcelable writes mParcelable\u0027s name and its content.",
+      "parentUuid": "026f0654_f098602f",
+      "range": {
+        "startLine": 159,
+        "startChar": 7,
+        "endLine": 159,
+        "endChar": 47
+      },
+      "revId": "a98415b043e505d631126cbb8f163d21eea4461d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
