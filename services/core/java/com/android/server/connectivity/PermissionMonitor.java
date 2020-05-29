@@ -82,6 +82,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     private final PackageManager mPackageManager;
     private final UserManager mUserManager;
     private final INetd mNetd;
+    private final Dependencies mDeps;
 
     // Values are User IDs.
     @GuardedBy("this")
@@ -102,10 +103,24 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     @GuardedBy("this")
     private final Set<Integer> mAllApps = new HashSet<>();
 
+    /**
+     * Dependencies of PermissionMonitor, for injection in tests.
+     */
+    @VisibleForTesting
+    public static class Dependencies {
+        public int getDeviceFirstSdkInt() {
+            return Build.VERSION.FIRST_SDK_INT;
+        }
+    }
     public PermissionMonitor(Context context, INetd netd) {
+        this(context, netd, new Dependencies());
+    }
+
+    public PermissionMonitor(Context context, INetd netd, Dependencies deps) {
         mPackageManager = context.getPackageManager();
         mUserManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
         mNetd = netd;
+        mDeps = deps;
     }
 
     // Intended to be called only once at startup, after the system is ready. Installs a broadcast
@@ -186,11 +201,6 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     }
 
     @VisibleForTesting
-    protected int getDeviceFirstSdkInt() {
-        return Build.VERSION.FIRST_SDK_INT;
-    }
-
-    @VisibleForTesting
     boolean hasPermission(@NonNull final PackageInfo app, @NonNull final String permission) {
         if (app.requestedPermissions == null || app.requestedPermissionsFlags == null) {
             return false;
@@ -212,7 +222,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         if (app.applicationInfo != null) {
             // Backward compatibility for b/114245686, on devices that launched before Q daemons
             // and apps running as the system UID are exempted from this check.
-            if (app.applicationInfo.uid == SYSTEM_UID && getDeviceFirstSdkInt() < VERSION_Q) {
+            if (app.applicationInfo.uid == SYSTEM_UID && mDeps.getDeviceFirstSdkInt() < VERSION_Q) {
                 return true;
             }
 
