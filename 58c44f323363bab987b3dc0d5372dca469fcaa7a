@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00512c67_a242a9d6",
+        "filename": "libs/input/SpriteController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-05-29T19:22:44Z",
+      "side": 1,
+      "message": "This will be the last piece of difference in this file, and it\u0027s replaced by a one-line bitmap copy, and I assume it won\u0027t be changed so I chose to keep it.\n\nOtherwise we need to expose dirty flags to SpriteIcon, which isn\u0027t something I found a way to do cleanly.",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 367,
+        "endChar": 9
+      },
+      "revId": "58c44f323363bab987b3dc0d5372dca469fcaa7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "676ad77e_c28f4d95",
+        "filename": "libs/input/SpriteController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-05-29T19:22:44Z",
+      "side": 1,
+      "message": "This is a piece of rewording from ag/9227657 that\u0027s also applicable here, so I included it here to further reduce difference.",
+      "revId": "58c44f323363bab987b3dc0d5372dca469fcaa7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
