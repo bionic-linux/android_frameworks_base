@@ -41,6 +41,7 @@ java_sdk_library {
     ],
 
     compile_dex: true,
+    sdk_version: "test_current",
 }
 
 // Build the android.test.runner-minus-junit library

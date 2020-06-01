@@ -59,6 +59,9 @@ java_library_static {
     java_version: "1.8",
 
     sdk_version: "current",
+    libs: [
+        "framework-annotations-lib",
+    ],
 }
 
 // Build the repackaged.android.test.base library
@@ -93,6 +96,7 @@ java_library_static {
     sdk_version: "current",
     libs: [
         "junit",
+        "framework-annotations-lib",
     ],
 }
 

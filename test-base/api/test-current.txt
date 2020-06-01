@@ -1,1 +1,10 @@
 // Signature format: 2.0
+package android.test {
+
+  @Deprecated public class AndroidTestCase extends junit.framework.TestCase {
+    method @Deprecated public android.content.Context getTestContext();
+    method @Deprecated public void setTestContext(android.content.Context);
+  }
+
+}
+
