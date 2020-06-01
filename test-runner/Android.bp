@@ -43,6 +43,19 @@ java_sdk_library {
     compile_dex: true,
 }
 
+// This lib is to provide all private APIs of android.test.runner
+// for the test of itself. It is visible only to that test.
+java_library {
+    name: "android.test.runner.implementation",
+    srcs: ["src/**/*.java"],
+    libs: [
+        "android.test.base",
+        "android.test.mock",
+    ],
+    installable: false,
+    visibility: ["//frameworks/base/test-runner/tests"],
+}
+
 // Build the android.test.runner-minus-junit library
 // =================================================
 // This is only intended for inclusion in the android.test.legacy static
