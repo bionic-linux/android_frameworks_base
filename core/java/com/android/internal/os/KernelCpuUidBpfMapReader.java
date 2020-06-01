@@ -16,7 +16,6 @@
 
 package com.android.internal.os;
 
-import android.os.StrictMode;
 import android.os.SystemClock;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -93,7 +92,11 @@ public abstract class KernelCpuUidBpfMapReader {
         mWriteLock.lock();
         int firstIndex = mData.indexOfKey(startUid);
         int lastIndex = mData.indexOfKey(endUid);
-        mData.removeAtRange(firstIndex, lastIndex - firstIndex + 1);
+        if (firstIndex >= 0 && lastIndex >= 0 && firstIndex <= lastIndex) {
+            mData.removeAtRange(firstIndex, lastIndex - firstIndex + 1);
+        } else {
+            Slog.w(mTag, "Attempt to remove out-of-range Uids");
+        }
         mWriteLock.unlock();
     }
 
