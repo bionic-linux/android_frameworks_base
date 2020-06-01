@@ -6383,7 +6383,7 @@
         <attr name="translateY" format="float"/>
         <!-- The amount to scale the group on X coordinate. -->
         <attr name="scaleX" />
-        <!-- The amount to scale the group on X coordinate. -->
+        <!-- The amount to scale the group on Y coordinate. -->
         <attr name="scaleY" />
     </declare-styleable>
 
