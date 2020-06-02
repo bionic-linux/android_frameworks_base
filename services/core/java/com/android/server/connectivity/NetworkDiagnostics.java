@@ -16,6 +16,8 @@
 
 package com.android.server.connectivity;
 
+import static android.net.DnsResolver.TYPE_A;
+import static android.net.DnsResolver.TYPE_AAAA;
 import static android.system.OsConstants.*;
 
 import android.annotation.NonNull;
@@ -100,6 +102,8 @@ public class NetworkDiagnostics {
     private static final InetAddress TEST_DNS4 = NetworkUtils.numericToInetAddress("8.8.8.8");
     private static final InetAddress TEST_DNS6 = NetworkUtils.numericToInetAddress(
             "2001:4860:4860::8888");
+
+    private static final int DNS_HEADER_SIZE = 12;
 
     // For brevity elsewhere.
     private static final long now() {
@@ -249,6 +253,36 @@ public class NetworkDiagnostics {
             return ni.getIndex();
         } catch (NullPointerException | SocketException e) {
             return null;
+        }
+    }
+
+    private static byte[] generateDnsQueryPacket(@Nullable String sixRandomDigits,
+            int randomIntValue, int queryType) {
+        final byte[] rnd = sixRandomDigits.getBytes(StandardCharsets.US_ASCII);
+        final byte[] queryId = ByteBuffer.allocate(2).putShort((short) randomIntValue).array();
+        return new byte[] {
+            queryId[0], queryId[1], // [0-1]   query ID
+            1, 0,  // [2-3]   flags; byte[2] = 1 for recursion desired (RD).
+            0, 1,  // [4-5]   QDCOUNT (number of queries)
+            0, 0,  // [6-7]   ANCOUNT (number of answers)
+            0, 0,  // [8-9]   NSCOUNT (number of name server records)
+            0, 0,  // [10-11] ARCOUNT (number of additional records)
+            17, rnd[0], rnd[1], rnd[2], rnd[3], rnd[4], rnd[5],
+                '-', 'a', 'n', 'd', 'r', 'o', 'i', 'd', '-', 'd', 's',
+            6, 'm', 'e', 't', 'r', 'i', 'c',
+            7, 'g', 's', 't', 'a', 't', 'i', 'c',
+            3, 'c', 'o', 'm',
+            0,  // null terminator of FQDN (root TLD)
+            0, (byte) queryType,  // QTYPE
+            0, 1  // QCLASS, set to 1 = IN (Internet)
+        };
+    }
+
+    private static String responseCodeStr(int rcode) {
+        try {
+            return DnsResponseCode.values()[rcode].toString();
+        } catch (IndexOutOfBoundsException e) {
+            return String.valueOf(rcode);
         }
     }
 
@@ -558,31 +592,19 @@ public class NetworkDiagnostics {
     private class DnsUdpCheck extends SimpleSocketCheck implements Runnable {
         private static final int TIMEOUT_SEND = 100;
         private static final int TIMEOUT_RECV = 500;
-        private static final int RR_TYPE_A = 1;
-        private static final int RR_TYPE_AAAA = 28;
         private static final int PACKET_BUFSIZE = 512;
 
-        protected final Random mRandom = new Random();
-
-        // Should be static, but the compiler mocks our puny, human attempts at reason.
-        protected String responseCodeStr(int rcode) {
-            try {
-                return DnsResponseCode.values()[rcode].toString();
-            } catch (IndexOutOfBoundsException e) {
-                return String.valueOf(rcode);
-            }
-        }
-
-        protected final int mQueryType;
+        private final Random mRandom = new Random();
+        private final int mQueryType;
 
         public DnsUdpCheck(InetAddress target, Measurement measurement) {
             super(target, measurement);
 
             // TODO: Ideally, query the target for both types regardless of address family.
             if (mAddressFamily == AF_INET6) {
-                mQueryType = RR_TYPE_AAAA;
+                mQueryType = TYPE_AAAA;
             } else {
-                mQueryType = RR_TYPE_A;
+                mQueryType = TYPE_A;
             }
 
             mMeasurement.description = "DNS UDP dst{" + mTarget.getHostAddress() + "}";
@@ -602,10 +624,13 @@ public class NetworkDiagnostics {
 
             // This needs to be fixed length so it can be dropped into the pre-canned packet.
             final String sixRandomDigits = String.valueOf(mRandom.nextInt(900000) + 100000);
-            appendDnsToMeasurementDescription(sixRandomDigits, mSocketAddress);
+            mMeasurement.description += " src{" + getSocketAddressString(mSocketAddress) + "}"
+                    + " qtype{" + mQueryType + "}"
+                    + " qname{" + sixRandomDigits + "-android-ds.metric.gstatic.com}";
 
             // Build a trivial DNS packet.
-            final byte[] dnsPacket = getDnsQueryPacket(sixRandomDigits);
+            final byte[] dnsPacket =
+                    generateDnsQueryPacket(sixRandomDigits, mRandom.nextInt(), mQueryType);
 
             int count = 0;
             mMeasurement.startTime = now();
@@ -638,49 +663,23 @@ public class NetworkDiagnostics {
 
             close();
         }
-
-        protected byte[] getDnsQueryPacket(String sixRandomDigits) {
-            byte[] rnd = sixRandomDigits.getBytes(StandardCharsets.US_ASCII);
-            return new byte[] {
-                (byte) mRandom.nextInt(), (byte) mRandom.nextInt(),  // [0-1]   query ID
-                1, 0,  // [2-3]   flags; byte[2] = 1 for recursion desired (RD).
-                0, 1,  // [4-5]   QDCOUNT (number of queries)
-                0, 0,  // [6-7]   ANCOUNT (number of answers)
-                0, 0,  // [8-9]   NSCOUNT (number of name server records)
-                0, 0,  // [10-11] ARCOUNT (number of additional records)
-                17, rnd[0], rnd[1], rnd[2], rnd[3], rnd[4], rnd[5],
-                        '-', 'a', 'n', 'd', 'r', 'o', 'i', 'd', '-', 'd', 's',
-                6, 'm', 'e', 't', 'r', 'i', 'c',
-                7, 'g', 's', 't', 'a', 't', 'i', 'c',
-                3, 'c', 'o', 'm',
-                0,  // null terminator of FQDN (root TLD)
-                0, (byte) mQueryType,  // QTYPE
-                0, 1  // QCLASS, set to 1 = IN (Internet)
-            };
-        }
-
-        protected void appendDnsToMeasurementDescription(
-                String sixRandomDigits, SocketAddress sockAddr) {
-            mMeasurement.description += " src{" + getSocketAddressString(sockAddr) + "}"
-                    + " qtype{" + mQueryType + "}"
-                    + " qname{" + sixRandomDigits + "-android-ds.metric.gstatic.com}";
-        }
     }
 
-    // TODO: Have it inherited from SimpleSocketCheck, and separate common DNS helpers out of
-    // DnsUdpCheck.
-    private class DnsTlsCheck extends DnsUdpCheck {
+
+    private class DnsTlsCheck extends SimpleSocketCheck implements Runnable {
         private static final int TCP_CONNECT_TIMEOUT_MS = 2500;
         private static final int TCP_TIMEOUT_MS = 2000;
         private static final int DNS_TLS_PORT = 853;
-        private static final int DNS_HEADER_SIZE = 12;
 
+        private final int mQueryType;
         private final String mHostname;
+        private final Random mRandom = new Random();
 
         public DnsTlsCheck(@Nullable String hostname, @NonNull InetAddress target,
                 @NonNull Measurement measurement) {
             super(target, measurement);
 
+            mQueryType = (mAddressFamily == AF_INET6) ? TYPE_AAAA : TYPE_A;
             mHostname = hostname;
             mMeasurement.description = "DNS TLS dst{" + mTarget.getHostAddress() + "} hostname{"
                     + TextUtils.emptyIfNull(mHostname) + "}";
@@ -708,14 +707,18 @@ public class NetworkDiagnostics {
 
         private void sendDoTProbe(@Nullable SSLSocket sslSocket) throws IOException {
             final String sixRandomDigits = String.valueOf(mRandom.nextInt(900000) + 100000);
-            final byte[] dnsPacket = getDnsQueryPacket(sixRandomDigits);
+            final byte[] dnsPacket =
+                    generateDnsQueryPacket(sixRandomDigits, mRandom.nextInt(), mQueryType);
 
             mMeasurement.startTime = now();
             sslSocket.connect(new InetSocketAddress(mTarget, DNS_TLS_PORT), TCP_CONNECT_TIMEOUT_MS);
+            mMeasurement.description +=
+                    " src{" + getSocketAddressString(sslSocket.getLocalSocketAddress()) + "}"
+                    + " qtype{" + mQueryType + "}"
+                    + " qname{" + sixRandomDigits + "-android-ds.metric.gstatic.com}";
 
             // Synchronous call waiting for the TLS handshake complete.
             sslSocket.startHandshake();
-            appendDnsToMeasurementDescription(sixRandomDigits, sslSocket.getLocalSocketAddress());
 
             final DataOutputStream output = new DataOutputStream(sslSocket.getOutputStream());
             output.writeShort(dnsPacket.length);
