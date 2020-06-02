@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0077d6e_e7279181",
+        "filename": "test-runner/tests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-06-02T14:32:00Z",
+      "side": 1,
+      "message": "Why not just use the android.test.runner.impl which the java_sdk_library already creates for use in this way?",
+      "revId": "b9911aa76bcb633b4c04a774f01d1575db30986d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
