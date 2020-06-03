@@ -63,7 +63,7 @@ import java.util.BitSet;
  */
 public class EntitlementManager {
     private static final String TAG = EntitlementManager.class.getSimpleName();
-    private static final boolean DBG = false;
+    private static final boolean DBG = true;
 
     @VisibleForTesting
     protected static final String DISABLE_PROVISIONING_SYSPROP_KEY = "net.tethering.noprovisioning";

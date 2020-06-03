@@ -31,6 +31,7 @@ java_defaults {
         "android.hardware.tetheroffload.config-V1.0-java",
         "android.hardware.tetheroffload.control-V1.0-java",
         "net-utils-framework-common",
+	"statsprotos",
     ],
     libs: [
         "framework-tethering.impl",
@@ -44,6 +45,7 @@ java_defaults {
 android_library {
     name: "TetheringApiCurrentLib",
     defaults: ["TetheringAndroidLibraryDefaults"],
+    srcs: [":statslog-tethering-java-gen"],
 }
 
 // Due to b/143733063, APK can't access a jni lib that is in APEX (but not in the APK).
@@ -130,3 +132,26 @@ android_app {
     apex_available: ["com.android.tethering"],
     min_sdk_version: "current",
 }
+
+genrule {
+    name: "statslog-tethering-java-gen",
+    tools: ["stats-log-api-gen"],
+    cmd: "$(location stats-log-api-gen) --java $(out) --module network_tethering" +
+         " --javaPackage com.android.networkstack.tethering.metrics --javaClass TetheringStatsLog",
+    out: ["com/android/networkstack/tethering/metrics/TetheringStatsLog.java"],
+}
+
+java_library_static {
+    name: "statsprotos",
+    proto: {
+        type: "lite",
+    },
+    srcs: [
+        "src/com/android/networkstack/tethering/metrics/stats.proto",
+    ],
+    static_libs: [
+        "tetheringprotos",
+    ],
+    sdk_version: "system_current",
+}
+

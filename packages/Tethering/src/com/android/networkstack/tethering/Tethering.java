@@ -129,6 +129,8 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.networkstack.tethering.metrics.TetheringMetrics;
+
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -152,8 +154,8 @@ import java.util.concurrent.RejectedExecutionException;
 public class Tethering {
 
     private static final String TAG = Tethering.class.getSimpleName();
-    private static final boolean DBG = false;
-    private static final boolean VDBG = false;
+    private static final boolean DBG = true;
+    private static final boolean VDBG = true;
 
     private static final Class[] sMessageClasses = {
             Tethering.class, TetherMasterSM.class, IpServer.class
@@ -234,6 +236,7 @@ public class Tethering {
     private final UserManager mUserManager;
     private final BpfCoordinator mBpfCoordinator;
     private final PrivateAddressCoordinator mPrivateAddressCoordinator;
+    private final TetheringMetrics mTetheringMetrics = new TetheringMetrics();
     private int mActiveDataSubId = INVALID_SUBSCRIPTION_ID;
     // All the usage of mTetheringEventCallback should run in the same thread.
     private ITetheringEventCallback mTetheringEventCallback = null;
@@ -805,13 +808,18 @@ public class Tethering {
             for (int i = 0; i < mTetherStates.size(); i++) {
                 TetherState tetherState = mTetherStates.valueAt(i);
                 String iface = mTetherStates.keyAt(i);
+                final int interfaceType = ifaceNameToType(iface);
+                Log.e(TAG, "Wayne downstream = " + interfaceType );
                 if (tetherState.lastError != TETHER_ERROR_NO_ERROR) {
                     erroredList.add(iface);
                     lastErrorList.add(tetherState.lastError);
+                    mTetheringMetrics.statsWrite(interfaceType, tetherState.lastError);
                 } else if (tetherState.lastState == IpServer.STATE_AVAILABLE) {
                     availableList.add(iface);
+                    lastErrorList.add(tetherState.lastError);
                 } else if (tetherState.lastState == IpServer.STATE_LOCAL_ONLY) {
                     localOnlyList.add(iface);
+                    lastErrorList.add(tetherState.lastError);
                 } else if (tetherState.lastState == IpServer.STATE_TETHERED) {
                     if (cfg.isUsb(iface)) {
                         downstreamTypesMask |= (1 << TETHERING_USB);
@@ -821,7 +829,17 @@ public class Tethering {
                         downstreamTypesMask |= (1 << TETHERING_BLUETOOTH);
                     }
                     tetherList.add(iface);
+                    lastErrorList.add(tetherState.lastError);
+                    mTetheringMetrics.statsWrite(interfaceType, tetherState.lastError);
                 }
+            }
+            if (mTetherUpstream != null) {
+            final ConnectivityManager connMgr = (ConnectivityManager) mContext.getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+            final NetworkCapabilities nc = (NetworkCapabilities) connMgr.getNetworkCapabilities(mTetherUpstream);
+            Log.e(TAG, "Wayne upstream length: " + nc.getTransportTypes().length);
+            if (nc.getTransportTypes().length > 0)
+                Log.e(TAG, "Wayne upstream = " + nc.getTransportTypes()[0]);
             }
         }
 
@@ -845,11 +863,12 @@ public class Tethering {
         mContext.sendStickyBroadcastAsUser(bcast, UserHandle.ALL);
         if (DBG) {
             Log.d(TAG, String.format(
-                    "sendTetherStateChangedBroadcast %s=[%s] %s=[%s] %s=[%s] %s=[%s]",
+                    "sendTetherStateChangedBroadcast %s=[%s] %s=[%s] %s=[%s] %s=[%s] %s=[%s]",
                     "avail", TextUtils.join(",", availableList),
                     "local_only", TextUtils.join(",", localOnlyList),
                     "tether", TextUtils.join(",", tetherList),
-                    "error", TextUtils.join(",", erroredList)));
+                    "error", TextUtils.join(",", erroredList),
+                    "lasterror", TextUtils.join(",", lastErrorList)));
         }
 
         mNotificationUpdater.onDownstreamChanged(downstreamTypesMask);

@@ -117,8 +117,8 @@ public class IpServer extends StateMachine {
     private static final MacAddress NULL_MAC_ADDRESS = MacAddress.fromString("00:00:00:00:00:00");
 
     private static final String TAG = "IpServer";
-    private static final boolean DBG = false;
-    private static final boolean VDBG = false;
+    private static final boolean DBG = true;
+    private static final boolean VDBG = true;
     private static final Class[] sMessageClasses = {
             IpServer.class
     };
