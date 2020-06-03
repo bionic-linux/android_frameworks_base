@@ -16,6 +16,24 @@
       "revId": "b9911aa76bcb633b4c04a774f01d1575db30986d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4cfd533_4c726236",
+        "filename": "test-runner/tests/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-06-03T02:12:00Z",
+      "side": 1,
+      "message": "That is because, as we discussed, explicit dependency to the internal of java_sdk_library is bad and therefore it should be banned.",
+      "parentUuid": "b0077d6e_e7279181",
+      "revId": "b9911aa76bcb633b4c04a774f01d1575db30986d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
