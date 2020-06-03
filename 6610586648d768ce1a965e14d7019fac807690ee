@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ce0437_711ffa2d",
+        "filename": "core/java/com/android/internal/os/KernelCpuUidBpfMapReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115183
+      },
+      "writtenOn": "2020-06-03T21:40:54Z",
+      "side": 1,
+      "message": "I think the solution is to try to insert startUid and endUid right before this line, i.e.:\nmData.put(startUid, null);\nmData.put(endUid, null);\n\nOtherwise removeUidsInRange(1000, 2000) does nothing if 1000 and 2000 are absent, even if many uids between them are present and ought to be removed",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 11
+      },
+      "revId": "6610586648d768ce1a965e14d7019fac807690ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
