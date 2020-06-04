@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33139eb4_a538d153",
+        "filename": "services/core/java/com/android/server/am/AppErrors.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2020-06-04T18:21:05Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be the right place. Anyway, it has been fixed in a previous CL",
+      "revId": "70ef1064e6dde739906eef0beac4f1835ff0ee23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
