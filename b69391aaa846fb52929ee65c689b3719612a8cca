@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa071aa2_be368af3",
+        "filename": "core/java/com/android/internal/os/KernelCpuUidBpfMapReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115183
+      },
+      "writtenOn": "2020-06-04T23:51:24Z",
+      "side": 1,
+      "message": "In this case I think a firstIndex of -1 is passed to removeAtRange (and the same is true for lastIndex in the lastIndex \u003c 0 case below)",
+      "range": {
+        "startLine": 98,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 17
+      },
+      "revId": "b69391aaa846fb52929ee65c689b3719612a8cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

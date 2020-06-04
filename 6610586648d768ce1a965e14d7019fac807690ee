@@ -46,6 +46,30 @@
       "revId": "6610586648d768ce1a965e14d7019fac807690ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8922214a_31b789c8",
+        "filename": "core/java/com/android/internal/os/KernelCpuUidBpfMapReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115183
+      },
+      "writtenOn": "2020-06-04T23:51:24Z",
+      "side": 1,
+      "message": "Agreed, that additional check makes sense to me",
+      "parentUuid": "e0077436_7df9a1cb",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 11
+      },
+      "revId": "6610586648d768ce1a965e14d7019fac807690ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
