@@ -22,6 +22,30 @@
       "revId": "6610586648d768ce1a965e14d7019fac807690ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0077436_7df9a1cb",
+        "filename": "core/java/com/android/internal/os/KernelCpuUidBpfMapReader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1409599
+      },
+      "writtenOn": "2020-06-04T12:45:17Z",
+      "side": 1,
+      "message": "You\u0027re absolutely right. Done.\nI\u0027m still skipping the removal if endUid \u003c startUid or startUid \u003c 0.\nI think it\u0027s a sane check, or do you think we should be more flexible and go for a `startUid \u003d max(0, startUid)?",
+      "parentUuid": "d9ce0437_711ffa2d",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 11
+      },
+      "revId": "6610586648d768ce1a965e14d7019fac807690ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
