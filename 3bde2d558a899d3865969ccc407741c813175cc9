@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76d7a2aa_f5a5fbb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-06-08T14:54:20Z",
+      "side": 1,
+      "message": "I recommend you adopt the habit of giving the same logical change the same Change-Id, to avoid needing N different merged-in clauses.",
+      "range": {
+        "startLine": 15,
+        "startChar": 52,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "3bde2d558a899d3865969ccc407741c813175cc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
