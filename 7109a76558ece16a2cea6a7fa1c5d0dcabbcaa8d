@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0baf22ee_94804c09",
+        "filename": "services/net/java/android/net/util/DhcpResultsCompatUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-08T09:57:42Z",
+      "side": 1,
+      "message": "Nit : @Nullable. Also document this only ever returns null if the argument is null.\nMaybe even document it with Kotlin syntax (which has no Java equivalent) :\n\n  contract {\n    returns(null) implies p \u003d\u003d null\n    returnsNotNull() implies p !\u003d null\n  }",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "7109a76558ece16a2cea6a7fa1c5d0dcabbcaa8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
