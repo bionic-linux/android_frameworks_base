@@ -22,6 +22,30 @@
       "revId": "b69391aaa846fb52929ee65c689b3719612a8cca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e839e6c6_7e6cfb0e",
+        "filename": "core/java/com/android/internal/os/KernelCpuUidBpfMapReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1409599
+      },
+      "writtenOn": "2020-06-08T08:57:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa071aa2_be368af3",
+      "range": {
+        "startLine": 98,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 17
+      },
+      "revId": "b69391aaa846fb52929ee65c689b3719612a8cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
