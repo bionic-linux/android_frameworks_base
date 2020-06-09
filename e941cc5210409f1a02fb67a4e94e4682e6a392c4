@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af0a878b_9305f1c5",
+        "filename": "services/net/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-09T06:47:20Z",
+      "side": 1,
+      "message": "of ? Not sure what you mean ; IIUC frameworks/libs/net should not depend of networkstack-client. Did you mean we should make network-stack-client depend of the incarnation of this library after it moves to frameworks/libs/net ?",
+      "range": {
+        "startLine": 24,
+        "startChar": 62,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "e941cc5210409f1a02fb67a4e94e4682e6a392c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
