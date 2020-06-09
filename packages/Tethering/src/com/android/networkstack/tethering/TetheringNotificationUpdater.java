@@ -31,6 +31,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.NetworkCapabilities;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -94,6 +95,7 @@ public class TetheringNotificationUpdater {
     private final NotificationManager mNotificationManager;
     private final NotificationChannel mChannel;
     private final Handler mHandler;
+    private final Dependencies mDeps;
 
     // WARNING : the constructor is called on a different thread. Thread safety therefore
     // relies on these values being initialized to 0, false or null, and not any other value. If you
@@ -137,9 +139,39 @@ public class TetheringNotificationUpdater {
         sCarrierIdToMccMnc.put(VERIZON_CARRIER_ID, new MccMncOverrideInfo("20404", 311, 480));
     }
 
+    /**
+     * Dependencies of TetheringNotificationUpdater, for injection in tests.
+     */
+    @VisibleForTesting
+    static class Dependencies {
+        /**
+         * Retrieve a PendingIntent that will start a new activity.
+         */
+        public PendingIntent getActivityPendingIntent(@NonNull final Context context,
+                final int requestCode, @NonNull final Intent intent, final int flags,
+                @Nullable Bundle options) {
+            return PendingIntent.getActivity(context, requestCode, intent, flags, options);
+        }
+
+        /**
+         * Retrieve a PendingIntent that will perform a broadcast.
+         */
+        public PendingIntent getBroadcastPendingIntent(@NonNull final Context context,
+                final int requestCode, @NonNull final Intent intent, final int flags) {
+            return PendingIntent.getBroadcast(context, requestCode, intent, flags);
+        }
+    }
+
     public TetheringNotificationUpdater(@NonNull final Context context,
             @NonNull final Looper looper) {
+        this(context, looper, new Dependencies());
+    }
+
+    @VisibleForTesting
+    TetheringNotificationUpdater(@NonNull final Context context,
+            @NonNull final Looper looper, @NonNull final Dependencies deps) {
         mContext = context;
+        mDeps = deps;
         mNotificationManager = (NotificationManager) context.createContextAsUser(UserHandle.ALL, 0)
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         mChannel = new NotificationChannel(
@@ -269,7 +301,7 @@ public class TetheringNotificationUpdater {
         final String message = res.getString(R.string.disable_tether_notification_message);
         if (isEmpty(title) || isEmpty(message)) return;
 
-        final PendingIntent pi = PendingIntent.getActivity(
+        final PendingIntent pi = mDeps.getActivityPendingIntent(
                 mContext.createContextAsUser(UserHandle.CURRENT, 0 /* flags */),
                 0 /* requestCode */,
                 new Intent(Settings.ACTION_TETHER_SETTINGS)
@@ -291,7 +323,7 @@ public class TetheringNotificationUpdater {
 
         final Intent intent = new Intent(ACTION_DISABLE_TETHERING);
         intent.setPackage(mContext.getPackageName());
-        final PendingIntent pi = PendingIntent.getBroadcast(
+        final PendingIntent pi = mDeps.getBroadcastPendingIntent(
                 mContext.createContextAsUser(UserHandle.CURRENT, 0 /* flags */),
                 0 /* requestCode */,
                 intent,
@@ -313,7 +345,7 @@ public class TetheringNotificationUpdater {
         final String message = res.getString(R.string.upstream_roaming_notification_message);
         if (isEmpty(title) || isEmpty(message)) return NO_NOTIFY;
 
-        final PendingIntent pi = PendingIntent.getActivity(
+        final PendingIntent pi = mDeps.getActivityPendingIntent(
                 mContext.createContextAsUser(UserHandle.CURRENT, 0 /* flags */),
                 0 /* requestCode */,
                 new Intent(Settings.ACTION_TETHER_SETTINGS)

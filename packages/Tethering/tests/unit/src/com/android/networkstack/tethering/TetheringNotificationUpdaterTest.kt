@@ -18,7 +18,9 @@ package com.android.networkstack.tethering
 
 import android.app.Notification
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -42,6 +44,7 @@ import com.android.networkstack.tethering.TetheringNotificationUpdater.NO_UPSTRE
 import com.android.networkstack.tethering.TetheringNotificationUpdater.RESTRICTED_NOTIFICATION_ID
 import com.android.networkstack.tethering.TetheringNotificationUpdater.ROAMING_NOTIFICATION_ID
 import com.android.networkstack.tethering.TetheringNotificationUpdater.VERIZON_CARRIER_ID
+import com.android.networkstack.tethering.TetheringNotificationUpdater.Dependencies
 import com.android.testutils.waitForIdle
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -53,6 +56,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.eq
+import org.mockito.ArgumentMatchers.intThat
 import org.mockito.Mock
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.mock
@@ -82,6 +86,7 @@ class TetheringNotificationUpdaterTest {
     @Mock private lateinit var notificationManager: NotificationManager
     @Mock private lateinit var telephonyManager: TelephonyManager
     @Mock private lateinit var testResources: Resources
+    @Mock private lateinit var deps: Dependencies
 
     // lateinit for these classes under test, as they should be reset to a different instance for
     // every test but should always be initialized before use (or the test should crash).
@@ -102,8 +107,8 @@ class TetheringNotificationUpdaterTest {
                 else super.getSystemService(name)
     }
 
-    private inner class WrappedNotificationUpdater(c: Context, looper: Looper)
-        : TetheringNotificationUpdater(c, looper) {
+    private inner class WrappedNotificationUpdater(c: Context, looper: Looper, deps: Dependencies)
+        : TetheringNotificationUpdater(c, looper, deps) {
         override fun getResourcesForSubId(c: Context, subId: Int) =
                 if (subId == TEST_SUBID) testResources else super.getResourcesForSubId(c, subId)
     }
@@ -137,13 +142,25 @@ class TetheringNotificationUpdaterTest {
                 .getSystemService(Context.NOTIFICATION_SERVICE)
         fakeTetheringThread = HandlerThread(this::class.java.simpleName)
         fakeTetheringThread.start()
-        notificationUpdater = WrappedNotificationUpdater(context, fakeTetheringThread.looper)
+        notificationUpdater = WrappedNotificationUpdater(context, fakeTetheringThread.looper, deps)
         setupResources()
     }
 
     @After
     fun tearDown() {
         fakeTetheringThread.quitSafely()
+    }
+
+    private fun verifyPendingIntentWithActivity() {
+        verify(deps, times(1)).getActivityPendingIntent(any(), anyInt(), any(Intent::class.java),
+                intThat { it and PendingIntent.FLAG_IMMUTABLE != 0 }, any())
+        reset(deps)
+    }
+
+    private fun verifyPendingIntentWithBroadcast() {
+        verify(deps, times(1)).getBroadcastPendingIntent(any(), anyInt(), any(Intent::class.java),
+                intThat { it and PendingIntent.FLAG_IMMUTABLE != 0 })
+        reset(deps)
     }
 
     private fun Notification.title() = this.extras.getString(Notification.EXTRA_TITLE)
@@ -182,6 +199,7 @@ class TetheringNotificationUpdaterTest {
 
         // User restrictions on. Show restricted notification.
         notificationUpdater.notifyTetheringDisabledByRestriction()
+        verifyPendingIntentWithActivity()
         verifyNotification(NOTIFICATION_ICON_ID, TEST_DISALLOW_TITLE, TEST_DISALLOW_MESSAGE,
                 RESTRICTED_NOTIFICATION_ID)
 
@@ -195,6 +213,7 @@ class TetheringNotificationUpdaterTest {
 
         // User restrictions on again. Show restricted notification.
         notificationUpdater.notifyTetheringDisabledByRestriction()
+        verifyPendingIntentWithActivity()
         verifyNotification(NOTIFICATION_ICON_ID, TEST_DISALLOW_TITLE, TEST_DISALLOW_MESSAGE,
                 RESTRICTED_NOTIFICATION_ID)
     }
@@ -245,6 +264,7 @@ class TetheringNotificationUpdaterTest {
         // There is no upstream. Show no upstream notification.
         notificationUpdater.onUpstreamCapabilitiesChanged(null)
         notificationUpdater.handler.waitForDelayedMessage(EVENT_SHOW_NO_UPSTREAM, TIMEOUT_MS)
+        verifyPendingIntentWithBroadcast()
         verifyNotification(NOTIFICATION_ICON_ID, TEST_NO_UPSTREAM_TITLE, TEST_NO_UPSTREAM_MESSAGE,
                 NO_UPSTREAM_NOTIFICATION_ID)
 
@@ -259,6 +279,7 @@ class TetheringNotificationUpdaterTest {
         // No upstream again. Show no upstream notification.
         notificationUpdater.onUpstreamCapabilitiesChanged(null)
         notificationUpdater.handler.waitForDelayedMessage(EVENT_SHOW_NO_UPSTREAM, TIMEOUT_MS)
+        verifyPendingIntentWithBroadcast()
         verifyNotification(NOTIFICATION_ICON_ID, TEST_NO_UPSTREAM_TITLE, TEST_NO_UPSTREAM_MESSAGE,
                 NO_UPSTREAM_NOTIFICATION_ID)
 
@@ -315,6 +336,7 @@ class TetheringNotificationUpdaterTest {
 
         // Upstream capabilities changed to roaming state. Show roaming notification.
         notificationUpdater.onUpstreamCapabilitiesChanged(ROAMING_CAPABILITIES)
+        verifyPendingIntentWithActivity()
         verifyNotification(NOTIFICATION_ICON_ID, TEST_ROAMING_TITLE, TEST_ROAMING_MESSAGE,
                 ROAMING_NOTIFICATION_ID)
 
@@ -328,6 +350,7 @@ class TetheringNotificationUpdaterTest {
 
         // Upstream capabilities changed to roaming state again. Show roaming notification.
         notificationUpdater.onUpstreamCapabilitiesChanged(ROAMING_CAPABILITIES)
+        verifyPendingIntentWithActivity()
         verifyNotification(NOTIFICATION_ICON_ID, TEST_ROAMING_TITLE, TEST_ROAMING_MESSAGE,
                 ROAMING_NOTIFICATION_ID)
 
@@ -335,6 +358,7 @@ class TetheringNotificationUpdaterTest {
         notificationUpdater.onUpstreamCapabilitiesChanged(null)
         notificationUpdater.handler.waitForDelayedMessage(EVENT_SHOW_NO_UPSTREAM, TIMEOUT_MS)
         verifyNotificationCancelled(listOf(ROAMING_NOTIFICATION_ID), false)
+        verifyPendingIntentWithBroadcast()
         verifyNotification(NOTIFICATION_ICON_ID, TEST_NO_UPSTREAM_TITLE, TEST_NO_UPSTREAM_MESSAGE,
                 NO_UPSTREAM_NOTIFICATION_ID)
 
@@ -346,6 +370,7 @@ class TetheringNotificationUpdaterTest {
         notificationUpdater.onDownstreamChanged(WIFI_MASK)
         notificationUpdater.handler.waitForDelayedMessage(EVENT_SHOW_NO_UPSTREAM, TIMEOUT_MS)
         verifyNotificationCancelled(listOf(ROAMING_NOTIFICATION_ID), false)
+        verifyPendingIntentWithBroadcast()
         verifyNotification(NOTIFICATION_ICON_ID, TEST_NO_UPSTREAM_TITLE, TEST_NO_UPSTREAM_MESSAGE,
                 NO_UPSTREAM_NOTIFICATION_ID)
 
