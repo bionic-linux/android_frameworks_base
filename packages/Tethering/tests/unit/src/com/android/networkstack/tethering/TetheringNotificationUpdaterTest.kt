@@ -24,6 +24,7 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -58,6 +59,7 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.argThat
 import org.mockito.ArgumentMatchers.eq
 import org.mockito.ArgumentMatchers.intThat
 import org.mockito.Mock
@@ -188,7 +190,12 @@ class TetheringNotificationUpdaterTest {
         assertEquals(text, notification.text())
 
         verify(amService).getIntentSender(eq(intentSenderType), any(), any(), any(), anyInt(),
-                any(), any(), intThat { it and PendingIntent.FLAG_IMMUTABLE != 0 }, any(), anyInt())
+                // Only activity pending intent needs set FLAG_ACTIVITY_NEW_TASK to the intent.
+                argThat { when (intentSenderType) {
+                    INTENT_SENDER_ACTIVITY -> it[0].flags and Intent.FLAG_ACTIVITY_NEW_TASK != 0
+                    else -> true
+                } },
+                any(), intThat { it and PendingIntent.FLAG_IMMUTABLE != 0 }, any(), anyInt())
 
         reset(notificationManager)
         reset(amService)
