@@ -56,6 +56,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.eq
+import org.mockito.ArgumentMatchers.argThat
 import org.mockito.ArgumentMatchers.intThat
 import org.mockito.Mock
 import org.mockito.Mockito.doReturn
@@ -152,7 +153,8 @@ class TetheringNotificationUpdaterTest {
     }
 
     private fun verifyPendingIntentWithActivity() {
-        verify(deps, times(1)).getActivityPendingIntent(any(), anyInt(), any(Intent::class.java),
+        verify(deps, times(1)).getActivityPendingIntent(any(), anyInt(),
+                argThat { it.flags and Intent.FLAG_ACTIVITY_NEW_TASK != 0 },
                 intThat { it and PendingIntent.FLAG_IMMUTABLE != 0 }, any())
         reset(deps)
     }
