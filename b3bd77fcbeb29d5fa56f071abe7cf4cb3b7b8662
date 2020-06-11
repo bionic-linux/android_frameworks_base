@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98e9eaed_7cdf19b3",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4262,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-11T11:45:00Z",
+      "side": 0,
+      "message": "Can you mention this in the commit message? Right now the commit message says that this is a doc-only change.",
+      "range": {
+        "startLine": 4262,
+        "startChar": 8,
+        "endLine": 4262,
+        "endChar": 45
+      },
+      "revId": "b3bd77fcbeb29d5fa56f071abe7cf4cb3b7b8662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
