@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37649226_07b0077e",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-11T03:16:00Z",
+      "side": 1,
+      "message": "tap to space",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 1
+      },
+      "revId": "08eac001d970674871ad9103bf358300e0ae09b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b17e75_bc82bcb8",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-11T03:16:00Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 819,
+        "startChar": 20,
+        "endLine": 819,
+        "endChar": 61
+      },
+      "revId": "08eac001d970674871ad9103bf358300e0ae09b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaddd88_fc0084d8",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-11T03:16:00Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 822,
+        "startChar": 20,
+        "endLine": 822,
+        "endChar": 61
+      },
+      "revId": "08eac001d970674871ad9103bf358300e0ae09b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c67a53_df48bbce",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-11T03:16:00Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 832,
+        "startChar": 20,
+        "endLine": 832,
+        "endChar": 61
+      },
+      "revId": "08eac001d970674871ad9103bf358300e0ae09b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e356b0f4_abd810eb",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/Tethering.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-11T03:16:00Z",
+      "side": 1,
+      "message": "Use tetherstate.ipServer.interfaceType() instead.",
+      "range": {
+        "startLine": 833,
+        "startChar": 49,
+        "endLine": 833,
+        "endChar": 62
+      },
+      "revId": "08eac001d970674871ad9103bf358300e0ae09b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
