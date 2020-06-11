@@ -22,6 +22,30 @@
       "revId": "7109a76558ece16a2cea6a7fa1c5d0dcabbcaa8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae4e732_321ccc75",
+        "filename": "services/net/java/android/net/util/DhcpResultsCompatUtil.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-06-11T06:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0baf22ee_94804c09",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "7109a76558ece16a2cea6a7fa1c5d0dcabbcaa8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
