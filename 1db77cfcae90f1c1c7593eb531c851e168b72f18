@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dae4985_2382149e",
+        "filename": "test-runner/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2020-06-11T19:59:36Z",
+      "side": 1,
+      "message": "Is it possible to use static_libs: [\"android.test.runner.implementation\"] instead?",
+      "revId": "1db77cfcae90f1c1c7593eb531c851e168b72f18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41624c81_bda6e671",
+        "filename": "test-runner/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2020-06-11T19:59:36Z",
+      "side": 1,
+      "message": "This should go in the java_library",
+      "revId": "1db77cfcae90f1c1c7593eb531c851e168b72f18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3deb9d91_c4372c3c",
+        "filename": "test-runner/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2020-06-11T19:59:36Z",
+      "side": 1,
+      "message": "This is the default.",
+      "revId": "1db77cfcae90f1c1c7593eb531c851e168b72f18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
