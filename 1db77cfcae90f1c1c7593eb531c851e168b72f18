@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebd085c0_8980d22a",
+        "filename": "test-runner/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-06-12T02:09:39Z",
+      "side": 1,
+      "message": "No it needs sources for API processing.",
+      "parentUuid": "6dae4985_2382149e",
+      "revId": "1db77cfcae90f1c1c7593eb531c851e168b72f18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41624c81_bda6e671",
         "filename": "test-runner/Android.bp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "151538df_a2bdc9c7",
+        "filename": "test-runner/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-06-12T02:09:39Z",
+      "side": 1,
+      "message": "no longer needed",
+      "parentUuid": "41624c81_bda6e671",
+      "revId": "1db77cfcae90f1c1c7593eb531c851e168b72f18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3deb9d91_c4372c3c",
         "filename": "test-runner/Android.bp",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "1db77cfcae90f1c1c7593eb531c851e168b72f18",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb5d593_aa82cf92",
+        "filename": "test-runner/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-06-12T02:09:39Z",
+      "side": 1,
+      "message": "ack. (but no longer needed)",
+      "parentUuid": "3deb9d91_c4372c3c",
+      "revId": "1db77cfcae90f1c1c7593eb531c851e168b72f18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
