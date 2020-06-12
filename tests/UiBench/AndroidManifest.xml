@@ -26,7 +26,8 @@
         <!-- Root navigation activity -->
         <activity
             android:name=".MainActivity"
-            android:label="UiBench">
+            android:label="UiBench"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -37,7 +38,8 @@
         <!-- General -->
         <activity
             android:name=".DialogListActivity"
-            android:label="General/Dialog List" >
+            android:label="General/Dialog List"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -45,7 +47,8 @@
         </activity>
         <activity
             android:name=".GlTextureViewActivity"
-            android:label="General/GL TextureView" >
+            android:label="General/GL TextureView"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -53,7 +56,8 @@
         </activity>
         <activity
             android:name=".FullscreenOverdrawActivity"
-            android:label="General/Fullscreen Overdraw" >
+            android:label="General/Fullscreen Overdraw"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -61,7 +65,8 @@
         </activity>
         <activity
             android:name=".InvalidateActivity"
-            android:label="General/Invalidate" >
+            android:label="General/Invalidate"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -69,7 +74,8 @@
         </activity>
         <activity
             android:name=".InvalidateTreeActivity"
-            android:label="General/Invalidate Tree" >
+            android:label="General/Invalidate Tree"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -77,7 +83,8 @@
         </activity>
         <activity
             android:name=".ResizeHWLayerActivity"
-            android:label="General/Resize HW Layer" >
+            android:label="General/Resize HW Layer"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -85,7 +92,8 @@
         </activity>
         <activity
             android:name=".TrivialAnimationActivity"
-            android:label="General/Trivial Animation" >
+            android:label="General/Trivial Animation"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -94,7 +102,8 @@
         <activity
             android:name=".TrivialAnimationActivityWideGamut"
             android:label="General/Trivial Animation (Wide Gamut)"
-            android:colorMode="wideColorGamut">
+            android:colorMode="wideColorGamut"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -102,7 +111,8 @@
         </activity>
         <activity
             android:name=".TrivialListActivity"
-            android:label="General/Trivial ListView" >
+            android:label="General/Trivial ListView"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -110,7 +120,8 @@
         </activity>
         <activity
             android:name=".FadingEdgeListActivity"
-            android:label="General/Fading Edge ListView" >
+            android:label="General/Fading Edge ListView"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -118,7 +129,8 @@
         </activity>
         <activity
             android:name=".SaveLayerInterleaveActivity"
-            android:label="General/SaveLayer Animation" >
+            android:label="General/SaveLayer Animation"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -127,7 +139,8 @@
         <activity
             android:name=".ClippedListActivity"
             android:label="General/Clipped ListView"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -135,7 +148,8 @@
         </activity>
         <activity
             android:name=".TrivialRecyclerViewActivity"
-            android:label="General/Trivial RecyclerView" >
+            android:label="General/Trivial RecyclerView"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -143,7 +157,8 @@
         </activity>
         <activity
             android:name=".SlowBindRecyclerViewActivity"
-            android:label="General/Slow Bind RecyclerView" >
+            android:label="General/Slow Bind RecyclerView"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -151,7 +166,8 @@
         </activity>
         <activity
             android:name=".SlowNestedRecyclerViewActivity"
-            android:label="General/Slow Nested RecyclerView" >
+            android:label="General/Slow Nested RecyclerView"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -159,7 +175,8 @@
         </activity>
         <activity
             android:name=".ActivityTransition"
-            android:label="Transitions/Activity Transition" >
+            android:label="Transitions/Activity Transition"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -167,7 +184,8 @@
         </activity>
         <activity
             android:name=".ActivityTransitionDetails"
-            android:label="Transitions/Activity Transition " >
+            android:label="Transitions/Activity Transition"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <!-- Part of ActivityTransition test above, so not in TEST category -->
@@ -177,7 +195,8 @@
         <!-- Rendering -->
         <activity
             android:name=".BitmapUploadActivity"
-            android:label="Rendering/Bitmap Upload" >
+            android:label="Rendering/Bitmap Upload"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -185,7 +204,8 @@
         </activity>
         <activity
             android:name=".ShadowGridActivity"
-            android:label="Rendering/Shadow Grid" >
+            android:label="Rendering/Shadow Grid"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -193,7 +213,8 @@
         </activity>
         <activity
             android:name=".RenderingJitter"
-            android:label="Rendering/Jitter" >
+            android:label="Rendering/Jitter"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -203,7 +224,8 @@
         <!-- Inflation -->
         <activity
             android:name=".InflatingListActivity"
-            android:label="Inflation/Inflating ListView" >
+            android:label="Inflation/Inflating ListView"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -213,7 +235,8 @@
         <activity-alias
             android:name=".InflatingEmojiListActivity"
             android:label="Inflation/Inflating ListView with Emoji"
-            android:targetActivity=".InflatingListActivity">
+            android:targetActivity=".InflatingListActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -223,7 +246,8 @@
         <activity-alias
             android:name=".InflatingHanListActivity"
             android:label="Inflation/Inflating ListView with Han Characters"
-            android:targetActivity=".InflatingListActivity">
+            android:targetActivity=".InflatingListActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -233,7 +257,8 @@
         <activity-alias
             android:name=".InflatingLongStringListActivity"
             android:label="Inflation/Inflating ListView with long string"
-            android:targetActivity=".InflatingListActivity">
+            android:targetActivity=".InflatingListActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -243,7 +268,8 @@
         <!-- Text -->
         <activity
             android:name=".EditTextTypeActivity"
-            android:label="Text/EditText Typing" >
+            android:label="Text/EditText Typing"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -251,7 +277,8 @@
         </activity>
         <activity
             android:name=".TextCacheLowHitrateActivity"
-            android:label="Text/Layout Cache Low Hitrate" >
+            android:label="Text/Layout Cache Low Hitrate"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -259,7 +286,8 @@
         </activity>
         <activity
             android:name=".TextCacheHighHitrateActivity"
-            android:label="Text/Layout Cache High Hitrate" >
+            android:label="Text/Layout Cache High Hitrate"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -268,8 +296,9 @@
 
         <!-- WebView -->
         <activity
-                android:name=".ScrollableWebViewActivity"
-                android:label="WebView/Scrollable WebView" >
+            android:name=".ScrollableWebViewActivity"
+            android:label="WebView/Scrollable WebView"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -280,7 +309,8 @@
         <activity
             android:name=".NavigationDrawerActivity"
             android:label="Navigation Drawer Activity"
-            android:theme="@style/NoActionBar">
+            android:theme="@style/NoActionBar"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -290,7 +320,8 @@
         <!-- Notification Shade -->
         <activity
             android:name=".NotificationShadeActivity"
-            android:label="Notification Shade">
+            android:label="Notification Shade"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
@@ -300,7 +331,8 @@
         <activity
             android:name=".leanback.BrowseActivity"
             android:theme="@style/Theme.Leanback.Browse"
-            android:label="Leanback/Browse Fragment" >
+            android:label="Leanback/Browse Fragment"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.android.test.uibench.TEST" />
