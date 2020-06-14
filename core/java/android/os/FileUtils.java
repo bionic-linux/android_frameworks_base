@@ -1261,15 +1261,17 @@ public final class FileUtils {
      */
     public static long roundStorageSize(long size) {
         long val = 1;
-        long pow = 1;
-        while ((val * pow) < size) {
+        long pow_2 = 1;
+        long pow_10 = 1;
+        while ((val * pow_2) < size) {
             val <<= 1;
             if (val > 512) {
                 val = 1;
-                pow *= 1000;
+                pow_2 *= 1024;
+                pow_10 *= 1000;
             }
         }
-        return val * pow;
+        return val * pow_10;
     }
 
     /**
