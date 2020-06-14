@@ -37,6 +37,7 @@ import static android.net.netlink.StructNdMsg.NUD_FAILED;
 import static android.net.netlink.StructNdMsg.NUD_REACHABLE;
 import static android.net.netlink.StructNdMsg.NUD_STALE;
 import static android.net.shared.Inet4AddressUtils.intToInet4AddressHTH;
+import static android.system.OsConstants.EBUSY;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -46,6 +47,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doAnswer;
@@ -72,6 +75,7 @@ import android.net.MacAddress;
 import android.net.RouteInfo;
 import android.net.TetherOffloadRuleParcel;
 import android.net.TetherStatsParcel;
+import android.net.dhcp.DhcpServerCallbacks;
 import android.net.dhcp.DhcpServingParamsParcel;
 import android.net.dhcp.IDhcpEventCallbacks;
 import android.net.dhcp.IDhcpServer;
@@ -85,6 +89,7 @@ import android.net.util.PrefixUtils;
 import android.net.util.SharedLog;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.os.ServiceSpecificException;
 import android.os.test.TestLooper;
 import android.text.TextUtils;
 
@@ -930,6 +935,114 @@ public class IpServerTest {
         final RaParams cellularParams = raParamsCaptor.getValue();
         assertEquals(63, cellularParams.hopLimit);
         reset(mRaDaemon);
+    }
+
+    @Test
+    public void testRetryNetworkAddInterface() throws Exception {
+        final IpServer.Dependencies testDependencies = new IpServer.Dependencies() {
+            @Override
+            public void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
+                    DhcpServerCallbacks cb) { }
+        };
+
+        // Test throwing ServiceSpecificException with EBUSY failure.
+        doThrow(new ServiceSpecificException(EBUSY)).when(mNetd).networkAddInterface(
+                INetd.LOCAL_NET_ID, IFACE_NAME);
+        try {
+            testDependencies.retryNetworkAddInterface(mNetd, IFACE_NAME, 10, 0);
+            fail("Expect throw ServiceSpecificException");
+        } catch (ServiceSpecificException e) {
+            assertEquals(e.errorCode, EBUSY);
+        }
+        verify(mNetd, times(10)).networkAddInterface(INetd.LOCAL_NET_ID, IFACE_NAME);
+        reset(mNetd);
+
+        // Test throwing ServiceSpecificException with unexpected failure.
+        final int testError = 999;
+        doThrow(new ServiceSpecificException(testError)).when(mNetd).networkAddInterface(
+                INetd.LOCAL_NET_ID, IFACE_NAME);
+        try {
+            testDependencies.retryNetworkAddInterface(mNetd, IFACE_NAME, 10, 0);
+            fail("Expect throw ServiceSpecificException");
+        } catch (ServiceSpecificException e) {
+            assertEquals(e.errorCode, testError);
+        }
+        verify(mNetd).networkAddInterface(INetd.LOCAL_NET_ID, IFACE_NAME);
+        reset(mNetd);
+
+        // Test throwing RemoteException.
+        doThrow(RemoteException.class).when(mNetd).networkAddInterface(INetd.LOCAL_NET_ID,
+                IFACE_NAME);
+        try {
+            testDependencies.retryNetworkAddInterface(mNetd, IFACE_NAME, 10, 0);
+            fail("Expect throw RemoteException");
+        } catch (RemoteException e) { }
+        verify(mNetd).networkAddInterface(INetd.LOCAL_NET_ID, IFACE_NAME);
+        reset(mNetd);
+
+        // Test no exception.
+        testDependencies.retryNetworkAddInterface(mNetd, IFACE_NAME, 10, 0);
+        verify(mNetd).networkAddInterface(INetd.LOCAL_NET_ID, IFACE_NAME);
+        reset(mNetd);
+    }
+
+    @Test
+    public void testNetworkAddInterfaceWithUnexpectedErrorCode() throws Exception {
+        initStateMachine(TETHERING_WIFI);
+
+        doThrow(new ServiceSpecificException(999 /* errorCode */)).when(mNetd).networkAddInterface(
+                INetd.LOCAL_NET_ID, IFACE_NAME);
+        verifyRetryNetworkAddInterface(false /* canTethered */);
+
+    }
+
+    @Test
+    public void testNetworkAddInterfaceFailure() throws Exception {
+        initStateMachine(TETHERING_WIFI);
+
+        doThrow(new ServiceSpecificException(EBUSY)).when(mDependencies).retryNetworkAddInterface(
+                eq(mNetd), eq(IFACE_NAME), anyInt(), anyLong());
+        doThrow(new ServiceSpecificException(EBUSY)).when(mNetd).networkAddInterface(
+                INetd.LOCAL_NET_ID, IFACE_NAME);
+        verifyRetryNetworkAddInterface(false /* canTethered */);
+    }
+
+    @Test
+    public void testNetworkAddInterface() throws Exception {
+        initStateMachine(TETHERING_WIFI);
+
+        doThrow(new ServiceSpecificException(EBUSY)).when(mNetd).networkAddInterface(
+                INetd.LOCAL_NET_ID, IFACE_NAME);
+        verifyRetryNetworkAddInterface(true /* canTethered */);
+    }
+
+    private void verifyRetryNetworkAddInterface(boolean canTethered) throws Exception {
+        dispatchCommand(IpServer.CMD_TETHER_REQUESTED, STATE_TETHERED);
+        InOrder inOrder = inOrder(mNetd, mCallback, mAddressCoordinator);
+        inOrder.verify(mAddressCoordinator).requestDownstreamAddress(any());
+        inOrder.verify(mNetd).interfaceSetCfg(argThat(cfg -> IFACE_NAME.equals(cfg.ifName)));
+        inOrder.verify(mNetd).tetherInterfaceAdd(IFACE_NAME);
+        inOrder.verify(mNetd).networkAddInterface(INetd.LOCAL_NET_ID, IFACE_NAME);
+
+        if (canTethered) {
+            inOrder.verify(mNetd, times(2)).networkAddRoute(eq(INetd.LOCAL_NET_ID), eq(IFACE_NAME),
+                    any(), any());
+            inOrder.verify(mCallback).updateInterfaceState(
+                    mIpServer, STATE_TETHERED, TETHER_ERROR_NO_ERROR);
+        } else {
+            inOrder.verify(mNetd, times(2)).interfaceSetCfg(
+                    argThat(cfg -> IFACE_NAME.equals(cfg.ifName)));
+            inOrder.verify(mCallback).updateInterfaceState(
+                    mIpServer, STATE_AVAILABLE, TETHER_ERROR_TETHER_IFACE_ERROR);
+        }
+
+        inOrder.verify(mCallback).updateLinkProperties(
+                eq(mIpServer), mLinkPropertiesCaptor.capture());
+        if (canTethered) {
+            assertIPv4AddressAndDirectlyConnectedRoute(mLinkPropertiesCaptor.getValue());
+        } else {
+            assertNoAddressesNorRoutes(mLinkPropertiesCaptor.getValue());
+        }
     }
 
     private void assertDhcpServingParams(final DhcpServingParamsParcel params,

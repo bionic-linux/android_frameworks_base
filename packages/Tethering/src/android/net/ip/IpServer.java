@@ -24,6 +24,7 @@ import static android.net.util.NetworkConstants.RFC7421_PREFIX_LENGTH;
 import static android.net.util.NetworkConstants.asByte;
 import static android.net.util.PrefixUtils.asIpPrefix;
 import static android.net.util.TetheringMessageBase.BASE_IPSERVER;
+import static android.system.OsConstants.EBUSY;
 import static android.system.OsConstants.RT_SCOPE_UNIVERSE;
 
 import android.net.INetd;
@@ -188,6 +189,32 @@ public class IpServer extends StateMachine {
         /** Create a DhcpServer instance to be used by IpServer. */
         public abstract void makeDhcpServer(String ifName, DhcpServingParamsParcel params,
                 DhcpServerCallbacks cb);
+
+        /** Retry Netd#networkAddInterface. */
+        public void retryNetworkAddInterface(final INetd netd, final String iface,
+                int pollingTimes, long pollingInterval)
+                throws ServiceSpecificException, RemoteException {
+            for (int i = 1; i <= pollingTimes; i++) {
+                try {
+                    Thread.sleep(pollingInterval);
+                } catch (InterruptedException e) {
+                    // Not much to do here.
+                }
+
+                try {
+                    netd.networkAddInterface(INetd.LOCAL_NET_ID, iface);
+                    return;
+                } catch (ServiceSpecificException se) {
+                    if (se.errorCode == EBUSY && i != pollingTimes) continue;
+
+                    Log.e(TAG, "Retry Netd#networkAddInterface failure: " + se);
+                    throw se;
+                } catch (RemoteException re) {
+                    Log.e(TAG, "Remote side failure: ", re);
+                    throw re;
+                }
+            }
+        }
     }
 
     // request from the user that it wants to tether
@@ -1080,7 +1107,19 @@ public class IpServer extends StateMachine {
             }
 
             try {
-                NetdUtils.tetherInterface(mNetd, mIfaceName, asIpPrefix(mIpv4Address));
+                mNetd.tetherInterfaceAdd(mIfaceName);
+
+                try {
+                    mNetd.networkAddInterface(INetd.LOCAL_NET_ID, mIfaceName);
+                } catch (ServiceSpecificException se) {
+                    if (se.errorCode != EBUSY) throw se;
+
+                    mDeps.retryNetworkAddInterface(mNetd, mIfaceName,
+                            10 /* pollingTimes */, 300L /* pollingInterval*/);
+                }
+                List<RouteInfo> routes = new ArrayList<>();
+                routes.add(new RouteInfo(asIpPrefix(mIpv4Address), null, mIfaceName, RTN_UNICAST));
+                RouteUtils.addRoutesToLocalNetwork(mNetd, mIfaceName, routes);
             } catch (RemoteException | ServiceSpecificException | IllegalStateException e) {
                 mLog.e("Error Tethering", e);
                 mLastError = TetheringManager.TETHER_ERROR_TETHER_IFACE_ERROR;
