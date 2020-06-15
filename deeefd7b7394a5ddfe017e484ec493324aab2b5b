@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cc39dfa_5f1837f6",
+        "filename": "packages/WAPPushManager/tests/src/com/android/smspush/unitTests/WapPushTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2020-06-15T06:46:39Z",
+      "side": 0,
+      "message": "This test always failed because #addPackage returned true. Because it returns true even if lastapp is null. This test didn\u0027t work well.",
+      "range": {
+        "startLine": 563,
+        "startChar": 32,
+        "endLine": 563,
+        "endChar": 42
+      },
+      "revId": "deeefd7b7394a5ddfe017e484ec493324aab2b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
