@@ -32,15 +32,19 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_ETHERNET;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
+import static junit.framework.Assert.assertEquals;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -49,15 +53,14 @@ import static org.mockito.Mockito.when;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
-import android.net.NetworkCapabilities;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.telephony.data.EpsBearerQosSessionAttributes;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -67,7 +70,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.concurrent.Executor;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -82,18 +90,19 @@ public class ConnectivityManagerTest {
     }
 
     static NetworkCapabilities verifyNetworkCapabilities(
-            int legacyType, int transportType, int... capabilities) {
+            final int legacyType, final int transportType, final int... capabilities) {
         final NetworkCapabilities nc = ConnectivityManager.networkCapabilitiesForType(legacyType);
         assertNotNull(nc);
         assertTrue(nc.hasTransport(transportType));
-        for (int capability : capabilities) {
+        for (final int capability : capabilities) {
             assertTrue(nc.hasCapability(capability));
         }
 
         return nc;
     }
 
-    static void verifyUnrestrictedNetworkCapabilities(int legacyType, int transportType) {
+    static void verifyUnrestrictedNetworkCapabilities(final int legacyType,
+            final int transportType) {
         verifyNetworkCapabilities(
                 legacyType,
                 transportType,
@@ -103,7 +112,8 @@ public class ConnectivityManagerTest {
                 NET_CAPABILITY_TRUSTED);
     }
 
-    static void verifyRestrictedMobileNetworkCapabilities(int legacyType, int capability) {
+    static void verifyRestrictedMobileNetworkCapabilities(final int legacyType,
+            final int capability) {
         final NetworkCapabilities nc = verifyNetworkCapabilities(
                 legacyType,
                 TRANSPORT_CELLULAR,
@@ -206,11 +216,11 @@ public class ConnectivityManagerTest {
 
     @Test
     public void testCallbackRelease() throws Exception {
-        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
-        NetworkRequest request = makeRequest(1);
-        NetworkCallback callback = mock(ConnectivityManager.NetworkCallback.class);
-        Handler handler = new Handler(Looper.getMainLooper());
-        ArgumentCaptor<Messenger> captor = ArgumentCaptor.forClass(Messenger.class);
+        final ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        final NetworkRequest request = makeRequest(1);
+        final NetworkCallback callback = mock(ConnectivityManager.NetworkCallback.class);
+        final Handler handler = new Handler(Looper.getMainLooper());
+        final ArgumentCaptor<Messenger> captor = ArgumentCaptor.forClass(Messenger.class);
 
         // register callback
         when(mService.requestNetwork(
@@ -234,12 +244,12 @@ public class ConnectivityManagerTest {
 
     @Test
     public void testCallbackRecycling() throws Exception {
-        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
-        NetworkRequest req1 = makeRequest(1);
-        NetworkRequest req2 = makeRequest(2);
-        NetworkCallback callback = mock(ConnectivityManager.NetworkCallback.class);
-        Handler handler = new Handler(Looper.getMainLooper());
-        ArgumentCaptor<Messenger> captor = ArgumentCaptor.forClass(Messenger.class);
+        final ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        final NetworkRequest req1 = makeRequest(1);
+        final NetworkRequest req2 = makeRequest(2);
+        final NetworkCallback callback = mock(ConnectivityManager.NetworkCallback.class);
+        final Handler handler = new Handler(Looper.getMainLooper());
+        final ArgumentCaptor<Messenger> captor = ArgumentCaptor.forClass(Messenger.class);
 
         // register callback
         when(mService.requestNetwork(
@@ -278,10 +288,10 @@ public class ConnectivityManagerTest {
     // TODO: turn on this test when request  callback 1:1 mapping is enforced
     //@Test
     private void noDoubleCallbackRegistration() throws Exception {
-        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
-        NetworkRequest request = makeRequest(1);
-        NetworkCallback callback = new ConnectivityManager.NetworkCallback();
-        ApplicationInfo info = new ApplicationInfo();
+        final ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        final NetworkRequest request = makeRequest(1);
+        final NetworkCallback callback = new ConnectivityManager.NetworkCallback();
+        final ApplicationInfo info = new ApplicationInfo();
         // TODO: update version when starting to enforce 1:1 mapping
         info.targetSdkVersion = VERSION_CODES.N_MR1 + 1;
 
@@ -289,11 +299,11 @@ public class ConnectivityManagerTest {
         when(mService.requestNetwork(any(), any(), anyInt(), any(), anyInt(), any(),
                 nullable(String.class))).thenReturn(request);
 
-        Handler handler = new Handler(Looper.getMainLooper());
+        final Handler handler = new Handler(Looper.getMainLooper());
         manager.requestNetwork(request, callback, handler);
 
         // callback is already registered, reregistration should fail.
-        Class<IllegalArgumentException> wantException = IllegalArgumentException.class;
+        final Class<IllegalArgumentException> wantException = IllegalArgumentException.class;
         expectThrowable(() -> manager.requestNetwork(request, callback), wantException);
 
         manager.unregisterNetworkCallback(callback);
@@ -305,13 +315,13 @@ public class ConnectivityManagerTest {
 
     @Test
     public void testArgumentValidation() throws Exception {
-        ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
+        final ConnectivityManager manager = new ConnectivityManager(mCtx, mService);
 
-        NetworkRequest request = mock(NetworkRequest.class);
-        NetworkCallback callback = mock(NetworkCallback.class);
-        Handler handler = mock(Handler.class);
-        NetworkCallback nullCallback = null;
-        PendingIntent nullIntent = null;
+        final NetworkRequest request = mock(NetworkRequest.class);
+        final NetworkCallback callback = mock(NetworkCallback.class);
+        final Handler handler = mock(Handler.class);
+        final NetworkCallback nullCallback = null;
+        final PendingIntent nullIntent = null;
 
         mustFail(() -> { manager.requestNetwork(null, callback); });
         mustFail(() -> { manager.requestNetwork(request, nullCallback); });
@@ -332,37 +342,91 @@ public class ConnectivityManagerTest {
         mustFail(() -> { manager.releaseNetworkRequest(nullIntent); });
     }
 
-    static void mustFail(Runnable fn) {
+    @Test
+    public void testQosCallbackConnectivityServiceCalled() throws Exception {
+        final Executor executor = Runnable::run;
+        final Network network = mock(Network.class);
+        final QosSocketInfo qosSocketInfo = new QosSocketInfo(network, new Socket());
+        final ConnectivityManager mgr = new ConnectivityManager(mCtx, mService);
+        final QosCallback callback = mock(QosCallback.class);
+
+
+        // Test correct callback is used when registering with service
+        final ArgumentCaptor<QosCallbackConnection> connectionCaptor =
+                ArgumentCaptor.forClass(QosCallbackConnection.class);
+        mgr.registerQosCallback(qosSocketInfo, callback, executor);
+
+        verify(mService).registerQosSocketCallback(
+                eq(qosSocketInfo), connectionCaptor.capture());
+        final QosCallbackConnection connection = connectionCaptor.getValue();
+        assertEquals(connection.getCallback(), callback);
+
+        // Test that exception is thrown when the same callback is registered twice
+        try {
+            mgr.registerQosCallback(new QosSocketInfo(network, new Socket()),
+                    callback, executor);
+            fail("expected QosCallback.QosCallbackRegistrationException");
+        } catch (final QosCallback.QosCallbackRegistrationException ex) {
+        }
+
+        // Test callback methods are called through the connection made
+        final QosSession session = new QosSession(1, QosSession.TYPE_EPS_BEARER);
+        final EpsBearerQosSessionAttributes attributes = new EpsBearerQosSessionAttributes(
+                1, 2, 3, 4, 5,
+                new ArrayList<>());
+
+        connection.onQosEpsBearerSessionAvailable(session, attributes);
+        verify(callback).onQosSessionAvailable(session, attributes);
+
+        connection.onQosSessionLost(session);
+        verify(callback).onQosSessionLost(session);
+
+        connection.onError(1);
+        verify(callback).onError(any(QosCallbackException.class));
+
+        // Test unregister method does its job and the callback is unwired
+        Mockito.verifyNoMoreInteractions(callback);
+        Mockito.reset(callback);
+        mgr.unregisterQosCallback(callback);
+        connection.onQosSessionLost(new QosSession(2, QosSession.TYPE_EPS_BEARER));
+        verify(callback, never()).onQosSessionLost(any());
+
+        // Verify that the callback can be registered again with no exception
+        mgr.registerQosCallback(qosSocketInfo, callback, executor);
+    }
+
+    static void mustFail(final Runnable fn) {
         try {
             fn.run();
             fail();
-        } catch (Exception expected) {
+        } catch (final Exception expected) {
         }
     }
 
-    static Message makeMessage(NetworkRequest req, int messageType) {
-        Bundle bundle = new Bundle();
+    static Message makeMessage(final NetworkRequest req, final int messageType) {
+        final Bundle bundle = new Bundle();
         bundle.putParcelable(NetworkRequest.class.getSimpleName(), req);
         // Pass default objects as we don't care which get passed here
         bundle.putParcelable(Network.class.getSimpleName(), new Network(1));
         bundle.putParcelable(NetworkCapabilities.class.getSimpleName(), new NetworkCapabilities());
         bundle.putParcelable(LinkProperties.class.getSimpleName(), new LinkProperties());
-        Message msg = Message.obtain();
+        final Message msg = Message.obtain();
         msg.what = messageType;
         msg.setData(bundle);
         return msg;
     }
 
-    static NetworkRequest makeRequest(int requestId) {
-        NetworkRequest request = new NetworkRequest.Builder().clearCapabilities().build();
+    static NetworkRequest makeRequest(final int requestId) {
+        final NetworkRequest request = new NetworkRequest.Builder().clearCapabilities().build();
         return new NetworkRequest(request.networkCapabilities, ConnectivityManager.TYPE_NONE,
                 requestId, NetworkRequest.Type.NONE);
     }
 
-    static void expectThrowable(Runnable block, Class<? extends Throwable> throwableType) {
+    static void expectThrowable(final Runnable block,
+            final Class<? extends Throwable> throwableType) {
         try {
             block.run();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             if (t.getClass().equals(throwableType)) {
                 return;
             }
