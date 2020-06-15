@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "92325cc3_8d9fe6a3",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-15T15:01:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "22cbe62c_20addbdd",
+      "range": {
+        "startLine": 193,
+        "startChar": 42,
+        "endLine": 193,
+        "endChar": 43
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f198c1ac_90c51c98",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 1
@@ -91,6 +115,30 @@
       "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652f6ebe_3a413555",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-15T15:01:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f198c1ac_90c51c98",
+      "range": {
+        "startLine": 199,
+        "startChar": 20,
+        "endLine": 199,
+        "endChar": 32
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "17c5607d_4a8f13be",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-15T15:01:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "379e06b1_2d4e40b0",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 17
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a1143de_786c414f",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 1
@@ -137,6 +209,30 @@
       "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d941d845_de56549d",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-15T15:01:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a1143de_786c414f",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 17
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "a0c8e78a_66d535e3",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-15T15:01:39Z",
+      "side": 1,
+      "message": "From bugreport I have, it just take 30ms. But I do not know the overall cases, it may need longer. 20x 50ms looks good to me.",
+      "parentUuid": "b8272e1f_214d6e97",
+      "range": {
+        "startLine": 1118,
+        "startChar": 28,
+        "endLine": 1118,
+        "endChar": 78
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31fedddc_ca54a00c",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 1
@@ -183,6 +303,30 @@
       "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7fd893_f60cb7bd",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-15T15:01:39Z",
+      "side": 1,
+      "message": "Two reason:\n1. I do not want to assume the EBUSY error is specific for networkAddInterface. Current netd won\u0027t throw EBUSY for tetherInterfaceAdd but it may throw it in the future.\n2. mNetd.tetherInterfaceAdd(mIfaceName) should be successful. We do not expect retry it. So put it into retry function seems weired.",
+      "parentUuid": "31fedddc_ca54a00c",
+      "range": {
+        "startLine": 1110,
+        "startChar": 0,
+        "endLine": 1119,
+        "endChar": 17
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "bf434e06_5b8dcd53",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-15T15:01:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "686a3ec5_1ed6f887",
+      "range": {
+        "startLine": 987,
+        "startChar": 4,
+        "endLine": 987,
+        "endChar": 5
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44034da7_4a81bf6e",
         "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
         "patchSetId": 1
@@ -229,6 +397,30 @@
       "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6974f40_1f650e4a",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-15T15:01:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44034da7_4a81bf6e",
+      "range": {
+        "startLine": 1019,
+        "startChar": 56,
+        "endLine": 1019,
+        "endChar": 67
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
