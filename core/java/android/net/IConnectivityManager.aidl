@@ -20,6 +20,8 @@ import android.app.PendingIntent;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityDiagnosticsManager;
 import android.net.IConnectivityDiagnosticsCallback;
+import android.net.IQosCallback;
+import android.net.ISocketKeepaliveCallback;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkAgentConfig;
@@ -28,8 +30,9 @@ import android.net.NetworkInfo;
 import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
-import android.net.ISocketKeepaliveCallback;
 import android.net.ProxyInfo;
+import android.net.QosFilter;
+import android.net.QosSocketFilter;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Messenger;
@@ -235,4 +238,6 @@ interface IConnectivityManager
                 in PersistableBundle extras);
 
     void systemReady();
+    void registerQosCallback(in QosSocketFilter filter, in IQosCallback callback);
+    void unregisterQosCallback(in IQosCallback callback);
 }
