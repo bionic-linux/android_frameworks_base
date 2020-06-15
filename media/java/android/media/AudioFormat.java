@@ -379,6 +379,13 @@ public final class AudioFormat implements Parcelable {
     /** @hide */
     public static final int CHANNEL_OUT_TOP_BACK_RIGHT =  0x80000;
 
+    /** @hide */
+    public static final int CHANNEL_OUT_BOTTOM_FRONT_LEFT = 0x400000;
+    /** @hide */
+    public static final int CHANNEL_OUT_BOTTOM_FRONT_CENTER = 0x800000;
+    /** @hide */
+    public static final int CHANNEL_OUT_BOTTOM_FRONT_RIGHT = 0x1000000;
+
     public static final int CHANNEL_OUT_MONO = CHANNEL_OUT_FRONT_LEFT;
     public static final int CHANNEL_OUT_STEREO = (CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_RIGHT);
     // aka QUAD_BACK
@@ -407,6 +414,13 @@ public final class AudioFormat implements Parcelable {
             CHANNEL_OUT_SIDE_LEFT | CHANNEL_OUT_SIDE_RIGHT |
             CHANNEL_OUT_BACK_LEFT | CHANNEL_OUT_BACK_RIGHT |
             CHANNEL_OUT_LOW_FREQUENCY);
+    public static final int CHANNEL_OUT_13POINT_360RA = (
+            CHANNEL_OUT_FRONT_LEFT | CHANNEL_OUT_FRONT_CENTER | CHANNEL_OUT_FRONT_RIGHT |
+            CHANNEL_OUT_SIDE_LEFT | CHANNEL_OUT_SIDE_RIGHT |
+            CHANNEL_OUT_TOP_FRONT_LEFT | CHANNEL_OUT_TOP_FRONT_CENTER | CHANNEL_OUT_TOP_FRONT_RIGHT |
+            CHANNEL_OUT_TOP_BACK_LEFT | CHANNEL_OUT_TOP_BACK_RIGHT |
+            CHANNEL_OUT_BOTTOM_FRONT_LEFT | CHANNEL_OUT_BOTTOM_FRONT_CENTER | CHANNEL_OUT_BOTTOM_FRONT_RIGHT);
+
     // CHANNEL_OUT_ALL is not yet defined; if added then it should match AUDIO_CHANNEL_OUT_ALL
 
     /** Minimum value for sample rate,

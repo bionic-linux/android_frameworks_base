@@ -19344,6 +19344,7 @@ package android.media {
     field public static final int CHANNEL_IN_X_AXIS = 2048; // 0x800
     field public static final int CHANNEL_IN_Y_AXIS = 4096; // 0x1000
     field public static final int CHANNEL_IN_Z_AXIS = 8192; // 0x2000
+    field public static final int CHANNEL_OUT_13POINT_360RA = 30136348; // 0x1cbd81c
     field public static final int CHANNEL_OUT_5POINT1 = 252; // 0xfc
     field @Deprecated public static final int CHANNEL_OUT_7POINT1 = 1020; // 0x3fc
     field public static final int CHANNEL_OUT_7POINT1_SURROUND = 6396; // 0x18fc
