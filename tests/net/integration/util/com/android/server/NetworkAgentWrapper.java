@@ -31,6 +31,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import android.annotation.NonNull;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
@@ -41,12 +42,14 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkProvider;
 import android.net.NetworkSpecifier;
+import android.net.QosFilter;
 import android.net.SocketKeepalive;
 import android.net.UidRange;
 import android.os.ConditionVariable;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.android.server.connectivity.ConnectivityConstants;
 import com.android.testutils.HandlerUtils;
@@ -71,6 +74,7 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
     // start/stop. Useful when simulate KeepaliveTracker is waiting for response from modem.
     private long mKeepaliveResponseDelay = 0L;
     private Integer mExpectedKeepaliveSlot = null;
+    private final SparseArray<Integer> mQosCallbackCmdCounter = new SparseArray<>();
 
     public NetworkAgentWrapper(int transport, LinkProperties linkProperties,
             NetworkCapabilities ncTemplate, Context context) throws Exception {
@@ -148,6 +152,23 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
             mWrapper.mHandlerThread.getThreadHandler().postDelayed(
                     () -> onSocketKeepaliveEvent(slot, mWrapper.mStopKeepaliveError),
                     mWrapper.mKeepaliveResponseDelay);
+        }
+
+        @Override
+        public void onQosCallbackRegistered(final int qosCallbackId,
+                final @NonNull QosFilter filter) {
+            Log.i(mWrapper.mLogTag, "onQosCallbackRegistered");
+            mWrapper.mQosCallbackCmdCounter.put(qosCallbackId,
+                    mWrapper.mQosCallbackCmdCounter.get(CMD_REGISTER_QOS_CALLBACK, 0) + 1
+            );
+        }
+
+        @Override
+        public void onQosCallbackUnregistered(final int qosCallbackId) {
+            Log.i(mWrapper.mLogTag, "onQosCallbackUnregistered");
+            mWrapper.mQosCallbackCmdCounter.put(qosCallbackId,
+                    mWrapper.mQosCallbackCmdCounter.get(CMD_UNREGISTER_QOS_CALLBACK, 0) + 1
+            );
         }
 
         @Override
@@ -270,6 +291,11 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
 
     public NetworkCapabilities getNetworkCapabilities() {
         return mNetworkCapabilities;
+    }
+
+    // Keeps track of the number of times a callback was called
+    public SparseArray<Integer> getQosCallbackCmdCounter() {
+        return mQosCallbackCmdCounter;
     }
 
     public void waitForIdle(long timeoutMs) {
