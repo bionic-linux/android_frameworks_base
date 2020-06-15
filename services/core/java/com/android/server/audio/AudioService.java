@@ -1275,6 +1275,9 @@ public class AudioService extends IAudioService.Stub
         int dtmfStreamAlias;
         final int a11yStreamAlias = sIndependentA11yVolume ?
                 AudioSystem.STREAM_ACCESSIBILITY : AudioSystem.STREAM_MUSIC;
+        final int notificationStreamAlias = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_useNotificationVolume) ?
+                AudioSystem.STREAM_NOTIFICATION : AudioSystem.STREAM_RING;
 
         if (mIsSingleVolume) {
             mStreamVolumeAlias = STREAM_VOLUME_ALIAS_TELEVISION;
@@ -1304,6 +1307,7 @@ public class AudioService extends IAudioService.Stub
 
         mStreamVolumeAlias[AudioSystem.STREAM_DTMF] = dtmfStreamAlias;
         mStreamVolumeAlias[AudioSystem.STREAM_ACCESSIBILITY] = a11yStreamAlias;
+        mStreamVolumeAlias[AudioSystem.STREAM_NOTIFICATION] = notificationStreamAlias;
 
         if (updateVolumes && mStreamStates != null) {
             updateDefaultVolumes();
