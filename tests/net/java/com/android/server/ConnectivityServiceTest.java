@@ -157,6 +157,7 @@ import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
 import android.net.INetworkStatsService;
+import android.net.IQosCallback;
 import android.net.InetAddresses;
 import android.net.InterfaceConfiguration;
 import android.net.IpPrefix;
@@ -179,6 +180,9 @@ import android.net.NetworkState;
 import android.net.NetworkTestResultParcelable;
 import android.net.NetworkUtils;
 import android.net.ProxyInfo;
+import android.net.QosCallbackException;
+import android.net.QosFilter;
+import android.net.QosSession;
 import android.net.ResolverParamsParcel;
 import android.net.RouteInfo;
 import android.net.RouteInfoParcel;
@@ -212,10 +216,12 @@ import android.provider.Settings;
 import android.security.KeyStore;
 import android.system.Os;
 import android.telephony.TelephonyManager;
+import android.telephony.data.EpsBearerQosSessionAttributes;
 import android.test.mock.MockContentResolver;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 
 import androidx.test.InstrumentationRegistry;
@@ -238,6 +244,7 @@ import com.android.server.connectivity.Nat464Xlat;
 import com.android.server.connectivity.NetworkAgentInfo;
 import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
 import com.android.server.connectivity.ProxyTracker;
+import com.android.server.connectivity.QosCallbackValidator;
 import com.android.server.connectivity.Vpn;
 import com.android.server.net.NetworkPinner;
 import com.android.server.net.NetworkPolicyManagerInternal;
@@ -274,6 +281,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
@@ -361,6 +369,7 @@ public class ConnectivityServiceTest {
     @Mock TelephonyManager mTelephonyManager;
     @Mock MockableSystemProperties mSystemProperties;
     @Mock EthernetManager mEthernetManager;
+    @Mock QosCallbackValidator mQosCallbackValidator;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -1290,6 +1299,7 @@ public class ConnectivityServiceTest {
                     inv.getArgument(0), inv.getArgument(1), inv.getArgument(2));
             return mPolicyTracker;
         }).when(deps).makeMultinetworkPolicyTracker(any(), any(), any());
+        doReturn(mQosCallbackValidator).when(deps).createQosCallbackValidator(any(), any());
 
         return deps;
     }
@@ -7476,5 +7486,133 @@ public class ConnectivityServiceTest {
 
 
         mCm.unregisterNetworkCallback(networkCallback);
+    }
+
+    private class QosCallbackMockHelper {
+        @NonNull final Network mNetwork;
+        @NonNull final QosFilter mFilter;
+        @NonNull final IQosCallback mCallback;
+        @NonNull final IBinder mBinder;
+        @NonNull final TestNetworkAgentWrapper mAgentWrapper;
+
+        QosCallbackMockHelper() throws Exception {
+            // Ensure the network is disconnected before we do anything.
+            if (mCellNetworkAgent != null) {
+                assertNull(mCm.getNetworkCapabilities(mCellNetworkAgent.getNetwork()));
+            }
+
+            mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+
+            ConditionVariable cv = registerConnectivityBroadcast(1);
+            mCellNetworkAgent.connect(true);
+            waitFor(cv);
+            verifyActiveNetwork(TRANSPORT_CELLULAR);
+            waitForIdle();
+            mNetwork = mCellNetworkAgent.getNetwork();
+
+            mFilter = mock(QosFilter.class);
+            Pair<IQosCallback, IBinder> pair = createCallback();
+            mCallback = pair.first;
+            mBinder = pair.second;
+
+            when(mFilter.getNetwork()).thenReturn(mNetwork);
+
+            mAgentWrapper = mCellNetworkAgent;
+        }
+
+        public Pair<IQosCallback, IBinder> createCallback() {
+            IQosCallback callback = mock(IQosCallback.class);
+            IBinder binder = mock(Binder.class);
+            when(callback.asBinder()).thenReturn(binder);
+            when(binder.isBinderAlive()).thenReturn(true);
+            return new Pair<>(callback, binder);
+        }
+    }
+
+
+    @Test
+    public void testQosCallbackRegistration() throws Exception {
+        QosCallbackMockHelper qcm = new QosCallbackMockHelper();
+
+        when(mQosCallbackValidator.validate()).thenReturn(Optional.empty());
+        mService.registerQosCallbackInternal(qcm.mFilter, qcm.mCallback);
+        waitForIdle();
+
+        assertEquals((int) qcm.mAgentWrapper.getCallbackMap()
+                        .getOrDefault(NetworkAgent.CMD_REGISTER_QOS_CALLBACK, 0), 1);
+        assertEquals((int) qcm.mAgentWrapper.getCallbackMap()
+                        .getOrDefault(NetworkAgent.CMD_UNREGISTER_QOS_CALLBACK, 0), 0);
+
+        mService.unregisterQosCallback(qcm.mCallback);
+        waitForIdle();
+
+        assertEquals((int) qcm.mAgentWrapper.getCallbackMap()
+                        .getOrDefault(NetworkAgent.CMD_UNREGISTER_QOS_CALLBACK, 0), 1);
+    }
+
+    @Test
+    public void testQosCallbackNoRegistrationOnValidationError() throws Exception {
+        QosCallbackMockHelper qcm = new QosCallbackMockHelper();
+
+        when(mQosCallbackValidator.validate())
+                .thenReturn(Optional.of(QosCallbackException.EX_TYPE_FILTER_NETWORK_RELEASED));
+        mService.registerQosCallbackInternal(qcm.mFilter, qcm.mCallback);
+        waitForIdle();
+
+        assertEquals((int) qcm.mAgentWrapper.getCallbackMap()
+                        .getOrDefault(NetworkAgent.CMD_REGISTER_QOS_CALLBACK, 0), 0);
+        verify(qcm.mCallback)
+                .onError(eq(QosCallbackException.EX_TYPE_FILTER_NETWORK_RELEASED), any());
+    }
+
+    @Test
+    public void testQosCallbackAvailableAndLost() throws Exception {
+        QosCallbackMockHelper qcm = new QosCallbackMockHelper();
+
+        when(mQosCallbackValidator.validate())
+                .thenReturn(Optional.empty());
+        mService.registerQosCallbackInternal(qcm.mFilter, qcm.mCallback);
+        waitForIdle();
+
+        EpsBearerQosSessionAttributes attributes = new EpsBearerQosSessionAttributes(
+                1, 2, 3, 4, 5, new ArrayList<>());
+        QosSession sess = new QosSession(1, QosSession.TYPE_EPS_BEARER);
+        qcm.mAgentWrapper.getNetworkAgent()
+                .sendQosSessionAvailable(1, sess, attributes);
+        waitForIdle();
+        verify(qcm.mCallback).onQosEpsBearerSessionAvailable(eq(sess), eq(attributes));
+
+        qcm.mAgentWrapper.getNetworkAgent()
+                .sendQosSessionLost(1, sess);
+        waitForIdle();
+        verify(qcm.mCallback).onQosSessionLost(eq(sess));
+    }
+
+    @Test
+    public void testQosCallbackTooManyRequests() throws Exception {
+        QosCallbackMockHelper qcm = new QosCallbackMockHelper();
+
+        when(mQosCallbackValidator.validate())
+                .thenReturn(Optional.empty());
+
+        for (int i = 0; i < 100; i++) {
+            Pair<IQosCallback, IBinder> pair = qcm.createCallback();
+            mService.registerQosCallbackInternal(qcm.mFilter, pair.first);
+            waitForIdle();
+            // Checking for 99 here doesn't work because network requests add to this count as well.
+            if (i < 50) {
+                verify(pair.first, never())
+                        .onError(eq(QosCallbackException.EX_TYPE_TOO_MANY_REQUESTS), any());
+            }
+        }
+
+        Pair<IQosCallback, IBinder> pair = qcm.createCallback();
+        mService.registerQosCallbackInternal(qcm.mFilter, pair.first);
+        waitForIdle();
+
+        // This is the 100th qos callback request,
+        // which means we are guaranteed to get the exception
+        verify(pair.first, times(1))
+                .onError(eq(QosCallbackException.EX_TYPE_TOO_MANY_REQUESTS), any());
     }
 }
