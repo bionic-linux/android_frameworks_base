@@ -5991,6 +5991,7 @@ package android.net {
     method @Deprecated @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void getLatestTetheringEntitlementResult(int, boolean, @NonNull java.util.concurrent.Executor, @NonNull android.net.ConnectivityManager.OnTetheringEntitlementResultListener);
     method @Deprecated @RequiresPermission(anyOf={android.Manifest.permission.TETHER_PRIVILEGED, android.Manifest.permission.WRITE_SETTINGS}) public boolean isTetheringSupported();
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_FACTORY}) public int registerNetworkProvider(@NonNull android.net.NetworkProvider);
+    method public void registerQosCallback(@NonNull android.net.QosSocketInfo, @NonNull android.net.QosCallback, @NonNull java.util.concurrent.Executor) throws android.net.QosCallback.QosCallbackRegistrationException;
     method @Deprecated @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void registerTetheringEventCallback(@NonNull java.util.concurrent.Executor, @NonNull android.net.ConnectivityManager.OnTetheringEventCallback);
     method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public void requestNetwork(@NonNull android.net.NetworkRequest, int, int, @NonNull android.os.Handler, @NonNull android.net.ConnectivityManager.NetworkCallback);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_AIRPLANE_MODE, android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_SETUP_WIZARD, android.Manifest.permission.NETWORK_STACK}) public void setAirplaneMode(boolean);
@@ -6000,6 +6001,7 @@ package android.net {
     method @Deprecated @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback, android.os.Handler);
     method @Deprecated @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void stopTethering(int);
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_FACTORY}) public void unregisterNetworkProvider(@NonNull android.net.NetworkProvider);
+    method public void unregisterQosCallback(@NonNull android.net.QosCallback);
     method @Deprecated @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void unregisterTetheringEventCallback(@NonNull android.net.ConnectivityManager.OnTetheringEventCallback);
     field public static final String EXTRA_CAPTIVE_PORTAL_PROBE_SPEC = "android.net.extra.CAPTIVE_PORTAL_PROBE_SPEC";
     field public static final String EXTRA_CAPTIVE_PORTAL_USER_AGENT = "android.net.extra.CAPTIVE_PORTAL_USER_AGENT";
@@ -6193,6 +6195,8 @@ package android.net {
     method public void onAddKeepalivePacketFilter(int, @NonNull android.net.KeepalivePacketData);
     method public void onAutomaticReconnectDisabled();
     method public void onNetworkUnwanted();
+    method public void onQosCallbackRegistered(int, @NonNull android.net.QosFilter);
+    method public void onQosCallbackUnregistered(int);
     method public void onRemoveKeepalivePacketFilter(int);
     method public void onSaveAcceptUnvalidated(boolean);
     method public void onSignalStrengthThresholdsUpdated(@NonNull int[]);
@@ -6203,9 +6207,14 @@ package android.net {
     method public final void sendLinkProperties(@NonNull android.net.LinkProperties);
     method public final void sendNetworkCapabilities(@NonNull android.net.NetworkCapabilities);
     method public final void sendNetworkScore(@IntRange(from=0, to=99) int);
+    method public final void sendQosError(int, int);
+    method public final void sendQosSessionAvailable(int, int, @NonNull android.telephony.data.EpsBearerQosSessionAttributes);
+    method public final void sendQosSessionLost(int, int);
     method public final void sendSocketKeepaliveEvent(int, int);
     method public final void setUnderlyingNetworks(@Nullable java.util.List<android.net.Network>);
     method public void unregister();
+    field public static final String QOS_SESSION_AVAILABLE_ATTRIBUTES_KEY = "attributes";
+    field public static final String QOS_SESSION_AVAILABLE_SESSION_KEY = "session";
     field public static final int VALIDATION_STATUS_NOT_VALID = 2; // 0x2
     field public static final int VALIDATION_STATUS_VALID = 1; // 0x1
   }
@@ -6357,6 +6366,61 @@ package android.net {
 
   public static class NetworkStats.Entry {
     ctor public NetworkStats.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
+  }
+
+  public abstract class QosCallback {
+    ctor public QosCallback();
+    method public void onError(@NonNull android.net.QosCallbackException);
+    method public void onQosSessionAvailable(@NonNull android.net.QosSession, @NonNull android.net.QosSessionAttributes);
+    method public void onQosSessionLost(@NonNull android.net.QosSession);
+  }
+
+  public static class QosCallback.QosCallbackRegistrationException extends java.lang.Exception {
+    ctor public QosCallback.QosCallbackRegistrationException();
+  }
+
+  public final class QosCallbackException extends java.lang.Exception {
+    ctor public QosCallbackException(@NonNull String);
+    ctor public QosCallbackException(@NonNull Throwable);
+  }
+
+  public static class QosCallbackException.NetworkReleasedException extends java.lang.Exception {
+    ctor public QosCallbackException.NetworkReleasedException();
+  }
+
+  public abstract class QosFilter {
+    method @NonNull public abstract android.net.Network getNetwork();
+  }
+
+  public final class QosSession implements android.os.Parcelable {
+    ctor public QosSession(int, int);
+    method public int describeContents();
+    method public int getSessionId();
+    method public int getSessionType();
+    method public long getUniqueId();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.QosSession> CREATOR;
+    field public static final int TYPE_EPS_BEARER = 1; // 0x1
+  }
+
+  public interface QosSessionAttributes {
+  }
+
+  public final class QosSocketInfo implements android.os.Parcelable {
+    ctor public QosSocketInfo(@NonNull android.net.Network, @NonNull java.net.Socket) throws java.io.IOException;
+    method public int describeContents();
+    method @NonNull public java.net.InetSocketAddress getLocalSocketAddress();
+    method @NonNull public android.net.Network getNetwork();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.QosSocketInfo> CREATOR;
+  }
+
+  public static class QosSocketInfo.SocketLocalAddressChangedException extends java.lang.Exception {
+    ctor public QosSocketInfo.SocketLocalAddressChangedException();
+  }
+
+  public static class QosSocketInfo.SocketNotBoundException extends java.lang.Exception {
+    ctor public QosSocketInfo.SocketNotBoundException();
   }
 
   public final class RouteInfo implements android.os.Parcelable {
@@ -10634,6 +10698,20 @@ package android.telephony.data {
     field public static final int RESULT_ERROR_INVALID_ARG = 2; // 0x2
     field public static final int RESULT_ERROR_UNSUPPORTED = 1; // 0x1
     field public static final int RESULT_SUCCESS = 0; // 0x0
+  }
+
+  public final class EpsBearerQosSessionAttributes implements android.os.Parcelable android.net.QosSessionAttributes {
+    ctor public EpsBearerQosSessionAttributes(int, long, long, long, long, @NonNull java.util.List<java.net.InetSocketAddress>);
+    method @NonNull public static android.telephony.data.EpsBearerQosSessionAttributes create(@NonNull android.os.Parcel);
+    method public int describeContents();
+    method public long getGuaranteedDownlinkBitRate();
+    method public long getGuaranteedUplinkBitRate();
+    method public long getMaxDownlinkBitRate();
+    method public long getMaxUplinkBitRate();
+    method public int getQci();
+    method @NonNull public java.util.List<java.net.InetSocketAddress> getRemoteAddresses();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.data.EpsBearerQosSessionAttributes> CREATOR;
   }
 
   public abstract class QualifiedNetworksService extends android.app.Service {
