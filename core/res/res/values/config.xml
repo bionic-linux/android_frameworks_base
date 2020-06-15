@@ -4379,4 +4379,7 @@
     <bool name="config_pdp_reject_enable_retry">false</bool>
     <!--pdp data reject retry delay in ms-->
     <integer name="config_pdp_reject_retry_delay_ms">-1</integer>
+
+    <!-- Whether or not to use notification stream volume separately from ring volume -->
+    <bool name="config_useNotificationVolume">false</bool>
 </resources>
