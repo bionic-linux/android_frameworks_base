@@ -36,6 +36,10 @@ import android.net.NetworkInfo;
 import android.net.NetworkMonitorManager;
 import android.net.NetworkRequest;
 import android.net.NetworkState;
+import android.net.QosCallbackException;
+import android.net.QosFilter;
+import android.net.QosFilterParcelable;
+import android.net.QosSession;
 import android.net.TcpKeepalivePacketData;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,6 +47,7 @@ import android.os.IBinder;
 import android.os.INetworkManagementService;
 import android.os.RemoteException;
 import android.os.SystemClock;
+import android.telephony.data.EpsBearerQosSessionAttributes;
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -318,12 +323,13 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private final ConnectivityService mConnService;
     private final Context mContext;
     private final Handler mHandler;
+    private final QosCallbackTracker mQosCallbackTracker;
 
     public NetworkAgentInfo(INetworkAgent na, Network net, NetworkInfo info,
             LinkProperties lp, NetworkCapabilities nc, int score, Context context,
             Handler handler, NetworkAgentConfig config, ConnectivityService connService, INetd netd,
             IDnsResolver dnsResolver, INetworkManagementService nms, int factorySerialNumber,
-            int creatorUid) {
+            int creatorUid, QosCallbackTracker qosCallbackTracker) {
         networkAgent = na;
         network = net;
         networkInfo = info;
@@ -337,6 +343,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         networkAgentConfig = config;
         this.factorySerialNumber = factorySerialNumber;
         this.creatorUid = creatorUid;
+        mQosCallbackTracker = qosCallbackTracker;
     }
 
     private class AgentDeathMonitor implements IBinder.DeathRecipient {
@@ -522,6 +529,31 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         }
     }
 
+    /**
+     * Notify the NetworkAgent that the qos filter should be registered against the given qos
+     * callback id.
+     */
+    public void onQosFilterCallbackRegistered(final int qosCallbackId,
+            final QosFilter qosFilter) {
+        try {
+            networkAgent.onQosFilterCallbackRegistered(qosCallbackId,
+                    new QosFilterParcelable(qosFilter));
+        } catch (final RemoteException e) {
+            Log.e(TAG, "Error registering a qos callback id against a qos filter", e);
+        }
+    }
+
+    /**
+     * Notify the NetworkAgent that the given qos callback id should be unregistered.
+     */
+    public void onQosCallbackUnregistered(final int qosCallbackId) {
+        try {
+            networkAgent.onQosCallbackUnregistered(qosCallbackId);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error unregistering a qos callback id", e);
+        }
+    }
+
     // TODO: consider moving out of NetworkAgentInfo into its own class
     private class NetworkAgentMessageHandler extends INetworkAgentRegistry.Stub {
         private final Handler mHandler;
@@ -579,6 +611,23 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
             }
             mHandler.obtainMessage(NetworkAgent.EVENT_UNDERLYING_NETWORKS_CHANGED,
                     new Pair<>(NetworkAgentInfo.this, args)).sendToTarget();
+        }
+
+        @Override
+        public void sendEpsQosSessionAvailable(final int qosCallbackId, final QosSession session,
+                final EpsBearerQosSessionAttributes attributes) {
+            mQosCallbackTracker.sendEventQosSessionAvailable(qosCallbackId, session, attributes);
+        }
+
+        @Override
+        public void sendQosSessionLost(final int qosCallbackId, final QosSession session) {
+            mQosCallbackTracker.sendEventQosSessionLost(qosCallbackId, session);
+        }
+
+        @Override
+        public void sendQosCallbackError(final int qosCallbackId,
+                @QosCallbackException.ExceptionType final int exceptionType) {
+            mQosCallbackTracker.sendEventQosCallbackError(qosCallbackId, exceptionType);
         }
     }
 
