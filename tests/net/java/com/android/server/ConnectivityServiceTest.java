@@ -167,6 +167,7 @@ import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkStatsService;
+import android.net.IQosCallback;
 import android.net.InetAddresses;
 import android.net.InterfaceConfigurationParcel;
 import android.net.IpPrefix;
@@ -190,6 +191,9 @@ import android.net.NetworkStackClient;
 import android.net.NetworkState;
 import android.net.NetworkTestResultParcelable;
 import android.net.ProxyInfo;
+import android.net.QosCallbackException;
+import android.net.QosFilter;
+import android.net.QosSession;
 import android.net.ResolverParamsParcel;
 import android.net.RouteInfo;
 import android.net.RouteInfoParcel;
@@ -217,6 +221,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.ServiceSpecificException;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -224,10 +229,12 @@ import android.provider.Settings;
 import android.security.KeyStore;
 import android.system.Os;
 import android.telephony.TelephonyManager;
+import android.telephony.data.EpsBearerQosSessionAttributes;
 import android.test.mock.MockContentResolver;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
+import android.util.Pair;
 import android.util.SparseArray;
 
 import androidx.test.InstrumentationRegistry;
@@ -358,6 +365,7 @@ public class ConnectivityServiceTest {
     private WrappedMultinetworkPolicyTracker mPolicyTracker;
     private HandlerThread mAlarmManagerThread;
     private TestNetIdManager mNetIdManager;
+    private QosCallbackMockHelper mQosCallbackMockHelper;
 
     @Mock IIpConnectivityMetrics mIpConnectivityMetrics;
     @Mock IpConnectivityMetrics.Logger mMetricsService;
@@ -1422,6 +1430,10 @@ public class ConnectivityServiceTest {
         if (mEthernetNetworkAgent != null) {
             mEthernetNetworkAgent.disconnect();
             mEthernetNetworkAgent = null;
+        }
+        if (mQosCallbackMockHelper != null) {
+            mQosCallbackMockHelper.tearDown();
+            mQosCallbackMockHelper = null;
         }
         mMockVpn.disconnect();
         waitForIdle();
@@ -4158,7 +4170,7 @@ public class ConnectivityServiceTest {
     }
 
     private Network connectKeepaliveNetwork(LinkProperties lp) throws Exception {
-        // Ensure the network is disconnected before we do anything.
+        // Ensure the network is disconnected before anything else occurs
         if (mWiFiNetworkAgent != null) {
             assertNull(mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork()));
         }
@@ -7840,7 +7852,8 @@ public class ConnectivityServiceTest {
     public void testCheckConnectivityDiagnosticsPermissionsNetworkStack() throws Exception {
         final NetworkAgentInfo naiWithoutUid =
                 new NetworkAgentInfo(null, null, null, null, new NetworkCapabilities(), 0,
-                        mServiceContext, null, null, mService, null, null, null, 0, INVALID_UID);
+                        mServiceContext, null, null, mService, null, null, null, 0, INVALID_UID,
+                        null);
 
         mServiceContext.setPermission(
                 android.Manifest.permission.NETWORK_STACK, PERMISSION_GRANTED);
@@ -7855,7 +7868,8 @@ public class ConnectivityServiceTest {
     public void testCheckConnectivityDiagnosticsPermissionsWrongUidPackageName() throws Exception {
         final NetworkAgentInfo naiWithoutUid =
                 new NetworkAgentInfo(null, null, null, null, new NetworkCapabilities(), 0,
-                        mServiceContext, null, null, mService, null, null, null, 0, INVALID_UID);
+                        mServiceContext, null, null, mService, null, null, null, 0, INVALID_UID,
+                        null);
 
         mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
 
@@ -7870,7 +7884,8 @@ public class ConnectivityServiceTest {
     public void testCheckConnectivityDiagnosticsPermissionsNoLocationPermission() throws Exception {
         final NetworkAgentInfo naiWithoutUid =
                 new NetworkAgentInfo(null, null, null, null, new NetworkCapabilities(), 0,
-                        mServiceContext, null, null, mService, null, null, null, 0, INVALID_UID);
+                        mServiceContext, null, null, mService, null, null, null, 0, INVALID_UID,
+                        null);
 
         mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
 
@@ -7886,7 +7901,8 @@ public class ConnectivityServiceTest {
         final Network network = new Network(NET_ID);
         final NetworkAgentInfo naiWithoutUid =
                 new NetworkAgentInfo(null, network, null, null, new NetworkCapabilities(), 0,
-                        mServiceContext, null, null, mService, null, null, null, 0, INVALID_UID);
+                        mServiceContext, null, null, mService, null, null, null, 0, INVALID_UID,
+                        null);
 
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -7920,7 +7936,7 @@ public class ConnectivityServiceTest {
         nc.setAdministratorUids(new int[] {Process.myUid()});
         final NetworkAgentInfo naiWithUid =
                 new NetworkAgentInfo(null, null, null, null, nc, 0, mServiceContext, null, null,
-                        mService, null, null, null, 0, INVALID_UID);
+                        mService, null, null, null, 0, INVALID_UID, null);
 
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -7939,7 +7955,7 @@ public class ConnectivityServiceTest {
         nc.setAdministratorUids(new int[] {Process.myUid()});
         final NetworkAgentInfo naiWithUid =
                 new NetworkAgentInfo(null, null, null, null, nc, 0, mServiceContext, null, null,
-                        mService, null, null, null, 0, INVALID_UID);
+                        mService, null, null, null, 0, INVALID_UID, null);
 
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -8170,5 +8186,152 @@ public class ConnectivityServiceTest {
                             < nriOutput[i + 1].mRequests.get(0).requestId;
             assertTrue(isRequestIdInOrder);
         }
+    }
+
+    private class QosCallbackMockHelper {
+        @NonNull public final QosFilter mFilter;
+        @NonNull public final IQosCallback mCallback;
+        @NonNull public final TestNetworkAgentWrapper mAgentWrapper;
+        @NonNull private final List<IQosCallback> mCallbacks = new ArrayList();
+
+        QosCallbackMockHelper() throws Exception {
+            Log.d(TAG, "QosCallbackMockHelper: ");
+            mFilter = mock(QosFilter.class);
+
+            // Ensure the network is disconnected before anything else occurs
+            assertNull(mCellNetworkAgent);
+
+            mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+            mCellNetworkAgent.connect(true);
+
+            verifyActiveNetwork(TRANSPORT_CELLULAR);
+            waitForIdle();
+            final Network network = mCellNetworkAgent.getNetwork();
+
+            final Pair<IQosCallback, IBinder> pair = createQosCallback();
+            mCallback = pair.first;
+
+            when(mFilter.getNetwork()).thenReturn(network);
+            when(mFilter.validate()).thenReturn(QosCallbackException.EX_TYPE_FILTER_NONE);
+            mAgentWrapper = mCellNetworkAgent;
+        }
+
+        void registerQosCallback(@NonNull final QosFilter filter,
+                @NonNull final IQosCallback callback) {
+            mCallbacks.add(callback);
+            final NetworkAgentInfo nai =
+                    mService.getNetworkAgentInfoForNetwork(filter.getNetwork());
+            mService.registerQosCallbackInternal(filter, callback, nai);
+        }
+
+        void tearDown() {
+            for (int i = 0; i < mCallbacks.size(); i++) {
+                mService.unregisterQosCallback(mCallbacks.get(i));
+            }
+        }
+    }
+
+    private Pair<IQosCallback, IBinder> createQosCallback() {
+        final IQosCallback callback = mock(IQosCallback.class);
+        final IBinder binder = mock(Binder.class);
+        when(callback.asBinder()).thenReturn(binder);
+        when(binder.isBinderAlive()).thenReturn(true);
+        return new Pair<>(callback, binder);
+    }
+
+
+    @Test
+    public void testQosCallbackRegistration() throws Exception {
+        mQosCallbackMockHelper = new QosCallbackMockHelper();
+        final NetworkAgentWrapper wrapper = mQosCallbackMockHelper.mAgentWrapper;
+
+        when(mQosCallbackMockHelper.mFilter.validate())
+                .thenReturn(QosCallbackException.EX_TYPE_FILTER_NONE);
+        mQosCallbackMockHelper.registerQosCallback(
+                mQosCallbackMockHelper.mFilter, mQosCallbackMockHelper.mCallback);
+
+        final NetworkAgentWrapper.CallbackType.OnQosCallbackRegister cbRegister1 =
+                (NetworkAgentWrapper.CallbackType.OnQosCallbackRegister)
+                        wrapper.getCallbackHistory().poll(1000, x -> true);
+        assertNotNull(cbRegister1);
+
+        final int registerCallbackId = cbRegister1.mQosCallbackId;
+        mService.unregisterQosCallback(mQosCallbackMockHelper.mCallback);
+        final NetworkAgentWrapper.CallbackType.OnQosCallbackUnregister cbUnregister;
+        cbUnregister = (NetworkAgentWrapper.CallbackType.OnQosCallbackUnregister)
+                wrapper.getCallbackHistory().poll(1000, x -> true);
+        assertNotNull(cbUnregister);
+        assertEquals(registerCallbackId, cbUnregister.mQosCallbackId);
+        assertNull(wrapper.getCallbackHistory().poll(200, x -> true));
+    }
+
+    @Test
+    public void testQosCallbackNoRegistrationOnValidationError() throws Exception {
+        mQosCallbackMockHelper = new QosCallbackMockHelper();
+
+        when(mQosCallbackMockHelper.mFilter.validate())
+                .thenReturn(QosCallbackException.EX_TYPE_FILTER_NETWORK_RELEASED);
+        mQosCallbackMockHelper.registerQosCallback(
+                mQosCallbackMockHelper.mFilter, mQosCallbackMockHelper.mCallback);
+        waitForIdle();
+        verify(mQosCallbackMockHelper.mCallback)
+                .onError(eq(QosCallbackException.EX_TYPE_FILTER_NETWORK_RELEASED));
+    }
+
+    @Test
+    public void testQosCallbackAvailableAndLost() throws Exception {
+        mQosCallbackMockHelper = new QosCallbackMockHelper();
+        final int sessionId = 10;
+        final int qosCallbackId = 1;
+
+        when(mQosCallbackMockHelper.mFilter.validate())
+                .thenReturn(QosCallbackException.EX_TYPE_FILTER_NONE);
+        mQosCallbackMockHelper.registerQosCallback(
+                mQosCallbackMockHelper.mFilter, mQosCallbackMockHelper.mCallback);
+        waitForIdle();
+
+        final EpsBearerQosSessionAttributes attributes = new EpsBearerQosSessionAttributes(
+                1, 2, 3, 4, 5, new ArrayList<>());
+        mQosCallbackMockHelper.mAgentWrapper.getNetworkAgent()
+                .sendQosSessionAvailable(qosCallbackId, sessionId, attributes);
+        waitForIdle();
+
+        verify(mQosCallbackMockHelper.mCallback).onQosEpsBearerSessionAvailable(argThat(session ->
+                session.getSessionId() == sessionId
+                        && session.getSessionType() == QosSession.TYPE_EPS_BEARER), eq(attributes));
+
+        mQosCallbackMockHelper.mAgentWrapper.getNetworkAgent()
+                .sendQosSessionLost(qosCallbackId, sessionId);
+        waitForIdle();
+        verify(mQosCallbackMockHelper.mCallback).onQosSessionLost(argThat(session ->
+                session.getSessionId() == sessionId
+                        && session.getSessionType() == QosSession.TYPE_EPS_BEARER));
+    }
+
+    @Test
+    public void testQosCallbackTooManyRequests() throws Exception {
+        mQosCallbackMockHelper = new QosCallbackMockHelper();
+
+        when(mQosCallbackMockHelper.mFilter.validate())
+                .thenReturn(QosCallbackException.EX_TYPE_FILTER_NONE);
+        for (int i = 0; i < 100; i++) {
+            final Pair<IQosCallback, IBinder> pair = createQosCallback();
+
+            try {
+                mQosCallbackMockHelper.registerQosCallback(
+                        mQosCallbackMockHelper.mFilter, pair.first);
+            } catch (ServiceSpecificException e) {
+                assertEquals(e.errorCode, ConnectivityManager.Errors.TOO_MANY_REQUESTS);
+                if (i < 50) {
+                    fail("TOO_MANY_REQUESTS thrown too early, the count is " + i);
+                }
+
+                // As long as there is at least 50 requests, it is safe to assume it works.
+                // Note: The count isn't being tested precisely against 100 because the counter
+                // is shared with request network.
+                return;
+            }
+        }
+        fail("TOO_MANY_REQUESTS never thrown");
     }
 }
