@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Messenger;
+import android.telephony.data.EpsBearerQosSessionAttributes;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -226,7 +227,31 @@ public abstract class NetworkAgent {
      */
     public static final String UNDERLYING_NETWORKS_KEY = "underlyingNetworks";
 
-     /**
+    /**
+     * The key for the Qos Session in the Bundle argument of {@code EVENT_QOS_SESSION_AVAILABLE}.
+     * <p/>
+     * The value is of type {@link QosSession}.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String QOS_SESSION_AVAILABLE_SESSION_KEY = "session";
+
+    /**
+     * The key for the Qos Session Attributes in the Bundle argument of
+     * {@code EVENT_QOS_SESSION_AVAILABLE}
+     * <p/>
+     * The value is a type of {@link QosSessionAttributes}.  The exact type is dependent on
+     * the value of the qos session type stored under the Bundle argument of
+     * {@link NetworkAgent#QOS_SESSION_AVAILABLE_SESSION_KEY}.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String QOS_SESSION_AVAILABLE_ATTRIBUTES_KEY = "attributes";
+
+
+    /**
      * Sent by the NetworkAgent to ConnectivityService to indicate this network was
      * explicitly selected.  This should be sent before the NetworkInfo is marked
      * CONNECTED so it can be given special treatment at that time.
@@ -328,6 +353,52 @@ public abstract class NetworkAgent {
      * @hide
      */
     public static final int CMD_REMOVE_KEEPALIVE_PACKET_FILTER = BASE + 17;
+
+    /**
+     * Sent by QosCallbackTracker to {@link NetworkAgent} to register a new filter with
+     * callback.
+     *
+     * arg1 = QoS agent callback ID
+     * obj = {@link QosFilter}
+     * @hide
+     */
+    public static final int CMD_REGISTER_QOS_CALLBACK = BASE + 18;
+
+    /**
+     * Sent by QosCallbackTracker to {@link NetworkAgent} to unregister a callback.
+     *
+     * arg1 = QoS agent callback ID
+     * @hide
+     */
+    public static final int CMD_UNREGISTER_QOS_CALLBACK = BASE + 19;
+
+    /**
+     * Sent by {@link NetworkAgent} to QosCallbackTracker when a qos session is
+     * available or has changed.
+     *
+     * arg1 = QoS agent callback ID
+     * obj = Bundle({@link NetworkAgent#QOS_SESSION_AVAILABLE_SESSION_KEY}: {@link QosSession},
+     * {@link NetworkAgent#QOS_SESSION_AVAILABLE_ATTRIBUTES_KEY}, {@link QosSessionAttributes})
+     * @hide
+     */
+    public static final int EVENT_QOS_SESSION_AVAILABLE = BASE + 20;
+
+    /**
+     * Sent by {@link NetworkAgent} to QosCallbackTracker when a qos session is lost.
+     *
+     * arg1 = QoS agent callback ID
+     * @hide
+     */
+    public static final int EVENT_QOS_SESSION_LOST = BASE + 21;
+
+    /**
+     * Sent by {@link NetworkAgent} to QosCallbackTracker when a qos session has an error
+     *
+     * arg1 = QoS agent callback ID
+     * arg2 = Type of exception ({@link QosCallbackException.ExceptionType})
+     * @hide
+     */
+    public static final int EVENT_QOS_SESSION_ERROR = BASE + 22;
 
     private static NetworkInfo getLegacyNetworkInfo(final NetworkAgentConfig config) {
         // The subtype can be changed with (TODO) setLegacySubtype, but it starts
@@ -516,6 +587,17 @@ public abstract class NetworkAgent {
                 }
                 case CMD_REMOVE_KEEPALIVE_PACKET_FILTER: {
                     onRemoveKeepalivePacketFilter(msg.arg1 /* slot */);
+                    break;
+                }
+                case CMD_REGISTER_QOS_CALLBACK: {
+                    onQosCallbackRegistered(
+                            msg.arg1 /* QoS callback id */,
+                            (QosFilter) msg.obj /* QoS filter */);
+                    break;
+                }
+                case CMD_UNREGISTER_QOS_CALLBACK: {
+                    onQosCallbackUnregistered(
+                            msg.arg1 /* QoS callback id */);
                     break;
                 }
             }
@@ -984,8 +1066,71 @@ public abstract class NetworkAgent {
     protected void preventAutomaticReconnect() {
     }
 
+    /**
+     * Called when a qos callback is registered with a filter.
+     * @param qosCallbackId the id for the callback registered
+     * @param filter the filter being registered
+     */
+    public void onQosCallbackRegistered(final int qosCallbackId, final @NonNull QosFilter filter) {
+    }
+
+    /**
+     * Called when a qos callback is registered with a filter.
+     * <p/>
+     * Any QoS events that are sent with the same callback id after this method is called
+     * are a no-op.
+     *
+     * @param qosCallbackId the id for the callback being unregistered
+     */
+    public void onQosCallbackUnregistered(final int qosCallbackId) {
+    }
+
+
+    /**
+     * Sends the attributes of Eps Bearer Qos Session back to the Application
+     *
+     * @param qosCallbackId the callback id that the session belongs to
+     * @param sessionId the unique session id across all Eps Bearer Qos Sessions
+     * @param attributes the attributes of the Eps Qos Session
+     */
+    public final void sendQosSessionAvailable(final int qosCallbackId, final int sessionId,
+            @NonNull final EpsBearerQosSessionAttributes attributes) {
+        Objects.requireNonNull(attributes, "The attributes must be non-null");
+
+        final Bundle bundle = new Bundle();
+        bundle.putParcelable(QOS_SESSION_AVAILABLE_ATTRIBUTES_KEY, attributes);
+        bundle.putParcelable(QOS_SESSION_AVAILABLE_SESSION_KEY,
+                new QosSession(sessionId, QosSession.TYPE_EPS_BEARER));
+        queueOrSendMessage(EVENT_QOS_SESSION_AVAILABLE, qosCallbackId, 0, bundle);
+    }
+
+    /**
+     * Sends event that the Eps Qos Session was lost.
+     *
+     * @param qosCallbackId the callback id that the session belongs to
+     * @param sessionId the unique session id across all Eps Bearer Qos Sessions
+     */
+    public final void sendQosSessionLost(final int qosCallbackId, final int sessionId) {
+        queueOrSendMessage(EVENT_QOS_SESSION_LOST, qosCallbackId, 0,
+                new QosSession(sessionId, QosSession.TYPE_EPS_BEARER));
+    }
+
+    /**
+     * Sends the exception type back to the application.
+     *
+     * The NetworkAgent should not send anymore messages with this id.
+     *
+     * @param qosCallbackId the callback id this exception belongs to
+     * @param exceptionType the type of exception
+     */
+    public final void sendQosError(final int qosCallbackId,
+            @QosCallbackException.ExceptionType final int exceptionType) {
+        queueOrSendMessage(EVENT_QOS_SESSION_ERROR, qosCallbackId, exceptionType);
+    }
+
+
     /** @hide */
-    protected void log(String s) {
+    protected void log(final String s) {
         Log.d(LOG_TAG, "NetworkAgent: " + s);
     }
 }
