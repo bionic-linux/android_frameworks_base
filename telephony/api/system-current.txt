@@ -1035,6 +1035,19 @@ package android.telephony.data {
     field public static final int RESULT_SUCCESS = 0; // 0x0
   }
 
+public final class EpsBearerQosSessionAttributes implements android.os.Parcelable android.net.QosSessionAttributes {
+    ctor public EpsBearerQosSessionAttributes(int, long, long, long, long, @NonNull java.util.List<java.net.InetSocketAddress>);
+    method @NonNull public static android.telephony.data.EpsBearerQosSessionAttributes create(@NonNull android.os.Parcel);
+    method public int describeContents();
+    method public long getGuaranteedDownlinkBitRate();
+    method public long getGuaranteedUplinkBitRate();
+    method public int getQci();
+    method @NonNull public java.util.List<java.net.InetSocketAddress> getRemoteAddresses();
+    method public int getSessionType();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.telephony.data.EpsBearerQosSessionAttributes> CREATOR;
+  }
+
   public abstract class QualifiedNetworksService extends android.app.Service {
     ctor public QualifiedNetworksService();
     method @NonNull public abstract android.telephony.data.QualifiedNetworksService.NetworkAvailabilityProvider onCreateNetworkAvailabilityProvider(int);
