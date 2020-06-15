@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c84331_0cf8068b",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 0,
+      "message": "Why can\u0027t this fix go into NetdUtils?",
+      "range": {
+        "startLine": 1083,
+        "startChar": 16,
+        "endLine": 1083,
+        "endChar": 41
+      },
+      "revId": "e1f84e003d37a1bd9ab0d23cc5361f25a89a450f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}

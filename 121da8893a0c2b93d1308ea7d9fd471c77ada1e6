@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6be95788_764b1980",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "There is also another case: when turning on ethernet tethering if ethernet is already connected in client mode. Suggest:\n\nIf tethering is started on an interface that was being used in client mode, the interface might still be in use by a network inside netd, and adding it to LOCAL_NETID will fail. This can happen, for example, when:\n\n- Switching wifi from client mode to softAp mode on the same interface.\n- Switching from ethernet client mode to Ethernet tethering on the same interface.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4871ecd3_dff0f9fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 10,
+        "startChar": 51,
+        "endLine": 10,
+        "endChar": 61
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22cbe62c_20addbdd",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "Explain in a comment here why this is needed (specifically, the fact that the interface is still in use in netd because the ConnectivityService thread hasn\u0027t processed the disconnect yet). Also include a link to the bug?",
+      "range": {
+        "startLine": 193,
+        "startChar": 42,
+        "endLine": 193,
+        "endChar": 43
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f198c1ac_90c51c98",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "Move the sleep to the \"catch ServiceSpecificException\" clause so that this method succeeds immediately if there is no problem.",
+      "range": {
+        "startLine": 199,
+        "startChar": 20,
+        "endLine": 199,
+        "endChar": 32
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379e06b1_2d4e40b0",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "Use SystemClock.sleep instead.",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 17
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1143de_786c414f",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s any point in catching the exception if all you do is log and rethrow it. The caller has to deal with RemoteException either way, and it\u0027s probably already logging or otherwise dealing with the failure.",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 17
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8272e1f_214d6e97",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "These both seem like a long time. How long does it usually take for this situation to resolve itself? Is sleeping 10x 100ms enough, perhaps? How about 20x 50ms?",
+      "range": {
+        "startLine": 1118,
+        "startChar": 28,
+        "endLine": 1118,
+        "endChar": 78
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fedddc_ca54a00c",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "Why can\u0027t you replace all this with one call to retryNetworkAddInterface?",
+      "range": {
+        "startLine": 1110,
+        "startChar": 0,
+        "endLine": 1119,
+        "endChar": 17
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686a3ec5_1ed6f887",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "Can we also have a test that covers when the first N tries fail and then the test succeeds? I don\u0027t think you can do this with when(), but you might be able to do this using doAnswer() and a integer variable that is incremented every time an networkAddInterface is called.\n\nThat way I think you can avoid needing to mock retryNetworkAddInterface. Mocking retryNetworkAddInterface is strange because it\u0027s not a dependency.",
+      "range": {
+        "startLine": 987,
+        "startChar": 4,
+        "endLine": 987,
+        "endChar": 5
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44034da7_4a81bf6e",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-15T06:55:54Z",
+      "side": 1,
+      "message": "addInterfaceFails",
+      "range": {
+        "startLine": 1019,
+        "startChar": 56,
+        "endLine": 1019,
+        "endChar": 67
+      },
+      "revId": "121da8893a0c2b93d1308ea7d9fd471c77ada1e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
