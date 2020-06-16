@@ -46,6 +46,30 @@
       "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8675e74a_d52a04c5",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-16T11:18:20Z",
+      "side": 1,
+      "message": "That would work too, though it\u0027s a bit strange for the code to rely on a dependencies object to create its own member variables. Either seems acceptable here.",
+      "parentUuid": "e9987fa3_98bc920f",
+      "range": {
+        "startLine": 758,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 5
+      },
+      "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
