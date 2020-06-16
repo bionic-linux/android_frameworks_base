@@ -220,6 +220,8 @@ import com.android.server.utils.PriorityDump;
 
 import com.google.android.collect.Lists;
 
+import libcore.io.IoUtils;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -7504,18 +7506,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void startNattKeepaliveWithFd(Network network, FileDescriptor fd, int resourceId,
             int intervalSeconds, ISocketKeepaliveCallback cb, String srcAddr,
             String dstAddr) {
-        mKeepaliveTracker.startNattKeepalive(
-                getNetworkAgentInfoForNetwork(network), fd, resourceId,
-                intervalSeconds, cb,
-                srcAddr, dstAddr, NattSocketKeepalive.NATT_PORT);
+        try {
+            mKeepaliveTracker.startNattKeepalive(
+                    getNetworkAgentInfoForNetwork(network), fd, resourceId,
+                    intervalSeconds, cb,
+                    srcAddr, dstAddr, NattSocketKeepalive.NATT_PORT);
+        } finally {
+            IoUtils.closeQuietly(fd);
+        }
     }
 
     @Override
     public void startTcpKeepalive(Network network, FileDescriptor fd, int intervalSeconds,
             ISocketKeepaliveCallback cb) {
-        enforceKeepalivePermission();
-        mKeepaliveTracker.startTcpKeepalive(
-                getNetworkAgentInfoForNetwork(network), fd, intervalSeconds, cb);
+        try {
+            enforceKeepalivePermission();
+            mKeepaliveTracker.startTcpKeepalive(
+                    getNetworkAgentInfoForNetwork(network), fd, intervalSeconds, cb);
+        } finally {
+            IoUtils.closeQuietly(fd);
+        }
     }
 
     @Override
