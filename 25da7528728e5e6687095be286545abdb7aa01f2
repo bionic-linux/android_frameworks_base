@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c0ed9d_baa43aab",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-16T14:31:03Z",
+      "side": 1,
+      "message": "{@code RouteInfo} objects",
+      "range": {
+        "startLine": 559,
+        "startChar": 7,
+        "endLine": 559,
+        "endChar": 24
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dba3c5_218e8030",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-16T14:31:03Z",
+      "side": 1,
+      "message": "I think you need:\n\n@IgnoreUpTo(Build.VERSION_CODES.Q)\n\nhere because we only added RouteKey in R. Without this, the test will fail when running on Q devices.",
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d07667_def49d19",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-16T14:31:03Z",
+      "side": 1,
+      "message": "gateway",
+      "range": {
+        "startLine": 399,
+        "startChar": 29,
+        "endLine": 399,
+        "endChar": 39
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce36526_117faa3b",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-16T14:31:03Z",
+      "side": 1,
+      "message": "gateway",
+      "range": {
+        "startLine": 405,
+        "startChar": 24,
+        "endLine": 405,
+        "endChar": 34
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30156fa0_78f8c630",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-16T14:31:03Z",
+      "side": 1,
+      "message": "gateway",
+      "range": {
+        "startLine": 418,
+        "startChar": 21,
+        "endLine": 418,
+        "endChar": 32
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833cb8b8_f4a658d6",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-16T14:31:03Z",
+      "side": 1,
+      "message": "Think you could this too, assuming it passes?\n\n        // Different gateway scope.\n        k1 \u003d new RouteInfo(Prefix(\"2001:db8::/64\"), Address(\"fe80::1%1\"), \"wlan0\").getRouteKey();\n        k2 \u003d new RouteInfo(Prefix(\"2001:db8::/64\"), Address(\"fe80::1%2\"), \"wlan0\").getRouteKey();\n        assertNotEquals(k1, k2);\n\n\nAlso could you add a simple test to LinkProperties as well? Something like:\n\n    @Test @IgnoreUpTo(Build.VERSION_CODES.Q)\n    public void testRouteAddWithSameKey() throws Exception {\n        LinkProperties lp \u003d new LinkProperties();\n\n        final IpPrefix v6 \u003d new IpPrefix(\"64:ff9b::/96\");\n        lp.addRoute(new RouteInfo(v6), address(\"fe80::1\"), \"wlan0\", RTN_UNICAST, 1280);\n        assertEquals(1, lp.getRoutes.size());\n        lp.addRoute(new RouteInfo(v6), address(\"fe80::1\"), \"wlan0\", RTN_UNICAST, 1500);\n        assertEquals(1, lp.getRoutes.size());\n\n        final IpPrefix v4 \u003d new IpPrefix(\"192.0.2.128/25\");\n        lp.addRoute(new RouteInfo(v4), address(\"192.0.2.1\"), \"wlan0\", RTN_UNICAST, 1460);\n        assertEquals(1, lp.getRoutes.size());\n        lp.addRoute(new RouteInfo(v4), address(\"192.0.2.1\"), \"wlan0\", RTN_THROW, 1460);\n        assertEquals(1, lp.getRoutes.size());\n    }",
+      "range": {
+        "startLine": 427,
+        "startChar": 4,
+        "endLine": 427,
+        "endChar": 5
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
