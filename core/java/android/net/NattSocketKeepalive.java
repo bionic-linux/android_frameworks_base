@@ -21,6 +21,8 @@ import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.util.Log;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.concurrent.Executor;
 
@@ -51,9 +53,19 @@ public final class NattSocketKeepalive extends SocketKeepalive {
     void startImpl(int intervalSec) {
         mExecutor.execute(() -> {
             try {
-                mService.startNattKeepaliveWithFd(mNetwork, mPfd.getFileDescriptor(), mResourceId,
-                        intervalSec, mCallback,
-                        mSource.getHostAddress(), mDestination.getHostAddress());
+                int duped;
+                try {
+                    duped = mPfd.dup().detachFd();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                FileDescriptor fd = new FileDescriptor();
+                fd.setInt$(duped);
+
+                mService.startNattKeepaliveWithFd(mNetwork, fd, mResourceId,
+                        intervalSec, mCallback, mSource.getHostAddress(),
+                        mDestination.getHostAddress());
             } catch (RemoteException e) {
                 Log.e(TAG, "Error starting socket keepalive: ", e);
                 throw e.rethrowFromSystemServer();
