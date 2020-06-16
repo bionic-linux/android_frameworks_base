@@ -22,6 +22,30 @@
       "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9987fa3_98bc920f",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-16T11:08:23Z",
+      "side": 1,
+      "message": "Ohh, sorry for typo.\nIn BpfCoordinator constructor.\nIt should be\n+       mIpv6ForwardingRules \u003d initIpv6ForwardingRules();",
+      "parentUuid": "1cb6df40_53391dd0",
+      "range": {
+        "startLine": 758,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 5
+      },
+      "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
