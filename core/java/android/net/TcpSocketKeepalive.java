@@ -22,6 +22,7 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.concurrent.Executor;
 
 /** @hide */
@@ -54,7 +55,15 @@ final class TcpSocketKeepalive extends SocketKeepalive {
     void startImpl(int intervalSec) {
         mExecutor.execute(() -> {
             try {
-                final FileDescriptor fd = mPfd.getFileDescriptor();
+                // startTcpKeepalive is an AIDL interface that expects an ownerless
+                // FileDescriptor that it'll be responsible for closing, so we need to explicitly
+                // create one here.
+                final FileDescriptor fd = new FileDescriptor();
+                try {
+                    fd.setInt$(mPfd.dup().detachFd());
+                } catch (IOException e) {
+                }
+
                 mService.startTcpKeepalive(mNetwork, fd, intervalSec, mCallback);
             } catch (RemoteException e) {
                 Log.e(TAG, "Error starting packet keepalive: ", e);
