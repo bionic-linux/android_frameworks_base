@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cb6df40_53391dd0",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-06-16T11:04:13Z",
+      "side": 1,
+      "message": "If get mIpv6ForwardingRules is really necessary for testing but it won\u0027t use in tethering module itself, I would suggest to have a init method and override it in testing:\n\nIn BpfCoordinator.java\n    public BpfCoordinator(@NonNull Dependencies deps) {\n        mDeps \u003d deps;\n        mHandler \u003d mDeps.getHandler();\n        mNetd \u003d mDeps.getNetd();\n        mLog \u003d mDeps.getSharedLog().forSubComponent(TAG);\n+       mIpv6ForwardingRules \u003d NewForwardingRules();\n    }\n\n    public HashMap\u003cIpServer, LinkedHashMap\u003cInet6Address, Ipv6ForwardingRule\u003e\u003e initIpv6ForwardingRules() {\n        return new LinkedHashMap\u003c\u003e();\n    }\n\nIn BpfCorrdinatorTest.java\n    class MockBpfCoordinator extends BpfCoordinator {\n        public mIpv6ForwardingRulesForTesting;\n\n        @Override\n        public HashMap\u003cIpServer, LinkedHashMap\u003cInet6Address, Ipv6ForwardingRule\u003e\u003e initIpv6ForwardingRules() {\n            mIpv6ForwardingRulesForTesting \u003d super.initIpv6ForwardingRules();\n            return mIpv6ForwardingRulesForTesting;\n        }        \n    }\n\nThen you can use mIpv6ForwardingRulesForTesting from MockBpfCoordinator",
+      "range": {
+        "startLine": 758,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 5
+      },
+      "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
