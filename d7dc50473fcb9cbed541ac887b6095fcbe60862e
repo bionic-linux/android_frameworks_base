@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43801892_7747178e",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-16T10:10:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88825871_d20d9a59",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 22
+      },
+      "revId": "d7dc50473fcb9cbed541ac887b6095fcbe60862e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfcdb06b_35f428cd",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "d7dc50473fcb9cbed541ac887b6095fcbe60862e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235d051f_8854085b",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-16T10:10:27Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for your advice. I didn\u0027t notice this.",
+      "parentUuid": "cfcdb06b_35f428cd",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 147,
+        "endChar": 22
+      },
+      "revId": "d7dc50473fcb9cbed541ac887b6095fcbe60862e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
