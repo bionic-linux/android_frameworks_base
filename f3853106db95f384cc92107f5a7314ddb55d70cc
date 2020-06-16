@@ -70,6 +70,46 @@
       "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf63909_d9494b24",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-16T11:43:53Z",
+      "side": 1,
+      "message": "nit: IIUC this implies the above assertion is true. And if it fails with NPE we will know it if null.\nMaybe remove above line if feasible?\nNo strong opinion.",
+      "range": {
+        "startLine": 545,
+        "startChar": 8,
+        "endLine": 545,
+        "endChar": 38
+      },
+      "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7617d145_0f0eaae7",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-06-16T11:43:53Z",
+      "side": 1,
+      "message": "Do you want to test if the config changes in runtime the coordinator still behaves well?\n true -\u003e false, false -\u003e true",
+      "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
