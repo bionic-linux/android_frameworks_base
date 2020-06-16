@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77ecd6e2_034c4b70",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-06-16T23:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c0ed9d_baa43aab",
+      "range": {
+        "startLine": 559,
+        "startChar": 7,
+        "endLine": 559,
+        "endChar": 24
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06dba3c5_218e8030",
         "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d204b9_84a02ebb",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-06-16T23:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06dba3c5_218e8030",
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "71f63a64_55434572",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-06-16T23:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89d07667_def49d19",
+      "range": {
+        "startLine": 399,
+        "startChar": 29,
+        "endLine": 399,
+        "endChar": 39
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ce36526_117faa3b",
         "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c98fdda_6a6d38f1",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-06-16T23:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ce36526_117faa3b",
+      "range": {
+        "startLine": 405,
+        "startChar": 24,
+        "endLine": 405,
+        "endChar": 34
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "4a4c9638_4dc57b53",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-06-16T23:36:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30156fa0_78f8c630",
+      "range": {
+        "startLine": 418,
+        "startChar": 21,
+        "endLine": 418,
+        "endChar": 32
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "833cb8b8_f4a658d6",
         "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a16ce86_09c3e430",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-06-16T23:36:46Z",
+      "side": 1,
+      "message": "Ha, looks like RouteKey did not handle IPv6 address scope at the moment (Inet6Address.equals() does not take scope Id into consideration). I fixed it in the new RouteKey implementation.",
+      "parentUuid": "833cb8b8_f4a658d6",
+      "range": {
+        "startLine": 427,
+        "startChar": 4,
+        "endLine": 427,
+        "endChar": 5
+      },
+      "revId": "25da7528728e5e6687095be286545abdb7aa01f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
