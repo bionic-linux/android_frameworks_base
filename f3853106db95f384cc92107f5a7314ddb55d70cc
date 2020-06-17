@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ccce2f2a_df13e6bc",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/BpfCoordinator.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-17T06:02:44Z",
+      "side": 1,
+      "message": "Thanks for both of your comment. \n\nFor the limited time for release, I would like to keep current approach. Then, we could review if we really need to initialize the map in a dependencies object as mark\u0027s approach.",
+      "parentUuid": "8675e74a_d52a04c5",
+      "range": {
+        "startLine": 758,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 5
+      },
+      "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf63909_d9494b24",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
         "patchSetId": 11
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "05e17089_9548f34d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-17T06:02:44Z",
+      "side": 1,
+      "message": "assertNotNull(rules) is a protection for fail case.\n\nIn fail case, |rules| may be a null pointer. \"rules.size()\" will raise an null pointer exception which crashes the test process. This null pointer check could help to avoid that and continue the remaining test cases.",
+      "parentUuid": "5bf63909_d9494b24",
+      "range": {
+        "startLine": 545,
+        "startChar": 8,
+        "endLine": 545,
+        "endChar": 38
+      },
+      "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7617d145_0f0eaae7",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
         "patchSetId": 11
@@ -107,6 +155,23 @@
       "writtenOn": "2020-06-16T11:43:53Z",
       "side": 1,
       "message": "Do you want to test if the config changes in runtime the coordinator still behaves well?\n true -\u003e false, false -\u003e true",
+      "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05682304_e32eaa18",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/BpfCoordinatorTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1348424
+      },
+      "writtenOn": "2020-06-17T06:02:44Z",
+      "side": 1,
+      "message": "noted.\nkeep this comment as unresolved. thanks for your advice.",
       "revId": "f3853106db95f384cc92107f5a7314ddb55d70cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
