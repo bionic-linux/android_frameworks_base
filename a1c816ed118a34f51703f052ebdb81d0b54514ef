@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3259c7ba_13d839ab",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-17T07:35:08Z",
+      "side": 1,
+      "message": "Ouch. After thinking about this for a while, I think this was a mistake, sorry.\n\nThe netd functions for adding/updating routes don\u0027t support scoped addresses. Even if they did, the netlink API to add/update routes doesn\u0027t support scoped addresses: rtm_to_fib6_config calls nla_get_in6_addr on the RTA_GATEWAY attribute, which does not include the scope ID. Therefore, from both the kernel\u0027s perspective and netd\u0027s perspective, fe80::1%1 and fe80::1%2 are the same. The same goes for the prefix (RTA_DST). The only indication of the interface is the interface index in RTA_OIF.\n\nSo maybe replace this with a comment saying:\n\n            // No need to do anything special for scoped addresses. Inet6Address#equals does not\n            // consider the scope ID, but the netd route IPCs (e.g., INetd#networkAddRouteParcel)\n            // and the kernel ignore scoped addresses both in the prefix and in the nexthop and only\n            // look at RTA_OIF.\n            return Objects.equals(p.mDestination, mDestination)\n\n                    \u0026\u0026 Objects.equals(p.mGateway, mGateway)",
+      "range": {
+        "startLine": 584,
+        "startChar": 23,
+        "endLine": 584,
+        "endChar": 49
+      },
+      "revId": "a1c816ed118a34f51703f052ebdb81d0b54514ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f707a953_172fce45",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-17T07:35:08Z",
+      "side": 1,
+      "message": "... so we can remove this...",
+      "range": {
+        "startLine": 593,
+        "startChar": 0,
+        "endLine": 605,
+        "endChar": 9
+      },
+      "revId": "a1c816ed118a34f51703f052ebdb81d0b54514ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3694dbf5_f92b41c0",
+        "filename": "tests/net/common/java/android/net/RouteInfoTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-06-17T07:35:08Z",
+      "side": 1,
+      "message": "... and change this to:\n\n        // Different scope IDs are ignored by the kernel, so we consider them equal here too.\n        k1 \u003d new RouteInfo(Prefix(\"2001:db8::/64\"), Address(\"fe80::1%1\"), \"wlan0\").getRouteKey();\n        k2 \u003d new RouteInfo(Prefix(\"2001:db8::/64\"), Address(\"fe80::1%2\"), \"wlan0\").getRouteKey();\n        assertEquals(k1, k2);",
+      "range": {
+        "startLine": 423,
+        "startChar": 0,
+        "endLine": 426,
+        "endChar": 32
+      },
+      "revId": "a1c816ed118a34f51703f052ebdb81d0b54514ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
