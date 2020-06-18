@@ -231,6 +231,203 @@
         <item>en-ZA</item> <!-- English (South Africa) -->
         <item>en-ZM</item> <!-- English (Zambia) -->
         <item>en-ZW</item> <!-- English (Zimbabwe) -->
+        <item>eo-AD</item> <!-- Esperanto (Andorra) -->
+        <item>eo-AE</item> <!-- Esperanto (United Arab Emirates) -->
+        <item>eo-AF</item> <!-- Esperanto (Afghanistan) -->
+        <item>eo-AG</item> <!-- Esperanto (Antigua and Barbuda) -->
+        <item>eo-AL</item> <!-- Esperanto (Albania) -->
+        <item>eo-AM</item> <!-- Esperanto (Armenia) -->
+        <item>eo-AO</item> <!-- Esperanto (Angola) -->
+        <item>eo-AR</item> <!-- Esperanto (Argentina) -->
+        <item>eo-AT</item> <!-- Esperanto (Austria) -->
+        <item>eo-AU</item> <!-- Esperanto (Australia) -->
+        <item>eo-AZ</item> <!-- Esperanto (Azerbaijan) -->
+        <item>eo-BA</item> <!-- Esperanto (Bosnia and Herzegovina) -->
+        <item>eo-BB</item> <!-- Esperanto (Barbados) -->
+        <item>eo-BD</item> <!-- Esperanto (Bangladesh) -->
+        <item>eo-BE</item> <!-- Esperanto (Belgium) -->
+        <item>eo-BF</item> <!-- Esperanto (Burkina Faso) -->
+        <item>eo-BG</item> <!-- Esperanto (Bulgaria) -->
+        <item>eo-BH</item> <!-- Esperanto (Bahrain) -->
+        <item>eo-BI</item> <!-- Esperanto (Burundi) -->
+        <item>eo-BJ</item> <!-- Esperanto (Benin) -->
+        <item>eo-BN</item> <!-- Esperanto (Brunei Darussalam) -->
+        <item>eo-BO</item> <!-- Esperanto (Bolivia) -->
+        <item>eo-BR</item> <!-- Esperanto (Brazil) -->
+        <item>eo-BS</item> <!-- Esperanto (Bahamas) -->
+        <item>eo-BT</item> <!-- Esperanto (Bhutan) -->
+        <item>eo-BW</item> <!-- Esperanto (Botswana) -->
+        <item>eo-BY</item> <!-- Esperanto (Belarus) -->
+        <item>eo-BZ</item> <!-- Esperanto (Belize) -->
+        <item>eo-CA</item> <!-- Esperanto (Canada) -->
+        <item>eo-CD</item> <!-- Esperanto (Democratic Republic of Congo) -->
+        <item>eo-CF</item> <!-- Esperanto (Central African Republic) -->
+        <item>eo-CG</item> <!-- Esperanto (Congo) -->
+        <item>eo-CH</item> <!-- Esperanto (Switzerland) -->
+        <item>eo-CI</item> <!-- Esperanto (Côte d'Ivoire) -->
+        <item>eo-CL</item> <!-- Esperanto (Chile) -->
+        <item>eo-CM</item> <!-- Esperanto (Cameroon) -->
+        <item>eo-CN</item> <!-- Esperanto (China) -->
+        <item>eo-CO</item> <!-- Esperanto (Colombia) -->
+        <item>eo-CR</item> <!-- Esperanto (Costa Rica) -->
+        <item>eo-CU</item> <!-- Esperanto (Cuba) -->
+        <item>eo-CV</item> <!-- Esperanto (Cabo Verde) -->
+        <item>eo-CY</item> <!-- Esperanto (Cyprus) -->
+        <item>eo-CZ</item> <!-- Esperanto (Czechia) -->
+        <item>eo-DE</item> <!-- Esperanto (Germany) -->
+        <item>eo-DJ</item> <!-- Esperanto (Djibouti) -->
+        <item>eo-DK</item> <!-- Esperanto (Denmark) -->
+        <item>eo-DM</item> <!-- Esperanto (Dominica) -->
+        <item>eo-DO</item> <!-- Esperanto (Dominican Republic) -->
+        <item>eo-DZ</item> <!-- Esperanto (Algeria) -->
+        <item>eo-EC</item> <!-- Esperanto (Ecuador) -->
+        <item>eo-EE</item> <!-- Esperanto (Estonia) -->
+        <item>eo-EG</item> <!-- Esperanto (Egypt) -->
+        <item>eo-EH</item> <!-- Esperanto (Western Sahara) -->
+        <item>eo-ER</item> <!-- Esperanto (Eritrea) -->
+        <item>eo-ES</item> <!-- Esperanto (Spain) -->
+        <item>eo-ET</item> <!-- Esperanto (Ethiopia) -->
+        <item>eo-FI</item> <!-- Esperanto (Finland) -->
+        <item>eo-FJ</item> <!-- Esperanto (Fiji) -->
+        <item>eo-FM</item> <!-- Esperanto (Micronesia) -->
+        <item>eo-FR</item> <!-- Esperanto (France ) -->
+        <item>eo-GA</item> <!-- Esperanto (Gabon) -->
+        <item>eo-GB</item> <!-- Esperanto (Great Britain) -->
+        <item>eo-GD</item> <!-- Esperanto (Grenada) -->
+        <item>eo-GE</item> <!-- Esperanto (Georgia) -->
+        <item>eo-GH</item> <!-- Esperanto (Ghana) -->
+        <item>eo-GM</item> <!-- Esperanto (Gambia) -->
+        <item>eo-GN</item> <!-- Esperanto (Guinea) -->
+        <item>eo-GQ</item> <!-- Esperanto (Equatorial Guinea) -->
+        <item>eo-GR</item> <!-- Esperanto (Greece) -->
+        <item>eo-GT</item> <!-- Esperanto (Guatemala) -->
+        <item>eo-GW</item> <!-- Esperanto (Guinea-Bissau) -->
+        <item>eo-GY</item> <!-- Esperanto (Guyana) -->
+        <item>eo-HN</item> <!-- Esperanto (Honduras) -->
+        <item>eo-HR</item> <!-- Esperanto (Croatia) -->
+        <item>eo-HT</item> <!-- Esperanto (Haiti) -->
+        <item>eo-HU</item> <!-- Esperanto (Hungary) -->
+        <item>eo-ID</item> <!-- Esperanto (Indonesia) -->
+        <item>eo-IE</item> <!-- Esperanto (Ireland) -->
+        <item>eo-IL</item> <!-- Esperanto (Israel) -->
+        <item>eo-IN</item> <!-- Esperanto (India) -->
+        <item>eo-IQ</item> <!-- Esperanto (Iraq) -->
+        <item>eo-IR</item> <!-- Esperanto (Iran) -->
+        <item>eo-IS</item> <!-- Esperanto (Iceland) -->
+        <item>eo-IT</item> <!-- Esperanto (Italy) -->
+        <item>eo-JM</item> <!-- Esperanto (Jamaica) -->
+        <item>eo-JO</item> <!-- Esperanto (Jordan) -->
+        <item>eo-JP</item> <!-- Esperanto (Japan) -->
+        <item>eo-KE</item> <!-- Esperanto (Kenya) -->
+        <item>eo-KG</item> <!-- Esperanto (Kyrgyzstan) -->
+        <item>eo-KH</item> <!-- Esperanto (Cambodia) -->
+        <item>eo-KI</item> <!-- Esperanto (Kiribati) -->
+        <item>eo-KM</item> <!-- Esperanto (Comoros) -->
+        <item>eo-KN</item> <!-- Esperanto (Saint Kitts and Nevis) -->
+        <item>eo-KP</item> <!-- Esperanto (North Korea) -->
+        <item>eo-KR</item> <!-- Esperanto (South Korea) -->
+        <item>eo-KW</item> <!-- Esperanto (Kuwait) -->
+        <item>eo-KZ</item> <!-- Esperanto (Kazakhstan) -->
+        <item>eo-LA</item> <!-- Esperanto (Laos) -->
+        <item>eo-LB</item> <!-- Esperanto (Lebanon) -->
+        <item>eo-LC</item> <!-- Esperanto (Saint Lucia) -->
+        <item>eo-LI</item> <!-- Esperanto (Liechtenstein) -->
+        <item>eo-LK</item> <!-- Esperanto (Sri Lanka) -->
+        <item>eo-LR</item> <!-- Esperanto (Liberia) -->
+        <item>eo-LS</item> <!-- Esperanto (Lesotho) -->
+        <item>eo-LT</item> <!-- Esperanto (Lithuania) -->
+        <item>eo-LU</item> <!-- Esperanto (Luxembourg) -->
+        <item>eo-LV</item> <!-- Esperanto (Latvia) -->
+        <item>eo-LY</item> <!-- Esperanto (Libya) -->
+        <item>eo-MA</item> <!-- Esperanto (Morocco) -->
+        <item>eo-MC</item> <!-- Esperanto (Monaco) -->
+        <item>eo-MD</item> <!-- Esperanto (Moldova) -->
+        <item>eo-ME</item> <!-- Esperanto (Montenegro) -->
+        <item>eo-MG</item> <!-- Esperanto (Madagascar) -->
+        <item>eo-MH</item> <!-- Esperanto (Marshall Islands) -->
+        <item>eo-MK</item> <!-- Esperanto (North Macedonia) -->
+        <item>eo-ML</item> <!-- Esperanto (Mali) -->
+        <item>eo-MM</item> <!-- Esperanto (Myanmar) -->
+        <item>eo-MN</item> <!-- Esperanto (Mongolia) -->
+        <item>eo-MR</item> <!-- Esperanto (Mauritania) -->
+        <item>eo-MT</item> <!-- Esperanto (Malta) -->
+        <item>eo-MU</item> <!-- Esperanto (Mauritius) -->
+        <item>eo-MV</item> <!-- Esperanto (Maldives) -->
+        <item>eo-MW</item> <!-- Esperanto (Malawi) -->
+        <item>eo-MX</item> <!-- Esperanto (Mexico) -->
+        <item>eo-MY</item> <!-- Esperanto (Malaysia) -->
+        <item>eo-MZ</item> <!-- Esperanto (Mozambique) -->
+        <item>eo-NA</item> <!-- Esperanto (Namibia) -->
+        <item>eo-NE</item> <!-- Esperanto (Niger) -->
+        <item>eo-NG</item> <!-- Esperanto (Nigeria) -->
+        <item>eo-NI</item> <!-- Esperanto (Nicaragua) -->
+        <item>eo-NL</item> <!-- Esperanto (Netherlands) -->
+        <item>eo-NO</item> <!-- Esperanto (Norway) -->
+        <item>eo-NP</item> <!-- Esperanto (Nepal) -->
+        <item>eo-NR</item> <!-- Esperanto (Nauru) -->
+        <item>eo-NZ</item> <!-- Esperanto (New Zealand) -->
+        <item>eo-OM</item> <!-- Esperanto (Oman) -->
+        <item>eo-PA</item> <!-- Esperanto (Panama) -->
+        <item>eo-PE</item> <!-- Esperanto (Peru) -->
+        <item>eo-PG</item> <!-- Esperanto (Papua New Guinea) -->
+        <item>eo-PH</item> <!-- Esperanto (Philippines) -->
+        <item>eo-PK</item> <!-- Esperanto (Pakistan) -->
+        <item>eo-PL</item> <!-- Esperanto (Poland) -->
+        <item>eo-PS</item> <!-- Esperanto (Palestine) -->
+        <item>eo-PT</item> <!-- Esperanto (Portugal) -->
+        <item>eo-PW</item> <!-- Esperanto (Palau) -->
+        <item>eo-PY</item> <!-- Esperanto (Paraguay) -->
+        <item>eo-QA</item> <!-- Esperanto (Qatar) -->
+        <item>eo-RO</item> <!-- Esperanto (Romania) -->
+        <item>eo-RS</item> <!-- Esperanto (Serbia) -->
+        <item>eo-RU</item> <!-- Esperanto (Russian Federation) -->
+        <item>eo-RW</item> <!-- Esperanto (Rwanda) -->
+        <item>eo-SA</item> <!-- Esperanto (Saudi Arabia) -->
+        <item>eo-SB</item> <!-- Esperanto (Solomon Islands) -->
+        <item>eo-SC</item> <!-- Esperanto (Seychelles) -->
+        <item>eo-SD</item> <!-- Esperanto (Sudan) -->
+        <item>eo-SE</item> <!-- Esperanto (Sweden) -->
+        <item>eo-SG</item> <!-- Esperanto (Singapore) -->
+        <item>eo-SI</item> <!-- Esperanto (Slovenia) -->
+        <item>eo-SK</item> <!-- Esperanto (Slovakia) -->
+        <item>eo-SL</item> <!-- Esperanto (Sierra Leone) -->
+        <item>eo-SM</item> <!-- Esperanto (San Marino) -->
+        <item>eo-SN</item> <!-- Esperanto (Senegal) -->
+        <item>eo-SO</item> <!-- Esperanto (Somalia) -->
+        <item>eo-SR</item> <!-- Esperanto (Suriname) -->
+        <item>eo-SS</item> <!-- Esperanto (South Sudan) -->
+        <item>eo-ST</item> <!-- Esperanto (Sao Tome and Principe) -->
+        <item>eo-SV</item> <!-- Esperanto (El Salvador) -->
+        <item>eo-SY</item> <!-- Esperanto (Syrian Arab Republic) -->
+        <item>eo-SZ</item> <!-- Esperanto (Eswatini) -->
+        <item>eo-TD</item> <!-- Esperanto (Chad) -->
+        <item>eo-TG</item> <!-- Esperanto (Togo) -->
+        <item>eo-TH</item> <!-- Esperanto (Thailand) -->
+        <item>eo-TJ</item> <!-- Esperanto (Tajikistan) -->
+        <item>eo-TL</item> <!-- Esperanto (Timor-Leste) -->
+        <item>eo-TM</item> <!-- Esperanto (Turkmenistan) -->
+        <item>eo-TN</item> <!-- Esperanto (Tunisia) -->
+        <item>eo-TO</item> <!-- Esperanto (Tonga) -->
+        <item>eo-TR</item> <!-- Esperanto (Turkey) -->
+        <item>eo-TT</item> <!-- Esperanto (Trinidad and Tobago) -->
+        <item>eo-TV</item> <!-- Esperanto (Tuvalu) -->
+        <item>eo-TW</item> <!-- Esperanto (Taiwan) -->
+        <item>eo-TZ</item> <!-- Esperanto (Tanzania) -->
+        <item>eo-UA</item> <!-- Esperanto (Ukraine) -->
+        <item>eo-UG</item> <!-- Esperanto (Uganda) -->
+        <item>eo-US</item> <!-- Esperanto (United States) -->
+        <item>eo-UY</item> <!-- Esperanto (Uruguay) -->
+        <item>eo-UZ</item> <!-- Esperanto (Uzbekistan) -->
+        <item>eo-VA</item> <!-- Esperanto (Vatican) -->
+        <item>eo-VC</item> <!-- Esperanto (Saint Vincent and the Grenadines) -->
+        <item>eo-VE</item> <!-- Esperanto (Venezuela) -->
+        <item>eo-VN</item> <!-- Esperanto (Viet Nam) -->
+        <item>eo-VU</item> <!-- Esperanto (Vanuatu) -->
+        <item>eo-WS</item> <!-- Esperanto (Samoa) -->
+        <item>eo-YE</item> <!-- Esperanto (Yemen) -->
+        <item>eo-ZA</item> <!-- Esperanto (South Africa) -->
+        <item>eo-ZM</item> <!-- Esperanto (Zambia) -->
+        <item>eo-ZW</item> <!-- Esperanto (Zimbabwe) -->
         <item>es-AR</item> <!-- Spanish (Argentina) -->
         <item>es-BO</item> <!-- Spanish (Bolivia) -->
         <item>es-BR</item> <!-- Spanish (Brazil) -->
