@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6d378b3e_851c71e0",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-23T04:43:11Z",
+      "side": 1,
+      "message": "Sure, but what else does the test receive ? What other intents does this API see ?",
+      "parentUuid": "b06af36f_c7189802",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 49
+      },
+      "revId": "75ad65049d852b1149c4de683b2212d457f4ddde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1db47c3_17678c1a",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "75ad65049d852b1149c4de683b2212d457f4ddde",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a628589_cc28b6b0",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-23T04:43:11Z",
+      "side": 1,
+      "message": "Ah sorry, I was confused. Thanks.",
+      "parentUuid": "14cf4e36_ef2ee83e",
+      "range": {
+        "startLine": 192,
+        "startChar": 28,
+        "endLine": 192,
+        "endChar": 32
+      },
+      "revId": "75ad65049d852b1149c4de683b2212d457f4ddde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
