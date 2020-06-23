@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "7bd58a45_d3c7c9a7",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-06-23T23:50:45Z",
+      "side": 1,
+      "message": "Ah so it\u0027s the broadcast pending intent that we need to ignore. This should be documented with a comment.",
+      "parentUuid": "4d4ce51e_1d889243",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 49
+      },
+      "revId": "75ad65049d852b1149c4de683b2212d457f4ddde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1db47c3_17678c1a",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
