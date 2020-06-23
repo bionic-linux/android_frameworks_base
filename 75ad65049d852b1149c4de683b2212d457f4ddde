@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4d4ce51e_1d889243",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-06-23T06:21:26Z",
+      "side": 1,
+      "message": "Because this test is to ensure that the intent inside activity pending intent has set FLAG_ACTIVITY_NEW_TASK as PendingIntent#getActivity() doc said. The broadcast pending intent doesn\u0027t have this restriction, so we just ignore check for it.",
+      "parentUuid": "6d378b3e_851c71e0",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 49
+      },
+      "revId": "75ad65049d852b1149c4de683b2212d457f4ddde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1db47c3_17678c1a",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
