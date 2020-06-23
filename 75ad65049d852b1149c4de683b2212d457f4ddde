@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b06af36f_c7189802",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-06-23T02:57:50Z",
+      "side": 1,
+      "message": "This check is necessary for activity pending intent only. Will add the comment accordingly.",
+      "parentUuid": "aefaf1c2_092af4e7",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 49
+      },
+      "revId": "75ad65049d852b1149c4de683b2212d457f4ddde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1db47c3_17678c1a",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-06-21T23:41:46Z",
       "side": 1,
       "message": "Don\u0027t you mean false here ? True means that you\u0027ll pass the test if you get any intent that has FLAG_IMMUTABLE and some other type.",
+      "range": {
+        "startLine": 192,
+        "startChar": 28,
+        "endLine": 192,
+        "endChar": 32
+      },
+      "revId": "75ad65049d852b1149c4de683b2212d457f4ddde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14cf4e36_ef2ee83e",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-06-23T02:57:50Z",
+      "side": 1,
+      "message": "No, it\u0027s ture here. Because only activity pending intent has set FLAG_ACTIVITY_NEW_TASK flag to the intent.",
+      "parentUuid": "a1db47c3_17678c1a",
       "range": {
         "startLine": 192,
         "startChar": 28,
