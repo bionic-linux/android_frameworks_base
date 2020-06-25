@@ -22,6 +22,30 @@
       "revId": "3bde2d558a899d3865969ccc407741c813175cc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe37881_ce885bf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-06-25T09:16:25Z",
+      "side": 1,
+      "message": "I do usually but the commit hook script added the new Change-Id, most likely because of the (cherry picked comment) below and I didn\u0027t catch it before uploading.",
+      "parentUuid": "76d7a2aa_f5a5fbb4",
+      "range": {
+        "startLine": 15,
+        "startChar": 52,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "3bde2d558a899d3865969ccc407741c813175cc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
