@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "5b453816_1b2f6714",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-06-29T02:02:45Z",
+      "side": 1,
+      "message": "This code is gone.",
+      "parentUuid": "7bd58a45_d3c7c9a7",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 49
+      },
+      "revId": "75ad65049d852b1149c4de683b2212d457f4ddde",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1db47c3_17678c1a",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/TetheringNotificationUpdaterTest.kt",
         "patchSetId": 2
