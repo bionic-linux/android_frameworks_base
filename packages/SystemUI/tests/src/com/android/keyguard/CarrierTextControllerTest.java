@@ -520,4 +520,64 @@ public class CarrierTextControllerTest extends SysuiTestCase {
         assertEquals(TEST_CARRIER + SEPARATOR + TEST_CARRIER,
                 captor.getValue().carrierText);
     }
+
+    @Test
+    public void testGetStatusForIccState() {
+        when(mKeyguardUpdateMonitor.isDeviceProvisioned()).thenReturn(false);
+        assertEquals(CarrierTextController.StatusMode.SimMissingLocked,
+                mCarrierTextController.getStatusForIccState(TelephonyManager.SIM_STATE_ABSENT));
+        assertEquals(CarrierTextController.StatusMode.NetworkLocked,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_NETWORK_LOCKED));
+        assertEquals(CarrierTextController.StatusMode.SimNotReady,
+                mCarrierTextController.getStatusForIccState(TelephonyManager.SIM_STATE_NOT_READY));
+        assertEquals(CarrierTextController.StatusMode.SimLocked,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PIN_REQUIRED));
+        assertEquals(CarrierTextController.StatusMode.SimPukLocked,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PUK_REQUIRED));
+        assertEquals(CarrierTextController.StatusMode.Normal,
+                mCarrierTextController.getStatusForIccState(TelephonyManager.SIM_STATE_READY));
+        assertEquals(CarrierTextController.StatusMode.SimMissingLocked,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PERM_DISABLED));
+        assertEquals(CarrierTextController.StatusMode.SimUnknown,
+                mCarrierTextController.getStatusForIccState(TelephonyManager.SIM_STATE_UNKNOWN));
+        assertEquals(CarrierTextController.StatusMode.SimIoError,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_CARD_IO_ERROR));
+        assertEquals(CarrierTextController.StatusMode.SimRestricted,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_CARD_RESTRICTED));
+
+        when(mKeyguardUpdateMonitor.isDeviceProvisioned()).thenReturn(true);
+        assertEquals(CarrierTextController.StatusMode.SimMissing,
+                mCarrierTextController.getStatusForIccState(TelephonyManager.SIM_STATE_ABSENT));
+        assertEquals(CarrierTextController.StatusMode.NetworkLocked,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_NETWORK_LOCKED));
+        assertEquals(CarrierTextController.StatusMode.SimNotReady,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_NOT_READY));
+        assertEquals(CarrierTextController.StatusMode.SimLocked,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PIN_REQUIRED));
+        assertEquals(CarrierTextController.StatusMode.SimPukLocked,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PUK_REQUIRED));
+        assertEquals(CarrierTextController.StatusMode.Normal,
+                mCarrierTextController.getStatusForIccState(TelephonyManager.SIM_STATE_READY));
+        assertEquals(CarrierTextController.StatusMode.SimPermDisabled,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_PERM_DISABLED));
+        assertEquals(CarrierTextController.StatusMode.SimUnknown,
+                mCarrierTextController.getStatusForIccState(TelephonyManager.SIM_STATE_UNKNOWN));
+        assertEquals(CarrierTextController.StatusMode.SimIoError,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_CARD_IO_ERROR));
+        assertEquals(CarrierTextController.StatusMode.SimRestricted,
+                mCarrierTextController.getStatusForIccState(
+                        TelephonyManager.SIM_STATE_CARD_RESTRICTED));
+    }
 }
