@@ -1284,17 +1284,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
             int subId = intent.getIntExtra(SubscriptionManager.EXTRA_SUBSCRIPTION_INDEX,
                     SubscriptionManager.INVALID_SUBSCRIPTION_ID);
             if (IccCardConstants.INTENT_VALUE_ICC_ABSENT.equals(stateExtra)) {
-                final String absentReason = intent
-                    .getStringExtra(IccCardConstants.INTENT_KEY_LOCKED_REASON);
-
-                if (IccCardConstants.INTENT_VALUE_ABSENT_ON_PERM_DISABLED.equals(
-                        absentReason)) {
-                    state = IccCardConstants.State.PERM_DISABLED;
-                } else {
-                    state = IccCardConstants.State.ABSENT;
-                }
-            } else if (IccCardConstants.INTENT_VALUE_ICC_READY.equals(stateExtra)) {
-                state = IccCardConstants.State.READY;
+                state = IccCardConstants.State.ABSENT;
             } else if (IccCardConstants.INTENT_VALUE_ICC_LOCKED.equals(stateExtra)) {
                 final String lockedReason = intent
                         .getStringExtra(IccCardConstants.INTENT_KEY_LOCKED_REASON);
@@ -1302,14 +1292,19 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                     state = IccCardConstants.State.PIN_REQUIRED;
                 } else if (IccCardConstants.INTENT_VALUE_LOCKED_ON_PUK.equals(lockedReason)) {
                     state = IccCardConstants.State.PUK_REQUIRED;
+                } else if (IccCardConstants.INTENT_VALUE_LOCKED_NETWORK.equals(lockedReason)) {
+                    state = IccCardConstants.State.NETWORK_LOCKED;
+                } else if (IccCardConstants.INTENT_VALUE_ABSENT_ON_PERM_DISABLED.equals(
+                        lockedReason)) {
+                    state = IccCardConstants.State.PERM_DISABLED;
                 } else {
+                    // This should never happen.
                     state = IccCardConstants.State.UNKNOWN;
                 }
-            } else if (IccCardConstants.INTENT_VALUE_LOCKED_NETWORK.equals(stateExtra)) {
-                state = IccCardConstants.State.NETWORK_LOCKED;
             } else if (IccCardConstants.INTENT_VALUE_ICC_CARD_IO_ERROR.equals(stateExtra)) {
                 state = IccCardConstants.State.CARD_IO_ERROR;
             } else if (IccCardConstants.INTENT_VALUE_ICC_LOADED.equals(stateExtra)
+                        || IccCardConstants.INTENT_VALUE_ICC_READY.equals(stateExtra)
                         || IccCardConstants.INTENT_VALUE_ICC_IMSI.equals(stateExtra)) {
                 // This is required because telephony doesn't return to "READY" after
                 // these state transitions. See bug 7197471.

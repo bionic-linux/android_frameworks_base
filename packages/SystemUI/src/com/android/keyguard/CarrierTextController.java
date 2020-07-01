@@ -487,18 +487,17 @@ public class CarrierTextController {
             return CarrierTextController.StatusMode.Normal;
         }
 
-        final boolean missingAndNotProvisioned =
-                !KeyguardUpdateMonitor.getInstance(mContext).isDeviceProvisioned()
-                        && (simState == IccCardConstants.State.ABSENT
-                        || simState == IccCardConstants.State.PERM_DISABLED);
+        if (!KeyguardUpdateMonitor.getInstance(mContext).isDeviceProvisioned()
+                && (simState == IccCardConstants.State.ABSENT
+                        || simState == IccCardConstants.State.PERM_DISABLED)) {
+            return CarrierTextController.StatusMode.SimMissingLocked;
+        }
 
-        // Assume we're NETWORK_LOCKED if not provisioned
-        simState = missingAndNotProvisioned ? IccCardConstants.State.NETWORK_LOCKED : simState;
         switch (simState) {
             case ABSENT:
                 return CarrierTextController.StatusMode.SimMissing;
             case NETWORK_LOCKED:
-                return CarrierTextController.StatusMode.SimMissingLocked;
+                return CarrierTextController.StatusMode.NetworkLocked;
             case NOT_READY:
                 return CarrierTextController.StatusMode.SimNotReady;
             case PIN_REQUIRED:
