@@ -143,7 +143,8 @@ public class CarrierTextController {
     /**
      * The status of this lock screen. Primarily used for widgets on LockScreen.
      */
-    private enum StatusMode {
+    @VisibleForTesting
+    protected enum StatusMode {
         Normal, // Normal case (sim card present, it's not locked)
         NetworkLocked, // SIM card is 'network locked'.
         SimMissing, // SIM card is missing.
@@ -153,6 +154,7 @@ public class CarrierTextController {
         SimPermDisabled, // SIM card is permanently disabled due to PUK unlock failure
         SimNotReady, // SIM is not ready yet. May never be on devices w/o a SIM.
         SimIoError, // SIM card is faulty
+        SimRestricted,// SIM Card restricted, present but not usable due to carrier restrictions.
         SimUnknown // SIM card is unknown
     }
 
@@ -473,6 +475,7 @@ public class CarrierTextController {
                         getContext().getText(R.string.keyguard_sim_error_message_short),
                         text);
                 break;
+            case SimRestricted: // fall through
             case SimUnknown:
                 carrierText = null;
                 break;
@@ -515,19 +518,19 @@ public class CarrierTextController {
     /**
      * Determine the current status of the lock screen given the SIM state and other stuff.
      */
-    private CarrierTextController.StatusMode getStatusForIccState(int simState) {
-        final boolean missingAndNotProvisioned =
-                !mKeyguardUpdateMonitor.isDeviceProvisioned()
-                        && (simState == TelephonyManager.SIM_STATE_ABSENT
-                        || simState == TelephonyManager.SIM_STATE_PERM_DISABLED);
+    @VisibleForTesting
+    protected CarrierTextController.StatusMode getStatusForIccState(int simState) {
+        if (!mKeyguardUpdateMonitor.isDeviceProvisioned()
+                && (simState == TelephonyManager.SIM_STATE_ABSENT
+                        || simState == TelephonyManager.SIM_STATE_PERM_DISABLED)) {
+            return CarrierTextController.StatusMode.SimMissingLocked;
+        }
 
-        // Assume we're NETWORK_LOCKED if not provisioned
-        simState = missingAndNotProvisioned ? TelephonyManager.SIM_STATE_NETWORK_LOCKED : simState;
         switch (simState) {
             case TelephonyManager.SIM_STATE_ABSENT:
                 return CarrierTextController.StatusMode.SimMissing;
             case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
-                return CarrierTextController.StatusMode.SimMissingLocked;
+                return CarrierTextController.StatusMode.NetworkLocked;
             case TelephonyManager.SIM_STATE_NOT_READY:
                 return CarrierTextController.StatusMode.SimNotReady;
             case TelephonyManager.SIM_STATE_PIN_REQUIRED:
@@ -542,6 +545,8 @@ public class CarrierTextController {
                 return CarrierTextController.StatusMode.SimUnknown;
             case TelephonyManager.SIM_STATE_CARD_IO_ERROR:
                 return CarrierTextController.StatusMode.SimIoError;
+            case TelephonyManager.SIM_STATE_CARD_RESTRICTED:
+                return CarrierTextController.StatusMode.SimRestricted;
         }
         return CarrierTextController.StatusMode.SimUnknown;
     }
