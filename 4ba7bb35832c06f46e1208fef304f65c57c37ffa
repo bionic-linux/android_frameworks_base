@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb2ac4cc_7ae6fd13",
+        "filename": "packages/Tethering/jarjar-rules.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-01T06:08:24Z",
+      "side": 1,
+      "message": "bad copy-paste",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 61
+      },
+      "revId": "4ba7bb35832c06f46e1208fef304f65c57c37ffa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
