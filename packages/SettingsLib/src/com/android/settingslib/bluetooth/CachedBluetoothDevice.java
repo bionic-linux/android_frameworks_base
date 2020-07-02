@@ -55,7 +55,7 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     private static final String TAG = "CachedBluetoothDevice";
 
     // See mConnectAttempted
-    private static final long MAX_UUID_DELAY_FOR_AUTO_CONNECT = 5000;
+    private static final long MAX_UUID_DELAY_FOR_AUTO_CONNECT = 20000;
     // Some Hearing Aids (especially the 2nd device) needs more time to do service discovery
     private static final long MAX_HEARING_AIDS_DELAY_FOR_AUTO_CONNECT = 15000;
     private static final long MAX_HOGP_DELAY_FOR_AUTO_CONNECT = 30000;
