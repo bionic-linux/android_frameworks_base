@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9094ccf5_5d4c5c07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#1154",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 67
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42d946e_124855f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#295",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5212b9_7c5a52dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#683",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87abb786_26d80b16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#696",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d93101_900dbe92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#307",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 66
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d008567_a75dfcd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#409\nhttps://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#416",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9645bd_6e6ca010",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#468",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376a5ebd_d3020fb3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#322",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 72
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47eea8b2_6973bc18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#441",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e1f727_26396e3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "see https://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#613",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 51
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15c44d2_eee335b9",
+        "filename": "packages/SystemUI/src/com/android/keyguard/CarrierTextController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "Can we delete this function and related string definition, as there is no place calling this fucntion.\n\nCould you please kindly share your opinion?\nIf you agree with this action, I\u0027ll raise a new change to remove unused function and string definition.\n\nThanks",
+      "range": {
+        "startLine": 560,
+        "startChar": 25,
+        "endLine": 560,
+        "endChar": 54
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c7b3c0_e0f0b969",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-02T19:30:27Z",
+      "side": 1,
+      "message": "Currently, this condition is never triggered, the reason is as below:\nThis extra depends on telephony FWK broadcast, i.e. SubscriptionInfoUpdater#EVENT_SIM_IMSI\nhttps://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/SubscriptionInfoUpdater.java#322\nBut currently there is no place calling function SubscriptionInfoUpdater#updateInternalIccState with param simStatus INTENT_VALUE_ICC_IMSI, i.e. there is no trigger to send message with SubscriptionInfoUpdater#EVENT_SIM_IMSI.\n\nTelephony removed it from Android Pie:\nhttps://android.googlesource.com/platform/frameworks/opt/telephony/+/400b954543b05bd3b39debc1dfded8d77d7a928f/src/java/com/android/internal/telephony/uicc/IccCardProxy.java#238\n\nBut I think we can still keep this condition, as telephony FWK still use it here:\nhttps://android.googlesource.com/platform/frameworks/opt/telephony/+/refs/heads/master/src/java/com/android/internal/telephony/vendor/VendorPhoneSwitcher.java#236\n\nThanks",
+      "range": {
+        "startLine": 1308,
+        "startChar": 27,
+        "endLine": 1308,
+        "endChar": 84
+      },
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
