@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2ba7c0bb_559c0746",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2020-07-06T03:10:31Z",
+      "side": 1,
+      "message": "\u003e Patch Set 6:\n\u003e \n\u003e Still happy with this if we still want it, but Bernie had a relevant comment.\n\nThis is out of date because we moved DnsPacket to lib/net instead of making it system/test API.",
+      "revId": "0a3efb2aa727b17e2de2d1b3145bb12e8a878f5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f2de049_6a211d47",
         "filename": "core/java/android/net/DnsPacket.java",
         "patchSetId": 6
