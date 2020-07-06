@@ -16,6 +16,23 @@
       "revId": "35257fb52ea0aa3562f32c37cfbf723c2bd16110",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0016d845_6b9b055d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1359095
+      },
+      "writtenOn": "2020-07-06T21:05:54Z",
+      "side": 1,
+      "message": "Not sure how you picked me as reviewer, but I have no idea what this is about so I am not a good choice to do the review.",
+      "revId": "35257fb52ea0aa3562f32c37cfbf723c2bd16110",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
