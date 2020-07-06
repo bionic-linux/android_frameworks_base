@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75ee3344_fc233371",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2020-07-06T20:49:28Z",
+      "side": 1,
+      "message": "EO\nŜanĝo ebliganta elekti la Lingvon Internacian. Bonvolu revizii kaj kunfandi ĝin (se ĉio estas ĝusta).\n\nEN\nChange, which add possibility to select Esperanto. Please review and merge it (if everything is OK).",
+      "revId": "35257fb52ea0aa3562f32c37cfbf723c2bd16110",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
