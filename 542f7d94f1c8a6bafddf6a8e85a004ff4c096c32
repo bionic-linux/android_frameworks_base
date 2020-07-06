@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccda992e_49b0fc6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-06T14:47:59Z",
+      "side": 1,
+      "message": "Nit: Separate?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e026b7_28082088",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-06T14:47:59Z",
+      "side": 1,
+      "message": "Is this also PERMISSION_NONE?",
+      "range": {
+        "startLine": 207,
+        "startChar": 59,
+        "endLine": 207,
+        "endChar": 60
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568930bb_f5a69bd4",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-07-06T14:47:59Z",
+      "side": 1,
+      "message": "I think it\u0027s usually the bug to track the TODO item. However, it\u0027s a fixed bug. Is this the right bug to track this?",
+      "range": {
+        "startLine": 232,
+        "startChar": 46,
+        "endLine": 232,
+        "endChar": 56
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
