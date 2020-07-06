@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae662c69_0e13d4fe",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-06T01:31:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9151d9bf_28d85b61",
+      "range": {
+        "startLine": 236,
+        "startChar": 8,
+        "endLine": 236,
+        "endChar": 42
+      },
+      "revId": "dbfd99477c7836c25debbd1da417e8aec0a721e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2adf04ba_209c88fc",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2020-06-22T04:54:52Z",
       "side": 1,
       "message": "The problem with splitting this is that you lose the test that makes sure a legacy package can actually access restricted networks. These new tests are good for unit testing of the two methods, but I think we probably should have some way to keep the coverage.\n\nYou could do this by having a test for highestPermissionForUid, for example.",
+      "range": {
+        "startLine": 258,
+        "startChar": 16,
+        "endLine": 258,
+        "endChar": 35
+      },
+      "revId": "dbfd99477c7836c25debbd1da417e8aec0a721e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4e0ac0_905633a9",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-06T01:31:30Z",
+      "side": 1,
+      "message": "Agree that we should have the way to keep the coverage. Add more tests in testHasUseBackgroundNetworksPermission to verify this because highestPermissionForUid will remove on RFPM07.",
+      "parentUuid": "2adf04ba_209c88fc",
       "range": {
         "startLine": 258,
         "startChar": 16,
