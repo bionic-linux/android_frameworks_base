@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51a09848_e12073bd",
+        "filename": "telephony/java/android/telephony/CellLocation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-07-06T21:28:42Z",
+      "side": 1,
+      "message": "Because this isn\u0027t going to land in R, I changes the SDK-specific behavior for version 30.",
+      "range": {
+        "startLine": 42,
+        "startChar": 65,
+        "endLine": 42,
+        "endChar": 67
+      },
+      "revId": "32deda2df30c940dc95c6d913cf17256005a7fd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56de4c4b_66117d40",
+        "filename": "telephony/java/android/telephony/CellLocation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-07-06T21:28:42Z",
+      "side": 1,
+      "message": "I had to remove the featureTag() thing in AOSP because it\u0027s not available. Shouldn\u0027t make a difference.",
+      "range": {
+        "startLine": 59,
+        "startChar": 88,
+        "endLine": 59,
+        "endChar": 89
+      },
+      "revId": "32deda2df30c940dc95c6d913cf17256005a7fd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
