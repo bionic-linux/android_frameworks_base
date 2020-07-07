@@ -342,8 +342,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
     @Override
     public void onConnectionStateChanged(CachedBluetoothDevice cachedDevice, int state) {
         if (DEBUG) {
-            Log.d(TAG, "ConnectionStateChanged=" + cachedDevice.getAddress() + " "
-                    + stateToString(state));
+            Log.d(TAG, "ConnectionStateChanged=" + cachedDevice + " " + stateToString(state));
         }
         mCachedState.remove(cachedDevice);
         updateConnected();
@@ -365,8 +364,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
     @Override
     public void onActiveDeviceChanged(CachedBluetoothDevice activeDevice, int bluetoothProfile) {
         if (DEBUG) {
-            Log.d(TAG, "ActiveDeviceChanged=" + activeDevice.getAddress()
-                    + " profileId=" + bluetoothProfile);
+            Log.d(TAG, "ActiveDeviceChanged=" + activeDevice + " profileId=" + bluetoothProfile);
         }
         updateActive();
         mHandler.sendEmptyMessage(H.MSG_STATE_CHANGED);

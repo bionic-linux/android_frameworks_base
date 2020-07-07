@@ -46,6 +46,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +81,11 @@ public class BluetoothControllerImplTest extends SysuiTestCase {
                 mTestableLooper.getLooper(),
                 mTestableLooper.getLooper(),
                 mMockBluetoothManager);
+
+        // enable BluetoothControllerImpl#DEBUG
+        Field f = BluetoothControllerImpl.class.getDeclaredField("DEBUG");
+        f.setAccessible(true);
+        f.setBoolean(null, true);
     }
 
     @Test
@@ -90,6 +96,7 @@ public class BluetoothControllerImplTest extends SysuiTestCase {
         mDevices.add(device);
         when(mMockAdapter.getConnectionState()).thenReturn(BluetoothAdapter.STATE_DISCONNECTED);
 
+        // null CachedBluetoothDevice
         mBluetoothControllerImpl.onConnectionStateChanged(null,
                 BluetoothAdapter.STATE_DISCONNECTED);
         assertTrue(mBluetoothControllerImpl.isBluetoothConnected());
@@ -228,5 +235,8 @@ public class BluetoothControllerImplTest extends SysuiTestCase {
 
         assertTrue(mBluetoothControllerImpl.isBluetoothAudioActive());
         assertTrue(mBluetoothControllerImpl.isBluetoothAudioProfileOnly());
+
+        // null CachedBluetoothDevice
+        mBluetoothControllerImpl.onActiveDeviceChanged(null, BluetoothProfile.HEADSET);
     }
 }
