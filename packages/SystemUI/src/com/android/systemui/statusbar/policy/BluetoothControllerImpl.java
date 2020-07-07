@@ -310,15 +310,17 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
 
     @Override
     public void onDeviceAdded(CachedBluetoothDevice cachedDevice) {
-        if (DEBUG) Log.d(TAG, "DeviceAdded=" + cachedDevice.getAddress());
-        cachedDevice.registerCallback(this);
+        if (DEBUG) Log.d(TAG, "DeviceAdded=" + cachedDevice);
+        if (cachedDevice != null) {
+            cachedDevice.registerCallback(this);
+        }
         updateConnected();
         mHandler.sendEmptyMessage(H.MSG_PAIRED_DEVICES_CHANGED);
     }
 
     @Override
     public void onDeviceDeleted(CachedBluetoothDevice cachedDevice) {
-        if (DEBUG) Log.d(TAG, "DeviceDeleted=" + cachedDevice.getAddress());
+        if (DEBUG) Log.d(TAG, "DeviceDeleted=" + cachedDevice);
         mCachedState.remove(cachedDevice);
         updateConnected();
         mHandler.sendEmptyMessage(H.MSG_PAIRED_DEVICES_CHANGED);
@@ -326,7 +328,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
 
     @Override
     public void onDeviceBondStateChanged(CachedBluetoothDevice cachedDevice, int bondState) {
-        if (DEBUG) Log.d(TAG, "DeviceBondStateChanged=" + cachedDevice.getAddress());
+        if (DEBUG) Log.d(TAG, "DeviceBondStateChanged=" + cachedDevice);
         mCachedState.remove(cachedDevice);
         updateConnected();
         mHandler.sendEmptyMessage(H.MSG_PAIRED_DEVICES_CHANGED);
@@ -342,8 +344,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
     @Override
     public void onConnectionStateChanged(CachedBluetoothDevice cachedDevice, int state) {
         if (DEBUG) {
-            Log.d(TAG, "ConnectionStateChanged=" + cachedDevice.getAddress() + " "
-                    + stateToString(state));
+            Log.d(TAG, "ConnectionStateChanged=" + cachedDevice + " " + stateToString(state));
         }
         mCachedState.remove(cachedDevice);
         updateConnected();
@@ -354,7 +355,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
     public void onProfileConnectionStateChanged(CachedBluetoothDevice cachedDevice,
             int state, int bluetoothProfile) {
         if (DEBUG) {
-            Log.d(TAG, "ProfileConnectionStateChanged=" + cachedDevice.getAddress() + " "
+            Log.d(TAG, "ProfileConnectionStateChanged=" + cachedDevice + " "
                     + stateToString(state) + " profileId=" + bluetoothProfile);
         }
         mCachedState.remove(cachedDevice);
@@ -365,8 +366,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
     @Override
     public void onActiveDeviceChanged(CachedBluetoothDevice activeDevice, int bluetoothProfile) {
         if (DEBUG) {
-            Log.d(TAG, "ActiveDeviceChanged=" + activeDevice.getAddress()
-                    + " profileId=" + bluetoothProfile);
+            Log.d(TAG, "ActiveDeviceChanged=" + activeDevice + " profileId=" + bluetoothProfile);
         }
         updateActive();
         mHandler.sendEmptyMessage(H.MSG_STATE_CHANGED);
@@ -375,8 +375,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
     @Override
     public void onAclConnectionStateChanged(CachedBluetoothDevice cachedDevice, int state) {
         if (DEBUG) {
-            Log.d(TAG, "ACLConnectionStateChanged=" + cachedDevice.getAddress() + " "
-                    + stateToString(state));
+            Log.d(TAG, "ACLConnectionStateChanged=" + cachedDevice + " " + stateToString(state));
         }
         mCachedState.remove(cachedDevice);
         updateConnected();
