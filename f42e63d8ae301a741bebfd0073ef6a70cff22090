@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4403b771_f8d70f8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-07T01:35:50Z",
+      "side": 1,
+      "message": "Michael, how fair do you think this assumption is? that exceptions won\u0027t be mixed with random other classes? I could create HwDeadObjectException instead if it\u0027s really necessary.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "f42e63d8ae301a741bebfd0073ef6a70cff22090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
