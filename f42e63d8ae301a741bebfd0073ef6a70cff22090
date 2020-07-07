@@ -93,6 +93,30 @@
       "revId": "f42e63d8ae301a741bebfd0073ef6a70cff22090",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc878ed0_80d2337a",
+        "filename": "core/jni/android_os_HwParcel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-07T17:04:24Z",
+      "side": 1,
+      "message": "to avoid duplicating L122 and L123",
+      "parentUuid": "fdb3fea6_23e289ea",
+      "range": {
+        "startLine": 127,
+        "startChar": 20,
+        "endLine": 127,
+        "endChar": 38
+      },
+      "revId": "f42e63d8ae301a741bebfd0073ef6a70cff22090",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
