@@ -50,6 +50,7 @@ public class DiskInfo implements Parcelable {
     public static final int FLAG_DEFAULT_PRIMARY = 1 << 1;
     public static final int FLAG_SD = 1 << 2;
     public static final int FLAG_USB = 1 << 3;
+    public static final int FLAG_VISIBLE = 1 << 6;
 
     public final String id;
     @UnsupportedAppUsage
@@ -150,6 +151,11 @@ public class DiskInfo implements Parcelable {
     @UnsupportedAppUsage
     public boolean isUsb() {
         return (flags & FLAG_USB) != 0;
+    }
+
+    @UnsupportedAppUsage
+    public boolean isVisible() {
+        return (flags & FLAG_VISIBLE) != 0;
     }
 
     @Override
