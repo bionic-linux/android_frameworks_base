@@ -46,6 +46,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +81,11 @@ public class BluetoothControllerImplTest extends SysuiTestCase {
                 mTestableLooper.getLooper(),
                 mTestableLooper.getLooper(),
                 mMockBluetoothManager);
+
+        // enable BluetoothControllerImpl#DEBUG
+        Field f = BluetoothControllerImpl.class.getDeclaredField("DEBUG");
+        f.setAccessible(true);
+        f.setBoolean(null, true);
     }
 
     @Test
@@ -228,5 +234,24 @@ public class BluetoothControllerImplTest extends SysuiTestCase {
 
         assertTrue(mBluetoothControllerImpl.isBluetoothAudioActive());
         assertTrue(mBluetoothControllerImpl.isBluetoothAudioProfileOnly());
+
+    }
+
+    @Test
+    public void testNullCachedBluetoothDevice() {
+        // null CachedBluetoothDevice
+        mBluetoothControllerImpl.onConnectionStateChanged(null,
+                BluetoothAdapter.STATE_DISCONNECTED);
+        mBluetoothControllerImpl.onActiveDeviceChanged(null, BluetoothProfile.HEADSET);
+
+        // generally below should not happen, but we still test null CachedBluetoothDevice case
+        // for robust purpose
+        mBluetoothControllerImpl.onDeviceAdded(null);
+        mBluetoothControllerImpl.onDeviceDeleted(null);
+        mBluetoothControllerImpl.onDeviceBondStateChanged(null, BluetoothDevice.BOND_NONE);
+        mBluetoothControllerImpl.onProfileConnectionStateChanged(null,
+                BluetoothProfile.STATE_DISCONNECTED, BluetoothProfile.A2DP);
+        mBluetoothControllerImpl.onAclConnectionStateChanged(null,
+                BluetoothAdapter.STATE_DISCONNECTED);
     }
 }
