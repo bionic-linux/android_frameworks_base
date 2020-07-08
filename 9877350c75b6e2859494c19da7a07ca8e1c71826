@@ -232,6 +232,23 @@
     },
     {
       "key": {
+        "uuid": "f5bedb2d_88ca8014",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-08T19:20:44Z",
+      "side": 1,
+      "message": "Hello,\n\nPing. Could you please check this patch?\n\nThanks",
+      "revId": "9877350c75b6e2859494c19da7a07ca8e1c71826",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e15c44d2_eee335b9",
         "filename": "packages/SystemUI/src/com/android/keyguard/CarrierTextController.java",
         "patchSetId": 4
