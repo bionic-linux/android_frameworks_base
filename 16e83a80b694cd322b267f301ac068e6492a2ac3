@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "a3ac3a2e_d3381f98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2020-07-08T16:06:10Z",
+      "side": 1,
+      "message": "The unit test would be as you described. Setting the prop is an option for the test or creating a separate method that would do the logging so that it can be invoked in the test directly.\n\nIf not creating a test, please indicate in the commit message in a new `Test: ` line that this was tested manually, triggering the path that would break before the CL.",
+      "revId": "16e83a80b694cd322b267f301ac068e6492a2ac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8b2ef0_117c85d5",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BluetoothControllerImpl.java",
         "patchSetId": 2
