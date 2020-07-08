@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "d4bbd44d_f5e2ddf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-08T15:57:31Z",
+      "side": 1,
+      "message": "Dear Fabian Kozynski\nThanks for your quick reply.\n\nOriginally, I also wanted to provide unit test.\nBut I didn\u0027t write the unit test due to below reasons:\n1. It is just add null check for printing verbose logs, which can\u0027t be observed in normal case.(BluetoothControllerImpl#DEBUG must be true, adb shell setprop persist.log.tag.BluetoothController V)\n2. We don\u0027t change any main code logic, i.e. the work flow of BluetoothControllerImpl.\n\nDo we still need to add unit test?\nIf you still recommend that it is necessary to add unit test.\nJust in case, please allow me to double confirm the unit test implementation detail.\n\nDo you mean, we need to add unit test to verify when:\n1. verbose log is enabled, i.e. BluetoothControllerImpl#DEBUG is true\n2. Trigger BluetoothCallback#onConnectionStateChanged, BluetoothCallback#onActiveDeviceChanged with null CachedBluetoothDevice object\n\nThen the unit test should check there is no NPE occurrs with all above condtion met.\n\nPlease kindly share your opinion, then I\u0027ll proceed with necessary action.\n\nThanks",
+      "revId": "16e83a80b694cd322b267f301ac068e6492a2ac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8b2ef0_117c85d5",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BluetoothControllerImpl.java",
         "patchSetId": 2
