@@ -68,6 +68,24 @@
       "revId": "28f686f091553f4931bae5136daf0395f0897911",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e57b02d_48ba45c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-08T02:34:01Z",
+      "side": 1,
+      "message": "+1, voted for NetworkStats.java.",
+      "parentUuid": "718433e3_92c04455",
+      "revId": "28f686f091553f4931bae5136daf0395f0897911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
