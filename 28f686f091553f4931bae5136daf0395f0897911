@@ -33,6 +33,23 @@
       "revId": "28f686f091553f4931bae5136daf0395f0897911",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d580c8f5_3d00a6bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-08T01:58:38Z",
+      "side": 1,
+      "message": "Looking back at the history of the CL, it looks like what happened here is:\n- Original CL copied the code\n- Jeff suggested using the code instead of copying it\n- New patchset uploaded to use the code, doesn\u0027t build because framework cannot depend on services\n- New patchset uploaded\n\nSuggestion: move the code to frameworks/base/code instead. Either android/net/NetworkStats.java, or something under com.android.internal.util. Perhaps com.android.internal.util.FastMath, except this method is the opposite of fast - it uses slow floating point operations.",
+      "revId": "28f686f091553f4931bae5136daf0395f0897911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
