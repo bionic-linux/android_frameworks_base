@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "fef91336_8a867245",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-07-08T17:41:19Z",
+      "side": 1,
+      "message": "Dear Fabian Kozynski,\n\nThanks for your confirmation. Since this is minoar change for printting log, so I prefer not to add unit test.\n\nBut I didn\u0027t clarify that manually test, that\u0027s my fault.\nI\u0027ll update the commit message with next patch set, I\u0027ll update as below:\nTest: Build pass\nTest: Do manual test: enable BluetoothController verbose log\n\nPlease wait for my next patch set.\n\nFYI, from my local test, I can simple reproduce this issue by toggle APM with verbose log enabled:\nadb logcat -b all | grep BluetoothController\n- waiting for device -\n07-09 01:34:03.930  2039  2039 D BluetoothController: BluetoothStateChanged\u003dUNKNOWN(10)\n07-09 01:34:20.734  2039  2199 D BluetoothController: BluetoothStateChanged\u003dUNKNOWN(11)\n07-09 01:34:21.648  2039  2199 D BluetoothController: BluetoothStateChanged\u003dUNKNOWN(12)\n07-09 01:34:35.112  2039  2199 D BluetoothController: BluetoothStateChanged\u003dUNKNOWN(11)\n07-09 01:34:35.637  2039  2199 D BluetoothController: BluetoothStateChanged\u003dUNKNOWN(12)\n07-09 01:34:46.785  2039  2199 D BluetoothController: BluetoothStateChanged\u003dUNKNOWN(13)\n07-09 01:34:47.236  2039  2199 D BluetoothController: ActiveDeviceChanged\u003dnull activeDevice profileId\u003d2\n07-09 01:34:47.349  2039  2199 D BluetoothController: BluetoothStateChanged\u003dUNKNOWN(10)\n\nThanks",
+      "parentUuid": "a3ac3a2e_d3381f98",
+      "revId": "16e83a80b694cd322b267f301ac068e6492a2ac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8b2ef0_117c85d5",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BluetoothControllerImpl.java",
         "patchSetId": 2
