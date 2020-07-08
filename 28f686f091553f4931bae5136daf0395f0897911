@@ -50,6 +50,24 @@
       "revId": "28f686f091553f4931bae5136daf0395f0897911",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "718433e3_92c04455",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-08T02:00:18Z",
+      "side": 1,
+      "message": "If there is no obvious better choice, NetworkStats.java is fine.",
+      "parentUuid": "d580c8f5_3d00a6bd",
+      "revId": "28f686f091553f4931bae5136daf0395f0897911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
