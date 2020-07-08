@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "ed9028dc_54821337",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2020-07-08T13:15:49Z",
+      "side": 1,
+      "message": "Thanks very much for the patch. Would you mind adding automated unit tests in BluetoothControllerImplTest to verify the fix?",
+      "revId": "16e83a80b694cd322b267f301ac068e6492a2ac3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba8b2ef0_117c85d5",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BluetoothControllerImpl.java",
         "patchSetId": 2
