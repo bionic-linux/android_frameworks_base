@@ -3032,7 +3032,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     new ConnectivityReportEvent(p.timestampMillis, nai));
 
             final PersistableBundle extras = new PersistableBundle();
-            extras.putInt(KEY_NETWORK_VALIDATION_RESULT, p.result);
+
+            // NetworkMonitor reports the network validation result as a bitmask while
+            // ConnectivityDiagnostics treats this value as an int. Convert the result to a single
+            // logical value for ConnectivityDiagnostics.
+            //
+            // Note that if HTTPS probing is disallowed but the user accepts partial connectivity,
+            // the reported result will be a bitmask of NETWORK_VALIDATION_RESULT_VALID and
+            // NETWORK_VALIDATION_RESULT_PARTIAL. Report this as RESULT_PARTIAL.
+            final int validationResult;
+            if ((p.result & NETWORK_VALIDATION_RESULT_PARTIAL) != 0) {
+                validationResult = ConnectivityReport.NETWORK_VALIDATION_RESULT_PARTIALLY_VALID;
+            } else if ((p.result & NETWORK_VALIDATION_RESULT_VALID) != 0) {
+                validationResult = ConnectivityReport.NETWORK_VALIDATION_RESULT_VALID;
+            } else {
+                validationResult = ConnectivityReport.NETWORK_VALIDATION_RESULT_INVALID;
+            }
+
+            extras.putInt(KEY_NETWORK_VALIDATION_RESULT, validationResult);
             extras.putInt(KEY_NETWORK_PROBES_SUCCEEDED_BITMASK, p.probesSucceeded);
             extras.putInt(KEY_NETWORK_PROBES_ATTEMPTED_BITMASK, p.probesAttempted);
 

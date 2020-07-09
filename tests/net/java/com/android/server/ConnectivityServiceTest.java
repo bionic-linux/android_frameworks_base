@@ -140,6 +140,7 @@ import android.content.res.Resources;
 import android.location.LocationManager;
 import android.net.CaptivePortalData;
 import android.net.ConnectionInfo;
+import android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.ConnectivityManager.PacketKeepalive;
@@ -7294,7 +7295,13 @@ public class ConnectivityServiceTest {
                 }));
     }
 
-    private void setUpConnectivityDiagnosticsCallback() throws Exception {
+    // Constants to be used for #setUpConnectivityDiagnosticsCallback. These specify what validation
+    // result should be produced by the network.
+    private static final int SETUP_NETWORK_VALID = 1;
+    private static final int SETUP_NETWORK_PARTIAL_VALID = 2;
+
+    private void setUpConnectivityDiagnosticsCallback(int networkValidationResult)
+            throws Exception {
         final NetworkRequest request = new NetworkRequest.Builder().build();
         when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
 
@@ -7311,32 +7318,61 @@ public class ConnectivityServiceTest {
         final TestNetworkCallback callback = new TestNetworkCallback();
         mCm.registerDefaultNetworkCallback(callback);
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
-        mCellNetworkAgent.connect(true);
+
+        switch (networkValidationResult) {
+            case SETUP_NETWORK_VALID:
+                mCellNetworkAgent.connect(true /* validated */);
+                break;
+            case SETUP_NETWORK_PARTIAL_VALID:
+                mCellNetworkAgent.connectWithPartialValidConnectivity(false /* isStrictMode */);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid networkValidationResult");
+        }
+
         callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         callback.assertNoCallback();
     }
 
-    @Test
-    public void testConnectivityDiagnosticsCallbackOnConnectivityReportAvailable()
+    private void blockCSThreadAndVerifyOnConnectivityReportAvailable(int expectedValidationResult)
             throws Exception {
-        setUpConnectivityDiagnosticsCallback();
-
         // Block until all other events are done processing.
         HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
 
-        // Verify onConnectivityReport fired
         verify(mConnectivityDiagnosticsCallback).onConnectivityReportAvailable(
                 argThat(report -> {
                     final NetworkCapabilities nc = report.getNetworkCapabilities();
-                    return nc.getUids() == null
+                    final int validationResult =
+                            report.getAdditionalInfo().getInt(
+                                    ConnectivityReport.KEY_NETWORK_VALIDATION_RESULT, -1);
+                    return validationResult == expectedValidationResult
+                            && nc.getUids() == null
                             && nc.getAdministratorUids().length == 0
                             && nc.getOwnerUid() == Process.INVALID_UID;
                 }));
     }
 
     @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReportAvailable()
+            throws Exception {
+        setUpConnectivityDiagnosticsCallback(SETUP_NETWORK_VALID);
+
+        blockCSThreadAndVerifyOnConnectivityReportAvailable(
+                ConnectivityReport.NETWORK_VALIDATION_RESULT_VALID);
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReportAvailable_multipleResults()
+            throws Exception {
+        setUpConnectivityDiagnosticsCallback(SETUP_NETWORK_PARTIAL_VALID);
+
+        blockCSThreadAndVerifyOnConnectivityReportAvailable(
+                ConnectivityReport.NETWORK_VALIDATION_RESULT_PARTIALLY_VALID);
+    }
+
+    @Test
     public void testConnectivityDiagnosticsCallbackOnDataStallSuspected() throws Exception {
-        setUpConnectivityDiagnosticsCallback();
+        setUpConnectivityDiagnosticsCallback(SETUP_NETWORK_VALID);
 
         // Trigger notifyDataStallSuspected() on the INetworkMonitorCallbacks instance in the
         // cellular network agent
@@ -7357,7 +7393,7 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testConnectivityDiagnosticsCallbackOnConnectivityReported() throws Exception {
-        setUpConnectivityDiagnosticsCallback();
+        setUpConnectivityDiagnosticsCallback(SETUP_NETWORK_VALID);
 
         final Network n = mCellNetworkAgent.getNetwork();
         final boolean hasConnectivity = true;
