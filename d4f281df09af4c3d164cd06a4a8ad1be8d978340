@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bc48384_fefdce50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2020-07-09T21:02:56Z",
+      "side": 1,
+      "message": "sorry this is stuck at another branch. So did not got picked after merging in internal master. Meanwhile can you please rebase",
+      "revId": "d4f281df09af4c3d164cd06a4a8ad1be8d978340",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
