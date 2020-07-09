@@ -16,6 +16,24 @@
       "revId": "b23a9210417d090fdbd39a07a2b9ec285a6333f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2c7a64_8e99bbcb",
+        "filename": "telephony/common/com/android/internal/telephony/CarrierAppUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2020-07-09T22:02:54Z",
+      "side": 1,
+      "message": "agree..will upload another patch for this",
+      "parentUuid": "357d5a94_04cbd3d2",
+      "revId": "b23a9210417d090fdbd39a07a2b9ec285a6333f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
