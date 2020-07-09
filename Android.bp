@@ -31,6 +31,9 @@ filegroup {
         "core/java/**/*.java",
         "core/java/**/*.aidl",
     ],
+
+    exclude_srcs: [":framework-connectivity-sources"],
+
     path: "core/java",
 }
 
@@ -303,6 +306,7 @@ filegroup {
     name: "framework-non-updatable-sources",
     srcs: [
         // Java/AIDL sources under frameworks/base
+        ":framework-connectivity-sources",
         ":framework-core-sources",
         ":framework-drm-sources",
         ":framework-graphics-sources",
@@ -1143,3 +1147,117 @@ build = [
     "StubLibraries.bp",
     "ApiDocs.bp",
 ]
+
+filegroup {
+    name: "frameworks-connectivity-non-updatable-sources",
+    srcs: [
+        "core/java/android/net/annotations/**/*.java",
+        "core/java/android/net/http/**/*.java",
+        "core/java/android/net/netstats/**/*.java",
+        "core/java/android/net/nsd/**/*.java",
+        "core/java/android/net/wimax/**/*.java",
+        "core/java/android/net/Credentials.java",
+        "core/java/android/net/DataUsageRequest.java",
+        "core/java/android/net/IpSecAlgorithm.java",
+        "core/java/android/net/IpSecConfig.java",
+        "core/java/android/net/IpSecManager.java",
+        "core/java/android/net/IpSecSpiResponse.java",
+        "core/java/android/net/IpSecTransform.java",
+        "core/java/android/net/IpSecTransformResponse.java",
+        "core/java/android/net/IpSecTunnelInterfaceResponse.java",
+        "core/java/android/net/IpSecUdpEncapResponse.java",
+        "core/java/android/net/LinkQualityInfo.java",
+        "core/java/android/net/LocalServerSocket.java",
+        "core/java/android/net/LocalSocketAddress.java",
+        "core/java/android/net/LocalSocketImpl.java",
+        "core/java/android/net/LocalSocket.java",
+        "core/java/android/net/MailTo.java",
+        "core/java/android/net/MatchAllNetworkSpecifier.java",
+        "core/java/android/net/MobileLinkQualityInfo.java",
+        "core/java/android/net/NetworkBadging.java",
+        "core/java/android/net/NetworkKey.java",
+        "core/java/android/net/NetworkPolicy.java",
+        "core/java/android/net/NetworkQuotaInfo.java",
+        "core/java/android/net/NetworkRecommendationProvider.java",
+        "core/java/android/net/NetworkScoreManager.java",
+        "core/java/android/net/NetworkScorerAppData.java",
+        "core/java/android/net/NetworkSpecifier.java",
+        "core/java/android/net/NetworkState.java",
+        "core/java/android/net/NetworkStatsHistory.java",
+        "core/java/android/net/NetworkWatchlistManager.java",
+        "core/java/android/net/PacProxySelector.java",
+        "core/java/android/net/ParseException.java",
+        "core/java/android/net/RssiCurve.java",
+        "core/java/android/net/ScoredNetwork.java",
+        "core/java/android/net/SntpClient.java",
+        "core/java/android/net/StringNetworkSpecifier.java",
+        "core/java/android/net/SSLCertificateSocketFactory.java",
+        "core/java/android/net/SSLSessionCache.java",
+        "core/java/android/net/TelephonyNetworkSpecifier.java",
+        "core/java/android/net/UriCodec.java",
+        "core/java/android/net/Uri.java",
+        "core/java/android/net/UrlQuerySanitizer.java",
+        "core/java/android/net/WebAddress.java",
+        "core/java/android/net/WifiKey.java",
+        "core/java/android/net/WifiLinkQualityInfo.java",
+    ],
+}
+
+filegroup {
+    name: "framework-connectivity-non-updatable-aidl-sources",
+    srcs: [
+        "core/java/android/net/DataUsageRequest.aidl",
+        "core/java/android/net/IIpSecService.aidl",
+        "core/java/android/net/INetworkManagementEventObserver.aidl",
+        "core/java/android/net/INetworkRecommendationProvider.aidl",
+        "core/java/android/net/INetworkScoreCache.aidl",
+        "core/java/android/net/INetworkScoreService.aidl",
+        "core/java/android/net/IpSecConfig.aidl",
+        "core/java/android/net/IpSecSpiResponse.aidl",
+        "core/java/android/net/IpSecTransformResponse.aidl",
+        "core/java/android/net/IpSecTunnelInterfaceResponse.aidl",
+        "core/java/android/net/IpSecUdpEncapResponse.aidl",
+        "core/java/android/net/ITetheringStatsProvider.aidl",
+        "core/java/android/net/LinkQualityInfo.aidl",
+        "core/java/android/net/NetworkKey.aidl",
+        "core/java/android/net/NetworkPolicy.aidl",
+        "core/java/android/net/NetworkQuotaInfo.aidl",
+        "core/java/android/net/NetworkScorerAppData.aidl",
+        "core/java/android/net/NetworkState.aidl",
+        "core/java/android/net/NetworkStats.aidl",
+        "core/java/android/net/NetworkStatsHistory.aidl",
+        "core/java/android/net/ScoredNetwork.aidl",
+        "core/java/android/net/Uri.aidl",
+    ],
+    path: "core/java",
+}
+
+filegroup {
+    name: "framework-connectivity-updatable-aidl-sources",
+    srcs: [
+        "core/java/android/**/*.aidl",
+    ],
+
+    exclude_srcs: [":framework-connectivity-non-updatable-aidl-sources"],
+    path: "core/java",
+}
+
+filegroup {
+    name: "framework-connectivity-sources",
+    srcs: [
+        "core/java/android/net/**/*.java",
+    ],
+    exclude_srcs: [":frameworks-connectivity-non-updatable-sources"],
+    path: "core/java",
+}
+
+java_library {
+    name: "framework-connectivity",
+    srcs: [
+        ":framework-connectivity-sources",
+        ":framework-connectivity-updatable-aidl-sources",
+    ],
+    libs:[
+        "unsupportedappusage",
+    ]
+}
