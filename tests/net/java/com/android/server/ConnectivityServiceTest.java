@@ -140,6 +140,7 @@ import android.content.res.Resources;
 import android.location.LocationManager;
 import android.net.CaptivePortalData;
 import android.net.ConnectionInfo;
+import android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.ConnectivityManager.PacketKeepalive;
@@ -703,6 +704,7 @@ public class ConnectivityServiceTest {
 
             ConnectivityManager.NetworkCallback callback = null;
             final ConditionVariable validatedCv = new ConditionVariable();
+
             if (validated) {
                 setNetworkValid(isStrictMode);
                 NetworkRequest request = new NetworkRequest.Builder()
@@ -7294,7 +7296,8 @@ public class ConnectivityServiceTest {
                 }));
     }
 
-    private void setUpConnectivityDiagnosticsCallback() throws Exception {
+    private void setUpConnectivityDiagnosticsCallback(boolean isNetworkPartialValid)
+            throws Exception {
         final NetworkRequest request = new NetworkRequest.Builder().build();
         when(mConnectivityDiagnosticsCallback.asBinder()).thenReturn(mIBinder);
 
@@ -7311,7 +7314,13 @@ public class ConnectivityServiceTest {
         final TestNetworkCallback callback = new TestNetworkCallback();
         mCm.registerDefaultNetworkCallback(callback);
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
-        mCellNetworkAgent.connect(true);
+
+        if (isNetworkPartialValid) {
+            mCellNetworkAgent.connectWithPartialValidConnectivity(false /* isStrictMode */);
+        } else {
+            mCellNetworkAgent.connect(true /* validated */);
+        }
+
         callback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         callback.assertNoCallback();
     }
@@ -7319,7 +7328,7 @@ public class ConnectivityServiceTest {
     @Test
     public void testConnectivityDiagnosticsCallbackOnConnectivityReportAvailable()
             throws Exception {
-        setUpConnectivityDiagnosticsCallback();
+        setUpConnectivityDiagnosticsCallback(false /* isNetworkPartialValid */);
 
         // Block until all other events are done processing.
         HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
@@ -7328,7 +7337,35 @@ public class ConnectivityServiceTest {
         verify(mConnectivityDiagnosticsCallback).onConnectivityReportAvailable(
                 argThat(report -> {
                     final NetworkCapabilities nc = report.getNetworkCapabilities();
-                    return nc.getUids() == null
+                    final int validationResult =
+                            report.getAdditionalInfo().getInt(
+                                    ConnectivityReport.KEY_NETWORK_VALIDATION_RESULT,
+                                    ConnectivityReport.NETWORK_VALIDATION_RESULT_INVALID);
+                    return validationResult == ConnectivityReport.NETWORK_VALIDATION_RESULT_VALID
+                            && nc.getUids() == null
+                            && nc.getAdministratorUids().length == 0
+                            && nc.getOwnerUid() == Process.INVALID_UID;
+                }));
+    }
+
+    @Test
+    public void testConnectivityDiagnosticsCallbackOnConnectivityReportAvailable_multipleResults()
+            throws Exception {
+        setUpConnectivityDiagnosticsCallback(true /* isNetworkPartialValid */);
+
+        // Block until all other events are done processing.
+        HandlerUtilsKt.waitForIdle(mCsHandlerThread, TIMEOUT_MS);
+
+        // Verify onConnectivityReport fired
+        verify(mConnectivityDiagnosticsCallback).onConnectivityReportAvailable(
+                argThat(report -> {
+                    final NetworkCapabilities nc = report.getNetworkCapabilities();
+                    final int validationResult =
+                            report.getAdditionalInfo().getInt(
+                                    ConnectivityReport.KEY_NETWORK_VALIDATION_RESULT,
+                                    ConnectivityReport.NETWORK_VALIDATION_RESULT_INVALID);
+                    return validationResult == ConnectivityReport.NETWORK_VALIDATION_RESULT_VALID
+                            && nc.getUids() == null
                             && nc.getAdministratorUids().length == 0
                             && nc.getOwnerUid() == Process.INVALID_UID;
                 }));
@@ -7336,7 +7373,7 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testConnectivityDiagnosticsCallbackOnDataStallSuspected() throws Exception {
-        setUpConnectivityDiagnosticsCallback();
+        setUpConnectivityDiagnosticsCallback(false /* isNetworkPartialValid */);
 
         // Trigger notifyDataStallSuspected() on the INetworkMonitorCallbacks instance in the
         // cellular network agent
@@ -7357,7 +7394,7 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testConnectivityDiagnosticsCallbackOnConnectivityReported() throws Exception {
-        setUpConnectivityDiagnosticsCallback();
+        setUpConnectivityDiagnosticsCallback(false /* isNetworkPartialValid */);
 
         final Network n = mCellNetworkAgent.getNetwork();
         final boolean hasConnectivity = true;

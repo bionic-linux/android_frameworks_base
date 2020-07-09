@@ -3032,7 +3032,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     new ConnectivityReportEvent(p.timestampMillis, nai));
 
             final PersistableBundle extras = new PersistableBundle();
-            extras.putInt(KEY_NETWORK_VALIDATION_RESULT, p.result);
+
+            // If HTTPS probing is disallowed but the user accepts partial connectivity, the
+            // reported result will be a bitmask of NETWORK_VALIDATION_RESULT_VALID and
+            // NETWORK_VALIDATION_RESULT_PARTIAL. However, ConnectivityDiagnostics treats this
+            // value as an int, so convert the result to a single logical value. Since the user
+            // accepted partial connectivity, report the above case as VALID.
+            final int validationResult;
+            if ((p.result & NETWORK_VALIDATION_RESULT_VALID) != 0) {
+                validationResult = NETWORK_VALIDATION_RESULT_VALID;
+            } else if ((p.result & NETWORK_VALIDATION_RESULT_PARTIAL) != 0) {
+                validationResult = NETWORK_VALIDATION_RESULT_PARTIAL;
+            } else {
+                validationResult = 0;
+            }
+
+            extras.putInt(KEY_NETWORK_VALIDATION_RESULT, validationResult);
             extras.putInt(KEY_NETWORK_PROBES_SUCCEEDED_BITMASK, p.probesSucceeded);
             extras.putInt(KEY_NETWORK_PROBES_ATTEMPTED_BITMASK, p.probesAttempted);
 
