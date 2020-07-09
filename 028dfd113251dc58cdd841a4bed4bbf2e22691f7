@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69ee47fc_ce000173",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsSubscriptionsMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-09T07:35:45Z",
+      "side": 1,
+      "message": "nit : is5GNsa or so",
+      "range": {
+        "startLine": 206,
+        "startChar": 26,
+        "endLine": 206,
+        "endChar": 30
+      },
+      "revId": "028dfd113251dc58cdd841a4bed4bbf2e22691f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a02d75_4107bd25",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsSubscriptionsMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-09T07:35:45Z",
+      "side": 1,
+      "message": "How should the code behave when the RAT type is NR but getNrState says NONE ? (I guess that would be a bug in telephony but...)\n\nI think your code does NR, and I think it\u0027s right, maybe you want to also add this check below.",
+      "range": {
+        "startLine": 258,
+        "startChar": 49,
+        "endLine": 258,
+        "endChar": 50
+      },
+      "revId": "028dfd113251dc58cdd841a4bed4bbf2e22691f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
