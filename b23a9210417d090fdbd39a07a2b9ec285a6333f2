@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "357d5a94_04cbd3d2",
+        "filename": "telephony/common/com/android/internal/telephony/CarrierAppUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1074723
+      },
+      "writtenOn": "2020-07-09T21:31:49Z",
+      "side": 1,
+      "message": "I think, it would be better if you just return \n\nai.flags \u0026 ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) !\u003d 0",
+      "revId": "b23a9210417d090fdbd39a07a2b9ec285a6333f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
