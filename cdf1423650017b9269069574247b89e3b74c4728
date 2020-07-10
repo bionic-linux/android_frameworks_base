@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34ff7c44_9bacd0a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-07-10T10:51:55Z",
+      "side": 1,
+      "message": "Seigo, this is a straight forward move of the classes. Please see the following CL to see the actual code landing in frameworks/base.",
+      "revId": "cdf1423650017b9269069574247b89e3b74c4728",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
