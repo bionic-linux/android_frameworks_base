@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082a66c1_58d8d560",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-10T03:03:11Z",
+      "side": 1,
+      "message": "Sorry we might want to revert this yet. As far as we know at this point, this is a bug in the telephony API.\n\nThis change was built to save time in case we determine the reason why it\u0027s right to report something but to log something else. I don\u0027t think we\u0027ve seen this ; we have arguments for why 4G is right, we have arguments for why 5G is right, but we don\u0027t have a single reason to think than any of them applies to the logging code but not to telephony.\n",
+      "revId": "edcaa70be2bc24ff2ce71444f6106bf92adb11e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
