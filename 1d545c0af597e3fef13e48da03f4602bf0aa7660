@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c9312a0_1c3f723c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2388,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-07-10T23:49:44Z",
+      "side": 1,
+      "message": "Not that it matters here, but change it to FALSE to match getLteOnCdmaModeStatic() implementation?",
+      "range": {
+        "startLine": 2388,
+        "startChar": 43,
+        "endLine": 2388,
+        "endChar": 50
+      },
+      "revId": "1d545c0af597e3fef13e48da03f4602bf0aa7660",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
