@@ -462,7 +462,6 @@ public final class Call {
         /**
          * Call supports adding participants to the call via
          * {@link #addConferenceParticipants(List)}.
-         * @hide
          */
         public static final int CAPABILITY_ADD_PARTICIPANT = 0x02000000;
 
@@ -599,7 +598,6 @@ public final class Call {
         /**
          * Indicates that the call is an adhoc conference call. This property can be set for both
          * incoming and outgoing calls.
-         * @hide
          */
         public static final int PROPERTY_IS_ADHOC_CONFERENCE = 0x00002000;
 
@@ -1766,7 +1764,6 @@ public final class Call {
      * See {@link Details#CAPABILITY_ADD_PARTICIPANT}.
      *
      * @param participants participants to be pulled to existing call.
-     * @hide
      */
     public void addConferenceParticipants(@NonNull List<Uri> participants) {
         mInCallAdapter.addConferenceParticipants(mTelecomCallId, participants);
