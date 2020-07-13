@@ -66,7 +66,7 @@ import java.time.ZoneOffset;
  *     <li> <p> {@link #elapsedRealtime} and {@link #elapsedRealtimeNanos}
  *     return the time since the system was booted, and include deep sleep.
  *     This clock is guaranteed to be monotonic, and continues to tick even
- *     when the CPU is in power saving modes, so is the recommend basis
+ *     when the CPU is in power saving modes, so is the recommended basis
  *     for general purpose interval timing.
  *
  * </ul>
