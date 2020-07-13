@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b74a5fa_ad902e8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-07-13T17:42:00Z",
+      "side": 1,
+      "message": "This change will not compile on AOSP due to missing support for the new API levels.",
+      "revId": "13d08a01545aba0264988a86c6bb5af585baf7a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
