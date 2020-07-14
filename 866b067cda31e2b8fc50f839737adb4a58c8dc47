@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f26b6aaa_4f0f58aa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3039,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-07-14T18:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d8240fb_a3f0848b",
+      "range": {
+        "startLine": 3039,
+        "startChar": 14,
+        "endLine": 3039,
+        "endChar": 15
+      },
+      "revId": "866b067cda31e2b8fc50f839737adb4a58c8dc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df97fd4_79d414ed",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "79b81f5a_7bbb8607",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7298,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-07-14T18:55:20Z",
+      "side": 1,
+      "message": "Used this initially to mirror TestNetworkAgentWrapper#connectWithPartialValidConnectivity. Done.",
+      "parentUuid": "8df97fd4_79d414ed",
+      "range": {
+        "startLine": 7298,
+        "startChar": 78,
+        "endLine": 7298,
+        "endChar": 79
+      },
+      "revId": "866b067cda31e2b8fc50f839737adb4a58c8dc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2c3779_c0b6b288",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "866b067cda31e2b8fc50f839737adb4a58c8dc47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e6c175_df20b214",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7371,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-07-14T18:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca2c3779_c0b6b288",
+      "range": {
+        "startLine": 7357,
+        "startChar": 0,
+        "endLine": 7371,
+        "endChar": 20
+      },
+      "revId": "866b067cda31e2b8fc50f839737adb4a58c8dc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
