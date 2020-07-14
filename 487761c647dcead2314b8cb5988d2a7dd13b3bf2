@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb7c962_a2f045d1",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/sms/BearerData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-07-14T00:06:44Z",
+      "side": 1,
+      "message": "I think it\u0027s better to have the () around it so that anyone reading it does not have to worry about the precedence of operators.",
+      "revId": "487761c647dcead2314b8cb5988d2a7dd13b3bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
