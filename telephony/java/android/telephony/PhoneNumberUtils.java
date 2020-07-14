@@ -664,7 +664,7 @@ public class PhoneNumberUtils {
             if (cccA != null) {
                 forwardIndexA = cccA.newIndex;
             } else {
-                int tmp = tryGetTrunkPrefixOmittedIndex(b, 0);
+                int tmp = tryGetTrunkPrefixOmittedIndex(a, 0);
                 if (tmp >= 0) {
                     forwardIndexA = tmp;
                     trunkPrefixIsOmittedA = true;
@@ -724,7 +724,7 @@ public class PhoneNumberUtils {
                 }
             }
             if ((trunkPrefixIsOmittedB && forwardIndexB <= backwardIndexB) ||
-                !checkPrefixIsIgnorable(b, forwardIndexA, backwardIndexB)) {
+                !checkPrefixIsIgnorable(b, forwardIndexB, backwardIndexB)) {
                 if (acceptInvalidCCCPrefix) {
                     return compare(a, b, false);
                 } else {
