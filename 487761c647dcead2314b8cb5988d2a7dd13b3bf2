@@ -16,6 +16,24 @@
       "revId": "487761c647dcead2314b8cb5988d2a7dd13b3bf2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886bcdd5_dad4789f",
+        "filename": "telephony/java/com/android/internal/telephony/cdma/sms/BearerData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-07-14T03:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fb7c962_a2f045d1",
+      "revId": "487761c647dcead2314b8cb5988d2a7dd13b3bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
