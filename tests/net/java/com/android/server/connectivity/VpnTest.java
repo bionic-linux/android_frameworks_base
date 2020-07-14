@@ -32,6 +32,7 @@ import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.AdditionalMatchers.aryEq;
@@ -91,6 +92,7 @@ import androidx.test.runner.AndroidJUnit4;
 import com.android.internal.R;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnProfile;
+import com.android.internal.util.CollectionUtils;
 import com.android.server.IpSecService;
 
 import org.junit.Before;
@@ -1012,8 +1014,7 @@ public class VpnTest {
         // a subsequent CL.
     }
 
-    @Test
-    public void testStartLegacyVpn() throws Exception {
+    public Vpn startLegacyVpn(VpnProfile profile) throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
         setMockedUsers(primaryUser);
 
@@ -1026,10 +1027,25 @@ public class VpnTest {
                         InetAddresses.parseNumericAddress("192.0.2.0"), egressIface);
         lp.addRoute(defaultRoute);
 
-        vpn.startLegacyVpn(mVpnProfile, mKeyStore, lp);
-
+        vpn.startLegacyVpn(profile, mKeyStore, lp);
+        return vpn;
         // TODO: Test the Ikev2VpnRunner started up properly. Relies on utility methods added in
         // a subsequent CL.
+    }
+
+    @Test
+    public void testStartLegacyVpnNumericEndPoint() throws Exception {
+        startLegacyVpn(mVpnProfile);
+    }
+
+    @Test
+    public void testStartLegacyVpnHostEndPoint() throws Exception {
+        // Puzzlingly VpnProfile implements Cloneable but doesn't override #clone()
+        final VpnProfile profile = VpnProfile.decode(mVpnProfile.key, mVpnProfile.encode());
+        profile.server = "www.google.com";
+        final Vpn vpn = startLegacyVpn(profile);
+        assertNotNull(CollectionUtils.find(vpn.mConfig.routes,
+                r -> r.getType() == RouteInfo.RTN_THROW));
     }
 
     /**

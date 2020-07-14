@@ -123,6 +123,7 @@ import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -2796,7 +2797,7 @@ public class Vpn {
                 String endpoint = parameters[5].isEmpty() ? mProfile.server : parameters[5];
                 if (!endpoint.isEmpty()) {
                     try {
-                        InetAddress addr = InetAddress.parseNumericAddress(endpoint);
+                        final InetAddress addr = resolveEndPoint(endpoint);
                         if (addr instanceof Inet4Address) {
                             mConfig.routes.add(new RouteInfo(new IpPrefix(addr, 32), RTN_THROW));
                         } else if (addr instanceof Inet6Address) {
@@ -2804,8 +2805,9 @@ public class Vpn {
                         } else {
                             Log.e(TAG, "Unknown IP address family for VPN endpoint: " + endpoint);
                         }
-                    } catch (IllegalArgumentException e) {
-                        Log.e(TAG, "Exception constructing throw route to " + endpoint + ": " + e);
+                    } catch (UnknownHostException e) {
+                        Log.e(TAG, "Unknown host in constructing throw route to " + endpoint
+                                + ": " + e);
                     }
                 }
 
@@ -2834,6 +2836,14 @@ public class Vpn {
                 Log.i(TAG, "Aborting", e);
                 updateState(DetailedState.FAILED, e.getMessage());
                 exitVpnRunner();
+            }
+        }
+
+        private InetAddress resolveEndPoint(final String endPoint) throws UnknownHostException {
+            try {
+                return InetAddress.parseNumericAddress(endPoint);
+            } catch (IllegalArgumentException e) {
+                return InetAddress.getByName(endPoint);
             }
         }
 
