@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "245159ff_6a09cded",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-07-14T06:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bf37ece_85327b37",
+      "range": {
+        "startLine": 198,
+        "startChar": 29,
+        "endLine": 198,
+        "endChar": 36
+      },
+      "revId": "6acdd2efb08292fee6a2f188843dce6b1644be90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9bda52_dc37c973",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0ea62329_11fc7a5d",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-07-14T06:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b9bda52_dc37c973",
+      "range": {
+        "startLine": 339,
+        "startChar": 8,
+        "endLine": 339,
+        "endChar": 91
+      },
+      "revId": "6acdd2efb08292fee6a2f188843dce6b1644be90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f04e9b4_5d962260",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "6acdd2efb08292fee6a2f188843dce6b1644be90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f2be4b_db99aa6f",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-07-14T06:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f04e9b4_5d962260",
+      "range": {
+        "startLine": 1364,
+        "startChar": 55,
+        "endLine": 1364,
+        "endChar": 62
+      },
+      "revId": "6acdd2efb08292fee6a2f188843dce6b1644be90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
