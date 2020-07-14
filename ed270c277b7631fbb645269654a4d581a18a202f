@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d85d1e8_307d63f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-07-14T00:05:26Z",
+      "side": 1,
+      "message": "For tracking purposes it would be better if you can file bugs for all changes.",
+      "revId": "ed270c277b7631fbb645269654a4d581a18a202f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "513b72f3_5467731f",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-07-14T00:05:26Z",
+      "side": 1,
+      "message": "Is this just clean up or is there a functional change in this file?",
+      "revId": "ed270c277b7631fbb645269654a4d581a18a202f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
