@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05af7787_3420e507",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-14T06:44:31Z",
+      "side": 1,
+      "message": "This simpler approach LGTM. See inline on adding comments and preventing possible NPEs. Junyu could you also take a look?",
+      "revId": "b099b2a8e86d325c64319c4608c0d769d46017e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8e2a7fc_e14f3ff7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7514,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-14T06:44:31Z",
+      "side": 1,
+      "message": "In the case of an in-process AIDL call, closing the fd is incorrect. I don\u0027t think we have any users of this call inside the system server, but if we did, we could remove the dups from the KeepaliveTracker code and do something like:\n\n    @Nullable FileDescriptor maybeDupFd(@Nullable FileDescriptor fd) {\n        // All FileDescriptors coming from AIDL calls must be manually closed by the receiver\n        // to prevent leaks.\n        if (fd \u003d\u003d null) return null;\n        if (Binder.getCallingPid() \u003d\u003d Process.myPid()) return fd;\n\n        FileDescriptor dup \u003d Os.dup(fd);\n        IOUtils.closeQuietly(fd);\n        return dup;\n    }\n\nDoesn\u0027t need to be in this CL, Junyu, maybe you could take this on as a follow-up?",
+      "range": {
+        "startLine": 7514,
+        "startChar": 10,
+        "endLine": 7514,
+        "endChar": 17
+      },
+      "revId": "b099b2a8e86d325c64319c4608c0d769d46017e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80246193_04d5994b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7515,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-14T06:44:31Z",
+      "side": 1,
+      "message": "Suggest adding a comment explaining this. Something like:\n\n    // All FileDescriptors coming from AIDL calls must be manually closed to prevent leaks.\n    // startNattKeepalive already calls Os.dup(fd) before returning. fd could be null here in\n    // certain circumstances (e.g., privileged caller).",
+      "range": {
+        "startLine": 7515,
+        "startChar": 12,
+        "endLine": 7515,
+        "endChar": 37
+      },
+      "revId": "b099b2a8e86d325c64319c4608c0d769d46017e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025532ac_21d2b2a6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7515,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-14T06:44:31Z",
+      "side": 1,
+      "message": "Does closeQuietly throw NPE in the presence of null fds? I believe that under certain circumstances (e.g., privileged caller) the fd can be null here. If I\u0027m reading IoUtils.java correctly, it doesn\u0027t catch NPE, so we\u0027d need an explicit check here.\n\nstartTcpKeepalive below does not allow null fds, so no need to do this there.",
+      "range": {
+        "startLine": 7515,
+        "startChar": 33,
+        "endLine": 7515,
+        "endChar": 35
+      },
+      "revId": "b099b2a8e86d325c64319c4608c0d769d46017e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fefe0a5_b29bebe9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7527,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-14T06:44:31Z",
+      "side": 1,
+      "message": "Ditto:\n\n    // All FileDescriptors coming from AIDL calls must be manually closed to prevent leaks.\n    // startTcpKeepalive already calls Os.dup(fd) before returning. fd must not be null.",
+      "range": {
+        "startLine": 7527,
+        "startChar": 12,
+        "endLine": 7527,
+        "endChar": 37
+      },
+      "revId": "b099b2a8e86d325c64319c4608c0d769d46017e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
