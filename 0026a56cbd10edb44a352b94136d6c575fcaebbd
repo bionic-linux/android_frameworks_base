@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51390832_5192e33c",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-14T15:13:34Z",
+      "side": 1,
+      "message": "Right now this doesn\u0027t pass – this needs to wait for the legacy VPN runner thread to be done.",
+      "range": {
+        "startLine": 1047,
+        "startChar": 8,
+        "endLine": 1047,
+        "endChar": 21
+      },
+      "revId": "0026a56cbd10edb44a352b94136d6c575fcaebbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
