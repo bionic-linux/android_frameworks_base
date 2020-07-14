@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d8240fb_a3f0848b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3039,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T17:50:42Z",
+      "side": 1,
+      "message": "Nit: this probably should have an extra blank comment line if you\u0027re trying to logically separate the two. Otherwise suggest collapsing to fit stuff on previous line",
+      "range": {
+        "startLine": 3039,
+        "startChar": 14,
+        "endLine": 3039,
+        "endChar": 15
+      },
+      "revId": "866b067cda31e2b8fc50f839737adb4a58c8dc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df97fd4_79d414ed",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7298,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T17:50:42Z",
+      "side": 1,
+      "message": "Nit: I think this should be \"isNetworkPartiallyValid\" for grammatical reasons",
+      "range": {
+        "startLine": 7298,
+        "startChar": 78,
+        "endLine": 7298,
+        "endChar": 79
+      },
+      "revId": "866b067cda31e2b8fc50f839737adb4a58c8dc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2c3779_c0b6b288",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7371,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T17:50:42Z",
+      "side": 1,
+      "message": "This looks almost identical to the above? can this be abstracted in any way?",
+      "range": {
+        "startLine": 7357,
+        "startChar": 0,
+        "endLine": 7371,
+        "endChar": 20
+      },
+      "revId": "866b067cda31e2b8fc50f839737adb4a58c8dc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6144214e_eacaa065",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7376,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T17:50:42Z",
+      "side": 1,
+      "message": "FYI: If you want to avoid changing these, feel free to make a overloaded version that sets false for isNetworkPartiallyValid by default.",
+      "range": {
+        "startLine": 7376,
+        "startChar": 8,
+        "endLine": 7376,
+        "endChar": 44
+      },
+      "revId": "866b067cda31e2b8fc50f839737adb4a58c8dc47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
