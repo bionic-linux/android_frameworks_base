@@ -22,6 +22,30 @@
       "revId": "fa8eb3f146db61c879958f6377e6adc4ec8d0ff1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0936b1_5e95214a",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-07-14T03:14:07Z",
+      "side": 0,
+      "message": "Oh. Thanks for correction.",
+      "parentUuid": "89f45102_88eeabcc",
+      "range": {
+        "startLine": 88,
+        "startChar": 27,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "fa8eb3f146db61c879958f6377e6adc4ec8d0ff1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

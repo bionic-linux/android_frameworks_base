@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "534899e3_02d4c3c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-07-14T03:14:07Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "8d85d1e8_307d63f5",
+      "revId": "ed270c277b7631fbb645269654a4d581a18a202f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "513b72f3_5467731f",
         "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "ed270c277b7631fbb645269654a4d581a18a202f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faafb082_da459ab3",
+        "filename": "telephony/java/com/android/internal/telephony/gsm/SmsMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-07-14T03:14:07Z",
+      "side": 1,
+      "message": "No functional change. it is to clean up code to show the error log when only wrong value is set actually.",
+      "parentUuid": "513b72f3_5467731f",
+      "revId": "ed270c277b7631fbb645269654a4d581a18a202f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
