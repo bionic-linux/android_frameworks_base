@@ -16637,25 +16637,30 @@ public class ActivityManagerService extends IActivityManager.Stub
             uidRec.lastReportedChange = change;
             uidRec.updateLastDispatchedProcStateSeq(change);
         }
+        mHandler.post(new Runnable() {
+        @Override
+            public void run(){
+                // Directly update the power manager, since we sit on top of it and it is critical
+                // it be kept in sync (so wake locks will be held as soon as appropriate).
+                if (mLocalPowerManager != null) {
+                // TO DO: dispatch cached/uncached changes here, so we don't need to report
+                // all proc state changes.
+                    if ((change & UidRecord.CHANGE_ACTIVE) != 0) {
+                        mLocalPowerManager.uidActive(pendingChange.uid);
+                    }
+                    if ((change & UidRecord.CHANGE_IDLE) != 0) {
+                        mLocalPowerManager.uidIdle(pendingChange.uid);
+                    }
+                    if ((change & UidRecord.CHANGE_GONE) != 0) {
+                        mLocalPowerManager.uidGone(pendingChange.uid);
+                    } else {
+                        mLocalPowerManager.updateUidProcState(pendingChange.uid,
+                                pendingChange.processState);
+                    }
+                }
+            }
+        });
 
-        // Directly update the power manager, since we sit on top of it and it is critical
-        // it be kept in sync (so wake locks will be held as soon as appropriate).
-        if (mLocalPowerManager != null) {
-            // TO DO: dispatch cached/uncached changes here, so we don't need to report
-            // all proc state changes.
-            if ((change & UidRecord.CHANGE_ACTIVE) != 0) {
-                mLocalPowerManager.uidActive(pendingChange.uid);
-            }
-            if ((change & UidRecord.CHANGE_IDLE) != 0) {
-                mLocalPowerManager.uidIdle(pendingChange.uid);
-            }
-            if ((change & UidRecord.CHANGE_GONE) != 0) {
-                mLocalPowerManager.uidGone(pendingChange.uid);
-            } else {
-                mLocalPowerManager.updateUidProcState(pendingChange.uid,
-                        pendingChange.processState);
-            }
-        }
     }
 
     private void maybeUpdateProviderUsageStatsLocked(ProcessRecord app, String providerPkgName,
