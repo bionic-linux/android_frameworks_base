@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02deaca2_e10a2f78",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-14T11:01:40Z",
+      "side": 1,
+      "message": "question: how do we maintain this?\nWhenever we add a new file in this folder, do we need to remember to add them here?\nIf yes, in what condition we need to do that?\nThe same question also applies to below.",
+      "range": {
+        "startLine": 1155,
+        "startChar": 0,
+        "endLine": 1155,
+        "endChar": 9
+      },
+      "revId": "2e7d315f862666aecf8bc1e571eb2c5f4890d533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
