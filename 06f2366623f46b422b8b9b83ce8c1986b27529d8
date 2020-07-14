@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f96af4a_f946a46f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3040,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T16:41:22Z",
+      "side": 1,
+      "message": "For the purposes of connectivity diagnostics, isn\u0027t RESULT_PARTIAL more informative? If the user accepts partial connectivity, would the network be force-marked as Validated?",
+      "range": {
+        "startLine": 3039,
+        "startChar": 81,
+        "endLine": 3040,
+        "endChar": 77
+      },
+      "revId": "06f2366623f46b422b8b9b83ce8c1986b27529d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
