@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "185a199e_d256e73a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T16:39:17Z",
+      "side": 1,
+      "message": "Took a gander through the code. I\u0027ll be happy when we can delete the LegacyVpnRunner altogether.",
+      "revId": "0026a56cbd10edb44a352b94136d6c575fcaebbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce7d12e7_18cf4123",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2772,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T16:39:17Z",
+      "side": 1,
+      "message": "Not from this CL, but oof. I didn\u0027t realize we had these outside the synchronized block. Since other VPN runner types don\u0027t wait for pppd and racoon to teardown, this theoretically can be modifying state that was set by a new VPN.",
+      "range": {
+        "startLine": 2772,
+        "startChar": 0,
+        "endLine": 2772,
+        "endChar": 57
+      },
+      "revId": "0026a56cbd10edb44a352b94136d6c575fcaebbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dfe4a72_cb4d7bb9",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2800,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T16:39:17Z",
+      "side": 1,
+      "message": "Reading through the code, I think there is a possibility for this to block the CS thread. I think the sinister part here is that InetAddress.getByName() cannot be interrupted, and thus any new call to startLegacyVpn() can block. This may, in turn lead to the ConnectivityService thread being blocked via the following call trace:\n* CS.updateNetworkInfo() -\u003e\n* CS.notifyLockdownVpn() -\u003e\n* mLockdownTracker.onNetworkInfoChanged() -\u003e\n* LockdownVpnTracker.handleStateChangedLocked() (also holds an additional lock) -\u003e\n* mVpn.startLegacyVpnPrivileged()\n\nMy only thought with regards to making this safe (without moving this out of the synchronized(TAG) block, which would allow multiple LegacyVpnRunners to be active at the same time) would be to:\n\n- At the start of bringup, trigger an async DnsResolver query, storing result into an AtomicReference or similar\n- Wait here until it is done using checkInterruptAndDelay(); effectively polling\n\nThis ensures we never go into an uninterruptible state on this LegacyVpnRunner thread",
+      "range": {
+        "startLine": 2800,
+        "startChar": 49,
+        "endLine": 2800,
+        "endChar": 64
+      },
+      "revId": "0026a56cbd10edb44a352b94136d6c575fcaebbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2338a3_8c89d6ad",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-07-14T16:39:17Z",
+      "side": 1,
+      "message": "Not sure if this will work if the device has no connectivity, or google.com isn\u0027t resolvable (eg AOSP devs in China). Would localhost here work? It\u0027d also have the added benefit of instantly resolving.",
+      "range": {
+        "startLine": 1045,
+        "startChar": 25,
+        "endLine": 1045,
+        "endChar": 41
+      },
+      "revId": "0026a56cbd10edb44a352b94136d6c575fcaebbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51390832_5192e33c",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 1
