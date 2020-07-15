@@ -735,7 +735,6 @@ public class IpServer extends StateMachine {
                     params.dnses.add(dnsServer);
                 }
             }
-            upstreamIfindex = mDeps.getIfindex(upstreamIface);
 
             // Add upstream index to name mapping for the tether stats usage in the coordinator.
             // Although this mapping could be added by both class Tethering and IpServer, adding
@@ -743,7 +742,7 @@ public class IpServer extends StateMachine {
             // forwarding rules. That is because there are different state machines in both
             // classes. It is hard to guarantee the link property update order between multiple
             // state machines.
-            mBpfCoordinator.addUpstreamNameToLookupTable(upstreamIfindex, upstreamIface);
+            mBpfCoordinator.addUpstreamNameToLookupTable(upstreamIfaceParams.index, upstreamIface);
         }
 
         // If v6only is null, we pass in null to setRaParams(), which handles

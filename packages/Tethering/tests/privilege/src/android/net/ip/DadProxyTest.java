@@ -18,7 +18,6 @@ package android.net.ip;
 
 import static android.system.OsConstants.IPPROTO_ICMPV6;
 import static android.system.OsConstants.IPPROTO_TCP;
-import static com.android.compatibility.common.util.SystemUtil.runWithShellPermissionIdentity;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -40,10 +39,12 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.internal.util.HexDump;
 import com.android.testutils.TapPacketReader;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -112,11 +113,10 @@ public class DadProxyTest {
         inst.getUiAutomation().adoptShellPermissionIdentity();
 
         AtomicReference<TestNetworkInterface> iface = new AtomicReference<>();
-        runWithShellPermissionIdentity(() -> {
-            final TestNetworkManager tnm = (TestNetworkManager) inst.getContext().getSystemService(
-                Context.TEST_NETWORK_SERVICE);
-            iface.set(tnm.createTapInterface());
-        });
+        final TestNetworkManager tnm = (TestNetworkManager) inst.getContext().getSystemService(
+            Context.TEST_NETWORK_SERVICE);
+        iface.set(tnm.createTapInterface());
+        inst.getUiAutomation().dropShellPermissionIdentity();
 
         return iface.get();
     }
@@ -180,7 +180,12 @@ public class DadProxyTest {
         int icmpLen = ICMPV6_HEADER_LEN +
             (type == NeighborPacketForwarder.ICMPV6_NEIGHBOR_ADVERTISEMENT ?
              LL_TARGET_OPTION_LEN : 0);
-        final ByteBuffer buf = ByteBuffer.allocate(icmpLen + IPV6_HEADER_LEN);
+        final ByteBuffer buf = ByteBuffer.allocate(ETH_HEADER_LEN + icmpLen + IPV6_HEADER_LEN);
+
+        final InetAddress target = InetAddresses.parseNumericAddress("ff02::1:5566:7788");
+        final MacAddress targetMac = MacAddress.fromString("01:02:03:04:05:06");
+        final MacAddress solicitedMac = MacAddress.fromString("33:33:01:66:77:88");
+        final MacAddress srcMac = MacAddress.fromString("01:02:03:04:05:06");
 
         // IPv6 header
         byte[] version = {(byte) 0x60, 0x00, 0x00, 0x00};
@@ -191,7 +196,7 @@ public class DadProxyTest {
 
         final byte[] src = InetAddresses.parseNumericAddress("::").getAddress();
         buf.put(src);                                               // Src
-        final byte[] dst = InetAddresses.parseNumericAddress("ff02::1:5566:7788").getAddress();
+        final byte[] dst = target.getAddress();
         buf.put(dst);                                               // Dst
 
         // ICMPv6 Header
@@ -199,16 +204,14 @@ public class DadProxyTest {
         buf.put((byte) 0x00);                                       // Code
         buf.putShort((short) 0);                                    // Checksum
         buf.putInt(0);                                              // Reserved
-        byte[] target =
-            InetAddresses.parseNumericAddress("fe80::1122:3344:5566:7788").getAddress();
-        buf.put(target);
+        buf.put(target.getAddress());
 
         if(type == NeighborPacketForwarder.ICMPV6_NEIGHBOR_ADVERTISEMENT) {
             //NA packet has LL target address
             //ICMPv6 Option
             buf.put((byte) 0x02);                                   // Type
             buf.put((byte) 0x01);                                   // Length
-            byte[] ll_target = MacAddress.fromString("01:02:03:04:05:06").toByteArray();
+            byte[] ll_target = targetMac.toByteArray();
             buf.put(ll_target);
         }
 
@@ -219,10 +222,19 @@ public class DadProxyTest {
 
         buf.flip();
 
-        return buf;
+        // Prepend Ethernet header.
+        ByteBuffer ethPacket = ByteBuffer.allocate(buf.capacity());
+        ethPacket.put(solicitedMac.toByteArray());
+        ethPacket.put(targetMac.toByteArray());
+        ethPacket.putShort((short) 0x86dd);  // TODO: use ETHER_TYPE_IPV6
+        ethPacket.put(buf);
+        ethPacket.flip();
+
+        return ethPacket;
     }
 
     private DadProxy setupProxy() {
+        if (Looper.myLooper() == null) Looper.prepare();
         final InterfaceParams tetheredParams = InterfaceParams.getByName(mTetheredIfaceName);
         assertNotNull(tetheredParams);
         DadProxy proxy = new DadProxy(new Handler(Looper.myLooper()), tetheredParams); // mMockNative
@@ -286,6 +298,7 @@ public class DadProxyTest {
 
         ByteBuffer ns_packet = createIcmpV6Packet(NeighborPacketForwarder.ICMPV6_NEIGHBOR_SOLICITATION);
 
+        Log.d("DadProxyTest", HexDump.toHexString(ns_packet.array()));
         try {
             mTetheredPacketReader.sendResponse(ns_packet);
         } catch (IOException e) {

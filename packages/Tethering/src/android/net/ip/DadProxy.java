@@ -17,7 +17,7 @@
 package android.net.ip;
 
 import android.net.util.InterfaceParams;
-import android.net.util.TetheringUtils.TetheringUtilsNative;
+import android.net.util.TetheringUtils;
 import android.os.Handler;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -29,10 +29,10 @@ public class DadProxy {
     public static NeighborPacketForwarder naForwarder, nsForwarder;
 
     public DadProxy(Handler h, InterfaceParams tetheredIface) {
-        this(h, tetheredIface, new TetheringUtilsNative());
+        this(h, tetheredIface, new TetheringUtils.Native());
     }
 
-    public DadProxy(Handler h, InterfaceParams tetheredIface, TetheringUtilsNative aNative) {
+    public DadProxy(Handler h, InterfaceParams tetheredIface, TetheringUtils.Native aNative) {
         naForwarder = new NeighborPacketForwarder(h, tetheredIface,
             NeighborPacketForwarder.ICMPV6_NEIGHBOR_ADVERTISEMENT, aNative);
         nsForwarder = new NeighborPacketForwarder(h, tetheredIface,
