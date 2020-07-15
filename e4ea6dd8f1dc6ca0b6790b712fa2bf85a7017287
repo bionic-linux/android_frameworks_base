@@ -16,6 +16,24 @@
       "revId": "e4ea6dd8f1dc6ca0b6790b712fa2bf85a7017287",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72b7f2ba_e27778c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2020-07-15T17:34:43Z",
+      "side": 1,
+      "message": "the purpose of this change is to ensure that the child and the parent use different keys for signing return addresses. this is good for security, but problematic for any frame from the parent that the child needs to return through. so we need to mark those so that they don\u0027t sign return addresses so that the child (with its different key) can return.\n\nif your real question is \"why isn\u0027t this flaky if we change the code?\" and/or \"isn\u0027t there a better way?\", yes, this is something we\u0027ll need to track if we make relevant changes, and, no, i don\u0027t think there\u0027s a way to automate this. in the short term, we don\u0027t have any hardware with PAC/BTI anyway so it\u0027ll only affect the folks working on getting this stuff running. longer term, i think you can assume that as soon as there\u0027s hardware, all the hardware will have it from then on, so it\u0027ll be obvious to anyone breaking this what\u0027s happened (i promise to add CFI and BTI failures to the big list in https://source.android.com/devices/tech/debug/native-crash :-) ).",
+      "parentUuid": "fc1c2557_7f4aed41",
+      "revId": "e4ea6dd8f1dc6ca0b6790b712fa2bf85a7017287",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
