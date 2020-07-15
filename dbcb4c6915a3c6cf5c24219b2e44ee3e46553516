@@ -16,6 +16,23 @@
       "revId": "dbcb4c6915a3c6cf5c24219b2e44ee3e46553516",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf8c7276_1dc9db87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2020-07-15T16:16:45Z",
+      "side": 1,
+      "message": "LOCATION_PROVIDERS_ALLOWED is removed completely in internal master - the same could be done here. If Xiaomi code is currently mutating LOCATION_PROVIDERS_ALLOWED (and thus hitting this bug), it can be refactored to avoid LOCATION_PROVIDERS_ALLOWED completely, which has been deprecated for about 4 years now, and will be completely unsupported starting with Android S.",
+      "revId": "dbcb4c6915a3c6cf5c24219b2e44ee3e46553516",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
