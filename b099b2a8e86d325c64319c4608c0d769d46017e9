@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "82d7acaa_c5327692",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7514,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-15T08:50:29Z",
+      "side": 1,
+      "message": "Ok I\u0027ll refactor that later once we know how to deal with it.\nJosh, any suggestion?",
+      "parentUuid": "a137f959_2beea3cd",
+      "range": {
+        "startLine": 7514,
+        "startChar": 10,
+        "endLine": 7514,
+        "endChar": 17
+      },
+      "revId": "b099b2a8e86d325c64319c4608c0d769d46017e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80246193_04d5994b",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
