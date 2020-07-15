@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fc164cc_bf6c14e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-15T15:32:38Z",
+      "side": 1,
+      "message": "(Thanks for the patch.)\n\n+soonil\n\nLOCATION_PROVIDERS_ALLOWED has been removed internally already, so once the next version comes to AOSP, the problem should be gone. So I suggest waiting for the next version...",
+      "revId": "dbcb4c6915a3c6cf5c24219b2e44ee3e46553516",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
