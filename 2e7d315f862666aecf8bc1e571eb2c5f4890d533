@@ -22,6 +22,30 @@
       "revId": "2e7d315f862666aecf8bc1e571eb2c5f4890d533",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399be3fc_ed15cc5f",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-16T06:21:12Z",
+      "side": 1,
+      "message": "Immediately yes. Whenever we need to add a file we need to know if it should be part of the CS module or part of the non-updatable framework. I don\u0027t expect this to be difficult to determine when we add a file.\n\nIn a second step, we will move these files to their own directory under packages/modules (or some subdirectory of frameworks/base for a while). This is also what we did for NetworkStack back in the Q timeframe ; there were changes grouping the files first and then changes moving them. The same thing applies to Tethering, but the moving work for Tethering is not done yet – which in a sense shows how much of a non-problem this has been in practice. Besides, if you add a source file but forget to add it here, it won\u0027t build. So it\u0027s not like we may fail to notice.\n\nThis case here looks particularly big and bad because of how tangled the current structure is, but if we\u0027re going to untangle it, this is a necessary step. I don\u0027t think it would be simpler to move them first and change the build rules later ; on the contrary I think this is faster and easier to handle.\n\nAaron : we should have a comment over this filegroup to explain that these files should ultimately move to their own CS directory.",
+      "parentUuid": "02deaca2_e10a2f78",
+      "range": {
+        "startLine": 1155,
+        "startChar": 0,
+        "endLine": 1155,
+        "endChar": 9
+      },
+      "revId": "2e7d315f862666aecf8bc1e571eb2c5f4890d533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
