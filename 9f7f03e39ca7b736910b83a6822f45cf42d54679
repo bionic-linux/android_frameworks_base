@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "754d508d_a690a3ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-16T08:36:41Z",
+      "side": 1,
+      "message": "LGTM with nit",
+      "revId": "9f7f03e39ca7b736910b83a6822f45cf42d54679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fe88a15_cbd64d08",
+        "filename": "core/java/android/net/NetworkStatsHistory.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-16T08:36:41Z",
+      "side": 1,
+      "message": "style: braces around the statements for a conditional is needed for multiple line.\nhttps://source.android.com/setup/contribute/code-style#use-standard-brace-style",
+      "range": {
+        "startLine": 572,
+        "startChar": 12,
+        "endLine": 573,
+        "endChar": 85
+      },
+      "revId": "9f7f03e39ca7b736910b83a6822f45cf42d54679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
