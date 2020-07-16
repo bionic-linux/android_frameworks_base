@@ -24,6 +24,7 @@ import static android.net.NetworkStats.INTERFACES_ALL;
 import static android.net.NetworkStats.METERED_ALL;
 import static android.net.NetworkStats.METERED_NO;
 import static android.net.NetworkStats.METERED_YES;
+import static android.net.NetworkStats.multiplySafe;
 import static android.net.NetworkStats.ROAMING_ALL;
 import static android.net.NetworkStats.ROAMING_NO;
 import static android.net.NetworkStats.ROAMING_YES;
@@ -980,6 +981,26 @@ public class NetworkStatsTest {
         assertEquals(2, stats.size());
         assertEquals(firstEntry, stats.getValues(0, null));
         assertEquals(secondEntry, stats.getValues(1, null));
+    }
+
+    @Test
+    public void testMultiplySafe() {
+        assertEquals(25, multiplySafe(50, 1, 2));
+        assertEquals(100, multiplySafe(50, 2, 1));
+
+        assertEquals(-10, multiplySafe(30, -1, 3));
+        assertEquals(0, multiplySafe(30, 0, 3));
+        assertEquals(10, multiplySafe(30, 1, 3));
+        assertEquals(20, multiplySafe(30, 2, 3));
+        assertEquals(30, multiplySafe(30, 3, 3));
+        assertEquals(40, multiplySafe(30, 4, 3));
+
+        assertEquals(100_000_000_000L,
+                multiplySafe(300_000_000_000L, 10_000_000_000L, 30_000_000_000L));
+        assertEquals(100_000_000_010L,
+                multiplySafe(300_000_000_000L, 10_000_000_001L, 30_000_000_000L));
+        assertEquals(823_202_048L,
+                multiplySafe(4_939_212_288L, 2_121_815_528L, 12_730_893_165L));
     }
 
     private static void assertContains(NetworkStats stats,  String iface, int uid, int set,

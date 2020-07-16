@@ -17,6 +17,7 @@
 package android.net;
 
 import static android.net.NetworkStats.IFACE_ALL;
+import static android.net.NetworkStats.multiplySafe;
 import static android.net.NetworkStats.SET_DEFAULT;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
@@ -364,11 +365,11 @@ public class NetworkStatsHistory implements Parcelable {
             if (overlap <= 0) continue;
 
             // integer math each time is faster than floating point
-            final long fracRxBytes = rxBytes * overlap / duration;
-            final long fracRxPackets = rxPackets * overlap / duration;
-            final long fracTxBytes = txBytes * overlap / duration;
-            final long fracTxPackets = txPackets * overlap / duration;
-            final long fracOperations = operations * overlap / duration;
+            final long fracRxBytes = multiplySafe(rxBytes, overlap, duration);
+            final long fracRxPackets = multiplySafe(rxPackets, overlap, duration);
+            final long fracTxBytes = multiplySafe(txBytes, overlap, duration);
+            final long fracTxPackets = multiplySafe(txPackets, overlap, duration);
+            final long fracOperations = multiplySafe(operations, overlap, duration);
 
             addLong(activeTime, i, overlap);
             addLong(this.rxBytes, i, fracRxBytes); rxBytes -= fracRxBytes;
@@ -568,12 +569,18 @@ public class NetworkStatsHistory implements Parcelable {
             if (overlap <= 0) continue;
 
             // integer math each time is faster than floating point
-            if (activeTime != null) entry.activeTime += activeTime[i] * overlap / bucketSpan;
-            if (rxBytes != null) entry.rxBytes += rxBytes[i] * overlap / bucketSpan;
-            if (rxPackets != null) entry.rxPackets += rxPackets[i] * overlap / bucketSpan;
-            if (txBytes != null) entry.txBytes += txBytes[i] * overlap / bucketSpan;
-            if (txPackets != null) entry.txPackets += txPackets[i] * overlap / bucketSpan;
-            if (operations != null) entry.operations += operations[i] * overlap / bucketSpan;
+            if (activeTime != null)
+                entry.activeTime += multiplySafe(activeTime[i], overlap, bucketSpan);
+            if (rxBytes != null)
+                entry.rxBytes += multiplySafe(rxBytes[i], overlap, bucketSpan);
+            if (rxPackets != null)
+                entry.rxPackets += multiplySafe(rxPackets[i], overlap, bucketSpan);
+            if (txBytes != null)
+                entry.txBytes += multiplySafe(txBytes[i], overlap, bucketSpan);
+            if (txPackets != null)
+                entry.txPackets += multiplySafe(txPackets[i], overlap, bucketSpan);
+            if (operations != null)
+                entry.operations += multiplySafe(operations[i], overlap, bucketSpan);
         }
         return entry;
     }
