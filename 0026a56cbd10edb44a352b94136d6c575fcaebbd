@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "e728b597_ad55bce5",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2800,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-16T10:47:13Z",
+      "side": 1,
+      "message": "This thread is already blocked for up to 60 seconds in the loop above:\n\n                // Wait for the daemons to create the new state.\n                while (!state.exists()) {\n                    // Check if a running daemon is dead.\n                    for (int i \u003d 0; i \u003c mDaemons.length; ++i) {\n                        String daemon \u003d mDaemons[i];\n                        if (mArguments[i] !\u003d null \u0026\u0026 !SystemService.isRunning(daemon)) {\n                            throw new IllegalStateException(daemon + \" is dead\");\n                        }\n                    }\n                    checkInterruptAndDelay(true);\n                }\n\nThat said - it seems better to do the DNS lookup before starting the daemon, because otherwise it could (unlikely) happen that the daemon starts but the DNS lookup fails and the throw route isn\u0027t created. There are a few ways I can see to do this:\n\n1. Do the DNS lookup before constructing the arguments (in startLegacyVpnPrivileged), and when constructing the arguments, use the IP address instead of profile.server. I don\u0027t know if it\u0027s safe to block there. I don\u0027t think it is.\n\n2. Do the DNS lookup before starting the daemon (in bringup, around line 2689), and rely on the DNS cache to return the same IP address that racoon got. This will not work if the DNS TTL is too low though. In this case the lookup could fail (which means we\u0027d have to fail the connection attempt) or, worse, we\u0027d create a throw route to the wrong IP address and bring up a VPN that doesn\u0027t work.\n\n3. Remember at which index in mArguments the server address is, and pass that down to this function. Then in this function do the DNS lookup and overwrite that index. Horrible, but would probably work.",
+      "parentUuid": "8dfe4a72_cb4d7bb9",
+      "range": {
+        "startLine": 2800,
+        "startChar": 49,
+        "endLine": 2800,
+        "endChar": 64
+      },
+      "revId": "0026a56cbd10edb44a352b94136d6c575fcaebbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a2338a3_8c89d6ad",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 1
