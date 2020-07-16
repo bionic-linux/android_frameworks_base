@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "dbf00de2_5856f320",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2800,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-07-16T11:03:50Z",
+      "side": 1,
+      "message": "Actually, a workable approach might be: instead of creating the racoon and mtpd arrays in startLegacyVpnPrivileged, create them in LegacyVpnRunner#run. LegacyVpnRunner already gets the VpnProfile, and that should be enough to construct the arguemnts. Then we can do the DNS lookup there before constructing the racoon and mtpd arrays.\n\nI *think* there is no need to make a defensive copy of the profile, because it comes all the way from a binder call made by Settings, so is already an unmarshalled parcelable. I don\u0027t think that profile is stored anywhere except for the LegacyVpnRunner, so there is no risk in mutating the object.",
+      "parentUuid": "e728b597_ad55bce5",
+      "range": {
+        "startLine": 2800,
+        "startChar": 49,
+        "endLine": 2800,
+        "endChar": 64
+      },
+      "revId": "0026a56cbd10edb44a352b94136d6c575fcaebbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a2338a3_8c89d6ad",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 1
