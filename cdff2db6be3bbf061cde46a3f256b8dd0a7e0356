@@ -16,6 +16,23 @@
       "revId": "cdff2db6be3bbf061cde46a3f256b8dd0a7e0356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70c880b2_23075b34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2020-07-18T05:19:43Z",
+      "side": 1,
+      "message": "what\u0027s wrong with the presubmit warning?",
+      "revId": "cdff2db6be3bbf061cde46a3f256b8dd0a7e0356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
