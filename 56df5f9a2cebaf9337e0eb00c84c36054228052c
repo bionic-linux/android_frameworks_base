@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc47dab5_fa68454e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-07-19T09:05:45Z",
+      "side": 1,
+      "message": "@Junyu Lai,\n\nCan you please help merge this change if there are no concerns.\n\nPlease let me know if there is any pending AI on us.",
+      "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
