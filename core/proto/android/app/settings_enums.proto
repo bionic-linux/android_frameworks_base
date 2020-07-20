@@ -2454,4 +2454,10 @@ enum PageId {
     // CATEGORY: SETTINGS
     // OS: R
     ADB_WIRELESS_DEVICE_DETAILS = 1836;
+
+    // OPEN: Settings > Security > Trusted credentials 
+    //  > Click on Certificate
+    // CATEGORY: SETTINGS
+    // OS: S
+    TRUSTED_CREDENTIALS_DETAILS = 1837;
 }
