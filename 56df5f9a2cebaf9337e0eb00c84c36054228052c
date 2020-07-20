@@ -33,6 +33,75 @@
       "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "613e0308_c7e33baf",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-20T04:15:01Z",
+      "side": 1,
+      "message": "Could this move instead to NetworkUtils or some other suitable utils class in internal ? I don\u0027t think NetworkStats is a great home for a generic math util.",
+      "range": {
+        "startLine": 1454,
+        "startChar": 8,
+        "endLine": 1454,
+        "endChar": 12
+      },
+      "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd2d581_40cef02f",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-20T04:15:01Z",
+      "side": 1,
+      "message": "I know you\u0027re only moving this code, but I don\u0027t think the name of the method with three ints make it very clear what it does, how about multiplySafeByRational ?\n\n(I have a lot of other gripes about the implementation, but as you\u0027re just moving this code let\u0027s not go there)",
+      "range": {
+        "startLine": 1456,
+        "startChar": 23,
+        "endLine": 1456,
+        "endChar": 35
+      },
+      "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84004c0_0cd21331",
+        "filename": "core/java/android/net/NetworkStatsHistory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-20T04:15:01Z",
+      "side": 1,
+      "message": "This code used to crash with divide by zero if duration is zero, instead now it silently returns a wrong value. I don\u0027t think this is great.\n\nThe contract for multiplySafe today is that a 0 denominator is silently changed into a 1 denominator. I know you\u0027re not changing it, but I really don\u0027t think this is a great contract. As there is only one caller of this function today, I\u0027d prefer if multiplySafe threw division by zero when passed a 0 denominator (as this is clearly a programming error) and we migrate the existing callers. All we have to do to achieve this is to add the following protection in NetworkStatsCollection immediately before the calls :\n\n  final long rawRxBytes \u003d entry.rxBytes \u003d\u003d 0 ? 1 : entry.rxBytes;\n  final long rawTxBytes \u003d entry.txBytes \u003d\u003d 0 ? 1 : entry.txBytes;",
+      "range": {
+        "startLine": 368,
+        "startChar": 37,
+        "endLine": 368,
+        "endChar": 49
+      },
+      "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
