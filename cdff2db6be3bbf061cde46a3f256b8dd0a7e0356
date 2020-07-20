@@ -33,6 +33,23 @@
       "revId": "cdff2db6be3bbf061cde46a3f256b8dd0a7e0356",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03a2cdfb_b3d59aea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1729398
+      },
+      "writtenOn": "2020-07-20T02:16:53Z",
+      "side": 1,
+      "message": "Is there a warning now? If so, how can we avoid it?",
+      "revId": "cdff2db6be3bbf061cde46a3f256b8dd0a7e0356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
