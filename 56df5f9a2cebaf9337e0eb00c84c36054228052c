@@ -16,6 +16,23 @@
       "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b387290_570b117d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-20T03:31:57Z",
+      "side": 1,
+      "message": "Hi Pavan,\n  This cannot be merged unless Qualcomm-Review is voted.\n  Could you kindly help with that?",
+      "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
