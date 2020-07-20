@@ -3839,7 +3839,7 @@ package android.media {
   }
 
   public static interface MediaPlayer.OnImsRxNoticeListener {
-    method public void onImsRxNotice(@NonNull android.os.Parcel);
+    method public void onImsRxNotice(@NonNull android.media.MediaPlayer, @NonNull byte[]);
   }
 
   public final class MediaRecorder.AudioSource {
