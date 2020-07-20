@@ -3617,8 +3617,15 @@ public class MediaPlayer extends PlayerBase
                 }
                 if (msg.obj instanceof Parcel) {
                     Parcel parcel = (Parcel) msg.obj;
-                    onImsRxNoticeListener.onImsRxNotice(parcel);
-                    parcel.recycle();
+                    byte[] event;
+                    try {
+                        event = parcel.createByteArray();
+                    } finally {
+                        parcel.recycle();
+                    }
+                    if (event != null) {
+                        onImsRxNoticeListener.onImsRxNotice(mMediaPlayer, event);
+                    }
                 }
                 return;
 
@@ -4065,16 +4072,73 @@ public class MediaPlayer extends PlayerBase
      * Interface definition of a callback to be invoked when
      * IMS Rx connection has a notice.
      *
+     * @see MediaPlayer.setOnImsRxNoticeListener
+     *
      * @hide
      */
     @SystemApi
     public interface OnImsRxNoticeListener
     {
-        public void onImsRxNotice(@NonNull Parcel parcel);
+        /**
+         * Called to indicate an event noticed from IMS.
+         *
+         * @param mp the {@code MediaPlayer} associated with this callback.
+         * @param event an ims media event serialized as byte[] array.
+         *
+         * byte[] event = {type, arg1, arg2, ...};
+         *
+         * int TYPE_RTP_FIRST_PACKET = 100;    // A first rtp packet received.
+         *  - {type = 100}
+         *
+         * int TYPE_RTCP_FIRST_PACKET = 101;   // A first rtcp packet received.
+         *  - {type = 101}
+         *
+         * int TYPE_RTP_QUALITY = 102;         // A periodic report of a RTP stastics.
+         * int TYPE_RTP_QUALITY_EMC = 103;     // An emergency report when serious packet loss
+         *                                        detected in between TYPE_RTP_QUALITY.
+         *  - {type = 102 or 103, arg1, arg2, arg3, arg4, arg5, arg6, arg7}
+         *    - int feedbacktype - always comes 0.
+         *    - int bitrate - amount of data received in this period.
+         *    - int higestSeqNum - highest rtp.seqnum received in this period.
+         *    - int baseSeqNum - the first rtp.seqnum received of the media stream.
+         *    - int prevExpectedNumPackets - expected count of receiving packets in previous report.
+         *    - int numPacketsReceived - count of actual receiving packets in this report.
+         *    - int prevNumPacketsReceived - count of actual receiving packets in previous report.
+         *
+         *
+         * int TYPE_RTCP_TSFB = 205;           // Transport layer Feedback message.
+         *  - {type = 205, arg1, arg2, arg3}
+         *    - int opponentId - SSRC value of RTP header (5.1 of RFC-3550)
+         *                       - RTCP_TSFB_TMMBR(3) - received TMMBR request from remote side.
+         *    - int feedbackType - RTCP_TSFB_NACK(1) - received NACK request from remote side.
+         *                       - RTCP_TSFB_TMMBR(3) - received TMMBR request from remote side.
+         *    - int value - Generic NACK(6.2.1 of RFC-4585)
+         *                - TMMBR(last 4bytes of 4.2.1.1 in RFC-5104)
+         *
+         * int TYPE_RTCP_PSFB = 206;           // Payload-specific Feedback message.
+         *  - {type = 205, arg1, arg2}
+         *    - int opponentId - SSRC value of RTP header (5.1 of RFC-3550)
+         *    - int feedbackType - RTCP_PSFB_PLI(1) - received PLI request from remote side.
+         *                       - RTCP_PSFB_FIR(4) - received FIR request from remote side.
+         *
+         * int TYPE_RTP_CVO = 300;             // CVO (RTP Extension) message.
+         *  - {type = 300, arg1}
+         *    - int cvoValue - rotation degrees of a received video(6.2.3 of 3GPP R12 TS 26.114).
+         *
+         * int TYPE_RTP_SOCKET_LOST = 400;     // A socket returns error while receive().
+         *  - {type = 400}
+         *
+         */
+        void onImsRxNotice(@NonNull MediaPlayer mp, @NonNull byte[] event);
     }
 
     /**
      * Register a callback to be invoked when IMS Rx connection has a notice.
+     *
+     * @see MediaPlayer.OnImsRxNoticeListener
+     * @see MediaPlayer.setDataSource(String8 rtpParams) of mediaplayer.h
+     *
+     * @param listener the callback that will be run
      *
      * @hide
      */
