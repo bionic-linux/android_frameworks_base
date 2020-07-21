@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52aedaa7_c7078d66",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4088,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-07-21T08:53:48Z",
+      "side": 1,
+      "message": "About the all comments to indicate actual data structure,\nI\u0027ll try to rewrite the contents more readable.",
+      "range": {
+        "startLine": 4088,
+        "startChar": 9,
+        "endLine": 4088,
+        "endChar": 50
+      },
+      "revId": "ad84a0fc77f29b006ad9da5899213dad6073cba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddb72ed_3c10a2ca",
+        "filename": "media/java/android/media/MediaPlayer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4112,
+      "author": {
+        "id": 1647935
+      },
+      "writtenOn": "2020-07-21T08:53:48Z",
+      "side": 1,
+      "message": "duplicated comment. Please remove.",
+      "range": {
+        "startLine": 4112,
+        "startChar": 33,
+        "endLine": 4112,
+        "endChar": 96
+      },
+      "revId": "ad84a0fc77f29b006ad9da5899213dad6073cba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
