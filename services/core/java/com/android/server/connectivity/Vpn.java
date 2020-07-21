@@ -1984,6 +1984,44 @@ public class Vpn {
     }
 
     /**
+     * A class that reads certificates from a keystore.
+     *
+     * The constructor will throw ISE if it can't read the credentials from the keystore.
+     */
+    private class CertificateSet {
+        public final String privateKey;
+        public final String userCert;
+        public final String caCert;
+        public final String serverCert;
+
+        CertificateSet(final VpnProfile profile, final KeyStore keyStore) {
+            if (!profile.ipsecUserCert.isEmpty()) {
+                privateKey = Credentials.USER_PRIVATE_KEY + profile.ipsecUserCert;
+                byte[] value = keyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecUserCert);
+                userCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
+            } else {
+                privateKey = "";
+                userCert = "";
+            }
+            if (!profile.ipsecCaCert.isEmpty()) {
+                byte[] value = keyStore.get(Credentials.CA_CERTIFICATE + profile.ipsecCaCert);
+                caCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
+            } else {
+                caCert = "";
+            }
+            if (!profile.ipsecServerCert.isEmpty()) {
+                byte[] value = keyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecServerCert);
+                serverCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
+            } else {
+                serverCert = "";
+            }
+            if (userCert == null || caCert == null || serverCert == null) {
+                throw new IllegalStateException("Cannot load credentials");
+            }
+        }
+    }
+
+    /**
      * Start legacy VPN, controlling native daemons as needed. Creates a
      * secondary thread to perform connection work, returning quickly.
      *
@@ -2021,39 +2059,20 @@ public class Vpn {
         final String iface = ipv4DefaultRoute.getInterface();
 
         // Load certificates.
-        String privateKey = "";
-        String userCert = "";
-        String caCert = "";
-        String serverCert = "";
-        if (!profile.ipsecUserCert.isEmpty()) {
-            privateKey = Credentials.USER_PRIVATE_KEY + profile.ipsecUserCert;
-            byte[] value = keyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecUserCert);
-            userCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
-        }
-        if (!profile.ipsecCaCert.isEmpty()) {
-            byte[] value = keyStore.get(Credentials.CA_CERTIFICATE + profile.ipsecCaCert);
-            caCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
-        }
-        if (!profile.ipsecServerCert.isEmpty()) {
-            byte[] value = keyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecServerCert);
-            serverCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
-        }
-        if (userCert == null || caCert == null || serverCert == null) {
-            throw new IllegalStateException("Cannot load credentials");
-        }
+        final CertificateSet certificates = new CertificateSet(profile, keyStore);
 
-        // Prepare arguments for racoon.
-        String[] racoon = null;
+        // If the VPN is IKEv2, start it here and return.
         switch (profile.type) {
             case VpnProfile.TYPE_IKEV2_IPSEC_RSA:
                 // Secret key is still just the alias (not the actual private key). The private key
                 // is retrieved from the KeyStore during conversion of the VpnProfile to an
                 // Ikev2VpnProfile.
-                profile.ipsecSecret = Ikev2VpnProfile.PREFIX_KEYSTORE_ALIAS + privateKey;
-                profile.ipsecUserCert = userCert;
+                profile.ipsecSecret = Ikev2VpnProfile.PREFIX_KEYSTORE_ALIAS
+                        + certificates.privateKey;
+                profile.ipsecUserCert = certificates.userCert;
                 // Fallthrough
             case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS:
-                profile.ipsecCaCert = caCert;
+                profile.ipsecCaCert = certificates.caCert;
 
                 // Start VPN profile
                 profile.setAllowedAlgorithms(Ikev2VpnProfile.DEFAULT_ALGORITHMS);
@@ -2068,68 +2087,20 @@ public class Vpn {
                 profile.setAllowedAlgorithms(Ikev2VpnProfile.DEFAULT_ALGORITHMS);
                 startVpnProfilePrivileged(profile, VpnConfig.LEGACY_VPN, keyStore);
                 return;
-            case VpnProfile.TYPE_L2TP_IPSEC_PSK:
-                racoon = new String[] {
-                    iface, profile.server, "udppsk", profile.ipsecIdentifier,
-                    profile.ipsecSecret, "1701",
-                };
-                break;
-            case VpnProfile.TYPE_L2TP_IPSEC_RSA:
-                racoon = new String[] {
-                    iface, profile.server, "udprsa", privateKey, userCert,
-                    caCert, serverCert, "1701",
-                };
-                break;
-            case VpnProfile.TYPE_IPSEC_XAUTH_PSK:
-                racoon = new String[] {
-                    iface, profile.server, "xauthpsk", profile.ipsecIdentifier,
-                    profile.ipsecSecret, profile.username, profile.password, "", gateway,
-                };
-                break;
-            case VpnProfile.TYPE_IPSEC_XAUTH_RSA:
-                racoon = new String[] {
-                    iface, profile.server, "xauthrsa", privateKey, userCert,
-                    caCert, serverCert, profile.username, profile.password, "", gateway,
-                };
-                break;
-            case VpnProfile.TYPE_IPSEC_HYBRID_RSA:
-                racoon = new String[] {
-                    iface, profile.server, "hybridrsa",
-                    caCert, serverCert, profile.username, profile.password, "", gateway,
-                };
-                break;
         }
 
-        // Prepare arguments for mtpd.
-        String[] mtpd = null;
-        switch (profile.type) {
-            case VpnProfile.TYPE_PPTP:
-                mtpd = new String[] {
-                    iface, "pptp", profile.server, "1723",
-                    "name", profile.username, "password", profile.password,
-                    "linkname", "vpn", "refuse-eap", "nodefaultroute",
-                    "usepeerdns", "idle", "1800", "mtu", "1400", "mru", "1400",
-                    (profile.mppe ? "+mppe" : "nomppe"),
-                };
-                break;
-            case VpnProfile.TYPE_L2TP_IPSEC_PSK:
-            case VpnProfile.TYPE_L2TP_IPSEC_RSA:
-                mtpd = new String[] {
-                    iface, "l2tp", profile.server, "1701", profile.l2tpSecret,
-                    "name", profile.username, "password", profile.password,
-                    "linkname", "vpn", "refuse-eap", "nodefaultroute",
-                    "usepeerdns", "idle", "1800", "mtu", "1400", "mru", "1400",
-                };
-                break;
-        }
 
-        VpnConfig config = new VpnConfig();
+        final VpnConfig config = new VpnConfig();
         config.legacy = true;
         config.user = profile.key;
         config.interfaze = iface;
         config.session = profile.name;
         config.isMetered = false;
         config.proxyInfo = profile.proxy;
+
+        // Prepare arguments for racoon and mtpd.
+        final String[] racoon = getRacoonArgs(config, profile, certificates, gateway);
+        final String[] mtpd = getMtpdArgs(config, profile);
 
         config.addLegacyRoutes(profile.routes);
         if (!profile.dnsServers.isEmpty()) {
@@ -2600,6 +2571,63 @@ public class Vpn {
                 shutdownVpnRunner();
             });
         }
+    }
+
+    @Nullable private static String[] getMtpdArgs(final VpnConfig config,
+            final VpnProfile profile) {
+        switch (profile.type) {
+            case VpnProfile.TYPE_PPTP:
+                return new String[] {
+                        config.interfaze, "pptp", profile.server, "1723",
+                        "name", profile.username, "password", profile.password,
+                        "linkname", "vpn", "refuse-eap", "nodefaultroute",
+                        "usepeerdns", "idle", "1800", "mtu", "1400", "mru", "1400",
+                        (profile.mppe ? "+mppe" : "nomppe"),
+                };
+            case VpnProfile.TYPE_L2TP_IPSEC_PSK:
+            case VpnProfile.TYPE_L2TP_IPSEC_RSA:
+                return new String[] {
+                        config.interfaze, "l2tp", profile.server, "1701", profile.l2tpSecret,
+                        "name", profile.username, "password", profile.password,
+                        "linkname", "vpn", "refuse-eap", "nodefaultroute",
+                        "usepeerdns", "idle", "1800", "mtu", "1400", "mru", "1400",
+                };
+        }
+        return null;
+    }
+
+    @Nullable private static String[] getRacoonArgs(final VpnConfig config,
+            final VpnProfile profile, final CertificateSet certificates, final String gateway) {
+        switch (profile.type) {
+            case VpnProfile.TYPE_L2TP_IPSEC_PSK:
+                return new String[] {
+                        config.interfaze, profile.server, "udppsk", profile.ipsecIdentifier,
+                        profile.ipsecSecret, "1701",
+                };
+            case VpnProfile.TYPE_L2TP_IPSEC_RSA:
+                return new String[] {
+                        config.interfaze, profile.server, "udprsa", certificates.privateKey,
+                        certificates.userCert, certificates.caCert, certificates.serverCert, "1701",
+                };
+            case VpnProfile.TYPE_IPSEC_XAUTH_PSK:
+                return new String[] {
+                        config.interfaze, profile.server, "xauthpsk", profile.ipsecIdentifier,
+                        profile.ipsecSecret, profile.username, profile.password, "", gateway,
+                };
+            case VpnProfile.TYPE_IPSEC_XAUTH_RSA:
+                return new String[] {
+                        config.interfaze, profile.server, "xauthrsa", certificates.privateKey,
+                        certificates.userCert, certificates.caCert, certificates.serverCert,
+                        profile.username, profile.password, "", gateway,
+                };
+            case VpnProfile.TYPE_IPSEC_HYBRID_RSA:
+                return new String[] {
+                        config.interfaze, profile.server, "hybridrsa", certificates.caCert,
+                        certificates.serverCert, profile.username, profile.password, "", gateway,
+                };
+            // Other cases are IKEv2 platform VPN so they don't generate arguments for racoon.
+        }
+        return null;
     }
 
     /**
