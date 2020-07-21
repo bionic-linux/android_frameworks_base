@@ -3325,16 +3325,12 @@ public final class Settings {
             }
         }
 
-        boolean doNonData = true;
-        boolean hasSchemes = false;
+        boolean doNonScheme = true;
 
         final int dataSchemesCount = tmpPa.countDataSchemes();
         for (int ischeme = 0; ischeme < dataSchemesCount; ischeme++) {
             boolean doScheme = true;
             final String scheme = tmpPa.getDataScheme(ischeme);
-            if (scheme != null && !scheme.isEmpty()) {
-                hasSchemes = true;
-            }
             final int dataSchemeSpecificPartsCount = tmpPa.countDataSchemeSpecificParts();
             for (int issp = 0; issp < dataSchemeSpecificPartsCount; issp++) {
                 Uri.Builder builder = new Uri.Builder();
@@ -3343,7 +3339,7 @@ public final class Settings {
                 builder.opaquePart(ssp.getPath());
                 Intent finalIntent = new Intent(intent);
                 finalIntent.setData(builder.build());
-                applyDefaultPreferredActivityLPw(pmInternal, finalIntent, flags, cn,
+                applyDefaultPreferredActivityLPw(pmInternal, tmpPa, finalIntent, flags, cn,
                         scheme, ssp, null, null, userId);
                 doScheme = false;
             }
@@ -3362,7 +3358,7 @@ public final class Settings {
                     builder.path(path.getPath());
                     Intent finalIntent = new Intent(intent);
                     finalIntent.setData(builder.build());
-                    applyDefaultPreferredActivityLPw(pmInternal, finalIntent, flags, cn,
+                    applyDefaultPreferredActivityLPw(pmInternal, tmpPa, finalIntent, flags, cn,
                             scheme, null, auth, path, userId);
                     doAuth = doScheme = false;
                 }
@@ -3374,7 +3370,7 @@ public final class Settings {
                     }
                     Intent finalIntent = new Intent(intent);
                     finalIntent.setData(builder.build());
-                    applyDefaultPreferredActivityLPw(pmInternal, finalIntent, flags, cn,
+                    applyDefaultPreferredActivityLPw(pmInternal, tmpPa, finalIntent, flags, cn,
                             scheme, null, auth, null, userId);
                     doScheme = false;
                 }
@@ -3384,38 +3380,35 @@ public final class Settings {
                 builder.scheme(scheme);
                 Intent finalIntent = new Intent(intent);
                 finalIntent.setData(builder.build());
-                applyDefaultPreferredActivityLPw(pmInternal, finalIntent, flags, cn,
+                applyDefaultPreferredActivityLPw(pmInternal, tmpPa, finalIntent, flags, cn,
                         scheme, null, null, null, userId);
             }
-            doNonData = false;
+            doNonScheme = false;
         }
 
-        for (int idata=0; idata<tmpPa.countDataTypes(); idata++) {
-            String mimeType = tmpPa.getDataType(idata);
-            if (hasSchemes) {
-                Uri.Builder builder = new Uri.Builder();
-                for (int ischeme=0; ischeme<tmpPa.countDataSchemes(); ischeme++) {
-                    String scheme = tmpPa.getDataScheme(ischeme);
-                    if (scheme != null && !scheme.isEmpty()) {
-                        Intent finalIntent = new Intent(intent);
-                        builder.scheme(scheme);
-                        finalIntent.setDataAndType(builder.build(), mimeType);
-                        applyDefaultPreferredActivityLPw(pmInternal, finalIntent, flags, cn,
-                                scheme, null, null, null, userId);
-                    }
-                }
-            } else {
-                Intent finalIntent = new Intent(intent);
-                finalIntent.setType(mimeType);
-                applyDefaultPreferredActivityLPw(pmInternal, finalIntent, flags, cn,
-                        null, null, null, null, userId);
-            }
-            doNonData = false;
-        }
-
-        if (doNonData) {
-            applyDefaultPreferredActivityLPw(pmInternal, intent, flags, cn,
+        if (doNonScheme) {
+            applyDefaultPreferredActivityLPw(pmInternal, tmpPa, intent, flags, cn,
                     null, null, null, null, userId);
+        }
+    }
+
+    private void applyDefaultPreferredActivityLPw(PackageManagerInternal pmInternal,
+            IntentFilter tmpPa, Intent intent, int flags, ComponentName cn, String scheme,
+            PatternMatcher ssp, IntentFilter.AuthorityEntry auth, PatternMatcher path,
+            int userId) {
+        boolean doNonType = true;
+        for (int idata = 0; idata < tmpPa.countDataTypes(); idata++) {
+            String mimeType = tmpPa.getDataType(idata);
+            Intent finalIntent = new Intent(intent);
+            finalIntent.setDataAndType(intent.getData(), mimeType);
+            applyDefaultPreferredActivityLPw(pmInternal, finalIntent, flags, cn, scheme, ssp, auth,
+                    path, userId);
+            doNonType = false;
+        }
+
+        if (doNonType) {
+            applyDefaultPreferredActivityLPw(pmInternal, intent, flags, cn, scheme, ssp, auth,
+                    path, userId);
         }
     }
 
