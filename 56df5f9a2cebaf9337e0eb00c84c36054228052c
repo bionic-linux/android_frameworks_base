@@ -59,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "0fb498dc_5e59e54a",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-07-21T08:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "613e0308_c7e33baf",
+      "range": {
+        "startLine": 1454,
+        "startChar": 8,
+        "endLine": 1454,
+        "endChar": 12
+      },
+      "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd2d581_40cef02f",
         "filename": "core/java/android/net/NetworkStats.java",
         "patchSetId": 10
@@ -82,6 +106,30 @@
     },
     {
       "key": {
+        "uuid": "9bff92be_aa095af0",
+        "filename": "core/java/android/net/NetworkStats.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-07-21T08:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd2d581_40cef02f",
+      "range": {
+        "startLine": 1456,
+        "startChar": 23,
+        "endLine": 1456,
+        "endChar": 35
+      },
+      "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d84004c0_0cd21331",
         "filename": "core/java/android/net/NetworkStatsHistory.java",
         "patchSetId": 10
@@ -102,6 +150,30 @@
       "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980fba41_d620522f",
+        "filename": "core/java/android/net/NetworkStatsHistory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-07-21T08:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d84004c0_0cd21331",
+      "range": {
+        "startLine": 368,
+        "startChar": 37,
+        "endLine": 368,
+        "endChar": 49
+      },
+      "revId": "56df5f9a2cebaf9337e0eb00c84c36054228052c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
