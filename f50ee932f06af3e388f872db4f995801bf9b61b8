@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d007a88_eb104162",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-22T02:21:16Z",
+      "side": 1,
+      "message": "LGTM assuming the nit will be addressed.",
+      "revId": "f50ee932f06af3e388f872db4f995801bf9b61b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "903ba25f_23322581",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsCollectionTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-22T02:21:16Z",
+      "side": 1,
+      "message": "maybe also test if den \u003d\u003d 0 the expected exception will be thrown?",
+      "range": {
+        "startLine": 524,
+        "startChar": 4,
+        "endLine": 524,
+        "endChar": 5
+      },
+      "revId": "f50ee932f06af3e388f872db4f995801bf9b61b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
