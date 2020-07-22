@@ -16,6 +16,29 @@
       "revId": "1bc1654ca956131e914d1901f8813f5ee709b78f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d35dff41_abe8565b",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-22T02:38:28Z",
+      "side": 1,
+      "message": "question: does this dup also needed for TcpSocketKeepalive?\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/TcpSocketKeepalive.java;l\u003d57",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 18
+      },
+      "revId": "1bc1654ca956131e914d1901f8813f5ee709b78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
