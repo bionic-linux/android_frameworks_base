@@ -954,6 +954,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public IBatteryStats getBatteryStatsService() {
             return BatteryStatsService.getService();
         }
+
+        /**
+         * @see DnsManager
+         */
+        public DnsManager makeDnsManager(
+                @NonNull Context c, @NonNull IDnsResolver d, @NonNull MockableSystemProperties s) {
+            return new DnsManager(c, d, s);
+        }
     }
 
     public ConnectivityService(Context context, INetworkManagementService netManager,
@@ -1164,7 +1172,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mMultipathPolicyTracker = new MultipathPolicyTracker(mContext, mHandler);
 
-        mDnsManager = new DnsManager(mContext, mDnsResolver, mSystemProperties);
+        mDnsManager = mDeps.makeDnsManager(mContext, mDnsResolver, mSystemProperties);
         registerPrivateDnsSettingsCallbacks();
     }
 

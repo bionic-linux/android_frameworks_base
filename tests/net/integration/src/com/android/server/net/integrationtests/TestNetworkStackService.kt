@@ -19,22 +19,29 @@ package com.android.server.net.integrationtests
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.net.DnsResolver
+import android.net.DnsResolver.TYPE_A
+import android.net.DnsResolver.TYPE_AAAA
 import android.net.INetworkMonitorCallbacks
+import android.net.InetAddresses
 import android.net.Network
 import android.net.metrics.IpConnectivityLog
 import android.net.util.SharedLog
 import android.os.IBinder
 import com.android.networkstack.netlink.TcpSocketTracker
+import com.android.networkstack.util.DnsUtils.PRIVATE_DNS_PROBE_HOST_SUFFIX
 import com.android.server.NetworkStackService
 import com.android.server.NetworkStackService.NetworkMonitorConnector
 import com.android.server.NetworkStackService.NetworkStackConnector
 import com.android.server.connectivity.NetworkMonitor
 import com.android.server.net.integrationtests.NetworkStackInstrumentationService.InstrumentationConnector
+import com.android.testutils.FakeDns
 import org.mockito.Mockito.doReturn
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.spy
 import java.io.ByteArrayInputStream
 import java.net.HttpURLConnection
+import java.net.InetAddress
 import java.net.URL
 import java.net.URLConnection
 import java.nio.charset.StandardCharsets
@@ -58,19 +65,30 @@ class TestNetworkStackService : Service() {
         override fun enforceNetworkStackCallingPermission() = Unit
     }
 
-    private class NetworkMonitorDeps(private val privateDnsBypassNetwork: Network) :
-            NetworkMonitor.Dependencies() {
+    private class NetworkMonitorDeps(
+        private val privateDnsBypassNetwork: Network,
+        private val resolver: DnsResolver
+    ) : NetworkMonitor.Dependencies() {
         override fun getPrivateDnsBypassNetwork(network: Network?) = privateDnsBypassNetwork
         override fun sendNetworkConditionsBroadcast(context: Context, broadcast: Intent) = Unit
+        override fun getDnsResolver() = resolver
     }
 
     private inner class TestNetworkStackConnector(context: Context) : NetworkStackConnector(
             context, TestPermissionChecker(), NetworkStackService.Dependencies()) {
 
-        private val network = Network(TEST_NETID)
-        private val privateDnsBypassNetwork = TestNetwork(TEST_NETID)
+        private val network = TestNetwork(TEST_NETID)
+        private val privateDnsBypassNetwork = TestPrivateDnsBypassNetwork(TEST_NETID)
+        private val mockDnsResolver = mock(DnsResolver::class.java)
+        private val fakeDns = FakeDns(mockDnsResolver).apply { startMocking() }
 
         private inner class TestNetwork(netId: Int) : Network(netId) {
+            override fun getAllByName(host: String): Array<InetAddress> {
+                return arrayOf(InetAddresses.parseNumericAddress("1.2.3.4"))
+            }
+        }
+
+        private inner class TestPrivateDnsBypassNetwork(netId: Int) : Network(netId) {
             override fun openConnection(url: URL): URLConnection {
                 val response = InstrumentationConnector.processRequest(url)
                 val responseBytes = response.content.toByteArray(StandardCharsets.UTF_8)
@@ -89,13 +107,22 @@ class TestNetworkStackService : Service() {
             name: String?,
             cb: INetworkMonitorCallbacks
         ) {
+            addTestMockDnsResponse()
             val nm = NetworkMonitor(this@TestNetworkStackService, cb,
                     this.network,
                     mock(IpConnectivityLog::class.java), mock(SharedLog::class.java),
                     mock(NetworkStackService.NetworkStackServiceManager::class.java),
-                    NetworkMonitorDeps(privateDnsBypassNetwork),
+                    NetworkMonitorDeps(privateDnsBypassNetwork, mockDnsResolver),
                     mock(TcpSocketTracker::class.java))
             cb.onNetworkMonitorCreated(NetworkMonitorConnector(nm, TestPermissionChecker()))
+        }
+
+        private fun addTestMockDnsResponse() {
+            fakeDns.setAnswer("secure.test.android.com", arrayOf("192.168.0.1"), TYPE_A)
+            fakeDns.setAnswer("test.android.com", arrayOf("192.168.0.2"), TYPE_A)
+            fakeDns.setAnswer(TEST_PRIVATE_DNS_HOST_NAME, arrayOf("192.168.0.3"), TYPE_A)
+            fakeDns.setAnswer(TEST_PRIVATE_DNS_HOST_NAME, arrayOf("2001:db8::1"), TYPE_AAAA)
+            fakeDns.setAnswer(PRIVATE_DNS_PROBE_HOST_SUFFIX, arrayOf("192.168.0.4"), TYPE_A)
         }
     }
 }

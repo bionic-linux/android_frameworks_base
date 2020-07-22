@@ -232,6 +232,7 @@ import com.android.internal.util.test.FakeSettingsProvider;
 import com.android.server.ConnectivityService.ConnectivityDiagnosticsCallbackInfo;
 import com.android.server.connectivity.ConnectivityConstants;
 import com.android.server.connectivity.DefaultNetworkMetrics;
+import com.android.server.connectivity.DnsManager;
 import com.android.server.connectivity.IpConnectivityMetrics;
 import com.android.server.connectivity.MockableSystemProperties;
 import com.android.server.connectivity.Nat464Xlat;
@@ -1273,6 +1274,8 @@ public class ConnectivityServiceTest {
         doReturn(mIpConnectivityMetrics).when(deps).getIpConnectivityMetrics();
         doReturn(mBatteryStatsService).when(deps).getBatteryStatsService();
         doReturn(true).when(deps).hasService(Context.ETHERNET_SERVICE);
+        doReturn(new DnsManager(mServiceContext, mMockDnsResolver, systemProperties))
+                .when(deps).makeDnsManager(any(), any(), any());
         doAnswer(inv -> {
             mPolicyTracker = new WrappedMultinetworkPolicyTracker(
                     inv.getArgument(0), inv.getArgument(1), inv.getArgument(2));
