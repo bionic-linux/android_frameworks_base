@@ -2021,6 +2021,18 @@ public class Vpn {
         }
     }
 
+    // Local to LegacyVpnRunner, but inner classes can't have inner static declarations
+    private static final class Daemon {
+        final String mName;
+        final String[] mArguments;
+        final LocalSocket mSocket;
+        Daemon(final String name, final String[] arguments) {
+            mName = name;
+            mArguments = arguments;
+            mSocket = new LocalSocket();
+        }
+    }
+
     /**
      * Start legacy VPN, controlling native daemons as needed. Creates a
      * secondary thread to perform connection work, returning quickly.
@@ -2640,9 +2652,7 @@ public class Vpn {
     private class LegacyVpnRunner extends VpnRunner {
         private static final String TAG = "LegacyVpnRunner";
 
-        private final String[] mDaemons;
-        private final String[][] mArguments;
-        private final LocalSocket[] mSockets;
+        private final Daemon[] mDaemons;
         private final String mOuterInterface;
         private final AtomicInteger mOuterConnection =
                 new AtomicInteger(ConnectivityManager.TYPE_NONE);
@@ -2676,10 +2686,10 @@ public class Vpn {
         LegacyVpnRunner(VpnConfig config, String[] racoon, String[] mtpd, VpnProfile profile) {
             super(TAG);
             mConfig = config;
-            mDaemons = new String[] {"racoon", "mtpd"};
-            // TODO: clear arguments from memory once launched
-            mArguments = new String[][] {racoon, mtpd};
-            mSockets = new LocalSocket[mDaemons.length];
+            mDaemons = new Daemon[] {
+                    new Daemon("racoon", racoon),
+                    new Daemon("mtpd", mtpd)
+            };
 
             // This is the interface which VPN is running on,
             // mConfig.interfaze will change to point to OUR
@@ -2746,8 +2756,8 @@ public class Vpn {
                     interrupted(); // Clear interrupt flag if execute called exit.
                 } catch (InterruptedException e) {
                 } finally {
-                    for (LocalSocket socket : mSockets) {
-                        IoUtils.closeQuietly(socket);
+                    for (Daemon daemon : mDaemons) {
+                        IoUtils.closeQuietly(daemon.mSocket);
                     }
                     // This sleep is necessary for racoon to successfully complete sending delete
                     // message to server.
@@ -2755,8 +2765,8 @@ public class Vpn {
                         Thread.sleep(50);
                     } catch (InterruptedException e) {
                     }
-                    for (String daemon : mDaemons) {
-                        mDeps.stopService(daemon);
+                    for (Daemon daemon : mDaemons) {
+                        mDeps.stopService(daemon.mName);
                     }
                 }
                 agentDisconnect();
@@ -2780,8 +2790,8 @@ public class Vpn {
                 mBringupStartTime = SystemClock.elapsedRealtime();
 
                 // Wait for the daemons to stop.
-                for (String daemon : mDaemons) {
-                    while (!mDeps.isServiceStopped(daemon)) {
+                for (Daemon daemon : mDaemons) {
+                    while (!mDeps.isServiceStopped(daemon.mName)) {
                         checkInterruptAndDelay(true);
                     }
                 }
@@ -2796,8 +2806,8 @@ public class Vpn {
 
                 // Check if we need to restart any of the daemons.
                 boolean restart = false;
-                for (String[] arguments : mArguments) {
-                    restart = restart || (arguments != null);
+                for (final Daemon daemon : mDaemons) {
+                    restart = restart || (daemon.mArguments != null);
                 }
                 if (!restart) {
                     agentDisconnect();
@@ -2807,25 +2817,22 @@ public class Vpn {
 
                 // Start the daemon with arguments.
                 for (int i = 0; i < mDaemons.length; ++i) {
-                    String[] arguments = mArguments[i];
-                    if (arguments == null) {
+                    final Daemon daemon = mDaemons[i];
+                    if (daemon.mArguments == null) {
                         continue;
                     }
 
                     // Start the daemon.
-                    String daemon = mDaemons[i];
-                    mDeps.startService(daemon);
+                    mDeps.startService(daemon.mName);
 
                     // Wait for the daemon to start.
-                    while (!mDeps.isServiceRunning(daemon)) {
+                    while (!mDeps.isServiceRunning(daemon.mName)) {
                         checkInterruptAndDelay(true);
                     }
 
                     // Create the control socket.
-                    mSockets[i] = new LocalSocket();
-
-                    // Wait for the socket to connect and end over the arguments.
-                    mDeps.sendArgumentsToDaemon(daemon, mSockets[i], arguments,
+                    // Wait for the socket to connect and send over the arguments.
+                    mDeps.sendArgumentsToDaemon(daemon.mName, daemon.mSocket, daemon.mArguments,
                             this::checkInterruptAndDelay);
                 }
 
@@ -2833,8 +2840,8 @@ public class Vpn {
                 while (!state.exists()) {
                     // Check if a running daemon is dead.
                     for (int i = 0; i < mDaemons.length; ++i) {
-                        String daemon = mDaemons[i];
-                        if (mArguments[i] != null && !mDeps.isServiceRunning(daemon)) {
+                        final Daemon daemon = mDaemons[i];
+                        if (daemon.mArguments != null && !mDeps.isServiceRunning(daemon.mName)) {
                             throw new IllegalStateException(daemon + " is dead");
                         }
                     }
@@ -2932,8 +2939,8 @@ public class Vpn {
             }
             while (true) {
                 Thread.sleep(2000);
-                for (int i = 0; i < mDaemons.length; i++) {
-                    if (mArguments[i] != null && mDeps.isServiceStopped(mDaemons[i])) {
+                for (final Daemon daemon : mDaemons) {
+                    if (daemon.mArguments != null && mDeps.isServiceStopped(daemon.mName)) {
                         return;
                     }
                 }
