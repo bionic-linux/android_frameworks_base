@@ -423,8 +423,13 @@ public class IpServer extends StateMachine {
                 // We are on the handler thread: mDhcpServerStartIndex can be read safely.
                 if (mStartIndex != mDhcpServerStartIndex) {
                     // This start request is obsolete. When the |server| binder token goes out of
-                    // scope, the garbage collector will finalize it, which causes the network stack
-                    // process garbage collector to collect the server itself.
+                    // scope, explicitly stop dhcp server to shut down dhcp server thread.
+                    try {
+                        server.stop(new OnHandlerStatusCallback() {
+                            @Override
+                            public void callback(int statusCode) { }
+                        });
+                    } catch (RemoteException e) { }
                     return;
                 }
 
