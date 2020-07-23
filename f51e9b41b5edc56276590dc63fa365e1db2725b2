@@ -64,6 +64,30 @@
       "revId": "f51e9b41b5edc56276590dc63fa365e1db2725b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c31f2de_05b2f98b",
+        "filename": "services/backup/java/com/android/server/backup/UserBackupManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1064128
+      },
+      "writtenOn": "2020-07-23T16:22:31Z",
+      "side": 1,
+      "message": "I don\u0027t think I can change it to a standard for loop either.  This `forEach()` call is a method of https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/backup/java/com/android/server/backup/DataChangedJournal.java;l\u003d74?q\u003dDataChangedJournal and that class doesn\u0027t implement Iterable.  Changing that is a bit out of scope of this change, which I\u0027m hoping will be small despite having an outsized benefit in reducing log spam.\n\n\u003e Lambda captures aren\u0027t supported in java :(\n\nI was surprised to see that too :(",
+      "parentUuid": "6ef8b5e4_3359d68e",
+      "range": {
+        "startLine": 1087,
+        "startChar": 8,
+        "endLine": 1087,
+        "endChar": 59
+      },
+      "revId": "f51e9b41b5edc56276590dc63fa365e1db2725b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
