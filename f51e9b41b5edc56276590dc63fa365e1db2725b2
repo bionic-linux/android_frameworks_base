@@ -22,6 +22,30 @@
       "revId": "f51e9b41b5edc56276590dc63fa365e1db2725b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca8dd5d_befa23ec",
+        "filename": "services/backup/java/com/android/server/backup/UserBackupManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1064128
+      },
+      "writtenOn": "2020-07-23T15:18:30Z",
+      "side": 1,
+      "message": "I get this error when using a simple int or even Integer:\n\nframeworks/base/services/backup/java/com/android/server/backup/UserBackupManagerService.java:1092: error: local variables referenced from a lambda expression must be final or effectively final\n                          staleJournals++;",
+      "parentUuid": "cc3e332b_42c62826",
+      "range": {
+        "startLine": 1087,
+        "startChar": 8,
+        "endLine": 1087,
+        "endChar": 59
+      },
+      "revId": "f51e9b41b5edc56276590dc63fa365e1db2725b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
