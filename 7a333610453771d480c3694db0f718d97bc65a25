@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "546a2e26_578ade93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-23T22:22:33Z",
+      "side": 1,
+      "message": "Once review is done on this, I will mark this as merged in and merge this in rvc-dev-plus-aosp to avoid merge conflicts.",
+      "revId": "7a333610453771d480c3694db0f718d97bc65a25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67288268_79395953",
         "filename": "core/java/android/os/Binder.java",
         "patchSetId": 1
@@ -70,6 +87,30 @@
       "revId": "7a333610453771d480c3694db0f718d97bc65a25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df2bbae_41fa8d19",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-23T22:22:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4600a9bf_297c7957",
+      "range": {
+        "startLine": 507,
+        "startChar": 63,
+        "endLine": 508,
+        "endChar": 47
+      },
+      "revId": "7a333610453771d480c3694db0f718d97bc65a25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
