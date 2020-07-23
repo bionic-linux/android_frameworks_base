@@ -1084,18 +1084,24 @@ public class UserBackupManagerService {
 
     private void parseLeftoverJournals() {
         ArrayList<DataChangedJournal> journals = DataChangedJournal.listJournals(mJournalDir);
+        AtomicInteger staleJournals = new AtomicInteger(0);
         for (DataChangedJournal journal : journals) {
             if (!journal.equals(mJournal)) {
                 try {
                     journal.forEach(packageName -> {
-                        Slog.i(TAG, "Found stale backup journal, scheduling");
-                        if (MORE_DEBUG) Slog.i(TAG, "  " + packageName);
+                        staleJournals.getAndIncrement();
+                        if (MORE_DEBUG) Slog.i(TAG, "Found state backup journal  " + packageName);
                         dataChangedImpl(packageName);
                     });
                 } catch (IOException e) {
                     Slog.e(TAG, "Can't read " + journal, e);
                 }
             }
+        }
+        if (staleJournals.get() == 1) {
+            Slog.i(TAG, "Found 1 stale backup journal, scheduling");
+        } else if (staleJournals.get() > 1) {
+            Slog.i(TAG, "Found " + staleJournals.get() + " stale backup journals, scheduling");
         }
     }
 
