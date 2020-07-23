@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08baee82_3a5c7ed2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-23T22:31:43Z",
+      "side": 1,
+      "message": "I\u0027ll defer Jiyong for code review...",
+      "revId": "600098baf09a66927bb11045875f950f2c9695ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
