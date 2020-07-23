@@ -22,6 +22,30 @@
       "revId": "7a333610453771d480c3694db0f718d97bc65a25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f51d638_bd528ffb",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-07-23T21:42:47Z",
+      "side": 1,
+      "message": "It\u0027s still only invoked by the build system (AIDL), which plugs everything into the right processes. Using these without plugging into that infrastructure would be ill-advised, for sure. However, I\u0027m not sure we really have a way to guard against that kind of foot-shooting.\n\nMaybe you have an idea (or wording suggestion)?",
+      "parentUuid": "67288268_79395953",
+      "range": {
+        "startLine": 507,
+        "startChar": 63,
+        "endLine": 508,
+        "endChar": 47
+      },
+      "revId": "7a333610453771d480c3694db0f718d97bc65a25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
