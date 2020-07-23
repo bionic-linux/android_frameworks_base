@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "792aeef3_87144c91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-23T05:48:48Z",
+      "side": 1,
+      "message": "Still LGTM but not sure if Jean wants to take another look.",
+      "revId": "3a0d857252fd9847aceeef68d7cb33ddf1cc89be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac1d4972_7d98b479",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsCollectionTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-07-23T05:48:48Z",
+      "side": 1,
+      "message": "nit: IIUC this can use assertThrows. But this works for me, too.\ne.g. (not for this, just copied from other files)\n       assertThrows(SecurityException.class,\n                () -\u003e mChecker.checkLocationPermissionWithDetailInfo(\n                        TEST_PKG_NAME, TEST_FEATURE_ID, mUid, null));",
+      "range": {
+        "startLine": 525,
+        "startChar": 8,
+        "endLine": 529,
+        "endChar": 9
+      },
+      "revId": "3a0d857252fd9847aceeef68d7cb33ddf1cc89be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
