@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc3e332b_42c62826",
+        "filename": "services/backup/java/com/android/server/backup/UserBackupManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-07-23T13:29:08Z",
+      "side": 1,
+      "message": "Wouldn\u0027t a simple int also work?\nWe aren\u0027t running any thread",
+      "range": {
+        "startLine": 1087,
+        "startChar": 8,
+        "endLine": 1087,
+        "endChar": 59
+      },
+      "revId": "f51e9b41b5edc56276590dc63fa365e1db2725b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
