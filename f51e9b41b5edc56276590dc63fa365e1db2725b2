@@ -88,6 +88,24 @@
       "revId": "f51e9b41b5edc56276590dc63fa365e1db2725b2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "969a0048_34f9eeb5",
+        "filename": "services/backup/java/com/android/server/backup/UserBackupManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-07-23T16:25:48Z",
+      "side": 1,
+      "message": "You can use journal.getPackages()",
+      "parentUuid": "7c31f2de_05b2f98b",
+      "revId": "f51e9b41b5edc56276590dc63fa365e1db2725b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
