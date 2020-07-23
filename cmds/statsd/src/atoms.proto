@@ -350,6 +350,7 @@ message Atom {
 
         UpdateEngineUpdateAttemptReported update_engine_update_attempt_reported = 225;
         UpdateEngineSuccessfulUpdateReported update_engine_successful_update_reported = 226;
+        UpdateEngineAttemptDownloadReported update_engine_attempt_download_reported = 227;
         AppCompatibilityChangeReported app_compatibility_change_reported =
             228 [(allow_from_any_uid) = true];
         PerfettoUploaded perfetto_uploaded =
@@ -7712,6 +7713,19 @@ message UpdateEngineSuccessfulUpdateReported {
 
     // The number of reboot of the device during a successful update.
     optional int32 reboot_count = 7;
+}
+
+/**
+ * Information about download attempts a device makes during an OTA
+ * update.
+ * Logged from platform/system/update_engine/metrics_reporter_android.cc
+ */
+message UpdateEngineAttemptDownloadReported {
+    optional int64 payload_bytes_downloaded = 1;
+    optional int64 payload_download_speed_bps = 2;
+    optional android.stats.otaupdate.DownloadSource download_source = 3;
+    optional android.stats.otaupdate.DownloadErrorCode download_error_code = 4;
+    optional android.stats.otaupdate.ConnectionType connection_type = 5;
 }
 
 /*
