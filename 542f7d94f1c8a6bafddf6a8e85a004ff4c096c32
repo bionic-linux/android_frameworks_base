@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "528352ff_b6438383",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:07:22Z",
+      "side": 1,
+      "message": "This is fine now, only nits",
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5ea1fbe_009bc2a0",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:07:22Z",
+      "side": 1,
+      "message": "Naming nit : being a \"legacy\" package in the general sense does not really mean a package should get access to restricted networks. It\u0027s not really wrong because here \"legacy\" is in a more specific sense, but I think it may be a little bit clearer to say \"isGrandfatheredPackage\" or \"isGrandfatheredForRestrictedPermission\"",
+      "range": {
+        "startLine": 175,
+        "startChar": 59,
+        "endLine": 175,
+        "endChar": 74
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64e026b7_28082088",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
@@ -48,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "2e92e753_4a67e5d1",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:07:22Z",
+      "side": 1,
+      "message": "No. This is the operand of |\u003d, so 0 is the neutral operand here no matter the value of PERMISSION_NONE.",
+      "parentUuid": "64e026b7_28082088",
+      "range": {
+        "startLine": 207,
+        "startChar": 59,
+        "endLine": 207,
+        "endChar": 60
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "568930bb_f5a69bd4",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
@@ -64,6 +128,98 @@
         "startChar": 46,
         "endLine": 232,
         "endChar": 56
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4795b21_c71a0e50",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:07:22Z",
+      "side": 1,
+      "message": "Could you maybe add an argument to buildPackageInfo and call it instead of redoing the same work ?\n\nAlso suggest calling this \"wouldBeLegacyPackage\" to clarify that this is about a hypothetical package. If you don\u0027t find that clear, you could instead call it \"isPackageWithAttributesLegacy\" or \"isSuchPackageLegacy\"",
+      "range": {
+        "startLine": 143,
+        "startChar": 20,
+        "endLine": 143,
+        "endChar": 35
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa015045_ed47b42b",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:07:22Z",
+      "side": 1,
+      "message": "(not for this change, but I\u0027ve stumbled on this many times now)\n\"uidWithPermissions\" is not a name that suggest side effects at all. Suggest renaming this and adding comments :\n\n  /**\n   * Set up mocks so that this UID has the requested permissions, and no other UID has any permission.\n   *\n   * This will REMOVE all previously set permissions from all uids other than the passed uid.\n   */\n  private void setupPermissions(int uid, String... permissions)",
+      "range": {
+        "startLine": 175,
+        "startChar": 17,
+        "endLine": 175,
+        "endChar": 35
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f44cd5cd_e94a346b",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:07:22Z",
+      "side": 1,
+      "message": "I think ideally we\u0027d have a few lines to make sure that no package on other partitions are grandfathered",
+      "range": {
+        "startLine": 277,
+        "startChar": 76,
+        "endLine": 277,
+        "endChar": 77
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21d4134_a322e782",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-23T01:07:22Z",
+      "side": 1,
+      "message": "IIUC the reason the system loses this permission is because we want packages running under the system UID to declare it. How about you add a line that makes sure that a package running as SYSTEM_UID and has CHANGE_NETWORK_STATE has the background permission ?",
+      "range": {
+        "startLine": 304,
+        "startChar": 70,
+        "endLine": 304,
+        "endChar": 71
       },
       "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
