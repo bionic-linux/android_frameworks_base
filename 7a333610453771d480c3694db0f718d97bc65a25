@@ -46,6 +46,30 @@
       "revId": "7a333610453771d480c3694db0f718d97bc65a25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4600a9bf_297c7957",
+        "filename": "core/java/android/os/Binder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-07-23T21:54:50Z",
+      "side": 1,
+      "message": "Okay I wasn\u0027t sure what this meant in the first place because the build system can\u0027t call an on-device API. :D\n\nWhy don\u0027t you just say that -- \"It\u0027s meant be called by auto-generated code by aidlgen; do no call it manually\"??",
+      "parentUuid": "6f51d638_bd528ffb",
+      "range": {
+        "startLine": 507,
+        "startChar": 63,
+        "endLine": 508,
+        "endChar": 47
+      },
+      "revId": "7a333610453771d480c3694db0f718d97bc65a25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
