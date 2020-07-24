@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "742b9a6a_e3415a2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241863
+      },
+      "writtenOn": "2020-07-24T03:10:30Z",
+      "side": 1,
+      "message": "internal (googleplex) master has 1c7270afd22438f4e6d50d4a50a1e10591fd9888 which MTK has confirmed works",
+      "revId": "10a438670c0c4f31566e472a96208e0310742afa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
