@@ -16,6 +16,23 @@
       "revId": "600098baf09a66927bb11045875f950f2c9695ca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0b4a030_096e4361",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-07-24T02:07:27Z",
+      "side": 1,
+      "message": "Yeah, this is critical for using stable AIDL across APEXes.",
+      "revId": "600098baf09a66927bb11045875f950f2c9695ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
