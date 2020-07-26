@@ -97,7 +97,6 @@ import com.android.internal.util.FunctionalUtils.ThrowingConsumer;
 import com.android.server.IpSecService;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
@@ -1057,7 +1056,6 @@ public class VpnTest {
     }
 
     @Test
-    @Ignore("b/158974172") // remove when the bug is fixed
     public void testStartRacoonHostName() throws Exception {
         startRacoon("hostname", "5.6.7.8"); // address returned by deps.resolve
     }

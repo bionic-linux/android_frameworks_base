@@ -2582,11 +2582,12 @@ public class Vpn {
     }
 
     @Nullable private static String[] getMtpdArgs(final VpnConfig config,
-            final VpnProfile profile) {
+            final VpnProfile profile, final InetAddress serverAddress) {
+        final String server = serverAddress.getHostAddress();
         switch (profile.type) {
             case VpnProfile.TYPE_PPTP:
                 return new String[] {
-                        config.interfaze, "pptp", profile.server, "1723",
+                        config.interfaze, "pptp", server, "1723",
                         "name", profile.username, "password", profile.password,
                         "linkname", "vpn", "refuse-eap", "nodefaultroute",
                         "usepeerdns", "idle", "1800", "mtu", "1400", "mru", "1400",
@@ -2595,7 +2596,7 @@ public class Vpn {
             case VpnProfile.TYPE_L2TP_IPSEC_PSK:
             case VpnProfile.TYPE_L2TP_IPSEC_RSA:
                 return new String[] {
-                        config.interfaze, "l2tp", profile.server, "1701", profile.l2tpSecret,
+                        config.interfaze, "l2tp", server, "1701", profile.l2tpSecret,
                         "name", profile.username, "password", profile.password,
                         "linkname", "vpn", "refuse-eap", "nodefaultroute",
                         "usepeerdns", "idle", "1800", "mtu", "1400", "mru", "1400",
@@ -2605,32 +2606,34 @@ public class Vpn {
     }
 
     @Nullable private static String[] getRacoonArgs(final VpnConfig config,
-            final VpnProfile profile, final CertificateSet certificates, final String gateway) {
+            final VpnProfile profile, final CertificateSet certificates, final String gateway,
+            final InetAddress serverAddress) {
+        final String server = serverAddress.getHostAddress();
         switch (profile.type) {
             case VpnProfile.TYPE_L2TP_IPSEC_PSK:
                 return new String[] {
-                        config.interfaze, profile.server, "udppsk", profile.ipsecIdentifier,
+                        config.interfaze, server, "udppsk", profile.ipsecIdentifier,
                         profile.ipsecSecret, "1701",
                 };
             case VpnProfile.TYPE_L2TP_IPSEC_RSA:
                 return new String[] {
-                        config.interfaze, profile.server, "udprsa", certificates.privateKey,
+                        config.interfaze, server, "udprsa", certificates.privateKey,
                         certificates.userCert, certificates.caCert, certificates.serverCert, "1701",
                 };
             case VpnProfile.TYPE_IPSEC_XAUTH_PSK:
                 return new String[] {
-                        config.interfaze, profile.server, "xauthpsk", profile.ipsecIdentifier,
+                        config.interfaze, server, "xauthpsk", profile.ipsecIdentifier,
                         profile.ipsecSecret, profile.username, profile.password, "", gateway,
                 };
             case VpnProfile.TYPE_IPSEC_XAUTH_RSA:
                 return new String[] {
-                        config.interfaze, profile.server, "xauthrsa", certificates.privateKey,
+                        config.interfaze, server, "xauthrsa", certificates.privateKey,
                         certificates.userCert, certificates.caCert, certificates.serverCert,
                         profile.username, profile.password, "", gateway,
                 };
             case VpnProfile.TYPE_IPSEC_HYBRID_RSA:
                 return new String[] {
-                        config.interfaze, profile.server, "hybridrsa", certificates.caCert,
+                        config.interfaze, server, "hybridrsa", certificates.caCert,
                         certificates.serverCert, profile.username, profile.password, "", gateway,
                 };
             // Other cases are IKEv2 platform VPN so they don't generate arguments for racoon.
@@ -2781,12 +2784,23 @@ public class Vpn {
             }
         }
 
+        private InetAddress resolveEndpoint(final String server) {
+            try {
+                return mDeps.resolve(server);
+            } catch (final UnknownHostException e) {
+                Log.e(TAG, "Exception resolving endpoint : " + mProfile.server + ". "
+                        + "Throw route won't be installed.", e);
+            }
+            return null;
+        }
         private void bringup() {
             // Catch all exceptions so we can clean up a few things.
             try {
+                final InetAddress endpointAddress = resolveEndpoint(mProfile.server);
+
                 mDaemons[0] = new Daemon("racoon",
-                        getRacoonArgs(mConfig, mProfile, mCertificates, mGateway));
-                mDaemons[1] = new Daemon("mtpd", getMtpdArgs(mConfig, mProfile));
+                        getRacoonArgs(mConfig, mProfile, mCertificates, mGateway, endpointAddress));
+                mDaemons[1] = new Daemon("mtpd", getMtpdArgs(mConfig, mProfile, endpointAddress));
 
                 // Initialize the timer.
                 mBringupStartTime = SystemClock.elapsedRealtime();
@@ -2883,19 +2897,16 @@ public class Vpn {
                 }
 
                 // Add a throw route for the VPN server endpoint, if one was specified.
-                String endpoint = parameters[5].isEmpty() ? mProfile.server : parameters[5];
-                if (!endpoint.isEmpty()) {
-                    try {
-                        InetAddress addr = InetAddress.parseNumericAddress(endpoint);
-                        if (addr instanceof Inet4Address) {
-                            mConfig.routes.add(new RouteInfo(new IpPrefix(addr, 32), RTN_THROW));
-                        } else if (addr instanceof Inet6Address) {
-                            mConfig.routes.add(new RouteInfo(new IpPrefix(addr, 128), RTN_THROW));
-                        } else {
-                            Log.e(TAG, "Unknown IP address family for VPN endpoint: " + endpoint);
-                        }
-                    } catch (IllegalArgumentException e) {
-                        Log.e(TAG, "Exception constructing throw route to " + endpoint + ": " + e);
+                if (endpointAddress != null) {
+                    if (endpointAddress instanceof Inet4Address) {
+                        mConfig.routes.add(new RouteInfo(
+                                new IpPrefix(endpointAddress, 32), RTN_THROW));
+                    } else if (endpointAddress instanceof Inet6Address) {
+                        mConfig.routes.add(new RouteInfo(
+                                new IpPrefix(endpointAddress, 128), RTN_THROW));
+                    } else {
+                        Log.e(TAG, "Unknown IP address family for VPN endpoint: "
+                                + endpointAddress);
                     }
                 }
 
