@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a2daaa_cbf5a222",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "Sorry for the long delay.",
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01eea21a_3d1cab77",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "Nit : as this is a single statement you could remove the braces and the semicolon :\n\n  forEach(aadr -\u003e proto.write(LINK_ADDRESSES, String.valueOf(addr));",
+      "range": {
+        "startLine": 1028,
+        "startChar": 39,
+        "endLine": 1028,
+        "endChar": 40
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd228fce_3242b45e",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "Do you want to also say if (!isEmpty) or !\u003d null here ?",
+      "range": {
+        "startLine": 1044,
+        "startChar": 49,
+        "endLine": 1044,
+        "endChar": 57
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a700813a_6d5e2228",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 1061,
+        "startChar": 12,
+        "endLine": 1061,
+        "endChar": 18
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0171c4dd_9515d431",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "Naming convention is that \"sToken\" would be for a static var ; just \"token\" is good. Also, final (same for the tokens in ll.1055, 1085 and 1090)",
+      "range": {
+        "startLine": 1063,
+        "startChar": 21,
+        "endLine": 1063,
+        "endChar": 27
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c75de2_75b34e0a",
+        "filename": "core/java/android/net/LinkProperties.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "This means that for example if they are all present but [2] is malformed, the proto will contain only RMEM_MIN and RMEM_DEF, are you okay with that ?",
+      "range": {
+        "startLine": 1078,
+        "startChar": 37,
+        "endLine": 1078,
+        "endChar": 66
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fa4bcc_cf974b9f",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "Nit : use a switch instead of a cascade of else if",
+      "range": {
+        "startLine": 516,
+        "startChar": 10,
+        "endLine": 516,
+        "endChar": 19
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a8fcd1_179d45d4",
+        "filename": "core/java/android/net/RouteInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "(here and elsewhere) String.valueOf() returns the literal string \"null\" when passed a null argument. This may be what you want, but in other places you avoid writing things to the proto when they are null, which looks inconsistent.",
+      "range": {
+        "startLine": 523,
+        "startChar": 55,
+        "endLine": 523,
+        "endChar": 62
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc77948_eb3103be",
+        "filename": "core/java/com/android/internal/util/StateMachineDump.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "final (here and in in l.52, 54, 59...)",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fea22ac_286fc071",
+        "filename": "core/java/com/android/internal/util/StateMachineDump.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "Same comment as before, please follow the naming conventions",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 18
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad65bf5_ff4d3f7a",
+        "filename": "core/proto/android/net/proxyinfo.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T01:04:23Z",
+      "side": 1,
+      "message": "While possibly useful, sending this would leak to Google internal and possibly confidential details about the network topology that this device is connected to. I\u0027m not sure enterprises would like that.\n\nThis also applies to some other fields like the host here or the list of routes in RouteInfoProto.",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 30
+      },
+      "revId": "5b1c4492fceb5170be257d3115e4b302020358dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
