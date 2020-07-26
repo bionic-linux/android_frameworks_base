@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af5c2f4_f6eb49ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-26T02:16:52Z",
+      "side": 1,
+      "message": "Happy with this assuming it\u0027s still current",
+      "revId": "47b1af2c1ad8d944382ef87e91a74f5f744f3b18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
