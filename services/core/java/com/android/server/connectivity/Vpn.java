@@ -2110,10 +2110,6 @@ public class Vpn {
         config.isMetered = false;
         config.proxyInfo = profile.proxy;
 
-        // Prepare arguments for racoon and mtpd.
-        final String[] racoon = getRacoonArgs(config, profile, certificates, gateway);
-        final String[] mtpd = getMtpdArgs(config, profile);
-
         config.addLegacyRoutes(profile.routes);
         if (!profile.dnsServers.isEmpty()) {
             config.dnsServers = Arrays.asList(profile.dnsServers.split(" +"));
@@ -2121,11 +2117,11 @@ public class Vpn {
         if (!profile.searchDomains.isEmpty()) {
             config.searchDomains = Arrays.asList(profile.searchDomains.split(" +"));
         }
-        startLegacyVpn(config, racoon, mtpd, profile);
+        startLegacyVpn(config, profile, certificates, gateway);
     }
 
-    private synchronized void startLegacyVpn(VpnConfig config, String[] racoon, String[] mtpd,
-            VpnProfile profile) {
+    private synchronized void startLegacyVpn(final VpnConfig config, final VpnProfile profile,
+            final CertificateSet certificates, final String gateway) {
         stopVpnRunnerPrivileged();
 
         // Prepare for the new request.
@@ -2133,7 +2129,7 @@ public class Vpn {
         updateState(DetailedState.CONNECTING, "startLegacyVpn");
 
         // Start a new LegacyVpnRunner and we are done!
-        mVpnRunner = new LegacyVpnRunner(config, racoon, mtpd, profile);
+        mVpnRunner = new LegacyVpnRunner(config, profile, certificates, gateway);
         mVpnRunner.start();
     }
 
@@ -2657,6 +2653,8 @@ public class Vpn {
         private final AtomicInteger mOuterConnection =
                 new AtomicInteger(ConnectivityManager.TYPE_NONE);
         private final VpnProfile mProfile;
+        private final CertificateSet mCertificates;
+        private final String mGateway;
 
         private long mBringupStartTime = -1;
 
@@ -2683,13 +2681,11 @@ public class Vpn {
             }
         };
 
-        LegacyVpnRunner(VpnConfig config, String[] racoon, String[] mtpd, VpnProfile profile) {
+        LegacyVpnRunner(final VpnConfig config, final VpnProfile profile,
+                final CertificateSet certificates, final String gateway) {
             super(TAG);
             mConfig = config;
-            mDaemons = new Daemon[] {
-                    new Daemon("racoon", racoon),
-                    new Daemon("mtpd", mtpd)
-            };
+            mDaemons = new Daemon[2];
 
             // This is the interface which VPN is running on,
             // mConfig.interfaze will change to point to OUR
@@ -2700,6 +2696,8 @@ public class Vpn {
             mOuterInterface = mConfig.interfaze;
 
             mProfile = profile;
+            mCertificates = certificates;
+            mGateway = gateway;
 
             if (!TextUtils.isEmpty(mOuterInterface)) {
                 final ConnectivityManager cm = ConnectivityManager.from(mContext);
@@ -2786,6 +2784,10 @@ public class Vpn {
         private void bringup() {
             // Catch all exceptions so we can clean up a few things.
             try {
+                mDaemons[0] = new Daemon("racoon",
+                        getRacoonArgs(mConfig, mProfile, mCertificates, mGateway));
+                mDaemons[1] = new Daemon("mtpd", getMtpdArgs(mConfig, mProfile));
+
                 // Initialize the timer.
                 mBringupStartTime = SystemClock.elapsedRealtime();
 
