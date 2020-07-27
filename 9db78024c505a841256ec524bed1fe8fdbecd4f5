@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28df62a8_89b91a6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-07-27T16:34:23Z",
+      "side": 1,
+      "message": "treehugger will initially fail because of the merge conflict, please rerun after the internal CL frm the Change-id is merged.",
+      "revId": "9db78024c505a841256ec524bed1fe8fdbecd4f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
