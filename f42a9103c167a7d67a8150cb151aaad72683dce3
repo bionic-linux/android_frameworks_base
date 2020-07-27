@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "049769a3_d209005a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "Sorry; this isn\u0027t your fault; the API docs for some of these methods needs a bit of sprucing up; here are my recommendations.",
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86e7c098_7eb209a0",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "add:\nOnce participants are added, the call becomes an adhoc conference ({@link #PROPERTY_IS_ADHOC_CONFERENCE}).",
+      "range": {
+        "startLine": 464,
+        "startChar": 51,
+        "endLine": 464,
+        "endChar": 52
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ec9c7a_29ea49bc",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "Add:\nAn adhoc conference call is formed using {@link #addConferenceParticipants(List)}, {@link TelecomManager#addNewIncomingConference(PhoneAccountHandle, Bundle extras)}, or {@link TelecomManager#startConference(List\u003cUri\u003e, Bundle)}, rather than by merging existing calls using {@link #conference(Call)}.",
+      "range": {
+        "startLine": 600,
+        "startChar": 36,
+        "endLine": 600,
+        "endChar": 39
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb5f746_89a4a51a",
+        "filename": "telecomm/java/android/telecom/Conference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "add:\nA ringback tone may be played when an outgoing conference is in the process of connecting to give the user an audible indication that the conference is connecting.",
+      "range": {
+        "startLine": 184,
+        "startChar": 20,
+        "endLine": 184,
+        "endChar": 21
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eff90f9_818b2dba",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "Add:\nWhen participants are added to a {@link Connection} it will be replaced by a {@link Conference} instance with {@link Connection#PROPERTY_IS_ADHOC_CONFERENCE} set to indicate that it is an adhoc conference call.",
+      "range": {
+        "startLine": 387,
+        "startChar": 6,
+        "endLine": 387,
+        "endChar": 7
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0ea04d_2e4ec721",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "a call is",
+      "range": {
+        "startLine": 528,
+        "startChar": 45,
+        "endLine": 528,
+        "endChar": 50
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec15575_de3caf0d",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "o\n(lowercase)",
+      "range": {
+        "startLine": 530,
+        "startChar": 24,
+        "endLine": 530,
+        "endChar": 25
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfefc3d5_f7a33214",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2648,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "Let\u0027s replace the javadoc with:\n\n     * Create a {@link Conference} given an incoming request. This is used to attach to an\n     * incoming conference call initiated via \n     * {@link TelecomManager#addNewIncomingConference(PhoneAccountHandle, Bundle)}. \n     *\n     * @param connectionManagerPhoneAccount See description at\n     *         {@link #onCreateOutgoingConnection(PhoneAccountHandle, ConnectionRequest)}.\n     * @param request Details about the incoming conference call.\n     * @return The {@link Conference} object to satisfy this call, or {@code null} to\n     *         not handle the call.",
+      "range": {
+        "startLine": 2641,
+        "startChar": 7,
+        "endLine": 2648,
+        "endChar": 35
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536c333c_69af762c",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2801,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "add:\nrequested via {@link TelecomManager#startConference(List, Bundle)}.",
+      "range": {
+        "startLine": 2801,
+        "startChar": 31,
+        "endLine": 2801,
+        "endChar": 32
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0931d82a_ec8add14",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1853,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "Add:\nAn incoming {@link Conference} is an adhoc conference call initiated on another device which the user is being invited to join.",
+      "range": {
+        "startLine": 1853,
+        "startChar": 41,
+        "endLine": 1853,
+        "endChar": 43
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81fd7b7_c8fee1ae",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "{@link #getPhoneAccount(PhoneAccountHandle)}",
+      "range": {
+        "startLine": 1856,
+        "startChar": 7,
+        "endLine": 1856,
+        "endChar": 31
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba2938d_8452b91b",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1865,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "{@link ConnectionService#onCreateIncomingConference(PhoneAccountHandle, ConnectionRequest)}",
+      "range": {
+        "startLine": 1865,
+        "startChar": 17,
+        "endLine": 1865,
+        "endChar": 69
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4b65cb_e2765b45",
+        "filename": "telecomm/java/android/telecom/TelecomManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "add:\nadhoc",
+      "range": {
+        "startLine": 2095,
+        "startChar": 18,
+        "endLine": 2095,
+        "endChar": 20
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4d55ed_5c8660a8",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-07-27T17:21:46Z",
+      "side": 1,
+      "message": "add:\nto form an adhoc conference call (in contrast to merging calls to form a conference).",
+      "range": {
+        "startLine": 1165,
+        "startChar": 79,
+        "endLine": 1165,
+        "endChar": 80
+      },
+      "revId": "f42a9103c167a7d67a8150cb151aaad72683dce3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
