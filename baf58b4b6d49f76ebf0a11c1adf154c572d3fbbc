@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e22fdb01_34204084",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-28T09:51:46Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ca095785_800bd5bc",
+      "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27bea901_1a5df6df",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c912e33_3c3f5c06",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-28T09:51:46Z",
+      "side": 1,
+      "message": "Done, thanks suggested wording.",
+      "parentUuid": "27bea901_1a5df6df",
+      "range": {
+        "startLine": 425,
+        "startChar": 55,
+        "endLine": 426,
+        "endChar": 28
+      },
+      "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a7113aa4_038b2528",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-28T09:51:46Z",
+      "side": 1,
+      "message": "Done in separate CL. BTW, we also have documentation DhcpServer#start says server cannot be restarted after being stopped.",
+      "parentUuid": "a2192a63_7e60e8d4",
+      "range": {
+        "startLine": 428,
+        "startChar": 31,
+        "endLine": 428,
+        "endChar": 35
+      },
+      "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ecc1f7_2eb18b8e",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7798f551_96c4ed45",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-07-28T09:51:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ecc1f7_2eb18b8e",
+      "range": {
+        "startLine": 428,
+        "startChar": 36,
+        "endLine": 431,
+        "endChar": 25
+      },
+      "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
