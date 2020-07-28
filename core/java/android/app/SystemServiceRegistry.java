@@ -120,12 +120,14 @@ import android.net.IEthernetManager;
 import android.net.IIpSecService;
 import android.net.INetworkPolicyManager;
 import android.net.ITestNetworkManager;
+import android.net.IVcnManagementService;
 import android.net.IpSecManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkScoreManager;
 import android.net.NetworkWatchlistManager;
 import android.net.TestNetworkManager;
 import android.net.TetheringManager;
+import android.net.VcnManager;
 import android.net.VpnManager;
 import android.net.lowpan.ILowpanManager;
 import android.net.lowpan.LowpanManager;
@@ -371,6 +373,14 @@ public final class SystemServiceRegistry {
                         ctx, () -> ServiceManager.getService(Context.TETHERING_SERVICE));
             }});
 
+        registerService(Context.VCN_MANAGEMENT_SERVICE, VcnManager.class,
+                new CachedServiceFetcher<VcnManager>() {
+            @Override
+            public VcnManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+                IBinder b = ServiceManager.getService(Context.VCN_MANAGEMENT_SERVICE);
+                IVcnManagementService service = IVcnManagementService.Stub.asInterface(b);
+                return new VcnManager(ctx, service);
+            }});
 
         registerService(Context.IPSEC_SERVICE, IpSecManager.class,
                 new CachedServiceFetcher<IpSecManager>() {
