@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "a2192a63_7e60e8d4",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-07-28T06:09:05Z",
+      "side": 1,
+      "message": "Actually this is weird as the server has not been started here, just created.\nWe may not want to rev the AIDL just for this to have a shutdown() or cleanup() method though... But at least, maybe update the documentation on DhcpServer#stop to say that the server will be cleaned up and can\u0027t be started again, even if it was already stopped ?",
+      "range": {
+        "startLine": 428,
+        "startChar": 31,
+        "endLine": 428,
+        "endChar": 35
+      },
+      "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92ecc1f7_2eb18b8e",
         "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
         "patchSetId": 1
