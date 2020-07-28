@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9240b19c_8a8b8e90",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-28T01:08:39Z",
+      "side": 1,
+      "message": "Apologies, I just noticed this word is now forbidden for some reason https://source.android.com/setup/contribute/respectful-code\n\nLet\u0027s call this isCarryoverPackage",
+      "range": {
+        "startLine": 230,
+        "startChar": 12,
+        "endLine": 230,
+        "endChar": 34
+      },
+      "revId": "158862cb53fbc449c32ada5f39ace6e55cff86cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
