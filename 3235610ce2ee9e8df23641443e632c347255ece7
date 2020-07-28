@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "925f8845_0d54495e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1380121
+      },
+      "writtenOn": "2020-07-28T06:11:24Z",
+      "side": 1,
+      "message": "Reverted MediaSessionStack.java to avoid auto merge conflict",
+      "revId": "3235610ce2ee9e8df23641443e632c347255ece7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
