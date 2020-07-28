@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c79cc2d_cda16b0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2020-07-28T06:10:43Z",
+      "side": 1,
+      "message": "@Charald Jean / @Junyu Lai,\n\nI have addressed the comments. Can you please check and run TreeHugger tests on the latest patch.\n\nI will get +1 from QCOM once the test cases pass.\n\nI have verified the compilation and the FW net tests internally",
+      "revId": "3708b68405b5e9ad64899116648728ae73c4dfcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
