@@ -123,7 +123,7 @@ class MediaSessionStack {
         if (mMediaButtonSession == record) {
             // When the media button session is removed, nullify the media button session and do not
             // search for the alternative media session within the app. It's because the alternative
-            // media session might be a dummy which isn't able to handle the media key events.
+            // media session might be a fake which isn't able to handle the media key events.
             updateMediaButtonSession(null);
         }
         clearCache(record.getUserId());
