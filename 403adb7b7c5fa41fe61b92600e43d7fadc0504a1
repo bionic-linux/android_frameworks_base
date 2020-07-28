@@ -16,6 +16,24 @@
       "revId": "403adb7b7c5fa41fe61b92600e43d7fadc0504a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "171c3560_0ac27ffe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1513319
+      },
+      "writtenOn": "2020-07-28T18:50:57Z",
+      "side": 1,
+      "message": "Changes related to the fixit are supposed to be merged in AOSP, so I\u0027m trying to keep them minimal. I can submit an internal branch CL to delete the file.",
+      "parentUuid": "e48c4ada_dda8c2e2",
+      "revId": "403adb7b7c5fa41fe61b92600e43d7fadc0504a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
