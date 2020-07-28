@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "e554c815_4d7495cd",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-28T14:46:50Z",
+      "side": 1,
+      "message": "Rename to isCarryoverPackage.",
+      "parentUuid": "a5ea1fbe_009bc2a0",
+      "range": {
+        "startLine": 175,
+        "startChar": 59,
+        "endLine": 175,
+        "endChar": 74
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64e026b7_28082088",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 4
@@ -135,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "bc5d3299_aac29158",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-28T14:46:50Z",
+      "side": 1,
+      "message": "Oops. Create new bug b/162295056 for tracking this.",
+      "parentUuid": "568930bb_f5a69bd4",
+      "range": {
+        "startLine": 232,
+        "startChar": 46,
+        "endLine": 232,
+        "endChar": 56
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4795b21_c71a0e50",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 4
@@ -155,6 +203,30 @@
       "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21eaad3a_68e6681a",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-28T14:46:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4795b21_c71a0e50",
+      "range": {
+        "startLine": 143,
+        "startChar": 20,
+        "endLine": 143,
+        "endChar": 35
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -204,6 +276,30 @@
     },
     {
       "key": {
+        "uuid": "2fdf8a99_4c0da856",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-28T14:46:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f44cd5cd_e94a346b",
+      "range": {
+        "startLine": 277,
+        "startChar": 76,
+        "endLine": 277,
+        "endChar": 77
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f21d4134_a322e782",
         "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
         "patchSetId": 4
@@ -224,6 +320,30 @@
       "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674c7fe5_f0aa34fe",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-07-28T14:46:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f21d4134_a322e782",
+      "range": {
+        "startLine": 304,
+        "startChar": 70,
+        "endLine": 304,
+        "endChar": 71
+      },
+      "revId": "542f7d94f1c8a6bafddf6a8e85a004ff4c096c32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
