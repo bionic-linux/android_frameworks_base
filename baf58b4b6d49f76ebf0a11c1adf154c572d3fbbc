@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca095785_800bd5bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-07-28T06:05:11Z",
+      "side": 1,
+      "message": "A unit test would also be nice since it\u0027s a rare code path",
+      "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27bea901_1a5df6df",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-07-28T06:05:11Z",
+      "side": 1,
+      "message": "This does not apply to the rest of the sentence: you\u0027re stopping it immediately here. Would this work ?\n// This start request is obsolete. Exeplicitly stop the DHCP server to shut down its thread.\n// When the |server| binder token goes out of scope, the garbage collector will finalize it,\n// which causes the network stack process garbage collector to collect the server itself.",
+      "range": {
+        "startLine": 425,
+        "startChar": 55,
+        "endLine": 426,
+        "endChar": 28
+      },
+      "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ecc1f7_2eb18b8e",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-07-28T06:05:11Z",
+      "side": 1,
+      "message": "Would \"null\" work here ? The callback for stop() is annotated with @Nullable",
+      "range": {
+        "startLine": 428,
+        "startChar": 36,
+        "endLine": 431,
+        "endChar": 25
+      },
+      "revId": "baf58b4b6d49f76ebf0a11c1adf154c572d3fbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
