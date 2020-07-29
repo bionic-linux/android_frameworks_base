@@ -159,30 +159,30 @@ public class BatteryControllerImpl extends BroadcastReceiver implements BatteryC
             mTestmode = true;
             mHandler.post(new Runnable() {
                 int curLevel = 0;
-                int incr = 1;
+                int mIncrement = 1;
                 int saveLevel = mLevel;
                 boolean savePlugged = mPluggedIn;
-                Intent dummy = new Intent(Intent.ACTION_BATTERY_CHANGED);
+                Intent mIntent = new Intent(Intent.ACTION_BATTERY_CHANGED);
                 @Override
                 public void run() {
                     if (curLevel < 0) {
                         mTestmode = false;
-                        dummy.putExtra("level", saveLevel);
-                        dummy.putExtra("plugged", savePlugged);
-                        dummy.putExtra("testmode", false);
+                        mIntent.putExtra("level", saveLevel);
+                        mIntent.putExtra("plugged", savePlugged);
+                        mIntent.putExtra("testmode", false);
                     } else {
-                        dummy.putExtra("level", curLevel);
-                        dummy.putExtra("plugged", incr > 0 ? BatteryManager.BATTERY_PLUGGED_AC
-                                : 0);
-                        dummy.putExtra("testmode", true);
+                        mIntent.putExtra("level", curLevel);
+                        mIntent.putExtra("plugged",
+                                mIncrement > 0 ? BatteryManager.BATTERY_PLUGGED_AC : 0);
+                        mIntent.putExtra("testmode", true);
                     }
-                    context.sendBroadcast(dummy);
+                    context.sendBroadcast(mIntent);
 
                     if (!mTestmode) return;
 
-                    curLevel += incr;
+                    curLevel += mIncrement;
                     if (curLevel == 100) {
-                        incr *= -1;
+                        mIncrement *= -1;
                     }
                     mHandler.postDelayed(this, 200);
                 }
