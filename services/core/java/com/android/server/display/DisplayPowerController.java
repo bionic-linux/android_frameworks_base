@@ -1363,6 +1363,9 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                     mColorFadeOnAnimator.end();
                 }
             } else {
+                if (mColorFadeEnabled && mColorFadeOffAnimator.isStarted()) {
+                    mColorFadeOffAnimator.end();
+                }
                 // Skip screen on animation.
                 mPowerState.setColorFadeLevel(1.0f);
                 mPowerState.dismissColorFade();
