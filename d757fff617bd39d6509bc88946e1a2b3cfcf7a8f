@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee11ba5a_ec5235b2",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1513319
+      },
+      "writtenOn": "2020-07-29T20:54:03Z",
+      "side": 1,
+      "message": "In this case, mIncrement is a member variable of the anonymous Runnable class. I had previously left this as-is but got a blocking Lint error because of it.",
+      "parentUuid": "b6017e9d_88e74095",
+      "range": {
+        "startLine": 162,
+        "startChar": 20,
+        "endLine": 162,
+        "endChar": 30
+      },
+      "revId": "d757fff617bd39d6509bc88946e1a2b3cfcf7a8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "103c0733_cd1d9548",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2020-07-29T18:42:12Z",
       "side": 1,
       "message": "intent",
+      "range": {
+        "startLine": 165,
+        "startChar": 23,
+        "endLine": 165,
+        "endChar": 30
+      },
+      "revId": "d757fff617bd39d6509bc88946e1a2b3cfcf7a8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b67e47_3d0554fd",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1513319
+      },
+      "writtenOn": "2020-07-29T20:54:03Z",
+      "side": 1,
+      "message": "Same as above comment. mIntent is a member variable of the anonymous Runnable class. Calling this intent would also shadow the corresponding method argument.",
+      "parentUuid": "103c0733_cd1d9548",
       "range": {
         "startLine": 165,
         "startChar": 23,
