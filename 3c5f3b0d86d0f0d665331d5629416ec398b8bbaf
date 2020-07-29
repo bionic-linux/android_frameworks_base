@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd579e42_7a04dfe1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-29T05:57:51Z",
+      "side": 1,
+      "message": "certificate",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "3c5f3b0d86d0f0d665331d5629416ec398b8bbaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db782be_cf706acc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-29T05:57:51Z",
+      "side": 1,
+      "message": "platform",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "3c5f3b0d86d0f0d665331d5629416ec398b8bbaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93918399_ff5cd016",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-29T05:57:51Z",
+      "side": 1,
+      "message": "the same certificate",
+      "range": {
+        "startLine": 12,
+        "startChar": 60,
+        "endLine": 12,
+        "endChar": 73
+      },
+      "revId": "3c5f3b0d86d0f0d665331d5629416ec398b8bbaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdc666b_6856f78e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-07-29T05:57:51Z",
+      "side": 1,
+      "message": "Is this still current ?\n\nI can\u0027t say I understand this well, I think Rémi should take a look at it",
+      "revId": "3c5f3b0d86d0f0d665331d5629416ec398b8bbaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
