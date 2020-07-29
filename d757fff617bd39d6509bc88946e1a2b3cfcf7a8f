@@ -49,6 +49,24 @@
     },
     {
       "key": {
+        "uuid": "168aefb3_4ee8bd18",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-07-29T20:57:43Z",
+      "side": 1,
+      "message": "I don\u0027t think a linter should warn on this.\nfine then",
+      "parentUuid": "ee11ba5a_ec5235b2",
+      "revId": "d757fff617bd39d6509bc88946e1a2b3cfcf7a8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "103c0733_cd1d9548",
         "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
         "patchSetId": 3
