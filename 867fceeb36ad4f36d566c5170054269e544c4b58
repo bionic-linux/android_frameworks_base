@@ -1,0 +1,48 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004096038",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1377816?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "ef9b1538_3faa4a74",
+          "description": "Change to \"packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java\"",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+              "range": {
+                "startLine": 176,
+                "startChar": 32,
+                "endLine": 176,
+                "endChar": 36
+              },
+              "replacement": "increment"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "24642e30_c7860f9b",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1550585
+      },
+      "writtenOn": "2020-07-29T18:34:23Z",
+      "side": 1,
+      "message": "Common typo found: \"incr\" -- should it be \"increment\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line.",
+      "range": {
+        "startLine": 176,
+        "startChar": 32,
+        "endLine": 176,
+        "endChar": 36
+      },
+      "revId": "867fceeb36ad4f36d566c5170054269e544c4b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
