@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46e938d8_e44962c1",
+        "filename": "packages/Tethering/src/android/net/ip/IpServer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-07-29T01:32:52Z",
+      "side": 1,
+      "message": "Explicitly",
+      "range": {
+        "startLine": 425,
+        "startChar": 56,
+        "endLine": 425,
+        "endChar": 67
+      },
+      "revId": "7c4a59f6958264c24531c025a2203896dd1acf9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b185ed07_86d491ae",
+        "filename": "packages/Tethering/tests/unit/src/android/net/ip/IpServerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-07-29T01:32:52Z",
+      "side": 1,
+      "message": "\"initStateMachineExceptForDhcpServer\" is an ugly name 😊\nCould you instead move this block to setUp() ? It\u0027s mocking of mDependencies that don\u0027t take any parameters so I think it makes sense there too.\nThen you can overwrite the mock just before calling initStateMachine in the test.",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 89
+      },
+      "revId": "7c4a59f6958264c24531c025a2203896dd1acf9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
