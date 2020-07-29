@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6017e9d_88e74095",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-07-29T18:42:12Z",
+      "side": 1,
+      "message": "Variables starting with m are usually member variables.\nLocal variable are lowercase with no prefix\nincrement",
+      "range": {
+        "startLine": 162,
+        "startChar": 20,
+        "endLine": 162,
+        "endChar": 30
+      },
+      "revId": "d757fff617bd39d6509bc88946e1a2b3cfcf7a8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103c0733_cd1d9548",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BatteryControllerImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2020-07-29T18:42:12Z",
+      "side": 1,
+      "message": "intent",
+      "range": {
+        "startLine": 165,
+        "startChar": 23,
+        "endLine": 165,
+        "endChar": 30
+      },
+      "revId": "d757fff617bd39d6509bc88946e1a2b3cfcf7a8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
