@@ -176,8 +176,8 @@ void InputQueue::enqueueEvent(InputEvent* event) {
     Mutex::Autolock _l(mLock);
     mPendingEvents.push(event);
     if (mPendingEvents.size() == 1) {
-        char dummy = 0;
-        int res = TEMP_FAILURE_RETRY(write(mDispatchWriteFd, &dummy, sizeof(dummy)));
+        char write_payload = 0;
+        int res = TEMP_FAILURE_RETRY(write(mDispatchWriteFd, &write_payload, sizeof(write_payload)));
         if (res < 0 && errno != EAGAIN) {
             ALOGW("Failed writing to dispatch fd: %s", strerror(errno));
         }
