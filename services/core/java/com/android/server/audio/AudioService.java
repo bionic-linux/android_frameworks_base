@@ -4953,12 +4953,14 @@ public class AudioService extends IAudioService.Stub
              * Pre-scale volume at lowest volume steps 1 2 and 3.
              * For volume step 0, set audio gain to 0 as some accessories won't mute on their end.
              */
+            int step = mIndexMax / (15 * 10);
             if (index == 0) {
                 // 0% for volume 0
                 index = 0;
-            } else if (index > 0 && index <= 3) {
+            } else if (index > 0 && index <= 3 * step) {
                 // Pre-scale for volume steps 1 2 and 3
-                index = (int) (mIndexMax * mPrescaleAbsoluteVolume[index - 1]) / 10;
+                int pos = new Double(Math.ceil((index - step) / step)).intValue();
+                index = (int) (mIndexMax * mPrescaleAbsoluteVolume[pos]) / 10;
             } else {
                 // otherwise, full gain
                 index = (mIndexMax + 5) / 10;
