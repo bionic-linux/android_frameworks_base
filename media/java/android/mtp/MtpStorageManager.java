@@ -958,7 +958,7 @@ public class MtpStorageManager {
         MtpObject parent = obj.getParent();
         MtpObject oldObj = parent.getChild(oldName);
         if (!success) {
-            // If the rename failed, we want oldObj to be the original and obj to be the dummy.
+            // If the rename failed, we want oldObj to be the original and obj to be the stand-in.
             // Switch the objects, except for their name and state.
             MtpObject temp = oldObj;
             MtpObjectState oldState = oldObj.getState();
