@@ -22,7 +22,7 @@ import java.util.StringTokenizer;
 
 /**
  * A sound generated within a room travels in many directions. The listener first hears the
- * direct sound from the source itself. Later, he or she hears discrete echoes caused by sound
+ * direct sound from the source itself. Later, they hear discrete echoes caused by sound
  * bouncing off nearby walls, the ceiling and the floor. As sound waves arrive after
  * undergoing more and more reflections, individual reflections become indistinguishable and
  * the listener hears continuous reverberation that decays over time.

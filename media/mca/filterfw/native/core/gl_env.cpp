@@ -164,7 +164,7 @@ bool GLEnv::InitWithNewContext() {
     return false;
   }
 
-  // Create dummy surface using a GLConsumer
+  // Create placeholder surface using a GLConsumer
   sp<IGraphicBufferProducer> producer;
   sp<IGraphicBufferConsumer> consumer;
   BufferQueue::createBufferQueue(&producer, &consumer);
