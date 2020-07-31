@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17ef1d15_c2052a9c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1737625
+      },
+      "writtenOn": "2020-07-31T10:25:29Z",
+      "side": 1,
+      "message": "@Michael Wright\nHi,Could you take the time to review my code, please?\nThank you,very much.\nBest wishes.",
+      "revId": "4aa9b60803b10163ec362573f415754d5d3cd0cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
