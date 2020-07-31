@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "014f67d4_d3c46e05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039918
+      },
+      "writtenOn": "2020-07-31T16:44:16Z",
+      "side": 1,
+      "message": "+1 for MediaCodec.java.",
+      "revId": "9b67bbe38ee6f48df8ff1cc2b27314570714801a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
