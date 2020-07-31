@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fa1179f_103bfa37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2020-07-31T08:15:58Z",
+      "side": 1,
+      "message": "Chris, could you take another here - I\u0027ve split the CL up into changes with just one group of OWNERS to simplify things. Thanks!",
+      "revId": "e939fab20ad8168220d3046491ecfd61616ccc9a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
