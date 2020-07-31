@@ -237,10 +237,10 @@ class GLEnv {
     int context_id_;
     int surface_id_;
 
-    // Dummy surface for context
+    // Surface for context
     sp<ANativeWindow> window_;
 
-    // Dummy GLConsumer for context
+    // GLConsumer for context
     sp<GLConsumer> surfaceTexture_;
 
     // The maximum surface id used.

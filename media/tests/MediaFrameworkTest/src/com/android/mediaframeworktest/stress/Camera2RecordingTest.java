@@ -985,7 +985,7 @@ public class Camera2RecordingTest extends Camera2SurfaceViewTestCase {
     }
 
     /**
-     * Validate video snapshot capture image object sanity and test.
+     * Validate video snapshot capture image object.
      *
      * <p> Check for size, format and jpeg decoding</p>
      *

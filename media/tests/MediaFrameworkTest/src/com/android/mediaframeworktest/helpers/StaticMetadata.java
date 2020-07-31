@@ -435,7 +435,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get max AE regions and do sanity check.
+     * Get and check max AE regions.
      *
      * @return AE max regions supported by the camera device
      */
@@ -448,7 +448,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get max AWB regions and do sanity check.
+     * Get and check max AWB regions.
      *
      * @return AWB max regions supported by the camera device
      */
@@ -461,7 +461,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get max AF regions and do sanity check.
+     * Get and check max AF regions.
      *
      * @return AF max regions supported by the camera device
      */
@@ -545,7 +545,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get available thumbnail sizes and do the sanity check.
+     * Get and check available thumbnail sizes.
      *
      * @return The array of available thumbnail sizes
      */
@@ -573,7 +573,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get available focal lengths and do the sanity check.
+     * Get and check available focal lengths.
      *
      * @return The array of available focal lengths
      */
@@ -594,7 +594,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get available apertures and do the sanity check.
+     * Get and check available apertures.
      *
      * @return The non-null array of available apertures
      */
@@ -909,7 +909,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get hyperfocalDistance and do the sanity check.
+     * Get and check hyperfocalDistance.
      * <p>
      * Note that, this tag is optional, will return -1 if this tag is not
      * available.
@@ -1068,7 +1068,7 @@ public class StaticMetadata {
     }
 
     /**
-     * get android.control.availableModes and do the sanity check.
+     * get and check android.control.availableModes.
      *
      * @return available control modes.
      */
@@ -1124,7 +1124,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get aeAvailableModes and do the sanity check.
+     * Get and check aeAvailableModes.
      *
      * <p>Depending on the check level this class has, for WAR or COLLECT levels,
      * If the aeMode list is invalid, return an empty mode array. The the caller doesn't
@@ -1196,7 +1196,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get available AWB modes and do the sanity check.
+     * Get and check available AWB modes.
      *
      * @return array that contains available AWB modes, empty array if awbAvailableModes is
      * unavailable.
@@ -1222,7 +1222,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get available AF modes and do the sanity check.
+     * Get and check available AF modes.
      *
      * @return array that contains available AF modes, empty array if afAvailableModes is
      * unavailable.
@@ -1580,7 +1580,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get value of key android.control.aeCompensationStep and do the sanity check.
+     * Get and check value of key android.control.aeCompensationStep.
      *
      * @return default value if the value is null.
      */
@@ -1605,7 +1605,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get value of key android.control.aeCompensationRange and do the sanity check.
+     * Get and check value of key android.control.aeCompensationRange.
      *
      * @return default value if the value is null or malformed.
      */
@@ -1635,7 +1635,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get availableVideoStabilizationModes and do the sanity check.
+     * Get and check availableVideoStabilizationModes.
      *
      * @return available video stabilization modes, empty array if it is unavailable.
      */
@@ -1666,7 +1666,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get availableOpticalStabilization and do the sanity check.
+     * Get and check availableOpticalStabilization.
      *
      * @return available optical stabilization modes, empty array if it is unavailable.
      */
@@ -1780,7 +1780,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get max pipeline depth and do the sanity check.
+     * Get and check max pipeline depth.
      *
      * @return max pipeline depth, default value if it is not available.
      */
@@ -1846,7 +1846,7 @@ public class StaticMetadata {
 
 
     /**
-     * Get available capabilities and do the sanity check.
+     * Get and check available capabilities.
      *
      * @return reported available capabilities list, empty list if the value is unavailable.
      */
@@ -2070,7 +2070,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get max number of output raw streams and do the basic sanity check.
+     * Get and check max number of output raw streams.
      *
      * @return reported max number of raw output stream
      */
@@ -2083,7 +2083,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get max number of output processed streams and do the basic sanity check.
+     * Get and check max number of output processed streams.
      *
      * @return reported max number of processed output stream
      */
@@ -2096,7 +2096,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get max number of output stalling processed streams and do the basic sanity check.
+     * Get and check max number of output stalling processed streams.
      *
      * @return reported max number of stalling processed output stream
      */
@@ -2109,7 +2109,7 @@ public class StaticMetadata {
     }
 
     /**
-     * Get lens facing and do the sanity check
+     * Get and check lens facing
      * @return lens facing, return default value (BACK) if value is unavailable.
      */
     public int getLensFacingChecked() {
