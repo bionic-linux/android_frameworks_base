@@ -50,6 +50,24 @@
       "revId": "9b67bbe38ee6f48df8ff1cc2b27314570714801a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8243c252_5d10bab8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2020-07-31T19:02:33Z",
+      "side": 1,
+      "message": "The tests were covered by that merge so I\u0027ve dropped those files.",
+      "parentUuid": "09a675f8_d704fc95",
+      "revId": "9b67bbe38ee6f48df8ff1cc2b27314570714801a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
