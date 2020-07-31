@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c997bb_defca1b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2020-07-31T19:12:18Z",
+      "side": 1,
+      "message": "Adding Jean-Michel on the \u0027master volume\u0027 question.",
+      "revId": "c4e2562902610d9da5d75545ba35d8de2774e5d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0518e14b_7e112559",
+        "filename": "media/java/android/media/audiofx/EnvironmentalReverb.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2020-07-31T19:12:18Z",
+      "side": 1,
+      "message": "I\u0027m not an audio API expert, but since \u0027master volume\u0027 is an actual concept in the API, I don\u0027t think we can remove it here in the reference docs.  There\u0027s a bigger discussion about how to handle that terminology, so probably out of scope for this fixit.",
+      "revId": "c4e2562902610d9da5d75545ba35d8de2774e5d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
