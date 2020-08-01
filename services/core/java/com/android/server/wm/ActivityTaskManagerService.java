@@ -6494,10 +6494,10 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
         @Override
         public void enableScreenAfterBoot(boolean booted) {
+            EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_ENABLE_SCREEN,
+                    SystemClock.uptimeMillis());
+            mWindowManager.enableScreenAfterBoot();
             synchronized (mGlobalLock) {
-                EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_ENABLE_SCREEN,
-                        SystemClock.uptimeMillis());
-                mWindowManager.enableScreenAfterBoot();
                 updateEventDispatchingLocked(booted);
             }
         }
