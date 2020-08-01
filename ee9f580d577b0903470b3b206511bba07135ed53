@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddee3ee9_772c587e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1687740
+      },
+      "writtenOn": "2020-08-01T16:50:32Z",
+      "side": 1,
+      "message": "after this patch we testing our Tv,by rebooting it about 500 times.\nthe deadlock is gone",
+      "revId": "ee9f580d577b0903470b3b206511bba07135ed53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
