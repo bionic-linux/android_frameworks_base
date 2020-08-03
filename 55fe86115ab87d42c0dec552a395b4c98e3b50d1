@@ -16,6 +16,46 @@
       "revId": "55fe86115ab87d42c0dec552a395b4c98e3b50d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af00d514_fcce2122",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T16:05:00Z",
+      "side": 1,
+      "message": "ConnectivityService changes LGTM, but not sure I understand the changes to client code.",
+      "revId": "55fe86115ab87d42c0dec552a395b4c98e3b50d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9896f2e_c23d4a85",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-03T16:05:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this. This is client code in app space. If this is an AIDL call to the system server, why does it matter what we do to the fd we have here? When the system server receives the fd, it\u0027s always going to be a different fd, and closing that one has no effect on this one. Are you trying to avoid leaks when this code runs in the system server? Or am I missing something?",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 71
+      },
+      "revId": "55fe86115ab87d42c0dec552a395b4c98e3b50d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
