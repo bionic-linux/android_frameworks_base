@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d47ed72c_af0de582",
+        "filename": "media/java/android/mtp/MtpStorageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2020-08-03T01:22:49Z",
+      "side": 0,
+      "message": "Missing this one?",
+      "range": {
+        "startLine": 1037,
+        "startChar": 44,
+        "endLine": 1037,
+        "endChar": 50
+      },
+      "revId": "09b57ae95f41daa9d1b4025f4a97918dcce0d361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce943167_c71f14dd",
+        "filename": "media/java/android/mtp/MtpStorageManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2020-08-03T01:22:49Z",
+      "side": 0,
+      "message": "ditto",
+      "range": {
+        "startLine": 1066,
+        "startChar": 89,
+        "endLine": 1066,
+        "endChar": 94
+      },
+      "revId": "09b57ae95f41daa9d1b4025f4a97918dcce0d361",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
