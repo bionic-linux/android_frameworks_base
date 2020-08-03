@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcb72684_65962200",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2020-08-03T20:14:10Z",
+      "side": 1,
+      "message": "Hmmm, This is not guaranteed to be kept in the boot image as the release evolves. I think if we have timeouts we need to rethink the tests.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "7cec0bba9abb199fe4086035748e9cce401cbbb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
