@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "dee8e56b_109a67e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2020-08-03T10:21:23Z",
+      "side": 1,
+      "message": "I\u0027ve resolved conflicts with other CLs in flight (coordination on the sheet didn\u0027t seem to be working) and dropped the files with TH merge conflicts to handle separately.",
+      "parentUuid": "44b036c3_a5a10efd",
+      "revId": "c4e2562902610d9da5d75545ba35d8de2774e5d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0518e14b_7e112559",
         "filename": "media/java/android/media/audiofx/EnvironmentalReverb.java",
         "patchSetId": 2
