@@ -16,6 +16,23 @@
       "revId": "4aa9b60803b10163ec362573f415754d5d3cd0cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e63b5665_42f2b52a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1737625
+      },
+      "writtenOn": "2020-08-04T03:07:56Z",
+      "side": 1,
+      "message": "Hi,Could you take the time to review my code, please?\nThank you,very much.\nBest wishes.",
+      "revId": "4aa9b60803b10163ec362573f415754d5d3cd0cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
