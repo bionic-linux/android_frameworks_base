@@ -56,6 +56,30 @@
       "revId": "55fe86115ab87d42c0dec552a395b4c98e3b50d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2753e040_51d4f029",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2020-08-04T12:30:00Z",
+      "side": 1,
+      "message": "Yeah, this actually just reintroduces the leak. I saw a test failure and saw an fdsan failure in logcat, so assumed that this code was actually running in system_server. I think someone that actually understands this code needs to take a look at this. The test failure is as follows:\n\n    [86/117] com.android.server.ConnectivityServiceTest#testNattSocketKeepalives: FAILED (246ms)\n\n    STACKTRACE:\n    java.lang.AssertionError: expected:\u003cCallbackValue(ON_STARTED, 0)\u003e but was:\u003cCallbackValue(ON_ERROR, -25)\u003e\n      at org.junit.Assert.fail(Assert.java:88)\n      at org.junit.Assert.failNotEquals(Assert.java:834)\n      at org.junit.Assert.assertEquals(Assert.java:118)\n      at org.junit.Assert.assertEquals(Assert.java:144)\n      at com.android.server.ConnectivityServiceTest$TestSocketKeepaliveCallback.expectCallback(ConnectivityServiceTest.java:3991)\n      at com.android.server.ConnectivityServiceTest$TestSocketKeepaliveCallback.expectStarted(ConnectivityServiceTest.java:3996)\n      at com.android.server.ConnectivityServiceTest.doTestNattSocketKeepalivesWithExecutor(ConnectivityServiceTest.java:4248)\n      at com.android.server.ConnectivityServiceTest.lambda$testNattSocketKeepalives$38(ConnectivityServiceTest.java:4160)\n      at com.android.server.ConnectivityServiceTest.lambda$testNattSocketKeepalives$38$ConnectivityServiceTest(Unknown Source:0)\n      at com.android.server.-$$Lambda$ConnectivityServiceTest$IlzftoO99nVbjFBtQcXLkqEh7JY.accept(Unknown Source:4)\n      at com.android.server.ConnectivityServiceTest.runTestWithSerialExecutors(ConnectivityServiceTest.java:4153)\n      at com.android.server.ConnectivityServiceTest.testNattSocketKeepalives(ConnectivityServiceTest.java:4160)\n      at java.lang.reflect.Method.invoke(Native Method)\n      at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)\n      at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n      at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:52)\n      at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n      at org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:148)\n      at org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:142)\n      at java.util.concurrent.FutureTask.run(FutureTask.java:266)\n      at java.lang.Thread.run(Thread.java:922)",
+      "parentUuid": "d9896f2e_c23d4a85",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 71
+      },
+      "revId": "55fe86115ab87d42c0dec552a395b4c98e3b50d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
