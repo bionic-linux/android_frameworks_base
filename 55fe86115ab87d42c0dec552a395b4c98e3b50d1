@@ -80,6 +80,30 @@
       "revId": "55fe86115ab87d42c0dec552a395b4c98e3b50d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3621b39_dc2f83bb",
+        "filename": "core/java/android/net/NattSocketKeepalive.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-04T12:42:22Z",
+      "side": 1,
+      "message": "It means keepalive failed to restart.\nThe error code -25 is:\n /** The target socket is invalid. */\n    public static final int ERROR_INVALID_SOCKET \u003d -25;\n\nThe failed test case verifies the keepalive can be stopped, but when the test is about to restart the keepalive, the test found the socket is invalid, hence -25 is returned.\n\nSee\nhttps://source.corp.google.com/android/frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java;l\u003d4248",
+      "parentUuid": "2753e040_51d4f029",
+      "range": {
+        "startLine": 57,
+        "startChar": 34,
+        "endLine": 57,
+        "endChar": 71
+      },
+      "revId": "55fe86115ab87d42c0dec552a395b4c98e3b50d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
