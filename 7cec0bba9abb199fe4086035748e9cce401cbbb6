@@ -22,6 +22,30 @@
       "revId": "7cec0bba9abb199fe4086035748e9cce401cbbb6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5014fd_74ec83b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2020-08-04T01:00:37Z",
+      "side": 1,
+      "message": "IIUC how this works, I think this is unlikely to cause problems. The main issue here is BigInteger.add(), which has always been in the profile, and which I expect to be there again once we generate a real profile. In the new version, most of the work is done in a helper method with the same name, which is currently not in the profile. If that doesn\u0027t end up in any real boot image profile, we\u0027re probably doing something wrong. The rest of the additions shouldn\u0027t be critical; I\u0027m just trying to avoid regression complaints.\n\nThe test that would fail is no longer terribly critical after this lands. It was really there to test the old native memory handling. In the unlikely case that this becomes a problem, we can disable it.",
+      "parentUuid": "bcb72684_65962200",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "7cec0bba9abb199fe4086035748e9cce401cbbb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
