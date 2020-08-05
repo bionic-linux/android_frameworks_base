@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8160bf52_f593ccd6",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2451,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-08-05T21:42:15Z",
+      "side": 1,
+      "message": "incoming :)",
+      "range": {
+        "startLine": 2451,
+        "startChar": 7,
+        "endLine": 2451,
+        "endChar": 15
+      },
+      "revId": "aa506444d0f7a83414895a5356c564ed981ad755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8da4255_1fb09c7d",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2457,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-08-05T21:42:15Z",
+      "side": 1,
+      "message": "@link RemoteConference",
+      "range": {
+        "startLine": 2457,
+        "startChar": 19,
+        "endLine": 2457,
+        "endChar": 37
+      },
+      "revId": "aa506444d0f7a83414895a5356c564ed981ad755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8552bc12_64cd1596",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2475,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-08-05T21:42:15Z",
+      "side": 1,
+      "message": "@link RemoteConference",
+      "range": {
+        "startLine": 2475,
+        "startChar": 20,
+        "endLine": 2475,
+        "endChar": 36
+      },
+      "revId": "aa506444d0f7a83414895a5356c564ed981ad755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd07158_9b3408b7",
+        "filename": "telecomm/java/android/telecom/RemoteConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-08-05T21:42:15Z",
+      "side": 1,
+      "message": "conference",
+      "range": {
+        "startLine": 1064,
+        "startChar": 61,
+        "endLine": 1064,
+        "endChar": 72
+      },
+      "revId": "aa506444d0f7a83414895a5356c564ed981ad755",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
