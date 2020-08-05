@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "567572b7_5bdab4f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1258293
+      },
+      "writtenOn": "2020-08-05T00:36:48Z",
+      "side": 1,
+      "message": "Please first create this in internal master",
+      "revId": "e2a3c8ffc337252636c00c9e1d82f4bb4b63a260",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
