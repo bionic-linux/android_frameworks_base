@@ -55,6 +55,7 @@ import static com.android.networkstack.tethering.UpstreamNetworkMonitor.EVENT_ON
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -63,6 +64,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -228,6 +230,7 @@ public class TetheringTest {
     private TetheringConfiguration mConfig;
     private EntitlementManager mEntitleMgr;
     private OffloadController mOffloadCtrl;
+    private PrivateAddressCoordinator mPrivateAddressCoordinator;
 
     private class TestContext extends BroadcastInterceptingContext {
         TestContext(Context base) {
@@ -437,6 +440,13 @@ public class TetheringTest {
         @Override
         public boolean isTetheringDenied() {
             return false;
+        }
+
+        @Override
+        public PrivateAddressCoordinator getPrivateAddressCoordinator(Context ctx,
+                TetheringConfiguration cfg) {
+            mPrivateAddressCoordinator = spy(super.getPrivateAddressCoordinator(ctx, cfg));
+            return mPrivateAddressCoordinator;
         }
     }
 
@@ -1889,7 +1899,8 @@ public class TetheringTest {
         final String ipv4Address = ifaceConfigCaptor.getValue().ipv4Addr;
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).startWithCallbacks(
                 any(), any());
-        reset(mNetd, mUsbManager);
+        verify(mPrivateAddressCoordinator).maybeRemoveDeprecatedUpstreams();
+        reset(mNetd, mUsbManager, mPrivateAddressCoordinator);
         upstreamNetwork = buildV4WifiUpstreamState(ipv4Address, 30, wifiNetwork);
         mTetheringDependencies.mUpstreamNetworkMonitorSM.sendMessage(
                 Tethering.TetherMainSM.EVENT_UPSTREAM_CALLBACK,
@@ -1914,7 +1925,8 @@ public class TetheringTest {
         runUsbTethering(null);
         verify(mDhcpServer, timeout(DHCPSERVER_START_TIMEOUT_MS).times(1)).startWithCallbacks(
                 any(), any());
-        reset(mUsbManager);
+        verify(mPrivateAddressCoordinator).maybeRemoveDeprecatedUpstreams();
+        reset(mUsbManager, mPrivateAddressCoordinator);
         final TetheredInterfaceRequest mockRequest = mock(TetheredInterfaceRequest.class);
         when(mEm.requestTetheredInterface(any(), any())).thenReturn(mockRequest);
         final ArgumentCaptor<TetheredInterfaceCallback> callbackCaptor =
@@ -1925,6 +1937,7 @@ public class TetheringTest {
         TetheredInterfaceCallback ethCallback = callbackCaptor.getValue();
         ethCallback.onAvailable(TEST_ETH_IFNAME);
         mLooper.dispatchAll();
+        verify(mPrivateAddressCoordinator, never()).maybeRemoveDeprecatedUpstreams();
         reset(mUsbManager, mEm);
 
         final UpstreamNetworkState upstreamNetwork = buildV4WifiUpstreamState(
@@ -1962,6 +1975,98 @@ public class TetheringTest {
         assertContains(Arrays.asList(mTethering.getTetherableIfaces()), TEST_ETH_IFNAME);
         assertEquals(TETHER_ERROR_IFACE_CFG_ERROR, mTethering.getLastTetherError(TEST_USB_IFNAME));
         assertEquals(TETHER_ERROR_IFACE_CFG_ERROR, mTethering.getLastTetherError(TEST_ETH_IFNAME));
+    }
+
+    private void runStartWifiTethering() throws Exception {
+        mTethering.startTethering(createTetheringRequestParcel(TETHERING_WIFI), null);
+        mLooper.dispatchAll();
+        sendWifiApStateChanged(WIFI_AP_STATE_ENABLED, TEST_WLAN_IFNAME, IFACE_IP_MODE_TETHERED);
+        mLooper.dispatchAll();
+    }
+
+    private void runStopWifiTEthering() throws Exception {
+        mTethering.stopTethering(TETHERING_WIFI);
+        mLooper.dispatchAll();
+        sendWifiApStateChanged(WifiManager.WIFI_AP_STATE_DISABLED);
+        mLooper.dispatchAll();
+    }
+
+    private void assertServerAddressConfiguration(final String expected) throws Exception {
+        final ArgumentCaptor<InterfaceConfigurationParcel> ifaceConfigCaptor =
+                ArgumentCaptor.forClass(InterfaceConfigurationParcel.class);
+        verify(mNetd).interfaceSetCfg(ifaceConfigCaptor.capture());
+        final String actual = ifaceConfigCaptor.getValue().ipv4Addr;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testRemoveDeprecatedUpstreams() throws Exception {
+        // 1. start wifi tethering. Make getRandomSubAddr return subaddress in 192.168.42.5.
+        final Network[] emptyNetwork = {};
+        final int testSubAddress = 0x2a05; // 16 bits suffix of 192.168.42.5.
+        final String testAddress = "192.168.42.5";
+        doReturn(testSubAddress).when(mPrivateAddressCoordinator).getRandomSubAddr();
+        when(mCm.getAllNetworks()).thenReturn(emptyNetwork);
+        runStartWifiTethering();
+        verify(mPrivateAddressCoordinator).maybeRemoveDeprecatedUpstreams();
+        assertServerAddressConfiguration(testAddress);
+        reset(mNetd, mPrivateAddressCoordinator);
+
+        // 2. setup tethering upstream with address 192.168.43.5.
+        final Network wifiNetwork = new Network(200);
+        final Network[] allNetworks = { wifiNetwork };
+        final String upstreamAddress = "192.168.43.5";
+        final int prefixLength = 24;
+        final UpstreamNetworkState upstreamNetwork = buildV4WifiUpstreamState(upstreamAddress,
+                prefixLength, wifiNetwork);
+        when(mCm.getAllNetworks()).thenReturn(allNetworks);
+        mTetheringDependencies.mUpstreamNetworkMonitorSM.sendMessage(
+                Tethering.TetherMainSM.EVENT_UPSTREAM_CALLBACK,
+                UpstreamNetworkMonitor.EVENT_ON_LINKPROPERTIES,
+                0,
+                upstreamNetwork);
+        mLooper.dispatchAll();
+
+        // 3. start usb tethering. Make getRandomSubAddr return subaddress in 192.168.43.5 which is
+        // the same as upstream address and verify the address can not be selected.
+        when(mNetd.interfaceGetList()).thenReturn(new String[] {
+                TEST_WLAN_IFNAME, TEST_USB_IFNAME});
+        final int upstreamSubAddress = 0x2b05; // 16 bits suffix of 192.168.43.5.
+        doReturn(upstreamSubAddress).when(mPrivateAddressCoordinator).getRandomSubAddr();
+        runUsbTethering(upstreamNetwork);
+        verify(mPrivateAddressCoordinator, never()).maybeRemoveDeprecatedUpstreams();
+        final ArgumentCaptor<InterfaceConfigurationParcel> ifaceConfigCaptor =
+                ArgumentCaptor.forClass(InterfaceConfigurationParcel.class);
+        verify(mNetd).interfaceSetCfg(ifaceConfigCaptor.capture());
+        final String address = ifaceConfigCaptor.getValue().ipv4Addr;
+        assertNotEquals(
+                new IpPrefix(InetAddresses.parseNumericAddress(upstreamAddress), prefixLength),
+                new IpPrefix(InetAddresses.parseNumericAddress(address), prefixLength));
+        reset(mNetd, mUsbManager, mPrivateAddressCoordinator);
+
+        // 4. stop all tetherings and tear down the upstream.
+        runStopUSBTethering();
+        runStopWifiTEthering();
+        reset(mNetd, mUsbManager, mPrivateAddressCoordinator);
+        when(mCm.getAllNetworks()).thenReturn(emptyNetwork);
+
+        // 5. start wifi tethering, verify test address still can be selected again.
+        when(mNetd.interfaceGetList()).thenReturn(new String[] { TEST_WLAN_IFNAME });
+        doReturn(testSubAddress).when(mPrivateAddressCoordinator).getRandomSubAddr();
+        runStartWifiTethering();
+        verify(mPrivateAddressCoordinator).maybeRemoveDeprecatedUpstreams();
+        assertServerAddressConfiguration(testAddress);
+        reset(mNetd, mPrivateAddressCoordinator);
+
+        // 6. start usb tethering, verify 192.168.43.5(the address original used for upstream) can
+        // be selected.
+        when(mNetd.interfaceGetList()).thenReturn(new String[] {
+                TEST_WLAN_IFNAME, TEST_USB_IFNAME});
+        doReturn(upstreamSubAddress).when(mPrivateAddressCoordinator).getRandomSubAddr();
+        runUsbTethering(null);
+        verify(mPrivateAddressCoordinator, never()).maybeRemoveDeprecatedUpstreams();
+        assertServerAddressConfiguration(upstreamAddress);
+        reset(mNetd, mPrivateAddressCoordinator);
     }
 
     @Test
