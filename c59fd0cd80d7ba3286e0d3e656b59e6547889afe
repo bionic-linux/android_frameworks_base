@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd0c3fc_44bd9dfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-08-05T20:56:46Z",
+      "side": 1,
+      "message": "Clean CP from internal.",
+      "revId": "c59fd0cd80d7ba3286e0d3e656b59e6547889afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
