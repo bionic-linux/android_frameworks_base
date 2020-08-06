@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9cb7a3ec_d86a2e58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-06T08:37:36Z",
+      "side": 1,
+      "message": "Yes, I think you are right.\nAlso, after applying this, the test passes.\nHi Josh, would you kindly update the patch if no concern?",
+      "parentUuid": "7c8bb969_75795f86",
+      "revId": "8248e7f8778a794ef10b22da460160e129b8c0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9fc11f0_34ce269c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
