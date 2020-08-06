@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8313456_5032acf0",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1524317
+      },
+      "writtenOn": "2020-08-06T07:48:38Z",
+      "side": 1,
+      "message": "Do the designators in this file have to match the name in InputEventLabels.h? I think in this file the buttons are called \"PROG_RED\", \"PROG_GREEN\", etc.\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/native/include/input/InputEventLabels.h;drc\u003dmaster;l\u003d226",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 15
+      },
+      "revId": "78c63353c82278374a84c5ba6998920f220e01ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
