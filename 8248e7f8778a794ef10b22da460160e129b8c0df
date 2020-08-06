@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7c8bb969_75795f86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-06T06:48:07Z",
+      "side": 1,
+      "message": "... except that it fails the test:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\njava.lang.AssertionError: expected:\u003cCallbackValue(ON_STARTED, 0)\u003e but was:\u003cCallbackValue(ON_ERROR, -25)\u003e\n\tat org.junit.Assert.fail(Assert.java:88)\n\tat org.junit.Assert.failNotEquals(Assert.java:834)\n\tat org.junit.Assert.assertEquals(Assert.java:118)\n\tat org.junit.Assert.assertEquals(Assert.java:144)\n\tat com.android.server.ConnectivityServiceTest$TestSocketKeepaliveCallback.expectCallback(ConnectivityServiceTest.java:3991)\n\tat com.android.server.ConnectivityServiceTest$TestSocketKeepaliveCallback.expectStarted(ConnectivityServiceTest.java:3996)\n\tat com.android.server.ConnectivityServiceTest.doTestNattSocketKeepalivesWithExecutor(ConnectivityServiceTest.java:4248)\n...\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\nJosh, Junyu: is this because ConnectivityServiceTest runs both the client and server code in the same process, so closing the fd in the service also closes the original FD?\n\nIf so, perhaps we can change the ConnectivityService code to only do the close() if Binder.getCallingPid() !\u003d Process.myPid()?",
+      "revId": "8248e7f8778a794ef10b22da460160e129b8c0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9fc11f0_34ce269c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 5
