@@ -1259,3 +1259,17 @@ filegroup {
         ":framework-connectivity-aidl-sources",
     ],
 }
+
+java_library {
+    name: "framework-connectivity",
+    platform_apis: true,
+    srcs: [
+        ":framework-connectivity-sources",
+        ":framework_native_aidl",
+    ],
+    libs: [
+        "framework-all",
+        "unsupportedappusage",
+    ],
+    installable: true,
+}
