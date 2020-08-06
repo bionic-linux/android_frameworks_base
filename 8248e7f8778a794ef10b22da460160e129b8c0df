@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a783f6a6_a1a97b7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-06T06:38:33Z",
+      "side": 1,
+      "message": "LGTM unless Junyu has any other concerns.",
+      "revId": "8248e7f8778a794ef10b22da460160e129b8c0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9fc11f0_34ce269c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7532,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-06T06:38:33Z",
+      "side": 1,
+      "message": "Nit: startTcpKeepalive.",
+      "range": {
+        "startLine": 7532,
+        "startChar": 15,
+        "endLine": 7532,
+        "endChar": 33
+      },
+      "revId": "8248e7f8778a794ef10b22da460160e129b8c0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
