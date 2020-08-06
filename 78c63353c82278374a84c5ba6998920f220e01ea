@@ -22,6 +22,30 @@
       "revId": "78c63353c82278374a84c5ba6998920f220e01ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b560280f_d6f60474",
+        "filename": "data/keyboards/Generic.kl",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1731018
+      },
+      "writtenOn": "2020-08-06T15:24:20Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right. Updated patch and commit message accordingly.",
+      "parentUuid": "a8313456_5032acf0",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 349,
+        "endChar": 15
+      },
+      "revId": "78c63353c82278374a84c5ba6998920f220e01ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
