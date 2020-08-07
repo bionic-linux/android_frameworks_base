@@ -3815,6 +3815,16 @@ public class CarrierConfigManager {
     public static final String KEY_DISABLE_DUN_APN_WHILE_ROAMING =
             "disable_dun_apn_while_roaming";
 
+    /**
+     * For Android 11, provide a temporary solution for OEMs to use the lower of the two MTU values
+     * for IPv4 and IPv6 if both are sent.
+     * TODO: remove in later release
+     *
+     * @hide
+     */
+    public static final String KEY_USE_LOWER_MTU_VALUE_IF_BOTH_RECEIVED =
+            "use_lower_mtu_value_if_both_received";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -4346,6 +4356,7 @@ public class CarrierConfigManager {
         });
         sDefaults.putStringArray(KEY_MISSED_INCOMING_CALL_SMS_PATTERN_STRING_ARRAY, new String[0]);
         sDefaults.putBoolean(KEY_DISABLE_DUN_APN_WHILE_ROAMING, false);
+        sDefaults.putBoolean(KEY_USE_LOWER_MTU_VALUE_IF_BOTH_RECEIVED, false);
     }
 
     /**
