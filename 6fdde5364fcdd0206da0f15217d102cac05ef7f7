@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c68855b8_3ac20247",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-07T02:52:40Z",
+      "side": 1,
+      "message": "LGTM assuming lorenzo is fine with this.",
+      "revId": "6fdde5364fcdd0206da0f15217d102cac05ef7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
