@@ -67,6 +67,24 @@
       "revId": "ee9f580d577b0903470b3b206511bba07135ed53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cff418c_864e3579",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5437,
+      "author": {
+        "id": 1687740
+      },
+      "writtenOn": "2020-08-07T15:58:30Z",
+      "side": 1,
+      "message": "Based on your comments, I\u0027m sure it won\u0027t be used, so I delete this function",
+      "parentUuid": "00f2c7fc_588a1c5a",
+      "revId": "ee9f580d577b0903470b3b206511bba07135ed53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }

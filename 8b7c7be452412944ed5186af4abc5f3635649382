@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c68bb88d_25afb4ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1687740
+      },
+      "writtenOn": "2020-08-07T15:58:30Z",
+      "side": 1,
+      "message": "I checked all references to this function mentioned by Riddle. I am sure it is unused.so I deleted it.\nThanks for your comments.",
+      "revId": "8b7c7be452412944ed5186af4abc5f3635649382",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
