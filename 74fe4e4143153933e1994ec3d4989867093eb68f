@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1012c095_2271abcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "Will require more thorough reviews from others, posted a few comments below.",
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcbc72ec_7cc4463f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4827,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "nit: Extra star",
+      "range": {
+        "startLine": 4827,
+        "startChar": 76,
+        "endLine": 4827,
+        "endChar": 78
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3985bb1d_dab1844a",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4832,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "I believe this should have an Executor associated with it so that the user can specify the thread that the QosCallback is called on. Right now, it is always called on the binder thread.",
+      "range": {
+        "startLine": 4832,
+        "startChar": 16,
+        "endLine": 4832,
+        "endChar": 35
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8267b6_e109d4f5",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "nit: extra star, same with below",
+      "range": {
+        "startLine": 331,
+        "startChar": 27,
+        "endLine": 331,
+        "endChar": 28
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a39dab_2260c1a3",
+        "filename": "core/java/android/net/QosCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "nit: extra star",
+      "range": {
+        "startLine": 35,
+        "startChar": 88,
+        "endLine": 35,
+        "endChar": 90
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e792bc3_65d91117",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "nit:typo",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d39e4a3_593c11ba",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "Is there any scenario where holding this lock while the Callback listener calls something that causes another one of these events to fire, causing a deadlock? I think moving to an executor model will reduce this chance",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f7fd55_42ac235f",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "Add @QosSessionType here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22c19a5_331f46ae",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3675,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "Perhaps this should be called incrementOrEnforceRequestCountLimit?",
+      "range": {
+        "startLine": 3675,
+        "startChar": 17,
+        "endLine": 3675,
+        "endChar": 41
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7ab190_a5e12fdf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8309,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "Should we silently fail here or report back that the service is not available?",
+      "range": {
+        "startLine": 8309,
+        "startChar": 21,
+        "endLine": 8309,
+        "endChar": 36
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0305b022_52b610cd",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-07T19:59:50Z",
+      "side": 1,
+      "message": "Should this generate an onError event?",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
