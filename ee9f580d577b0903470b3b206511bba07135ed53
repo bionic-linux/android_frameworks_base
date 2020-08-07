@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "c60a546f_9fb5cc0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2020-08-07T01:35:35Z",
+      "side": 1,
+      "message": "LGTM, please update the changes as Riddle suggested before submit. Thanks for the fix!",
+      "revId": "ee9f580d577b0903470b3b206511bba07135ed53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00f2c7fc_588a1c5a",
         "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
         "patchSetId": 1
