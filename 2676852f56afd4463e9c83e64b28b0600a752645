@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc58536a_de0f6a16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-08-07T09:52:38Z",
+      "side": 1,
+      "message": "I will update related CTS TC(CL:1392065) accordingly when it is merged.",
+      "revId": "2676852f56afd4463e9c83e64b28b0600a752645",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
