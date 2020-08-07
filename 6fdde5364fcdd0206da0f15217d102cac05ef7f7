@@ -16,6 +16,29 @@
       "revId": "6fdde5364fcdd0206da0f15217d102cac05ef7f7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3114d31_2e7d521f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7534,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-08-07T03:21:16Z",
+      "side": 1,
+      "message": "Nit: this should still say startTcpKeepalive.",
+      "range": {
+        "startLine": 7534,
+        "startChar": 15,
+        "endLine": 7534,
+        "endChar": 33
+      },
+      "revId": "6fdde5364fcdd0206da0f15217d102cac05ef7f7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
