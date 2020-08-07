@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "509b19e9_45cc7047",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1687740
+      },
+      "writtenOn": "2020-08-07T16:11:26Z",
+      "side": 1,
+      "message": "Done, I delete the unused function as Riddle mentioned",
+      "parentUuid": "c60a546f_9fb5cc0a",
+      "revId": "ee9f580d577b0903470b3b206511bba07135ed53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00f2c7fc_588a1c5a",
         "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
         "patchSetId": 1
