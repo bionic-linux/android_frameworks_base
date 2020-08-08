@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "825d2e5d_de3f86de",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4827,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcbc72ec_7cc4463f",
+      "range": {
+        "startLine": 4827,
+        "startChar": 76,
+        "endLine": 4827,
+        "endChar": 78
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3985bb1d_dab1844a",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 3
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "21b51936_a413727f",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4832,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3985bb1d_dab1844a",
+      "range": {
+        "startLine": 4832,
+        "startChar": 16,
+        "endLine": 4832,
+        "endChar": 35
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e8267b6_e109d4f5",
         "filename": "core/java/android/net/NetworkAgent.java",
         "patchSetId": 3
@@ -85,6 +133,30 @@
       "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f8e5bd_862d459a",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e8267b6_e109d4f5",
+      "range": {
+        "startLine": 331,
+        "startChar": 27,
+        "endLine": 331,
+        "endChar": 28
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "a634e98d_2e1d9bc2",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e792bc3_65d91117",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 15
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d39e4a3_593c11ba",
         "filename": "core/java/android/net/QosCallbackConnection.java",
         "patchSetId": 3
@@ -154,6 +250,30 @@
       "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29c0929_eeadc2bf",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "I tried to be very careful to avoid a deadlock... but... changed to executor since that\u0027s better either way.",
+      "parentUuid": "8d39e4a3_593c11ba",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "b41c8d02_754d8979",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5f7fd55_42ac235f",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f22c19a5_331f46ae",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -200,6 +344,30 @@
       "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed55efd_e1435a03",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3675,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "This is the same name as was there in NetworkRequest.  I think the logic behind the name is that \"enforce\" means that there is a check that may throw an exception.",
+      "parentUuid": "f22c19a5_331f46ae",
+      "range": {
+        "startLine": 3675,
+        "startChar": 17,
+        "endLine": 3675,
+        "endChar": 41
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +394,30 @@
     },
     {
       "key": {
+        "uuid": "e9276ef3_0dc0ce70",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8309,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "I think it makes sense to keep it as is, here is my logic, let me know what you think:\n\n\nIf sending back the security exception fails asynchronously, then we could either:\n1. Send the security exception back synchronously.  This is odd since we are intentionally sending it asynchronously and now we would be doing it two different ways.\n2. We could pass back the remote exception, but that\u0027s odd because the developer won\u0027t really care about the remote exception which was caused by not being able to send the onError message to itself on the Binder.\n\nEach option isn\u0027t great.\n\n\nOne other note, if we get an exception when calling onError in QosCallbackTracker it is a no-op same as here.  We couldn\u0027t send it back synchronously in that case for obvious reasons.  And so I think it\u0027s consistent here.",
+      "parentUuid": "de7ab190_a5e12fdf",
+      "range": {
+        "startLine": 8309,
+        "startChar": 21,
+        "endLine": 8309,
+        "endChar": 36
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0305b022_52b610cd",
         "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
         "patchSetId": 3
@@ -237,6 +429,30 @@
       "writtenOn": "2020-08-07T19:59:50Z",
       "side": 1,
       "message": "Should this generate an onError event?",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504ee790_9cac2dd1",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:17:06Z",
+      "side": 1,
+      "message": "If the NetworkAgent has an issue it\u0027s handled in ac.sendCmdRegisterCallback().",
+      "parentUuid": "0305b022_52b610cd",
       "range": {
         "startLine": 127,
         "startChar": 12,
