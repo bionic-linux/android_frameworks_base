@@ -183,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "8b2fc9ae_17a47294",
+        "filename": "core/java/android/net/QosCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-08T00:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a39dab_2260c1a3",
+      "range": {
+        "startLine": 35,
+        "startChar": 88,
+        "endLine": 35,
+        "endChar": 90
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e792bc3_65d91117",
         "filename": "core/java/android/net/QosCallbackConnection.java",
         "patchSetId": 3
