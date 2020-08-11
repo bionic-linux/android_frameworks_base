@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09df48af_5ed62152",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2020-08-11T14:03:50Z",
+      "side": 1,
+      "message": "The changes is conflict with the code base in our internal branches. I\u0027ll fix the merge conflict first and should able to pass the presubmit then.",
+      "revId": "596f18bb0620a99c1f966de451a2dd8bf9d3fa30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
