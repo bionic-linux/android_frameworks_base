@@ -15,30 +15,105 @@
  */
 package android.net.vcn;
 
+import static com.android.internal.annotations.VisibleForTesting.Visibility;
+
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
+import android.util.ArraySet;
+
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.Preconditions;
+import com.android.server.vcn.util.PersistableBundleUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * This class represents a configuration for a Virtual Carrier Network.
+ *
+ * <p>Each {@link VcnGatewayConnectionConfig} instance added represents a connection that will be
+ * brought up on demand based on app-requested {@link Network}s.
  *
  * @hide
  */
 public final class VcnConfig implements Parcelable {
     @NonNull private static final String TAG = VcnConfig.class.getSimpleName();
 
-    private VcnConfig() {
+    private static final String TUNNEL_CONFIGS_KEY = "mTunnelConfigs";
+    @NonNull private final Set<VcnGatewayConnectionConfig> mTunnelConfigs;
+
+    private VcnConfig(@NonNull Set<VcnGatewayConnectionConfig> tunnelConfigs) {
+        mTunnelConfigs = Collections.unmodifiableSet(tunnelConfigs);
+
         validate();
     }
-    // TODO: Implement getters, validators, etc
 
     /**
-     * Validates this configuration.
+     * Deserializes a VcnConfig from a PersistableBundle.
      *
      * @hide
      */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public VcnConfig(@NonNull PersistableBundle in) {
+        final PersistableBundle tunnelConfigsBundle = in.getPersistableBundle(TUNNEL_CONFIGS_KEY);
+        mTunnelConfigs =
+                new ArraySet<>(
+                        PersistableBundleUtils.toList(
+                                tunnelConfigsBundle, VcnGatewayConnectionConfig::new));
+
+        validate();
+    }
+
     private void validate() {
-        // TODO: implement validation logic
+        Preconditions.checkCollectionNotEmpty(mTunnelConfigs, "tunnelConfigs");
+    }
+
+    /**
+     * Retrieves the set of configured tunnels.
+     *
+     * @hide
+     */
+    @NonNull
+    public Set<VcnGatewayConnectionConfig> getTunnelConfigs() {
+        return Collections.unmodifiableSet(mTunnelConfigs);
+    }
+
+    /**
+     * Serializes this object to a PersistableBundle.
+     *
+     * @hide
+     */
+    @NonNull
+    public PersistableBundle toPersistableBundle() {
+        final PersistableBundle result = new PersistableBundle();
+
+        final PersistableBundle tunnelConfigsBundle =
+                PersistableBundleUtils.fromList(
+                        new ArrayList<>(mTunnelConfigs),
+                        VcnGatewayConnectionConfig::toPersistableBundle);
+        result.putPersistableBundle(TUNNEL_CONFIGS_KEY, tunnelConfigsBundle);
+
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mTunnelConfigs);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object other) {
+        if (!(other instanceof VcnConfig)) {
+            return false;
+        }
+
+        final VcnConfig rhs = (VcnConfig) other;
+        return mTunnelConfigs.equals(rhs.mTunnelConfigs);
     }
 
     // Parcelable methods
@@ -49,15 +124,16 @@ public final class VcnConfig implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {}
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeParcelable(toPersistableBundle(), flags);
+    }
 
     @NonNull
     public static final Parcelable.Creator<VcnConfig> CREATOR =
             new Parcelable.Creator<VcnConfig>() {
                 @NonNull
                 public VcnConfig createFromParcel(Parcel in) {
-                    // TODO: Ensure all methods are pulled from the parcels
-                    return new VcnConfig();
+                    return new VcnConfig((PersistableBundle) in.readParcelable(null));
                 }
 
                 @NonNull
@@ -68,16 +144,31 @@ public final class VcnConfig implements Parcelable {
 
     /** This class is used to incrementally build {@link VcnConfig} objects. */
     public static class Builder {
-        // TODO: Implement this builder
+        @NonNull private final Set<VcnGatewayConnectionConfig> mTunnelConfigs = new ArraySet<>();
+
+        /**
+         * Adds a {@link VcnGatewayConnectionConfig} with the configuration for an individual
+         * tunnel.
+         *
+         * @param tunnelConfig the configuration for an individual tunnel.
+         * @return this {@link Builder} instance, for chaining.
+         */
+        @NonNull
+        public Builder addTunnelConfig(@NonNull VcnGatewayConnectionConfig tunnelConfig) {
+            Objects.requireNonNull(tunnelConfig, "tunnelConfig was null");
+
+            mTunnelConfigs.add(tunnelConfig);
+            return this;
+        }
 
         /**
          * Builds and validates the VcnConfig.
          *
-         * @return an immutable VcnConfig instance
+         * @return an immutable VcnConfig instance.
          */
         @NonNull
         public VcnConfig build() {
-            return new VcnConfig();
+            return new VcnConfig(mTunnelConfigs);
         }
     }
 }
