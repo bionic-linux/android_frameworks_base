@@ -40,6 +40,17 @@ public final class CellIdentityNr extends CellIdentity {
     private final long mNci;
 
     /**
+     * @hide
+     */
+    public CellIdentityNr() {
+        super(TAG, CellInfo.TYPE_NR, null, null, null, null);
+        mPci = CellInfo.UNAVAILABLE;
+        mTac = CellInfo.UNAVAILABLE;
+        mNrArfcn = CellInfo.UNAVAILABLE;
+        mNci = CellInfo.UNAVAILABLE_LONG;
+    }
+
+    /**
      *
      * @param pci Physical Cell Id in range [0, 1007].
      * @param tac 16-bit Tracking Area Code.
