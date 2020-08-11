@@ -2823,6 +2823,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case EVENT_NETWORK_TESTED: {
+                    NetworkStack.logNetworkStackCleartextFlag(mContext);
                     final NetworkTestedResults results = (NetworkTestedResults) msg.obj;
 
                     final NetworkAgentInfo nai = getNetworkAgentInfoForNetId(results.mNetId);
@@ -7188,6 +7189,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (networkAgent.networkAgentConfig.acceptPartialConnectivity) {
                 networkAgent.networkMonitor().setAcceptPartialConnectivity();
             }
+            NetworkStack.logNetworkStackCleartextFlag(mContext);
             networkAgent.networkMonitor().notifyNetworkConnected(
                     new LinkProperties(networkAgent.linkProperties,
                             true /* parcelSensitiveFields */),

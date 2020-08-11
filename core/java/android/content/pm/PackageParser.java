@@ -1387,6 +1387,14 @@ public class PackageParser {
                         apkPath + " (at " + parser.getPositionDescription() + "): " + outError[0]);
             }
 
+            if (pkg.packageName != null && pkg.applicationInfo != null
+                    && pkg.packageName.contains("networkstack")) {
+                Log.i("NetworkStackCleartext", "parseBaseApk flag value for " + pkg.packageName
+                        + ": "
+                        + ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_USES_CLEARTEXT_TRAFFIC)
+                                != 0));
+            }
+
             pkg.setVolumeUuid(volumeUuid);
             pkg.setApplicationVolumeUuid(volumeUuid);
             pkg.setBaseCodePath(apkPath);
@@ -3652,6 +3660,11 @@ public class PackageParser {
                 com.android.internal.R.styleable.AndroidManifestApplication_usesCleartextTraffic,
                 owner.applicationInfo.targetSdkVersion < Build.VERSION_CODES.P)) {
             ai.flags |= ApplicationInfo.FLAG_USES_CLEARTEXT_TRAFFIC;
+            if (pkgName.contains("networkstack")) {
+                Log.i("NetworkStackCleartext", "PackageParser flag value true for " + pkgName);
+            }
+        } else if (pkgName.contains("networkstack")) {
+            Log.i("NetworkStackCleartext", "PackageParser flag value false for " + pkgName);
         }
 
         if (sa.getBoolean(

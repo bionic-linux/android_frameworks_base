@@ -16,15 +16,21 @@
 package android.net;
 
 import static android.Manifest.permission.NETWORK_STACK;
+import static android.content.pm.ApplicationInfo.FLAG_USES_CLEARTEXT_TRAFFIC;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.ServiceManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,6 +108,30 @@ public class NetworkStack {
         permissions.add(NETWORK_STACK);
         permissions.add(PERMISSION_MAINLINE_NETWORK_STACK);
         enforceAnyPermissionOf(context, permissions.toArray(new String[0]));
+    }
+
+    /** @hide */
+    public static void logNetworkStackCleartextFlag(final @NonNull Context context) {
+        // Extremely inefficient way to just do some logging, but it's just for testing
+        // DO NOT ship with this code !
+        final PackageManager pm = context.getPackageManager();
+        final Intent nsIntent = new Intent("android.net.INetworkStackConnector");
+        final ComponentName c = nsIntent.resolveSystemService(pm, PackageManager.MATCH_SYSTEM_ONLY);
+        if (c == null) {
+            Log.wtf("NetworkStackCleartext", "NetworkStack not found");
+            return;
+        }
+
+        final ApplicationInfo ai;
+        try {
+            ai = pm.getApplicationInfo(c.getPackageName(), 0 /* flags */);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.wtf("NetworkStackCleartext", "Could not get NetworkStack info", e);
+            return;
+        }
+
+        Log.i("NetworkStackCleartext", "NetworkStack cleartext flag value: "
+                + ((ai.flags & FLAG_USES_CLEARTEXT_TRAFFIC) != 0));
     }
 
     private static void enforceAnyPermissionOf(final @NonNull Context context,

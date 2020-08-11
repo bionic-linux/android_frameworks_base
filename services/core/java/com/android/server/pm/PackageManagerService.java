@@ -3280,6 +3280,16 @@ public class PackageManagerService extends IPackageManager.Stub
                 MetricsLogger.histogram(null, "ota_package_manager_init_time",
                         (int) (SystemClock.uptimeMillis() - startTime));
             }
+
+            for (Map.Entry<String, PackageParser.Package> entry : mPackages.entrySet()) {
+                if (entry.getKey().contains("networkstack")) {
+                    final boolean flagValue =
+                            (entry.getValue().applicationInfo.flags
+                                    & ApplicationInfo.FLAG_USES_CLEARTEXT_TRAFFIC) != 0;
+                    Log.i("NetworkStackCleartext", "PackageManagerService flag value for "
+                            + entry.getKey() + ": " + flagValue);
+                }
+            }
         } // synchronized (mPackages)
         } // synchronized (mInstallLock)
 
@@ -9118,6 +9128,12 @@ public class PackageManagerService extends IPackageManager.Stub
         // Static shared libraries have synthetic package names
         if (pkg.applicationInfo.isStaticSharedLibrary()) {
             renameStaticSharedLibraryPackage(pkg);
+        }
+
+        if (pkg.packageName != null && pkg.packageName.contains("networkstack")) {
+            Log.i("NetworkStackCleartext", "scanPackageLI flag value for " + pkg.packageName + ": "
+                    + ((pkg.applicationInfo.flags & ApplicationInfo.FLAG_USES_CLEARTEXT_TRAFFIC)
+                            != 0));
         }
 
         return scanPackageChildLI(pkg, parseFlags, scanFlags, currentTime, user);
