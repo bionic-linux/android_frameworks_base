@@ -3835,7 +3835,7 @@ package android.media {
   }
 
   public class MediaPlayer implements android.media.AudioRouting android.media.VolumeAutomation {
-    method public void setOnImsRxNoticeListener(@Nullable android.media.MediaPlayer.OnImsRxNoticeListener);
+    method @RequiresPermission("android.permission.BIND_IMS_SERVICE") public void setOnImsRxNoticeListener(@Nullable android.media.MediaPlayer.OnImsRxNoticeListener, @Nullable android.os.Handler);
   }
 
   public static interface MediaPlayer.OnImsRxNoticeListener {

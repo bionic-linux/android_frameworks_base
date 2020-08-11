@@ -19,6 +19,7 @@ package android.media;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.app.ActivityThread;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -2091,6 +2092,7 @@ public class MediaPlayer extends PlayerBase
         mOnVideoSizeChangedListener = null;
         mOnTimedTextListener = null;
         mOnImsRxNoticeListener = null;
+        mOnImsRxNoticeHandler = null;
         synchronized (mTimeProviderLock) {
             if (mTimeProvider != null) {
                 mTimeProvider.close();
@@ -3610,9 +3612,11 @@ public class MediaPlayer extends PlayerBase
                 return;
 
             case MEDIA_IMS_RX_NOTICE:
-                OnImsRxNoticeListener onImsRxNoticeListener =
-                    mOnImsRxNoticeListener;
-                if (onImsRxNoticeListener == null) {
+                final OnImsRxNoticeListener imsRxNoticeListener;
+                final Handler imsRxNoticeHandler;
+                imsRxNoticeListener = mOnImsRxNoticeListener;
+                imsRxNoticeHandler = mOnImsRxNoticeHandler;
+                if (imsRxNoticeListener == null) {
                     return;
                 }
                 if (msg.obj instanceof Parcel) {
@@ -3623,8 +3627,15 @@ public class MediaPlayer extends PlayerBase
                     } finally {
                         parcel.recycle();
                     }
-                    if (event != null) {
-                        onImsRxNoticeListener.onImsRxNotice(mMediaPlayer, event);
+                    if (imsRxNoticeHandler == null) {
+                        imsRxNoticeListener.onImsRxNotice(mMediaPlayer, event);
+                    } else {
+                        imsRxNoticeHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                imsRxNoticeListener.onImsRxNotice(mMediaPlayer, event);
+                            }
+                        });
                     }
                 }
                 return;
@@ -4189,15 +4200,21 @@ public class MediaPlayer extends PlayerBase
      * @see MediaPlayer.OnImsRxNoticeListener
      *
      * @param listener the callback that will be run
+     * @param handler Specifies Handler object for the thread on which to execute
+     * the callback. If null, the handler on the main looper will be used.
      *
      * @hide
      */
     @SystemApi
-    public void setOnImsRxNoticeListener(@Nullable OnImsRxNoticeListener listener) {
+    @RequiresPermission("android.permission.BIND_IMS_SERVICE")
+    public void setOnImsRxNoticeListener(
+        @Nullable OnImsRxNoticeListener listener, @Nullable Handler handler) {
         mOnImsRxNoticeListener = listener;
+        mOnImsRxNoticeHandler = handler;
     }
 
     private OnImsRxNoticeListener mOnImsRxNoticeListener;
+    private Handler mOnImsRxNoticeHandler;
 
     /**
      * Register a callback to be invoked when a selected track has timed metadata available.
