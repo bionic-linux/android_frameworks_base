@@ -442,6 +442,30 @@
     },
     {
       "key": {
+        "uuid": "97310c4e_f027b7cd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8309,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-12T21:43:11Z",
+      "side": 1,
+      "message": "Oh oops, I think I read this wrong, this is a catch on onError failing, not a catch on QosCallbackTracker#registerCallback failing. The current logic makes sense.",
+      "parentUuid": "e9276ef3_0dc0ce70",
+      "range": {
+        "startLine": 8309,
+        "startChar": 21,
+        "endLine": 8309,
+        "endChar": 36
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0305b022_52b610cd",
         "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
         "patchSetId": 3
@@ -486,6 +510,30 @@
       "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353ea057_150b7df1",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-12T21:43:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "504ee790_9cac2dd1",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "74fe4e4143153933e1994ec3d4989867093eb68f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
