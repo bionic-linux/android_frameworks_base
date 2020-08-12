@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c665b13e_81307489",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112033
+      },
+      "writtenOn": "2020-08-12T00:16:00Z",
+      "side": 1,
+      "message": "Cherrypick this change forwards into AOSP ",
+      "revId": "7d2f84c1bc4e3cfa44c6ed3edf9356479bf2ac2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
