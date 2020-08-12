@@ -46,6 +46,30 @@
       "revId": "2e7d315f862666aecf8bc1e571eb2c5f4890d533",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a5852c_b3c9ca2a",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-08-12T07:46:15Z",
+      "side": 1,
+      "message": "Point taken.\nSGTM as long as TH passes.",
+      "parentUuid": "399be3fc_ed15cc5f",
+      "range": {
+        "startLine": 1155,
+        "startChar": 0,
+        "endLine": 1155,
+        "endChar": 9
+      },
+      "revId": "2e7d315f862666aecf8bc1e571eb2c5f4890d533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
