@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f62f2f8_341f66f4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4838,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-12T21:58:36Z",
+      "side": 1,
+      "message": "executor",
+      "range": {
+        "startLine": 4838,
+        "startChar": 31,
+        "endLine": 4838,
+        "endChar": 39
+      },
+      "revId": "aa6661be3b4eb60b1291013344de2d7d5b02a014",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef901ca_5a0bbd86",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-12T21:58:36Z",
+      "side": 1,
+      "message": "Does this need to be deleted?",
+      "range": {
+        "startLine": 344,
+        "startChar": 12,
+        "endLine": 344,
+        "endChar": 24
+      },
+      "revId": "aa6661be3b4eb60b1291013344de2d7d5b02a014",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a43b012_d89e2645",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-08-12T21:58:36Z",
+      "side": 1,
+      "message": "Would it be easier to supply Runnable::run directly here?",
+      "range": {
+        "startLine": 367,
+        "startChar": 54,
+        "endLine": 367,
+        "endChar": 62
+      },
+      "revId": "aa6661be3b4eb60b1291013344de2d7d5b02a014",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
