@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fc1ab4d0_9ef24118",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2020-08-13T00:03:05Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "7e5014fd_74ec83b0",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "7cec0bba9abb199fe4086035748e9cce401cbbb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b11df5_a886a1ad",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
