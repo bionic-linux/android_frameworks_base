@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5708003c_0dbedb8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381973
+      },
+      "writtenOn": "2020-08-13T13:56:20Z",
+      "side": 1,
+      "message": "Will move this change into internal since the merge conflict. (Code base difference at this block)",
+      "revId": "8f13a5c10461f0d58ee0e836c735f4c21883e6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
