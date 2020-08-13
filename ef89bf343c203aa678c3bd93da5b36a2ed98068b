@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7f98974_35516b65",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-08-13T13:24:13Z",
+      "side": 1,
+      "message": "Implementation of this method could be different depending on the type of the local device, and the target device.\n\nMessages like \u003cText View On\u003e, \u003cSet Stream Path\u003e should be used primarily to change power states of other devices. Similar how `powerOffRemoteDevice` relies on \u003cStandby\u003e. \n\u003cUser Control Pressed\u003e should be considered as a fallback if the dedicated messages do not work as expected.",
+      "range": {
+        "startLine": 1811,
+        "startChar": 20,
+        "endLine": 1811,
+        "endChar": 39
+      },
+      "revId": "ef89bf343c203aa678c3bd93da5b36a2ed98068b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
