@@ -22,6 +22,30 @@
       "revId": "ef89bf343c203aa678c3bd93da5b36a2ed98068b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6056515_b6927c62",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-08-13T23:45:30Z",
+      "side": 1,
+      "message": "Disagree,  set stream path has other affects and should not be used.  \n\nOf course there is no guarantee that the remote device will support CEC_KEYCODE_POWER_ON_FUNCTION",
+      "parentUuid": "d7f98974_35516b65",
+      "range": {
+        "startLine": 1811,
+        "startChar": 20,
+        "endLine": 1811,
+        "endChar": 39
+      },
+      "revId": "ef89bf343c203aa678c3bd93da5b36a2ed98068b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
