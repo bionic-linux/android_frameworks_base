@@ -36,9 +36,11 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.content.pm.ParceledListSlice;
 import android.net.ConnectivityManager;
+import android.net.ConnectivityManager.NetworkCallback;
 import android.net.DhcpInfo;
 import android.net.MacAddress;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkStack;
 import android.net.wifi.hotspot2.IProvisioningCallback;
 import android.net.wifi.hotspot2.OsuProvider;
@@ -2740,15 +2742,45 @@ public class WifiManager {
     /**
      * Return dynamic information about the current Wi-Fi connection, if any is active.
      * <p>
-     * In the connected state, access to the SSID and BSSID requires
-     * the same permissions as {@link #getScanResults}. If such access is not allowed,
-     * {@link WifiInfo#getSSID} will return {@link #UNKNOWN_SSID} and
-     * {@link WifiInfo#getBSSID} will return {@code "02:00:00:00:00:00"}.
-     * {@link WifiInfo#getPasspointFqdn()} will return null.
-     * {@link WifiInfo#getPasspointProviderFriendlyName()} will return null.
      *
      * @return the Wi-Fi information, contained in {@link WifiInfo}.
+     *
+     * @deprecated Starting with {@link Build.VERSION_CODES#S}, WifiInfo retrieval is moved to
+     * {@link ConnectivityManager} API surface. WifiInfo is attached in
+     * {@link NetworkCapabilities#getTransportInfo()} which is available via callback in
+     * {@link NetworkCallback#onCapabilitiesChanged(Network, NetworkCapabilities)} or on-demand from
+     * {@link ConnectivityManager#getNetworkCapabilities(Network)}.
+     *
+     *</p>
+     * Usage example:
+     * <pre>{@code
+     * final NetworkRequest request =
+     *      new NetworkRequest.Builder()
+     *      .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+     *      .build();
+     * final ConnectivityManager connectivityManager =
+     *      context.getSystemService(ConnectivityManager.class);
+     * final NetworkCallback networkCallback = new NetworkCallback() {
+     *      ...
+     *      {@literal @}Override
+     *      void onAvailable(Network network) {}
+     *
+     *      {@literal @}Override
+     *      void onCapabilitiesChanged(Network network, NetworkCapabilities networkCapabilities) {
+     *          WifiInfo wifiInfo = (WifiInfo) networkCapabilities.getTransportInfo();
+     *      }
+     *      // etc.
+     * };
+     * connectivityManager.requestNetwork(request, networkCallback); // For request
+     * connectivityManager.registerNetworkCallback(request, networkCallback); // For listen
+     * }</pre>
+     * <p>
+     * <b>Compatibility Note:</b> Apps can continue using this API, however newer features
+     * such as ability to mask out location sensitive data in WifiInfo will not be supported
+     * via this API.
+     * </p>
      */
+    @Deprecated
     public WifiInfo getConnectionInfo() {
         try {
             return mService.getConnectionInfo(mContext.getOpPackageName(),
