@@ -70,6 +70,30 @@
       "revId": "ef89bf343c203aa678c3bd93da5b36a2ed98068b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a0a181_1520ba9b",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1590836
+      },
+      "writtenOn": "2020-08-14T11:15:40Z",
+      "side": 1,
+      "message": "There is a similar method \nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/hdmi/DeviceSelectAction.java;l\u003d161 which uses both POWER and POWER_ON_FUNCTION. Should this method also use both?",
+      "parentUuid": "0f57d27d_8a62682d",
+      "range": {
+        "startLine": 1811,
+        "startChar": 20,
+        "endLine": 1811,
+        "endChar": 39
+      },
+      "revId": "ef89bf343c203aa678c3bd93da5b36a2ed98068b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
