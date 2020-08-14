@@ -33,6 +33,24 @@
       "revId": "8f13a5c10461f0d58ee0e836c735f4c21883e6b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19f652bc_e88a026b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381973
+      },
+      "writtenOn": "2020-08-14T10:42:08Z",
+      "side": 1,
+      "message": "Yes, this change also conflict in some rvc branches.\nI think we can merge the internal one first then merge this one until rvc drop.\n\nSince I always meet a weird internal server error and I can\u0027t upload a new patchset, let\u0027s move this to aosp/1398973, thanks!\n\n\nAn error occurred\nError 500: Internal server error\n\nEndpoint: /changes/*~*/edit/\nTrace Id: retry-on-failure-1597400434868-2bf1fabf",
+      "parentUuid": "8306b1d8_e21ba407",
+      "revId": "8f13a5c10461f0d58ee0e836c735f4c21883e6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
