@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70166170_f5b591e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2020-08-14T18:42:45Z",
+      "side": 1,
+      "message": "Why is this change necessary?\nIt\u0027s not included in the original AOSP code.",
+      "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
