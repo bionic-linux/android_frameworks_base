@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7db8c907_728ef38c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1506910
+      },
+      "writtenOn": "2020-08-15T02:11:47Z",
+      "side": 1,
+      "message": "\u003e Patch Set 1:\n\u003e \n\u003e Hi all, sincerely thanks for your contribution, we have an internal solution under reviewing.\n\nWhat was the commit that fixed that???\n\nThey obvious problem with this file is that it is non standard ProPhoto RGB. While XYZ for red, green and blue in icc profile are correct, the white point is not correct, i.e. is not D50! Compare with https://en.wikipedia.org/wiki/ProPhoto_RGB_color_space#ProPhoto_RGB_(ROMM_RGB)_Encoding_Primaries this exiftool -v output:\n\n| 1)  RedMatrixColumn \u003d 0.79767 0.28804 0\n| 2)  GreenMatrixColumn \u003d 0.13519 0.71188 0\n| 3)  BlueMatrixColumn \u003d 0.03134 9e-05 0.82491\n| 7)  MediaWhitePoint \u003d 0.9642 1 0.82491\n\nSo whatever fix you applied (again what it was?), it is incorrect IMHO.\nSomething of those maybe:\nhttps://android.googlesource.com/platform/frameworks/base/+log/refs/heads/master/packages/SystemUI/src/com/android/systemui/glwallpaper/ImageProcessHelper.java",
+      "revId": "2b77c95e6e90e7467a3195a08492ae6b446a5418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
