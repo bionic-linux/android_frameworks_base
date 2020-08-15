@@ -16,6 +16,23 @@
       "revId": "2b77c95e6e90e7467a3195a08492ae6b446a5418",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc5e1c02_ac4565d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1506910
+      },
+      "writtenOn": "2020-08-15T02:21:06Z",
+      "side": 1,
+      "message": "P.S. Also Google/Skia/E3CADAB7BD3DE5E3436874D2A9DEE126 is just how Skia anon. color spaces and this has nothing to do with actual colorspac, see https://skia.googlesource.com/skia/+/7a808d618e90e216cf4fa6369f658350319deb02 and https://bugs.chromium.org/p/skia/issues/detail?id\u003d6720 skia bug. What we can say though is that it is non standard.",
+      "revId": "2b77c95e6e90e7467a3195a08492ae6b446a5418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
