@@ -33,6 +33,23 @@
       "revId": "2b77c95e6e90e7467a3195a08492ae6b446a5418",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38333d11_ea4c266b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1506910
+      },
+      "writtenOn": "2020-08-15T02:47:54Z",
+      "side": 1,
+      "message": "Laso the file has 3 TRC, tone reproduction curves, it can be it, please open a bug on skia See https://github.com/google/skia/search?q\u003dTRC\u0026type\u003d",
+      "revId": "2b77c95e6e90e7467a3195a08492ae6b446a5418",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
