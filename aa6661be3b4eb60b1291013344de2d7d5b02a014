@@ -164,6 +164,30 @@
       "revId": "aa6661be3b4eb60b1291013344de2d7d5b02a014",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554e6e9a_db9699f6",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-08-17T17:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4baccb5_3f86cf95",
+      "range": {
+        "startLine": 367,
+        "startChar": 54,
+        "endLine": 367,
+        "endChar": 62
+      },
+      "revId": "aa6661be3b4eb60b1291013344de2d7d5b02a014",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
