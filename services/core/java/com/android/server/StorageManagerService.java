@@ -2497,7 +2497,7 @@ class StorageManagerService extends IStorageManager.Stub
         return 0;
     }
 
-    /** Set the password for encrypting the master key.
+    /** Set the password for encrypting the primary key.
      *  @param type One of the CRYPTO_TYPE_XXX consts defined in StorageManager.
      *  @param password The password to set.
      */
@@ -2561,7 +2561,7 @@ class StorageManagerService extends IStorageManager.Stub
     }
 
     /**
-     * Get the type of encryption used to encrypt the master key.
+     * Get the type of encryption used to encrypt the primary key.
      * @return The type, one of the CRYPT_TYPE_XXX consts from StorageManager.
      */
     @Override
@@ -2784,7 +2784,7 @@ class StorageManagerService extends IStorageManager.Stub
      * Clear disk encryption key bound to the associated token / secret pair. Removing the user
      * binding of the Disk encryption key is done in two phases: first, this call will retrieve
      * the disk encryption key using the provided token / secret pair and store it by
-     * encrypting it with a keymaster key not bound to the user, then fixateNewestUserKeyAuth
+     * encrypting it with a keyprimary key not bound to the user, then fixateNewestUserKeyAuth
      * is called to delete all other bindings of the disk encryption key.
      */
     @Override
