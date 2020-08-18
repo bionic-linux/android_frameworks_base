@@ -94,6 +94,30 @@
       "revId": "ef89bf343c203aa678c3bd93da5b36a2ed98068b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe29408_5d6dbe26",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1811,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-08-18T15:04:29Z",
+      "side": 1,
+      "message": "Resolving. POWER_ON_FUNCTION is okay here.",
+      "parentUuid": "12a0a181_1520ba9b",
+      "range": {
+        "startLine": 1811,
+        "startChar": 20,
+        "endLine": 1811,
+        "endChar": 39
+      },
+      "revId": "ef89bf343c203aa678c3bd93da5b36a2ed98068b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
