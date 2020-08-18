@@ -367,6 +367,7 @@ message Atom {
         NetworkStackQuirkReported network_stack_quirk_reported = 293 [(log_from_module) = "network_stack"];
         KeystoreKeyEventReported keystore_key_event_reported = 302;
         NetworkTetheringReported  network_tethering_reported = 303 [(log_from_module) =  "network_tethering"];
+        TlsHandshake tls_handshake = 304;
     }
 
     // Pulled events will start at field 10000.
@@ -7903,6 +7904,62 @@ message SupportedRadioAccessFamily {
     // A bitmask of supported radio technologies.
     // See android.telephony.TelephonyManager.NetworkTypeBitMask.
     optional int64 network_type_bitmask = 1;
+}
+
+/**
+  * Tracks TLS handskae success/failure ratio.
+  */
+message TlsHandshake {
+
+    enum Protocol {
+        UNKNOWN_PROTO = 0;
+        SSLv3 = 1;
+        TLSv1 = 2;
+        TLSv1_1 = 3;
+        TLSv1_2 = 4;
+        TLSv1_3 = 5;
+    }
+
+    enum CipherSuite {
+        UNKNOWN_CIPHER_SUITE = 0;
+        TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA = 1;
+        TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA = 2;
+        TLS_RSA_WITH_AES_256_CBC_SHA = 3;
+        TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA = 4;
+        TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA = 5;
+        TLS_RSA_WITH_AES_128_CBC_SHA = 6;
+        SSL_RSA_WITH_3DES_EDE_CBC_SHA = 7;
+
+        // TLSv1.2 cipher suites
+        TLS_RSA_WITH_AES_128_GCM_SHA256 = 8;
+        TLS_RSA_WITH_AES_256_GCM_SHA384 = 9;
+        TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 = 10;
+        TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 = 11;
+        TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 = 12;
+        TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 = 13;
+        TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 = 14;
+        TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 = 15;
+
+        // Pre-Shared Key (PSK) cipher suites
+        TLS_PSK_WITH_AES_128_CBC_SHA = 16;
+        TLS_PSK_WITH_AES_256_CBC_SHA = 17;
+        TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA = 18;
+        TLS_ECDHE_PSK_WITH_AES_256_CBC_SHA = 19;
+        TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305_SHA256 = 20;
+
+        // TLS 1.3 cipher suites
+        TLS_AES_128_GCM_SHA256 = 21;
+        TLS_AES_256_GCM_SHA384 = 22;
+        TLS_CHACHA20_POLY1305_SHA256 = 23;
+    }
+
+    optional bool success = 1;
+
+    optional Protocol protocol = 2;
+
+    optional CipherSuite cipher_suite = 3;
+
+    optional int64 handshake_duration_ms = 4;
 }
 
 /**
