@@ -157,6 +157,24 @@
       "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f8b378_78eb1da8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-08-19T09:44:42Z",
+      "side": 1,
+      "message": "Thanks Jiyong! Here\u0027s the cherry picks:\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1404528/\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1404527/\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1404529/\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1404530/\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1404531/",
+      "parentUuid": "6663eacc_1e85e75d",
+      "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
