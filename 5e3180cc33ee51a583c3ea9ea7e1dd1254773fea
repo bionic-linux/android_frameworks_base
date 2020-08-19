@@ -139,6 +139,24 @@
       "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6663eacc_1e85e75d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-08-19T09:16:35Z",
+      "side": 1,
+      "message": "This is due to matalava being old. There are several changes that are missing in the android10-gsi branch. Cherry-picking the following changes fixes the problem.\n\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1123518/2\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1123977/3\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1123519/4\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1120992/5\nhttps://android-review.googlesource.com/c/platform/tools/metalava/+/1041188/",
+      "parentUuid": "54387d44_5c4c4ad2",
+      "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
