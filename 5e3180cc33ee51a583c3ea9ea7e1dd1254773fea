@@ -104,6 +104,41 @@
       "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54387d44_5c4c4ad2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-08-19T08:22:57Z",
+      "side": 1,
+      "message": "+jiyong to take a look at the error when generating the stub class",
+      "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8cb43d9_7359dbe5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-08-19T08:22:57Z",
+      "side": 1,
+      "message": "But why would it be a problem that the build system generates the stub class with CellIdentityNr(android.hardware.radio.V1_4.CellIdentityNr cid)?",
+      "parentUuid": "44da2ec2_24b2a5e4",
+      "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
