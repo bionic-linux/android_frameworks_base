@@ -514,8 +514,8 @@ public final class VcnGatewayConnectionConfig {
          *     retry a session initiation. At least one, but no more than 10 retry intervals must be
          *     provided, with the last (repeating) retry interval at least 15 minutes between
          *     retries.
-         * @return this {@link Builder} instance, for chaining
-         * @see VcnManager
+         * @return this {@link Builder} instance, for chaining.
+         * @see VcnManager for additional discussion on fail-safe mode
          */
         @NonNull
         public Builder setRetryInterval(@NonNull long[] retryIntervalsMs) {
