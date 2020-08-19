@@ -501,15 +501,15 @@ public final class VcnGatewayConnectionConfig {
          * the system enters a power saving mode, the retry may not occur until the device leaves
          * the specified power saving mode.
          *
-         * <p>Each tunnel will retry according to the retry intervals configured, but if safe mode
-         * is enabled, all tunnels will be disabled.
+         * <p>Each tunnel will retry according to the retry intervals configured, but if fail-safe
+         * mode is triggered, all tunnels will be disabled.
          *
          * @param retryIntervalsMs the millisecond intervals after which the VCN will attempt to
          *     retry a session initiation. At least one, but no more than 10 retry intervals must be
          *     provided, with the last (repeating) retry interval at least 15 minutes between
          *     retries.
          * @return this {@link Builder} instance, for chaining.
-         * @see VcnManager
+         * @see VcnManager for additional discussion on fail-safe mode
          */
         @NonNull
         public Builder setRetryInterval(@NonNull long[] retryIntervalsMs) {
