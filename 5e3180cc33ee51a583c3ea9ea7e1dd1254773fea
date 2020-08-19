@@ -68,6 +68,24 @@
       "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6b800b8_3b681291",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2020-08-19T04:31:36Z",
+      "side": 1,
+      "message": "Having a closer look, why would the added default constructor resolve the missing android.hardware.radio.V1_4.CellIdentityNr?",
+      "parentUuid": "8379be83_9b8868b2",
+      "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
