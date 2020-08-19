@@ -86,6 +86,24 @@
       "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44da2ec2_24b2a5e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137899
+      },
+      "writtenOn": "2020-08-19T06:27:51Z",
+      "side": 1,
+      "message": "Without default constructor, android build system generates a stub class with the constructor :\nCellIdentityNr(android.hardware.radio.V1_4.CellIdentityNr cid).\n\nWith default constructor, the build generates a stub with the default constructor instead of the one above.",
+      "parentUuid": "c6b800b8_3b681291",
+      "revId": "5e3180cc33ee51a583c3ea9ea7e1dd1254773fea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
