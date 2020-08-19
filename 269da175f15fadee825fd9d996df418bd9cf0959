@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf765a41_bb4c985a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2020-08-19T16:16:03Z",
+      "side": 1,
+      "message": "First draft of TlsHandshake atom for Westworld. Note that it contains fourth field with CipherSuite (in addition to success/failure, duration and protocol).",
+      "revId": "269da175f15fadee825fd9d996df418bd9cf0959",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
