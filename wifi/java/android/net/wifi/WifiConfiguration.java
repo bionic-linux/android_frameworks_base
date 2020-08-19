@@ -28,7 +28,6 @@ import android.net.NetworkSpecifier;
 import android.net.ProxyInfo;
 import android.net.StaticIpConfiguration;
 import android.net.Uri;
-import android.net.util.MacAddressUtils;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -38,6 +37,8 @@ import android.text.TextUtils;
 import android.util.BackupUtils;
 import android.util.Log;
 import android.util.TimeUtils;
+
+import com.android.net.module.util.MacAddressUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
