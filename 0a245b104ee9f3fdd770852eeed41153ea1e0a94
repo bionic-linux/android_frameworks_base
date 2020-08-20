@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15dc1345_98be1d8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-08-20T10:37:06Z",
+      "side": 1,
+      "message": "I\u0027m not the right reviewer, but LGTM with exception of one comment below.",
+      "revId": "0a245b104ee9f3fdd770852eeed41153ea1e0a94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69f93d0f_dc407083",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2787,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-08-20T10:37:06Z",
+      "side": 1,
+      "message": "this replacement does not make sense. Maybe \u0027keyowner\u0027 or \u0027keyholder\u0027?",
+      "range": {
+        "startLine": 2787,
+        "startChar": 28,
+        "endLine": 2787,
+        "endChar": 38
+      },
+      "revId": "0a245b104ee9f3fdd770852eeed41153ea1e0a94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
