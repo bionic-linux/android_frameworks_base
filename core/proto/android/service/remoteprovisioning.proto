@@ -1,0 +1,57 @@
+syntax = "proto2";
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "android.security.provisioner";
+
+message DeviceInfo { 
+  // device type or certificate type
+  enum DeviceType {
+    DEVICE_TYPE_UNSPECIFIED = 0;
+    ANDROID_DEVICE = 1;
+  }
+  optional DeviceType device_type = 1;
+
+  // brand, device, product could be derived from fingerprint
+  // go/android-build-fingerprint
+  optional string build_fingerprint = 2;
+  optional string brand = 3;
+  optional string device = 4;
+  optional string product = 5;
+  
+  // TODO: fields needed for non-Android devices
+}
+
+service ProvisioningService {
+    rpc GetGeek(google.protobuf.Empty) returns (GetGeekResponse) {}
+
+    rpc SignCertificate(SignCertificateRequest) returns (SignCertificateResponse) {}
+}
+
+message GetGeekResponse {
+  optional bytes geek_chain = 1;
+  // This timestamp should be included in CSR to detect replay attacks
+  optional bytes challenge = 2;
+}
+
+message SignCertificateRequest {
+  optional DeviceInfo device_info = 1;
+  optional bytes challenge = 2;
+  // List of certificate requests for different type of key (attestation keys and widevine keys)
+  repeated CertificateRequest certificate_requests = 3;
+}
+
+message SignCertificateResponse {
+  repeated CertificateResponse certificates = 1;
+}
+
+message CertificateRequest {
+  // CBOR encoded request payload: go/remote-provisioning-hal#certificaterequest
+  optional bytes certificate_signing_request = 1;
+}
+
+message CertificateResponse {
+  optional bytes certificates = 1;
+}
+
