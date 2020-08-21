@@ -39,6 +39,7 @@ import android.security.keymaster.KeymasterCertificateChain;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keymaster.OperationResult;
 import android.security.keystore.IKeystoreService;
+import android.security.keystore.AttestationPoolStatus;
 import android.security.keystore.KeyExpiredException;
 import android.security.keystore.KeyNotYetValidException;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
@@ -60,6 +61,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import javax.security.cert.X509Certificate;
 
 import sun.security.util.ObjectIdentifier;
 import sun.security.x509.AlgorithmId;
@@ -1192,6 +1195,49 @@ public class KeyStore {
         } catch (RemoteException e) {
             Log.w(TAG, "Cannot connect to keystore", e);
         }
+    }
+
+    // Remote provisioning support
+    @UnsupportedAppUsage
+    public void setUnsignedPoolCount(int count) {
+        /*
+        try {
+            mBinder.setUnsignedPoolCount(count);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Cannot connect to keystore", e);
+        }*/
+    }
+
+    @UnsupportedAppUsage
+    public byte[] generateCsr(int numCerts, byte[] geekChain, byte[] challenge, byte[] payload) {
+        /*
+        try {
+            mBinder.generateCsr(numCerts, geekChain, challenge, payload);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Cannot connect to keystore", e);
+        }*/
+        return null;
+    }
+
+    @UnsupportedAppUsage
+    public void provisionCertChain(X509Certificate[] certificates) {
+        /*
+        try {
+            mBinder.provisionCertChain(certificates);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Cannot connect to keystore", e);
+        }*/
+    }
+
+    @UnsupportedAppUsage
+    public AttestationPoolStatus getPoolStatus(Date date) {
+        /*
+        try {
+            mBinder.getPoolStatus(date);
+        } catch (RemoteException e) {
+            Log.w(TAG, "Cannot connect to keystore", e);
+        }*/
+        return null;
     }
 
     // Keep in sync with confirmationui/1.0/types.hal.

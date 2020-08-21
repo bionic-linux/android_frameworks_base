@@ -903,6 +903,11 @@ public final class SystemServer {
         traceBeginAndSlog("GpuService");
         mSystemServiceManager.startService(GpuService.class);
         traceEnd();
+
+        // Service for attestation remote provisioning
+        traceBeginAndSlog("StartRemoteProvisioningService");
+        mSystemServiceManager.startService(RemoteProvisioningService.class);
+        traceEnd();
     }
 
     /**

@@ -265,6 +265,10 @@ BroadcastBehavior: android.telephony.euicc.EuiccManager#ACTION_NOTIFY_CARRIER_SE
     
 
 
+BuilderSetStyle: android.security.identity.PersonalizationData.Builder#putEntry(String, String, java.util.Collection<android.security.identity.AccessControlProfileId>, byte[]):
+    Builder methods names should use setFoo() / addFoo() / clearFoo() style: method android.security.identity.PersonalizationData.Builder.putEntry(String,String,java.util.Collection<android.security.identity.AccessControlProfileId>,byte[])
+
+
 CompileTimeConstant: android.icu.util.JapaneseCalendar#REIWA:
     
 
@@ -485,12 +489,34 @@ HiddenSuperclass: android.util.StatsLog:
     
 
 
+IntentBuilderName: android.net.VpnManager#provisionVpnProfile(android.net.PlatformVpnProfile):
+    Methods creating an Intent should be named `create<Foo>Intent()`, was `provisionVpnProfile`
+
+
+MissingGetterMatchingBuilder: android.net.Ikev2VpnProfile.Builder#setAuthDigitalSignature(java.security.cert.X509Certificate, java.security.PrivateKey, java.security.cert.X509Certificate):
+    android.net.Ikev2VpnProfile does not declare a `getAuthDigitalSignature()` method matching method android.net.Ikev2VpnProfile.Builder.setAuthDigitalSignature(java.security.cert.X509Certificate,java.security.PrivateKey,java.security.cert.X509Certificate)
+MissingGetterMatchingBuilder: android.net.Ikev2VpnProfile.Builder#setAuthPsk(byte[]):
+    android.net.Ikev2VpnProfile does not declare a `getAuthPsk()` method matching method android.net.Ikev2VpnProfile.Builder.setAuthPsk(byte[])
+MissingGetterMatchingBuilder: android.net.Ikev2VpnProfile.Builder#setAuthUsernamePassword(String, String, java.security.cert.X509Certificate):
+    android.net.Ikev2VpnProfile does not declare a `getAuthUsernamePassword()` method matching method android.net.Ikev2VpnProfile.Builder.setAuthUsernamePassword(String,String,java.security.cert.X509Certificate)
+MissingGetterMatchingBuilder: android.net.Ikev2VpnProfile.Builder#setProxy(android.net.ProxyInfo):
+    android.net.Ikev2VpnProfile does not declare a `getProxy()` method matching method android.net.Ikev2VpnProfile.Builder.setProxy(android.net.ProxyInfo)
+MissingGetterMatchingBuilder: android.security.identity.AccessControlProfile.Builder#setReaderCertificate(java.security.cert.X509Certificate):
+    android.security.identity.AccessControlProfile does not declare a `getReaderCertificate()` method matching method android.security.identity.AccessControlProfile.Builder.setReaderCertificate(java.security.cert.X509Certificate)
+MissingGetterMatchingBuilder: android.security.identity.AccessControlProfile.Builder#setUserAuthenticationRequired(boolean):
+    android.security.identity.AccessControlProfile does not declare a `isUserAuthenticationRequired()` method matching method android.security.identity.AccessControlProfile.Builder.setUserAuthenticationRequired(boolean)
+MissingGetterMatchingBuilder: android.security.identity.AccessControlProfile.Builder#setUserAuthenticationTimeout(long):
+    android.security.identity.AccessControlProfile does not declare a `getUserAuthenticationTimeout()` method matching method android.security.identity.AccessControlProfile.Builder.setUserAuthenticationTimeout(long)
+MissingGetterMatchingBuilder: android.security.identity.PersonalizationData.Builder#addAccessControlProfile(android.security.identity.AccessControlProfile):
+    android.security.identity.PersonalizationData does not declare a `getAccessControlProfiles()` method matching method android.security.identity.PersonalizationData.Builder.addAccessControlProfile(android.security.identity.AccessControlProfile)
+
+
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#CHORASMIAN:
-    Missing nullability on field `CHORASMIAN` in class `class android.icu.lang.UCharacter.UnicodeBlock`
+    
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#CJK_UNIFIED_IDEOGRAPHS_EXTENSION_G:
-    Missing nullability on field `CJK_UNIFIED_IDEOGRAPHS_EXTENSION_G` in class `class android.icu.lang.UCharacter.UnicodeBlock`
+    
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#DIVES_AKURU:
-    Missing nullability on field `DIVES_AKURU` in class `class android.icu.lang.UCharacter.UnicodeBlock`
+    
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#EGYPTIAN_HIEROGLYPH_FORMAT_CONTROLS:
     
 MissingNullability: android.icu.lang.UCharacter.UnicodeBlock#ELYMAIC:
@@ -536,10 +562,29 @@ MissingNullability: android.icu.util.VersionInfo#UNICODE_12_0:
 MissingNullability: android.icu.util.VersionInfo#UNICODE_12_1:
     
 MissingNullability: android.icu.util.VersionInfo#UNICODE_13_0:
-    Missing nullability on field `UNICODE_13_0` in class `class android.icu.util.VersionInfo`
     
+MissingNullability: android.security.keystore.AttestationPoolStatus#CREATOR:
+    Missing nullability on field `CREATOR` in class `class android.security.keystore.AttestationPoolStatus`
+MissingNullability: android.security.keystore.AttestationPoolStatus#readFromParcel(android.os.Parcel) parameter #0:
+    Missing nullability on parameter `_aidl_parcel` in method `readFromParcel`
+MissingNullability: android.security.keystore.AttestationPoolStatus#writeToParcel(android.os.Parcel, int) parameter #0:
+    Missing nullability on parameter `_aidl_parcel` in method `writeToParcel`
 MissingNullability: java.time.chrono.JapaneseEra#REIWA:
-    Missing nullability on field `REIWA` in class `class java.time.chrono.JapaneseEra`
+    
+
+
+MutableBareField: android.security.keystore.AttestationPoolStatus#expiring:
+    Bare field expiring must be marked final, or moved behind accessors if mutable
+MutableBareField: android.security.keystore.AttestationPoolStatus#unassigned:
+    Bare field unassigned must be marked final, or moved behind accessors if mutable
+
+
+NotCloseable: android.util.CloseGuard:
+    Classes that release resources (close()) should implement AutoClosable and CloseGuard: class android.util.CloseGuard
+
+
+ParcelNotFinal: android.security.keystore.AttestationPoolStatus:
+    Parcelable classes must be final: android.security.keystore.AttestationPoolStatus is not final
 
 
 RequiresPermission: android.accounts.AccountManager#getAccountsByTypeAndFeatures(String, String[], android.accounts.AccountManagerCallback<android.accounts.Account[]>, android.os.Handler):
