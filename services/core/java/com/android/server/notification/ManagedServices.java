@@ -936,12 +936,34 @@ abstract public class ManagedServices {
         return componentsByUser;
     }
 
+    private void updateEnabledServicesForCurrentProfiles() {
+        mEnabledServicesForCurrentProfiles.clear();
+        mEnabledServicesPackageNames.clear();
+
+        IntArray userIds = mUserProfiles.getCurrentProfileIds();
+        final SparseArray<ArraySet<ComponentName>> approvedComponentsByUser =
+                getAllowedComponents(userIds);
+        for (int i = 0; i < userIds.size(); i++) {
+            final ArraySet<ComponentName> userComponents =
+                    approvedComponentsByUser.get(userIds.get(i));
+            if (null == userComponents) continue;
+
+            mEnabledServicesForCurrentProfiles.addAll(userComponents);
+
+            for (int j = 0; j < userComponents.size(); j++) {
+                final ComponentName component = userComponents.valueAt(j);
+                if (component != null) {
+                    mEnabledServicesPackageNames.add(component.getPackageName());
+                }
+            }
+        }
+    }
+
     @GuardedBy("mMutex")
     protected void populateComponentsToBind(SparseArray<Set<ComponentName>> componentsToBind,
             final IntArray activeUsers,
             SparseArray<ArraySet<ComponentName>> approvedComponentsByUser) {
-        mEnabledServicesForCurrentProfiles.clear();
-        mEnabledServicesPackageNames.clear();
+        boolean needToUpdateEnabledServicesForCurrentProfiles = false;
         final int nUserIds = activeUsers.size();
 
         for (int i = 0; i < nUserIds; ++i) {
@@ -958,12 +980,14 @@ abstract public class ManagedServices {
 
             componentsToBind.put(userId, add);
 
-            mEnabledServicesForCurrentProfiles.addAll(userComponents);
-
-            for (int j = 0; j < userComponents.size(); j++) {
-                final ComponentName component = userComponents.valueAt(j);
-                mEnabledServicesPackageNames.add(component.getPackageName());
+            if (!needToUpdateEnabledServicesForCurrentProfiles
+                    && mUserProfiles.isCurrentProfile(userId)) {
+                needToUpdateEnabledServicesForCurrentProfiles = true;
             }
+        }
+
+        if (needToUpdateEnabledServicesForCurrentProfiles) {
+            updateEnabledServicesForCurrentProfiles();
         }
     }
 
