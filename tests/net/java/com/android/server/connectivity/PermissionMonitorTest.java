@@ -56,9 +56,7 @@ import static org.mockito.Mockito.when;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageList;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManagerInternal;
 import android.content.pm.UserInfo;
 import android.net.INetd;
 import android.net.UidRange;
@@ -71,8 +69,6 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.android.server.LocalServices;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -80,7 +76,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -112,7 +107,6 @@ public class PermissionMonitorTest {
     @Mock private Context mContext;
     @Mock private PackageManager mPackageManager;
     @Mock private INetd mNetdService;
-    @Mock private PackageManagerInternal mMockPmi;
     @Mock private UserManager mUserManager;
     @Mock private PermissionMonitor.Dependencies mDeps;
 
@@ -131,13 +125,8 @@ public class PermissionMonitorTest {
 
         mPermissionMonitor = spy(new PermissionMonitor(mContext, mNetdService, mDeps));
 
-        LocalServices.removeServiceForTest(PackageManagerInternal.class);
-        LocalServices.addService(PackageManagerInternal.class, mMockPmi);
-        when(mMockPmi.getPackageList(any())).thenReturn(new PackageList(new ArrayList<String>(),
-                  /* observer */ null));
         when(mPackageManager.getInstalledPackages(anyInt())).thenReturn(/* empty app list */ null);
         mPermissionMonitor.startMonitoring();
-        verify(mMockPmi).getPackageList(mPermissionMonitor);
     }
 
     private boolean hasRestrictedNetworkPermission(String partition, int targetSdkVersion, int uid,
@@ -478,8 +467,9 @@ public class PermissionMonitorTest {
                         buildPackageInfo(/* SYSTEM */ false, MOCK_UID2, MOCK_USER1),
                         buildPackageInfo(/* SYSTEM */ false, VPN_UID, MOCK_USER1)
                 }));
-        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS))).thenReturn(
-                buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
+        when(mPackageManager.getPackageInfo(
+                eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS | MATCH_ANY_USER)))
+                .thenReturn(buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
         mPermissionMonitor.startMonitoring();
         // Every app on user 0 except MOCK_UID2 are under VPN.
         final Set<UidRange> vpnRange1 = new HashSet<>(Arrays.asList(new UidRange[] {
@@ -527,8 +517,9 @@ public class PermissionMonitorTest {
                         buildPackageInfo(true, SYSTEM_UID1, MOCK_USER1),
                         buildPackageInfo(false, VPN_UID, MOCK_USER1)
                 }));
-        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS))).thenReturn(
-                        buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
+        when(mPackageManager.getPackageInfo(
+                eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS | MATCH_ANY_USER)))
+                .thenReturn(buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
 
         mPermissionMonitor.startMonitoring();
         final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(MOCK_USER1));

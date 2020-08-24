@@ -34,7 +34,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.PackageManagerInternal;
 import android.content.pm.UserInfo;
 import android.net.INetd;
 import android.net.UidRange;
@@ -53,7 +52,6 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.IndentingPrintWriter;
-import com.android.server.LocalServices;
 import com.android.server.SystemConfig;
 
 import java.util.ArrayList;
@@ -72,7 +70,7 @@ import java.util.Set;
  *
  * @hide
  */
-public class PermissionMonitor implements PackageManagerInternal.PackageListObserver {
+public class PermissionMonitor {
     private static final String TAG = "PermissionMonitor";
     private static final boolean DBG = true;
     protected static final Boolean SYSTEM = Boolean.TRUE;
@@ -134,12 +132,6 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     public synchronized void startMonitoring() {
         log("Monitoring");
 
-        PackageManagerInternal pmi = LocalServices.getService(PackageManagerInternal.class);
-        if (pmi != null) {
-            pmi.getPackageList(this);
-        } else {
-            loge("failed to get the PackageManagerInternal service");
-        }
         List<PackageInfo> apps = mPackageManager.getInstalledPackages(GET_PERMISSIONS
                 | MATCH_ANY_USER);
         if (apps == null) {
@@ -328,7 +320,8 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             return currentPermission;
         }
         try {
-            final PackageInfo app = mPackageManager.getPackageInfo(name, GET_PERMISSIONS);
+            final PackageInfo app =
+                    mPackageManager.getPackageInfo(name, GET_PERMISSIONS | MATCH_ANY_USER);
             final boolean isNetwork = hasNetworkPermission(app);
             final boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
             if (isNetwork || hasRestrictedPermission) {
@@ -369,9 +362,8 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
      *
      * @hide
      */
-    @Override
     public synchronized void onPackageAdded(@NonNull final String packageName, final int uid) {
-        sendPackagePermissionsForUid(uid, getPermissionForUid(uid));
+        sendPackagePermissionsForUid(UserHandle.getAppId(uid), getPermissionForUid(uid));
 
         // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
         // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
@@ -406,9 +398,8 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
      *
      * @hide
      */
-    @Override
     public synchronized void onPackageRemoved(@NonNull final String packageName, final int uid) {
-        sendPackagePermissionsForUid(uid, getPermissionForUid(uid));
+        sendPackagePermissionsForUid(UserHandle.getAppId(uid), getPermissionForUid(uid));
 
         // If the newly-removed package falls within some VPN's uid range, update Netd with it.
         // This needs to happen before the mApps update below, since removeBypassingUids() depends
@@ -455,16 +446,15 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     }
 
     /**
-     * Called when a package is changed.
+     * Called when a package is replaced.
      *
-     * @param packageName The name of the changed package.
-     * @param uid The uid of the changed package.
+     * @param packageName The name of the replaced package.
+     * @param uid The uid of the replaced package.
      *
      * @hide
      */
-    @Override
-    public synchronized void onPackageChanged(@NonNull final String packageName, final int uid) {
-        sendPackagePermissionsForUid(uid, getPermissionForUid(uid));
+    public synchronized void onPackageReplaced(@NonNull final String packageName, final int uid) {
+        sendPackagePermissionsForUid(UserHandle.getAppId(uid), getPermissionForUid(uid));
     }
 
     private static int getNetdPermissionMask(String[] requestedPermissions,
