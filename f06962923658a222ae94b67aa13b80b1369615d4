@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2a98cdc_ad211469",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-08-25T15:26:46Z",
+      "side": 1,
+      "message": "this problem was already fixed on internal master and will be open sourced soon with next Android release",
+      "revId": "f06962923658a222ae94b67aa13b80b1369615d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
