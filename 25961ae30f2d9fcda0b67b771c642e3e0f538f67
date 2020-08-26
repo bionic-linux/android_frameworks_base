@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d091e3c_e49279f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-08-26T17:18:58Z",
+      "side": 1,
+      "message": "Can Wale take a look?\n\nThis is a cherry pick from ag/9206407 so that Lenono can pass their VTS. I\u0027ll ask TS team to cherry pick this to GSI after it\u0027s in.",
+      "revId": "25961ae30f2d9fcda0b67b771c642e3e0f538f67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
