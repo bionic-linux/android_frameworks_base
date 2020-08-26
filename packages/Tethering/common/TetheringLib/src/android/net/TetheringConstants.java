@@ -65,28 +65,24 @@ public final class TetheringConstants {
     /**
      * Extra used for communicating with the TetherService and TetherProvisioningActivity.
      * Contains the subId of current active cellular upstream.
-     * @hide
      */
     public static final String EXTRA_TETHER_SUBID = "android.net.extra.TETHER_SUBID";
 
     /**
      * Extra used for telling TetherProvisioningActivity the entitlement package name and class
      * name to start UI entitlement check.
-     * @hide
      */
     public static final String EXTRA_TETHER_UI_PROVISIONING_APP_NAME =
             "android.net.extra.TETHER_UI_PROVISIONING_APP_NAME";
 
     /**
      * Extra used for telling TetherService the intent action to start silent entitlement check.
-     * @hide
      */
     public static final String EXTRA_TETHER_SILENT_PROVISIONING_ACTION =
             "android.net.extra.TETHER_SILENT_PROVISIONING_ACTION";
 
     /**
      * Extra used for TetherService to receive the response of provisioning check.
-     * @hide
      */
     public static final String EXTRA_TETHER_PROVISIONING_RESPONSE =
             "android.net.extra.TETHER_PROVISIONING_RESPONSE";

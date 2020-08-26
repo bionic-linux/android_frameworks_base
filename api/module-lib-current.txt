@@ -17,6 +17,10 @@ package android.net {
     field public static final String EXTRA_REM_TETHER_TYPE = "extraRemTetherType";
     field public static final String EXTRA_RUN_PROVISION = "extraRunProvision";
     field public static final String EXTRA_SET_ALARM = "extraSetAlarm";
+    field public static final String EXTRA_TETHER_PROVISIONING_RESPONSE = "android.net.extra.TETHER_PROVISIONING_RESPONSE";
+    field public static final String EXTRA_TETHER_SILENT_PROVISIONING_ACTION = "android.net.extra.TETHER_SILENT_PROVISIONING_ACTION";
+    field public static final String EXTRA_TETHER_SUBID = "android.net.extra.TETHER_SUBID";
+    field public static final String EXTRA_TETHER_UI_PROVISIONING_APP_NAME = "android.net.extra.TETHER_UI_PROVISIONING_APP_NAME";
   }
 
   public class TetheringManager {
