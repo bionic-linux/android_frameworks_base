@@ -128,7 +128,7 @@ public class HdmiCecMessageValidator {
         FixedLengthValidator oneByteValidator = new FixedLengthValidator(1);
         addValidationInfo(Constants.MESSAGE_CEC_VERSION, oneByteValidator, DEST_DIRECT);
         addValidationInfo(Constants.MESSAGE_SET_MENU_LANGUAGE,
-                new FixedLengthValidator(3), DEST_BROADCAST);
+                new AsciiValidator(3), DEST_BROADCAST);
 
         // TODO: Handle messages for the Deck Control.
 
@@ -148,8 +148,8 @@ public class HdmiCecMessageValidator {
                 maxLengthValidator, DEST_ALL | SRC_UNREGISTERED);
 
         // Messages for the OSD.
-        addValidationInfo(Constants.MESSAGE_SET_OSD_STRING, maxLengthValidator, DEST_DIRECT);
-        addValidationInfo(Constants.MESSAGE_SET_OSD_NAME, maxLengthValidator, DEST_DIRECT);
+        addValidationInfo(Constants.MESSAGE_SET_OSD_STRING, new AsciiValidator(1, 14), DEST_DIRECT);
+        addValidationInfo(Constants.MESSAGE_SET_OSD_NAME, new AsciiValidator(1, 14), DEST_DIRECT);
 
         // Messages for the Device Menu Control.
         addValidationInfo(Constants.MESSAGE_MENU_REQUEST, oneByteValidator, DEST_DIRECT);
@@ -357,6 +357,38 @@ public class HdmiCecMessageValidator {
                             || isWithinRange(params[0], 0x10, 0x17)
                             || isWithinRange(params[0], 0x1A, 0x1B)
                             || params[0] == 0x1F);
+        }
+    }
+
+    /**
+     * Check if the given parameters represents printable characters.
+     * A valid parameter should lie within the range description of ASCII defined in CEC 1.4
+     * Specification : Operand Descriptions (Section 17)
+     */
+    private class AsciiValidator implements ParameterValidator {
+        private final int mLength;
+
+        AsciiValidator(int length) {
+            mLength = length;
+        }
+
+        AsciiValidator(int minLength, int maxLength) {
+            mLength = minLength;
+        }
+
+        @Override
+        public int isValid(byte[] params) {
+            // If the length is longer than expected, we assume it's OK since the parameter can be
+            // extended in the future version.
+            if (params.length < mLength) {
+                return ERROR_PARAMETER_SHORT;
+            }
+            for (byte b : params) {
+                if (!isWithinRange(b, 0x20, 0x7E)) {
+                    return ERROR_PARAMETER;
+                }
+            }
+            return OK;
         }
     }
 }
