@@ -478,8 +478,9 @@ public class PermissionMonitorTest {
                         buildPackageInfo(/* SYSTEM */ false, MOCK_UID2, MOCK_USER1),
                         buildPackageInfo(/* SYSTEM */ false, VPN_UID, MOCK_USER1)
                 }));
-        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS))).thenReturn(
-                buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
+        when(mPackageManager.getPackageInfo(
+                eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS | MATCH_ANY_USER)))
+                .thenReturn(buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
         mPermissionMonitor.startMonitoring();
         // Every app on user 0 except MOCK_UID2 are under VPN.
         final Set<UidRange> vpnRange1 = new HashSet<>(Arrays.asList(new UidRange[] {
@@ -527,8 +528,9 @@ public class PermissionMonitorTest {
                         buildPackageInfo(true, SYSTEM_UID1, MOCK_USER1),
                         buildPackageInfo(false, VPN_UID, MOCK_USER1)
                 }));
-        when(mPackageManager.getPackageInfo(eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS))).thenReturn(
-                        buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
+        when(mPackageManager.getPackageInfo(
+                eq(MOCK_PACKAGE1), eq(GET_PERMISSIONS | MATCH_ANY_USER)))
+                .thenReturn(buildPackageInfo(false, MOCK_UID1, MOCK_USER1));
 
         mPermissionMonitor.startMonitoring();
         final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(MOCK_USER1));
@@ -615,19 +617,19 @@ public class PermissionMonitorTest {
                 new int[]{SYSTEM_UID2});
 
         // Update permission of MOCK_UID1, expect new permission show up.
-        mPermissionMonitor.sendPackagePermissionsForUid(MOCK_UID1,
+        mPermissionMonitor.sendPackagePermissionsForAppId(MOCK_UID1,
                 INetd.PERMISSION_INTERNET | INetd.PERMISSION_UPDATE_DEVICE_STATS);
         mNetdServiceMonitor.expectPermission(INetd.PERMISSION_INTERNET
                 | INetd.PERMISSION_UPDATE_DEVICE_STATS, new int[]{MOCK_UID1});
 
         // Change permissions of SYSTEM_UID2, expect new permission show up and old permission
         // revoked.
-        mPermissionMonitor.sendPackagePermissionsForUid(SYSTEM_UID2,
+        mPermissionMonitor.sendPackagePermissionsForAppId(SYSTEM_UID2,
                 INetd.PERMISSION_INTERNET);
         mNetdServiceMonitor.expectPermission(INetd.PERMISSION_INTERNET, new int[]{SYSTEM_UID2});
 
         // Revoke permission from SYSTEM_UID1, expect no permission stored.
-        mPermissionMonitor.sendPackagePermissionsForUid(SYSTEM_UID1, INetd.PERMISSION_NONE);
+        mPermissionMonitor.sendPackagePermissionsForAppId(SYSTEM_UID1, INetd.PERMISSION_NONE);
         mNetdServiceMonitor.expectPermission(INetd.PERMISSION_NONE, new int[]{SYSTEM_UID1});
     }
 
