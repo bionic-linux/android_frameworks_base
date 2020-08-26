@@ -2894,7 +2894,11 @@ public final class TvInputManagerService extends SystemService {
                     values.put(TvContract.WatchedPrograms.COLUMN_INTERNAL_SESSION_TOKEN,
                             sessionToken.toString());
 
-                    mContentResolver.insert(TvContract.WatchedPrograms.CONTENT_URI, values);
+                    try{
+                        mContentResolver.insert(TvContract.WatchedPrograms.CONTENT_URI, values);
+                    }catch(IllegalArgumentException ex){
+                        Slog.w(TAG, "error in insert db for MSG_LOG_WATCH_START" + ex);
+                    }
                     args.recycle();
                     break;
                 }
@@ -2909,7 +2913,11 @@ public final class TvInputManagerService extends SystemService {
                     values.put(TvContract.WatchedPrograms.COLUMN_INTERNAL_SESSION_TOKEN,
                             sessionToken.toString());
 
-                    mContentResolver.insert(TvContract.WatchedPrograms.CONTENT_URI, values);
+                    try{
+                        mContentResolver.insert(TvContract.WatchedPrograms.CONTENT_URI, values);
+                    }catch(IllegalArgumentException ex){
+                        Slog.w(TAG, "error in insert db for MSG_LOG_WATCH_END" + ex);
+                    }
                     args.recycle();
                     break;
                 }
