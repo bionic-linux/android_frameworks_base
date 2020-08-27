@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "732851f9_a65602e8",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "Do you want to remove it?",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 271,
+        "endChar": 5
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b19e0e_e941e0e1",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "Add final?",
+      "range": {
+        "startLine": 391,
+        "startChar": 12,
+        "endLine": 391,
+        "endChar": 15
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f39e70_0df22b8c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "Add final?",
+      "range": {
+        "startLine": 438,
+        "startChar": 8,
+        "endLine": 438,
+        "endChar": 11
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07306b7_00efa805",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "Since you have imported convertToIntArray, do you want to use convertToIntArray instead?",
+      "range": {
+        "startLine": 607,
+        "startChar": 58,
+        "endLine": 607,
+        "endChar": 68
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee804a6_31485bd9",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 609,
+        "startChar": 54,
+        "endLine": 609,
+        "endChar": 64
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d24fee9_a1e0bef0",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "Add final? Also the following.",
+      "range": {
+        "startLine": 653,
+        "startChar": 8,
+        "endLine": 653,
+        "endChar": 17
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb78cbc2_53b0db3c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "Good catch!",
+      "range": {
+        "startLine": 676,
+        "startChar": 20,
+        "endLine": 676,
+        "endChar": 26
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82911355_c089ff8f",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "nit: ArrayUtils could be removed since you have imported convertToIntArray. Also the following.",
+      "range": {
+        "startLine": 686,
+        "startChar": 24,
+        "endLine": 686,
+        "endChar": 34
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7dd238_d9c4389a",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-27T13:05:21Z",
+      "side": 1,
+      "message": "It seem like these code could move to setUp(), right? (Including line#531~533)",
+      "range": {
+        "startLine": 481,
+        "startChar": 8,
+        "endLine": 483,
+        "endChar": 76
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
