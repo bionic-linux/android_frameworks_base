@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33144a36_3427f775",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2020-08-27T17:48:43Z",
+      "side": 1,
+      "message": "Leave a link to where this is defined.",
+      "range": {
+        "startLine": 344,
+        "startChar": 18,
+        "endLine": 344,
+        "endChar": 39
+      },
+      "revId": "049db64e77c0b7339939a6da3add36cdb03db65e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
