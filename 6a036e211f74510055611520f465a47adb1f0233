@@ -16,6 +16,23 @@
       "revId": "6a036e211f74510055611520f465a47adb1f0233",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b63a88a_fc029593",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109308
+      },
+      "writtenOn": "2020-08-27T22:15:00Z",
+      "side": 1,
+      "message": "Thanks a lot. This should be a good patch as this was the fix to Samsung\u0027s original issue, and Lenovo  already verified that this is a good patch for debug images.\n\nIt\u0027d be very odd if it\u0027s somehow not good for release images",
+      "revId": "6a036e211f74510055611520f465a47adb1f0233",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
