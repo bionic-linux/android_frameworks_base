@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "822a304a_13108fea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "I will suggest to separate this to other commit to be clearer. And would you mind to give more content on the message to explain why it need to change from uid to app id?",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8e1ce8_3600cbf0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "General issue for me is that I do not have clear content why the UID is changed to appId. The message says correct but I cannot find why we need such a correction. And some uids are changed to appId but some not. what causes the difference?\n",
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "732851f9_a65602e8",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
@@ -25,6 +65,75 @@
     },
     {
       "key": {
+        "uuid": "c955d6ae_35fc2365",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "Optional/Nit?: Do you want to use the same doc as UserHandle to say \"app id (or base uid)\"",
+      "range": {
+        "startLine": 377,
+        "startChar": 24,
+        "endLine": 377,
+        "endChar": 41
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1545d54_09390204",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "do you like to add @AppIdInt?",
+      "range": {
+        "startLine": 382,
+        "startChar": 79,
+        "endLine": 382,
+        "endChar": 80
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4be0df_6b15d04c",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "do you want to also update the doc here since it\u0027s not UID now? maybe also the comment",
+      "range": {
+        "startLine": 385,
+        "startChar": 40,
+        "endLine": 385,
+        "endChar": 43
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8b19e0e_e941e0e1",
         "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
         "patchSetId": 2
@@ -41,6 +150,75 @@
         "startChar": 12,
         "endLine": 391,
         "endChar": 15
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63d6808_d07a0198",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "shouldn\u0027t it take uid?",
+      "range": {
+        "startLine": 400,
+        "startChar": 53,
+        "endLine": 400,
+        "endChar": 58
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8bf511_f1732490",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "Also update this to changeAppIds?",
+      "range": {
+        "startLine": 401,
+        "startChar": 35,
+        "endLine": 401,
+        "endChar": 46
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7e8e5e_43aa0bb4",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "also this?",
+      "range": {
+        "startLine": 403,
+        "startChar": 31,
+        "endLine": 403,
+        "endChar": 35
       },
       "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
@@ -160,6 +338,29 @@
       "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "827b551f_26cb3e4a",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-08-27T14:34:10Z",
+      "side": 1,
+      "message": "Maybe not for this commit. this should take uid or appId? If that is actually an appId, maybe we should also update the naming.",
+      "range": {
+        "startLine": 684,
+        "startChar": 22,
+        "endLine": 684,
+        "endChar": 46
+      },
+      "revId": "bd5a5463fc54f6db502051d9dd4b80cff1bec23c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     },
     {
       "key": {
