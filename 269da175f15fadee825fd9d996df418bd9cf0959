@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "4ac26820_649815f3",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 7910,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-08-27T10:27:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e29153da_29120342",
+      "range": {
+        "startLine": 7910,
+        "startChar": 15,
+        "endLine": 7910,
+        "endChar": 23
+      },
+      "revId": "269da175f15fadee825fd9d996df418bd9cf0959",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "373bc46f_0b43479f",
         "filename": "cmds/statsd/src/atoms.proto",
         "patchSetId": 1
@@ -53,6 +77,30 @@
       "writtenOn": "2020-08-19T18:17:54Z",
       "side": 1,
       "message": "Looks good so far!\n\nI think maybe one more field to track which \"platform\":  system (i.e. the Android platform itself), GMS (Google Play Services) and unbundled (i.e. the unbundled build).\n\nTODO(prb): 1) How to distinguish between GMS and unbundled and (2) can unbundled even log to statsd?",
+      "range": {
+        "startLine": 7912,
+        "startChar": 8,
+        "endLine": 7912,
+        "endChar": 20
+      },
+      "revId": "269da175f15fadee825fd9d996df418bd9cf0959",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e486d2_f45c527a",
+        "filename": "cmds/statsd/src/atoms.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 7912,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-08-27T10:27:04Z",
+      "side": 1,
+      "message": "I still think we need to add this, unless it\u0027s available by some other dimension in Westworld?",
+      "parentUuid": "373bc46f_0b43479f",
       "range": {
         "startLine": 7912,
         "startChar": 8,
