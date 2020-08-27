@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da230bd6_5be1d0da",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-08-27T22:10:34Z",
+      "side": 1,
+      "message": "This is a bit of an implementation detail; I\u0027d @hide this as it doesn\u0027t really need to be in the API surface.",
+      "range": {
+        "startLine": 1258,
+        "startChar": 8,
+        "endLine": 1268,
+        "endChar": 9
+      },
+      "revId": "5238146ca2d6f2e7048ef096f596b2eeec11d8ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
