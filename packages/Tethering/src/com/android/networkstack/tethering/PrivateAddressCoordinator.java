@@ -15,6 +15,7 @@
  */
 package com.android.networkstack.tethering;
 
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.TetheringManager.TETHERING_WIFI_P2P;
 
 import static java.util.Arrays.asList;
@@ -23,7 +24,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.IpPrefix;
 import android.net.LinkAddress;
-import android.net.LinkProperties;
 import android.net.Network;
 import android.net.ip.IpServer;
 import android.net.util.PrefixUtils;
@@ -92,14 +92,18 @@ public class PrivateAddressCoordinator {
      * Record a new upstream IpPrefix which may conflict with tethering downstreams.
      * The downstreams will be notified if a conflict is found.
      */
-    public void updateUpstreamPrefix(final Network network, final LinkProperties lp) {
-        final ArrayList<IpPrefix> ipv4Prefixes = getIpv4Prefixes(lp.getAllLinkAddresses());
+    public void updateUpstreamPrefix(final UpstreamNetworkState ns) {
+        final ArrayList<IpPrefix> ipv4Prefixes = getIpv4Prefixes(
+                ns.linkProperties.getAllLinkAddresses());
+        // Do not support VPN as upstream, so ignore it.
+        if (ns.networkCapabilities.hasTransport(TRANSPORT_VPN)) return;
+
         if (ipv4Prefixes.isEmpty()) {
-            removeUpstreamPrefix(network);
+            removeUpstreamPrefix(ns.network);
             return;
         }
 
-        mUpstreamPrefixMap.put(network, ipv4Prefixes);
+        mUpstreamPrefixMap.put(ns.network, ipv4Prefixes);
         handleMaybePrefixConflict(ipv4Prefixes);
     }
 
