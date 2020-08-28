@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57991452_e16dec9a",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-08-28T13:23:10Z",
+      "side": 1,
+      "message": "It\u0027s possible that a device responds with 0x06 (CEC 2.0) or above (Reserved in the 2.0 spec).\n\nIn this case the ATV device shouldn\u0027t respond with a \u003cFeature Abort\u003e message but it should assume the highest possible compatible version (i.e. 1.4).",
+      "range": {
+        "startLine": 358,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 5
+      },
+      "revId": "60893635478a1c8f1825cde5b27b6e733f14caff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
