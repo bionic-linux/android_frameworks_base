@@ -16,6 +16,7 @@
 
 package com.android.server;
 
+import static android.Manifest.permission.NETWORK_STACK;
 import static android.Manifest.permission.RECEIVE_DATA_ACTIVITY_CHANGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport.KEY_NETWORK_PROBES_ATTEMPTED_BITMASK;
@@ -1133,6 +1134,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 intentFilter,
                 null /* broadcastPermission */,
                 mHandler);
+
+        // Listen to lockdown VPN reset.
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(LockdownVpnTracker.ACTION_LOCKDOWN_RESET);
+        mContext.registerReceiverAsUser(
+                mIntentReceiver, UserHandle.ALL, intentFilter, NETWORK_STACK, mHandler);
 
         try {
             mNMS.registerObserver(mDataActivityObserver);
@@ -5221,6 +5228,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 final boolean isReplacing = intent.getBooleanExtra(
                         Intent.EXTRA_REPLACING, false);
                 onPackageRemoved(packageName, uid, isReplacing);
+            } else if (LockdownVpnTracker.ACTION_LOCKDOWN_RESET.equals(action)) {
+                synchronized (mVpns) {
+                    if (mLockdownTracker != null) mLockdownTracker.reset();
+                }
             }
         }
     };
