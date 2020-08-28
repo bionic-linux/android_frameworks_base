@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11355abd_b3b41b6f",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1570596
+      },
+      "writtenOn": "2020-08-28T16:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d0eacb_2ad8a025",
+      "range": {
+        "startLine": 634,
+        "startChar": 11,
+        "endLine": 642,
+        "endChar": 77
+      },
+      "revId": "5238146ca2d6f2e7048ef096f596b2eeec11d8ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da230bd6_5be1d0da",
         "filename": "core/java/android/provider/CallLog.java",
         "patchSetId": 28
@@ -45,6 +69,30 @@
       "revId": "5238146ca2d6f2e7048ef096f596b2eeec11d8ae",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8185c85b_dc2d7484",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1570596
+      },
+      "writtenOn": "2020-08-28T16:46:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da230bd6_5be1d0da",
+      "range": {
+        "startLine": 1258,
+        "startChar": 8,
+        "endLine": 1268,
+        "endChar": 9
+      },
+      "revId": "5238146ca2d6f2e7048ef096f596b2eeec11d8ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
