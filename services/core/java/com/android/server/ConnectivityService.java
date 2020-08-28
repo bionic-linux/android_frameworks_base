@@ -16,6 +16,7 @@
 
 package com.android.server;
 
+import static android.Manifest.permission.NETWORK_STACK;
 import static android.Manifest.permission.RECEIVE_DATA_ACTIVITY_CHANGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport.KEY_NETWORK_PROBES_ATTEMPTED_BITMASK;
@@ -1133,6 +1134,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 intentFilter,
                 null /* broadcastPermission */,
                 mHandler);
+
+        // Listen to lockdown VPN reset.
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(LockdownVpnTracker.ACTION_LOCKDOWN_RESET);
+        mContext.registerReceiver(mLockdownVpnResetReceiver, intentFilter, NETWORK_STACK, mHandler);
 
         try {
             mNMS.registerObserver(mDataActivityObserver);
@@ -5232,6 +5238,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // unlocked keystore.
             updateLockdownVpn();
             mContext.unregisterReceiver(this);
+        }
+    };
+
+    private BroadcastReceiver mLockdownVpnResetReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (LockdownVpnTracker.ACTION_LOCKDOWN_RESET.equals(action)) {
+                synchronized (mVpns) {
+                    if (mLockdownTracker != null) mLockdownTracker.reset();
+                }
+            } else {
+                Log.wtf(TAG, "received unexpected intent: " + action);
+            }
         }
     };
 
