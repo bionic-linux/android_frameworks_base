@@ -45,6 +45,54 @@
       "revId": "049db64e77c0b7339939a6da3add36cdb03db65e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620b0035_ee2495ca",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1590836
+      },
+      "writtenOn": "2020-08-31T10:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33144a36_3427f775",
+      "range": {
+        "startLine": 344,
+        "startChar": 18,
+        "endLine": 344,
+        "endChar": 39
+      },
+      "revId": "049db64e77c0b7339939a6da3add36cdb03db65e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98d828b3_0b00cac4",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecMessageValidator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1590836
+      },
+      "writtenOn": "2020-08-31T10:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4426c3a0_eadcd8a3",
+      "range": {
+        "startLine": 344,
+        "startChar": 18,
+        "endLine": 344,
+        "endChar": 39
+      },
+      "revId": "049db64e77c0b7339939a6da3add36cdb03db65e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
