@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "156b0a37_6525b2b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-08-31T08:21:48Z",
+      "side": 1,
+      "message": "- Can you reproduce this issue locally? I think it\u0027s better to describe how to reproduce this issue on the commit message or bugnizer.\n- Just out of curiosity, why patchset 1 doesn\u0027t work.",
+      "revId": "50b8c1cb1cce818d36dfcbcf893e3c7e8f18931f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
