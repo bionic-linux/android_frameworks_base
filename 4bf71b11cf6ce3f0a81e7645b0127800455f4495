@@ -22,6 +22,30 @@
       "revId": "4bf71b11cf6ce3f0a81e7645b0127800455f4495",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef716f8_acadb41f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1508966
+      },
+      "writtenOn": "2020-09-01T04:28:44Z",
+      "side": 1,
+      "message": "Updated bugId.",
+      "parentUuid": "d9bc1cc0_131d6f39",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "4bf71b11cf6ce3f0a81e7645b0127800455f4495",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
