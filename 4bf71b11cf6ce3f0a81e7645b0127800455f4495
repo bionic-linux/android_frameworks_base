@@ -46,6 +46,30 @@
       "revId": "4bf71b11cf6ce3f0a81e7645b0127800455f4495",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e28f0a_c9f36af7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1131623
+      },
+      "writtenOn": "2020-09-01T05:25:06Z",
+      "side": 1,
+      "message": "I cannot access this bug. Can you please ask folks in the bug to provide accessibility of the bug to me?",
+      "parentUuid": "eef716f8_acadb41f",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "4bf71b11cf6ce3f0a81e7645b0127800455f4495",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
