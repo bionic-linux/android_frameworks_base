@@ -16,6 +16,24 @@
       "revId": "50b8c1cb1cce818d36dfcbcf893e3c7e8f18931f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d6c75df_4dbf2c6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-01T08:37:01Z",
+      "side": 1,
+      "message": "It\u0027s in the #1 comment of the linked issue. But it seems we cannot reproduce locally. Maybe the timing of binder call is different in pixel devices.\n\npatch 1 does not work because intent did not fill EXTRA_USER_HANDLE. Hence it always got filtered by mIntentReceiver.\nThanks for asking, revert to patch 1 with fix.",
+      "parentUuid": "156b0a37_6525b2b8",
+      "revId": "50b8c1cb1cce818d36dfcbcf893e3c7e8f18931f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
