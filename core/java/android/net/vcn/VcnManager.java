@@ -22,7 +22,31 @@ import android.annotation.SystemService;
 import android.content.Context;
 
 /**
- * VcnManager publishes APIs for applications to configure and manage Virtual Carrier Networks
+ * VcnManager publishes APIs for carrier apps to manage Virtual Carrier Networks (VCNs)
+ *
+ * <p>A VCN creates a virtualization layer to allow MVNOs to aggregate heterogeneous physical
+ * network technologies, unifying them as a single carrier network. This enables infrastructure
+ * flexibility on the part of MVNOs without impacting user connectivity, abstracting the physical
+ * network technologies as an implementation detail of their public network. This potentially
+ * enables alternative cost and business models for MVNOs.
+ *
+ * <p>Each VCN virtualizes an Carrier's network by building tunnels to a carrier's core network over
+ * carrier-managed physical links and supports a IP mobility layer to ensure seamless transitions
+ * between the underlying networks. Each VCN is configured based on a Subscription Group (see {@link
+ * android.telephony.SubscriptionManager}), and aggregates all networks that are brought up based on
+ * a profile or suggestion in the specified Subscription Group.
+ *
+ * <p>The VCN can be configured to expose one or more {@link android.net.Network}(s), each with
+ * different capabilities, allowing for APN virtualization.
+ *
+ * <p>Upon failure, the VCN will attempt to retry a number of times. If a tunnel fails to connect
+ * after a system-determined timeout, the VCN Safe Mode (see below) will be entered.
+ *
+ * <p>The VCN Safe Mode ensures users (and carriers) have a fallback to restore system connectivity
+ * to update profiles, diagnose issues, contact support, or perform other remediation tasks. In Safe
+ * Mode, the system will allow underlying cellular networks to be used as default. Additionally,
+ * during Safe Mode, the VCN will continue to retry the connections, and will automatically exit
+ * Safe Mode if all active tunnels connect successfully.
  *
  * @hide
  */
