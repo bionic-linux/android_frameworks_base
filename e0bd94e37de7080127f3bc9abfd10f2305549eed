@@ -22,6 +22,30 @@
       "revId": "e0bd94e37de7080127f3bc9abfd10f2305549eed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f41490f_1d11ac20",
+        "filename": "apex/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-09-03T11:48:19Z",
+      "side": 0,
+      "message": "It\u0027s no longer needed, in https://r.android.com/1416192, I changed the semantics so that the more specific visibilities override the default visibility attr. You can still add the override if you want to override the defaults, though (does not apply here)",
+      "parentUuid": "ffe2e24d_754cf238",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 32
+      },
+      "revId": "e0bd94e37de7080127f3bc9abfd10f2305549eed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
