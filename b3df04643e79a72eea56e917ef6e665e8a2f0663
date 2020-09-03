@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5429a115_de23d388",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-09-03T15:48:02Z",
+      "side": 1,
+      "message": "Looking through the bug, the request is to add a new layout for czech qwertz.\n\nFrom wikipedia:\nIn internet poll in 2013 56% of Czech users used QWERTZ and 44% used QWERTY[3], but in 2020 57% of Czech users used QWERTY and 43% used QWERTZ[4].\n\nSo I suggest we keep the qwerty option and add a qwertz one",
+      "revId": "b3df04643e79a72eea56e917ef6e665e8a2f0663",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
