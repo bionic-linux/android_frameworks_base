@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da3b1f0_56271f6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-03T23:12:19Z",
+      "side": 1,
+      "message": "Couple small cleanups.",
+      "revId": "969cbc846b0d3d1a44614aec30882ea9e0d900f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4b29e9d_e7729736",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-03T23:12:19Z",
+      "side": 1,
+      "message": "rang for a short period of time.",
+      "range": {
+        "startLine": 662,
+        "startChar": 22,
+        "endLine": 662,
+        "endChar": 92
+      },
+      "revId": "969cbc846b0d3d1a44614aec30882ea9e0d900f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d580d5ca_5bb13560",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-03T23:12:19Z",
+      "side": 1,
+      "message": "This can be @hide as it\u0027s an internal implementation detail.",
+      "range": {
+        "startLine": 667,
+        "startChar": 8,
+        "endLine": 671,
+        "endChar": 62
+      },
+      "revId": "969cbc846b0d3d1a44614aec30882ea9e0d900f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645dea2f_67fe3534",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-03T23:12:19Z",
+      "side": 1,
+      "message": "a low ring volume",
+      "range": {
+        "startLine": 681,
+        "startChar": 33,
+        "endLine": 681,
+        "endChar": 98
+      },
+      "revId": "969cbc846b0d3d1a44614aec30882ea9e0d900f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3754abf6_3cd697f8",
+        "filename": "core/java/android/provider/CallLog.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-03T23:12:19Z",
+      "side": 1,
+      "message": "@hide this as it\u0027s internal implementation detail.",
+      "range": {
+        "startLine": 686,
+        "startChar": 8,
+        "endLine": 690,
+        "endChar": 52
+      },
+      "revId": "969cbc846b0d3d1a44614aec30882ea9e0d900f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
