@@ -46,6 +46,30 @@
       "revId": "e0bd94e37de7080127f3bc9abfd10f2305549eed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f271f97c_101e8cd5",
+        "filename": "apex/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-09-03T11:51:33Z",
+      "side": 0,
+      "message": "Got it. That\u0027s cool :)",
+      "parentUuid": "1f41490f_1d11ac20",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 32
+      },
+      "revId": "e0bd94e37de7080127f3bc9abfd10f2305549eed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
