@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffe2e24d_754cf238",
+        "filename": "apex/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-09-03T11:41:04Z",
+      "side": 0,
+      "message": "Isn\u0027t this needed anymore?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 32
+      },
+      "revId": "e0bd94e37de7080127f3bc9abfd10f2305549eed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
