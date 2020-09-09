@@ -31,6 +31,9 @@
 #include "BootAnimationUtil.h"
 #include "audioplay.h"
 
+#include <chrono>
+#include <thread>
+
 using namespace android;
 
 int main()
@@ -48,6 +51,9 @@ int main()
         sp<BootAnimation> boot = new BootAnimation(audioplay::createAnimationCallbacks());
 
         waitForSurfaceFlinger();
+
+        // Sleep to give ourselves time to attach the debugger.
+        std::this_thread::sleep_for(std::chrono::seconds(20));
 
         boot->run("BootAnimation", PRIORITY_DISPLAY);
 
