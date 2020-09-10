@@ -40,6 +40,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.LargeTest;
 import androidx.test.uiautomator.By;
@@ -131,7 +132,7 @@ public class BugreportManagerTest {
         // wifi bugreport does not take screenshot
         mBrm.startBugreport(mBugreportFd, null /*screenshotFd = null*/, wifi(),
                 mExecutor, callback);
-        shareConsentDialog(ConsentReply.ALLOW);
+        shareConsentDialog(ConsentReply.ALLOW, null);
         waitTillDoneOrTimeout(callback);
 
         assertThat(callback.isDone()).isTrue();
@@ -149,7 +150,7 @@ public class BugreportManagerTest {
         // interactive bugreport does not take screenshot
         mBrm.startBugreport(mBugreportFd, null /*screenshotFd = null*/, interactive(),
                 mExecutor, callback);
-        shareConsentDialog(ConsentReply.ALLOW);
+        shareConsentDialog(ConsentReply.ALLOW, null);
         waitTillDoneOrTimeout(callback);
 
         assertThat(callback.isDone()).isTrue();
@@ -165,7 +166,7 @@ public class BugreportManagerTest {
     public void normalFlow_full() throws Exception {
         BugreportCallbackImpl callback = new BugreportCallbackImpl();
         mBrm.startBugreport(mBugreportFd, mScreenshotFd, full(), mExecutor, callback);
-        shareConsentDialog(ConsentReply.ALLOW);
+        shareConsentDialog(ConsentReply.ALLOW, null);
         waitTillDoneOrTimeout(callback);
 
         assertThat(callback.isDone()).isTrue();
@@ -181,7 +182,7 @@ public class BugreportManagerTest {
         BugreportCallbackImpl callback = new BugreportCallbackImpl();
         mBrm.startBugreport(mBugreportFd, mScreenshotFd, wifi(), mExecutor, callback);
         // TODO(b/162389762) Make sure the wait time is reasonable
-        shareConsentDialog(ConsentReply.ALLOW);
+        shareConsentDialog(ConsentReply.ALLOW, null);
 
         // Before #1 is done, try to start #2.
         assertThat(callback.isDone()).isFalse();
@@ -299,6 +300,25 @@ public class BugreportManagerTest {
         assertFdsAreClosed(mBugreportFd, mScreenshotFd);
     }
 
+    @Test
+    public void userConsentDenied() throws Exception {
+        // Start a bugreport, but deny user consent.
+        BugreportCallbackImpl callback = new BugreportCallbackImpl();
+        mBrm.startBugreport(mBugreportFd, mScreenshotFd, full(), mExecutor, callback);
+        shareConsentDialog(ConsentReply.DENY, callback);
+        waitTillDoneOrTimeout(callback);
+
+        // Ensure correct error code is received in less than one second.
+        assertThat(callback.getErrorCode()).isEqualTo(
+                BugreportCallback.BUGREPORT_ERROR_USER_DENIED_CONSENT);
+        assertThat(callback.getErrorCodeResponseTimeMillis()).isLessThan(1000L);
+
+        // Consent was denied, so these files should be empty.
+        assertThat(mBugreportFile.length()).isEqualTo(0L);
+        assertThat(mScreenshotFile.length()).isEqualTo(0L);
+        assertFdsAreClosed(mBugreportFd, mScreenshotFd);
+    }
+
     private Handler createHandler() {
         HandlerThread handlerThread = new HandlerThread("BugreportManagerTest");
         handlerThread.start();
@@ -310,6 +330,8 @@ public class BugreportManagerTest {
         private int mErrorCode = -1;
         private boolean mSuccess = false;
         private boolean mReceivedProgress = false;
+        private long mConsentPressedTimeMillis;
+        private long mConsentCallbackReceivedTimeMillis;
         private boolean mEarlyReportFinished = false;
         private final Object mLock = new Object();
 
@@ -352,6 +374,7 @@ public class BugreportManagerTest {
 
         public int getErrorCode() {
             synchronized (mLock) {
+                mConsentCallbackReceivedTimeMillis = now();
                 return mErrorCode;
             }
         }
@@ -366,6 +389,14 @@ public class BugreportManagerTest {
             synchronized (mLock) {
                 return mReceivedProgress;
             }
+        }
+
+        public void setConsentButtonPressedTime() {
+            mConsentPressedTimeMillis = now();
+        }
+
+        public long getErrorCodeResponseTimeMillis() {
+            return mConsentCallbackReceivedTimeMillis - mConsentPressedTimeMillis;
         }
 
         public boolean hasEarlyReportFinished() {
@@ -509,8 +540,11 @@ public class BugreportManagerTest {
     /*
      * Ensure the consent dialog is shown and take action according to <code>consentReply<code/>.
      * It will fail if the dialog is not shown when <code>ignoreNotFound<code/> is false.
+     * If a <code>BugreportCallbackImpl</code> is passed, the time at which the consent dialog
+     * button is clicked will be noted.
      */
-    private void shareConsentDialog(@NonNull ConsentReply consentReply) throws Exception {
+    private void shareConsentDialog(@NonNull ConsentReply consentReply,
+            @Nullable BugreportCallbackImpl callback) throws Exception {
         mTemporaryVmPolicy.permitIncorrectContextUse();
         final UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
@@ -536,6 +570,9 @@ public class BugreportManagerTest {
         final UiObject2 btnObj = device.findObject(selector);
         assertNotNull("The button of consent dialog is not found", btnObj);
         btnObj.click();
+        if (callback != null) {
+            callback.setConsentButtonPressedTime();
+        }
 
         Log.d(TAG, "Wait for the dialog to be dismissed");
         assertTrue(device.wait(Until.gone(consentTitleObj), UIAUTOMATOR_TIMEOUT_MS));
