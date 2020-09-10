@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ef214ff_b85b7720",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2020-09-10T15:31:23Z",
+      "side": 1,
+      "message": "This is a cherry-pick, approving to get this in sync with internal master",
+      "revId": "68fa882cdb0a21996b5c2dbb32cd7d428af4ecc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
