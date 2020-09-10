@@ -997,6 +997,11 @@ public final class SystemServer {
         mSystemServiceManager.startService(GpuService.class);
         t.traceEnd();
 
+        // Service for attestation remote provisioning
+        t.traceBegin("StartRemoteProvisioningService");
+        mSystemServiceManager.startService(RemoteProvisioningService.class);
+        t.traceEnd();
+
         t.traceEnd(); // startCoreServices
     }
 
