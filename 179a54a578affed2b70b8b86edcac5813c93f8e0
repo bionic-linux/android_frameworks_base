@@ -1,0 +1,31 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000004871089",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1406414?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2f4e98f5_46a1a92e",
+        "filename": "services/core/java/com/android/server/RemoteProvisioningService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-09-10T16:45:56Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(ConnectivityManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 58
+      },
+      "revId": "179a54a578affed2b70b8b86edcac5813c93f8e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
