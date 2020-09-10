@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f6f9569_20ab8f6b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3809,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-09-10T22:40:36Z",
+      "side": 1,
+      "message": "Please use the following as the docstring for this variable. We may expose it in the public API surface at a later point, so it\u0027s important to have through documentation.\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n\nDetermines the default RTT mode sent to the IMS stack.\n\nUpon first boot, when the user has not yet set a value for their preferred RTT mode, the value of this config will be sent to the IMS stack. Valid values are the same as for {@link Settings.Secure#RTT_CALLING_MODE}.",
+      "range": {
+        "startLine": 3809,
+        "startChar": 7,
+        "endLine": 3809,
+        "endChar": 39
+      },
+      "revId": "40669abc852fa6007c9d7eb5580ceeaf4884e3ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
