@@ -28,6 +28,7 @@ import android.hardware.tetheroffload.control.V1_0.NatTimeoutUpdate;
 import android.hardware.tetheroffload.control.V1_0.NetworkProtocol;
 import android.hardware.tetheroffload.control.V1_0.OffloadCallbackEvent;
 import android.net.netlink.NetlinkSocket;
+import android.net.netlink.StructNfGenMsg;
 import android.net.netlink.StructNlMsgHdr;
 import android.net.util.SharedLog;
 import android.net.util.SocketUtils;
@@ -46,6 +47,7 @@ import java.io.IOException;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -268,15 +270,21 @@ public class OffloadHardwareInterface {
 
     @VisibleForTesting
     public void sendNetlinkMessage(@NonNull NativeHandle handle, short type, short flags) {
-        final int length = StructNlMsgHdr.STRUCT_SIZE;
+        final int length = StructNlMsgHdr.STRUCT_SIZE + StructNfGenMsg.STRUCT_SIZE;
         final byte[] msg = new byte[length];
-        final StructNlMsgHdr nlh = new StructNlMsgHdr();
         final ByteBuffer byteBuffer = ByteBuffer.wrap(msg);
+        byteBuffer.order(ByteOrder.nativeOrder());
+
+        final StructNlMsgHdr nlh = new StructNlMsgHdr();
         nlh.nlmsg_len = length;
         nlh.nlmsg_type = type;
         nlh.nlmsg_flags = flags;
         nlh.nlmsg_seq = 1;
         nlh.pack(byteBuffer);
+
+        final StructNfGenMsg nfh = new StructNfGenMsg((byte) OsConstants.AF_INET);
+        nfh.pack(byteBuffer);
+
         try {
             NetlinkSocket.sendMessage(handle.getFileDescriptor(), msg, 0 /* offset */, length,
                                       NETLINK_MESSAGE_TIMEOUT_MS);
