@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8bb7778_9f9d621f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5217,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-11T02:13:47Z",
+      "side": 1,
+      "message": "Just for style consistency can you please have an onVpnLockdownReset method to hold these three lines ?",
+      "range": {
+        "startLine": 5215,
+        "startChar": 13,
+        "endLine": 5217,
+        "endChar": 17
+      },
+      "revId": "0b882baef0e6f5c1efa29d3dd55130b836a961ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193a5c3e_bb4e0200",
+        "filename": "services/core/java/com/android/server/net/LockdownVpnTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-11T02:13:47Z",
+      "side": 1,
+      "message": "maybe also add @GuardedBy(\"mConnService.mVpns\")",
+      "range": {
+        "startLine": 215,
+        "startChar": 16,
+        "endLine": 215,
+        "endChar": 21
+      },
+      "revId": "0b882baef0e6f5c1efa29d3dd55130b836a961ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
