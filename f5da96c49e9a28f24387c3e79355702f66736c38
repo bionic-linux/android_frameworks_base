@@ -22,6 +22,30 @@
       "revId": "f5da96c49e9a28f24387c3e79355702f66736c38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17561cda_9cab1b92",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2107,
+      "author": {
+        "id": 1121603
+      },
+      "writtenOn": "2020-09-14T21:22:48Z",
+      "side": 1,
+      "message": "For only this one? or for all the APIs?",
+      "parentUuid": "2a99ab80_1a1ab6f3",
+      "range": {
+        "startLine": 2103,
+        "startChar": 26,
+        "endLine": 2107,
+        "endChar": 48
+      },
+      "revId": "f5da96c49e9a28f24387c3e79355702f66736c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
