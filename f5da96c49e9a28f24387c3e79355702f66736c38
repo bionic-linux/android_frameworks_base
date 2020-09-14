@@ -46,6 +46,30 @@
       "revId": "f5da96c49e9a28f24387c3e79355702f66736c38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fabb121_b6b3e2a6",
+        "filename": "telephony/java/android/telephony/SmsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2107,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-14T23:27:23Z",
+      "side": 1,
+      "message": "OH, never mind, it is locally consistent with how things work in the rest of the file.  Thanks for clarifying.",
+      "parentUuid": "17561cda_9cab1b92",
+      "range": {
+        "startLine": 2103,
+        "startChar": 26,
+        "endLine": 2107,
+        "endChar": 48
+      },
+      "revId": "f5da96c49e9a28f24387c3e79355702f66736c38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
