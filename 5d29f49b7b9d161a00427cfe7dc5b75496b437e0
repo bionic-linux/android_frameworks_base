@@ -16,6 +16,24 @@
       "revId": "5d29f49b7b9d161a00427cfe7dc5b75496b437e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5f33965_c43908bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2020-09-14T16:09:22Z",
+      "side": 1,
+      "message": "No problem.  I should have put this in AOSP in the first place.",
+      "parentUuid": "a846cab6_0d752ea4",
+      "revId": "5d29f49b7b9d161a00427cfe7dc5b75496b437e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
