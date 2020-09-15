@@ -1675,12 +1675,12 @@ public class AudioManager {
      * <ul>
      *   <li> the stream type must be {@link #STREAM_VOICE_CALL} </li>
      *   <li> the format must be mono </li>
-     *   <li> the sampling must be 16kHz or 8kHz </li>
+     *   <li> the sample rate must be 16kHz or 8kHz </li>
      * </ul>
      * <p>The following restrictions apply on input streams:
      * <ul>
      *   <li> the format must be mono </li>
-     *   <li> the sampling must be 8kHz </li>
+     *   <li> the sample rate must be 16kHz or 8kHz </li>
      * </ul>
      * <p>Note that the phone application always has the priority on the usage of the SCO
      * connection for telephony. If this method is called while the phone is in call
