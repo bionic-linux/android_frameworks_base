@@ -1945,7 +1945,7 @@ public class AudioManager {
      * Start bluetooth SCO audio connection.
      * <p>Requires Permission:
      *   {@link android.Manifest.permission#MODIFY_AUDIO_SETTINGS}.
-     * <p>This method can be used by applications wanting to send and received audio
+     * <p>This method can be used by applications wanting to send and receive audio
      * to/from a bluetooth SCO headset while the phone is not in call.
      * <p>As the SCO connection establishment can take several seconds,
      * applications should not rely on the connection to be available when the method
@@ -1960,27 +1960,17 @@ public class AudioManager {
      * transition from DISCONNECTED to CONNECTING and then either to CONNECTED if the connection
      * succeeds or back to DISCONNECTED if the connection fails (e.g no headset is connected).
      * <p>When finished with the SCO connection or if the establishment fails, the application must
-     * call {@link #stopBluetoothSco()} to clear the request and turn down the bluetooth connection.
-     * <p>Even if a SCO connection is established, the following restrictions apply on audio
-     * output streams so that they can be routed to SCO headset:
-     * <ul>
-     *   <li> the stream type must be {@link #STREAM_VOICE_CALL} </li>
-     *   <li> the format must be mono </li>
-     *   <li> the sampling must be 16kHz or 8kHz </li>
-     * </ul>
-     * <p>The following restrictions apply on input streams:
-     * <ul>
-     *   <li> the format must be mono </li>
-     *   <li> the sampling must be 8kHz </li>
-     * </ul>
+     * call {@link #stopBluetoothSco()} to clear the request and turn down the Bluetooth connection.
      * <p>Note that the phone application always has the priority on the usage of the SCO
      * connection for telephony. If this method is called while the phone is in call
      * it will be ignored. Similarly, if a call is received or sent while an application
      * is using the SCO connection, the connection will be lost for the application and NOT
      * returned automatically when the call ends.
+     * Depending on hardware capabilities, other Bluetooth audio streams such as A2DP might be
+     * affected when SCO is active.
      * <p>NOTE: up to and including API version
      * {@link android.os.Build.VERSION_CODES#JELLY_BEAN_MR1}, this method initiates a virtual
-     * voice call to the bluetooth headset.
+     * voice call to the Bluetooth headset.
      * After API version {@link android.os.Build.VERSION_CODES#JELLY_BEAN_MR2} only a raw SCO audio
      * connection is established.
      * @see #stopBluetoothSco()
