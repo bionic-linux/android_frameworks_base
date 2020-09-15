@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3efff8a7_33f580c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2020-09-15T23:36:40Z",
+      "side": 1,
+      "message": "Eric and Jack, can you please confirm\n(a) is this correct, or does it require additional software implementation work?\n(b) is it version-specific?\nThanks, Glenn",
+      "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
