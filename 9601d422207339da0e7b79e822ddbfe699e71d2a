@@ -34,6 +34,29 @@
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08b7344c_4a2b7694",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-09-15T23:49:32Z",
+      "side": 1,
+      "message": "we can even get rid of all those restrictions given the framework does all the required channel remapping and up/down sampling",
+      "range": {
+        "startLine": 1673,
+        "startChar": 3,
+        "endLine": 1684,
+        "endChar": 12
+      },
+      "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
