@@ -1989,7 +1989,9 @@ public abstract class ConnectionService extends Service {
         }
         connection.setTelecomCallId(callId);
         if (connection.getState() != Connection.STATE_DISCONNECTED) {
-            addConnection(request.getAccountHandle(), callId, connection);
+            PhoneAccountHandle  phoneAccountHandle = connection.getPhoneAccountHandle() == null
+                ? request.getAccountHandle() : connection.getPhoneAccountHandle();
+            addConnection(phoneAccountHandle, callId, connection);
         }
 
         Uri address = connection.getAddress();
@@ -2005,7 +2007,7 @@ public abstract class ConnectionService extends Service {
                 callId,
                 request,
                 new ParcelableConnection(
-                        request.getAccountHandle(),
+                        connection.getPhoneAccountHandle(),
                         connection.getState(),
                         connection.getConnectionCapabilities(),
                         connection.getConnectionProperties(),
