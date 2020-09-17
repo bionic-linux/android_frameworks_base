@@ -21,6 +21,7 @@ import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 
+import android.annotation.NonNull;
 import android.net.NetworkStats;
 import android.net.NetworkStats.NonMonotonicObserver;
 import android.net.NetworkStatsHistory;
@@ -80,7 +81,6 @@ public class NetworkStatsRecorder {
     private final boolean mOnlyTags;
 
     private long mPersistThresholdBytes = 2 * MB_IN_BYTES;
-    private NetworkStats mLastSnapshot;
 
     private final NetworkStatsCollection mPending;
     private final NetworkStatsCollection mSinceBoot;
@@ -135,7 +135,6 @@ public class NetworkStatsRecorder {
     }
 
     public void resetLocked() {
-        mLastSnapshot = null;
         if (mPending != null) {
             mPending.reset();
         }
@@ -198,39 +197,25 @@ public class NetworkStatsRecorder {
     }
 
     /**
-     * Record any delta that occurred since last {@link NetworkStats} snapshot, using the given
-     * {@link Map} to identify network interfaces. First snapshot is considered bootstrap, and is
-     * not counted as delta.
+     * Record any diff that occurred since last {@link NetworkStats} snapshot, using the given
+     * {@link Map} to identify network interfaces.
      */
-    public void recordSnapshotLocked(NetworkStats snapshot,
+    public void recordDiffLocked(@NonNull NetworkStats diff,
             Map<String, NetworkIdentitySet> ifaceIdent, long currentTimeMillis) {
         final HashSet<String> unknownIfaces = Sets.newHashSet();
-
-        // skip recording when snapshot missing
-        if (snapshot == null) return;
-
-        // assume first snapshot is bootstrap and don't record
-        if (mLastSnapshot == null) {
-            mLastSnapshot = snapshot;
-            return;
-        }
-
         final NetworkStatsCollection complete = mComplete != null ? mComplete.get() : null;
-
-        final NetworkStats delta = NetworkStats.subtract(
-                snapshot, mLastSnapshot, mObserver, mCookie);
         final long end = currentTimeMillis;
-        final long start = end - delta.getElapsedRealtime();
+        final long start = end - diff.getElapsedRealtime();
 
         NetworkStats.Entry entry = null;
-        for (int i = 0; i < delta.size(); i++) {
-            entry = delta.getValues(i, entry);
+        for (int i = 0; i < diff.size(); i++) {
+            entry = diff.getValues(i, entry);
 
             // As a last-ditch check, report any negative values and
             // clamp them so recording below doesn't croak.
             if (entry.isNegative()) {
                 if (mObserver != null) {
-                    mObserver.foundNonMonotonic(delta, i, mCookie);
+                    mObserver.foundNonMonotonic(diff, i, mCookie);
                 }
                 entry.rxBytes = Math.max(entry.rxBytes, 0);
                 entry.rxPackets = Math.max(entry.rxPackets, 0);
@@ -245,7 +230,7 @@ public class NetworkStatsRecorder {
                 continue;
             }
 
-            // skip when no delta occurred
+            // skip when no diff occurred
             if (entry.isEmpty()) continue;
 
             // only record tag data when requested
@@ -265,8 +250,6 @@ public class NetworkStatsRecorder {
                 }
             }
         }
-
-        mLastSnapshot = snapshot;
 
         if (LOGV && unknownIfaces.size() > 0) {
             Slog.w(TAG, "unknown interfaces " + unknownIfaces + ", ignoring those stats");
@@ -332,11 +315,6 @@ public class NetworkStatsRecorder {
         }
         if (mSinceBoot != null) {
             mSinceBoot.removeUids(uids);
-        }
-
-        // Clear UID from current stats snapshot
-        if (mLastSnapshot != null) {
-            mLastSnapshot.removeUids(uids);
         }
 
         final NetworkStatsCollection complete = mComplete != null ? mComplete.get() : null;

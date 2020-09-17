@@ -40,6 +40,8 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -54,6 +56,7 @@ class NetworkStatsObservers {
     private static final int MSG_REGISTER = 1;
     private static final int MSG_UNREGISTER = 2;
     private static final int MSG_UPDATE_STATS = 3;
+    private static final int MSG_REMOVE_UIDS = 4;
 
     // All access to this map must be done from the handler thread.
     // indexed by DataUsageRequest#requestId
@@ -109,6 +112,10 @@ class NetworkStatsObservers {
         getHandler().sendMessage(mHandler.obtainMessage(MSG_UPDATE_STATS, statsContext));
     }
 
+    public void removeUids(int[] uids) {
+        getHandler().sendMessage(mHandler.obtainMessage(MSG_REMOVE_UIDS, Arrays.asList(uids)));
+    }
+
     private Handler getHandler() {
         if (mHandler == null) {
             synchronized (this) {
@@ -142,6 +149,10 @@ class NetworkStatsObservers {
                 }
                 case MSG_UPDATE_STATS: {
                     handleUpdateStats((StatsContext) msg.obj);
+                    return true;
+                }
+                case MSG_REMOVE_UIDS: {
+                    handleRemoveUids((List<Integer>) msg.obj);
                     return true;
                 }
                 default: {
@@ -194,6 +205,17 @@ class NetworkStatsObservers {
         }
     }
 
+    private void handleRemoveUids(List<Integer> uids) {
+        if (mDataUsageRequests.size() == 0) {
+            return;
+        }
+
+        for (int i = 0; i < mDataUsageRequests.size(); i++) {
+            RequestInfo requestInfo = mDataUsageRequests.valueAt(i);
+            requestInfo.removeUids(uids);
+        }
+    }
+
     private DataUsageRequest buildRequest(DataUsageRequest request) {
         // Cap the minimum threshold to a safe default to avoid too many callbacks
         long thresholdInBytes = Math.max(MIN_THRESHOLD_BYTES, request.thresholdInBytes);
@@ -232,6 +254,8 @@ class NetworkStatsObservers {
         protected final @NetworkStatsAccess.Level int mAccessLevel;
         protected NetworkStatsRecorder mRecorder;
         protected NetworkStatsCollection mCollection;
+        // Null means that the snapshot is waiting for bootstrap snapshot.
+        protected NetworkStats mLastSnapshot;
 
         RequestInfo(NetworkStatsObservers statsObserver, DataUsageRequest request,
                     Messenger messenger, IBinder binder, int callingUid,
@@ -288,6 +312,10 @@ class NetworkStatsObservers {
             }
         }
 
+        private void removeUids(List<Integer> uids) {
+            mLastSnapshot.removeUids(uids.stream().mapToInt(i->i).toArray());
+        }
+
         private void callCallback(int callbackType) {
             Bundle bundle = new Bundle();
             bundle.putParcelable(DataUsageRequest.PARCELABLE_KEY, mRequest);
@@ -309,6 +337,7 @@ class NetworkStatsObservers {
         private void resetRecorder() {
             mRecorder = new NetworkStatsRecorder();
             mCollection = mRecorder.getSinceBoot();
+            mLastSnapshot = null;
         }
 
         protected abstract boolean checkStats();
@@ -350,10 +379,16 @@ class NetworkStatsObservers {
         @Override
         protected void recordSample(StatsContext statsContext) {
             // Recorder does not need to be locked in this context since only the handler
-            // thread will update it. We pass a null VPN array because usage is aggregated by uid
-            // for this snapshot, so VPN traffic can't be reattributed to responsible apps.
-            mRecorder.recordSnapshotLocked(statsContext.mXtSnapshot, statsContext.mActiveIfaces,
+            // thread will update it.
+            if (mLastSnapshot == null) {
+                // The first snapshot is considered bootstrap, and is not counted as delta.
+                mLastSnapshot = statsContext.mXtSnapshot;
+                return;
+            }
+            final NetworkStats diff = statsContext.mXtSnapshot.subtract(mLastSnapshot);
+            mRecorder.recordDiffLocked(diff, statsContext.mActiveIfaces,
                     statsContext.mCurrentTime);
+            mLastSnapshot = statsContext.mXtSnapshot;
         }
 
         /**
@@ -392,10 +427,16 @@ class NetworkStatsObservers {
         @Override
         protected void recordSample(StatsContext statsContext) {
             // Recorder does not need to be locked in this context since only the handler
-            // thread will update it. We pass the VPN info so VPN traffic is reattributed to
-            // responsible apps.
-            mRecorder.recordSnapshotLocked(statsContext.mUidSnapshot, statsContext.mActiveUidIfaces,
+            // thread will update it.
+            if (mLastSnapshot == null) {
+                // The first snapshot is considered bootstrap, and is not counted as delta.
+                mLastSnapshot = statsContext.mUidSnapshot;
+                return;
+            }
+            final NetworkStats diff = statsContext.mUidSnapshot.subtract(mLastSnapshot);
+            mRecorder.recordDiffLocked(diff, statsContext.mActiveUidIfaces,
                     statsContext.mCurrentTime);
+            mLastSnapshot = statsContext.mUidSnapshot;
         }
 
         /**
