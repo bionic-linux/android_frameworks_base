@@ -232,6 +232,7 @@ class NetworkStatsObservers {
         protected final @NetworkStatsAccess.Level int mAccessLevel;
         protected NetworkStatsRecorder mRecorder;
         protected NetworkStatsCollection mCollection;
+        protected NetworkStats mLastSnapshot;
 
         RequestInfo(NetworkStatsObservers statsObserver, DataUsageRequest request,
                     Messenger messenger, IBinder binder, int callingUid,
@@ -309,6 +310,8 @@ class NetworkStatsObservers {
         private void resetRecorder() {
             mRecorder = new NetworkStatsRecorder();
             mCollection = mRecorder.getSinceBoot();
+            // reset last snapshot
+            mLastSnapshot = null;
         }
 
         protected abstract boolean checkStats();
@@ -352,7 +355,12 @@ class NetworkStatsObservers {
             // Recorder does not need to be locked in this context since only the handler
             // thread will update it. We pass a null VPN array because usage is aggregated by uid
             // for this snapshot, so VPN traffic can't be reattributed to responsible apps.
-            mRecorder.recordSnapshotLocked(statsContext.mXtSnapshot, statsContext.mActiveIfaces,
+            if (mLastSnapshot == null) {
+                mLastSnapshot = statsContext.mXtSnapshot;
+                return;
+            }
+            final NetworkStats delta = statsContext.mXtSnapshot.subtract(mLastSnapshot);
+            mRecorder.recordDeltaLocked(delta, statsContext.mActiveIfaces,
                     statsContext.mCurrentTime);
         }
 
@@ -394,7 +402,12 @@ class NetworkStatsObservers {
             // Recorder does not need to be locked in this context since only the handler
             // thread will update it. We pass the VPN info so VPN traffic is reattributed to
             // responsible apps.
-            mRecorder.recordSnapshotLocked(statsContext.mUidSnapshot, statsContext.mActiveUidIfaces,
+            if (mLastSnapshot == null) {
+                mLastSnapshot = statsContext.mXtSnapshot;
+                return;
+            }
+            final NetworkStats delta = statsContext.mXtSnapshot.subtract(mLastSnapshot);
+            mRecorder.recordDeltaLocked(statsContext.mUidSnapshot, statsContext.mActiveUidIfaces,
                     statsContext.mCurrentTime);
         }
 
