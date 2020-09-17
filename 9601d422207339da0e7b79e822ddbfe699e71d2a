@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "745afa5c_efc1ae30",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2020-09-17T21:32:55Z",
+      "side": 1,
+      "message": "receive",
+      "range": {
+        "startLine": 1657,
+        "startChar": 70,
+        "endLine": 1657,
+        "endChar": 78
+      },
+      "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b7344c_4a2b7694",
         "filename": "media/java/android/media/AudioManager.java",
         "patchSetId": 1
@@ -54,6 +77,23 @@
         "endLine": 1684,
         "endChar": 12
       },
+      "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d15c681_86389491",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1689,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2020-09-17T21:32:55Z",
+      "side": 1,
+      "message": "Should we add a note about how the A2DP pathway will be disabled while SCO is connected?\n\nWhat happens if this is called when an A2DP stream is already active?",
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
