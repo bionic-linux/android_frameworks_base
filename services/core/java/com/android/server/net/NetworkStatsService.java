@@ -75,6 +75,7 @@ import static com.android.server.NetworkManagementService.LIMIT_GLOBAL_ALERT;
 import static com.android.server.NetworkManagementSocketTagger.resetKernelUidStats;
 import static com.android.server.NetworkManagementSocketTagger.setKernelCounterSet;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.AlarmManager;
@@ -155,6 +156,8 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.time.Clock;
 import java.time.ZoneOffset;
 import java.util.Arrays;
@@ -316,6 +319,24 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private NetworkStatsRecorder mUidRecorder;
     @GuardedBy("mStatsLock")
     private NetworkStatsRecorder mUidTagRecorder;
+
+    // The index of the last snapshot array.
+    private static final int SNAPSHOT_TYPE_UID = 0;
+    private static final int SNAPSHOT_TYPE_XT  = 1;
+    private static final int SNAPSHOT_TYPE_DEV = 2;
+    // Length for last snapshot array.
+    private static final int SNAPSHOT_TYPE_LENGTH = SNAPSHOT_TYPE_DEV + 1;
+
+    @IntDef(prefix = { "SNAPSHOT_TYPE_" }, value = {
+        SNAPSHOT_TYPE_UID,
+        SNAPSHOT_TYPE_XT,
+        SNAPSHOT_TYPE_DEV
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SnapshotType {}
+
+    @GuardedBy("mStatsLock")
+    private final NetworkStats[] mLastSnapshot = new NetworkStats[SNAPSHOT_TYPE_LENGTH];
 
     /** Cached {@link #mXtRecorder} stats. */
     @GuardedBy("mStatsLock")
@@ -1403,7 +1424,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     @GuardedBy("mStatsLock")
-    private void recordSnapshotLocked(long currentTime) throws RemoteException {
+    private void recordDiffLocked(long currentTime) throws RemoteException {
         // snapshot and record current counters; read UID stats first to
         // avoid over counting dev stats.
         Trace.traceBegin(TRACE_TAG_NETWORK, "snapshotUid");
@@ -1416,33 +1437,47 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final NetworkStats devSnapshot = readNetworkStatsSummaryDev();
         Trace.traceEnd(TRACE_TAG_NETWORK);
 
-        // Snapshot for dev/xt stats from all custom stats providers. Counts per-interface data
-        // from stats providers that isn't already counted by dev and XT stats.
         Trace.traceBegin(TRACE_TAG_NETWORK, "snapshotStatsProvider");
         final NetworkStats providersnapshot = getNetworkStatsFromProviders(STATS_PER_IFACE);
         Trace.traceEnd(TRACE_TAG_NETWORK);
         xtSnapshot.combineAllValues(providersnapshot);
         devSnapshot.combineAllValues(providersnapshot);
 
+        final NetworkStats uidDiff = NetworkStats.subtract(
+                        uidSnapshot, mLastSnapshot[SNAPSHOT_TYPE_UID],
+                        mNonMonotonicObserver, PREFIX_UID);
+        final NetworkStats xtDiff = NetworkStats.subtract(
+                        xtSnapshot, mLastSnapshot[SNAPSHOT_TYPE_XT],
+                        mNonMonotonicObserver, PREFIX_XT);
+        final NetworkStats devDiff = NetworkStats.subtract(
+                        devSnapshot, mLastSnapshot[SNAPSHOT_TYPE_DEV],
+                        mNonMonotonicObserver, PREFIX_DEV);
+
         // For xt/dev, we pass a null VPN array because usage is aggregated by UID, so VPN traffic
         // can't be reattributed to responsible apps.
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordDev");
-        mDevRecorder.recordSnapshotLocked(devSnapshot, mActiveIfaces, currentTime);
+        mDevRecorder.recordDiffLocked(devDiff, mActiveIfaces, currentTime);
         Trace.traceEnd(TRACE_TAG_NETWORK);
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordXt");
-        mXtRecorder.recordSnapshotLocked(xtSnapshot, mActiveIfaces, currentTime);
+        mXtRecorder.recordDiffLocked(xtDiff, mActiveIfaces, currentTime);
         Trace.traceEnd(TRACE_TAG_NETWORK);
 
         // For per-UID stats, pass the VPN info so VPN traffic is reattributed to responsible apps.
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordUid");
-        mUidRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, currentTime);
+        mUidRecorder.recordDiffLocked(uidDiff, mActiveUidIfaces, currentTime);
         Trace.traceEnd(TRACE_TAG_NETWORK);
         Trace.traceBegin(TRACE_TAG_NETWORK, "recordUidTag");
-        mUidTagRecorder.recordSnapshotLocked(uidSnapshot, mActiveUidIfaces, currentTime);
+        mUidTagRecorder.recordDiffLocked(uidDiff, mActiveUidIfaces, currentTime);
         Trace.traceEnd(TRACE_TAG_NETWORK);
+
+        // update last snapshot
+        mLastSnapshot[SNAPSHOT_TYPE_UID] = uidSnapshot;
+        mLastSnapshot[SNAPSHOT_TYPE_XT] = xtSnapshot;
+        mLastSnapshot[SNAPSHOT_TYPE_DEV] = devSnapshot;
 
         // We need to make copies of member fields that are sent to the observer to avoid
         // a race condition between the service handler thread and the observer's
+        // TODO: Make NetworkStatsObservers#updateStats takes diff.
         mStatsObservers.updateStats(xtSnapshot, uidSnapshot, new ArrayMap<>(mActiveIfaces),
                 new ArrayMap<>(mActiveUidIfaces), currentTime);
     }
@@ -1453,10 +1488,14 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      */
     @GuardedBy("mStatsLock")
     private void bootstrapStatsLocked() {
-        final long currentTime = mClock.millis();
-
         try {
-            recordSnapshotLocked(currentTime);
+            // Get the snapshot for each type instead of initialing by zeros.
+            // When framework restarts without rebooting, framework will cause losing the last
+            // snapshots but statistics from xt_qtaguid won't, this would cause first snapshot
+            // get treated as a huge diff if zeros are used when initializing.
+            mLastSnapshot[SNAPSHOT_TYPE_UID] = getNetworkStatsUidDetail(INTERFACES_ALL);
+            mLastSnapshot[SNAPSHOT_TYPE_XT] = readNetworkStatsSummaryXt();
+            mLastSnapshot[SNAPSHOT_TYPE_DEV] = readNetworkStatsSummaryDev();
         } catch (IllegalStateException e) {
             Slog.w(TAG, "problem reading network stats: " + e);
         } catch (RemoteException e) {
@@ -1496,7 +1535,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final long currentTime = mClock.millis();
 
         try {
-            recordSnapshotLocked(currentTime);
+            recordDiffLocked(currentTime);
         } catch (IllegalStateException e) {
             Log.wtf(TAG, "problem reading network stats", e);
             return;
@@ -1607,13 +1646,15 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private void removeUidsLocked(int... uids) {
         if (LOGV) Slog.v(TAG, "removeUidsLocked() for UIDs " + Arrays.toString(uids));
 
-        // Perform one last poll before removing
+        // Perform one last poll before removing.
         performPollLocked(FLAG_PERSIST_ALL);
 
         mUidRecorder.removeUidsLocked(uids);
         mUidTagRecorder.removeUidsLocked(uids);
+        // Clear UID from current stats snapshot.
+        mLastSnapshot[SNAPSHOT_TYPE_UID].removeUids(uids);
 
-        // Clear kernel stats associated with UID
+        // Clear kernel stats associated with UID.
         for (int uid : uids) {
             resetKernelUidStats(uid);
         }
