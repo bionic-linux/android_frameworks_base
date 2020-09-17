@@ -97,6 +97,24 @@
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e38a4a6_06ae7076",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1689,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2020-09-17T21:39:52Z",
+      "side": 1,
+      "message": "One problem is that this behavior is not specified by AOSP but depends on HW capabilities. So the documentation should use the conditional and say that A2DP (or other Bluetooth audio by the way) COULD be affected when SCO is active.",
+      "parentUuid": "2d15c681_86389491",
+      "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
