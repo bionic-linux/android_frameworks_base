@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4acb9149_a5c5a6fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1448822
+      },
+      "writtenOn": "2020-09-18T10:06:57Z",
+      "side": 1,
+      "message": "I assume this is difficult to test programmatically, but have you done any manual tests?",
+      "revId": "d92762e20f744f4a86b88962950628b53e355dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a743571b_4839f646",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 18
@@ -16,6 +33,29 @@
       "revId": "d92762e20f744f4a86b88962950628b53e355dbb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6a33c7f_66a5c001",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1448822
+      },
+      "writtenOn": "2020-09-18T10:06:57Z",
+      "side": 1,
+      "message": "Does this check negate the need for the PROP_FATAL_IGNORE property? My assumption is that any time PROP_FATAL_IGNORE is set, this feature is being debugged, and therefore there will be an active USB connection. In this case, isCrashLoopFound() will always return false, so there is no need to ignore the result.",
+      "range": {
+        "startLine": 795,
+        "startChar": 8,
+        "endLine": 803,
+        "endChar": 9
+      },
+      "revId": "d92762e20f744f4a86b88962950628b53e355dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
