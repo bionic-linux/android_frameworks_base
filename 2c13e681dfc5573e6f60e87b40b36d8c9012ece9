@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51d7908c_63bf644d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-09-18T16:03:58Z",
+      "side": 1,
+      "message": "Since you are changing both read and write, adding in the middle is fine, but usually, new stuff should be appended to the end of the parcel.\n\nIf you see conflicts, maybe you can do this in internal branches only. I don\u0027t have a preference though.",
+      "parentUuid": "93b304e2_995d4bf4",
+      "revId": "2c13e681dfc5573e6f60e87b40b36d8c9012ece9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c36be95e_d12ed780",
         "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
         "patchSetId": 1
