@@ -151,7 +151,7 @@ public class BatteryStatsImpl extends BatteryStats {
     private static final int MAGIC = 0xBA757475; // 'BATSTATS'
 
     // Current on-disk Parcel version
-    static final int VERSION = 186 + (USE_OLD_HISTORY ? 1000 : 0);
+    static final int VERSION = 187 + (USE_OLD_HISTORY ? 1000 : 0);
 
     // The maximum number of names wakelocks we will keep track of
     // per uid; once the limit is reached, we batch the remaining wakelocks
@@ -13562,6 +13562,7 @@ public class BatteryStatsImpl extends BatteryStats {
         mDischargePlugLevel = in.readInt();
         mDischargeCurrentLevel = in.readInt();
         mCurrentBatteryLevel = in.readInt();
+        mBatteryTimeToFullSeconds = in.readLong();
         mEstimatedBatteryCapacity = in.readInt();
         mMinLearnedBatteryCapacity = in.readInt();
         mMaxLearnedBatteryCapacity = in.readInt();
@@ -14054,6 +14055,7 @@ public class BatteryStatsImpl extends BatteryStats {
         out.writeInt(mDischargePlugLevel);
         out.writeInt(mDischargeCurrentLevel);
         out.writeInt(mCurrentBatteryLevel);
+        out.writeLong(mBatteryTimeToFullSeconds);
         out.writeInt(mEstimatedBatteryCapacity);
         out.writeInt(mMinLearnedBatteryCapacity);
         out.writeInt(mMaxLearnedBatteryCapacity);
@@ -14653,6 +14655,7 @@ public class BatteryStatsImpl extends BatteryStats {
         mDischargePlugLevel = in.readInt();
         mDischargeCurrentLevel = in.readInt();
         mCurrentBatteryLevel = in.readInt();
+        mBatteryTimeToFullSeconds = in.readLong();
         mLowDischargeAmountSinceCharge = in.readInt();
         mHighDischargeAmountSinceCharge = in.readInt();
         mDischargeAmountScreenOn = in.readInt();
@@ -14845,6 +14848,7 @@ public class BatteryStatsImpl extends BatteryStats {
         out.writeInt(mDischargePlugLevel);
         out.writeInt(mDischargeCurrentLevel);
         out.writeInt(mCurrentBatteryLevel);
+        out.writeLong(mBatteryTimeToFullSeconds);
         out.writeInt(mLowDischargeAmountSinceCharge);
         out.writeInt(mHighDischargeAmountSinceCharge);
         out.writeInt(mDischargeAmountScreenOn);
