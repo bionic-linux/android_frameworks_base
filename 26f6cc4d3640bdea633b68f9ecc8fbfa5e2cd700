@@ -63,6 +63,30 @@
       "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c651920_9485b1ee",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1604091
+      },
+      "writtenOn": "2020-09-18T23:43:10Z",
+      "side": 1,
+      "message": "Ops, yeah, the one in git master is 187. This seems non-ideal as merging from AOSP could potentially cause an undetected merge race (if the versions are the same)",
+      "parentUuid": "22df7525_4198ba0c",
+      "range": {
+        "startLine": 154,
+        "startChar": 21,
+        "endLine": 154,
+        "endChar": 28
+      },
+      "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
