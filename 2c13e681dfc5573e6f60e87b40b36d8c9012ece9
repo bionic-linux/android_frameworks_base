@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0afda0b6_1ce5fe4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604091
+      },
+      "writtenOn": "2020-09-18T20:03:45Z",
+      "side": 1,
+      "message": "There are no conflicts in the middle. Not sure if we want to do it this way though. Open to either way.",
+      "parentUuid": "51d7908c_63bf644d",
+      "revId": "2c13e681dfc5573e6f60e87b40b36d8c9012ece9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c36be95e_d12ed780",
         "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
         "patchSetId": 1
