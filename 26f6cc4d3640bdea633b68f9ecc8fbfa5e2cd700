@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b2558bd_7396f463",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-09-18T16:01:31Z",
+      "side": 1,
+      "message": "LGTM. Dmitri/Michael, could you please take a look as well?",
+      "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
