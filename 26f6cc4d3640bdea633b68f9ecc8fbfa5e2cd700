@@ -16,6 +16,29 @@
       "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1540dd22_33446acd",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2020-09-18T20:14:09Z",
+      "side": 1,
+      "message": "You will want to increment VERSION past what it is in git_master, which I believe is currently 187.",
+      "range": {
+        "startLine": 154,
+        "startChar": 21,
+        "endLine": 154,
+        "endChar": 28
+      },
+      "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
