@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "93b304e2_995d4bf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604091
+      },
+      "writtenOn": "2020-09-18T01:58:44Z",
+      "side": 1,
+      "message": "hmm, conflicts. I can probably move the changes to a different location avoid them",
+      "revId": "2c13e681dfc5573e6f60e87b40b36d8c9012ece9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c36be95e_d12ed780",
         "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
         "patchSetId": 1
