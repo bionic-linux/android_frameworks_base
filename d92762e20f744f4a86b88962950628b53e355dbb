@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89feef7c_cbbf9419",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1345812
+      },
+      "writtenOn": "2020-09-18T13:31:44Z",
+      "side": 1,
+      "message": "Yes it\u0027s true. In my manual test I need to insert code like this to BinderThreadMonitor:\n\n  if (getBoolProp(\u0027debug.block_system_server_watchdog\u0027)) sleep_forever();\n\nShould I merge similar implementation like this to this patch? so next we can add test case to verify this feature.",
+      "parentUuid": "4acb9149_a5c5a6fd",
+      "revId": "d92762e20f744f4a86b88962950628b53e355dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a743571b_4839f646",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 18
@@ -47,6 +65,30 @@
       "writtenOn": "2020-09-18T10:06:57Z",
       "side": 1,
       "message": "Does this check negate the need for the PROP_FATAL_IGNORE property? My assumption is that any time PROP_FATAL_IGNORE is set, this feature is being debugged, and therefore there will be an active USB connection. In this case, isCrashLoopFound() will always return false, so there is no need to ignore the result.",
+      "range": {
+        "startLine": 795,
+        "startChar": 8,
+        "endLine": 803,
+        "endChar": 9
+      },
+      "revId": "d92762e20f744f4a86b88962950628b53e355dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea493baa_7f6bad44",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1345812
+      },
+      "writtenOn": "2020-09-18T13:31:44Z",
+      "side": 1,
+      "message": "This design focuses on serving dogfooders, most of who installed userdebug build (so rescue party is disabled) on their devices, and used the devices as daily phones (so usually there is no USB cable and PC around them to capture bugreport for issues).\n\nAnd at the same time I\u0027d like to reduce interference to non-dogfooders\u0027 debugging process. So added this check for labs and engineers who basically attach the devices to their workstations all the time. And added the PROP_FATAL_IGNORE for engineers who try to reproduce issues on their phones, and wait to capture bugreport when symptom is reproduced. In this case the PROP_FATAL_IGNORE can be an option to skip this feature without re-compile a debugging build.",
+      "parentUuid": "a6a33c7f_66a5c001",
       "range": {
         "startLine": 795,
         "startChar": 8,
