@@ -111,6 +111,30 @@
       "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b56497e_e42ca614",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1604091
+      },
+      "writtenOn": "2020-09-19T22:12:25Z",
+      "side": 1,
+      "message": "Seems like there\u0027s merged conflict now. I\u0027m going to do master first and cherry-pick into AOSP",
+      "parentUuid": "5eefb88e_ae2a1631",
+      "range": {
+        "startLine": 154,
+        "startChar": 21,
+        "endLine": 154,
+        "endChar": 28
+      },
+      "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
