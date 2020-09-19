@@ -87,6 +87,30 @@
       "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5eefb88e_ae2a1631",
+        "filename": "core/java/com/android/internal/os/BatteryStatsImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-09-19T00:38:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t any changes in git_master be cherry-picked here first? Otherwise, 188 in AOSP has a different meaning than 188 in git_master. It is probably fine though, since they would be different builds, but I want to double check.",
+      "parentUuid": "0c651920_9485b1ee",
+      "range": {
+        "startLine": 154,
+        "startChar": 21,
+        "endLine": 154,
+        "endChar": 28
+      },
+      "revId": "26f6cc4d3640bdea633b68f9ecc8fbfa5e2cd700",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
