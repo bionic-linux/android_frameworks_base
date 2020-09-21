@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ed68d366_6eb914d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1448822
+      },
+      "writtenOn": "2020-09-21T21:56:23Z",
+      "side": 1,
+      "message": "This can be done in a future CL. For now you should just mention this manual test in the CL description",
+      "parentUuid": "89feef7c_cbbf9419",
+      "revId": "d92762e20f744f4a86b88962950628b53e355dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a743571b_4839f646",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 18
@@ -98,6 +116,30 @@
       "revId": "d92762e20f744f4a86b88962950628b53e355dbb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dee730_2d06c20c",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1448822
+      },
+      "writtenOn": "2020-09-21T21:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea493baa_7f6bad44",
+      "range": {
+        "startLine": 795,
+        "startChar": 8,
+        "endLine": 803,
+        "endChar": 9
+      },
+      "revId": "d92762e20f744f4a86b88962950628b53e355dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
