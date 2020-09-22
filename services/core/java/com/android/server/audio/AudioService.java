@@ -561,6 +561,8 @@ public class AudioService extends IAudioService.Stub
 
     private final boolean mMonitorRotation;
 
+    private final boolean mMonitorFold;
+
     private boolean mDockAudioMediaEnabled = true;
 
     private int mDockState = Intent.EXTRA_DOCK_STATE_UNDOCKED;
@@ -871,8 +873,13 @@ public class AudioService extends IAudioService.Stub
 
         intentFilter.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
         mMonitorRotation = SystemProperties.getBoolean("ro.audio.monitorRotation", false);
+        mMonitorFold = SystemProperties.getBoolean("ro.audio.monitorFold", false);
         if (mMonitorRotation) {
             RotationHelper.init(mContext, mAudioHandler);
+        }
+
+        if (mMonitorFold) {
+            FoldHelper.init();
         }
 
         intentFilter.addAction(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION);
@@ -6901,11 +6908,17 @@ public class AudioService extends IAudioService.Stub
                 if (mMonitorRotation) {
                     RotationHelper.enable();
                 }
+                if (mMonitorFold) {
+                    FoldHelper.enable();
+                }
                 AudioSystem.setParameters("screen_state=on");
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
                 if (mMonitorRotation) {
                     //reduce wakeups (save current) by only listening when display is on
                     RotationHelper.disable();
+                }
+                if (mMonitorFold) {
+                    FoldHelper.disable();
                 }
                 AudioSystem.setParameters("screen_state=off");
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
