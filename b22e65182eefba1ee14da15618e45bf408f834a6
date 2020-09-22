@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "507a4af2_2145f5cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1714489
+      },
+      "writtenOn": "2020-09-22T11:01:06Z",
+      "side": 1,
+      "message": "- Regarding review for -\nhttps://android-review.googlesource.com/c/platform/frameworks/opt/telephony/+/1426551/1\n\nWe added the equalsExceptID of ApnSetting.java that was in the previous \"reset to default\" review part.\nI uploaded a different review because the repo is different from each other.",
+      "revId": "b22e65182eefba1ee14da15618e45bf408f834a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
