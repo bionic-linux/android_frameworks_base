@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c020f7e7_608d29d0",
+        "filename": "media/java/android/media/MediaHTTPConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1334152
+      },
+      "writtenOn": "2020-09-22T11:03:39Z",
+      "side": 1,
+      "message": "nit: maybe \"default TLS Provider\" for clarity, but your call.",
+      "range": {
+        "startLine": 243,
+        "startChar": 38,
+        "endLine": 243,
+        "endChar": 54
+      },
+      "revId": "6d92792f2990137983cd7feb162c70420ce8f50b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
