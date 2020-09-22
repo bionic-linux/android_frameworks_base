@@ -1159,6 +1159,64 @@ public class ApnSetting implements Parcelable {
     }
 
     /**
+     * This method would be used in DcTracker.java to check whether apn is changed or not.
+     * @hide
+     */
+    public String toStringExceptID() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[ApnSettingV7] ")
+                .append(mEntryName)
+                .append(", ").append(mOperatorNumeric)
+                .append(", ").append(mApnName)
+                .append(", ").append(mProxyAddress)
+                .append(", ").append(UriToString(mMmsc))
+                .append(", ").append(mMmsProxyAddress)
+                .append(", ").append(portToString(mMmsProxyPort))
+                .append(", ").append(portToString(mProxyPort))
+                .append(", ").append(mAuthType).append(", ");
+        final String[] types = getApnTypesStringFromBitmask(mApnTypeBitmask).split(",");
+        sb.append(TextUtils.join(" | ", types));
+        sb.append(", ").append(PROTOCOL_INT_MAP.get(mProtocol));
+        sb.append(", ").append(PROTOCOL_INT_MAP.get(mRoamingProtocol));
+        sb.append(", ").append(mCarrierEnabled);
+        sb.append(", ").append(mProfileId);
+        sb.append(", ").append(mPersistent);
+        sb.append(", ").append(mMaxConns);
+        sb.append(", ").append(mWaitTime);
+        sb.append(", ").append(mMaxConnsTime);
+        sb.append(", ").append(mMtu);
+        sb.append(", ").append(MVNO_TYPE_INT_MAP.get(mMvnoType));
+        sb.append(", ").append(mMvnoMatchData);
+        sb.append(", ").append(mPermanentFailed);
+        sb.append(", ").append(mNetworkTypeBitmask);
+        sb.append(", ").append(mApnSetId);
+        sb.append(", ").append(mCarrierId);
+        sb.append(", ").append(mSkip464Xlat);
+        return sb.toString();
+    }
+
+    /**
+     * This method would be used in DcTracker.java to check whether apn is changed or not.
+     * @hide
+     */
+    public boolean equalsExceptID(Object o) {
+        if (!(o instanceof ApnSetting)) return false;
+        ApnSetting obj = (ApnSetting) o;
+        boolean ret = toStringExceptID().equals(obj.toStringExceptID());
+        boolean areUsersEqual = defaultString(mUser).equals(defaultString(obj.mUser));
+        boolean arePasswordsEqual = defaultString(mPassword).equals(defaultString(obj.mPassword));
+        return ret && areUsersEqual && arePasswordsEqual;
+    }
+
+    /**
+     * This method would be used to avoid null exception.
+     * @hide
+     */
+    public String defaultString(String str) {
+        return str == null ? "" : str;
+    }
+
+    /**
      * Returns true if there are MVNO params specified.
      * @hide
      */
