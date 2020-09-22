@@ -2324,6 +2324,9 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
                         stack.executeAppTransition(targetOptions);
                     } else {
                         resumedOnDisplay |= topRunningActivity.makeActiveIfNeeded(target);
+                        if (sNdx >= taskDisplayArea.getStackCount()) {
+                            sNdx = taskDisplayArea.getStackCount() - 1;
+                        }
                     }
                 }
             }
