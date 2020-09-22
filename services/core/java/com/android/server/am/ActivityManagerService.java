@@ -10990,19 +10990,10 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (dumpCheckinFormat) {
             dumpBroadcastStatsCheckinLocked(fd, pw, args, opti, dumpCheckin, dumpPackage);
         } else {
-            if (dumpClient) {
-                // dumpEverything() will take the lock when needed, and momentarily drop
-                // it for dumping client state.
-                dumpEverything(fd, pw, args, opti, dumpAll, dumpPackage, dumpClient,
-                        dumpNormalPriority, dumpAppId);
-            } else {
-                // Take the lock here, so we get a consistent state for the entire dump;
-                // dumpEverything() will take the lock as well, but that is fine.
-                synchronized(this) {
-                    dumpEverything(fd, pw, args, opti, dumpAll, dumpPackage, dumpClient,
-                            dumpNormalPriority, dumpAppId);
-                }
-            }
+            // dumpEverything() will take the lock when needed, and momentarily drop
+            // it for dumping client state.
+            dumpEverything(fd, pw, args, opti, dumpAll, dumpPackage, dumpClient,
+                    dumpNormalPriority, dumpAppId);
         }
         Binder.restoreCallingIdentity(origId);
     }
