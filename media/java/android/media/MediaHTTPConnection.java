@@ -36,15 +36,20 @@ import java.net.NoRouteToHostException;
 import java.net.ProtocolException;
 import java.net.Proxy;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.UnknownServiceException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 
 /** @hide */
 public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
     private static final String TAG = "MediaHTTPConnection";
-    private static final boolean VERBOSE = false;
+    private static final boolean VERBOSE = true;
 
     // connection timeout - 30 sec
     private static final int CONNECT_TIMEOUT_MS = 30 * 1000;
@@ -222,6 +227,25 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
         return false;
     }
 
+    private HttpURLConnection openConnection(URL url, boolean noProxy) throws IOException {
+        URLConnection connection;
+        if (noProxy) {
+            connection = url.openConnection(Proxy.NO_PROXY);
+        } else {
+            connection = url.openConnection();
+        }
+        if (connection instanceof HttpsURLConnection) {
+            HttpsURLConnection httpsConnection = (HttpsURLConnection) connection;
+            try {
+                SSLContext platformSslContext = SSLContext.getInstance("TLS", "AndroidOpenSSL");
+                httpsConnection.setSSLSocketFactory(platformSslContext.getSocketFactory());
+            } catch (NoSuchAlgorithmException | NoSuchProviderException e) {
+                Log.w(TAG, "Using the default Provider", e);
+            }
+        }
+        return (HttpURLConnection)connection;
+    }
+
     private synchronized void seekTo(long offset) throws IOException {
         teardownConnection();
 
@@ -248,11 +272,7 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
                 if (mNumDisconnectingThreads.get() > 0) {
                     throw new IOException("concurrently disconnecting");
                 }
-                if (noProxy) {
-                    mConnection = (HttpURLConnection)url.openConnection(Proxy.NO_PROXY);
-                } else {
-                    mConnection = (HttpURLConnection)url.openConnection();
-                }
+                mConnection = openConnection(url, noProxy);
                 // If another thread is concurrently disconnecting, throwing IOException will
                 // cause us to release the lock, giving the other thread a chance to acquire
                 // it. It also ensures that the catch block will run, which will tear down
