@@ -50,6 +50,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
+import android.util.Log;
 import android.util.SparseIntArray;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -67,7 +68,7 @@ import java.util.BitSet;
  */
 public class EntitlementManager {
     private static final String TAG = EntitlementManager.class.getSimpleName();
-    private static final boolean DBG = false;
+    private static final boolean DBG = Log.isLoggable(TAG, Log.DEBUG);
 
     @VisibleForTesting
     protected static final String DISABLE_PROVISIONING_SYSPROP_KEY = "net.tethering.noprovisioning";

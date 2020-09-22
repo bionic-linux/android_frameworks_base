@@ -76,8 +76,7 @@ import java.util.Set;
  */
 public class UpstreamNetworkMonitor {
     private static final String TAG = UpstreamNetworkMonitor.class.getSimpleName();
-    private static final boolean DBG = false;
-    private static final boolean VDBG = false;
+    private static final boolean VDBG = Log.isLoggable(TAG, Log.VERBOSE);
 
     public static final int EVENT_ON_CAPABILITIES   = 1;
     public static final int EVENT_ON_LINKPROPERTIES = 2;

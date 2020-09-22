@@ -76,7 +76,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class OffloadController {
     private static final String TAG = OffloadController.class.getSimpleName();
-    private static final boolean DBG = false;
+    private static final boolean DBG = Log.isLoggable(TAG, Log.VERBOSE);
     private static final String ANYIP = "0.0.0.0";
     private static final ForwardedStats EMPTY_STATS = new ForwardedStats();
 
