@@ -334,6 +334,9 @@ public class VolumeInfo implements Parcelable {
     }
 
     public boolean isVisibleForRead(int userId) {
+        if (type == TYPE_STUB && mountUserId == userId) {
+            return true;
+        }
         return isVisibleForUser(userId);
     }
 
