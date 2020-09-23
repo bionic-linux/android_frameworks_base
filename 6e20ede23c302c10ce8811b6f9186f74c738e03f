@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "560e0d1c_a1738df4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1054468
+      },
+      "writtenOn": "2020-09-23T17:56:05Z",
+      "side": 1,
+      "message": "Can you include the motivation for this change? Why does Traceur need the status_bar permission?",
+      "revId": "6e20ede23c302c10ce8811b6f9186f74c738e03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
