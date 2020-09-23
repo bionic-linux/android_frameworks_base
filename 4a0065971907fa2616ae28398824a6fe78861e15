@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c79c56cb_51028164",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-09-23T09:59:32Z",
+      "side": 1,
+      "message": "Maybe also run the VPN CTS tests like HostsideVpnTests.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "4a0065971907fa2616ae28398824a6fe78861e15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
