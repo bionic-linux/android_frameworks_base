@@ -16,6 +16,24 @@
       "revId": "6e20ede23c302c10ce8811b6f9186f74c738e03f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e59805_464b9d07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1558410
+      },
+      "writtenOn": "2020-09-23T17:58:23Z",
+      "side": 1,
+      "message": "It is needed for the quick settings tile. Traceur already utilizes this permission, but it needs to be explicitly whitelisted as we move from a platform-signed app to a privapp.",
+      "parentUuid": "560e0d1c_a1738df4",
+      "revId": "6e20ede23c302c10ce8811b6f9186f74c738e03f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
