@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2277725e_01dc4510",
+        "filename": "telephony/java/android/telephony/ims/ImsReasonInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1386,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-23T18:07:21Z",
+      "side": 1,
+      "message": "Can we @IntDef this now?",
+      "range": {
+        "startLine": 1386,
+        "startChar": 3,
+        "endLine": 1386,
+        "endChar": 31
+      },
+      "revId": "44e4d2a55a85061ea369b22d00e2669f612ee8d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
