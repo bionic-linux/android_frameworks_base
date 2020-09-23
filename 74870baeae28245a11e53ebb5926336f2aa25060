@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa8883f7_18568489",
+        "filename": "telecomm/java/android/telecom/ConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1994,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-09-23T18:30:42Z",
+      "side": 1,
+      "message": "Can connection\u0027s phoneaccount be null here? If so, it looks like we do not perform the same check below.",
+      "range": {
+        "startLine": 1992,
+        "startChar": 12,
+        "endLine": 1994,
+        "endChar": 66
+      },
+      "revId": "74870baeae28245a11e53ebb5926336f2aa25060",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
