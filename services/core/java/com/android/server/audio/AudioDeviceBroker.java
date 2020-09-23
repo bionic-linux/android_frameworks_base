@@ -438,7 +438,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
             sendIILMsgNoDelay(MSG_IIL_SET_FORCE_USE, SENDMSG_QUEUE,
                     AudioSystem.FOR_COMMUNICATION, mForcedUseForComm, eventSource);
             sendIILMsgNoDelay(MSG_IIL_SET_FORCE_USE, SENDMSG_QUEUE,
-                    AudioSystem.FOR_RECORD, mForcedUseForComm, eventSource);
+                    AudioSystem.FOR_RECORD, mForcedUseForComm == AudioSystem.FORCE_SPEAKER
+                            ? AudioSystem.FORCE_NONE : mForcedUseForComm, eventSource);
         }
         // Un-mute ringtone stream volume
         mAudioService.postUpdateRingerModeServiceInt();
