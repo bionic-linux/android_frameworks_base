@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b01fbf4f_f490a6bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2020-09-24T11:51:12Z",
+      "side": 1,
+      "message": "What I mean was: who sets these properties? I thought vendor_init sets these because system_vendor_config_prop is used?",
+      "parentUuid": "a04aa9da_e9dc5222",
+      "revId": "b4aabb700df774c71c38a46fda55be8043d4a489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e66b6f91_2922bede",
         "filename": "services/core/java/com/android/server/Watchdog.java",
         "patchSetId": 19
