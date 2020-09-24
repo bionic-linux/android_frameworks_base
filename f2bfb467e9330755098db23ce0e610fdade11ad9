@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d81c4c_0d570a90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2020-09-24T19:26:11Z",
+      "side": 1,
+      "message": "Should fields for 187 be cherry-picked?",
+      "revId": "f2bfb467e9330755098db23ce0e610fdade11ad9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
