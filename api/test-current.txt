@@ -4380,10 +4380,13 @@ package android.telephony.ims {
     method public void disableIms(int);
     method public void enableIms(int);
     method public android.telephony.ims.stub.ImsConfigImplBase getConfig(int);
+    method public long getImsServiceCapabilities();
     method public android.telephony.ims.stub.ImsRegistrationImplBase getRegistration(int);
+    method @Nullable public android.telephony.ims.stub.SipTransportImplBase getSipTransport(int);
     method public final void onUpdateSupportedImsFeatures(android.telephony.ims.stub.ImsFeatureConfiguration) throws android.os.RemoteException;
     method public android.telephony.ims.stub.ImsFeatureConfiguration querySupportedImsFeatures();
     method public void readyForFeatureCreation();
+    field public static final long CAPABILITY_SIP_DELEGATE_CREATION = 2L; // 0x2L
   }
 
   public final class ImsSsData implements android.os.Parcelable {
