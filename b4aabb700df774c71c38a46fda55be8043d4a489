@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1827f33c_80a33641",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2020-09-24T03:19:01Z",
+      "side": 1,
+      "message": "I recommend using sysprop as API if the values of these properties come from vendor.",
+      "revId": "b4aabb700df774c71c38a46fda55be8043d4a489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e66b6f91_2922bede",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1291338
+      },
+      "writtenOn": "2020-09-24T03:19:01Z",
+      "side": 1,
+      "message": "nit; Can we print a warning if only one of these two is zero?",
+      "range": {
+        "startLine": 781,
+        "startChar": 0,
+        "endLine": 783,
+        "endChar": 9
+      },
+      "revId": "b4aabb700df774c71c38a46fda55be8043d4a489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
