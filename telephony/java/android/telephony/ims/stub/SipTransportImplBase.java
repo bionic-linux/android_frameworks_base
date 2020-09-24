@@ -24,8 +24,6 @@ import java.util.concurrent.Executor;
 /**
  * Manages the creation and destruction of SipDelegates in order to proxy SIP traffic to other
  * IMS applications in order to support IMS single registration.
- *
- * @hide Until there is an implementation, keep this hidden
  */
 public class SipTransportImplBase {
 
