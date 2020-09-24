@@ -17,6 +17,8 @@
 package android.telephony.ims.stub;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.telephony.ims.aidl.ISipTransport;
 
 import java.util.concurrent.Executor;
@@ -24,14 +26,15 @@ import java.util.concurrent.Executor;
 /**
  * Manages the creation and destruction of SipDelegates in order to proxy SIP traffic to other
  * IMS applications in order to support IMS single registration.
- *
- * @hide Until there is an implementation, keep this hidden
+ * @hide
  */
+@SystemApi
+@TestApi
 public class SipTransportImplBase {
 
     private final Executor mBinderExecutor;
     private final ISipTransport mSipTransportImpl = new ISipTransport.Stub() {
-
+        // Empty binder for now until the impl is started.
     };
 
     /**
