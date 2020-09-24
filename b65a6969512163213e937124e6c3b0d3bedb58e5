@@ -22,6 +22,30 @@
       "revId": "b65a6969512163213e937124e6c3b0d3bedb58e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2243f8b0_f65052ed",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1558410
+      },
+      "writtenOn": "2020-09-24T17:45:12Z",
+      "side": 1,
+      "message": "No problem, added.",
+      "parentUuid": "718bbc83_ecab8de3",
+      "range": {
+        "startLine": 436,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 52
+      },
+      "revId": "b65a6969512163213e937124e6c3b0d3bedb58e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
