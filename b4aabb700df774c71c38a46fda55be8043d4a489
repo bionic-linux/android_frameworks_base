@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c7087cf1_138a3517",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1345812
+      },
+      "writtenOn": "2020-09-25T00:25:02Z",
+      "side": 1,
+      "message": "Yes, these will be configured by vendor\u0027s init_*.rc, and without the configuration this feature will be a no-op, so we can dogfooding it first on some of the on-going products.",
+      "parentUuid": "b01fbf4f_f490a6bf",
+      "revId": "b4aabb700df774c71c38a46fda55be8043d4a489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e66b6f91_2922bede",
         "filename": "services/core/java/com/android/server/Watchdog.java",
         "patchSetId": 19
