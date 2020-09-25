@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "446116b9_6f90ed9a",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-25T22:41:46Z",
+      "side": 1,
+      "message": "In the future ConntrackMessage should get a parse API like StructNlMsgHdr so we can confirm that the conntrack added is for the TCP connection above, but this should be fine for now.",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
