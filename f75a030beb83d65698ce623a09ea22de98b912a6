@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6f6228_86dc8772",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-09-25T13:11:15Z",
+      "side": 1,
+      "message": "do you mind saying not only what this CL does, but also give context / say why?\n\nThe \"why\" seems even more important than the \"what\", to me.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "f75a030beb83d65698ce623a09ea22de98b912a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5097c47c_8db02735",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1103203
+      },
+      "writtenOn": "2020-09-25T13:11:15Z",
+      "side": 1,
+      "message": "This CL LGTM as a workaround for bug 168703351. That said, I\u0027m not sure if it\u0027s the right thing to do in the long term because it seems weird for a piece of code that runs in the app process to not preferences the app\u0027s preferences for choice of SSLSocketFactory. OTOH, we could consider this code part of the platform, in which case this is probably okay. Not sure what\u0027s better.",
+      "revId": "f75a030beb83d65698ce623a09ea22de98b912a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
