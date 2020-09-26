@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ff684cc_bcf58ced",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1199008
+      },
+      "writtenOn": "2020-09-26T03:38:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "93345c39_e7317314",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1543efa6_df9fd0df",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "cd414b1c_447cfa3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1199008
+      },
+      "writtenOn": "2020-09-26T03:38:46Z",
+      "side": 1,
+      "message": "We will add below \nBug: 149109043\nTest: OffloadHardwareInterfaceTest",
+      "parentUuid": "1543efa6_df9fd0df",
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65289c32_be701f9c",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
         "patchSetId": 10
@@ -53,6 +95,30 @@
       "writtenOn": "2020-09-26T03:21:14Z",
       "side": 1,
       "message": "If this is specific for StructNfGenMsg, then maybe this will need rename?",
+      "range": {
+        "startLine": 272,
+        "startChar": 16,
+        "endLine": 272,
+        "endChar": 34
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77000f1_6b58baa5",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1199008
+      },
+      "writtenOn": "2020-09-26T03:38:46Z",
+      "side": 1,
+      "message": "THis code has been discussed in detail and already approved.We don\u0027t want to change the function at this time.",
+      "parentUuid": "65289c32_be701f9c",
       "range": {
         "startLine": 272,
         "startChar": 16,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "cca3702a_f99a45b8",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1199008
+      },
+      "writtenOn": "2020-09-26T03:38:46Z",
+      "side": 1,
+      "message": "This is required to format the netlink correctly otherwise kernel rejects it. ConntrackMessage.java also uses this. Do you still want a comment here.",
+      "parentUuid": "db99dfbd_d3476a3a",
+      "range": {
+        "startLine": 285,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89c3ef71_69be2903",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
         "patchSetId": 10
@@ -99,6 +189,24 @@
       "writtenOn": "2020-09-26T03:21:14Z",
       "side": 1,
       "message": "IIUC there is already a frameworks/base/packages/Tethering/tests/unit/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java.\nIs it better to add your test there instead of create a new file?",
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca9bd10_8b5969e3",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1199008
+      },
+      "writtenOn": "2020-09-26T03:38:46Z",
+      "side": 1,
+      "message": "We need to add it here as we are creating a socket and need to be privileged. Also Lorenzo recommended us.",
+      "parentUuid": "89c3ef71_69be2903",
       "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
