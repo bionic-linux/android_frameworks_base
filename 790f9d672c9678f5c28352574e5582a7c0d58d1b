@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "c76bcecc_d9e93b3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "SGTM\nIIUC there are 2 OffloadHardwareInterfaceTest, maybe you want to be more specific?",
+      "parentUuid": "cd414b1c_447cfa3f",
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65289c32_be701f9c",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
         "patchSetId": 10
@@ -119,6 +137,30 @@
       "side": 1,
       "message": "THis code has been discussed in detail and already approved.We don\u0027t want to change the function at this time.",
       "parentUuid": "65289c32_be701f9c",
+      "range": {
+        "startLine": 272,
+        "startChar": 16,
+        "endLine": 272,
+        "endChar": 34
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756f72e4_14265e65",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "nit: You are already changing this function, right? And consider we\u0027ll need to send other type of netlink messages in future, what name we should use?\nThat being said, no strong opinion for this, given that we could always rename it when needed.",
+      "parentUuid": "d77000f1_6b58baa5",
       "range": {
         "startLine": 272,
         "startChar": 16,
@@ -178,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "ba35c025_6d8ad39d",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "Yes, assuming I will need to maintain this file in future.\nI don\u0027t really know how to check the correctness of these lines.\nSo my answer is yes, maybe show me(and future developers) where to look at when something is wrong?",
+      "parentUuid": "cca3702a_f99a45b8",
+      "range": {
+        "startLine": 285,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89c3ef71_69be2903",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
         "patchSetId": 10
@@ -213,6 +279,116 @@
     },
     {
       "key": {
+        "uuid": "29a7eb6a_b8f7fc69",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7ca9bd10_8b5969e3",
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a01fc4b3_7fe6ca9d",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "dead code?",
+      "range": {
+        "startLine": 65,
+        "startChar": 3,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dabd99_0d0256c4",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "nit: final?\nAlso applies to variables below.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 25
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b96c8db_0219a808",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "style: maybe foundConntrackEntry?",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4809e772_7bd383b6",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "nit: period?",
+      "range": {
+        "startLine": 114,
+        "startChar": 47,
+        "endLine": 114,
+        "endChar": 48
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "446116b9_6f90ed9a",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
         "patchSetId": 10
@@ -229,6 +405,53 @@
         "startChar": 12,
         "endLine": 118,
         "endChar": 13
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224892e1_79c63177",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "Maybe add a // TODO: for it?",
+      "parentUuid": "446116b9_6f90ed9a",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e5e40d_6f6e1042",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-26T04:38:31Z",
+      "side": 1,
+      "message": "Will these sockets be closed if fail at l.111?\nIf not, maybe you want to use finally?",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 29
       },
       "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
