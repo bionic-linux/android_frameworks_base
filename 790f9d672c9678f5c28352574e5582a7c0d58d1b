@@ -119,6 +119,23 @@
     },
     {
       "key": {
+        "uuid": "9443a550_f7f309f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-27T14:23:49Z",
+      "side": 1,
+      "message": "Fails to build with:\n\nframeworks/base/packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java:24: error: cannot find symbol\nimport static com.android.networkstack.tethering.OffloadHardwareInterface.IPCTNL_MSG_CT_NEW;\n^\n  symbol:   static IPCTNL_MSG_CT_NEW\n  location: class OffloadHardwareInterface\nframeworks/base/packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java:26: error: cannot find symbol\nimport static com.android.networkstack.tethering.OffloadHardwareInterface.NF_NETLINK_CONNTRACK_DESTROY;\n^\n  symbol:   static NF_NETLINK_CONNTRACK_DESTROY\n  location: class OffloadHardwareInterface\nframeworks/base/packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java:27: error: cannot find symbol\nimport static com.android.networkstack.tethering.OffloadHardwareInterface.NF_NETLINK_CONNTRACK_NEW;\n^\n  symbol:   static NF_NETLINK_CONNTRACK_NEW\n  location: class OffloadHardwareInterface\nframeworks/base/packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java:99: error: cannot find symbol\n                NF_NETLINK_CONNTRACK_NEW | NF_NETLINK_CONNTRACK_DESTROY);\n                ^\n  symbol:   variable NF_NETLINK_CONNTRACK_NEW\n  location: class OffloadHardwareInterfaceTest\nframeworks/base/packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java:99: error: cannot find symbol\n                NF_NETLINK_CONNTRACK_NEW | NF_NETLINK_CONNTRACK_DESTROY);\n                                           ^\n  symbol:   variable NF_NETLINK_CONNTRACK_DESTROY\n  location: class OffloadHardwareInterfaceTest\nframeworks/base/packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java:115: error: cannot find symbol\n            if (nlmsghdr.nlmsg_type \u003d\u003d ((NFNL_SUBSYS_CTNETLINK \u003c\u003c 8) | IPCTNL_MSG_CT_NEW)) {\n                                                                       ^\n  symbol:   variable IPCTNL_MSG_CT_NEW\n  location: class OffloadHardwareInterfaceTest\n6 errors\n",
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65289c32_be701f9c",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
         "patchSetId": 10
