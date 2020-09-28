@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "aa2fe452_86830151",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1345812
+      },
+      "writtenOn": "2020-09-28T15:02:35Z",
+      "side": 1,
+      "message": "Added sysprop_library \"com.android.sysprop.watchdog\" to use sysprop API. Kindly review patch set #23 for this revision. Thanks.",
+      "parentUuid": "c7087cf1_138a3517",
+      "revId": "b4aabb700df774c71c38a46fda55be8043d4a489",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e66b6f91_2922bede",
         "filename": "services/core/java/com/android/server/Watchdog.java",
         "patchSetId": 19
