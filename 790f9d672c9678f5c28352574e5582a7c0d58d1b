@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "d6251b23_d026c0d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c76bcecc_d9e93b3c",
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd4b5729_55739ea6",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 10
@@ -231,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "b1ac5944_0402f8f3",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2fdaead_a57c3296",
+      "range": {
+        "startLine": 272,
+        "startChar": 16,
+        "endLine": 272,
+        "endChar": 34
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db99dfbd_d3476a3a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
         "patchSetId": 10
@@ -326,6 +368,30 @@
     },
     {
       "key": {
+        "uuid": "b42b22a2_b4653577",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7a19a77_8d9b67a0",
+      "range": {
+        "startLine": 285,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 29
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89c3ef71_69be2903",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
         "patchSetId": 10
@@ -397,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "5c17c5f2_262e8c5e",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd91e9e_209a413f",
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a01fc4b3_7fe6ca9d",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
         "patchSetId": 10
@@ -417,6 +501,30 @@
       "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3c5986_9ec9f4f2",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a01fc4b3_7fe6ca9d",
+      "range": {
+        "startLine": 65,
+        "startChar": 3,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -443,6 +551,30 @@
     },
     {
       "key": {
+        "uuid": "4d8fe7a0_973dd6a7",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11dabd99_0d0256c4",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 25
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b96c8db_0219a808",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
         "patchSetId": 10
@@ -466,6 +598,30 @@
     },
     {
       "key": {
+        "uuid": "d60a3b74_ebeaa553",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b96c8db_0219a808",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 31
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4809e772_7bd383b6",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
         "patchSetId": 10
@@ -486,6 +642,30 @@
       "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bfe18e_c732fbd3",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4809e772_7bd383b6",
+      "range": {
+        "startLine": 114,
+        "startChar": 47,
+        "endLine": 114,
+        "endChar": 48
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -560,6 +740,30 @@
     },
     {
       "key": {
+        "uuid": "61e1b251_474ae10b",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74d2398b_f12f65f7",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 13
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69e5e40d_6f6e1042",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
         "patchSetId": 10
@@ -604,6 +808,30 @@
       "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f46f6b3_7114b0aa",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/OffloadHardwareInterfaceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1203633
+      },
+      "writtenOn": "2020-09-28T17:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a264fef_cc06ec3a",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 29
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
