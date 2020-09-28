@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74b0e963_c6c90a65",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T10:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e454270_8a3ad3b9",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6f735dc_17c74f79",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
         "patchSetId": 1
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "8f60818e_f5618073",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T10:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f735dc_17c74f79",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 10
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c2f8a1d_5820e51b",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T10:01:26Z",
+      "side": 1,
+      "message": "In theory, I think it should not be null.\nSee the NetworkCallback#onAvailable in ConnectivityManager\nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/ConnectivityManager.java;l\u003d3354?q\u003dconnectivitymanager.java\u0026sq\u003dpackage:aosp-master\n\nThere are onCapabilitiesChanged and onLinkPropertiesChanged updated that guarantees UpstreamNetworkMonitor can get non-null NetworkCapabilies.\n\nBut this seems too implicitly, add the protection to avoid breaking in the future.",
+      "parentUuid": "6ff0dad8_43cba991",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "609705b3_009dfeeb",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a659290_7670301d",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T10:01:26Z",
+      "side": 1,
+      "message": "I think string is more friend for reading than constant. I make some change in new patch that explicitly put it into the test.",
+      "parentUuid": "609705b3_009dfeeb",
+      "range": {
+        "startLine": 62,
+        "startChar": 49,
+        "endLine": 62,
+        "endChar": 59
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0157f3cc_27b0b405",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T10:01:26Z",
+      "side": 1,
+      "message": "Oops, thanks for catching.",
+      "parentUuid": "2b9200db_b22059b4",
+      "range": {
+        "startLine": 79,
+        "startChar": 52,
+        "endLine": 79,
+        "endChar": 53
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "229e8ca8_7a3c2919",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f94d4f_4635cf14",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T10:01:26Z",
+      "side": 1,
+      "message": "Done, ideally null networkCapabilities should not happen.",
+      "parentUuid": "229e8ca8_7a3c2919",
+      "range": {
+        "startLine": 219,
+        "startChar": 5,
+        "endLine": 219,
+        "endChar": 9
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b7c52173_9455954b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T10:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6444197f_0274a672",
+      "range": {
+        "startLine": 255,
+        "startChar": 65,
+        "endLine": 255,
+        "endChar": 66
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "880ea8dd_fbff1623",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2020-09-28T01:46:33Z",
       "side": 1,
       "message": "Actually I think the numbers don\u0027t make it much easier to read, but it\u0027s harder to maintain. You could just use \"// * Disable wifi upstream...\" or \"// - Disable wifi upstream ...\" if you want to make the steps easy to spot instead.\nWhichever you prefer though.",
+      "range": {
+        "startLine": 282,
+        "startChar": 11,
+        "endLine": 282,
+        "endChar": 13
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e8655a0_a0f32591",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-09-28T10:01:26Z",
+      "side": 1,
+      "message": "Thanks for suggestion.",
+      "parentUuid": "880ea8dd_fbff1623",
       "range": {
         "startLine": 282,
         "startChar": 11,
