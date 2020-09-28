@@ -1912,6 +1912,7 @@ public class PackageParser {
                 outError[0] = "<manifest> specifies bad sharedUserId name \""
                     + str + "\": " + nameError;
                 mParseError = PackageManager.INSTALL_PARSE_FAILED_BAD_SHARED_USER_ID;
+                sa.recycle();
                 return null;
             }
             pkg.mSharedUserId = str.intern();
@@ -3970,6 +3971,9 @@ public class PackageParser {
 
         final String classLoaderName = sa.getString(
                 com.android.internal.R.styleable.AndroidManifestApplication_classLoader);
+
+        sa.recycle();
+
         if (classLoaderName == null || ClassLoaderFactory.isValidClassLoaderName(classLoaderName)) {
             owner.applicationInfo.splitClassLoaderNames[splitIndex] = classLoaderName;
         } else {
