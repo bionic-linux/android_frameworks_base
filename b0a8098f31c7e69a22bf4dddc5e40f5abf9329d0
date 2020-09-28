@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e454270_8a3ad3b9",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:46:33Z",
+      "side": 1,
+      "message": "Nit: also document that the UpstreamNetworkState must have an already populated LinkProperties (e.g. UpstreamNetworkState#linkProperties must never be null)",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 6
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f735dc_17c74f79",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:46:33Z",
+      "side": 1,
+      "message": "Nit: maybe move as the first line ? It\u0027s a bit strange to do some processing, then have a condition to give up, then continue",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 10
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff0dad8_43cba991",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:46:33Z",
+      "side": 1,
+      "message": "I don\u0027t think we have guarantees that this is not null at this point ? Looking at UpstreamNetworkMonitor, it will first initialize mNetworkMap with UpstreamNetworkState(lp\u003dnull, nc\u003dnull) in handleAvailable, then handleLinkProp could have prev.networkCapabilities \u003d\u003d null.\n\nThis generates EVENT_ON_LINKPROPERTIES with ns.networkCapabilities \u003d\u003d null",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609705b3_009dfeeb",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:46:33Z",
+      "side": 1,
+      "message": "Nit: maybe parse the address directly in the constant ? Would simplify the test code very slightly, and it would be consistent with mBluetoothPrefix or mLegacyWifiP2pAddress",
+      "range": {
+        "startLine": 62,
+        "startChar": 49,
+        "endLine": 62,
+        "endChar": 59
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9200db_b22059b4",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:46:33Z",
+      "side": 1,
+      "message": "3 ? Otherwise it\u0027s the same as the mobile one",
+      "range": {
+        "startLine": 79,
+        "startChar": 52,
+        "endLine": 79,
+        "endChar": 53
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229e8ca8_7a3c2919",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:46:33Z",
+      "side": 1,
+      "message": "Could you also add a test to check what happens if the UpstreamNetworkState\u0027s networkCapabilities are null when calling updateUpstreamPrefix ?",
+      "range": {
+        "startLine": 219,
+        "startChar": 5,
+        "endLine": 219,
+        "endChar": 9
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6444197f_0274a672",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:46:33Z",
+      "side": 1,
+      "message": "Nit: \"but VPN networks are ignored\"",
+      "range": {
+        "startLine": 255,
+        "startChar": 65,
+        "endLine": 255,
+        "endChar": 66
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880ea8dd_fbff1623",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-28T01:46:33Z",
+      "side": 1,
+      "message": "Actually I think the numbers don\u0027t make it much easier to read, but it\u0027s harder to maintain. You could just use \"// * Disable wifi upstream...\" or \"// - Disable wifi upstream ...\" if you want to make the steps easy to spot instead.\nWhichever you prefer though.",
+      "range": {
+        "startLine": 282,
+        "startChar": 11,
+        "endLine": 282,
+        "endChar": 13
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
