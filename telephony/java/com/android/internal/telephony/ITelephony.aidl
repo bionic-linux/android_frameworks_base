@@ -2297,4 +2297,6 @@ interface ITelephony {
      * Whether device can connect to 5G network when two SIMs are active.
      */
     boolean canConnectTo5GInDsdsMode();
+
+    List<String> getEhplmns(int subId, String callingPackage, String callingFeatureId);
 }
