@@ -55,7 +55,9 @@ stubs_defaults {
     aidl: {
         local_include_dirs: ["telephony/java"],
     },
-    libs: ["framework-internal-utils"],
+    libs: [
+        "framework-protos",
+    ],
     installable: false,
     annotations_enabled: true,
     previous_api: ":android.api.public.latest",
