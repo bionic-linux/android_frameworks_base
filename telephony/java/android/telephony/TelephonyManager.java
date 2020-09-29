@@ -13388,4 +13388,32 @@ public class TelephonyManager {
             return true;
         }
     }
+
+    /**
+     * Returns an array of the equivalent home PLMNs (EF_EHPLMN) from the USIM app.
+     * Returns null if the query fails.
+     *
+     * <p>Requires Permission: {@link android.Manifest.permission#READ_PHONE_STATE READ_PHONE_STATE}
+     * or that the calling app has carrier privileges (see {@link #hasCarrierPrivileges}).
+     *
+     * @return an array of equivalent home PLMNs or null if not available.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
+    public @Nullable String[] getEhplmns() {
+        try {
+            ITelephony telephony = getITelephony();
+            if (telephony == null) {
+                return null;
+            }
+            return telephony.getEhplmns(getSubId(), mContext.getOpPackageName(),
+                    getAttributionTag());
+        } catch (RemoteException ex) {
+            return null;
+        } catch (NullPointerException ex) {
+            // This could happen before phone starts
+            return null;
+        }
+    }
 }
