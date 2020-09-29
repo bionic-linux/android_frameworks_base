@@ -6597,10 +6597,6 @@ public abstract class BatteryStats implements Parcelable {
                 }
                 oldState = rec.states;
                 oldState2 = rec.states2;
-                // Clear High Tx Power Flag for volta positioning
-                if ((rec.states2 & HistoryItem.STATE2_CELLULAR_HIGH_TX_POWER_FLAG) != 0) {
-                    rec.states2 &= ~HistoryItem.STATE2_CELLULAR_HIGH_TX_POWER_FLAG;
-                }
             }
 
             return item.toString();

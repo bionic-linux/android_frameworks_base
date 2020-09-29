@@ -11224,8 +11224,11 @@ public class BatteryStatsImpl extends BatteryStats {
         }
         if (levelMaxTimeSpent == ModemActivityInfo.TX_POWER_LEVELS - 1) {
             mHistoryCur.states2 |= HistoryItem.STATE2_CELLULAR_HIGH_TX_POWER_FLAG;
-            addHistoryRecordLocked(elapsedRealtime, uptime);
         }
+        else {
+            mHistoryCur.states2 &= ~HistoryItem.STATE2_CELLULAR_HIGH_TX_POWER_FLAG;
+        }
+        addHistoryRecordLocked(elapsedRealtime, uptime);
     }
 
     private final class BluetoothActivityInfoCache {
