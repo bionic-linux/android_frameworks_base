@@ -22,6 +22,30 @@
       "revId": "f9cc970c914034a9af99881db5b792f24ce69a32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbab8b7_39b70219",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-09-29T22:08:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0371757b_daa0e422",
+      "range": {
+        "startLine": 499,
+        "startChar": 17,
+        "endLine": 499,
+        "endChar": 35
+      },
+      "revId": "f9cc970c914034a9af99881db5b792f24ce69a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
