@@ -2032,6 +2032,14 @@ public class CarrierConfigManager {
             "support_enhanced_call_blocking_bool";
 
     /**
+     * Determines whether to enable match criteria based call blocking feature on the device.
+     *
+     * If {@code true} enable match criteria based call blocking, {@code false} otherwise.
+     */
+    public static final String KEY_SUPPORT_MATCH_CRITERIA_CALL_BLOCKING_BOOL =
+            "support_match_criteria_call_blocking_bool";
+
+    /**
      * For carriers which require an empty flash to be sent before sending the normal 3-way calling
      * flash, the duration in milliseconds of the empty flash to send.  When {@code 0}, no empty
      * flash is sent.
@@ -4170,6 +4178,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_CARRIER_DEFAULT_DATA_ROAMING_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_SKIP_CF_FAIL_TO_DISABLE_DIALOG_BOOL, false);
         sDefaults.putBoolean(KEY_SUPPORT_ENHANCED_CALL_BLOCKING_BOOL, true);
+        sDefaults.putBoolean(KEY_SUPPORT_MATCH_CRITERIA_CALL_BLOCKING_BOOL, false);
 
         // MMS defaults
         sDefaults.putBoolean(KEY_MMS_ALIAS_ENABLED_BOOL, false);

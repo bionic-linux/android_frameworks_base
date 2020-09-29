@@ -214,10 +214,20 @@ public class BlockedNumberContract {
          * <p>TYPE: String</p>
          */
         public static final String COLUMN_E164_NUMBER = "e164_number";
+
+        /**
+         * Matching criteria to check when determining blocked number.
+         * <p>Optional in {@code insert}. Default value is 0.
+		 * <p>TYPE: Integer</p>
+         */
+        public static final String COLUMN_MATCH_CONDITION = "match_condition";
     }
 
     /** @hide */
     public static final String METHOD_IS_BLOCKED = "is_blocked";
+
+    /** @hide */
+    public static final String METHOD_IS_BLOCKED_MATCH = "is_blocked_match";
 
     /** @hide */
     public static final String METHOD_UNBLOCK= "unblock";
@@ -306,6 +316,9 @@ public class BlockedNumberContract {
     public static final String EXTRA_ENHANCED_SETTING_VALUE = "extra_enhanced_setting_value";
 
     /** @hide */
+    public static final String EXTRA_MATCH_KEY = "extra_match_key";
+
+    /** @hide */
     public static final String EXTRA_CONTACT_EXIST = "extra_contact_exist";
 
     /** @hide */
@@ -328,6 +341,38 @@ public class BlockedNumberContract {
         try {
             final Bundle res = context.getContentResolver().call(
                     AUTHORITY_URI, METHOD_IS_BLOCKED, phoneNumber, null);
+            boolean isBlocked = res != null && res.getBoolean(RES_NUMBER_IS_BLOCKED, false);
+            Log.d(LOG_TAG, "isBlocked: phoneNumber=%s, isBlocked=%b", Log.piiHandle(phoneNumber),
+                    isBlocked);
+            return isBlocked;
+        } catch (NullPointerException | IllegalArgumentException ex) {
+            // The content resolver can throw an NPE or IAE; we don't want to crash Telecom if
+            // either of these happen.
+            Log.w(null, "isBlocked: provider not ready.");
+            return false;
+        }
+    }
+
+    /**
+     * Returns whether a given number is in the blocked list with same match condition
+     *
+     * <p> This matches the {@code phoneNumber} against the
+     * {@link BlockedNumbers#COLUMN_ORIGINAL_NUMBER} column, and the {@code matchCondition}
+     * with the {@link BlockedNumbers#COLUMN_MATCH_CONDITION} column.
+     *
+     * <p> Note that if the {@link #canCurrentUserBlockNumbers} is {@code false} for the user
+     * context {@code context}, this method will throw a {@link SecurityException}.
+     *
+     * @return {@code true} if the {@code phoneNumber} is present in blocklist with same match
+     * condition.
+     */
+    @WorkerThread
+    public static boolean isBlocked(Context context, String phoneNumber, int matchCondition) {
+        try {
+            Bundle extras = new Bundle();
+            extras.putInt(EXTRA_MATCH_KEY, matchCondition);
+            final Bundle res = context.getContentResolver().call(
+                    AUTHORITY_URI, METHOD_IS_BLOCKED_MATCH, phoneNumber, extras);
             boolean isBlocked = res != null && res.getBoolean(RES_NUMBER_IS_BLOCKED, false);
             Log.d(LOG_TAG, "isBlocked: phoneNumber=%s, isBlocked=%b", Log.piiHandle(phoneNumber),
                     isBlocked);
