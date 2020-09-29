@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "adf68784_23c2221b",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-29T10:40:45Z",
+      "side": 1,
+      "message": "I thought having the constant be something like:\nprivate static final LinkAddress TEST_IPV4_ADDR \u003d new LinkAddress(\"10.0.0.8/24\");\n\nso it still contains a readable String; but your newest patchset LGTM too",
+      "parentUuid": "5a659290_7670301d",
+      "range": {
+        "startLine": 62,
+        "startChar": 49,
+        "endLine": 62,
+        "endChar": 59
+      },
+      "revId": "b0a8098f31c7e69a22bf4dddc5e40f5abf9329d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9200db_b22059b4",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 1

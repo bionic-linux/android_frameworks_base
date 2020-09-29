@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17020681_c98992a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-29T10:40:45Z",
+      "side": 1,
+      "message": "Only nits about comments, so feel free to ignore them for now and merge instead of respinning",
+      "revId": "097b4bfea24f05b0b5ff4437d84a9aeb6453f28e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a432a612_def4c1fd",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-29T10:40:45Z",
+      "side": 1,
+      "message": "As in the test, a comment to explain that this is normally not expected (but just checking to be sure) would have been nice",
+      "range": {
+        "startLine": 98,
+        "startChar": 12,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "097b4bfea24f05b0b5ff4437d84a9aeb6453f28e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac42882_7403a626",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-09-29T10:40:45Z",
+      "side": 1,
+      "message": "A comment to explain why (because NetworkCapabilities update should always happen before LinkProperties update and the UpstreamNetworkState update) would have been nice",
+      "range": {
+        "startLine": 222,
+        "startChar": 94,
+        "endLine": 222,
+        "endChar": 95
+      },
+      "revId": "097b4bfea24f05b0b5ff4437d84a9aeb6453f28e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
