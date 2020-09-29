@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f940c03a_84446f24",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13399,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-29T17:06:33Z",
+      "side": 1,
+      "message": "See API guideline below:\ngo/android-api-guidelines#return-error",
+      "range": {
+        "startLine": 13399,
+        "startChar": 51,
+        "endLine": 13399,
+        "endChar": 74
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a6c1c2_50dc546c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13404,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-29T17:06:33Z",
+      "side": 1,
+      "message": "See API guideline below:\ngo/android-api-guidelines#methods-prefer-collection-over-array\n\nIf these are ordered in some manner, a List\u003cString\u003e is more appropriate.  If unordered and unique Set\u003cString\u003e is reasonable.",
+      "range": {
+        "startLine": 13404,
+        "startChar": 21,
+        "endLine": 13404,
+        "endChar": 29
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72985c11_fd6e3b76",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13408,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-29T17:06:33Z",
+      "side": 1,
+      "message": "Elsewhere we do something like:\nif (!isSystemProcess()) {\n                    throw new RuntimeException(\"Telephony service unavailable\");\n                }\n                return;\n            }",
+      "range": {
+        "startLine": 13408,
+        "startChar": 0,
+        "endLine": 13408,
+        "endChar": 28
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e60eac_7e24e0f4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13413,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-29T17:06:33Z",
+      "side": 1,
+      "message": "if (!isSystemProcess()) {\n                ex.rethrowAsRuntimeException();",
+      "range": {
+        "startLine": 13413,
+        "startChar": 12,
+        "endLine": 13413,
+        "endChar": 24
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1e4501_e32fdc63",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13416,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-29T17:06:33Z",
+      "side": 1,
+      "message": "What would be throwing an NPE?  I\u0027d think we should be able to anticipate what is throwing to get a more useful error?",
+      "range": {
+        "startLine": 13415,
+        "startChar": 12,
+        "endLine": 13416,
+        "endChar": 24
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
