@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "6cfa7aaa_7df8124b",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "Nit: the G in \"nfgen\" should probably be capitalized for consistency with NfGenMsg. Also might want to mention IPv4.\n\nMaybe rename again to sendIpv4NfGenMsg?\n\nAlso, doesn\u0027t OffloadHardwareInterfaceTest.java need to be updated, because it calls this method which is being renamed?",
+      "parentUuid": "b1ac5944_0402f8f3",
+      "range": {
+        "startLine": 272,
+        "startChar": 16,
+        "endLine": 272,
+        "endChar": 34
+      },
+      "revId": "790f9d672c9678f5c28352574e5582a7c0d58d1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db99dfbd_d3476a3a",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/OffloadHardwareInterface.java",
         "patchSetId": 10

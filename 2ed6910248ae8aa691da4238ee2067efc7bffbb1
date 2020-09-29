@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51becfb6_ca1b0bc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "LGTM but I think this code cannot be submitted as is because the existing OffloadHardwareInterfaceTest will no longer compile (due to the method rename).\n\nGiven that you already need to fix that, suggest making the changes in the comments below. In particular, it would be good to ensure that the test socket is an IPv4 socket because otherwise it will not be matched by the test code. The other comments are less important but I think they\u0027re probably also trivial.",
+      "revId": "2ed6910248ae8aa691da4238ee2067efc7bffbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e3ebf18_3ba3529d",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "Remove extra ;",
+      "range": {
+        "startLine": 63,
+        "startChar": 67,
+        "endLine": 63,
+        "endChar": 69
+      },
+      "revId": "2ed6910248ae8aa691da4238ee2067efc7bffbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a735d9_6127377c",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "I think we can remove all this by making OffloadHardwareInterface#sendNfgenMessage static. That would let you delete mOffloadHw, mDeps, mLog, mHandler, mHandlerThread, the code that prepares the looper...\n\nThat said: a more complete setup here will allow us to test the code more in depth, so perhaps this is fine.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 59
+      },
+      "revId": "2ed6910248ae8aa691da4238ee2067efc7bffbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b65b55ac_86d8e02b",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "It occurs to me that this is likely to be an IPv6 address and thus the connection will be an IPv6 connection which will not be seen by the conntrack query. I think you want:\n\n    // Set up server and connect.\n    // The socket must be IPv4 because OffloadHardwareInterface only looks at IPv4 sockets.\n    final InetSocketAddress anyIpv4Address \u003d new InetSocketAddress(\n            InetAddress.getByName(\"127.0.0.1\"), 0);",
+      "range": {
+        "startLine": 86,
+        "startChar": 67,
+        "endLine": 86,
+        "endChar": 93
+      },
+      "revId": "2ed6910248ae8aa691da4238ee2067efc7bffbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7129de3_e56f3c08",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "Nit: the server socket is not actually closed here. Update comment?",
+      "range": {
+        "startLine": 91,
+        "startChar": 44,
+        "endLine": 91,
+        "endChar": 65
+      },
+      "revId": "2ed6910248ae8aa691da4238ee2067efc7bffbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27832beb_2d10d6d0",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "Nit: acceptedSocket?",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "2ed6910248ae8aa691da4238ee2067efc7bffbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66219be_8eee37b5",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "Nit: the call to order() should probably be just after creating the buffer (so at line 103).",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 54
+      },
+      "revId": "2ed6910248ae8aa691da4238ee2067efc7bffbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0679dc_1ff949bc",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-29T00:52:54Z",
+      "side": 1,
+      "message": "This should have a clearer error message. Also, suggest moving this out of the finally block:\n\n        try {\n            ...\n        } finally {\n            socket.close();\n            serverSocket.close();\n        }\n\n        assertTrue(\"Did not receive any NFNL_SUBSYS_CTNETLINK/IPCTNL_MSG_CT_NEW message\",\n                foundConntrackEntry);\n    }",
+      "range": {
+        "startLine": 126,
+        "startChar": 12,
+        "endLine": 126,
+        "endChar": 44
+      },
+      "revId": "2ed6910248ae8aa691da4238ee2067efc7bffbb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
