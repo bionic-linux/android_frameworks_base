@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0371757b_daa0e422",
+        "filename": "media/java/android/media/RingtoneManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-09-29T17:58:23Z",
+      "side": 1,
+      "message": "looks like this is not imported",
+      "range": {
+        "startLine": 499,
+        "startChar": 17,
+        "endLine": 499,
+        "endChar": 35
+      },
+      "revId": "f9cc970c914034a9af99881db5b792f24ce69a32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
