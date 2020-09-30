@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f02aa2f_1c76533c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13399,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-09-30T00:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f940c03a_84446f24",
+      "range": {
+        "startLine": 13399,
+        "startChar": 51,
+        "endLine": 13399,
+        "endChar": 74
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a6c1c2_50dc546c",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f632c13_d9eabdb0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13404,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-09-30T00:25:10Z",
+      "side": 1,
+      "message": "Done. I was just trying to be consistent with TM.getForbiddenPlmns().",
+      "parentUuid": "f6a6c1c2_50dc546c",
+      "range": {
+        "startLine": 13404,
+        "startChar": 21,
+        "endLine": 13404,
+        "endChar": 29
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "51e54e48_f90f3a17",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13408,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-09-30T00:25:10Z",
+      "side": 1,
+      "message": "Done. IllegalStateException to be consistent with other TM APIs.",
+      "parentUuid": "72985c11_fd6e3b76",
+      "range": {
+        "startLine": 13408,
+        "startChar": 0,
+        "endLine": 13408,
+        "endChar": 28
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e60eac_7e24e0f4",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cd40e9d8_2c6e3b00",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13413,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-09-30T00:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e60eac_7e24e0f4",
+      "range": {
+        "startLine": 13413,
+        "startChar": 12,
+        "endLine": 13413,
+        "endChar": 24
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c1e4501_e32fdc63",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcfa271_f1038c0d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13416,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-09-30T00:25:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c1e4501_e32fdc63",
+      "range": {
+        "startLine": 13415,
+        "startChar": 12,
+        "endLine": 13416,
+        "endChar": 24
+      },
+      "revId": "68ae202402bcec61484452c1d2d6288be15b502d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
