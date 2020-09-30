@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b330a56b_bafd1721",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-09-30T11:13:11Z",
+      "side": 1,
+      "message": "Please don\u0027t have this in the same topic as the changes moving IpUtils.",
+      "revId": "4e86c44835339fefe3bd22d467218f132e8a7f50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
