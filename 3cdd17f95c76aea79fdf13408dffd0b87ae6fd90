@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "c2451e3f_b58d33dd",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-30T03:53:36Z",
+      "side": 1,
+      "message": "nit: Is this also subject to ipv4? \nIf so maybe testIpv4ConntrackSocket?",
+      "range": {
+        "startLine": 84,
+        "startChar": 16,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "3cdd17f95c76aea79fdf13408dffd0b87ae6fd90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f10e69d_d4cb1111",
         "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
         "patchSetId": 17
@@ -35,6 +58,29 @@
         "startChar": 0,
         "endLine": 86,
         "endChar": 106
+      },
+      "revId": "3cdd17f95c76aea79fdf13408dffd0b87ae6fd90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad30c13e_f052ffdc",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-30T03:53:36Z",
+      "side": 1,
+      "message": "question: do we need to close this as well?",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 35
       },
       "revId": "3cdd17f95c76aea79fdf13408dffd0b87ae6fd90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",

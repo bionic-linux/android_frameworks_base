@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae63029_ba46e689",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-09-30T03:53:36Z",
+      "side": 1,
+      "message": "LGTM with nits which could be ignored.",
+      "revId": "64c7091bdc76a35b1f896b69744f2a5b0b73a7fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
