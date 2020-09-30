@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80bdddd5_4542fe36",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13393,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-30T15:38:02Z",
+      "side": 1,
+      "message": "List",
+      "range": {
+        "startLine": 13393,
+        "startChar": 18,
+        "endLine": 13393,
+        "endChar": 23
+      },
+      "revId": "fbed620c35e52702b925e44b5f712b9d6083c9e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa8a809_6898146e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13394,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-30T15:38:02Z",
+      "side": 1,
+      "message": "Don\u0027t need any more.",
+      "range": {
+        "startLine": 13394,
+        "startChar": 7,
+        "endLine": 13394,
+        "endChar": 38
+      },
+      "revId": "fbed620c35e52702b925e44b5f712b9d6083c9e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7620e69_25a84f00",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13409,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-09-30T15:38:02Z",
+      "side": 1,
+      "message": "Let\u0027s just call this getEquivalentHomePlmns\n\nI think the abbreviation looses something.",
+      "range": {
+        "startLine": 13409,
+        "startChar": 33,
+        "endLine": 13409,
+        "endChar": 43
+      },
+      "revId": "fbed620c35e52702b925e44b5f712b9d6083c9e4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
