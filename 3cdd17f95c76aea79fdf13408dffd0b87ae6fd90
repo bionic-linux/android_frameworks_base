@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d26b28_34a0e79a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-30T03:35:18Z",
+      "side": 1,
+      "message": "LGTM unless Junyu has any comments. Ideally we should fix the long lines in this CL but that\u0027s not strictly necessary.",
+      "revId": "3cdd17f95c76aea79fdf13408dffd0b87ae6fd90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f10e69d_d4cb1111",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-30T03:35:18Z",
+      "side": 1,
+      "message": "Long line.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 106
+      },
+      "revId": "3cdd17f95c76aea79fdf13408dffd0b87ae6fd90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54542a0e_6955e21e",
+        "filename": "packages/Tethering/tests/privileged/src/com/android/networkstack/tethering/ConntrackSocketTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-09-30T03:35:18Z",
+      "side": 1,
+      "message": "Space before foundConntrackEntry, and long line.",
+      "range": {
+        "startLine": 127,
+        "startChar": 89,
+        "endLine": 127,
+        "endChar": 110
+      },
+      "revId": "3cdd17f95c76aea79fdf13408dffd0b87ae6fd90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
