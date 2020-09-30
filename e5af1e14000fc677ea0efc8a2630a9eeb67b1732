@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f9f548_f9e2aae8",
+        "filename": "core/java/android/os/BatteryStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6603,
+      "author": {
+        "id": 1407099
+      },
+      "writtenOn": "2020-09-30T17:44:50Z",
+      "side": 0,
+      "message": "We added this clearing because if we hit a High tx power state and the radio is then turned off. It will span the length of the cellular radio off period. This caused confusion as high tx power was being noted in not expected time periods. This should remain.",
+      "range": {
+        "startLine": 6600,
+        "startChar": 16,
+        "endLine": 6603,
+        "endChar": 17
+      },
+      "revId": "e5af1e14000fc677ea0efc8a2630a9eeb67b1732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
