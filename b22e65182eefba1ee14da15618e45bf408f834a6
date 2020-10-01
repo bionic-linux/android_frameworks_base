@@ -16,6 +16,40 @@
       "revId": "b22e65182eefba1ee14da15618e45bf408f834a6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8545a1dc_cf6291ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-10-01T22:40:22Z",
+      "side": 1,
+      "message": "Please add a topic to both CLs so that they can be linked.",
+      "revId": "b22e65182eefba1ee14da15618e45bf408f834a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "119b3496_2aa6ebed",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2020-10-01T22:40:22Z",
+      "side": 1,
+      "message": "Why convert to String first? Can you do it similar to equals and check only for those parameters that you care about in this case? On top of that equals() can reuse this equalsExceptId() and add check for id on top of that.",
+      "revId": "b22e65182eefba1ee14da15618e45bf408f834a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
