@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a363bc40_c57fa389",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "In AOSP code, DO NOT MERGE is almost never what you want. Unless this message is meant for humans to tell them not to merge the CL? If so, suggest \"DO NOT SUBMIT\".",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdfa86b0_a9499269",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4707,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "Is there a reason none of the APIs here are public? Do we not want to support non-preinstalled apps?",
+      "range": {
+        "startLine": 4707,
+        "startChar": 24,
+        "endLine": 4707,
+        "endChar": 35
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facec56d_6b9772dd",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4721,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "This doesn\u0027t look like it should be public.",
+      "range": {
+        "startLine": 4721,
+        "startChar": 4,
+        "endLine": 4721,
+        "endChar": 66
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60af700_f7078948",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4730,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "Nit: do we need an exception for this? A network connecting and disconnecting is not an exceptional event.",
+      "range": {
+        "startLine": 4730,
+        "startChar": 32,
+        "endLine": 4730,
+        "endChar": 56
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6798c5d7_b7bb4096",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 8563,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "Is this an IP address and port? If so, then why not simply use InetSocketAddress? If it\u0027s \"a range of IP addresses all on the same port\", then use IpPrefix instead of LinkAddress.",
+      "range": {
+        "startLine": 8563,
+        "startChar": 116,
+        "endLine": 8563,
+        "endChar": 159
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca58a3a3_d5e4fb2b",
+        "filename": "core/java/android/net/QosCallbackException.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "Can the user close the socket? If so, what happens then? Will there be an exception, either immediately or at some future point in time? If the user closes the socket, is it guaranteed that no future callbacks will arrive for that socket?",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 6
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08dd06a9_e8fce8a3",
+        "filename": "core/java/android/net/QosCallbackException.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "This can\u0027t ever return null so @Nullable is incorrect.",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 13
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b69c5b1_86902442",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "Need to clarify \"binding\" here. If \"binding\" is used in the sense of, say, Network#bindSocket, then this statement is not really true because there is no reliable way, given a socket, to determine what network it\u0027s bound to. If \"binding\" means \"local IP address and port\", or \"local and remote IP addresses, and local and remote ports\", then you should clarify that.",
+      "range": {
+        "startLine": 43,
+        "startChar": 64,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c003d621_9e0a2aa2",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "This should probably say that the callback will only report QOS changes on this network.",
+      "range": {
+        "startLine": 46,
+        "startChar": 51,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc51dbef_71191076",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "This name is grammatically incorrect. You could call this NotSupportedException or FilterNotSupportedException. But there\u0027s already UnsupportedOperationException which you could use.",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 34
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c185e9da_d4d349fd",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "This should be documented.",
+      "range": {
+        "startLine": 34,
+        "startChar": 28,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6430285e_e6b12089",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "For UDP sockets, this can change even if the socket is still usable. What will the system do in that case?",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 43
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfd1f53_f67081b1",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "How does the system detect this case? By calling getsockname and seeing if the result is non-null? For UDP sockets the local port can change and I think can both go from null to non-null and from non-null to null.",
+      "range": {
+        "startLine": 187,
+        "startChar": 15,
+        "endLine": 187,
+        "endChar": 38
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b2c1c2_15f11718",
+        "filename": "telephony/java/android/telephony/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "EPS",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8871b4_8883afcb",
+        "filename": "telephony/java/android/telephony/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-02T02:13:15Z",
+      "side": 1,
+      "message": "Since this is an acronym, capitalize it. Quality Class Indicator. Also: where is this defined? Suggest linking to relevant 3GPP spec. The link could be here on this method and/or at the class level.",
+      "range": {
+        "startLine": 56,
+        "startChar": 11,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
