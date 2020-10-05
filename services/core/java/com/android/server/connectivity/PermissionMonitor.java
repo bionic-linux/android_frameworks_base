@@ -177,11 +177,11 @@ public class PermissionMonitor {
             boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
 
             if (isNetwork || hasRestrictedPermission) {
-                Boolean permission = mApps.get(uid);
+                Boolean permission = mApps.get(UserHandle.getAppId(uid));
                 // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
                 // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
                 if (permission == null || permission == NETWORK) {
-                    mApps.put(uid, hasRestrictedPermission);
+                    mApps.put(UserHandle.getAppId(uid), hasRestrictedPermission);
                 }
             }
 
@@ -272,7 +272,7 @@ public class PermissionMonitor {
         // networks. mApps contains the result of checks for both hasNetworkPermission and
         // hasRestrictedNetworkPermission. If uid is in the mApps list that means uid has one of
         // permissions at least.
-        return mApps.containsKey(uid);
+        return mApps.containsKey(UserHandle.getAppId(uid));
     }
 
     private int[] toIntArray(Collection<Integer> list) {
@@ -374,12 +374,13 @@ public class PermissionMonitor {
     public synchronized void onPackageAdded(String packageName, int uid) {
         // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
         // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
-        final Boolean permission = highestPermissionForUid(mApps.get(uid), packageName);
-        if (permission != mApps.get(uid)) {
-            mApps.put(uid, permission);
+        final int appId = UserHandle.getAppId(uid);
+        final Boolean permission = highestPermissionForUid(mApps.get(appId), packageName);
+        if (permission != mApps.get(appId)) {
+            mApps.put(appId, permission);
 
             Map<Integer, Boolean> apps = new HashMap<>();
-            apps.put(uid, permission);
+            apps.put(appId, permission);
             update(mUsers, apps, true);
         }
 
@@ -394,7 +395,7 @@ public class PermissionMonitor {
                 updateVpnUids(vpn.getKey(), changedUids, true);
             }
         }
-        mAllApps.add(UserHandle.getAppId(uid));
+        mAllApps.add(appId);
     }
 
     /**
@@ -435,16 +436,18 @@ public class PermissionMonitor {
                 }
             }
         }
-        if (permission == mApps.get(uid)) {
+
+        final int appId = UserHandle.getAppId(uid);
+        if (permission == mApps.get(appId)) {
             // The permissions of this UID have not changed. Nothing to do.
             return;
         } else if (permission != null) {
-            mApps.put(uid, permission);
-            apps.put(uid, permission);
+            mApps.put(appId, permission);
+            apps.put(appId, permission);
             update(mUsers, apps, true);
         } else {
-            mApps.remove(uid);
-            apps.put(uid, NETWORK);  // doesn't matter which permission we pick here
+            mApps.remove(appId);
+            apps.put(appId, NETWORK);  // doesn't matter which permission we pick here
             update(mUsers, apps, false);
         }
     }
@@ -556,7 +559,7 @@ public class PermissionMonitor {
      */
     private void removeBypassingUids(Set<Integer> uids, int vpnAppUid) {
         uids.remove(vpnAppUid);
-        uids.removeIf(uid -> mApps.getOrDefault(uid, NETWORK) == SYSTEM);
+        uids.removeIf(uid -> mApps.getOrDefault(UserHandle.getAppId(uid), NETWORK) == SYSTEM);
     }
 
     /**
