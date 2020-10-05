@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "bf1375e6_6087873c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-05T02:41:44Z",
+      "side": 1,
+      "message": "Thanks for review !",
+      "revId": "097b4bfea24f05b0b5ff4437d84a9aeb6453f28e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a432a612_def4c1fd",
         "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
         "patchSetId": 3
@@ -42,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "cf3ecefc_83134a9f",
+        "filename": "packages/Tethering/src/com/android/networkstack/tethering/PrivateAddressCoordinator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-05T02:41:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a432a612_def4c1fd",
+      "range": {
+        "startLine": 98,
+        "startChar": 12,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "097b4bfea24f05b0b5ff4437d84a9aeb6453f28e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bac42882_7403a626",
         "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
         "patchSetId": 3
@@ -62,6 +103,30 @@
       "revId": "097b4bfea24f05b0b5ff4437d84a9aeb6453f28e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cda1c43_47b2c3b7",
+        "filename": "packages/Tethering/tests/unit/src/com/android/networkstack/tethering/PrivateAddressCoordinatorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-05T02:41:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bac42882_7403a626",
+      "range": {
+        "startLine": 222,
+        "startChar": 94,
+        "endLine": 222,
+        "endChar": 95
+      },
+      "revId": "097b4bfea24f05b0b5ff4437d84a9aeb6453f28e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
