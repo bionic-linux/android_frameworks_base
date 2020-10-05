@@ -22,6 +22,30 @@
       "revId": "e5af1e14000fc677ea0efc8a2630a9eeb67b1732",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1497770_d02aae30",
+        "filename": "core/java/android/os/BatteryStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6603,
+      "author": {
+        "id": 1539471
+      },
+      "writtenOn": "2020-10-05T12:18:22Z",
+      "side": 0,
+      "message": "Thanks for your comments. \n\nYou are right, if we hit a High tx power state, the radio is then turned off and getDeltaModemActivityInfo(activityInfo) is not called in time, it will span the length of the cellular radio off period until the next time getDeltaModemActivityInfo(activityInfo) is called.\n\nIf we remain, then a -cellular_high_tx_power will be sended in the next printNextItem() whether tx power level is changed or not. This also caused confusion as high tx power was not being noted in expected time periods.\n\nIf we can ensure getDeltaModemActivityInfo(activityInfo) is called in time, then it will be ok that we send +/- cellular_high_tx_power according to the actual tx power level. If not, then we don\u0027t have a suitable method to indicate cellular_high_tx_power, maybe we should remove +/- cellular_high_tx_power.",
+      "parentUuid": "21f9f548_f9e2aae8",
+      "range": {
+        "startLine": 6600,
+        "startChar": 16,
+        "endLine": 6603,
+        "endChar": 17
+      },
+      "revId": "e5af1e14000fc677ea0efc8a2630a9eeb67b1732",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
     }
   ]
 }
