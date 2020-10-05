@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2937eace_723c7ab4",
+        "filename": "StubLibraries.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-10-05T08:38:28Z",
+      "side": 1,
+      "message": "maybe remove?",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 57
+      },
+      "revId": "3330fac93b8cb4ee23464a2f4ba13764672a6f6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": true
+    }
+  ]
+}
