@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac291452_eeeafd98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120915
+      },
+      "writtenOn": "2020-10-05T15:18:35Z",
+      "side": 1,
+      "message": "I believe this only happens when the user uses both the DSU UI and gsi_util, right?",
+      "revId": "569c31cef61f05e9b83e1afac8eab4ddb246255a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
+    }
+  ]
+}
