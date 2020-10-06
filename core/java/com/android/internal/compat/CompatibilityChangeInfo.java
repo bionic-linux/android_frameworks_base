@@ -29,6 +29,7 @@ public class CompatibilityChangeInfo implements Parcelable {
     private final long mChangeId;
     private final @Nullable String mName;
     private final int mEnableAfterTargetSdk;
+    private final int mEnableSinceTargetSdk;
     private final boolean mDisabled;
     private final boolean mLoggingOnly;
     private final @Nullable String mDescription;
@@ -46,6 +47,10 @@ public class CompatibilityChangeInfo implements Parcelable {
         return mEnableAfterTargetSdk;
     }
 
+    public int getEnableSinceTargetSdk() {
+        return mEnableSinceTargetSdk;
+    }
+
     public boolean getDisabled() {
         return mDisabled;
     }
@@ -59,11 +64,12 @@ public class CompatibilityChangeInfo implements Parcelable {
     }
 
     public CompatibilityChangeInfo(
-            Long changeId, String name, int enableAfterTargetSdk, boolean disabled,
-            boolean loggingOnly, String description) {
+            Long changeId, String name, int enableAfterTargetSdk, int enableSinceTargetSdk,
+            boolean disabled, boolean loggingOnly, String description) {
         this.mChangeId = changeId;
         this.mName = name;
         this.mEnableAfterTargetSdk = enableAfterTargetSdk;
+        this.mEnableSinceTargetSdk = enableSinceTargetSdk;
         this.mDisabled = disabled;
         this.mLoggingOnly = loggingOnly;
         this.mDescription = description;
@@ -73,6 +79,7 @@ public class CompatibilityChangeInfo implements Parcelable {
         mChangeId = in.readLong();
         mName = in.readString();
         mEnableAfterTargetSdk = in.readInt();
+        mEnableSinceTargetSdk = in.readInt();
         mDisabled = in.readBoolean();
         mLoggingOnly = in.readBoolean();
         mDescription = in.readString();
@@ -88,6 +95,7 @@ public class CompatibilityChangeInfo implements Parcelable {
         dest.writeLong(mChangeId);
         dest.writeString(mName);
         dest.writeInt(mEnableAfterTargetSdk);
+        dest.writeInt(mEnableSinceTargetSdk);
         dest.writeBoolean(mDisabled);
         dest.writeBoolean(mLoggingOnly);
         dest.writeString(mDescription);
@@ -102,6 +110,9 @@ public class CompatibilityChangeInfo implements Parcelable {
         }
         if (getEnableAfterTargetSdk() != -1) {
             sb.append("; enableAfterTargetSdk=").append(getEnableAfterTargetSdk());
+        }
+        if (getEnableSinceTargetSdk() != -1) {
+            sb.append("; enableSinceTargetSdk=").append(getEnableSinceTargetSdk());
         }
         if (getDisabled()) {
             sb.append("; disabled");
@@ -124,6 +135,7 @@ public class CompatibilityChangeInfo implements Parcelable {
         return this.mChangeId == that.mChangeId
                 && this.mName.equals(that.mName)
                 && this.mEnableAfterTargetSdk == that.mEnableAfterTargetSdk
+                && this.mEnableSinceTargetSdk == that.mEnableSinceTargetSdk
                 && this.mDisabled == that.mDisabled
                 && this.mLoggingOnly == that.mLoggingOnly
                 && this.mDescription.equals(that.mDescription);

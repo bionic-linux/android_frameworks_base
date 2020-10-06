@@ -192,16 +192,22 @@ final class CompatConfig {
     }
 
     /**
-     * Returns the minimum sdk version for which this change should be enabled (or 0 if it is not
+     * Returns the maximum sdk version for which this change can be opted in (or 0 if it is not
      * target sdk gated).
      */
-    int minTargetSdkForChangeId(long changeId) {
+    int maxTargetSdkForChangeIdOptIn(long changeId) {
         synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             if (c == null) {
                 return 0;
             }
-            return c.getEnableAfterTargetSdk();
+            if (c.getEnableAfterTargetSdk() != -1) {
+                return c.getEnableAfterTargetSdk();
+            }
+            if (c.getEnableSinceTargetSdk() != -1) {
+                return c.getEnableSinceTargetSdk() - 1;
+            }
+            return 0;
         }
     }
 
@@ -451,6 +457,7 @@ final class CompatConfig {
                 changeInfos[i] = new CompatibilityChangeInfo(change.getId(),
                         change.getName(),
                         change.getEnableAfterTargetSdk(),
+                        change.getEnableSinceTargetSdk(),
                         change.getDisabled(),
                         change.getLoggingOnly(),
                         change.getDescription());
