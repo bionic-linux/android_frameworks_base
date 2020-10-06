@@ -28,7 +28,7 @@ import android.os.Parcelable;
 public class CompatibilityChangeInfo implements Parcelable {
     private final long mChangeId;
     private final @Nullable String mName;
-    private final int mEnableAfterTargetSdk;
+    private final int mEnableSinceTargetSdk;
     private final boolean mDisabled;
     private final boolean mLoggingOnly;
     private final @Nullable String mDescription;
@@ -42,8 +42,8 @@ public class CompatibilityChangeInfo implements Parcelable {
         return mName;
     }
 
-    public int getEnableAfterTargetSdk() {
-        return mEnableAfterTargetSdk;
+    public int getEnableSinceTargetSdk() {
+        return mEnableSinceTargetSdk;
     }
 
     public boolean getDisabled() {
@@ -59,20 +59,35 @@ public class CompatibilityChangeInfo implements Parcelable {
     }
 
     public CompatibilityChangeInfo(
-            Long changeId, String name, int enableAfterTargetSdk, boolean disabled,
-            boolean loggingOnly, String description) {
+            Long changeId, String name, int enableAfterTargetSdk, int enableSinceTargetSdk,
+            boolean disabled, boolean loggingOnly, String description) {
         this.mChangeId = changeId;
         this.mName = name;
-        this.mEnableAfterTargetSdk = enableAfterTargetSdk;
+        if (enableAfterTargetSdk != -1) {
+            // Need to maintain support for @EnabledAfter(X), but make it equivalent to
+            // @EnabledSince(X+1)
+            this.mEnableSinceTargetSdk = enableAfterTargetSdk + 1;
+        } else {
+            this.mEnableSinceTargetSdk = enableSinceTargetSdk;
+        }
         this.mDisabled = disabled;
         this.mLoggingOnly = loggingOnly;
         this.mDescription = description;
     }
 
+    public CompatibilityChangeInfo(CompatibilityChangeInfo other) {
+        this.mChangeId = other.mChangeId;
+        this.mName = other.mName;
+        this.mEnableSinceTargetSdk = other.mEnableSinceTargetSdk;
+        this.mDisabled = other.mDisabled;
+        this.mLoggingOnly = other.mLoggingOnly;
+        this.mDescription = other.mDescription;
+    }
+
     private CompatibilityChangeInfo(Parcel in) {
         mChangeId = in.readLong();
         mName = in.readString();
-        mEnableAfterTargetSdk = in.readInt();
+        mEnableSinceTargetSdk = in.readInt();
         mDisabled = in.readBoolean();
         mLoggingOnly = in.readBoolean();
         mDescription = in.readString();
@@ -87,7 +102,7 @@ public class CompatibilityChangeInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mChangeId);
         dest.writeString(mName);
-        dest.writeInt(mEnableAfterTargetSdk);
+        dest.writeInt(mEnableSinceTargetSdk);
         dest.writeBoolean(mDisabled);
         dest.writeBoolean(mLoggingOnly);
         dest.writeString(mDescription);
@@ -100,8 +115,8 @@ public class CompatibilityChangeInfo implements Parcelable {
         if (getName() != null) {
             sb.append("; name=").append(getName());
         }
-        if (getEnableAfterTargetSdk() != -1) {
-            sb.append("; enableAfterTargetSdk=").append(getEnableAfterTargetSdk());
+        if (getEnableSinceTargetSdk() != -1) {
+            sb.append("; enableSinceTargetSdk=").append(getEnableSinceTargetSdk());
         }
         if (getDisabled()) {
             sb.append("; disabled");
@@ -123,7 +138,7 @@ public class CompatibilityChangeInfo implements Parcelable {
         CompatibilityChangeInfo that = (CompatibilityChangeInfo) o;
         return this.mChangeId == that.mChangeId
                 && this.mName.equals(that.mName)
-                && this.mEnableAfterTargetSdk == that.mEnableAfterTargetSdk
+                && this.mEnableSinceTargetSdk == that.mEnableSinceTargetSdk
                 && this.mDisabled == that.mDisabled
                 && this.mLoggingOnly == that.mLoggingOnly
                 && this.mDescription.equals(that.mDescription);
