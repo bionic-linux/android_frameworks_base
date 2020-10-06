@@ -63,7 +63,7 @@ public final class CompatChange extends CompatibilityChangeInfo {
     private Map<String, Boolean> mPackageOverrides;
 
     public CompatChange(long changeId) {
-        this(changeId, null, -1, false, false, null);
+        this(changeId, null, -1, -1, false, false, null);
     }
 
     /**
@@ -71,11 +71,14 @@ public final class CompatChange extends CompatibilityChangeInfo {
      * @param name Short descriptive name.
      * @param enableAfterTargetSdk {@code targetSdkVersion} restriction. See {@link EnabledAfter};
      *                             -1 if the change is always enabled.
+     * @param enableSinceTargetSdk {@code targetSdkVersion} restriction. See {@link EnabledSince};
+     *                             -1 if the change is always enabled.
      * @param disabled If {@code true}, overrides any {@code enableAfterTargetSdk} set.
      */
     public CompatChange(long changeId, @Nullable String name, int enableAfterTargetSdk,
-            boolean disabled, boolean loggingOnly, String description) {
-        super(changeId, name, enableAfterTargetSdk, disabled, loggingOnly, description);
+            int enableSinceTargetSdk, boolean disabled, boolean loggingOnly, String description) {
+        super(changeId, name, enableAfterTargetSdk, enableSinceTargetSdk, disabled, loggingOnly,
+              description);
     }
 
     /**
@@ -83,7 +86,8 @@ public final class CompatChange extends CompatibilityChangeInfo {
      */
     public CompatChange(Change change) {
         super(change.getId(), change.getName(), change.getEnableAfterTargetSdk(),
-                change.getDisabled(), change.getLoggingOnly(), change.getDescription());
+                change.getEnableSinceTargetSdk(), change.getDisabled(), change.getLoggingOnly(),
+                change.getDescription());
     }
 
     void registerListener(ChangeListener listener) {
@@ -145,8 +149,8 @@ public final class CompatChange extends CompatibilityChangeInfo {
         if (getDisabled()) {
             return false;
         }
-        if (getEnableAfterTargetSdk() != -1) {
-            return app.targetSdkVersion > getEnableAfterTargetSdk();
+        if (getEnableSinceTargetSdk() != -1) {
+            return app.targetSdkVersion >= getEnableSinceTargetSdk();
         }
         return true;
     }
@@ -166,9 +170,6 @@ public final class CompatChange extends CompatibilityChangeInfo {
                 .append(getId());
         if (getName() != null) {
             sb.append("; name=").append(getName());
-        }
-        if (getEnableAfterTargetSdk() != -1) {
-            sb.append("; enableAfterTargetSdk=").append(getEnableAfterTargetSdk());
         }
         if (getDisabled()) {
             sb.append("; disabled");
