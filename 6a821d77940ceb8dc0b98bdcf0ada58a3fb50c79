@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e432f9e_5e35fee5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-06T13:20:46Z",
+      "side": 1,
+      "message": "It would be easier to understand what this change does while reading the subject if mention that this removes methods from LinkProperties.",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "6a821d77940ceb8dc0b98bdcf0ada58a3fb50c79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "458036f0_b1d430b9",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-06T13:20:46Z",
+      "side": 1,
+      "message": "If CompareResult is entirely removed from LinkProperties then I think we can only test it in LinkPropertiesUtilsTest. WDYT",
+      "range": {
+        "startLine": 450,
+        "startChar": 11,
+        "endLine": 450,
+        "endChar": 37
+      },
+      "revId": "6a821d77940ceb8dc0b98bdcf0ada58a3fb50c79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
