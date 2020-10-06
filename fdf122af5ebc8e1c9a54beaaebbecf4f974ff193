@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e0129d5_3fc79b3b",
+        "filename": "core/sysprop/WatchdogProperties.sysprop",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "Can we add some docs that describe what these sysprops actually means somewhere?",
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2aef9a2_02180426",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "nit: Use ArrayList, not Vector\n\nVector is unnecessarily synchronized",
+      "range": {
+        "startLine": 729,
+        "startChar": 30,
+        "endLine": 729,
+        "endChar": 36
+      },
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd1f15db_491a1500",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "nit: prefer readTimeoutHistory / writeTimeoutHistory to make it clear that we\u0027re actually doing disk transactions and not just setting a member like set/get generally imply.",
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75286164_a55b365f",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "nit: emptyStringArray\n\nList implies it\u0027s a java.util.List",
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8bdb8bc_0dc3ae87",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "nit: don\u0027t predeclare variables unless necessary\n\nSame for isCrashLoopFound below.",
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ca486cb_fa60021c",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "nit: Can we just return early here? Continuing with an empty list seems pointless since all of the below checks are going to fail 100% of the time.",
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7def76e2_31bf7055",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "nit: use ArrayList",
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7acdfbd8_452d08e0",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "nit: consider pulling this out to it\u0027s own function instead of using a comment. It\u0027ll make this function more readable.\n\n  boolean hasActiveUsbConnection();",
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04be3290_a66cfc40",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "nit: Can you add name these raw values? Either:\n\n            final int maxBytes \u003d 128;\n            final int ellipsis \u003d null;\n            final String state \u003d FileUtils.readTextFile(\n                    new File(\"/sys/class/android_usb/android0/state\"), maxBytes, ellipsis).trim();\n\nor\n\n            final String state \u003d FileUtils.readTextFile(\n                    new File(\"/sys/class/android_usb/android0/state\"),\n                    128 /*max*/, null /*ellipsis*/).trim();",
+      "range": {
+        "startLine": 801,
+        "startChar": 71,
+        "endLine": 801,
+        "endChar": 78
+      },
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c45e6cf_e569577d",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-10-06T14:01:21Z",
+      "side": 1,
+      "message": "Why catch this? You just added an element above, so you know it can\u0027t fail at this point, and it\u0027s a RuntimeException.",
+      "range": {
+        "startLine": 811,
+        "startChar": 0,
+        "endLine": 815,
+        "endChar": 25
+      },
+      "revId": "fdf122af5ebc8e1c9a54beaaebbecf4f974ff193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
