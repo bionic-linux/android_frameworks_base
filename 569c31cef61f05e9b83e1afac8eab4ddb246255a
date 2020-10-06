@@ -16,6 +16,24 @@
       "revId": "569c31cef61f05e9b83e1afac8eab4ddb246255a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6714439d_46af0d68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-10-06T03:24:05Z",
+      "side": 1,
+      "message": "Not really. It also happens when the user uses only gsi_tool and not DSU UI.",
+      "parentUuid": "ac291452_eeeafd98",
+      "revId": "569c31cef61f05e9b83e1afac8eab4ddb246255a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
+      "unresolved": false
     }
   ]
 }
