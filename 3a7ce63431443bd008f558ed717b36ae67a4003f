@@ -16,6 +16,57 @@
       "message": "Hello,\nCould you review this change?",
       "revId": "3a7ce63431443bd008f558ed717b36ae67a4003f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c86eb6d3_7015fa77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2020-10-07T17:48:29Z",
+      "side": 1,
+      "message": "We should avoid adding new code in PackageParser. The issues here have been addressed in parsing v2. I\u0027ve linked the corresponding lines as comments.",
+      "revId": "3a7ce63431443bd008f558ed717b36ae67a4003f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f49ea1d_29f2a01c",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1915,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2020-10-07T17:48:29Z",
+      "side": 1,
+      "message": "This is handled in parsing v2 at https://github.com/aosp-mirror/platform_frameworks_base/blob/b0ba7618c8584071d9a99ee6cf938ec474ff0f16/core/java/android/content/pm/parsing/ParsingPackageUtils.java#L501.",
+      "revId": "3a7ce63431443bd008f558ed717b36ae67a4003f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1ca2bb1_8dcd1f62",
+        "filename": "core/java/android/content/pm/PackageParser.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3975,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2020-10-07T17:48:29Z",
+      "side": 1,
+      "message": "This is handled in parsing v2 at https://github.com/aosp-mirror/platform_frameworks_base/blob/b0ba7618c8584071d9a99ee6cf938ec474ff0f16/core/java/android/content/pm/parsing/ParsingPackageUtils.java#L592",
+      "revId": "3a7ce63431443bd008f558ed717b36ae67a4003f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
