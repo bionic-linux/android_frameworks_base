@@ -30,7 +30,6 @@ import android.content.res.Resources;
 import android.net.NetworkSpecifier;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.wifi.WifiInfo;
-import android.os.UserHandle;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -282,7 +281,7 @@ public class NetworkNotificationManager {
 
         mNotificationTypeMap.put(id, eventId);
         try {
-            mNotificationManager.notifyAsUser(tag, eventId, notification, UserHandle.ALL);
+            mNotificationManager.notify(tag, eventId, notification);
         } catch (NullPointerException npe) {
             Slog.d(TAG, "setNotificationVisible: visible notificationManager error", npe);
         }
@@ -311,7 +310,7 @@ public class NetworkNotificationManager {
                    nameOf(eventId)));
         }
         try {
-            mNotificationManager.cancelAsUser(tag, eventId, UserHandle.ALL);
+            mNotificationManager.cancel(tag, eventId);
         } catch (NullPointerException npe) {
             Slog.d(TAG, String.format(
                     "failed to clear notification tag=%s event=%s", tag, nameOf(eventId)), npe);
