@@ -18,6 +18,10 @@ package android.telephony.ims.stub;
 
 import android.annotation.NonNull;
 import android.annotation.SystemApi;
+import android.telephony.ims.DelegateMessageCallback;
+import android.telephony.ims.DelegateRequest;
+import android.telephony.ims.DelegateStateCallback;
+import android.telephony.ims.SipDelegateManager;
 import android.telephony.ims.aidl.ISipTransport;
 
 import java.util.concurrent.Executor;
@@ -46,6 +50,35 @@ public class SipTransportImplBase {
         }
 
         mBinderExecutor = executor;
+    }
+
+    /**
+     * Creates a new {@link SipDelegate} for the specified subscription ID.
+     *
+     * @param request A SIP delegate request containing the parameters that the remote RCS
+     * application wishes to use.
+     * @param dc A callback back to the remote application to be used to communicate state callbacks
+     *           for the SipDelegate.
+     * @param mc A callback back to the remote application to be used to send SIP messages to the
+     *           remote application and acknowledge the sending of outgoing SIP messages.
+     * @hide
+     */
+    public void createSipDelegate(DelegateRequest request, DelegateStateCallback dc,
+            DelegateMessageCallback mc) {
+
+    }
+
+    /**
+     * Destroys the SipDelegate associated with a remote IMS application. After the delegate is
+     * destroyed, SipDelegate#onDestroy should be called to notify listeners of its destruction to
+     * release resources.
+     * @param delegate The delegate to be modified.
+     * @param reason The reason the remote connection to this SipDelegate is being destroyed.
+     * @hide
+     */
+    public void destroySipDelegate(SipDelegate delegate,
+            @SipDelegateManager.DelegateConnectionDestroyReason int reason) {
+
     }
 
     /**
