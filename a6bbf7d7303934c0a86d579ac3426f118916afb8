@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4846441_199afd47",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-08T12:24:17Z",
+      "side": 1,
+      "message": "I\u0027d say it will be much simpler to eliminate this dupication at the earliest possible opportunity - i.e. here (or even in the calling code, i.e. CompatConfig.readConfig() by the look of it).\n\nWe need to support both in the XML *and no further*. Just do a clean migration from the old to the new in this CL, and then convert one to the other here. I don\u0027t see any value in keeping the two in parallel here or elsewhere \"downstream\" from here.",
+      "range": {
+        "startLine": 88,
+        "startChar": 48,
+        "endLine": 89,
+        "endChar": 49
+      },
+      "revId": "a6bbf7d7303934c0a86d579ac3426f118916afb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
