@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bea980fb_4337d73f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-08T06:04:18Z",
+      "side": 1,
+      "message": "Did you run the PermissionMonitorTest? Suppose that you need to update it according to your change.",
+      "revId": "93df01e3a0aa54a3331a096b4e5130e7035c890e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a5acba6_46c6891d",
+        "filename": "services/core/java/com/android/server/connectivity/PermissionMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-08T06:04:18Z",
+      "side": 1,
+      "message": "Nit: You can have parameter to store this value and use it like Line.377.",
+      "range": {
+        "startLine": 439,
+        "startChar": 36,
+        "endLine": 439,
+        "endChar": 60
+      },
+      "revId": "93df01e3a0aa54a3331a096b4e5130e7035c890e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
