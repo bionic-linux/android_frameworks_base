@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea781ae4_7db9d2a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112033
+      },
+      "writtenOn": "2020-10-08T21:04:13Z",
+      "side": 1,
+      "message": "Cpick to AOSP.",
+      "revId": "446548446a9719c73f8483052e71d4dbdb9562f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
