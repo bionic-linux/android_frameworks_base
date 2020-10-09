@@ -153,6 +153,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Vpn {
     private static final String NETWORKTYPE = "VPN";
     private static final String TAG = "Vpn";
+    private static final String VPN_AGENT_NAME = "VPN Network Agent";
     private static final boolean LOGD = true;
 
     // Length of time (in milliseconds) that an app hosting an always-on VPN is placed on
@@ -443,12 +444,37 @@ public class Vpn {
      * Update current state, dispatching event to listeners.
      */
     @VisibleForTesting
+    @GuardedBy("this")
     protected void updateState(DetailedState detailedState, String reason) {
         if (LOGD) Log.d(TAG, "setting state=" + detailedState + ", reason=" + reason);
         mLegacyState = LegacyVpnInfo.stateFromNetworkInfo(detailedState);
-        mNetworkInfo.setDetailedState(detailedState, reason, null);
-        if (mNetworkAgent != null) {
-            mNetworkAgent.sendNetworkInfo(mNetworkInfo);
+        // TODO : only accept transitions when the agent is in the correct state (non-null for
+        // CONNECTED, DISCONNECTED and FAILED, null for CONNECTED).
+        // This will require a way for tests to pretend the VPN is connected that's not
+        // calling this method with CONNECTED.
+        // It will also require audit of where the code calls this method with DISCONNECTED
+        // with a null agent, which it was doing historically to make sure the agent is
+        // disconnected as this was a no-op if the agent was null.
+        switch (detailedState) {
+            case CONNECTED:
+                if (null != mNetworkAgent) {
+                    mNetworkAgent.markConnected();
+                }
+                break;
+            case DISCONNECTED:
+            case FAILED:
+                if (null != mNetworkAgent) {
+                    mNetworkAgent.unregister();
+                }
+                break;
+            case CONNECTING:
+                if (null != mNetworkAgent) {
+                    throw new IllegalStateException("VPN can only go to CONNECTING state when"
+                            + " the agent is null.");
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Illegal state argument " + detailedState);
         }
         updateAlwaysOnNotification(detailedState);
     }
@@ -1016,7 +1042,7 @@ public class Vpn {
             }
             mConfig = null;
 
-            updateState(DetailedState.IDLE, "prepare");
+            updateState(DetailedState.DISCONNECTED, "prepare");
             setVpnForcedLocked(mLockdown);
         } finally {
             Binder.restoreCallingIdentity(token);
@@ -1251,8 +1277,9 @@ public class Vpn {
         // behaves the same as when it uses the default network.
         mNetworkCapabilities.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
 
+        mNetworkAgent = null;
         mLegacyState = LegacyVpnInfo.STATE_CONNECTING;
-        mNetworkInfo.setDetailedState(DetailedState.CONNECTING, null, null);
+        updateState(DetailedState.CONNECTING, "agentConnect");
 
         NetworkAgentConfig networkAgentConfig = new NetworkAgentConfig();
         networkAgentConfig.allowBypass = mConfig.allowBypass && !mLockdown;
@@ -1263,15 +1290,16 @@ public class Vpn {
                 mConfig.allowedApplications, mConfig.disallowedApplications));
         long token = Binder.clearCallingIdentity();
         try {
-            mNetworkAgent = new NetworkAgent(mLooper, mContext, NETWORKTYPE /* logtag */,
-                    mNetworkInfo, mNetworkCapabilities, lp,
+            mNetworkAgent = new NetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
+                    mNetworkCapabilities, lp,
                     ConnectivityConstants.VPN_DEFAULT_SCORE, networkAgentConfig,
-                    NetworkProvider.ID_VPN) {
+                    new NetworkProvider(mContext, mLooper, VPN_AGENT_NAME)) {
                             @Override
                             public void unwanted() {
                                 // We are user controlled, not driven by NetworkRequest.
                             }
                         };
+            mNetworkAgent.register();
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -2920,8 +2948,9 @@ public class Vpn {
                 for (String[] arguments : mArguments) {
                     restart = restart || (arguments != null);
                 }
+                // TODO : is it even possible that the control comes here with a connected agent ?
+                agentDisconnect();
                 if (!restart) {
-                    agentDisconnect();
                     return;
                 }
                 updateState(DetailedState.CONNECTING, "execute");
