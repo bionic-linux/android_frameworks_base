@@ -119,6 +119,7 @@ public abstract class NetworkAgent {
     /**
      * The ID of the {@link NetworkProvider} that created this object, or
      * {@link NetworkProvider#ID_NONE} if unknown.
+     * TODO (b/170787321) : this field is never used and always contains ID_NONE. Remove it.
      * @hide
      */
     public final int providerId;
@@ -356,7 +357,8 @@ public abstract class NetworkAgent {
         // with the type and an empty description.
         final NetworkInfo ni = new NetworkInfo(config.legacyType, 0, config.legacyTypeName, "");
         ni.setIsAvailable(true);
-        ni.setExtraInfo(config.getLegacyExtraInfo());
+        ni.setDetailedState(NetworkInfo.DetailedState.CONNECTING, null /* reason */,
+                config.getLegacyExtraInfo());
         return ni;
     }
 
@@ -371,6 +373,10 @@ public abstract class NetworkAgent {
      * @param score the initial score of this network. Update with sendNetworkScore.
      * @param config an immutable {@link NetworkAgentConfig} for this agent.
      * @param provider the {@link NetworkProvider} managing this agent.
+     * TODO (b/170787321) : the provider passed in here is only ever used to feed the `providerId`
+     * field, which is never used. Further, providers get their ID at the time
+     * ConnectivityManager.registerNetworkProvider, which can't have been called yet here, so
+     * this will always evaluate to ID_NONE. This argument should be removed.
      */
     public NetworkAgent(@NonNull Context context, @NonNull Looper looper, @NonNull String logTag,
             @NonNull NetworkCapabilities nc, @NonNull LinkProperties lp, int score,
