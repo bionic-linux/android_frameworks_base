@@ -356,7 +356,8 @@ public abstract class NetworkAgent {
         // with the type and an empty description.
         final NetworkInfo ni = new NetworkInfo(config.legacyType, 0, config.legacyTypeName, "");
         ni.setIsAvailable(true);
-        ni.setExtraInfo(config.getLegacyExtraInfo());
+        ni.setDetailedState(NetworkInfo.DetailedState.CONNECTING, null /* reason */,
+                config.getLegacyExtraInfo());
         return ni;
     }
 
