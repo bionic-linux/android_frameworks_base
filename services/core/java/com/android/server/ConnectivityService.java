@@ -6055,7 +6055,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         nai.asyncChannel.connect(mContext, mTrackerHandler, nai.messenger);
         NetworkInfo networkInfo = nai.networkInfo;
         updateNetworkInfo(nai, networkInfo);
-        updateUids(nai, null, nai.networkCapabilities);
     }
 
     /**
@@ -6466,7 +6465,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateNetworkPermissions(nai, newNc);
         final NetworkCapabilities prevNc = nai.getAndSetNetworkCapabilities(newNc);
 
-        updateUids(nai, prevNc, newNc);
+        if (nai.created) {
+            // VPN have to update their capabilities before they connect to tell CS about their
+            // UIDs, but there is no point installing them before the native network is created.
+            // The initial setting of UIDs will be done at native network creation time.
+            updateUids(nai, prevNc, newNc);
+        }
 
         if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)) {
             // If the requestable capabilities haven't changed, and the score hasn't changed, then
@@ -7287,20 +7291,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     + oldInfo.getState() + " to " + state);
         }
 
-        if (!networkAgent.created
-                && (state == NetworkInfo.State.CONNECTED
-                || (state == NetworkInfo.State.CONNECTING && networkAgent.isVPN()))) {
-
+        if (!networkAgent.created && state == NetworkInfo.State.CONNECTED) {
             // A network that has just connected has zero requests and is thus a foreground network.
             networkAgent.networkCapabilities.addCapability(NET_CAPABILITY_FOREGROUND);
 
             if (!createNativeNetwork(networkAgent)) return;
             if (networkAgent.isVPN()) {
+                // Initialize the UIDs for the VPN by passing a null `prevNc` so all ranges
+                // will be sent once. All subsequent calls to updateUids will only update a diff.
+                updateUids(networkAgent, null, networkAgent.networkCapabilities);
                 // Initialize the VPN capabilities to their starting values according to the
                 // underlying networks. This will avoid a spurious callback to
                 // onCapabilitiesUpdated being sent in updateAllVpnCapabilities below as
                 // the VPN would switch from its default, blank capabilities to those
                 // that reflect the capabilities of its underlying networks.
+                // TODO : this is wasteful. Only the currently connecting VPN needs this, not all.
                 propagateUnderlyingNetworkCapabilities();
             }
             networkAgent.created = true;
