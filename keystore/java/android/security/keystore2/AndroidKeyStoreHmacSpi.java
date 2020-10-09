@@ -16,21 +16,22 @@
 
 package android.security.keystore2;
 
-import android.os.IBinder;
-import android.security.KeyStore;
 import android.security.KeyStoreException;
-import android.security.keymaster.KeymasterArguments;
+import android.security.KeyStoreOperation;
 import android.security.keymaster.KeymasterDefs;
-import android.security.keymaster.OperationResult;
-import android.security.keystore.KeyStoreConnectException;
+import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyStoreCryptoOperation;
 import android.security.keystore.KeymasterUtils;
+import android.system.keystore2.KeyParameter;
+import android.util.Log;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.ProviderException;
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.crypto.MacSpi;
 
@@ -40,6 +41,8 @@ import javax.crypto.MacSpi;
  * @hide
  */
 public abstract class AndroidKeyStoreHmacSpi extends MacSpi implements KeyStoreCryptoOperation {
+
+    private static final String TAG = "AndroidKeyStoreHmacSpi";
 
     public static class HmacSHA1 extends AndroidKeyStoreHmacSpi {
         public HmacSHA1() {
@@ -71,7 +74,6 @@ public abstract class AndroidKeyStoreHmacSpi extends MacSpi implements KeyStoreC
         }
     }
 
-    private final KeyStore mKeyStore = KeyStore.getInstance();
     private final int mKeymasterDigest;
     private final int mMacSizeBits;
 
@@ -80,12 +82,16 @@ public abstract class AndroidKeyStoreHmacSpi extends MacSpi implements KeyStoreC
 
     // Fields below are reset when engineDoFinal succeeds.
     private KeyStoreCryptoOperationChunkedStreamer mChunkedStreamer;
-    private IBinder mOperationToken;
-    private long mOperationHandle;
+    private KeyStoreOperation mOperation;
+    private long mOperationChallenge;
 
     protected AndroidKeyStoreHmacSpi(int keymasterDigest) {
         mKeymasterDigest = keymasterDigest;
         mMacSizeBits = KeymasterUtils.getDigestOutputSizeBits(keymasterDigest);
+        mOperation = null;
+        mOperationChallenge = 0;
+        mKey = null;
+        mChunkedStreamer = null;
     }
 
     @Override
@@ -127,24 +133,36 @@ public abstract class AndroidKeyStoreHmacSpi extends MacSpi implements KeyStoreC
 
     }
 
-    private void resetAll() {
-        mKey = null;
-        IBinder operationToken = mOperationToken;
-        if (operationToken != null) {
-            mKeyStore.abort(operationToken);
+    private void abortOperation() {
+        KeyStoreOperation operation = mOperation;
+        if (operation != null) {
+            try {
+                operation.abort();
+            } catch (KeyStoreException e) {
+                // We log this error, but we can afford to ignore it. Dropping the reference
+                // to the KeyStoreOperation is enough to clean up all related resources even
+                // in the Keystore daemon. We log it anyway, because it may indicate some
+                // underlying problem that is worth debugging.
+                Log.w(
+                        TAG,
+                        "In resetAll: Encountered error trying to abort a keystore operation.",
+                        e
+                );
+            }
         }
-        mOperationToken = null;
-        mOperationHandle = 0;
+        mOperation = null;
+    }
+
+    private void resetAll() {
+        abortOperation();
+        mOperationChallenge = 0;
+        mKey = null;
         mChunkedStreamer = null;
     }
 
     private void resetWhilePreservingInitState() {
-        IBinder operationToken = mOperationToken;
-        if (operationToken != null) {
-            mKeyStore.abort(operationToken);
-        }
-        mOperationToken = null;
-        mOperationHandle = 0;
+        abortOperation();
+        mOperationChallenge = 0;
         mChunkedStreamer = null;
     }
 
@@ -161,45 +179,48 @@ public abstract class AndroidKeyStoreHmacSpi extends MacSpi implements KeyStoreC
             throw new IllegalStateException("Not initialized");
         }
 
-        KeymasterArguments keymasterArgs = new KeymasterArguments();
-        keymasterArgs.addEnum(KeymasterDefs.KM_TAG_ALGORITHM, KeymasterDefs.KM_ALGORITHM_HMAC);
-        keymasterArgs.addEnum(KeymasterDefs.KM_TAG_DIGEST, mKeymasterDigest);
-        keymasterArgs.addUnsignedInt(KeymasterDefs.KM_TAG_MAC_LENGTH, mMacSizeBits);
+        List<KeyParameter> parameters = new ArrayList<>();
+        parameters.add(KeyStore2ParameterUtils.makeEnum(
+                KeymasterDefs.KM_TAG_ALGORITHM, KeymasterDefs.KM_ALGORITHM_HMAC
+        ));
+        parameters.add(KeyStore2ParameterUtils.makeEnum(
+                KeymasterDefs.KM_TAG_DIGEST, mKeymasterDigest
+        ));
+        parameters.add(KeyStore2ParameterUtils.makeInt(
+                KeymasterDefs.KM_TAG_MAC_LENGTH, mMacSizeBits
+        ));
 
-        OperationResult opResult = mKeyStore.begin(
-                mKey.getAlias(),
-                KeymasterDefs.KM_PURPOSE_SIGN,
-                true,
-                keymasterArgs,
-                null, // no additional entropy needed for HMAC because it's deterministic
-                mKey.getUid());
-
-        if (opResult == null) {
-            throw new KeyStoreConnectException();
+        try {
+            mOperation = mKey.getSecurityLevel().createOperation(
+                    mKey.getKeyIdDescriptor(),
+                    parameters
+            );
+        } catch (KeyStoreException keyStoreException) {
+            // If necessary, throw an exception due to KeyStore operation having failed.
+            InvalidKeyException e = KeyStoreCryptoOperationUtils.getInvalidKeyException(
+                    mKey, keyStoreException);
+            if (e != null) {
+                throw e;
+            }
         }
 
-        // Store operation token and handle regardless of the error code returned by KeyStore to
-        // ensure that the operation gets aborted immediately if the code below throws an exception.
-        mOperationToken = opResult.token;
-        mOperationHandle = opResult.operationHandle;
-
-        // If necessary, throw an exception due to KeyStore operation having failed.
-        InvalidKeyException e = KeyStoreCryptoOperationUtils.getInvalidKeyExceptionForInit(
-                mKeyStore, mKey, opResult.resultCode);
-        if (e != null) {
-            throw e;
-        }
-
-        if (mOperationToken == null) {
-            throw new ProviderException("Keystore returned null operation token");
-        }
-        if (mOperationHandle == 0) {
-            throw new ProviderException("Keystore returned invalid operation handle");
+        // Now we check if we got an operation challenge. This indicates that user authorization
+        // is required. And if we got a challenge we check if the authorization can possibly
+        // succeed.
+        if (mOperation.getChallenge() != null) {
+            if (!KeyStoreCryptoOperationUtils.canUserAuthorizationSucceed(mKey)) {
+                throw new KeyPermanentlyInvalidatedException();
+            }
+            mOperationChallenge = mOperation.getChallenge();
+        } else {
+            // Keystore won't give us an operation challenge if the operation doesn't
+            // need user authorization. So we make our own.
+            mOperationChallenge = Math.randomLongInternal();
         }
 
         mChunkedStreamer = new KeyStoreCryptoOperationChunkedStreamer(
                 new KeyStoreCryptoOperationChunkedStreamer.MainDataStream(
-                        mKeyStore, mOperationToken));
+                        mOperation));
     }
 
     @Override
@@ -238,9 +259,7 @@ public abstract class AndroidKeyStoreHmacSpi extends MacSpi implements KeyStoreC
         try {
             result = mChunkedStreamer.doFinal(
                     null, 0, 0,
-                    null, // no signature provided -- this invocation will generate one
-                    null // no additional entropy needed -- HMAC is deterministic
-                    );
+                    null); // no signature provided -- this invocation will generate one
         } catch (KeyStoreException e) {
             throw new ProviderException("Keystore operation failed", e);
         }
@@ -252,10 +271,7 @@ public abstract class AndroidKeyStoreHmacSpi extends MacSpi implements KeyStoreC
     @Override
     public void finalize() throws Throwable {
         try {
-            IBinder operationToken = mOperationToken;
-            if (operationToken != null) {
-                mKeyStore.abort(operationToken);
-            }
+            abortOperation();
         } finally {
             super.finalize();
         }
@@ -263,6 +279,6 @@ public abstract class AndroidKeyStoreHmacSpi extends MacSpi implements KeyStoreC
 
     @Override
     public long getOperationHandle() {
-        return mOperationHandle;
+        return mOperationChallenge;
     }
 }
