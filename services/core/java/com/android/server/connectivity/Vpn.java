@@ -153,6 +153,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Vpn {
     private static final String NETWORKTYPE = "VPN";
     private static final String TAG = "Vpn";
+    private static final String VPN_AGENT_NAME = "VpnNetworkAgent";
     private static final boolean LOGD = true;
 
     // Length of time (in milliseconds) that an app hosting an always-on VPN is placed on
@@ -444,12 +445,39 @@ public class Vpn {
      * Update current state, dispatching event to listeners.
      */
     @VisibleForTesting
+    @GuardedBy("this")
     protected void updateState(DetailedState detailedState, String reason) {
         if (LOGD) Log.d(TAG, "setting state=" + detailedState + ", reason=" + reason);
         mLegacyState = LegacyVpnInfo.stateFromNetworkInfo(detailedState);
         mNetworkInfo.setDetailedState(detailedState, reason, null);
-        if (mNetworkAgent != null) {
-            mNetworkAgent.sendNetworkInfo(mNetworkInfo);
+        // TODO : only accept transitions when the agent is in the correct state (non-null for
+        // CONNECTED, DISCONNECTED and FAILED, null for CONNECTED).
+        // This will require a way for tests to pretend the VPN is connected that's not
+        // calling this method with CONNECTED.
+        // It will also require audit of where the code calls this method with DISCONNECTED
+        // with a null agent, which it was doing historically to make sure the agent is
+        // disconnected as this was a no-op if the agent was null.
+        switch (detailedState) {
+            case CONNECTED:
+                if (null != mNetworkAgent) {
+                    mNetworkAgent.markConnected();
+                }
+                break;
+            case DISCONNECTED:
+            case FAILED:
+                if (null != mNetworkAgent) {
+                    mNetworkAgent.unregister();
+                    mNetworkAgent = null;
+                }
+                break;
+            case CONNECTING:
+                if (null != mNetworkAgent) {
+                    throw new IllegalStateException("VPN can only go to CONNECTING state when"
+                            + " the agent is null.");
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Illegal state argument " + detailedState);
         }
         updateAlwaysOnNotification(detailedState);
     }
@@ -1017,7 +1045,7 @@ public class Vpn {
             }
             mConfig = null;
 
-            updateState(DetailedState.IDLE, "prepare");
+            updateState(DetailedState.DISCONNECTED, "prepare");
             setVpnForcedLocked(mLockdown);
         } finally {
             Binder.restoreCallingIdentity(token);
@@ -1253,7 +1281,7 @@ public class Vpn {
         mNetworkCapabilities.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
 
         mLegacyState = LegacyVpnInfo.STATE_CONNECTING;
-        mNetworkInfo.setDetailedState(DetailedState.CONNECTING, null, null);
+        updateState(DetailedState.CONNECTING, "agentConnect");
 
         NetworkAgentConfig networkAgentConfig = new NetworkAgentConfig();
         networkAgentConfig.allowBypass = mConfig.allowBypass && !mLockdown;
@@ -1262,20 +1290,24 @@ public class Vpn {
         mNetworkCapabilities.setAdministratorUids(new int[] {mOwnerUID});
         mNetworkCapabilities.setUids(createUserAndRestrictedProfilesRanges(mUserId,
                 mConfig.allowedApplications, mConfig.disallowedApplications));
-        final long token = Binder.clearCallingIdentity();
-        try {
-            mNetworkAgent = new NetworkAgent(mLooper, mContext, NETWORKTYPE /* logtag */,
-                    mNetworkInfo, mNetworkCapabilities, lp,
-                    ConnectivityConstants.VPN_DEFAULT_SCORE, networkAgentConfig,
-                    NetworkProvider.ID_VPN) {
-                            @Override
-                            public void unwanted() {
-                                // We are user controlled, not driven by NetworkRequest.
-                            }
-                        };
-        } finally {
-            Binder.restoreCallingIdentity(token);
-        }
+        mNetworkAgent = new NetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
+                mNetworkCapabilities, lp,
+                ConnectivityConstants.VPN_DEFAULT_SCORE, networkAgentConfig,
+                new NetworkProvider(mContext, mLooper, VPN_AGENT_NAME)) {
+            @Override
+            public void unwanted() {
+                // We are user controlled, not driven by NetworkRequest.
+            }
+        };
+        Binder.withCleanCallingIdentity(() -> {
+            try {
+                mNetworkAgent.register();
+            } catch (final Exception e) {
+                // If register() throws, don't keep an unregistered agent.
+                mNetworkAgent = null;
+                throw e;
+            }
+        });
         mNetworkInfo.setIsAvailable(true);
         updateState(DetailedState.CONNECTED, "agentConnect");
     }
@@ -1291,19 +1323,12 @@ public class Vpn {
 
     private void agentDisconnect(NetworkAgent networkAgent) {
         if (networkAgent != null) {
-            NetworkInfo networkInfo = new NetworkInfo(mNetworkInfo);
-            networkInfo.setIsAvailable(false);
-            networkInfo.setDetailedState(DetailedState.DISCONNECTED, null, null);
-            networkAgent.sendNetworkInfo(networkInfo);
+            networkAgent.unregister();
         }
     }
 
     private void agentDisconnect() {
-        if (mNetworkInfo.isConnected()) {
-            mNetworkInfo.setIsAvailable(false);
-            updateState(DetailedState.DISCONNECTED, "agentDisconnect");
-            mNetworkAgent = null;
-        }
+        updateState(DetailedState.DISCONNECTED, "agentDisconnect");
     }
 
     /**
@@ -1392,6 +1417,8 @@ public class Vpn {
                     && updateLinkPropertiesInPlaceIfPossible(mNetworkAgent, oldConfig)) {
                 // Keep mNetworkAgent unchanged
             } else {
+                // Initialize the state for a new agent, while keeping the old one connected
+                // in case this new connection fails.
                 mNetworkAgent = null;
                 updateState(DetailedState.CONNECTING, "establish");
                 // Set up forwarding and DNS rules.
