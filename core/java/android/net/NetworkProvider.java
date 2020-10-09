@@ -58,6 +58,13 @@ public class NetworkProvider {
     public static final int ID_VPN = -2;
 
     /**
+     * A hardcoded ID for NetworkAgents created by TestNetworkService. These agents are not
+     * created by any provider, so they use this constant for clarity instead of NONE.
+     * @hide only used by TestNetworkService.
+     */
+    public static final int ID_TEST_NETWORK_SERVICE = -3;
+
+    /**
      * The first providerId value that will be allocated.
      * @hide only used by ConnectivityService.
      */
