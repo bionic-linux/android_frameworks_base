@@ -2596,15 +2596,6 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                 }
                 mDisplayContent.prepareAppTransition(transit, false);
 
-                // When finishing the activity preemptively take the snapshot before the app window
-                // is marked as hidden and any configuration changes take place
-                if (mAtmService.mWindowManager.mTaskSnapshotController != null) {
-                    final ArraySet<Task> tasks = Sets.newArraySet(task);
-                    mAtmService.mWindowManager.mTaskSnapshotController.snapshotTasks(tasks);
-                    mAtmService.mWindowManager.mTaskSnapshotController
-                            .addSkipClosingAppSnapshotTasks(tasks);
-                }
-
                 // Tell window manager to prepare for this one to be removed.
                 setVisibility(false);
 
