@@ -3998,13 +3998,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     settingsPkgName + ".wifi.WifiNoInternetDialog");
         }
 
-        PendingIntent pendingIntent = PendingIntent.getActivityAsUser(
-                mContext,
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                mContext.createContextAsUser(UserHandle.CURRENT, 0 /* flags */),
                 0 /* requestCode */,
                 intent,
                 PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE,
-                null /* options */,
-                UserHandle.CURRENT);
+                null /* options */);
 
         mNotifier.showNotification(nai.network.netId, type, nai, null, pendingIntent, highPriority);
     }
