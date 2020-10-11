@@ -8387,6 +8387,13 @@ package android.security.keystore.recovery {
 
 }
 
+package android.security.keystore2 {
+
+  public class AndroidKeyStoreProvider extends java.security.Provider {
+  }
+
+}
+
 package android.service.appprediction {
 
   public abstract class AppPredictionService extends android.app.Service {
