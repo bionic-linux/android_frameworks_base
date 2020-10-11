@@ -8387,6 +8387,14 @@ package android.security.keystore.recovery {
 
 }
 
+package android.security.keystore2 {
+
+  public class AndroidKeyStoreProvider extends java.security.Provider {
+    method @NonNull public static java.security.KeyStore getKeyStoreForNamespace(int) throws java.security.KeyStoreException, java.security.NoSuchProviderException;
+  }
+
+}
+
 package android.service.appprediction {
 
   public abstract class AppPredictionService extends android.app.Service {
