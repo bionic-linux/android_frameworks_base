@@ -16,6 +16,24 @@
       "message": "Do you like to also update VpnConfig since you also found there is such TODO in our code?",
       "revId": "c5bc48feb2e5a8eb92951ad6a1aa6e4925b64bb2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c51f09d_685d43e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-12T11:04:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6b97ff20_e5df44a9",
+      "revId": "c5bc48feb2e5a8eb92951ad6a1aa6e4925b64bb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
