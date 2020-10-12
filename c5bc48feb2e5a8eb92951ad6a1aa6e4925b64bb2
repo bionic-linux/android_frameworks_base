@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b97ff20_e5df44a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-12T09:33:09Z",
+      "side": 1,
+      "message": "Do you like to also update VpnConfig since you also found there is such TODO in our code?",
+      "revId": "c5bc48feb2e5a8eb92951ad6a1aa6e4925b64bb2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
