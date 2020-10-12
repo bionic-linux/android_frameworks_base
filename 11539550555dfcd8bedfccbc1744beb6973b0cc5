@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96b2fec6_39cc8add",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1345812
+      },
+      "writtenOn": "2020-10-12T16:40:50Z",
+      "side": 1,
+      "message": "Patch set #25: Open \"/dev/kmsg_debug\" in append mode, and use \"append()\" to write log message to it. ",
+      "revId": "11539550555dfcd8bedfccbc1744beb6973b0cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
