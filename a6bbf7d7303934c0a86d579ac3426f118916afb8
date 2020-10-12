@@ -22,6 +22,30 @@
       },
       "revId": "a6bbf7d7303934c0a86d579ac3426f118916afb8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0111f9b9_0ce61e26",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-12T15:24:21Z",
+      "side": 1,
+      "message": "Ack; CompatibilityChangeInfo now only contains enabledSinceTargetSdk and converts enabledAfterTargetSdk to the appropriate value.",
+      "parentUuid": "a4846441_199afd47",
+      "range": {
+        "startLine": 88,
+        "startChar": 48,
+        "endLine": 89,
+        "endChar": 49
+      },
+      "revId": "a6bbf7d7303934c0a86d579ac3426f118916afb8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

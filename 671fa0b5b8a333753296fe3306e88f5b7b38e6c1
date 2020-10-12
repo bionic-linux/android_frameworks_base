@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b33e303_43f6e39a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-12T15:24:21Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb7d165e_8b972b14",
@@ -31,6 +48,30 @@
       "writtenOn": "2020-10-12T08:56:08Z",
       "side": 1,
       "message": "needs updating? add enabledSince",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e9c0ace_bc522c23",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-12T15:24:21Z",
+      "side": 1,
+      "message": "I have no idea why the enableSince disappeared from here 😕",
+      "parentUuid": "cb7d165e_8b972b14",
       "range": {
         "startLine": 168,
         "startChar": 18,
@@ -64,6 +105,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6babbec7_da7bb631",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-12T15:24:21Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s very confusing, however the condition is correct I think.\n\nmaxTargetSdkForChangeIdOptIn returns the equivalent of enabledAfter, which is enabledSince - 1. \n\nI.e. if a change id is enabled since target SDK X, you can only opt into it until target SDK X - 1.",
+      "parentUuid": "3d9f97eb_0272cd1e",
+      "range": {
+        "startLine": 92,
+        "startChar": 36,
+        "endLine": 92,
+        "endChar": 40
+      },
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55ec6cfb_2212cb67",
@@ -87,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adce8366_a8e90749",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-12T15:24:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55ec6cfb_2212cb67",
+      "range": {
+        "startLine": 62,
+        "startChar": 59,
+        "endLine": 62,
+        "endChar": 60
+      },
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4560b73_e0d56b5b",
@@ -100,6 +189,30 @@
       "writtenOn": "2020-10-12T08:56:08Z",
       "side": 1,
       "message": "should we keep the original tests and add new ones for enabledSince? (since CompatChange still supports both, and we still supports enabledSince in the XML)",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 43
+      },
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "582e6413_d625df4d",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-10-12T15:24:21Z",
+      "side": 1,
+      "message": "Agreed. I\u0027ll create an extra CL on top of this one, just to make it easier to read.",
+      "parentUuid": "c4560b73_e0d56b5b",
       "range": {
         "startLine": 99,
         "startChar": 16,
