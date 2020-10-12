@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71da891c_e0ee949a",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-12T11:31:25Z",
+      "side": 1,
+      "message": "It\u0027s not related to this commit, but if it\u0027s a redundant \"to\", maybe we can fix it by this commit or in the following commit.",
+      "range": {
+        "startLine": 33,
+        "startChar": 43,
+        "endLine": 33,
+        "endChar": 45
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dce6904_3450cf90",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-12T11:31:25Z",
+      "side": 1,
+      "message": "I don\u0027t really understand what does it mean.\nCould you give an example or describe it more detail?",
+      "range": {
+        "startLine": 446,
+        "startChar": 82,
+        "endLine": 447,
+        "endChar": 65
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "785586e5_da34d824",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-12T11:31:25Z",
+      "side": 1,
+      "message": "It means Vpn will never send CONNECTING state to ConnectivityService, right?\nIf so, did you consider ConnectivityService#updateNetworkInfo()? (https://source.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/ConnectivityService.java;l\u003d7179?q\u003dconnectivityservice.java\u0026sq\u003dpackage:%5Eaosp-master$)\nIt will check if the network is VPN and the state is CONNECTING.\nI think the purpose is that some pre-config should be configured before CONNECTED. e.g. allowBypass, uid ranges.",
+      "range": {
+        "startLine": 465,
+        "startChar": 12,
+        "endLine": 470,
+        "endChar": 22
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1bf77f4_e895a2df",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-12T11:31:25Z",
+      "side": 1,
+      "message": "According to the NetworkAgent constructor, it will get provider id from NetworkProvider if NetworkProvider is not null. (https://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkAgent.java;l\u003d379?q\u003dnetworkagent.java\u0026sq\u003dpackage:%5Eaosp-master$)\nBut the default provider id is ID_NONE and it seems like currently there is no way to change NetworkAgent#providerId after creating NetworkAgent, so after this commit, the provider id of VPN NetworkAgent will always be ID_NONE, right?\nIs it expected? Or do we have any TODO item will fix it?",
+      "range": {
+        "startLine": 1288,
+        "startChar": 20,
+        "endLine": 1288,
+        "endChar": 74
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16041dfc_c6d4e54e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2934,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-12T11:31:25Z",
+      "side": 1,
+      "message": "I think it\u0027s fine because prepareInternal() will be called before this method.\nAnd agentDisconnect() will be called there, so there should be no-op when calling agentDisconnect() here.\nMaybe we can consider remove it?",
+      "range": {
+        "startLine": 2933,
+        "startChar": 16,
+        "endLine": 2934,
+        "endChar": 34
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90a7bcca_a7aa4427",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2935,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-12T11:31:25Z",
+      "side": 1,
+      "message": "According to the startLegacyVpnPrivileged() and current VPN types in Settings, I don\u0027t find a case which will create a LegacyVpnRunner object with null racoon and null mtpd at the same time.\nSo \"arguments !\u003d null\" at line#2931 should be always true.\nMaybe we can remove this?",
+      "range": {
+        "startLine": 2935,
+        "startChar": 16,
+        "endLine": 2935,
+        "endChar": 31
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
