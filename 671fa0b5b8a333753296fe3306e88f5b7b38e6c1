@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4750460_0fc8833e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-12T08:56:08Z",
+      "side": 1,
+      "message": "So I assume the behaviour of `adb shell am compat enable-all` has now changed. We should call that out in any docs etc. Are there any tests that also need updating as a result?",
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb7d165e_8b972b14",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-12T08:56:08Z",
+      "side": 1,
+      "message": "needs updating? add enabledSince",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d9f97eb_0272cd1e",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-12T08:56:08Z",
+      "side": 1,
+      "message": "should now be \"\u003c\"? (not sure, it\u0027s confusing)",
+      "range": {
+        "startLine": 92,
+        "startChar": 36,
+        "endLine": 92,
+        "endChar": 40
+      },
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55ec6cfb_2212cb67",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-12T08:56:08Z",
+      "side": 1,
+      "message": "should this be updated too? (maybe an orthogonal change)",
+      "range": {
+        "startLine": 62,
+        "startChar": 59,
+        "endLine": 62,
+        "endChar": 60
+      },
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4560b73_e0d56b5b",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-12T08:56:08Z",
+      "side": 1,
+      "message": "should we keep the original tests and add new ones for enabledSince? (since CompatChange still supports both, and we still supports enabledSince in the XML)",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 43
+      },
+      "revId": "671fa0b5b8a333753296fe3306e88f5b7b38e6c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
