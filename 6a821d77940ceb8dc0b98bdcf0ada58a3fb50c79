@@ -93,6 +93,30 @@
       },
       "revId": "6a821d77940ceb8dc0b98bdcf0ada58a3fb50c79",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6f9cd8c_48a54e70",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-12T07:17:38Z",
+      "side": 1,
+      "message": "Okay, I think this test(this test is also inculded in cts) cannot pass on Q devices because the CompareResult is in different package in Q and R+. We should keep the check for sdk.",
+      "parentUuid": "cf55029e_4851fafc",
+      "range": {
+        "startLine": 450,
+        "startChar": 11,
+        "endLine": 450,
+        "endChar": 37
+      },
+      "revId": "6a821d77940ceb8dc0b98bdcf0ada58a3fb50c79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
