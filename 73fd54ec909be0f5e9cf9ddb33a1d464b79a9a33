@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9741fe8b_adeffcf6",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-10-13T23:20:16Z",
+      "side": 1,
+      "message": "Forive my ignorance; I presume the providerId being ID_NONE is acceptable? I notice the same thing with the VPNs.\n\nIs providerId not relevant/necessary in the context of networks where the lifecycle of the network is not request-managed? Perhaps a comment on that would be helpful (The NetworkProvider#ID_NONE javadoc only discusses usage in NetworkProvider and NetworkRequest classes, but not NetworkAgents)",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 39
+      },
+      "revId": "73fd54ec909be0f5e9cf9ddb33a1d464b79a9a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
