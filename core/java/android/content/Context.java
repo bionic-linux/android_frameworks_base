@@ -3978,7 +3978,6 @@ public abstract class Context {
      *
      * @see #getSystemService(String)
      * @see android.net.vcn.VcnManager
-     * @hide
      */
     public static final String VCN_MANAGEMENT_SERVICE = "vcn_management";
 
