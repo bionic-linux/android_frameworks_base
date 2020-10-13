@@ -16,6 +16,8 @@
 
 package android.util;
 
+import static android.os.Build.IS_USER;
+
 import android.compat.annotation.UnsupportedAppUsage;
 
 import com.android.internal.util.ArrayUtils;
@@ -645,7 +647,7 @@ public final class ArrayMap<K, V> implements Map<K, V> {
             e.fillInStackTrace();
             Log.w(TAG, "New hash " + hash
                     + " is before end of array hash " + mHashes[index-1]
-                    + " at index " + index + " key " + key, e);
+                    + " at index " + index + (IS_USER ? "" : " key " + key), e);
             put(key, value);
             return;
         }
