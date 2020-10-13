@@ -22,6 +22,30 @@
       },
       "revId": "f9b1a37169f39db9a8ed9e3ed9750c36fbcad8c3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66f7d0b2_37068121",
+        "filename": "packages/Tethering/tests/privileged/src/android/net/ip/DadProxyTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-13T02:40:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f373f2f1_c214e9bb",
+      "range": {
+        "startLine": 65,
+        "startChar": 37,
+        "endLine": 65,
+        "endChar": 56
+      },
+      "revId": "f9b1a37169f39db9a8ed9e3ed9750c36fbcad8c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
