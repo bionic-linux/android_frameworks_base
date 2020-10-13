@@ -44,8 +44,6 @@ import android.content.Context;
  * Mode, the system will allow underlying cellular networks to be used as default. Additionally,
  * during Safe Mode, the VCN will continue to retry the connections, and will automatically exit
  * Safe Mode if all active tunnels connect successfully.
- *
- * @hide
  */
 @SystemService(Context.VCN_MANAGEMENT_SERVICE)
 public final class VcnManager {
