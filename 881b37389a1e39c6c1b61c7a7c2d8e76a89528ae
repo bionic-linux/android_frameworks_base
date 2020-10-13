@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47669b8a_3b30faab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-13T02:24:26Z",
+      "side": 1,
+      "message": "Since the \"Bundle\" parameter of getActivity() are all null for these files.\nDo you want to replace it by https://developer.android.com/reference/android/app/PendingIntent#getActivity(android.content.Context,%20int,%20android.content.Intent,%20int) ?",
+      "revId": "881b37389a1e39c6c1b61c7a7c2d8e76a89528ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f9269c5_a577ff6c",
+        "filename": "services/core/java/com/android/server/connectivity/LingerMonitor.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-13T02:24:26Z",
+      "side": 1,
+      "message": "What about using this one?\nhttps://developer.android.com/reference/android/app/PendingIntent#getActivity(android.content.Context,%20int,%20android.content.Intent,%20int)",
+      "range": {
+        "startLine": 162,
+        "startChar": 29,
+        "endLine": 162,
+        "endChar": 40
+      },
+      "revId": "881b37389a1e39c6c1b61c7a7c2d8e76a89528ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
