@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5071b149_a603cfae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-13T03:18:32Z",
+      "side": 1,
+      "message": "Maybe add some manual tests.",
+      "parentUuid": "123c2d33_22903996",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "881b37389a1e39c6c1b61c7a7c2d8e76a89528ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "47669b8a_3b30faab",
