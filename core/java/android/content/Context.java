@@ -3545,6 +3545,8 @@ public abstract class Context {
      *  <dt> {@link #CONNECTIVITY_SERVICE} ("connectivity")
      *  <dd> A {@link android.net.ConnectivityManager ConnectivityManager} for
      *  handling management of network connections.
+     *  <dt> {@link #VCN_MANAGEMENT_SERVICE} ("vcn_management")
+     *  <dd> A {@link android.net.vcn.VcnManager VcnManager} for managing Virtual Carrier Networks
      *  <dt> {@link #IPSEC_SERVICE} ("ipsec")
      *  <dd> A {@link android.net.IpSecManager IpSecManager} for managing IPSec on
      *  sockets and networks.
@@ -3625,6 +3627,8 @@ public abstract class Context {
      * @see android.os.Vibrator
      * @see #CONNECTIVITY_SERVICE
      * @see android.net.ConnectivityManager
+     * @see #VCN_MANAGEMENT_SERVICE
+     * @see android.net.vcn.VcnManager
      * @see #WIFI_SERVICE
      * @see android.net.wifi.WifiManager
      * @see #AUDIO_SERVICE
@@ -3972,7 +3976,6 @@ public abstract class Context {
      *
      * @see #getSystemService(String)
      * @see android.net.vcn.VcnManager
-     * @hide
      */
     public static final String VCN_MANAGEMENT_SERVICE = "vcn_management";
 
