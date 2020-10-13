@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ce31736_1de1e5e2",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-10-13T09:55:07Z",
+      "side": 1,
+      "message": "maybe cleaner to now do:\n\n  if ((c !\u003d null) \u0026\u0026 (c.getEnableSinceTargetSdk() !\u003d -1)) {\n    ...\n  }\n  return -1",
+      "range": {
+        "startLine": 201,
+        "startChar": 12,
+        "endLine": 204,
+        "endChar": 51
+      },
+      "revId": "f3b3618f84c6a532a03440a5814117b941ff422d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
