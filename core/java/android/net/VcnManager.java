@@ -21,11 +21,7 @@ import android.annotation.NonNull;
 import android.annotation.SystemService;
 import android.content.Context;
 
-/**
- * VcnManager publishes APIs for applications to configure and manage Virtual Carrier Networks
- *
- * @hide
- */
+/** VcnManager publishes APIs for applications to configure and manage Virtual Carrier Networks */
 @SystemService(Context.VCN_MANAGEMENT_SERVICE)
 public final class VcnManager {
     @NonNull private static final String TAG = VcnManager.class.getSimpleName();
