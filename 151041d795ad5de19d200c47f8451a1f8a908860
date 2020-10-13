@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e13c8dad_4d46badc",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-13T02:09:27Z",
+      "side": 1,
+      "message": "Nit: null /* options */ \n\nto align with other parameters and files",
+      "range": {
+        "startLine": 74,
+        "startChar": 46,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "151041d795ad5de19d200c47f8451a1f8a908860",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
