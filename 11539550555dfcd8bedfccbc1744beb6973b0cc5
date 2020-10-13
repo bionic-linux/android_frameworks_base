@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ae7c741_bdad0843",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1345812
+      },
+      "writtenOn": "2020-10-13T03:31:03Z",
+      "side": 1,
+      "message": "Done; thanks for catching this, it should be \"IOException\" (thrown by FileUtils.readTextFile).",
+      "parentUuid": "7aeabb58_9df9fd00",
+      "range": {
+        "startLine": 776,
+        "startChar": 17,
+        "endLine": 776,
+        "endChar": 26
+      },
+      "revId": "11539550555dfcd8bedfccbc1744beb6973b0cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f8bac4f_186dc360",
@@ -54,6 +78,24 @@
       "writtenOn": "2020-10-13T02:57:01Z",
       "side": 1,
       "message": "Use a try-with-resources block instead of a try block, to ensure that close() is always called regardless of IOExceptions on previous lines.\n\n  try (FileWriter kmsg \u003d new FileWriter(\"/dev/kmsg_debug\", /* append\u003d */ true)) {\n    ...\n  }\n\nsee line 734 as an example.",
+      "revId": "11539550555dfcd8bedfccbc1744beb6973b0cc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cf60f75_509dac84",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1345812
+      },
+      "writtenOn": "2020-10-13T03:31:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f8bac4f_186dc360",
       "revId": "11539550555dfcd8bedfccbc1744beb6973b0cc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
