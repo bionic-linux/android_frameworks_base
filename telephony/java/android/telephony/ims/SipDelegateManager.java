@@ -25,9 +25,11 @@ import android.content.Context;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
+import android.telephony.BinderCacheManager;
 import android.telephony.CarrierConfigManager;
 import android.telephony.TelephonyFrameworkInitializer;
 import android.telephony.ims.aidl.IImsRcsController;
+import android.telephony.ims.aidl.SipDelegateConnectionAidlWrapper;
 import android.telephony.ims.stub.DelegateConnectionMessageCallback;
 import android.telephony.ims.stub.DelegateConnectionStateCallback;
 
@@ -269,6 +271,8 @@ public class SipDelegateManager {
 
     private final Context mContext;
     private final int mSubId;
+    private final BinderCacheManager<IImsRcsController> mBinderCache =
+            new BinderCacheManager<>(SipDelegateManager::getIImsRcsControllerInterface);
 
     /**
      * Only visible for testing. To instantiate an instance of this class, please use
@@ -298,7 +302,7 @@ public class SipDelegateManager {
     @RequiresPermission(Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
     public boolean isSupported() throws ImsException {
         try {
-            IImsRcsController controller = getIImsRcsController();
+            IImsRcsController controller = mBinderCache.getBinder();
             if (controller == null) {
                 throw new ImsException("Telephony server is down",
                         ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
@@ -323,7 +327,7 @@ public class SipDelegateManager {
      * a persistent binding to when the app is the default SMS application.
      * @param request The parameters that are associated with the SipDelegate creation request that
      *                will be used to create the SipDelegate connection.
-     * @param e The executor that will be used to call the callbacks associated with this
+     * @param executor The executor that will be used to call the callbacks associated with this
      *          SipDelegate.
      * @param dc The callback that will be used to notify the listener of the creation/destruction
      *           of the remote SipDelegate as well as changes to the state of the remote SipDelegate
@@ -335,18 +339,34 @@ public class SipDelegateManager {
      * associated with this SipDelegateManager. See {@link ImsException#getCode()}.
      * @hide
      */
-    public void createSipDelegate(@NonNull DelegateRequest request, @NonNull Executor e,
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
+    public void createSipDelegate(@NonNull DelegateRequest request, @NonNull Executor executor,
             @NonNull DelegateConnectionStateCallback dc,
             @NonNull DelegateConnectionMessageCallback mc) throws ImsException {
-        if (request == null || e == null || dc == null || mc == null) {
+        if (request == null || executor == null || dc == null || mc == null) {
             throw new IllegalArgumentException("Invalid arguments passed into createSipDelegate");
         }
-        throw new ImsException("creating a SipDelegate is not supported" ,
-                ImsException.CODE_ERROR_UNSUPPORTED_OPERATION);
+        try {
+            SipDelegateConnectionAidlWrapper wrapper =
+                    new SipDelegateConnectionAidlWrapper(executor, dc, mc);
+            IImsRcsController controller = mBinderCache.listenOnBinder(wrapper,
+                    wrapper::binderDied);
+            if (controller == null) {
+                throw new ImsException("Telephony server is down",
+                        ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+            }
+            controller.createSipDelegate(mSubId, request, wrapper.getStateCallbackBinder(),
+                    wrapper.getMessageCallbackBinder());
+        } catch (ServiceSpecificException e) {
+            throw new ImsException(e.getMessage(), e.errorCode);
+        } catch (RemoteException e) {
+            throw new ImsException(e.getMessage(),
+                    ImsException.CODE_ERROR_SERVICE_UNAVAILABLE);
+        }
     }
 
     /**
-     * Destroy a previously created SipDelegateConnection that was created using
+     * Destroy a previously created {@link SipDelegateConnection} that was created using
      * {@link #createSipDelegate}.
      * <p>
      * This will also clean up all related callbacks in the associated ImsService.
@@ -354,16 +374,36 @@ public class SipDelegateManager {
      * @param reason The reason for why this SipDelegateConnection was destroyed.
      * @hide
      */
+    @RequiresPermission(Manifest.permission.MODIFY_PHONE_STATE)
     public void destroySipDelegate(@NonNull SipDelegateConnection delegateConnection,
             @SipDelegateDestroyReason int reason) {
 
         if (delegateConnection == null) {
             throw new IllegalArgumentException("invalid argument passed into destroySipDelegate");
         }
-        // not supported yet.
+        if (delegateConnection instanceof SipDelegateConnectionAidlWrapper) {
+            SipDelegateConnectionAidlWrapper w =
+                    (SipDelegateConnectionAidlWrapper) delegateConnection;
+            try {
+                IImsRcsController c = mBinderCache.removeRunnable(w);
+                c.destroySipDelegate(mSubId, w.getSipDelegateBinder(), reason);
+            } catch (RemoteException e) {
+                // Connection to telephony died, but this will signal destruction of SipDelegate
+                // eventually anyway, so return normally.
+                try {
+                    w.getStateCallbackBinder().onDestroyed(
+                            SipDelegateManager.SIP_DELEGATE_DESTROY_REASON_REQUESTED_BY_APP);
+                } catch (RemoteException ignore) {
+                    // Local to process.
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Unknown SipDelegateConnection implementation passed"
+                    + " into this method");
+        }
     }
 
-    private IImsRcsController getIImsRcsController() {
+    private static IImsRcsController getIImsRcsControllerInterface() {
         IBinder binder = TelephonyFrameworkInitializer
                 .getTelephonyServiceManager()
                 .getTelephonyImsServiceRegisterer()

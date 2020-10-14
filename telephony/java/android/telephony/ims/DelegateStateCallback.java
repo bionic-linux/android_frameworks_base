@@ -52,11 +52,22 @@ public interface DelegateStateCallback {
     void onCreated(@NonNull SipDelegate delegate, @Nullable List<FeatureTagState> deniedTags);
 
     /**
-     * Must be called after {@link SipTransportImplBase#destroySipDelegate} to notify the framework
-     * and remote application that this {@link SipDelegate} has been destroyed.
-     * @param reasonCode The reason for closing this delegate.
+     * The {@link SipDelegate} has modified the IMS registration state of the RCS feature tags that
+     * were requested as part of the initial {@link DelegateRequest}.
+     * <p>
+     * See {@link DelegateRegistrationState} for more information about how IMS Registration state
+     * should be communicated the associated SipDelegateConnection in cases such as
+     * IMS deregistration, handover, PDN change, provisioning changes, etc…
+     * <p>
+     * Note: Even after the status of the feature tags are updated here to deregistered, the
+     * SipDelegate must still be able to handle these messages and call
+     * {@link DelegateMessageCallback#onMessageSendFailure} to notify the RCS application that the
+     * message was not sent.
+     *
+     * @param registrationState The current network IMS registration state for all feature tags
+     *         associated with this SipDelegate.
      */
-    void onDestroyed(@SipDelegateManager.SipDelegateDestroyReason int reasonCode);
+    void onFeatureTagRegistrationChanged(DelegateRegistrationState registrationState);
 
     /**
      * Notify the remote application of a configuration change associated with this
@@ -76,20 +87,9 @@ public interface DelegateStateCallback {
     void onImsConfigurationChanged(@NonNull SipDelegateImsConfiguration config);
 
     /**
-     * The {@link SipDelegate} has modified the IMS registration state of the RCS feature tags that
-     * were requested as part of the initial {@link DelegateRequest}.
-     * <p>
-     * See {@link DelegateRegistrationState} for more information about how IMS Registration state
-     * should be communicated the associated SipDelegateConnection in cases such as
-     * IMS deregistration, handover, PDN change, provisioning changes, etc…
-     * <p>
-     * Note: Even after the status of the feature tags are updated here to deregistered, the
-     * SipDelegate must still be able to handle these messages and call
-     * {@link DelegateMessageCallback#onMessageSendFailure} to notify the RCS application that the
-     * message was not sent.
-     *
-     * @param registrationState The current network IMS registration state for all feature tags
-     *         associated with this SipDelegate.
+     * Must be called after {@link SipTransportImplBase#destroySipDelegate} to notify the framework
+     * and remote application that this {@link SipDelegate} has been destroyed.
+     * @param reasonCode The reason for closing this delegate.
      */
-    void onFeatureTagRegistrationChanged(DelegateRegistrationState registrationState);
+    void onDestroyed(@SipDelegateManager.SipDelegateDestroyReason int reasonCode);
 }
