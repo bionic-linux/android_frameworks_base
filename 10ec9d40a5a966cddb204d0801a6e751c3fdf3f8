@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005524679",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1460522?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9b376d80_a01710c8",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-14T14:52:57Z",
+      "side": 1,
+      "message": "This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.",
+      "range": {
+        "startLine": 2197,
+        "startChar": 1,
+        "endLine": 2197,
+        "endChar": 7
+      },
+      "revId": "10ec9d40a5a966cddb204d0801a6e751c3fdf3f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
