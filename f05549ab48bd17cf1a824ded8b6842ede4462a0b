@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c82017d_0bff4ea3",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-14T08:44:38Z",
+      "side": 1,
+      "message": "You don\u0027t need this comment, it\u0027s very obvious that setting it to null means the snapshot is reset",
+      "range": {
+        "startLine": 313,
+        "startChar": 12,
+        "endLine": 313,
+        "endChar": 34
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "364076bc_c48bbf99",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-14T08:44:38Z",
+      "side": 1,
+      "message": "mUidSnapshot",
+      "range": {
+        "startLine": 406,
+        "startChar": 46,
+        "endLine": 406,
+        "endChar": 48
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "918f9467_d24d0d38",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-14T08:44:38Z",
+      "side": 1,
+      "message": "delta",
+      "range": {
+        "startLine": 410,
+        "startChar": 39,
+        "endLine": 410,
+        "endChar": 65
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07b35a9d_5a8f633b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-14T08:44:38Z",
+      "side": 1,
+      "message": "Really we should throw in this case, it should not be accepted usage to send null",
+      "range": {
+        "startLine": 207,
+        "startChar": 1,
+        "endLine": 208,
+        "endChar": 34
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
