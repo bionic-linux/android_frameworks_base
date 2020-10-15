@@ -117,6 +117,30 @@
       },
       "revId": "6a821d77940ceb8dc0b98bdcf0ada58a3fb50c79",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e17a4db_86a9239b",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T09:15:24Z",
+      "side": 1,
+      "message": "Nice catch ! Fixed. This will depend on aosp/1462062 being merged before it can be treehugged.",
+      "parentUuid": "e6f9cd8c_48a54e70",
+      "range": {
+        "startLine": 450,
+        "startChar": 11,
+        "endLine": 450,
+        "endChar": 37
+      },
+      "revId": "6a821d77940ceb8dc0b98bdcf0ada58a3fb50c79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
