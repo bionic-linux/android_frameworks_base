@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a01dc7fc_e838d9ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2020-10-15T04:14:30Z",
+      "side": 1,
+      "message": "Hi Matt, could you PTAL at the proposed fix for a MTBF issue met by MTK? Thanks.",
+      "revId": "a67424cf9637d1ebcb2dcac50c3696de54889ebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
