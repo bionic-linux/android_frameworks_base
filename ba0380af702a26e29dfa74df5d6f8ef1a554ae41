@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c2642d_cf9bb73d",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T02:57:12Z",
+      "side": 1,
+      "message": "aosp/1459885",
+      "parentUuid": "71da891c_e0ee949a",
+      "range": {
+        "startLine": 33,
+        "startChar": 43,
+        "endLine": 33,
+        "endChar": 45
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8dce6904_3450cf90",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-12T11:31:25Z",
       "side": 1,
       "message": "I don\u0027t really understand what does it mean.\nCould you give an example or describe it more detail?",
+      "range": {
+        "startLine": 446,
+        "startChar": 82,
+        "endLine": 447,
+        "endChar": 65
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed15313f_9432800e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T02:57:12Z",
+      "side": 1,
+      "message": "Tried to clarify, let me know what you think",
+      "parentUuid": "8dce6904_3450cf90",
       "range": {
         "startLine": 446,
         "startChar": 82,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "497a51d8_dcdac2ba",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T02:57:12Z",
+      "side": 1,
+      "message": "Yes, you are correct, Vpn will never send CONNECTING to CS, and you are also correct that the purpose it to allow for some pre-configuration.\n\nIn the new API, the agent starts in CONNECTING and only has two valid transitions : CONNECTING → CONNECTED and CONNECTED → DISCONNECTED. There is no possible transition to CONNECTING, which means there should never be a need to tell CS about a move to CONNECTING.\n\nHowever there is actually a bug in NetworkInfo that you\u0027re reminding me of that might break this code : when we made the API last year, while the intent was absolutely to have agents start in CONNECTING, we forgot to implement that last year.\n\nSo to address this, I split out a fix of this patch that I inserted below this patchset, together with its CTS. PTAL.",
+      "parentUuid": "785586e5_da34d824",
+      "range": {
+        "startLine": 465,
+        "startChar": 12,
+        "endLine": 470,
+        "endChar": 22
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1bf77f4_e895a2df",
@@ -83,6 +155,30 @@
       "writtenOn": "2020-10-12T11:31:25Z",
       "side": 1,
       "message": "According to the NetworkAgent constructor, it will get provider id from NetworkProvider if NetworkProvider is not null. (https://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkAgent.java;l\u003d379?q\u003dnetworkagent.java\u0026sq\u003dpackage:%5Eaosp-master$)\nBut the default provider id is ID_NONE and it seems like currently there is no way to change NetworkAgent#providerId after creating NetworkAgent, so after this commit, the provider id of VPN NetworkAgent will always be ID_NONE, right?\nIs it expected? Or do we have any TODO item will fix it?",
+      "range": {
+        "startLine": 1288,
+        "startChar": 20,
+        "endLine": 1288,
+        "endChar": 74
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2435eed1_380f646c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T02:57:12Z",
+      "side": 1,
+      "message": "Right. Fixed that by creating a single provider and setting its ID to the VPN ID.",
+      "parentUuid": "c1bf77f4_e895a2df",
       "range": {
         "startLine": 1288,
         "startChar": 20,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3996236a_92c0f174",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2934,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T02:57:12Z",
+      "side": 1,
+      "message": "I think so, that\u0027s what the TODO stands for. But your next comment makes me realize that it\u0027s probably better to remove this completely.",
+      "parentUuid": "16041dfc_c6d4e54e",
+      "range": {
+        "startLine": 2933,
+        "startChar": 16,
+        "endLine": 2934,
+        "endChar": 34
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90a7bcca_a7aa4427",
@@ -129,6 +249,30 @@
       "writtenOn": "2020-10-12T11:31:25Z",
       "side": 1,
       "message": "According to the startLegacyVpnPrivileged() and current VPN types in Settings, I don\u0027t find a case which will create a LegacyVpnRunner object with null racoon and null mtpd at the same time.\nSo \"arguments !\u003d null\" at line#2931 should be always true.\nMaybe we can remove this?",
+      "range": {
+        "startLine": 2935,
+        "startChar": 16,
+        "endLine": 2935,
+        "endChar": 31
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "703cf1ad_8a231d32",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2935,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-15T02:57:12Z",
+      "side": 1,
+      "message": "Yes I think so. In fact, it\u0027s probably safer to remove this completely than to move agentDisconnect() out of this block (because it\u0027s harder to predict what might happen with a new method call that never used to happen). Done, and also added an assertion in the constructor to clarify this.",
+      "parentUuid": "90a7bcca_a7aa4427",
       "range": {
         "startLine": 2935,
         "startChar": 16,
