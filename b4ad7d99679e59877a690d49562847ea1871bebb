@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68581be5_1ac43411",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-15T06:55:39Z",
+      "side": 1,
+      "message": "Nit: maybe move this line closer to actual usage ?",
+      "range": {
+        "startLine": 238,
+        "startChar": 33,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "b4ad7d99679e59877a690d49562847ea1871bebb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e02aa75_f1af9155",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-15T06:55:39Z",
+      "side": 1,
+      "message": "Should this set legacyType and legacyTypeName at least (and legacyExtraInfo ?) ? The public TestNetworkAgent constructor creates NetworkInfo from them.",
+      "range": {
+        "startLine": 238,
+        "startChar": 75,
+        "endLine": 238,
+        "endChar": 80
+      },
+      "revId": "b4ad7d99679e59877a690d49562847ea1871bebb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b74abfd5_2b0da4e6",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-15T06:55:39Z",
+      "side": 1,
+      "message": "The previous code did something more similar to markConnected, then register; is inverting the order fine ?",
+      "range": {
+        "startLine": 290,
+        "startChar": 14,
+        "endLine": 290,
+        "endChar": 27
+      },
+      "revId": "b4ad7d99679e59877a690d49562847ea1871bebb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3c0fbc2_01adda51",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-15T06:55:39Z",
+      "side": 0,
+      "message": "This won\u0027t be called anymore, is that expected ?",
+      "range": {
+        "startLine": 207,
+        "startChar": 16,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "88a38308849a146426b59a22feb0f7acf21dbf21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
