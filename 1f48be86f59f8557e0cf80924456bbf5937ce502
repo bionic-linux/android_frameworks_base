@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "f43437dc_cc043f95",
         "filename": "media/java/android/media/AudioTrack.java",
@@ -20,8 +21,31 @@
         "endChar": 0
       },
       "revId": "1f48be86f59f8557e0cf80924456bbf5937ce502",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "438209ac_7b1fea9d",
+        "filename": "media/java/android/media/AudioTrack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2020-10-15T17:47:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f43437dc_cc043f95",
+      "range": {
+        "startLine": 1264,
+        "startChar": 0,
+        "endLine": 1264,
+        "endChar": 0
+      },
+      "revId": "1f48be86f59f8557e0cf80924456bbf5937ce502",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
