@@ -2501,7 +2501,6 @@ public class AudioService extends IAudioService.Stub
 
     /** @see AudioManager#getVolumeIndexForAttributes(attr) */
     public int getVolumeIndexForAttributes(@NonNull AudioAttributes attr) {
-        enforceModifyAudioRoutingPermission();
         Objects.requireNonNull(attr, "attr must not be null");
         final int volumeGroup = getVolumeGroupIdForAttributes(attr);
         if (sVolumeGroupStates.indexOfKey(volumeGroup) < 0) {
