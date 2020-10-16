@@ -46,6 +46,30 @@
       },
       "revId": "88a38308849a146426b59a22feb0f7acf21dbf21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65cb140d_b1a000c2",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-16T17:01:55Z",
+      "side": 0,
+      "message": "Ah you meant just \"setIsAvailable\". Yes, it\u0027s unneeded. In practice sending a NI with disconnected destroys the NI anyway.\n\nFurther, in fact it should never have been here, I don\u0027t know why it passed code review. https://developer.android.com/reference/android/net/NetworkInfo#isAvailable() :\nSince Android L, this always returns true, because the system only returns info for available networks.",
+      "parentUuid": "61a6db02_f5966e62",
+      "range": {
+        "startLine": 207,
+        "startChar": 16,
+        "endLine": 207,
+        "endChar": 30
+      },
+      "revId": "88a38308849a146426b59a22feb0f7acf21dbf21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
