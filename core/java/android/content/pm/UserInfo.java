@@ -18,6 +18,7 @@ package android.content.pm;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.annotation.UserIdInt;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
@@ -47,7 +48,8 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @hide
  */
-public class UserInfo implements Parcelable {
+@SystemApi
+public final class UserInfo implements Parcelable {
 
     /**
      * *************************** NOTE ***************************
@@ -58,6 +60,7 @@ public class UserInfo implements Parcelable {
     /**
      * Primary user. Only one user can have this flag set. It identifies the first human user
      * on a device. This flag is not supported in headless system user mode.
+     * @hide
      */
     @UnsupportedAppUsage
     public static final int FLAG_PRIMARY = 0x00000001;
@@ -65,12 +68,14 @@ public class UserInfo implements Parcelable {
     /**
      * User with administrative privileges. Such a user can create and
      * delete users.
+     * @hide
      */
     public static final int FLAG_ADMIN   = 0x00000002;
 
     /**
      * Indicates a guest user that may be transient.
      * @deprecated Use {@link UserManager#USER_TYPE_FULL_GUEST} instead.
+     * @hide
      */
     @Deprecated
     public static final int FLAG_GUEST   = 0x00000004;
@@ -79,12 +84,14 @@ public class UserInfo implements Parcelable {
      * Indicates the user has restrictions in privileges, in addition to those for normal users.
      * Exact meaning TBD. For instance, maybe they can't install apps or administer WiFi access pts.
      * @deprecated Use {@link UserManager#USER_TYPE_FULL_RESTRICTED} instead.
+     * @hide
      */
     @Deprecated
     public static final int FLAG_RESTRICTED = 0x00000008;
 
     /**
      * Indicates that this user has gone through its first-time initialization.
+     * @hide
      */
     public static final int FLAG_INITIALIZED = 0x00000010;
 
@@ -92,6 +99,7 @@ public class UserInfo implements Parcelable {
      * Indicates that this user is a profile of another user, for example holding a users
      * corporate data.
      * @deprecated Use {@link UserManager#USER_TYPE_PROFILE_MANAGED} instead.
+     * @hide
      */
     @Deprecated
     public static final int FLAG_MANAGED_PROFILE = 0x00000020;
@@ -101,20 +109,23 @@ public class UserInfo implements Parcelable {
      *
      * <p>Note: If an ephemeral user is disabled, it shouldn't be later re-enabled. Ephemeral users
      * are disabled as their removal is in progress to indicate that they shouldn't be re-entered.
+     * @hide
      */
     public static final int FLAG_DISABLED = 0x00000040;
-
+    /** @hide */
     public static final int FLAG_QUIET_MODE = 0x00000080;
 
     /**
      * Indicates that this user is ephemeral. I.e. the user will be removed after leaving
      * the foreground.
+     * @hide
      */
     public static final int FLAG_EPHEMERAL = 0x00000100;
 
     /**
      * User is for demo purposes only and can be removed at any time.
      * @deprecated Use {@link UserManager#USER_TYPE_FULL_DEMO} instead.
+     * @hide
      */
     @Deprecated
     public static final int FLAG_DEMO = 0x00000200;
@@ -125,17 +136,20 @@ public class UserInfo implements Parcelable {
      * <p>When creating a new (non-system) user, this flag will always be forced true unless the
      * user is a {@link #FLAG_PROFILE}. If user {@link UserHandle#USER_SYSTEM} is also a
      * human user, it must also be flagged as FULL.
+     * @hide
      */
     public static final int FLAG_FULL = 0x00000400;
 
     /**
      * Indicates that this user is {@link UserHandle#USER_SYSTEM}. Not applicable to created users.
+     * @hide
      */
     public static final int FLAG_SYSTEM = 0x00000800;
 
     /**
      * Indicates that this user is a profile human user, such as a managed profile.
      * Mutually exclusive with {@link #FLAG_FULL}.
+     * @hide
      */
     public static final int FLAG_PROFILE = 0x00001000;
 
@@ -161,27 +175,37 @@ public class UserInfo implements Parcelable {
     public @interface UserInfoFlag {
     }
 
+    /** @hide */
     public static final int NO_PROFILE_GROUP_ID = UserHandle.USER_NULL;
 
+    /** @hide */
     @UnsupportedAppUsage
     public @UserIdInt int id;
+    /** @hide */
     @UnsupportedAppUsage
     public int serialNumber;
+    /** @hide */
     @UnsupportedAppUsage
     public String name;
+    /** @hide */
     @UnsupportedAppUsage
     public String iconPath;
+    /** @hide */
     @UnsupportedAppUsage
     public @UserInfoFlag int flags;
+    /** @hide */
     @UnsupportedAppUsage
     public long creationTime;
+    /** @hide */
     @UnsupportedAppUsage
     public long lastLoggedInTime;
+    /** @hide */
     public String lastLoggedInFingerprint;
 
     /**
      * Type of user, such as {@link UserManager#USER_TYPE_PROFILE_MANAGED}, corresponding to
      * {@link com.android.server.pm.UserTypeDetails#getName()}.
+     * @hide
      */
     public String userType;
 
@@ -189,9 +213,11 @@ public class UserInfo implements Parcelable {
      * If this user is a parent user, it would be its own user id.
      * If this user is a child user, it would be its parent user id.
      * Otherwise, it would be {@link #NO_PROFILE_GROUP_ID}.
+     * @hide
      */
     @UnsupportedAppUsage
     public int profileGroupId;
+    /** @hide */
     public int restrictedProfileParentId;
 
     /**
@@ -199,12 +225,17 @@ public class UserInfo implements Parcelable {
      * purpose of badging.
      * It is used for determining which badge color/label to use (if applicable) from
      * the options available for a particular user type.
+     * @hide
      */
     public int profileBadge;
 
-    /** User is only partially created. */
+    /**
+     * User is only partially created.
+     * @hide
+     */
     @UnsupportedAppUsage
     public boolean partial;
+    /** @hide */
     @UnsupportedAppUsage
     public boolean guestToRemove;
 
@@ -217,12 +248,14 @@ public class UserInfo implements Parcelable {
      *
      * <p>Once the pre-created is used to create a "real" user later on, {@code preCreate} is set to
      * {@code false}.
+     * @hide
      */
     public boolean preCreated;
 
     /**
      * Creates a UserInfo whose user type is determined automatically by the flags according to
      * {@link #getDefaultUserType}; can only be used for user types handled there.
+     * @hide
      */
     @UnsupportedAppUsage
     public UserInfo(int id, String name, int flags) {
@@ -232,12 +265,14 @@ public class UserInfo implements Parcelable {
     /**
      * Creates a UserInfo whose user type is determined automatically by the flags according to
      * {@link #getDefaultUserType}; can only be used for user types handled there.
+     * @hide
      */
     @UnsupportedAppUsage
     public UserInfo(int id, String name, String iconPath, int flags) {
         this(id, name, iconPath, flags, getDefaultUserType(flags));
     }
 
+    /** @hide */
     public UserInfo(int id, String name, String iconPath, int flags, String userType) {
         this.id = id;
         this.name = name;
@@ -282,64 +317,81 @@ public class UserInfo implements Parcelable {
         }
     }
 
-    @UnsupportedAppUsage
     public boolean isPrimary() {
         return (flags & FLAG_PRIMARY) == FLAG_PRIMARY;
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public boolean isAdmin() {
         return (flags & FLAG_ADMIN) == FLAG_ADMIN;
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public boolean isGuest() {
         return UserManager.isUserTypeGuest(userType);
     }
 
-    @UnsupportedAppUsage
     public boolean isRestricted() {
         return UserManager.isUserTypeRestricted(userType);
     }
 
+    /** @hide */
     public boolean isProfile() {
         return (flags & FLAG_PROFILE) != 0;
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public boolean isManagedProfile() {
         return UserManager.isUserTypeManagedProfile(userType);
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public boolean isEnabled() {
         return (flags & FLAG_DISABLED) != FLAG_DISABLED;
     }
 
+    /** @hide */
     public boolean isQuietModeEnabled() {
         return (flags & FLAG_QUIET_MODE) == FLAG_QUIET_MODE;
     }
 
+    /** @hide */
     public boolean isEphemeral() {
         return (flags & FLAG_EPHEMERAL) == FLAG_EPHEMERAL;
     }
 
+    /** @hide */
     public boolean isInitialized() {
         return (flags & FLAG_INITIALIZED) == FLAG_INITIALIZED;
     }
 
+    /** @hide */
     public boolean isDemo() {
         return UserManager.isUserTypeDemo(userType);
     }
 
+    /** @hide */
     public boolean isFull() {
         return (flags & FLAG_FULL) == FLAG_FULL;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getRestrictedProfileParentId() {
+        return restrictedProfileParentId;
     }
 
     /**
      * Returns true if the user is a split system user.
      * <p>If {@link UserManager#isSplitSystemUser split system user mode} is not enabled,
      * the method always returns false.
+     * @hide
      */
     public boolean isSystemOnly() {
         return isSystemOnly(id);
@@ -349,6 +401,7 @@ public class UserInfo implements Parcelable {
      * Returns true if the given user is a split system user.
      * <p>If {@link UserManager#isSplitSystemUser split system user mode} is not enabled,
      * the method always returns false.
+     * @hide
      */
     public static boolean isSystemOnly(int userId) {
         return userId == UserHandle.USER_SYSTEM && UserManager.isSplitSystemUser();
@@ -356,6 +409,7 @@ public class UserInfo implements Parcelable {
 
     /**
      * @return true if this user can be switched to.
+     * @hide
      **/
     public boolean supportsSwitchTo() {
         if (isEphemeral() && !isEnabled()) {
@@ -371,6 +425,7 @@ public class UserInfo implements Parcelable {
 
     /**
      * @return true if this user can be switched to by end user through UI.
+     * @hide
      */
     public boolean supportsSwitchToByUser() {
         // Hide the system user when it does not represent a human user.
@@ -379,7 +434,7 @@ public class UserInfo implements Parcelable {
     }
 
     // TODO(b/142482943): Make this logic more specific and customizable. (canHaveProfile(userType))
-    /* @hide */
+    /** @hide */
     public boolean canHaveProfile() {
         if (isProfile() || isGuest() || isRestricted()) {
             return false;
@@ -395,12 +450,14 @@ public class UserInfo implements Parcelable {
     /**
      * @deprecated This is dangerous since it doesn't set the mandatory fields. Use a different
      * constructor instead.
+     * @hide
      */
     @Deprecated
     @VisibleForTesting
     public UserInfo() {
     }
 
+    /** @hide */
     public UserInfo(UserInfo orig) {
         name = orig.name;
         iconPath = orig.iconPath;
@@ -419,6 +476,7 @@ public class UserInfo implements Parcelable {
         profileBadge = orig.profileBadge;
     }
 
+    /** @hide */
     @UnsupportedAppUsage
     public UserHandle getUserHandle() {
         return UserHandle.of(id);
@@ -455,7 +513,7 @@ public class UserInfo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int parcelableFlags) {
+    public void writeToParcel(@NonNull Parcel dest, int parcelableFlags) {
         dest.writeInt(id);
         dest.writeString8(name);
         dest.writeString8(iconPath);
@@ -473,7 +531,6 @@ public class UserInfo implements Parcelable {
         dest.writeInt(profileBadge);
     }
 
-    @UnsupportedAppUsage
     public static final @android.annotation.NonNull Parcelable.Creator<UserInfo> CREATOR
             = new Parcelable.Creator<UserInfo>() {
         public UserInfo createFromParcel(Parcel source) {
@@ -484,6 +541,7 @@ public class UserInfo implements Parcelable {
         }
     };
 
+    /** @hide */
     private UserInfo(Parcel source) {
         id = source.readInt();
         name = source.readString8();

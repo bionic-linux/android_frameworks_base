@@ -2280,6 +2280,16 @@ package android.content.pm {
     method @NonNull public android.content.pm.SuspendDialogInfo.Builder setTitle(@StringRes int);
   }
 
+  public final class UserInfo implements android.os.Parcelable {
+    method public int describeContents();
+    method public int getId();
+    method public int getRestrictedProfileParentId();
+    method public boolean isPrimary();
+    method public boolean isRestricted();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.content.pm.UserInfo> CREATOR;
+  }
+
 }
 
 package android.content.pm.dex {
