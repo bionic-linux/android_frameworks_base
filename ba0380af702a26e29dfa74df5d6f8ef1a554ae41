@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "225026a4_07aa2ff6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-16T07:14:52Z",
+      "side": 1,
+      "message": "It looks good to me.\nThanks!",
+      "parentUuid": "ed15313f_9432800e",
+      "range": {
+        "startLine": 446,
+        "startChar": 82,
+        "endLine": 447,
+        "endChar": 65
+      },
+      "revId": "ba0380af702a26e29dfa74df5d6f8ef1a554ae41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "785586e5_da34d824",
