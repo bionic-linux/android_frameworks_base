@@ -16,15 +16,18 @@
 
 package android.media;
 
+import android.annotation.NonNull;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * The AudioPortEventHandler handles AudioManager.OnAudioPortUpdateListener callbacks
@@ -38,8 +41,8 @@ class AudioPortEventHandler {
     private final Object mLock = new Object();
 
     @GuardedBy("mLock")
-    private final ArrayList<AudioManager.OnAudioPortUpdateListener> mListeners =
-            new ArrayList<AudioManager.OnAudioPortUpdateListener>();
+    private final ArrayList<WeakReference<AudioManager.OnAudioPortUpdateListener>> mListeners =
+            new ArrayList<>();
 
     private static final String TAG = "AudioPortEventHandler";
 
@@ -70,16 +73,17 @@ class AudioPortEventHandler {
                 mHandler = new Handler(mHandlerThread.getLooper()) {
                     @Override
                     public void handleMessage(Message msg) {
-                        ArrayList<AudioManager.OnAudioPortUpdateListener> listeners;
+                        ArrayList<WeakReference<AudioManager.OnAudioPortUpdateListener>> listeners;
                         synchronized (mLock) {
                             if (msg.what == AUDIOPORT_EVENT_NEW_LISTENER) {
-                                listeners = new ArrayList<AudioManager.OnAudioPortUpdateListener>();
+                                listeners = new ArrayList<
+                                        WeakReference<AudioManager.OnAudioPortUpdateListener>>();
                                 if (mListeners.contains(msg.obj)) {
-                                    listeners.add((AudioManager.OnAudioPortUpdateListener)msg.obj);
+                                    listeners.add((WeakReference<
+                                            AudioManager.OnAudioPortUpdateListener>) msg.obj);
                                 }
                             } else {
-                                listeners = (ArrayList<AudioManager.OnAudioPortUpdateListener>)
-                                        mListeners.clone();
+                                listeners = mListeners;
                             }
                         }
                         // reset audio port cache if the event corresponds to a change coming
@@ -114,7 +118,11 @@ class AudioPortEventHandler {
                         case AUDIOPORT_EVENT_PORT_LIST_UPDATED:
                             AudioPort[] portList = ports.toArray(new AudioPort[0]);
                             for (int i = 0; i < listeners.size(); i++) {
-                                listeners.get(i).onAudioPortListUpdate(portList);
+                                final AudioManager.OnAudioPortUpdateListener cb =
+                                        listeners.get(i).get();
+                                if (cb != null) {
+                                    cb.onAudioPortListUpdate(portList);
+                                }
                             }
                             if (msg.what == AUDIOPORT_EVENT_PORT_LIST_UPDATED) {
                                 break;
@@ -124,13 +132,21 @@ class AudioPortEventHandler {
                         case AUDIOPORT_EVENT_PATCH_LIST_UPDATED:
                             AudioPatch[] patchList = patches.toArray(new AudioPatch[0]);
                             for (int i = 0; i < listeners.size(); i++) {
-                                listeners.get(i).onAudioPatchListUpdate(patchList);
+                                final AudioManager.OnAudioPortUpdateListener cb =
+                                        listeners.get(i).get();
+                                if (cb != null) {
+                                    cb.onAudioPatchListUpdate(patchList);
+                                }
                             }
                             break;
 
                         case AUDIOPORT_EVENT_SERVICE_DIED:
                             for (int i = 0; i < listeners.size(); i++) {
-                                listeners.get(i).onServiceDied();
+                                final AudioManager.OnAudioPortUpdateListener cb =
+                                        listeners.get(i).get();
+                                if (cb != null) {
+                                    cb.onServiceDied();
+                                }
                             }
                             break;
 
@@ -158,18 +174,37 @@ class AudioPortEventHandler {
     private native void native_finalize();
 
     void registerListener(AudioManager.OnAudioPortUpdateListener l) {
+        Objects.requireNonNull(l, "OnAudioPortUpdateListener shall not be null");
+        final WeakReference<AudioManager.OnAudioPortUpdateListener> cbwr =
+                new WeakReference<AudioManager.OnAudioPortUpdateListener>(l);
         synchronized (mLock) {
-            mListeners.add(l);
+            if (mListeners.contains(cbwr)) {
+                Log.e(TAG, "trying to add twice the same callback");
+                return;
+            }
+            mListeners.add(cbwr);
         }
         if (mHandler != null) {
-            Message m = mHandler.obtainMessage(AUDIOPORT_EVENT_NEW_LISTENER, 0, 0, l);
+            Message m = mHandler.obtainMessage(AUDIOPORT_EVENT_NEW_LISTENER, 0, 0, cbwr);
             mHandler.sendMessage(m);
         }
+        unregisterListenerInternal(null); // remove unused references
     }
 
     void unregisterListener(AudioManager.OnAudioPortUpdateListener l) {
+        Objects.requireNonNull(l, "OnAudioPortUpdateListener shall not be null");
+        unregisterListenerInternal(l);
+    }
+
+    private void unregisterListenerInternal(@NonNull AudioManager.OnAudioPortUpdateListener l) {
         synchronized (mLock) {
-            mListeners.remove(l);
+            final WeakReference<AudioManager.OnAudioPortUpdateListener> cbToRemove =
+                    mListeners.stream()
+                    .filter(wrcb -> wrcb.get() == l)
+                    .findFirst().orElse(null);
+            if (cbToRemove != null) {
+                mListeners.remove(cbToRemove);
+            }
         }
     }
 

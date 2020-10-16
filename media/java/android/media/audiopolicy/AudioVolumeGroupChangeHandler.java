@@ -21,11 +21,11 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-
-import com.android.internal.util.Preconditions;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * The AudioVolumeGroupChangeHandler handles AudioManager.OnAudioVolumeGroupChangedListener
@@ -37,8 +37,8 @@ import java.util.ArrayList;
 public class AudioVolumeGroupChangeHandler {
     private Handler mHandler;
     private HandlerThread mHandlerThread;
-    private final ArrayList<AudioManager.VolumeGroupCallback> mListeners =
-            new ArrayList<AudioManager.VolumeGroupCallback>();
+    private final ArrayList<WeakReference<AudioManager.VolumeGroupCallback>> mListeners =
+            new ArrayList<>();
 
     private static final String TAG = "AudioVolumeGroupChangeHandler";
 
@@ -70,18 +70,16 @@ public class AudioVolumeGroupChangeHandler {
             mHandler = new Handler(mHandlerThread.getLooper()) {
                 @Override
                 public void handleMessage(Message msg) {
-                    ArrayList<AudioManager.VolumeGroupCallback> listeners;
-                    synchronized (this) {
+                    ArrayList<WeakReference<AudioManager.VolumeGroupCallback>> listeners;
+                    synchronized (AudioVolumeGroupChangeHandler.this) {
                         if (msg.what == AUDIOVOLUMEGROUP_EVENT_NEW_LISTENER) {
-                            listeners =
-                                    new ArrayList<AudioManager.VolumeGroupCallback>();
+                            listeners = new ArrayList<>();
                             if (mListeners.contains(msg.obj)) {
                                 listeners.add(
-                                        (AudioManager.VolumeGroupCallback) msg.obj);
+                                        (WeakReference<AudioManager.VolumeGroupCallback>) msg.obj);
                             }
                         } else {
-                            listeners = (ArrayList<AudioManager.VolumeGroupCallback>)
-                                    mListeners.clone();
+                            listeners = mListeners;
                         }
                     }
                     if (listeners.isEmpty()) {
@@ -91,8 +89,10 @@ public class AudioVolumeGroupChangeHandler {
                     switch (msg.what) {
                         case AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED:
                             for (int i = 0; i < listeners.size(); i++) {
-                                listeners.get(i).onAudioVolumeGroupChanged((int) msg.arg1,
-                                                                           (int) msg.arg2);
+                                final AudioManager.VolumeGroupCallback cb = listeners.get(i).get();
+                                if (cb != null) {
+                                    cb.onAudioVolumeGroupChanged((int) msg.arg1, (int) msg.arg2);
+                                }
                             }
                             break;
 
@@ -120,24 +120,39 @@ public class AudioVolumeGroupChangeHandler {
     * @param cb the {@link AudioManager.VolumeGroupCallback} to register
     */
     public void registerListener(@NonNull AudioManager.VolumeGroupCallback cb) {
-        Preconditions.checkNotNull(cb, "volume group callback shall not be null");
+        Objects.requireNonNull(cb, "volume group callback shall not be null");
+        final WeakReference<AudioManager.VolumeGroupCallback> cbwr =
+                new WeakReference<AudioManager.VolumeGroupCallback>(cb);
         synchronized (this) {
-            mListeners.add(cb);
+            if (mListeners.contains(cbwr)) {
+                Log.e(TAG, "trying to add twice the same callback");
+                return;
+            }
+            mListeners.add(cbwr);
         }
         if (mHandler != null) {
-            Message m = mHandler.obtainMessage(
-                    AUDIOVOLUMEGROUP_EVENT_NEW_LISTENER, 0, 0, cb);
+            Message m = mHandler.obtainMessage(AUDIOVOLUMEGROUP_EVENT_NEW_LISTENER, 0, 0, cbwr);
             mHandler.sendMessage(m);
         }
+        unregisterListenerInternal(null); // remove unused references
     }
 
    /**
     * @param cb the {@link AudioManager.VolumeGroupCallback} to unregister
     */
     public void unregisterListener(@NonNull AudioManager.VolumeGroupCallback cb) {
-        Preconditions.checkNotNull(cb, "volume group callback shall not be null");
+        Objects.requireNonNull(cb, "volume group callback shall not be null");
+        unregisterListenerInternal(cb);
+    }
+
+    private void unregisterListenerInternal(@NonNull AudioManager.VolumeGroupCallback cb) {
         synchronized (this) {
-            mListeners.remove(cb);
+            final WeakReference<AudioManager.VolumeGroupCallback> cbToRemove = mListeners.stream()
+                    .filter(wrcb -> wrcb.get() == cb)
+                    .findFirst().orElse(null);
+            if (cbToRemove != null) {
+                mListeners.remove(cbToRemove);
+            }
         }
     }
 
