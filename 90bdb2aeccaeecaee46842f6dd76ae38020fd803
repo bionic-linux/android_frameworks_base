@@ -45,6 +45,30 @@
       },
       "revId": "90bdb2aeccaeecaee46842f6dd76ae38020fd803",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2058a996_1c630c66",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7179,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-16T15:58:51Z",
+      "side": 0,
+      "message": "TL;DR : because VPN agents now have the same lifecycle as others, so they don\u0027t need special lifecycle treatment.\n\n\nWith this patch, there no longer is an UNKNOWN or IDLE state for VPN that Connectivity service sees. The VPN agent was the only one with a different lifecycle and this was done for legacy reasons originally. These reasons (in particular, the Settings app needed to see the network (through CONNECTIVITY_ACTION I presume)) have gone away. With the migration of the VPN agent to the modern lifecycle on the agent side, it can just have the same lifecycle as every other agent on the CS side too, so this is a simplification.\n\nNote that part of the reason other networks only enter this in CONNECTED is to let them update their capabilities without causing wrong callbacks to be sent (see the comment in l.7186 which explains what might happen to VPNs – I added this last year when I fixed that bug). With this bypass, VPNs agents can cause rematches with side effects by sending updates to their capabilities before they call markConnected, because created \u003d true means they can now match requests. In practice they don\u0027t do it, because VpnService calls establish() once and then can\u0027t ever update its capabilities, which is why it used to work.\n\nBut tests do this, and they *should* be able to, and it happened to work before because VPNs used to start in UNKNOWN. Without this patch, ConnectivityServiceTest#testVpnUnvalidated and ConnectivityServiceTest#testVpnStartsWithUnderlyingCaps fail because they update the capabilities between register() and markConnected(), which triggers the bad code path (it triggers a rematch, the test VPN agent starts matching the request put by the test, and when the VPN connects l.7234 sends a spurious callback).\n\nOf course technically I can go and update the tests instead, but this bypass here is still dangerous for future changes and it\u0027s much better that all agents are treated the same way.",
+      "parentUuid": "24bfbb2b_1863ec93",
+      "range": {
+        "startLine": 7179,
+        "startChar": 16,
+        "endLine": 7179,
+        "endChar": 82
+      },
+      "revId": "90bdb2aeccaeecaee46842f6dd76ae38020fd803",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
