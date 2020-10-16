@@ -22,6 +22,30 @@
       },
       "revId": "73fd54ec909be0f5e9cf9ddb33a1d464b79a9a33",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c93a1be9_596f147a",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-16T16:49:09Z",
+      "side": 1,
+      "message": "It\u0027s a bit of all you said. In practice the provider ID is used by factories to figure out whether they themselves are serving a given request, so all that matters is that all other factories than the ones testing for it have a different ID.\n\nFrom a higher-level point of view, you\u0027re right – because this is used for not trying to serve a request twice, it\u0027s never necessary when the lifecycle is not request-managed.\n\nFrom a yet higher-level point of view, the ID identifies a NetworkProvider registered with CS, and this provider is not. In fact neither Test networks nor VPNs had NetworkProviders until today, so they used to use ID_NONE. It worked, we never tried to fix it.\n\nEventually, hopefully everyone would have a provider ID, not just the registered ones. But registering is how providers get their IDs assigned, and as they live in different processes this is less than trivial to address in a comprehensive way.\n\nThis used to work before. I don\u0027t think there is a lot of urgency in fixing this in fact. What I could do is to define another constant for test networks and assign it here. That\u0027s what the VPN do (they use NetworkProvider.ID_VPN and not ID_NONE, and functionally it\u0027s equivalent to get an ID assigned by registering).\n\n\nEdit : done that.",
+      "parentUuid": "9741fe8b_adeffcf6",
+      "range": {
+        "startLine": 172,
+        "startChar": 24,
+        "endLine": 172,
+        "endChar": 39
+      },
+      "revId": "73fd54ec909be0f5e9cf9ddb33a1d464b79a9a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

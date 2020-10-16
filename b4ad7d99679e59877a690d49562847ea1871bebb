@@ -47,6 +47,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e68906d_ebcfffd7",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-16T16:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68581be5_1ac43411",
+      "range": {
+        "startLine": 238,
+        "startChar": 33,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "b4ad7d99679e59877a690d49562847ea1871bebb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cec69e73_e1da9764",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-16T16:49:09Z",
+      "side": 1,
+      "message": "Done, thanks. Though hopefully nobody uses them.\n\nIt should not set legacyExtraInfo because there was never a use or a definition for extra info for test networks.",
+      "parentUuid": "4e02aa75_f1af9155",
+      "range": {
+        "startLine": 238,
+        "startChar": 75,
+        "endLine": 238,
+        "endChar": 80
+      },
+      "revId": "b4ad7d99679e59877a690d49562847ea1871bebb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b74abfd5_2b0da4e6",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-10-15T06:55:39Z",
       "side": 1,
       "message": "The previous code did something more similar to markConnected, then register; is inverting the order fine ?",
+      "range": {
+        "startLine": 290,
+        "startChar": 14,
+        "endLine": 290,
+        "endChar": 27
+      },
+      "revId": "b4ad7d99679e59877a690d49562847ea1871bebb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9709d99_a639440d",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-16T16:49:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure where you see this ; it\u0027s never been possible to mark an agent connected before it\u0027s registered, because registering establishes the connection with CS and markConnected (or its legacy \"equivalent\") is a message going over that connection.\n\nThe legacy constructors for NetworkAgent call register() right in the constructor. Then they are expected to mark themselves connected by calling sendNetworkInfo with state CONNECTED. This is similar to what this does now – but the new lifecycle controlled by the new API is streamlined and a lot better controlled.\n\nWhere did you see something that looked like the reverse ?",
+      "parentUuid": "b74abfd5_2b0da4e6",
       "range": {
         "startLine": 290,
         "startChar": 14,
