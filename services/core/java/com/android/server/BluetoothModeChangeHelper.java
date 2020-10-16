@@ -33,7 +33,7 @@ import com.android.internal.annotations.VisibleForTesting;
  * Helper class that handles callout and callback methods without
  * complex logic.
  */
-class BluetoothModeChangeHelper {
+public class BluetoothModeChangeHelper {
     private volatile BluetoothA2dp mA2dp;
     private volatile BluetoothHearingAid mHearingAid;
     private final BluetoothAdapter mAdapter;
