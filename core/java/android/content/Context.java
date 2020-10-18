@@ -3978,6 +3978,16 @@ public abstract class Context {
     public static final String NETD_SERVICE = "netd";
 
     /**
+     * Use with {@link #getSystemService(String)} to retrieve a
+     * {@link android.net.IDnsResolver} for communicating with dns resolver.
+     *
+     * @see #getSystemService(String)
+     * @hide
+     */
+    @SystemApi
+    public static final String DNSRESOLVER_SERVICE = "dnsresolver";
+
+    /**
      * Use with {@link android.os.ServiceManager.getService()} to retrieve a
      * {@link INetworkStackConnector} IBinder for communicating with the network stack
      * @hide

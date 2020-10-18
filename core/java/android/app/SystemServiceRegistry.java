@@ -363,6 +363,14 @@ public final class SystemServiceRegistry {
             }
         });
 
+        registerService(Context.DNSRESOLVER_SERVICE, IBinder.class,
+                new StaticServiceFetcher<IBinder>() {
+            @Override
+            public IBinder createService() throws ServiceNotFoundException {
+                return ServiceManager.getServiceOrThrow(Context.DNSRESOLVER_SERVICE);
+            }
+        });
+
         registerService(Context.TETHERING_SERVICE, TetheringManager.class,
                 new CachedServiceFetcher<TetheringManager>() {
             @Override
