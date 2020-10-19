@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "a14bb24476b27a35a64ff58a1271d154a3e4f59b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc65451c_5b610f5f",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-19T04:21:20Z",
+      "side": 1,
+      "message": "Ah, here also has test for CompareResult. This can pass now.",
+      "range": {
+        "startLine": 958,
+        "startChar": 10,
+        "endLine": 958,
+        "endChar": 44
+      },
+      "revId": "a14bb24476b27a35a64ff58a1271d154a3e4f59b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
