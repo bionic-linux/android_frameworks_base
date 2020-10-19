@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e1091fe_4c15ccc2",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-19T09:36:42Z",
+      "side": 1,
+      "message": "Done in aosp/1448415 as this patch is already ready to go.",
+      "parentUuid": "b982e7ac_f5ace57b",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "a14bb24476b27a35a64ff58a1271d154a3e4f59b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc65451c_5b610f5f",
         "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
         "patchSetId": 3
@@ -95,6 +119,30 @@
       "side": 1,
       "message": "This exercises com.android.net.module.util.LinkPropertiesUtils.CompareResult, which is statically linked so independent of the device SDK I think ?\n\nThis test should probably be in frameworks/libs/net/common/tests though, since it doesn\u0027t exercise LinkProperties at all",
       "parentUuid": "fc65451c_5b610f5f",
+      "range": {
+        "startLine": 958,
+        "startChar": 10,
+        "endLine": 958,
+        "endChar": 44
+      },
+      "revId": "a14bb24476b27a35a64ff58a1271d154a3e4f59b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "914d8432_bc0ef893",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-19T09:36:42Z",
+      "side": 1,
+      "message": "Done in aosp/1448415 as this patch is already ready to go.",
+      "parentUuid": "3e0fa998_f6670a90",
       "range": {
         "startLine": 958,
         "startChar": 10,
