@@ -69,6 +69,30 @@
       },
       "revId": "90bdb2aeccaeecaee46842f6dd76ae38020fd803",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "690ec61e_2bfaf428",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7179,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-19T13:07:48Z",
+      "side": 0,
+      "message": "My initial concern was that in handleRegisterNetworkAgent(), it will call updateNetworkInfo() first then updateUids().\nFor that moment when handleRegisterNetworkAgent() calls updateNetworkInfo(), the state of VPN is CONNECTING.\nIt means that the line#7196 to line#7241 won\u0027t be run. Especially rematchAllNetworksAndRequests() won\u0027t be called.\nSo we can make sure that before available callback is sent, the uid ragnes has been set. i.e. There is no race condition that a certain app thought it can use network but after a while it can\u0027t because the uid ranges has set and the app is in the blacklist.\nBut this change will make a race condition that I just mentioned above. i.e. The available callback is sent before uid ranges has set.\n\n//\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d//\n\nIt looks like the NetworkCapabilites of VPN doesn\u0027t change from line#7193~line#7232.(Hopefully I don\u0027t miss anything that need to consider.) Can we remove line#7233~7235 since we have done the same thing at line#7185~7192?",
+      "parentUuid": "2058a996_1c630c66",
+      "range": {
+        "startLine": 7179,
+        "startChar": 16,
+        "endLine": 7179,
+        "endChar": 82
+      },
+      "revId": "90bdb2aeccaeecaee46842f6dd76ae38020fd803",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

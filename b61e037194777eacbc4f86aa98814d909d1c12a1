@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89f4afd4_69a73c28",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-19T13:07:48Z",
+      "side": 0,
+      "message": "I know that it may doesn\u0027t matter if we don\u0027t set NetworkInfo#mIsAvailable to false when network is torn down.\nThe app should refer to NetworkCallback or NetworkInfo#isConnected() to know the network status.\nBut for those apps which refer to NetworkInfo#isAvailable(), some of their behaviors may be wrong.\nDo we want to move this action to another place to reduce the impact of those apps which refer to NetworkInfo#isAvailable()? e.g. NetworkAgent#unregister()",
+      "range": {
+        "startLine": 1286,
+        "startChar": 12,
+        "endLine": 1286,
+        "endChar": 46
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

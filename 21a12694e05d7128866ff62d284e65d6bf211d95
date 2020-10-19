@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb893559_68420cdb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7175,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-19T13:07:48Z",
+      "side": 1,
+      "message": "Both of NetworkAgent#created and NetworkAgent#everConnected are \"sticky bit\"(Once set, it\u0027s never cleared.), so if there is no CONNECTING state need to be considered, it seems like NetworkAgent#created can be replaced by NetworkAgent#everConnected, right?\nIf so, we could combine the if clause at line#7191 into current block?\nBut please read my comment on patchset5 first.",
+      "range": {
+        "startLine": 7175,
+        "startChar": 12,
+        "endLine": 7175,
+        "endChar": 33
+      },
+      "revId": "21a12694e05d7128866ff62d284e65d6bf211d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
