@@ -1271,7 +1271,7 @@ public class ConnectivityServiceTest {
         doReturn(true).when(deps).queryUserAccess(anyInt(), anyInt());
         doReturn(mIpConnectivityMetrics).when(deps).getIpConnectivityMetrics();
         doReturn(mBatteryStatsService).when(deps).getBatteryStatsService();
-        doReturn(true).when(deps).hasService(Context.ETHERNET_SERVICE);
+        doReturn(true).when(deps).hasService(any(), eq(Context.ETHERNET_SERVICE));
         doAnswer(inv -> {
             mPolicyTracker = new WrappedMultinetworkPolicyTracker(
                     inv.getArgument(0), inv.getArgument(1), inv.getArgument(2));
