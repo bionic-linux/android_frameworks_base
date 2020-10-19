@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dca126f_4192f032",
+        "filename": "tests/net/jarjar-rules.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T09:55:56Z",
+      "side": 1,
+      "message": "Nit: this jarjar rule is not related to CTS, since it\u0027s only used in FrameworksNetTests: maybe android.net.frameworktests.util.@1 ? Or something similar ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 48,
+        "endLine": 2,
+        "endChar": 51
+      },
+      "revId": "27ace03997b2c7f37f4a94a82bd77eb9bfe3f289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
