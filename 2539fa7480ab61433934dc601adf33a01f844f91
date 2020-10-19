@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e8fed2b_1394362d",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-19T15:15:17Z",
+      "side": 1,
+      "message": "Nit: Maybe mark it @NonNull and add null check like android.os.HandlerExecutor\nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/os/HandlerExecutor.java",
+      "range": {
+        "startLine": 148,
+        "startChar": 35,
+        "endLine": 148,
+        "endChar": 50
+      },
+      "revId": "2539fa7480ab61433934dc601adf33a01f844f91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
