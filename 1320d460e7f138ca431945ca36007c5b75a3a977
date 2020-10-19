@@ -22,6 +22,75 @@
       },
       "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab87afde_c1119864",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2020-10-19T23:21:01Z",
+      "side": 1,
+      "message": "Is this how it has to be done? Seems kind of messy to have the hwservicemgr stuff right here, but it does work.",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 58
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0692a3d_5f7bc800",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2020-10-19T23:21:01Z",
+      "side": 1,
+      "message": "is there a better way to get this outside of hardcoding it? And is this always going to be the right string?",
+      "range": {
+        "startLine": 84,
+        "startChar": 59,
+        "endLine": 84,
+        "endChar": 68
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42c70291_9ed26f66",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2020-10-19T23:21:01Z",
+      "side": 1,
+      "message": "do want to mention the possibility of deprecation? Or just leave it like this?",
+      "range": {
+        "startLine": 89,
+        "startChar": 44,
+        "endLine": 89,
+        "endChar": 75
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
