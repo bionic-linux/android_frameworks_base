@@ -18,6 +18,46 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bacd373_2aaa02b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T06:28:00Z",
+      "side": 1,
+      "message": "LGTM but the jarjar rule on FrameworksNetTests should be addressed, at least in a followup",
+      "revId": "a14bb24476b27a35a64ff58a1271d154a3e4f59b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b982e7ac_f5ace57b",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T06:28:00Z",
+      "side": 1,
+      "message": "Because you\u0027re adding that, ideally you should also add a jarjar rule for com.android.net.module.util to users of this library, so FrameworksNetTests and CtsNetTestCasesDefaults. The latter already has it, so that leaves FrameworksNetTests.",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "a14bb24476b27a35a64ff58a1271d154a3e4f59b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc65451c_5b610f5f",
@@ -31,6 +71,30 @@
       "writtenOn": "2020-10-19T04:21:20Z",
       "side": 1,
       "message": "Ah, here also has test for CompareResult. This can pass now.",
+      "range": {
+        "startLine": 958,
+        "startChar": 10,
+        "endLine": 958,
+        "endChar": 44
+      },
+      "revId": "a14bb24476b27a35a64ff58a1271d154a3e4f59b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e0fa998_f6670a90",
+        "filename": "tests/net/common/java/android/net/LinkPropertiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-19T06:28:00Z",
+      "side": 1,
+      "message": "This exercises com.android.net.module.util.LinkPropertiesUtils.CompareResult, which is statically linked so independent of the device SDK I think ?\n\nThis test should probably be in frameworks/libs/net/common/tests though, since it doesn\u0027t exercise LinkProperties at all",
+      "parentUuid": "fc65451c_5b610f5f",
       "range": {
         "startLine": 958,
         "startChar": 10,
