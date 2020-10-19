@@ -3774,7 +3774,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         }
         final WindowControllerCallback callback = getWindowControllerCallback();
         if (callback != null) {
-            getWindowControllerCallback().updateStatusBarColor(color);
+            callback.updateStatusBarColor(color);
         }
     }
 
@@ -3792,7 +3792,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         }
         final WindowControllerCallback callback = getWindowControllerCallback();
         if (callback != null) {
-            getWindowControllerCallback().updateNavigationBarColor(color);
+            callback.updateNavigationBarColor(color);
         }
     }
 
