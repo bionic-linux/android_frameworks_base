@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6bc0a38_666a191c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-19T08:00:31Z",
+      "side": 1,
+      "message": "Nit: you do not replace with a public API but a system api.",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "c50d8b6d94a392b38079ed0b696dabed18bfa35b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09dde752_c548b57c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-19T08:00:31Z",
+      "side": 1,
+      "message": "This may throw IllegalStateException for eng build. Do you like to throws/catch to prevent crashing device.",
+      "range": {
+        "startLine": 2005,
+        "startChar": 28,
+        "endLine": 2005,
+        "endChar": 47
+      },
+      "revId": "c50d8b6d94a392b38079ed0b696dabed18bfa35b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
