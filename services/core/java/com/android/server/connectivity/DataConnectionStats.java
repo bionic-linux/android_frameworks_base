@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.RemoteException;
 import android.telephony.NetworkRegistrationInfo;
 import android.telephony.PhoneStateListener;
@@ -35,6 +34,9 @@ import android.util.Log;
 
 import com.android.internal.app.IBatteryStats;
 import com.android.server.am.BatteryStatsService;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.RejectedExecutionException;
 
 public class DataConnectionStats extends BroadcastReceiver {
     private static final String TAG = "DataConnectionStats";
@@ -55,7 +57,8 @@ public class DataConnectionStats extends BroadcastReceiver {
         mContext = context;
         mBatteryStats = BatteryStatsService.getService();
         mListenerHandler = listenerHandler;
-        mPhoneStateListener = new PhoneStateListenerImpl(listenerHandler.getLooper());
+        mPhoneStateListener =
+                new PhoneStateListenerImpl(new PhoneStateListenerExecutor(listenerHandler));
     }
 
     public void startMonitoring() {
@@ -140,9 +143,22 @@ public class DataConnectionStats extends BroadcastReceiver {
                 && mServiceState.getState() != ServiceState.STATE_POWER_OFF;
     }
 
+    private class PhoneStateListenerExecutor implements Executor {
+        private final Handler mHandler;
+        PhoneStateListenerExecutor(Handler handler) {
+            mHandler = handler;
+        }
+        @Override
+        public void execute(Runnable command) {
+            if (!mHandler.post(command)) {
+                throw new RejectedExecutionException(mHandler + " is shutting down");
+            }
+        }
+    }
+
     private class PhoneStateListenerImpl extends PhoneStateListener {
-        PhoneStateListenerImpl(Looper looper) {
-            super(looper);
+        PhoneStateListenerImpl(Executor executor) {
+            super(executor);
         }
 
         @Override
