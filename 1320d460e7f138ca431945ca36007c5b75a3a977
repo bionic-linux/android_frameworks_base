@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f8b0886a_1c267a8b",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-10-20T00:36:13Z",
+      "side": 1,
+      "message": "Typically yeah - we could add a helper function to system/libhidl/transport/include/hidl/ServiceManagement.h (in fact there is one there returning a vector of instances), but this is fine",
+      "parentUuid": "ab87afde_c1119864",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 58
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a0692a3d_5f7bc800",
         "filename": "services/core/jni/com_android_server_SystemServer.cpp",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6cc6d62f_99f7806b",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-10-20T00:36:13Z",
+      "side": 1,
+      "message": "It only looks odd because this is set as the default argument to registerAsService. You could use the same string to pass into both functions, so it\u0027s clear how these calls are related.",
+      "parentUuid": "a0692a3d_5f7bc800",
+      "range": {
+        "startLine": 84,
+        "startChar": 59,
+        "endLine": 84,
+        "endChar": 68
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42c70291_9ed26f66",
         "filename": "services/core/jni/com_android_server_SystemServer.cpp",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2020-10-19T23:21:01Z",
       "side": 1,
       "message": "do want to mention the possibility of deprecation? Or just leave it like this?",
+      "range": {
+        "startLine": 89,
+        "startChar": 44,
+        "endLine": 89,
+        "endChar": 75
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "951447e1_d5e115d0",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2020-10-20T00:36:13Z",
+      "side": 1,
+      "message": "I would recommend it",
+      "parentUuid": "42c70291_9ed26f66",
       "range": {
         "startLine": 89,
         "startChar": 44,
