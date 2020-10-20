@@ -22,6 +22,30 @@
       },
       "revId": "2539fa7480ab61433934dc601adf33a01f844f91",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "201be8b4_95fa9804",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-20T07:28:08Z",
+      "side": 1,
+      "message": "Updated but I think we should not need to add null check if we have @NonNull annotation.",
+      "parentUuid": "3e8fed2b_1394362d",
+      "range": {
+        "startLine": 148,
+        "startChar": 35,
+        "endLine": 148,
+        "endChar": 50
+      },
+      "revId": "2539fa7480ab61433934dc601adf33a01f844f91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
