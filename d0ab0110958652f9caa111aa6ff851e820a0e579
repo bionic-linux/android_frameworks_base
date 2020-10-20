@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a7bc72_1825da00",
+        "filename": "services/tests/servicestests/src/com/android/server/hdmi/HdmiCecMessageValidatorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1651020
+      },
+      "writtenOn": "2020-10-20T14:59:20Z",
+      "side": 1,
+      "message": "Can you leave a comment above this line that - while this message is too long, it is accepted as this parameter might be extended in future versions?",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "d0ab0110958652f9caa111aa6ff851e820a0e579",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
