@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a6fcc2d_61a2a0f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-20T02:00:28Z",
+      "side": 1,
+      "message": "The public API I meant here is Settings.Secure#putString() and Settings.Secure#putInt().",
+      "parentUuid": "f6bc0a38_666a191c",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "c50d8b6d94a392b38079ed0b696dabed18bfa35b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09dde752_c548b57c",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-19T08:00:31Z",
       "side": 1,
       "message": "This may throw IllegalStateException for eng build. Do you like to throws/catch to prevent crashing device.",
+      "range": {
+        "startLine": 2005,
+        "startChar": 28,
+        "endLine": 2005,
+        "endChar": 47
+      },
+      "revId": "c50d8b6d94a392b38079ed0b696dabed18bfa35b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4cdb868_0b67d81f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-20T02:00:28Z",
+      "side": 1,
+      "message": "No, you should refer to ContextImpl.java but not Context.java.\nThe context of VPN is coming from ConnectivityService, and the context of ConnectivityService is coming from SystemServer, and the context of SystemServer is coming from ContextImpl.",
+      "parentUuid": "09dde752_c548b57c",
       "range": {
         "startLine": 2005,
         "startChar": 28,
