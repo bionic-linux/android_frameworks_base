@@ -31,6 +31,7 @@ import java.util.function.Consumer;
 
 public class Utils {
 
+    public static boolean sNeedShowVolumeUI = false;
     /**
      * Allows lambda iteration over a list. It is done in reverse order so it is safe
      * to add or remove items during the iteration.  Skips over null items.

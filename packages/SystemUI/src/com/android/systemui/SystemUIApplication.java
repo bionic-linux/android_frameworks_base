@@ -38,6 +38,7 @@ import com.android.systemui.util.NotificationChannels;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import com.android.systemui.util.Utils;
 
 /**
  * Application class for SystemUI.
@@ -219,6 +220,7 @@ public class SystemUIApplication extends Application implements
         log.traceEnd();
 
         mServicesStarted = true;
+        Utils.sNeedShowVolumeUI = true;
     }
 
     @Override

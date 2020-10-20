@@ -68,6 +68,7 @@ import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.util.RingerModeLiveData;
 import com.android.systemui.util.RingerModeTracker;
+import com.android.systemui.util.Utils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -466,6 +467,9 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
     }
 
     private boolean shouldShowUI(int flags) {
+        if (!Utils.sNeedShowVolumeUI) {
+              return false;
+        }
         // if status bar isn't null, check if phone is in AOD, else check flags
         // since we could be using a different status bar
         return mStatusBarOptionalLazy.map(statusBarLazy -> {
