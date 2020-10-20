@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f662a27_4b916e20",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T06:45:15Z",
+      "side": 1,
+      "message": "when will the mLastSnapshot be null?\nDoes this cause traffic of first update be lost?",
+      "range": {
+        "startLine": 358,
+        "startChar": 12,
+        "endLine": 361,
+        "endChar": 13
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "364076bc_c48bbf99",
         "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
         "patchSetId": 6
@@ -88,6 +111,168 @@
         "startChar": 1,
         "endLine": 208,
         "endChar": 34
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7ed852f_eb038fc9",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T06:45:15Z",
+      "side": 1,
+      "message": "+1, or add @NonNull annotation.",
+      "parentUuid": "07b35a9d_5a8f633b",
+      "range": {
+        "startLine": 207,
+        "startChar": 1,
+        "endLine": 208,
+        "endChar": 34
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52d7f8fd_8748dccc",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T06:45:15Z",
+      "side": 1,
+      "message": "1. redundant space?\n2. IIUC this should this be guarded by mStatsLock, right?.",
+      "range": {
+        "startLine": 321,
+        "startChar": 18,
+        "endLine": 321,
+        "endChar": 19
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4ca4e4c_f37fc300",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T06:45:15Z",
+      "side": 1,
+      "message": "Old solution uses latest snapshot to initialize it.\nBut we are using empty stats here.\nFor normal boot up cases I think it is fine.\nBut not sure if this would cause issue to record unwanted stats for corner cases, e.g. framework restarts without rebooting.",
+      "range": {
+        "startLine": 585,
+        "startChar": 39,
+        "endLine": 585,
+        "endChar": 62
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23ed102f_08e5e065",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1428,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T06:45:15Z",
+      "side": 1,
+      "message": "IIUC this could move to l.1449?",
+      "range": {
+        "startLine": 1426,
+        "startChar": 1,
+        "endLine": 1428,
+        "endChar": 78
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "569695ee_0602ee32",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T06:45:15Z",
+      "side": 1,
+      "message": "style: these can fit in 2 lines IIUC.",
+      "range": {
+        "startLine": 1450,
+        "startChar": 0,
+        "endLine": 1452,
+        "endChar": 89
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cab9ef5_0cc03430",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T06:45:15Z",
+      "side": 1,
+      "message": "IIUC this is unused?",
+      "range": {
+        "startLine": 1482,
+        "startChar": 8,
+        "endLine": 1482,
+        "endChar": 59
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fde3136_5f7cb610",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T06:45:15Z",
+      "side": 1,
+      "message": "It looks strange to me that we have removeUidsLocked above and then removeUids.",
+      "range": {
+        "startLine": 1653,
+        "startChar": 12,
+        "endLine": 1653,
+        "endChar": 41
       },
       "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
