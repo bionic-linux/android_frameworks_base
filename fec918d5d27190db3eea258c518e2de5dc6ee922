@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f5576c4_28b99a41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-10-20T15:47:37Z",
+      "side": 1,
+      "message": "Sorry, UserInfo is specifically something we don\u0027t want to expose. Doesn\u0027t UserManager already expose what you need? If not, please file a bug under \"framework \u003e multi user\" and explain what exact features are missing.",
+      "revId": "fec918d5d27190db3eea258c518e2de5dc6ee922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
