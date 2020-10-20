@@ -2042,7 +2042,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         }
     }
 
-    private static class NetworkStatsProviderCallbackImpl extends INetworkStatsProviderCallback.Stub
+    private class NetworkStatsProviderCallbackImpl extends INetworkStatsProviderCallback.Stub
             implements IBinder.DeathRecipient {
         @NonNull final String mTag;
 
@@ -2095,12 +2095,21 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         @Override
         public void notifyStatsUpdated(int token, @Nullable NetworkStats ifaceStats,
-                @Nullable NetworkStats uidStats) {
+                @Nullable NetworkStats uidStats) throws RemoteException {
             // TODO: 1. Use token to map ifaces to correct NetworkIdentity.
-            //       2. Store the difference and store it directly to the recorder.
+            //       2. Remove snapshot of iface and uid stats.
             synchronized (mProviderStatsLock) {
                 if (ifaceStats != null) mIfaceStats.combineAllValues(ifaceStats);
                 if (uidStats != null) mUidStats.combineAllValues(uidStats);
+            }
+
+            synchronized (mStatsLock) {
+                final long identity = Binder.clearCallingIdentity();
+                try {
+                    recordDiffLocked();
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
             }
             mSemaphore.release();
         }
