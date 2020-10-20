@@ -1164,25 +1164,15 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
 
         // Create some initial traffic and report to the service.
         incrementCurrentTime(HOUR_IN_MILLIS);
-        final NetworkStats expectedStats = new NetworkStats(0L, 1)
+        final NetworkStats expectedStats = new NetworkStats(getElapsedRealtime(), 1)
                 .addEntry(new NetworkStats.Entry(TEST_IFACE, UID_RED, SET_DEFAULT,
                         TAG_NONE, METERED_YES, ROAMING_NO, DEFAULT_NETWORK_YES,
                         128L, 2L, 128L, 2L, 1L))
                 .addEntry(new NetworkStats.Entry(TEST_IFACE, UID_RED, SET_DEFAULT,
                         0xF00D, METERED_YES, ROAMING_NO, DEFAULT_NETWORK_YES,
                         64L, 1L, 64L, 1L, 1L));
+
         cb.notifyStatsUpdated(0 /* unused */, expectedStats, expectedStats);
-
-        // Make another empty mutable stats object. This is necessary since the new NetworkStats
-        // object will be used to compare with the old one in NetworkStatsRecoder, two of them
-        // cannot be the same object.
-        expectNetworkStatsUidDetail(buildEmptyStats());
-
-        forcePollAndWaitForIdle();
-
-        // Verifies that one requestStatsUpdate and setAlert will be called during polling.
-        provider.expectOnRequestStatsUpdate(0 /* unused */);
-        provider.expectOnSetAlert(MB_IN_BYTES);
 
         // Verifies that service recorded history, does not verify uid tag part.
         assertUidTotal(sTemplateWifi, UID_RED, 128L, 2L, 128L, 2L, 1);

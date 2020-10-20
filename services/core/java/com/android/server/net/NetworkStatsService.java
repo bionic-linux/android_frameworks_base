@@ -334,6 +334,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @Retention(RetentionPolicy.SOURCE)
     public @interface SnapshotType {}
 
+    // The snapshots that accumulated since boot. Note that the snapshots do not
+    // contain stats from providers.
     @GuardedBy("mStatsLock")
     private final NetworkStats[] mLastSnapshot = new NetworkStats[MAX_SNAPSHOT_TYPE];
 
@@ -910,6 +912,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 android.os.Process.SYSTEM_UID);
     }
 
+    // TODO: This should contain provider stats. See b/174636868.
     @Override
     public NetworkStats getDataLayerSnapshotForUid(int uid) throws RemoteException {
         if (Binder.getCallingUid() != uid) {
@@ -942,7 +945,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         try {
             final String[] ifacesToQuery =
                     mStatsFactory.augmentWithStackedInterfaces(requiredIfaces);
-            return getNetworkStatsUidDetail(ifacesToQuery);
+            final NetworkStats uidStats = getNetworkStatsUidDetail(ifacesToQuery);
+            final NetworkStats providerStats = getNetworkStatsFromProviders(STATS_PER_UID);
+            providerStats.filter(UID_ALL, requiredIfaces, TAG_ALL);
+            uidStats.combineAllValues(providerStats);
+            return uidStats;
         } catch (RemoteException e) {
             Log.wtf(TAG, "Error compiling UID stats", e);
             return new NetworkStats(0L, 0);
@@ -1436,12 +1443,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final NetworkStats devSnapshot = readNetworkStatsSummaryDev();
         Trace.traceEnd(TRACE_TAG_NETWORK);
 
-        Trace.traceBegin(TRACE_TAG_NETWORK, "snapshotStatsProvider");
-        final NetworkStats providersnapshot = getNetworkStatsFromProviders(STATS_PER_IFACE);
-        Trace.traceEnd(TRACE_TAG_NETWORK);
-        xtSnapshot.combineAllValues(providersnapshot);
-        devSnapshot.combineAllValues(providersnapshot);
-
         final NetworkStats uidDiff = NetworkStats.subtract(
                         uidSnapshot, mLastSnapshot[SNAPSHOT_TYPE_UID],
                         mNonMonotonicObserver, PREFIX_UID);
@@ -1928,7 +1929,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     /**
      * Return snapshot of current UID statistics, including any
      * {@link TrafficStats#UID_TETHERING}, video calling data usage, and {@link #mUidOperations}
-     * values.
+     * values. Note that this does not contain provider stats.
      *
      * @param ifaces A list of interfaces the stats should be restricted to, or
      *               {@link NetworkStats#INTERFACES_ALL}.
@@ -1942,13 +1943,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         tetherSnapshot.filter(UID_ALL, ifaces, TAG_ALL);
         mStatsFactory.apply464xlatAdjustments(uidSnapshot, tetherSnapshot);
         uidSnapshot.combineAllValues(tetherSnapshot);
-
-        // get a stale copy of uid stats snapshot provided by providers.
-        final NetworkStats providerStats = getNetworkStatsFromProviders(STATS_PER_UID);
-        providerStats.filter(UID_ALL, ifaces, TAG_ALL);
-        mStatsFactory.apply464xlatAdjustments(uidSnapshot, providerStats);
-        uidSnapshot.combineAllValues(providerStats);
-
         uidSnapshot.combineAllValues(mUidOperations);
 
         return uidSnapshot;
@@ -2010,7 +2004,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         try {
             NetworkStatsProviderCallbackImpl callback = new NetworkStatsProviderCallbackImpl(
                     tag, provider, mStatsProviderSem, mAlertObserver,
-                    mStatsProviderCbList);
+                    mStatsProviderCbList, this);
             mStatsProviderCbList.add(callback);
             Log.d(TAG, "registerNetworkStatsProvider from " + callback.mTag + " uid/pid="
                     + getCallingUid() + "/" + getCallingPid());
@@ -2052,6 +2046,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         @NonNull private final Semaphore mSemaphore;
         @NonNull final INetworkManagementEventObserver mAlertObserver;
         @NonNull final CopyOnWriteArrayList<NetworkStatsProviderCallbackImpl> mStatsProviderCbList;
+        @NonNull final NetworkStatsService mStatsService;
 
         @NonNull private final Object mProviderStatsLock = new Object();
 
@@ -2065,7 +2060,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 @NonNull String tag, @NonNull INetworkStatsProvider provider,
                 @NonNull Semaphore semaphore,
                 @NonNull INetworkManagementEventObserver alertObserver,
-                @NonNull CopyOnWriteArrayList<NetworkStatsProviderCallbackImpl> cbList)
+                @NonNull CopyOnWriteArrayList<NetworkStatsProviderCallbackImpl> cbList,
+                @NonNull NetworkStatsService service)
                 throws RemoteException {
             mTag = tag;
             mProvider = provider;
@@ -2073,6 +2069,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             mSemaphore = semaphore;
             mAlertObserver = alertObserver;
             mStatsProviderCbList = cbList;
+            mStatsService = service;
         }
 
         @NonNull
@@ -2095,14 +2092,33 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             }
         }
 
+        // TODO: This should be protected from frequently updating.
         @Override
         public void notifyStatsUpdated(int token, @Nullable NetworkStats ifaceStats,
-                @Nullable NetworkStats uidStats) {
+                @Nullable NetworkStats uidStats) throws RemoteException {
             // TODO: 1. Use token to map ifaces to correct NetworkIdentity.
-            //       2. Store the difference and store it directly to the recorder.
+            //       2. Remove snapshot of iface and uid stats if possible. The local caches
+            //          are still used in getNetworkStatsFromProviders which is called by a
+            //          public method getDetailedUidStats.
             synchronized (mProviderStatsLock) {
                 if (ifaceStats != null) mIfaceStats.combineAllValues(ifaceStats);
                 if (uidStats != null) mUidStats.combineAllValues(uidStats);
+            }
+
+            synchronized (mStatsService.mStatsLock) {
+                final long currentTime = mStatsService.mClock.millis();
+                if (ifaceStats != null) {
+                    mStatsService.mDevRecorder.recordDiffLocked(ifaceStats,
+                            mStatsService.mActiveUidIfaces, currentTime);
+                    mStatsService.mXtRecorder.recordDiffLocked(ifaceStats,
+                            mStatsService.mActiveUidIfaces, currentTime);
+                }
+                if (uidStats != null) {
+                    mStatsService.mUidRecorder.recordDiffLocked(uidStats,
+                            mStatsService.mActiveUidIfaces, currentTime);
+                    mStatsService.mUidTagRecorder.recordDiffLocked(uidStats,
+                            mStatsService.mActiveUidIfaces, currentTime);
+                }
             }
             mSemaphore.release();
         }
