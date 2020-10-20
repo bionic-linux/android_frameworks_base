@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "360b6dcb_da76cb59",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2020-10-20T15:24:45Z",
+      "side": 1,
+      "message": "Done in other CL.",
+      "parentUuid": "d14bb44c_15f5d66e",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 12
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab87afde_c1119864",
         "filename": "services/core/jni/com_android_server_SystemServer.cpp",
         "patchSetId": 1
@@ -61,6 +85,30 @@
       "side": 1,
       "message": "Typically yeah - we could add a helper function to system/libhidl/transport/include/hidl/ServiceManagement.h (in fact there is one there returning a vector of instances), but this is fine",
       "parentUuid": "ab87afde_c1119864",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 58
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6d2c3ee_7c8caf2e",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2020-10-20T15:24:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8b0886a_1c267a8b",
       "range": {
         "startLine": 82,
         "startChar": 8,
@@ -118,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29221234_035fa9ac",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2020-10-20T15:24:45Z",
+      "side": 1,
+      "message": "I like that. Done.",
+      "parentUuid": "6cc6d62f_99f7806b",
+      "range": {
+        "startLine": 84,
+        "startChar": 59,
+        "endLine": 84,
+        "endChar": 68
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "42c70291_9ed26f66",
@@ -155,6 +227,30 @@
       "side": 1,
       "message": "I would recommend it",
       "parentUuid": "42c70291_9ed26f66",
+      "range": {
+        "startLine": 89,
+        "startChar": 44,
+        "endLine": 89,
+        "endChar": 75
+      },
+      "revId": "1320d460e7f138ca431945ca36007c5b75a3a977",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af05b689_56cb06f2",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2020-10-20T15:24:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "951447e1_d5e115d0",
       "range": {
         "startLine": 89,
         "startChar": 44,
