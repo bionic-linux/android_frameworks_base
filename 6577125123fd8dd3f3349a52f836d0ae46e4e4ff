@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2670c57d_8e9beb6e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-20T02:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529b382e_e8c5dd2d",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "6577125123fd8dd3f3349a52f836d0ae46e4e4ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9cb56f6_edfc8594",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-19T04:45:13Z",
       "side": 1,
       "message": "Java doc needs to be modified.",
+      "range": {
+        "startLine": 933,
+        "startChar": 11,
+        "endLine": 933,
+        "endChar": 51
+      },
+      "revId": "6577125123fd8dd3f3349a52f836d0ae46e4e4ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edbdb117_1b91881a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-20T02:03:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9cb56f6_edfc8594",
       "range": {
         "startLine": 933,
         "startChar": 11,
