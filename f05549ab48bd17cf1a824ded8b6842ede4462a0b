@@ -95,6 +95,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b3bad90_f057c959",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-20T08:35:39Z",
+      "side": 1,
+      "message": "I\u0027ll prefer diff over delta,\nsince delta is a greek symbol that has different meanings in different areas,\nwhich is not necessarily means difference from different perspective.",
+      "range": {
+        "startLine": 203,
+        "startChar": 22,
+        "endLine": 203,
+        "endChar": 27
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "07b35a9d_5a8f633b",
         "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
         "patchSetId": 6
