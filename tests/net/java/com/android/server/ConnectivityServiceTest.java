@@ -313,6 +313,8 @@ public class ConnectivityServiceTest {
     private static final long TIMESTAMP = 1234L;
 
     private static final int NET_ID = 110;
+    // Set a non-zero value to verify the flow to set tcp init rwnd value.
+    private static final int TEST_TCP_INIT_RWND = 60;
 
     private static final String CLAT_PREFIX = "v4-";
     private static final String MOBILE_IFNAME = "test_rmnet_data0";
@@ -355,6 +357,7 @@ public class ConnectivityServiceTest {
     @Mock LocationManager mLocationManager;
     @Mock AppOpsManager mAppOpsManager;
     @Mock TelephonyManager mTelephonyManager;
+    @Mock MockableSystemProperties mSystemProperties;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -1257,15 +1260,15 @@ public class ConnectivityServiceTest {
     }
 
     private ConnectivityService.Dependencies makeDependencies() {
-        final MockableSystemProperties systemProperties = spy(new MockableSystemProperties());
-        when(systemProperties.getInt("net.tcp.default_init_rwnd", 0)).thenReturn(0);
-        when(systemProperties.getBoolean("ro.radio.noril", false)).thenReturn(false);
-
+        when(mSystemProperties.getInt("net.tcp.default_init_rwnd", 0))
+                .thenReturn(TEST_TCP_INIT_RWND);
+        when(mSystemProperties.getBoolean("ro.radio.noril", false)).thenReturn(false);
+        doNothing().when(mSystemProperties).setTcpInitRwnd(anyInt());
         final ConnectivityService.Dependencies deps = mock(ConnectivityService.Dependencies.class);
         doReturn(mCsHandlerThread).when(deps).makeHandlerThread();
         doReturn(new TestNetIdManager()).when(deps).makeNetIdManager();
         doReturn(mNetworkStack).when(deps).getNetworkStack();
-        doReturn(systemProperties).when(deps).getSystemProperties();
+        doReturn(mSystemProperties).when(deps).getSystemProperties();
         doReturn(mock(ProxyTracker.class)).when(deps).makeProxyTracker(any(), any());
         doReturn(mMetricsService).when(deps).getMetricsLogger();
         doReturn(true).when(deps).queryUserAccess(anyInt(), anyInt());
@@ -6565,6 +6568,12 @@ public class ConnectivityServiceTest {
         String wmemValues = String.join(" ", values[3], values[4], values[5]);
         verify(mMockNetd, atLeastOnce()).setTcpRWmemorySize(rmemValues, wmemValues);
         reset(mMockNetd);
+        verify(mSystemProperties, times(1))
+                .setTcpInitRwnd(eq(TEST_TCP_INIT_RWND));
+        // Reset the counter and value to get the correct interaction count.
+        reset(mSystemProperties);
+        when(mSystemProperties.getInt("net.tcp.default_init_rwnd", 0))
+                .thenReturn(TEST_TCP_INIT_RWND);
     }
 
     @Test
