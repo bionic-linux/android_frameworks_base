@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "301bbb3a_4b097b50",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-20T08:11:51Z",
+      "side": 1,
+      "message": "As we talked offline, these two methods may have different check result if the checking service is a native service but not in system service list. Fortunately, ETHERNET_SERVICE is in system service list, so it\u0027s probably fine.\nSince you are not using a static method to check the service, I think you can remove hasService() from Dependencies and check the service inline. It can also prevent the misusing of hasService() in the future that someone calls it to check native service but gets unexpected result. You can change it by follow up commit.",
+      "range": {
+        "startLine": 936,
+        "startChar": 19,
+        "endLine": 936,
+        "endChar": 58
+      },
+      "revId": "078136d1a1354387811b58ca180b88d6712ed59a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
