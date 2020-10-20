@@ -22,6 +22,30 @@
       },
       "revId": "c90a797b8ee78cdd91f99c57b65616beddae032e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c92f8bc3_8f66a588",
+        "filename": "services/core/jni/com_android_server_SystemServer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2020-10-20T00:30:44Z",
+      "side": 0,
+      "message": "We can leave it, we just end up with the following errors:\n10-19 16:54:12.648   521  1518 E HidlServiceManagement: Service android.frameworks.schedulerservice@1.0::ISchedulingPolicyService/default must be in VINTF manifest in order to register/get.\n10-19 16:54:12.648   521  1518 E system_server: Cannot register android.frameworks.schedulerservice@1.0::ISchedulingPolicyService: -2147483648\n\nIt seems like we would want a better message if we expect it. WDYT?",
+      "parentUuid": "f0ffbd46_8283050d",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 93
+      },
+      "revId": "c90a797b8ee78cdd91f99c57b65616beddae032e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
