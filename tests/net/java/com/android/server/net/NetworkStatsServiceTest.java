@@ -1156,6 +1156,10 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
                 .addEntry(new NetworkStats.Entry(TEST_IFACE, UID_RED, SET_DEFAULT,
                         0xF00D, METERED_YES, ROAMING_NO, DEFAULT_NETWORK_YES,
                         64L, 1L, 64L, 1L, 1L));
+
+        // Make another empty mutable stats object. This is necessary or it will cause this
+        // test refer to the same object when get uid snapshot.
+        expectNetworkStatsUidDetail(buildEmptyStats());
         cb.notifyStatsUpdated(0 /* unused */, expectedStats, expectedStats);
 
         // Make another empty mutable stats object. This is necessary since the new NetworkStats

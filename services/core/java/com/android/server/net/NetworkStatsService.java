@@ -2012,7 +2012,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         try {
             NetworkStatsProviderCallbackImpl callback = new NetworkStatsProviderCallbackImpl(
                     tag, provider, mStatsProviderSem, mAlertObserver,
-                    mStatsProviderCbList);
+                    mStatsProviderCbList, this);
             mStatsProviderCbList.add(callback);
             Log.d(TAG, "registerNetworkStatsProvider from " + callback.mTag + " uid/pid="
                     + getCallingUid() + "/" + getCallingPid());
@@ -2054,6 +2054,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         @NonNull private final Semaphore mSemaphore;
         @NonNull final INetworkManagementEventObserver mAlertObserver;
         @NonNull final CopyOnWriteArrayList<NetworkStatsProviderCallbackImpl> mStatsProviderCbList;
+        @NonNull final NetworkStatsService mStatsService;
 
         @NonNull private final Object mProviderStatsLock = new Object();
 
@@ -2067,7 +2068,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 @NonNull String tag, @NonNull INetworkStatsProvider provider,
                 @NonNull Semaphore semaphore,
                 @NonNull INetworkManagementEventObserver alertObserver,
-                @NonNull CopyOnWriteArrayList<NetworkStatsProviderCallbackImpl> cbList)
+                @NonNull CopyOnWriteArrayList<NetworkStatsProviderCallbackImpl> cbList,
+                @NonNull NetworkStatsService service)
                 throws RemoteException {
             mTag = tag;
             mProvider = provider;
@@ -2075,6 +2077,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             mSemaphore = semaphore;
             mAlertObserver = alertObserver;
             mStatsProviderCbList = cbList;
+            mStatsService = service;
         }
 
         @NonNull
@@ -2099,12 +2102,21 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         @Override
         public void notifyStatsUpdated(int token, @Nullable NetworkStats ifaceStats,
-                @Nullable NetworkStats uidStats) {
+                @Nullable NetworkStats uidStats) throws RemoteException {
             // TODO: 1. Use token to map ifaces to correct NetworkIdentity.
-            //       2. Store the difference and store it directly to the recorder.
+            //       2. Remove snapshot of iface and uid stats.
             synchronized (mProviderStatsLock) {
                 if (ifaceStats != null) mIfaceStats.combineAllValues(ifaceStats);
                 if (uidStats != null) mUidStats.combineAllValues(uidStats);
+            }
+
+            synchronized (mStatsService.mStatsLock) {
+                final long identity = Binder.clearCallingIdentity();
+                try {
+                    mStatsService.recordDiffLocked();
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
             }
             mSemaphore.release();
         }
