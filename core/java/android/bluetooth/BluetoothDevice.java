@@ -902,10 +902,15 @@ public final class BluetoothDevice implements Parcelable {
     @UnsupportedAppUsage
     static IBluetooth getService() {
         synchronized (BluetoothDevice.class) {
-            if (sService == null) {
-                BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-                sService = adapter.getBluetoothService(sStateChangeCallback);
+            if (sService != null) {
+                return sService;
             }
+        }
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        adapter.setBluetoothServiceCallback(sStateChangeCallback);
+
+        synchronized (BluetoothDevice.class) {
+            sService = adapter.getBluetoothService();
         }
         return sService;
     }

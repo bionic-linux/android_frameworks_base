@@ -4375,7 +4375,8 @@ HSPLandroid/bluetooth/BluetoothAdapter;->access$500()Landroid/bluetooth/le/Bluet
 HSPLandroid/bluetooth/BluetoothAdapter;->access$600()Landroid/bluetooth/le/BluetoothLeScanner;
 HSPLandroid/bluetooth/BluetoothAdapter;->checkBluetoothAddress(Ljava/lang/String;)Z
 HSPLandroid/bluetooth/BluetoothAdapter;->getBluetoothManager()Landroid/bluetooth/IBluetoothManager;
-HSPLandroid/bluetooth/BluetoothAdapter;->getBluetoothService(Landroid/bluetooth/IBluetoothManagerCallback;)Landroid/bluetooth/IBluetooth;
+HSPLandroid/bluetooth/BluetoothAdapter;->setBluetoothServiceCallback(Landroid/bluetooth/IBluetoothManagerCallback;)V;
+HSPLandroid/bluetooth/BluetoothAdapter;->getBluetoothService()Landroid/bluetooth/IBluetooth;
 HSPLandroid/bluetooth/BluetoothAdapter;->getBondedDevices()Ljava/util/Set;
 HSPLandroid/bluetooth/BluetoothAdapter;->getConnectionState()I
 HSPLandroid/bluetooth/BluetoothAdapter;->getDefaultAdapter()Landroid/bluetooth/BluetoothAdapter;

@@ -3116,7 +3116,11 @@ public final class BluetoothAdapter {
             new ArrayList<IBluetoothManagerCallback>();
 
     @UnsupportedAppUsage
-    /*package*/ IBluetooth getBluetoothService(IBluetoothManagerCallback cb) {
+    /*package*/ IBluetooth getBluetoothService() {
+        return mService;
+    }
+
+    /*package*/ void setBluetoothServiceCallback(IBluetoothManagerCallback cb) {
         synchronized (mProxyServiceStateCallbacks) {
             if (cb == null) {
                 Log.w(TAG, "getBluetoothService() called with no BluetoothManagerCallback");
@@ -3124,7 +3128,6 @@ public final class BluetoothAdapter {
                 mProxyServiceStateCallbacks.add(cb);
             }
         }
-        return mService;
     }
 
     /*package*/ void removeServiceStateCallback(IBluetoothManagerCallback cb) {
