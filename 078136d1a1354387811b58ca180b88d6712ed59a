@@ -46,6 +46,30 @@
       },
       "revId": "078136d1a1354387811b58ca180b88d6712ed59a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc89cd17_4ef8f9d7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-21T03:08:20Z",
+      "side": 1,
+      "message": "+1 to that: I\u0027d recommend either calling getSystemService directly at the unique call site, or rename the method to \"hasEthernetService\" and remove the \"name\" argument (small preference for the first option).\n\nAlso, looking at SystemServiceRegistry this may Log.wtf if ConnectivityService is the first one querying EthernetService (see onServiceNotFound). Looking at usages of sEnableServiceNotFoundWtf in that class, it looks like the Log.wtf should be suppressed if that var is false though; maybe have another CL to send to the framework team to fix that ?",
+      "parentUuid": "a18ab4dd_659184fe",
+      "range": {
+        "startLine": 936,
+        "startChar": 19,
+        "endLine": 936,
+        "endChar": 58
+      },
+      "revId": "078136d1a1354387811b58ca180b88d6712ed59a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
