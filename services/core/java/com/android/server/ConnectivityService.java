@@ -1859,7 +1859,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         NetworkAgentInfo nai = mLegacyTypeTracker.getNetworkForType(networkType);
         if (nai == null) {
-            if (mLegacyTypeTracker.isTypeSupported(networkType) == false) {
+            if (!mLegacyTypeTracker.isTypeSupported(networkType)) {
                 if (DBG) log("requestRouteToHostAddress on unsupported network: " + networkType);
             } else {
                 if (DBG) log("requestRouteToHostAddress on down network: " + networkType);
@@ -2955,7 +2955,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             updateInetCondition(nai);
             // Let the NetworkAgent know the state of its network
-            Bundle redirectUrlBundle = new Bundle();
+            final Bundle redirectUrlBundle = new Bundle();
             redirectUrlBundle.putString(NetworkAgent.REDIRECT_URL_KEY, redirectUrl);
             // TODO: Evaluate to update partial connectivity to status to NetworkAgent.
             nai.asyncChannel.sendMessage(
@@ -3269,7 +3269,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void handleAsyncChannelHalfConnect(Message msg) {
         ensureRunningOnConnectivityServiceThread();
-        final AsyncChannel ac = (AsyncChannel) msg.obj;
         if (mNetworkProviderInfos.containsKey(msg.replyTo)) {
             if (msg.arg1 == AsyncChannel.STATUS_SUCCESSFUL) {
                 if (VDBG) log("NetworkFactory connected");
@@ -7155,7 +7154,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkInfo newInfo = mixInInfo(networkAgent, info);
 
         final NetworkInfo.State state = newInfo.getState();
-        NetworkInfo oldInfo = null;
+        final NetworkInfo oldInfo;
         synchronized (networkAgent) {
             oldInfo = networkAgent.networkInfo;
             networkAgent.networkInfo = newInfo;
@@ -7300,8 +7299,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             boolean newMetered, boolean oldRestrictBackground, boolean newRestrictBackground) {
 
         for (int i = 0; i < nai.numNetworkRequests(); i++) {
-            NetworkRequest nr = nai.requestAt(i);
-            NetworkRequestInfo nri = mNetworkRequests.get(nr);
+            final NetworkRequest nr = nai.requestAt(i);
+            final NetworkRequestInfo nri = mNetworkRequests.get(nr);
             final int uidRules = mUidRules.get(nri.mUid);
             final boolean oldBlocked, newBlocked;
             // mVpns lock needs to be hold here to ensure that the active VPN cannot be changed
@@ -7343,8 +7342,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
             final int arg = encodeBool(newBlocked);
             for (int i = 0; i < nai.numNetworkRequests(); i++) {
-                NetworkRequest nr = nai.requestAt(i);
-                NetworkRequestInfo nri = mNetworkRequests.get(nr);
+                final NetworkRequest nr = nai.requestAt(i);
+                final NetworkRequestInfo nri = mNetworkRequests.get(nr);
                 if (nri != null && nri.mUid == uid) {
                     callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_BLK_CHANGED, arg);
                 }
@@ -7360,7 +7359,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // HIPRI has just disconnected. So we need to set the type to HIPRI and
         // the state to DISCONNECTED, even though the network is of type MOBILE
         // and is still connected.
-        NetworkInfo info = new NetworkInfo(nai.networkInfo);
+        final NetworkInfo info = new NetworkInfo(nai.networkInfo);
         info.setType(type);
         if (state != DetailedState.DISCONNECTED) {
             info.setDetailedState(state, null, info.getExtraInfo());
