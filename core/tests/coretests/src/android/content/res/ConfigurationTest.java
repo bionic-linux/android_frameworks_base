@@ -16,6 +16,7 @@
 
 package android.content.res;
 
+<<<<<<< HEAD   (c08503 Merge "[automerger skipped] Merge "AM: make isHighEndGfx Tes)
 import static android.app.WindowConfiguration.ROTATION_UNDEFINED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 import static android.app.WindowConfiguration.WINDOW_CONFIG_ROTATION;
@@ -27,7 +28,16 @@ import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static android.content.res.Configuration.SMALLEST_SCREEN_WIDTH_DP_UNDEFINED;
 import static android.view.Surface.ROTATION_90;
+=======
+import android.content.Context;
+import android.os.LocaleList;
+import android.platform.test.annotations.Presubmit;
+import android.util.AtomicFile;
+import android.util.proto.ProtoInputStream;
+import android.util.proto.ProtoOutputStream;
+>>>>>>> BRANCH (ad615d Merge "Use language tags to store Configuration's locale lis)
 
+<<<<<<< HEAD   (c08503 Merge "[automerger skipped] Merge "AM: make isHighEndGfx Tes)
 import android.content.Context;
 import android.os.LocaleList;
 import android.platform.test.annotations.Presubmit;
@@ -35,6 +45,8 @@ import android.util.AtomicFile;
 import android.util.proto.ProtoInputStream;
 import android.util.proto.ProtoOutputStream;
 
+=======
+>>>>>>> BRANCH (ad615d Merge "Use language tags to store Configuration's locale lis)
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 
@@ -96,6 +108,7 @@ public class ConfigurationTest extends TestCase {
                 .setExtension('u', "nu-latn").build();
         Configuration write = new Configuration();
         write.setLocales(new LocaleList(arabic, urdu, urduExtension));
+<<<<<<< HEAD   (c08503 Merge "[automerger skipped] Merge "AM: make isHighEndGfx Tes)
         dumpDebug(proto, write);
         assertTrue("Failed to write configs to proto.", proto.exists());
 
@@ -180,6 +193,51 @@ public class ConfigurationTest extends TestCase {
             if (protoIn.nextField(IntervalStatsProto.CONFIGURATIONS)) {
                 final long token = protoIn.start(IntervalStatsProto.CONFIGURATIONS);
                 if (protoIn.nextField(IntervalStatsProto.Configuration.CONFIG)) {
+=======
+        writeToProto(proto, write);
+        assertTrue("Failed to write configs to proto.", proto.exists());
+
+        final Configuration read = new Configuration();
+        try {
+            readFromProto(proto, read);
+        } finally {
+            proto.delete();
+        }
+
+        assertEquals("Missing locales in proto file written to disk.",
+                read.getLocales().size(), write.getLocales().size());
+        assertTrue("Arabic locale not found in Configuration locale list.",
+                read.getLocales().indexOf(arabic) != -1);
+        assertTrue("Urdu locale not found in Configuration locale list.",
+                read.getLocales().indexOf(urdu) != -1);
+        assertTrue("Urdu locale with extensions not found in Configuration locale list.",
+                read.getLocales().indexOf(urduExtension) != -1);
+    }
+
+    private void writeToProto(File f, Configuration config) throws Exception {
+        final AtomicFile af = new AtomicFile(f);
+        FileOutputStream fos = af.startWrite();
+        try {
+            final ProtoOutputStream protoOut = new ProtoOutputStream(fos);
+            final long token = protoOut.start(IntervalStatsProto.CONFIGURATIONS);
+            config.writeToProto(protoOut, IntervalStatsProto.Configuration.CONFIG, false, false);
+            protoOut.end(token);
+            protoOut.flush();
+            af.finishWrite(fos);
+            fos = null;
+        } finally {
+            af.failWrite(fos);
+        }
+    }
+
+    private void readFromProto(File f, Configuration config) throws Exception {
+        final AtomicFile afRead = new AtomicFile(f);
+        try (FileInputStream in = afRead.openRead()) {
+            final ProtoInputStream protoIn = new ProtoInputStream(in);
+            if (protoIn.isNextField(IntervalStatsProto.CONFIGURATIONS)) {
+                final long token = protoIn.start(IntervalStatsProto.CONFIGURATIONS);
+                if (protoIn.isNextField(IntervalStatsProto.Configuration.CONFIG)) {
+>>>>>>> BRANCH (ad615d Merge "Use language tags to store Configuration's locale lis)
                     config.readFromProto(protoIn, IntervalStatsProto.Configuration.CONFIG);
                     protoIn.end(token);
                 }

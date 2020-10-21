@@ -20,7 +20,11 @@ import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.Size;
+<<<<<<< HEAD   (c08503 Merge "[automerger skipped] Merge "AM: make isHighEndGfx Tes)
 import android.compat.annotation.UnsupportedAppUsage;
+=======
+import android.annotation.UnsupportedAppUsage;
+>>>>>>> BRANCH (ad615d Merge "Use language tags to store Configuration's locale lis)
 import android.icu.util.ULocale;
 
 import com.android.internal.annotations.GuardedBy;
@@ -137,7 +141,11 @@ public final class LocaleList implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int parcelableFlags) {
+<<<<<<< HEAD   (c08503 Merge "[automerger skipped] Merge "AM: make isHighEndGfx Tes)
         dest.writeString8(mStringRepresentation);
+=======
+        dest.writeString(mStringRepresentation);
+>>>>>>> BRANCH (ad615d Merge "Use language tags to store Configuration's locale lis)
     }
 
     /**
