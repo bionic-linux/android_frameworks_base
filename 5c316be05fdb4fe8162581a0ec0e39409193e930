@@ -50,6 +50,23 @@
       "message": "Thanks for sending out this fix! This change was actually made upstream but never merged into AOSP, so I just made a cherry pick aosp/1469282 of that fix. I think we should merge that instead, since this fix will likely cause merge conflicts with the other fix.",
       "revId": "5c316be05fdb4fe8162581a0ec0e39409193e930",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7593529e_09512a5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1448822
+      },
+      "writtenOn": "2020-10-21T10:56:47Z",
+      "side": 1,
+      "message": "aosp/1469282 is merged",
+      "revId": "5c316be05fdb4fe8162581a0ec0e39409193e930",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
