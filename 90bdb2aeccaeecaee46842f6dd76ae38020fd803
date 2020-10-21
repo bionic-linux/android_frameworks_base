@@ -93,6 +93,30 @@
       },
       "revId": "90bdb2aeccaeecaee46842f6dd76ae38020fd803",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40c336a7_9bfdb537",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7179,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-21T04:27:28Z",
+      "side": 0,
+      "message": "\u003e But this change will make a race condition that I just mentioned above. i.e. The available callback is sent before uid ranges has set.\n\nVery nice catch. The ranges are in fact updated in l.7191, as updateAllVpnsCapabilities will transitively call updateCapabilities, which starts with updateUids, however that call is done with the existing NCs and therefore will not serve as an initialization. The call to updateUids() in registerNetworkAgent() is done with a null NCs, and needs to be done.\n\nHowever all of this is better done here. I added the initialization call in the block here. This showed we were calling updateUids even on uncreated VPNs when it makes no sense – this used to be a bug that I found because one of the tests happened to be sensitive to it.\n\nAlso we had no coverage of the issue you mentioned. Added some.",
+      "parentUuid": "690ec61e_2bfaf428",
+      "range": {
+        "startLine": 7179,
+        "startChar": 16,
+        "endLine": 7179,
+        "endChar": 82
+      },
+      "revId": "90bdb2aeccaeecaee46842f6dd76ae38020fd803",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

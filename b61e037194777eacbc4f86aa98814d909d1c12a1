@@ -22,6 +22,30 @@
       },
       "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25fa55bf_ad88b4ff",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-21T04:27:28Z",
+      "side": 0,
+      "message": "When you send DISCONNECTED the network is torn down immediately. There is no space for anybody to observe the availability change in NetworkInfo.\n\nBesides, apps *should* not call #isConnected() or #isAvailable(). These have been deprecated 6 years ago !\n\nHowever in any case the code in both versions fo agentDisconnect() should do the same thing.",
+      "parentUuid": "89f4afd4_69a73c28",
+      "range": {
+        "startLine": 1286,
+        "startChar": 12,
+        "endLine": 1286,
+        "endChar": 46
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
