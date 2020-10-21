@@ -22,6 +22,30 @@
       },
       "revId": "27ace03997b2c7f37f4a94a82bd77eb9bfe3f289",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b12243d_091762d2",
+        "filename": "tests/net/jarjar-rules.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-21T04:54:48Z",
+      "side": 1,
+      "message": "Not really a nit :) Done.",
+      "parentUuid": "9dca126f_4192f032",
+      "range": {
+        "startLine": 2,
+        "startChar": 48,
+        "endLine": 2,
+        "endChar": 51
+      },
+      "revId": "27ace03997b2c7f37f4a94a82bd77eb9bfe3f289",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
