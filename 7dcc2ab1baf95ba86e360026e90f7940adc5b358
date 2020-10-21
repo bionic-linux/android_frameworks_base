@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fe46cc8_a3520423",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-21T05:50:16Z",
+      "side": 1,
+      "message": "I think listenerHandler::post would also work here; but it does not handle the RejectedExecutionException. Not sure if that\u0027s really needed since we may not care if the event is lost if the handler was terminated... But what you have is fine since it replicates previous behavior.",
+      "range": {
+        "startLine": 62,
+        "startChar": 43,
+        "endLine": 62,
+        "endChar": 90
+      },
+      "revId": "7dcc2ab1baf95ba86e360026e90f7940adc5b358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0a0f9d7_e2ba4798",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-21T05:50:16Z",
+      "side": 1,
+      "message": "Nit: static",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 12
+      },
+      "revId": "7dcc2ab1baf95ba86e360026e90f7940adc5b358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43fed78e_3cef815b",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-21T05:50:16Z",
+      "side": 1,
+      "message": "Nit: also @NonNull if the constructor arg was @NonNull",
+      "range": {
+        "startLine": 148,
+        "startChar": 30,
+        "endLine": 148,
+        "endChar": 38
+      },
+      "revId": "7dcc2ab1baf95ba86e360026e90f7940adc5b358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
