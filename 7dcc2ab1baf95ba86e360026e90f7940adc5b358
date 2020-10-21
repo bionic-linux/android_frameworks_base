@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e4660cf_e4c78c7f",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-21T06:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0a0f9d7_e2ba4798",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 12
+      },
+      "revId": "7dcc2ab1baf95ba86e360026e90f7940adc5b358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43fed78e_3cef815b",
@@ -60,6 +84,30 @@
       "writtenOn": "2020-10-21T05:50:16Z",
       "side": 1,
       "message": "Nit: also @NonNull if the constructor arg was @NonNull",
+      "range": {
+        "startLine": 148,
+        "startChar": 30,
+        "endLine": 148,
+        "endChar": 38
+      },
+      "revId": "7dcc2ab1baf95ba86e360026e90f7940adc5b358",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9f87eb8_27008b99",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-21T06:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43fed78e_3cef815b",
       "range": {
         "startLine": 148,
         "startChar": 30,
