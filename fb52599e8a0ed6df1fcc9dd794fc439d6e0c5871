@@ -39,6 +39,23 @@
       "message": "BuildRetrievalError",
       "revId": "fb52599e8a0ed6df1fcc9dd794fc439d6e0c5871",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3961067b_78c86cb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2020-10-21T23:05:33Z",
+      "side": 1,
+      "message": "nice to see this fixed 😊",
+      "revId": "fb52599e8a0ed6df1fcc9dd794fc439d6e0c5871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
