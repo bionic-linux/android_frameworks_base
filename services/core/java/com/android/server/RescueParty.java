@@ -458,6 +458,9 @@ public class RescueParty {
                 if (pm.getModuleInfo(packageName, 0) != null) {
                     return true;
                 }
+            } catch (PackageManager.NameNotFoundException e) {}
+
+            try {
                 ApplicationInfo info = pm.getApplicationInfo(packageName, 0);
                 return (info.flags & PERSISTENT_MASK) == PERSISTENT_MASK;
             } catch (PackageManager.NameNotFoundException e) {
