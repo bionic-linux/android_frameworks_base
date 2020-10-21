@@ -16,6 +16,23 @@
       "message": "self test pass",
       "revId": "5c316be05fdb4fe8162581a0ec0e39409193e930",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2cf052a_491c3141",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1154008
+      },
+      "writtenOn": "2020-10-21T07:15:02Z",
+      "side": 1,
+      "message": "Hi Gavin \u0026 Hongyi, I find an issue in function mayObservePackage() which make RescueParty couldn\u0027t work as design to monitor persistant apps\u0027s health. Please help me review this patch. Thanks.",
+      "revId": "5c316be05fdb4fe8162581a0ec0e39409193e930",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
