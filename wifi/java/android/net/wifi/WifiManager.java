@@ -3497,6 +3497,7 @@ public class WifiManager {
      * Indicates that the operation failed due to an internal error.
      * @hide
      */
+    @SystemApi
     public static final int ERROR                       = 0;
 
     /**
@@ -3504,6 +3505,7 @@ public class WifiManager {
      * Indicates that the operation is already in progress
      * @hide
      */
+    @SystemApi
     public static final int IN_PROGRESS                 = 1;
 
     /**
@@ -3512,6 +3514,7 @@ public class WifiManager {
      * unable to service the request
      * @hide
      */
+    @SystemApi
     public static final int BUSY                        = 2;
 
     /** @hide */

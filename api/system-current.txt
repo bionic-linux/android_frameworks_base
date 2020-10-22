@@ -7287,6 +7287,7 @@ package android.net.wifi {
     field public static final String ACTION_PASSPOINT_LAUNCH_OSU_VIEW = "android.net.wifi.action.PASSPOINT_LAUNCH_OSU_VIEW";
     field public static final String ACTION_REQUEST_DISABLE = "android.net.wifi.action.REQUEST_DISABLE";
     field public static final String ACTION_REQUEST_ENABLE = "android.net.wifi.action.REQUEST_ENABLE";
+    field public static final int BUSY = 2; // 0x2
     field public static final int CHANGE_REASON_ADDED = 0; // 0x0
     field public static final int CHANGE_REASON_CONFIG_CHANGE = 2; // 0x2
     field public static final int CHANGE_REASON_REMOVED = 1; // 0x1
@@ -7297,6 +7298,7 @@ package android.net.wifi {
     field public static final int DEVICE_MOBILITY_STATE_UNKNOWN = 0; // 0x0
     field public static final int EASY_CONNECT_NETWORK_ROLE_AP = 1; // 0x1
     field public static final int EASY_CONNECT_NETWORK_ROLE_STA = 0; // 0x0
+    field public static final int ERROR = 0; // 0x0
     field public static final String EXTRA_CHANGE_REASON = "changeReason";
     field public static final String EXTRA_LINK_PROPERTIES = "android.net.wifi.extra.LINK_PROPERTIES";
     field public static final String EXTRA_MULTIPLE_NETWORKS_CHANGED = "multipleChanges";
@@ -7314,6 +7316,7 @@ package android.net.wifi {
     field public static final int IFACE_IP_MODE_LOCAL_ONLY = 2; // 0x2
     field public static final int IFACE_IP_MODE_TETHERED = 1; // 0x1
     field public static final int IFACE_IP_MODE_UNSPECIFIED = -1; // 0xffffffff
+    field public static final int IN_PROGRESS = 1; // 0x1
     field public static final int PASSPOINT_HOME_NETWORK = 0; // 0x0
     field public static final int PASSPOINT_ROAMING_NETWORK = 1; // 0x1
     field public static final int SAP_CLIENT_BLOCK_REASON_CODE_BLOCKED_BY_USER = 0; // 0x0
