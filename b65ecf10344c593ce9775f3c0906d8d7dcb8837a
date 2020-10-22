@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18e2f5f4_5774e11e",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3501,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-22T14:13:42Z",
+      "side": 1,
+      "message": "WifiManager.ERROR seems a bit too generic. ACTION_LISTENER_FAILED_ERROR?",
+      "range": {
+        "startLine": 3500,
+        "startChar": 0,
+        "endLine": 3501,
+        "endChar": 60
+      },
+      "revId": "b65ecf10344c593ce9775f3c0906d8d7dcb8837a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
