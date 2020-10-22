@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88fcbc0b_deab37c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-22T07:57:38Z",
+      "side": 1,
+      "message": "This won\u0027t cover the code changed here well right ? Can you at least do a manual test for each call site, to check that there\u0027s no regression with usage of the PendingIntent ?",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "529cda4f3110a17b4babdd054b913bb0e5824f94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
