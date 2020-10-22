@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f71f3ae2_dd27f926",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-22T07:46:08Z",
+      "side": 1,
+      "message": "Since TH found a bug with this patch, I think it\u0027s better to also have a manual test to test it. (e.g. Establish legacy VPN and 3rd-party VPN app manually.)\nSee if there is any surprise with this patch.",
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d5f69ce_c0438bdb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7199,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-22T07:46:08Z",
+      "side": 1,
+      "message": "Do you want to combine these 2 blocks?\nIt looks to me that it\u0027s an unnecessary if clause because once the network brings up with CONNECTED state, these 2 if clause must be run at the same time.\nAnd after that, these 2 if condition won\u0027t be true anymore because both of networkAgent.created and networkAgent.everConnected are set to true.",
+      "range": {
+        "startLine": 7197,
+        "startChar": 8,
+        "endLine": 7199,
+        "endChar": 82
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06f67840_88582739",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-22T07:46:08Z",
+      "side": 1,
+      "message": "I think it\u0027s better to clean the mNetworkAgent after unregistering.\nIt might be fixing the TH fail(CONNECTING state with non-null mNetworkAgent) when running the android.net.cts.Ikev2VpnTest.\nBut we still need to check the root cause.",
+      "range": {
+        "startLine": 470,
+        "startChar": 20,
+        "endLine": 470,
+        "endChar": 47
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a8245bd_98d874d7",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-10-22T07:46:08Z",
+      "side": 1,
+      "message": "This can be removed if you clean the mNetworkAgent in updateStatee() when receiving DISCONNECTED state and mNetworkAgent is not null.",
+      "range": {
+        "startLine": 1327,
+        "startChar": 12,
+        "endLine": 1327,
+        "endChar": 33
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
