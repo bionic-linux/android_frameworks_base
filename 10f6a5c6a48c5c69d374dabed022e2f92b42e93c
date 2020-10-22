@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "651f4a5e_92e31c94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-22T09:53:54Z",
+      "side": 1,
+      "message": "style: too long for a line.",
+      "range": {
+        "startLine": 7,
+        "startChar": 57,
+        "endLine": 7,
+        "endChar": 75
+      },
+      "revId": "10f6a5c6a48c5c69d374dabed022e2f92b42e93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "777da13f_fe41c3eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-22T09:53:54Z",
+      "side": 1,
+      "message": "redundant change-id",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "10f6a5c6a48c5c69d374dabed022e2f92b42e93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17fe5504_dc7957c6",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-22T09:53:54Z",
+      "side": 1,
+      "message": "IIUC this could still be static if we pass service into the constructor.",
+      "range": {
+        "startLine": 2045,
+        "startChar": 11,
+        "endLine": 2045,
+        "endChar": 12
+      },
+      "revId": "10f6a5c6a48c5c69d374dabed022e2f92b42e93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0984c24f_049dc330",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-22T09:53:54Z",
+      "side": 1,
+      "message": "IIUC this can be removed.",
+      "range": {
+        "startLine": 1170,
+        "startChar": 7,
+        "endLine": 1170,
+        "endChar": 34
+      },
+      "revId": "10f6a5c6a48c5c69d374dabed022e2f92b42e93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
