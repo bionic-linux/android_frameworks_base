@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd8b6444_20fcf49f",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-22T06:02:42Z",
+      "side": 1,
+      "message": "Any reason you don\u0027t simply have TestNetworkService call registerNetworkProvider(mNetworkProvider) and use the real ID managed by ConnectivityService? Seems like a cleaner use of the existing APIs, which might help use move to mainline.\n\nIf there\u0027s a startup ordering issue, then maybe factor the registerNetworkProvider call out to a method that is called every time registerTestNetworkAgent is called? When that call is made, then either we have a ConnectivityManager, or the call will fail, so it should be simple to call a method that does something like:\n\n    private void maybeRegisterNetworkProvider() {\n        synchronized (mBinderLock) {  // or any lock, really\n            if (mNetworkProvider.getProviderId() \u003d\u003d NetworkProvider.ID_NONE) {\n                final ConnectivityManager cm \u003d mContext.getSystemService(...);\n                cm.registerNetworkProvider(mNetworkProvider);\n            }\n        }\n    }",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 57
+      },
+      "revId": "2c8a6c4b9ecc95bbd752a3a377f2380f88aba401",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
