@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "25dc3fe4_f1807329",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-22T16:25:08Z",
+      "side": 1,
+      "message": "Not yet, but I\u0027m working on that! We\u0027ll have CTS tests to verify everything once the APIs are switched over to @SystemApi.\n\nI can also work on tracking down where to put tests until then, possibly in frameworks/base/core/testing/coretests?",
+      "parentUuid": "af626dc4_9696deca",
+      "revId": "6eb3cc31d0b5e1e478293570db0c88e190e33762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b4fd60d_28fe3517",
         "filename": "core/java/android/uwb/AngleMeasurement.java",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2020-10-22T06:54:43Z",
       "side": 1,
       "message": "Do we want to add a TODO?",
+      "revId": "6eb3cc31d0b5e1e478293570db0c88e190e33762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59f11556_07bdb9ad",
+        "filename": "core/java/android/uwb/AngleMeasurement.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-22T16:25:08Z",
+      "side": 1,
+      "message": "Good question -- this is actually the specified implementation if the Parcel doesn\u0027t include a file descriptor.\n\nhttps://developer.android.com/reference/android/os/Parcelable#describeContents()",
+      "parentUuid": "7b4fd60d_28fe3517",
       "revId": "6eb3cc31d0b5e1e478293570db0c88e190e33762",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
