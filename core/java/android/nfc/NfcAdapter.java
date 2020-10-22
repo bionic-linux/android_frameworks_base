@@ -2072,8 +2072,8 @@ public final class NfcAdapter {
             attemptDeadServiceRecovery(e);
             return false;
         }
-    }
-
+    }    
+    
     /**
      * @hide
      */
@@ -2104,4 +2104,24 @@ public final class NfcAdapter {
             return mContext.getApplicationInfo().targetSdkVersion;
         }
     }
+    
+
+    /**
+     * Sets NFCC controller ON feature.
+     * <p>This API is for the Settings application.
+     * @return True if successful
+     * @hide
+     */
+    @SystemApi
+    public void setNfccControllerOn(boolean status) {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            sService.setNfccControllerOn(status);
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+        }
+    }
+
 }
