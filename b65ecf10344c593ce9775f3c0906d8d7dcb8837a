@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55067566_f69e4f58",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3501,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-10-23T14:57:04Z",
+      "side": 1,
+      "message": "These constants have existed for a long time (albeit @hide). Renaming it would be cleaner. But, you have to change wifi service internals to use these new constants.",
+      "parentUuid": "18e2f5f4_5774e11e",
+      "range": {
+        "startLine": 3500,
+        "startChar": 0,
+        "endLine": 3501,
+        "endChar": 60
+      },
+      "revId": "b65ecf10344c593ce9775f3c0906d8d7dcb8837a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a24ec4f8_b26bed42",
         "filename": "wifi/java/android/net/wifi/WifiManager.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-23T03:08:31Z",
       "side": 1,
       "message": "Should these be included in ActionListenerFailureReason and be SystemApi?",
+      "range": {
+        "startLine": 3547,
+        "startChar": 3,
+        "endLine": 3559,
+        "endChar": 25
+      },
+      "revId": "b65ecf10344c593ce9775f3c0906d8d7dcb8837a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f17a539_f7f24c06",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3559,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-10-23T14:57:04Z",
+      "side": 1,
+      "message": "Yeah, the comments seem to imply that this is part of ActionListenerFailureReason. But, these constants are not being used currently in service. So, maybe remove it for now.",
+      "parentUuid": "a24ec4f8_b26bed42",
       "range": {
         "startLine": 3547,
         "startChar": 3,
