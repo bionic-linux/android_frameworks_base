@@ -2450,6 +2450,40 @@ public final class TvContract {
          */
         public static final String COLUMN_GLOBAL_CONTENT_ID = "global_content_id";
 
+        /**
+         * The remote control key preset number that is assigned to this channel.
+         *
+         * <p> This can be used for one-touch-tuning, tuning to the channel with
+         * pressing the preset button.
+         *
+         * <p> Type: INTEGER (remote control key preset number)
+         */
+        public static final String COLUMN_REMOTE_CONTROL_KEY_PRESET_NUMBER =
+                "remote_control_key_preset_number";
+
+        /**
+         * The flag indicating whether this TV channel is scrambled or not.
+         *
+         * <p>Use the same coding for scrambled in the underlying broadcast standard
+         * if {@code free_ca_mode} in SDT is defined there (e.g. ETSI EN 300 468).
+         *
+         * <p>Type: INTEGER (boolean)
+         */
+        public static final String COLUMN_SCRAMBLED = "scrambled";
+
+        /**
+         * The typical video resolution.
+         *
+         * <p>This is primarily used to filter out channels based on video resolution
+         * by applications.
+         * The value should match one of the followings: {@link #VIDEO_RESOLUTION_SD},
+         * {@link #VIDEO_RESOLUTION_HD}, {@link #VIDEO_RESOLUTION_UHD}.
+         *
+         * <p>Type: TEXT
+         *
+         */
+        public static final String COLUMN_VIDEO_RESOLUTION = "video_resolution";
+
         private Channels() {}
 
         /**
