@@ -29,7 +29,6 @@ apex {
 
 // Combined apex including Tethering + ConnectivityService module,
 // for use in S+ device images.
-// TODO: add ConnectivityService module libraries to this apex
 apex {
     name: "com.android.tethering.next",
     updatable: true,
@@ -37,9 +36,26 @@ apex {
     java_libs: ["framework-tethering"],
     bpfs: ["offload.o"],
     apps: ["Tethering"],
+    jni_libs: ["libservice-connectivity"],
     manifest: "manifest.json",
     key: "com.android.tethering.key",
     androidManifest: "AndroidManifest.xml",
+    file_contexts: ":com.android.tethering-file_contexts",
+}
+
+// Extension of the Tethering apex that contains only the
+// ConnectivityService module. For use in development S+ device
+// images together with the Tethering apex, until the combined
+// apex is ready for production.
+apex {
+    name: "com.android.tethering.connectivity",
+    updatable: true,
+    min_sdk_version: "current",
+    // TODO: also add the service-connectivity jar
+    jni_libs: ["libservice-connectivity"],
+    manifest: "manifest_connectivity.json",
+    key: "com.android.tethering.connectivity.key",
+    androidManifest: "AndroidManifest_connectivity.xml",
     file_contexts: ":com.android.tethering-file_contexts",
 }
 
@@ -47,6 +63,12 @@ apex_key {
     name: "com.android.tethering.key",
     public_key: "com.android.tethering.avbpubkey",
     private_key: "com.android.tethering.pem",
+}
+
+apex_key {
+    name: "com.android.tethering.connectivity.key",
+    public_key: "com.android.tethering.connectivity.avbpubkey",
+    private_key: "com.android.tethering.connectivity.pem",
 }
 
 android_app_certificate {

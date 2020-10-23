@@ -59,8 +59,6 @@ cc_library_static {
         "com_android_server_pm_PackageManagerShellCommandDataLoader.cpp",
         "onload.cpp",
         ":lib_networkStatsFactory_native",
-        // TODO: move the file below to the connectivity APEX
-        "com_android_server_connectivity_Vpn.cpp",
     ],
 
     include_dirs: [
