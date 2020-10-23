@@ -16,6 +16,23 @@
       "message": "Sorry, UserInfo is specifically something we don\u0027t want to expose. Doesn\u0027t UserManager already expose what you need? If not, please file a bug under \"framework \u003e multi user\" and explain what exact features are missing.",
       "revId": "fec918d5d27190db3eea258c518e2de5dc6ee922",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "642c6114_49e2fb2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-23T07:59:46Z",
+      "side": 1,
+      "message": "Thanks for reviewing. Filed a bug b/171529940.",
+      "revId": "fec918d5d27190db3eea258c518e2de5dc6ee922",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
