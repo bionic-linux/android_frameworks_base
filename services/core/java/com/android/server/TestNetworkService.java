@@ -72,6 +72,10 @@ class TestNetworkService extends ITestNetworkManager.Stub {
     @NonNull private final HandlerThread mHandlerThread;
     @NonNull private final Handler mHandler;
 
+    static {
+        System.loadLibrary("service-connectivity");
+    }
+
     // Native method stubs
     private static native int jniCreateTunTap(boolean isTun, @NonNull String iface);
 

@@ -175,6 +175,8 @@ public class Vpn {
         MOST_IPV6_ADDRESSES_COUNT = twoPower128
                 .multiply(BigInteger.valueOf(howManyPercentIsMost))
                 .divide(BigInteger.valueOf(100));
+
+        System.loadLibrary("service-connectivity");
     }
     // How many routes to evaluate before bailing and declaring this Vpn should provide
     // the INTERNET capability. This is necessary because computing the address space is

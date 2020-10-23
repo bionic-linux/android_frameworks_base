@@ -83,7 +83,6 @@ java_library {
         "services.voiceinteraction",
         "services.wifi",
         "service-blobstore",
-        "service-connectivity",
         "service-jobscheduler",
         "android.hidl.base-V1.0-java",
     ],
@@ -91,6 +90,7 @@ java_library {
     libs: [
         "android.hidl.manager-V1.0-java",
         "framework-tethering.stubs.module_lib",
+        "service-connectivity",
     ],
 
     // Uncomment to enable output of certain warnings (deprecated, unchecked)
