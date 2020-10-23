@@ -16,6 +16,23 @@
       "message": "This is a 1:1 backport of the same change from goog/master",
       "revId": "39f2db141b54889745dcc176686bdf5811b7a448",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "835ec14b_a91bd2d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1566802
+      },
+      "writtenOn": "2020-10-23T01:29:59Z",
+      "side": 1,
+      "message": "Add \"Merged-In:\" in the commit message to avoid merge conflicts.",
+      "revId": "39f2db141b54889745dcc176686bdf5811b7a448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
