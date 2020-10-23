@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41acf625_93f6d60e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-23T17:04:01Z",
+      "side": 1,
+      "message": "Yea, definitely. Added a second patch on top of this one with tests -- they caught one error 😊\n\nOpted to keep it separate to try to keep patch size down, but happy to combine if we want the tests in at the same time as the code change.",
+      "parentUuid": "259ce576_d9ebc27f",
+      "revId": "6eb3cc31d0b5e1e478293570db0c88e190e33762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b4fd60d_28fe3517",
