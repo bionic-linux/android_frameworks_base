@@ -46,6 +46,53 @@
       },
       "revId": "9b1ed6b0e644fa4abf0b637ea12209e83a3fd1ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d01c1eb_d3e51f42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-23T06:11:01Z",
+      "side": 1,
+      "message": "+2, but did you test in a multi-user context ?\n\n(I think the code is correct)",
+      "parentUuid": "5909f546_782761f6",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "9b1ed6b0e644fa4abf0b637ea12209e83a3fd1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08ac1d70_43e18f26",
+        "filename": "services/core/java/com/android/server/connectivity/LingerMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-23T06:11:01Z",
+      "side": 1,
+      "message": "As far as I can tell this method is only ever used in the function above. It\u0027s marked @VisibleForTesting but it\u0027s not used in testing.\n\nSuggest inlining it.",
+      "range": {
+        "startLine": 161,
+        "startChar": 28,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "9b1ed6b0e644fa4abf0b637ea12209e83a3fd1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
