@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83bb470d_4e363671",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-10-23T00:18:07Z",
+      "side": 1,
+      "message": "probably helpful to start with the \"why\" before going into the \"how\". What does this do / why would a carrier want to use this thing?",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "751239ed92feb83e684ae061a2f5860ccaecf095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9c9407a_03a7f844",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-10-23T00:18:07Z",
+      "side": 1,
+      "message": "nit",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "751239ed92feb83e684ae061a2f5860ccaecf095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc625ebd_848571c5",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-10-23T00:18:07Z",
+      "side": 1,
+      "message": "@link",
+      "range": {
+        "startLine": 33,
+        "startChar": 54,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "751239ed92feb83e684ae061a2f5860ccaecf095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
