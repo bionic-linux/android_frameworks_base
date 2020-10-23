@@ -48,6 +48,10 @@ java_defaults {
 android_library {
     name: "TetheringApiCurrentLib",
     defaults: ["TetheringAndroidLibraryDefaults"],
+    apex_available: [
+        "com.android.tethering",
+        "com.android.tethering.next",
+    ],
 }
 
 // Due to b/143733063, APK can't access a jni lib that is in APEX (but not in the APK).
@@ -57,6 +61,7 @@ cc_library {
     apex_available: [
         "//apex_available:platform", // Used by InProcessTethering
         "com.android.tethering",
+        "com.android.tethering.next",
     ],
     min_sdk_version: "current",
     srcs: [
@@ -132,6 +137,6 @@ android_app {
     use_embedded_native_libs: true,
     // The permission configuration *must* be included to ensure security of the device
     required: ["NetworkPermissionConfig"],
-    apex_available: ["com.android.tethering"],
+    apex_available: ["com.android.tethering", "com.android.tethering.next",],
     min_sdk_version: "current",
 }

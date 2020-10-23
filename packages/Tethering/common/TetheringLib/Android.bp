@@ -24,7 +24,7 @@ java_sdk_library {
     installable: true,
 
     hostdex: true, // for hiddenapi check
-    apex_available: ["com.android.tethering"],
+    apex_available: ["com.android.tethering", "com.android.tethering.next"],
     permitted_packages: ["android.net"],
 }
 
