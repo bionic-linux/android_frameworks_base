@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "259ce576_d9ebc27f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-10-23T01:18:24Z",
+      "side": 1,
+      "message": "I just meant specifically for the boilerplate of Parcel flattening/unflattening. Seems too easy to make a mistake, but relatively easy to validate. Nothing worth blocking this CL on, though.",
+      "parentUuid": "25dc3fe4_f1807329",
+      "revId": "6eb3cc31d0b5e1e478293570db0c88e190e33762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b4fd60d_28fe3517",
