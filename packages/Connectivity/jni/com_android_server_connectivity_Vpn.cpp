@@ -34,6 +34,7 @@
 #include <sys/types.h>
 
 #include <log/log.h>
+#include <android/log.h>
 
 #include "netutils/ifc.h"
 
@@ -371,6 +372,20 @@ int register_android_server_connectivity_Vpn(JNIEnv *env)
     }
     return jniRegisterNativeMethods(env, "com/android/server/connectivity/Vpn",
             gMethods, NELEM(gMethods));
+}
+
+extern "C" jint JNI_OnLoad(JavaVM* vm, void*) {
+    JNIEnv *env;
+    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+        ALOGE("GetEnv failed");
+        return JNI_ERR;
+    }
+
+    if (register_android_server_connectivity_Vpn(env) < 0) {
+        return JNI_ERR;
+    }
+
+    return JNI_VERSION_1_6;
 }
 
 };

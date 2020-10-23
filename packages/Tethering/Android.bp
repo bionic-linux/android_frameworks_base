@@ -42,6 +42,7 @@ java_defaults {
     ],
     plugins: ["java_api_finder"],
     manifest: "AndroidManifestBase.xml",
+    apex_available: ["com.android.tethering", "com.android.tethering.next",],
 }
 
 // Build tethering static library, used to compile both variants of the tethering.
@@ -57,6 +58,7 @@ cc_library {
     apex_available: [
         "//apex_available:platform", // Used by InProcessTethering
         "com.android.tethering",
+        "com.android.tethering.next",
     ],
     min_sdk_version: "current",
     srcs: [
@@ -107,6 +109,7 @@ java_defaults {
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },
+    apex_available: ["com.android.tethering", "com.android.tethering.next",],
 }
 
 // Non-updatable tethering running in the system server process for devices not using the module
@@ -132,6 +135,6 @@ android_app {
     use_embedded_native_libs: true,
     // The permission configuration *must* be included to ensure security of the device
     required: ["NetworkPermissionConfig"],
-    apex_available: ["com.android.tethering"],
+    apex_available: ["com.android.tethering", "com.android.tethering.next",],
     min_sdk_version: "current",
 }
