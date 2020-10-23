@@ -2450,7 +2450,176 @@ public final class TvContract {
          */
         public static final String COLUMN_GLOBAL_CONTENT_ID = "global_content_id";
 
+        /**
+         * The remote control key preset number that is assigned to this channel.
+         *
+         * <p> This can be used for one-touch-tuning, tuning to the channel with
+         * pressing the preset button.
+         *
+         * <p> Type: INTEGER (remote control key preset number)
+         */
+        public static final String COLUMN_REMOTE_CONTROL_KEY_PRESET_NUMBER =
+                "remote_control_key_preset_number";
+
+        /**
+         * The flag indicating whether this TV channel is scrambled or not.
+         *
+         * <p>Use the same coding for scrambled in the underlying broadcast standard
+         * if {@code free_ca_mode} in SDT is defined there (e.g. ETSI EN 300 468).
+         *
+         * <p>Type: INTEGER (boolean)
+         */
+        public static final String COLUMN_SCRAMBLED = "scrambled";
+
+        /**
+         * The typical video resolution.
+         *
+         * <p>This is primarily used to filter out channels based on video resolution
+         * by applications. The value is from SDT if defined there. (e.g. ETSI EN 300 468)
+         * The value should match one of the followings: {@link #VIDEO_RESOLUTION_SD},
+         * {@link #VIDEO_RESOLUTION_HD}, {@link #VIDEO_RESOLUTION_UHD}.
+         *
+         * <p>Type: TEXT
+         *
+         */
+        public static final String COLUMN_VIDEO_RESOLUTION = "video_resolution";
+
+        /**
+         * The channel list ID of this TV channel.
+         *
+         * <p>It is used to identify the channel list constructed from broadcast SI based on the
+         * underlying broadcast standard or country/operator profile, if applicable. Otherwise,
+         * leave empty.
+         *
+         * <p>The ID can be defined by individual TV input services. For example, one may assign a
+         * service operator name for the service operator channel list constructed from broadcast
+         * SI or one may assign the {@code profile_name} of the operator_info() APDU defined in CI
+         * Plus 1.3 for the dedicated CICAM operator profile channel list constructed
+         * from CICAM NIT.
+         *
+         * <p>Type: TEXT
+         */
+        public static final String COLUMN_CHANNEL_LIST_ID = "channel_list_id";
+
+        /**
+         * The comma-separated genre string of this TV channel.
+         *
+         * <p>Use the same language appeared in the underlying broadcast standard, if applicable.
+         * Otherwise, leave empty. Use
+         * {@link Genres#encode} to create a text that can be stored in this column. Use
+         * {@link Genres#decode} to get the broadcast genre strings from the text stored in the
+         * column.
+         *
+         * <p>Type: TEXT
+         * @see Genres#encode
+         * @see Genres#decode
+         */
+        public static final String COLUMN_BROADCAST_GENRE = "broadcast_genre";
+
         private Channels() {}
+
+        /** Broadcast genres for TV channels. */
+        public static final class Genres {
+            public @interface Genre {}
+
+            private static final char DOUBLE_QUOTE = '"';
+            private static final char COMMA = ',';
+            private static final String DELIMITER = ",";
+
+            private static final String[] EMPTY_STRING_ARRAY = new String[0];
+
+            private Genres() {}
+
+            /**
+             * Encodes genre strings to a text that can be put into the database.
+             *
+             * @param genres Genre strings.
+             * @return an encoded genre string that can be inserted into the
+             *         {@link #COLUMN_BROADCAST_GENRE} column.
+             */
+            @Nullable
+            public static String encode(@Nullable String... genres) {
+                if (genres == null) {
+                    // MNC and before will throw a NPE.
+                    return null;
+                }
+                StringBuilder sb = new StringBuilder();
+                String separator = "";
+                for (String genre : genres) {
+                    sb.append(separator).append(encodeToCsv(genre));
+                    separator = DELIMITER;
+                }
+                return sb.toString();
+            }
+
+            private static String encodeToCsv(String genre) {
+                StringBuilder sb = new StringBuilder();
+                int length = genre.length();
+                for (int i = 0; i < length; ++i) {
+                    char c = genre.charAt(i);
+                    switch (c) {
+                        case DOUBLE_QUOTE:
+                            sb.append(DOUBLE_QUOTE);
+                            break;
+                        case COMMA:
+                            sb.append(DOUBLE_QUOTE);
+                            break;
+                    }
+                    sb.append(c);
+                }
+                return sb.toString();
+            }
+
+            /**
+             * Decodes the genre strings from the text stored in the database.
+             *
+             * @param genres The encoded genre string retrieved from the
+             *            {@link #COLUMN_BROADCAST_GENRE} column.
+             * @return genre strings.
+             */
+            @NonNull
+            public static String[] decode(@Nullable String genres) {
+                if (TextUtils.isEmpty(genres)) {
+                    // MNC and before will throw a NPE for {@code null} genres.
+                    return EMPTY_STRING_ARRAY;
+                }
+                if (genres.indexOf(COMMA) == -1 && genres.indexOf(DOUBLE_QUOTE) == -1) {
+                    return new String[] {genres.trim()};
+                }
+                StringBuilder sb = new StringBuilder();
+                List<String> results = new ArrayList<>();
+                int length = genres.length();
+                boolean escape = false;
+                for (int i = 0; i < length; ++i) {
+                    char c = genres.charAt(i);
+                    switch (c) {
+                        case DOUBLE_QUOTE:
+                            if (!escape) {
+                                escape = true;
+                                continue;
+                            }
+                            break;
+                        case COMMA:
+                            if (!escape) {
+                                String string = sb.toString().trim();
+                                if (string.length() > 0) {
+                                    results.add(string);
+                                }
+                                sb = new StringBuilder();
+                                continue;
+                            }
+                            break;
+                    }
+                    sb.append(c);
+                    escape = false;
+                }
+                String string = sb.toString().trim();
+                if (string.length() > 0) {
+                    results.add(string);
+                }
+                return results.toArray(new String[results.size()]);
+            }
+        }
 
         /**
          * A sub-directory of a single TV channel that represents its primary logo.
