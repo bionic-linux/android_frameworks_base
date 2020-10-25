@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "a363bc40_c57fa389",
         "filename": "/COMMIT_MSG",
@@ -20,10 +21,34 @@
         "endChar": 12
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b8bddfc_a7ff17a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "I \"thought\" I needed it earlier due to a downstream conflict with internal master before AOSP was resynced.  I could have been mistaken...\n\nEither way... don\u0027t need it anymore",
+      "parentUuid": "a363bc40_c57fa389",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 12
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "bdfa86b0_a9499269",
         "filename": "api/system-current.txt",
@@ -43,10 +68,34 @@
         "endChar": 35
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "18658436_27349f4a",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4707,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "This is only supports Bearers coming from the IMS network which is restricted, and so we decided to keep it as a SystemApi until we have another use case.",
+      "parentUuid": "bdfa86b0_a9499269",
+      "range": {
+        "startLine": 4707,
+        "startChar": 24,
+        "endLine": 4707,
+        "endChar": 35
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "facec56d_6b9772dd",
         "filename": "api/system-current.txt",
@@ -66,10 +115,34 @@
         "endChar": 66
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c99a4a8b_741f7d20",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4721,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "facec56d_6b9772dd",
+      "range": {
+        "startLine": 4721,
+        "startChar": 4,
+        "endLine": 4721,
+        "endChar": 66
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "c60af700_f7078948",
         "filename": "api/system-current.txt",
@@ -89,10 +162,34 @@
         "endChar": 56
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "78ae5c38_b41e1941",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4730,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "An exception is the only way we have to provide a message like this to the api consumer.  I initially proposed having an \"onDestroyed\" event with reasons on the callback but it made the API surface bloated.  Let me know if you have any other ways to deal with it.",
+      "parentUuid": "c60af700_f7078948",
+      "range": {
+        "startLine": 4730,
+        "startChar": 32,
+        "endLine": 4730,
+        "endChar": 56
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "6798c5d7_b7bb4096",
         "filename": "api/system-current.txt",
@@ -112,10 +209,34 @@
         "endChar": 159
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fbaaecc_08d9b937",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 8563,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6798c5d7_b7bb4096",
+      "range": {
+        "startLine": 8563,
+        "startChar": 116,
+        "endLine": 8563,
+        "endChar": 159
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "ca58a3a3_d5e4fb2b",
         "filename": "core/java/android/net/QosCallbackException.java",
@@ -135,10 +256,10 @@
         "endChar": 6
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "08dd06a9_e8fce8a3",
         "filename": "core/java/android/net/QosCallbackException.java",
@@ -158,10 +279,34 @@
         "endChar": 13
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44d56fdd_ea7c9157",
+        "filename": "core/java/android/net/QosCallbackException.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08dd06a9_e8fce8a3",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 13
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "4b69c5b1_86902442",
         "filename": "core/java/android/net/QosFilter.java",
@@ -181,10 +326,34 @@
         "endChar": 24
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c54d9dcc_224a9e93",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b69c5b1_86902442",
+      "range": {
+        "startLine": 43,
+        "startChar": 64,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "c003d621_9e0a2aa2",
         "filename": "core/java/android/net/QosFilter.java",
@@ -204,10 +373,34 @@
         "endChar": 52
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "10858546_d82d40c4",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c003d621_9e0a2aa2",
+      "range": {
+        "startLine": 46,
+        "startChar": 51,
+        "endLine": 46,
+        "endChar": 52
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "cc51dbef_71191076",
         "filename": "core/java/android/net/QosFilter.java",
@@ -227,10 +420,34 @@
         "endChar": 34
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2fe01de_58f3fad2",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc51dbef_71191076",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 34
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "c185e9da_d4d349fd",
         "filename": "core/java/android/net/QosSession.java",
@@ -250,10 +467,34 @@
         "endChar": 43
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb35d4be_d1424ec3",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c185e9da_d4d349fd",
+      "range": {
+        "startLine": 34,
+        "startChar": 28,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "6430285e_e6b12089",
         "filename": "core/java/android/net/QosSocketFilter.java",
@@ -273,10 +514,34 @@
         "endChar": 43
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72716951_30999c71",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Removed this so that os.getsockname is called in getLocalAddress.  (I\u0027m hoping there isn\u0027t a huge overhead with calling this every time, if there is, I can change things around.)\n\nI also changed the validation logic to support the UDP use case, see comment below.",
+      "parentUuid": "6430285e_e6b12089",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 43
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "adfd1f53_f67081b1",
         "filename": "core/java/android/net/QosSocketFilter.java",
@@ -296,10 +561,34 @@
         "endChar": 38
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33ef513b_3dae5827",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "I didn\u0027t realized, fixed it.  (We technically don\u0027t support UDP form the API surface but I think there\u0027s a way around it, regardless, it\u0027s good to check for.)\n\ntldr;\nYou can look at the code, but this is what I did to remedy:\nQosCallbackSocketValidator now stores the local address when it is first created.  Each time a new session is about to be passed back to the API consumer, the validator ensures that the local address of the fd still matches the one originally captured.",
+      "parentUuid": "adfd1f53_f67081b1",
+      "range": {
+        "startLine": 187,
+        "startChar": 15,
+        "endLine": 187,
+        "endChar": 38
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "48b2c1c2_15f11718",
         "filename": "telephony/java/android/telephony/EpsBearerQosSessionAttributes.java",
@@ -319,10 +608,34 @@
         "endChar": 36
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f897206_87c3ab5e",
+        "filename": "telephony/java/android/telephony/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b2c1c2_15f11718",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "2e8871b4_8883afcb",
         "filename": "telephony/java/android/telephony/EpsBearerQosSessionAttributes.java",
@@ -342,8 +655,31 @@
         "endChar": 34
       },
       "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ef5089d_40a92178",
+        "filename": "telephony/java/android/telephony/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-25T23:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e8871b4_8883afcb",
+      "range": {
+        "startLine": 56,
+        "startChar": 11,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
