@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3875e717_7b50f976",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-26T06:52:10Z",
+      "side": 1,
+      "message": "Or rather, instead of \"Add a jarjar rule in tethering...\", import the jarjar rule of the binary (like NetworkStackTests uses \":NetworkStackJarJarRules\").",
+      "parentUuid": "af28b4ce_dbf787b1",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "7c7d9c785521c22217ccdd7f363712556f2a106f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac869965_bc50f1fb",
         "filename": "packages/Tethering/tests/integration/coverage-tests-jarjar-rules.jarjar",
         "patchSetId": 1
