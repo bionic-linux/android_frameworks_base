@@ -219,10 +219,7 @@ public class VpnTest {
         when(mContext.getOpPackageName()).thenReturn(TEST_VPN_PKG);
         when(mContext.getSystemService(eq(Context.USER_SERVICE))).thenReturn(mUserManager);
         when(mContext.getSystemService(eq(Context.APP_OPS_SERVICE))).thenReturn(mAppOps);
-        when(mContext.getSystemServiceName(NotificationManager.class))
-                .thenReturn(Context.NOTIFICATION_SERVICE);
-        when(mContext.getSystemService(eq(Context.NOTIFICATION_SERVICE)))
-                .thenReturn(mNotificationManager);
+        doReturn(mNotificationManager).when(mContext).getSystemService(NotificationManager.class);
         when(mContext.getSystemService(eq(Context.CONNECTIVITY_SERVICE)))
                 .thenReturn(mConnectivityManager);
         when(mContext.getSystemServiceName(eq(ConnectivityManager.class)))

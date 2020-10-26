@@ -57,7 +57,7 @@ android_test {
         "frameworks-base-testutils",
         "frameworks-net-integration-testutils",
         "framework-protos",
-        "mockito-target-minus-junit4",
+        "mockito-target-extended-minus-junit4",
         "net-tests-utils",
         "platform-test-annotations",
         "service-connectivity",
@@ -69,5 +69,10 @@ android_test {
         "android.test.runner",
         "android.test.base",
         "android.test.mock",
+    ],
+    jni_libs: [
+        // For mockito extended
+        "libdexmakerjvmtiagent",
+        "libstaticjvmtiagent",
     ],
 }

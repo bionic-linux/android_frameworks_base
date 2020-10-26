@@ -23,7 +23,7 @@ java_library {
         "androidx.core_core",
         "androidx.test.rules",
         "junit",
-        "mockito-target-minus-junit4",
+        "mockito-target-extended-minus-junit4",
         "net-tests-utils",
         "net-utils-framework-common",
         "platform-test-annotations",

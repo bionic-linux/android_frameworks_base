@@ -49,7 +49,14 @@
     <uses-permission android:name="android.permission.NETWORK_FACTORY" />
     <uses-permission android:name="android.permission.NETWORK_STATS_PROVIDER" />
 
-    <application>
+    <!--
+        android:debuggable="true" is required to load jvmti dependencies,
+        otherwise it gets the following error message at runtime.
+
+        Openjdkjvmti plugin was loaded on a non-debuggable Runtime.
+        Plugin was loaded too late to change runtime state to DEBUGGABLE.
+    -->
+    <application android:debuggable="true">
         <uses-library android:name="android.test.runner" />
         <uses-library android:name="android.net.ipsec.ike" />
     </application>

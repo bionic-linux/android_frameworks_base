@@ -113,11 +113,6 @@ public class MultipathPolicyTrackerTest {
     private Clock mPreviousRecurrenceRuleClock;
     private boolean mRecurrenceRuleClockMocked;
 
-    private <T> void mockService(String serviceName, Class<T> serviceClass, T service) {
-        when(mContext.getSystemServiceName(serviceClass)).thenReturn(serviceName);
-        when(mContext.getSystemService(serviceName)).thenReturn(service);
-    }
-
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -146,10 +141,10 @@ public class MultipathPolicyTrackerTest {
         Settings.Global.clearProviderForTest();
         when(mContext.getContentResolver()).thenReturn(mContentResolver);
 
-        mockService(Context.CONNECTIVITY_SERVICE, ConnectivityManager.class, mCM);
-        mockService(Context.NETWORK_POLICY_SERVICE, NetworkPolicyManager.class, mNPM);
-        mockService(Context.NETWORK_STATS_SERVICE, NetworkStatsManager.class, mStatsManager);
-        mockService(Context.TELEPHONY_SERVICE, TelephonyManager.class, mTelephonyManager);
+        when(mContext.getSystemService(ConnectivityManager.class)).thenReturn(mCM);
+        when(mContext.getSystemService(NetworkPolicyManager.class)).thenReturn(mNPM);
+        when(mContext.getSystemService(NetworkStatsManager.class)).thenReturn(mStatsManager);
+        when(mContext.getSystemService(TelephonyManager.class)).thenReturn(mTelephonyManager);
 
         LocalServices.removeServiceForTest(NetworkPolicyManagerInternal.class);
         LocalServices.addService(NetworkPolicyManagerInternal.class, mNPMI);
