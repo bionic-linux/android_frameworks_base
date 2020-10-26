@@ -57,6 +57,7 @@ public class NsdManagerTest {
     @Mock INsdManager mService;
     MockServiceHandler mServiceHandler;
 
+    Messenger mMessenger;
     NsdManager mManager;
 
     long mTimeoutMs = 200; // non-final so that tests can adjust the value.
@@ -66,7 +67,10 @@ public class NsdManagerTest {
         MockitoAnnotations.initMocks(this);
 
         mServiceHandler = spy(MockServiceHandler.create(mContext));
-        when(mService.getMessenger()).thenReturn(new Messenger(mServiceHandler));
+        // Here needs to create Messenger separately otherwise it will get
+        // UnfinishedStubbingException if put it inline.
+        mMessenger = new Messenger(mServiceHandler);
+        when(mService.getMessenger()).thenReturn(mMessenger);
 
         mManager = makeManager();
     }
