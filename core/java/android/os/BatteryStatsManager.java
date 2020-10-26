@@ -24,8 +24,11 @@ import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.net.ConnectivityManager.LegacyNetworkType;
 import android.os.connectivity.CellularBatteryStats;
 import android.os.connectivity.WifiBatteryStats;
+import android.telephony.Annotation.NetworkType;
+import android.telephony.ServiceState.RegState;
 
 import com.android.internal.app.IBatteryStats;
 
@@ -372,6 +375,58 @@ public final class BatteryStatsManager {
     public void reportWifiMulticastDisabled(@NonNull WorkSource ws) {
         try {
             mBatteryStats.noteWifiMulticastDisabled(ws.getAttributionUid());
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Reports the network changes.
+     *
+     * @param networkType The type of the network {@link LegacyNetworkType}.
+     * @param state Current state of the network.
+     * @throws RuntimeException
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportConnectivityChanged(@LegacyNetworkType int networkType,
+            @NonNull String state) throws RuntimeException {
+        try {
+            mBatteryStats.noteConnectivityChanged(networkType, state);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Reports the interface is changed.
+     *
+     * @param iface The interface of the network.
+     * @param networkType The type of the network {@link LegacyNetworkType}.
+     * @throws RuntimeException
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportNetworkInterfaceType(@NonNull String iface,
+            @LegacyNetworkType int networkType) throws RuntimeException {
+        try {
+            mBatteryStats.noteNetworkInterfaceType(iface, networkType);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Reports the data connection state changes.
+     *
+     * @param dataType The access network technology {@link NetworkType}.
+     * @param hasData A boolean indicates the data connection is visible.
+     * @param serviceType Current data service state.
+     * @throws RuntimeException
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportPhoneDataConnectionState(@NetworkType int dataType, boolean hasData,
+            @RegState int serviceType) throws RuntimeException {
+        try {
+            mBatteryStats.notePhoneDataConnectionState(dataType, hasData, serviceType);
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
         }
