@@ -416,10 +416,27 @@ public final class BatteryStatsManager {
         }
     }
 
+    /**
+     * Notifies the battery stats a new interface, and the transport types of the network that
+     * includes that interface.
+     *
+     * @param iface The interface of the network.
+     * @param transportTypes The transport type of the network {@link Transport}.
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportNetworkInterfaceForTransports(@NonNull String iface,
+            @NonNull int[] transportTypes) throws RuntimeException {
+        try {
+            mBatteryStats.noteNetworkInterfaceForTransports(iface, transportTypes);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
     private static int getDataConnectionPowerState(boolean isActive) {
         // TODO: DataConnectionRealTimeInfo is under telephony package but the constants are used
-        // for both Wifi and mobile. It would make more sense to separate the constants to a generic
-        // class or move it to generic package.
+        // for both Wifi and mobile. It would make more sense to separate the constants to a
+        // generic class or move it to generic package.
         return isActive ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
                 : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
     }
