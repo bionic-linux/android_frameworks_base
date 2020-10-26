@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afb052e5_90e62e0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-26T01:23:30Z",
+      "side": 1,
+      "message": "I have verified the PendingIntents with the multi-users.",
+      "parentUuid": "4d01c1eb_d3e51f42",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "9b1ed6b0e644fa4abf0b637ea12209e83a3fd1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08ac1d70_43e18f26",
