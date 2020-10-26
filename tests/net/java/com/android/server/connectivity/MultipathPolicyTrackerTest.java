@@ -114,7 +114,7 @@ public class MultipathPolicyTrackerTest {
     private boolean mRecurrenceRuleClockMocked;
 
     private <T> void mockService(String serviceName, Class<T> serviceClass, T service) {
-        when(mContext.getSystemServiceName(serviceClass)).thenReturn(serviceName);
+        when(mContext.getSystemService(serviceClass)).thenReturn(service);
         when(mContext.getSystemService(serviceName)).thenReturn(service);
     }
 
