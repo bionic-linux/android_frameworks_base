@@ -193,6 +193,7 @@ import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
 import android.os.BadParcelableException;
+import android.os.BatteryStatsManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -224,7 +225,6 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.android.internal.app.IBatteryStats;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
@@ -352,7 +352,7 @@ public class ConnectivityServiceTest {
     @Mock DefaultNetworkMetrics mDefaultNetworkMetrics;
     @Mock INetworkManagementService mNetworkManagementService;
     @Mock INetworkStatsService mStatsService;
-    @Mock IBatteryStats mBatteryStatsService;
+    @Mock BatteryStatsManager mBatteryStatsManager;
     @Mock INetworkPolicyManager mNpm;
     @Mock IDnsResolver mMockDnsResolver;
     @Mock INetd mMockNetd;
@@ -456,6 +456,7 @@ public class ConnectivityServiceTest {
             if (Context.APP_OPS_SERVICE.equals(name)) return mAppOpsManager;
             if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
             if (Context.ETHERNET_SERVICE.equals(name)) return mEthernetManager;
+            if (Context.BATTERY_STATS_SERVICE.equals(name)) return mBatteryStatsManager;
             return super.getSystemService(name);
         }
 
@@ -1305,7 +1306,6 @@ public class ConnectivityServiceTest {
         doReturn(mMetricsService).when(deps).getMetricsLogger();
         doReturn(true).when(deps).queryUserAccess(anyInt(), anyInt());
         doReturn(mIpConnectivityMetrics).when(deps).getIpConnectivityMetrics();
-        doReturn(mBatteryStatsService).when(deps).getBatteryStatsService();
         doAnswer(inv -> {
             mPolicyTracker = new WrappedMultinetworkPolicyTracker(
                     inv.getArgument(0), inv.getArgument(1), inv.getArgument(2));
@@ -6270,18 +6270,18 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR, cellLp);
         mCellNetworkAgent.connect(true);
         waitForIdle();
-        verify(mBatteryStatsService).noteNetworkInterfaceType(cellLp.getInterfaceName(),
+        verify(mBatteryStatsManager).reportNetworkInterfaceType(cellLp.getInterfaceName(),
                 TYPE_MOBILE);
-        reset(mBatteryStatsService);
+        reset(mBatteryStatsManager);
 
         final LinkProperties wifiLp = new LinkProperties();
         wifiLp.setInterfaceName("wifi0");
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI, wifiLp);
         mWiFiNetworkAgent.connect(true);
         waitForIdle();
-        verify(mBatteryStatsService).noteNetworkInterfaceType(wifiLp.getInterfaceName(),
+        verify(mBatteryStatsManager).reportNetworkInterfaceType(wifiLp.getInterfaceName(),
                 TYPE_WIFI);
-        reset(mBatteryStatsService);
+        reset(mBatteryStatsManager);
 
         mCellNetworkAgent.disconnect();
 
@@ -6289,7 +6289,7 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR, cellLp);
         mCellNetworkAgent.connect(true);
         waitForIdle();
-        verify(mBatteryStatsService).noteNetworkInterfaceType(cellLp.getInterfaceName(),
+        verify(mBatteryStatsManager).reportNetworkInterfaceType(cellLp.getInterfaceName(),
                 TYPE_MOBILE);
     }
 
@@ -6352,7 +6352,7 @@ public class ConnectivityServiceTest {
         reset(mNetworkManagementService);
         reset(mMockDnsResolver);
         reset(mMockNetd);
-        reset(mBatteryStatsService);
+        reset(mBatteryStatsManager);
 
         // Connect with ipv6 link properties. Expect prefix discovery to be started.
         mCellNetworkAgent.connect(true);
@@ -6363,7 +6363,7 @@ public class ConnectivityServiceTest {
         assertRoutesAdded(cellNetId, ipv6Subnet, defaultRoute);
         verify(mMockDnsResolver, times(1)).createNetworkCache(eq(cellNetId));
         verify(mMockNetd, times(1)).networkAddInterface(cellNetId, MOBILE_IFNAME);
-        verify(mBatteryStatsService).noteNetworkInterfaceType(cellLp.getInterfaceName(),
+        verify(mBatteryStatsManager).reportNetworkInterfaceType(cellLp.getInterfaceName(),
                 TYPE_MOBILE);
 
         networkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
@@ -6384,7 +6384,8 @@ public class ConnectivityServiceTest {
         // Make sure BatteryStats was not told about any v4- interfaces, as none should have
         // come online yet.
         waitForIdle();
-        verify(mBatteryStatsService, never()).noteNetworkInterfaceType(startsWith("v4-"), anyInt());
+        verify(mBatteryStatsManager, never())
+                .reportNetworkInterfaceType(startsWith("v4-"), anyInt());
 
         verifyNoMoreInteractions(mMockNetd);
         verifyNoMoreInteractions(mMockDnsResolver);
@@ -6437,7 +6438,7 @@ public class ConnectivityServiceTest {
         assertTrue(ArrayUtils.contains(resolvrParams.servers, "8.8.8.8"));
 
         for (final LinkProperties stackedLp : stackedLpsAfterChange) {
-            verify(mBatteryStatsService).noteNetworkInterfaceType(stackedLp.getInterfaceName(),
+            verify(mBatteryStatsManager).reportNetworkInterfaceType(stackedLp.getInterfaceName(),
                     TYPE_MOBILE);
         }
         reset(mMockNetd);
