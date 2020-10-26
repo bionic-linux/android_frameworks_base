@@ -7138,6 +7138,8 @@ package android.os {
     method @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public void reportFullWifiLockAcquiredFromSource(@NonNull android.os.WorkSource);
     method @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public void reportFullWifiLockReleasedFromSource(@NonNull android.os.WorkSource);
     method @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public void reportMobileRadioPowerState(boolean, int) throws java.lang.RuntimeException;
+    method @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public void reportNetworkInterfaceForTransports(@NonNull String, @NonNull int[]) throws java.lang.RuntimeException;
+    method @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public void reportPhoneDataConnectionState(int, boolean, int) throws java.lang.RuntimeException;
     method @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public void reportWifiBatchedScanStartedFromSource(@NonNull android.os.WorkSource, @IntRange(from=0) int);
     method @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public void reportWifiBatchedScanStoppedFromSource(@NonNull android.os.WorkSource);
     method @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS) public void reportWifiMulticastDisabled(@NonNull android.os.WorkSource);
