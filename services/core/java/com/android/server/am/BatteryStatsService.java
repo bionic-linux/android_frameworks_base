@@ -66,6 +66,7 @@ import com.android.internal.os.RpmStats;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.ParseUtils;
+import com.android.net.module.util.PermissionUtils;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
 
@@ -765,7 +766,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     }
 
     public void notePhoneDataConnectionState(int dataType, boolean hasData, int serviceType) {
-        enforceCallingPermission();
+        PermissionUtils.enforceNetworkStackPermission(mContext);
         synchronized (mStats) {
             mStats.notePhoneDataConnectionStateLocked(dataType, hasData, serviceType);
         }
@@ -1067,7 +1068,7 @@ public final class BatteryStatsService extends IBatteryStats.Stub
 
     @Override
     public void noteNetworkInterfaceForTransports(final String iface, int[] transportTypes) {
-        enforceCallingPermission();
+        PermissionUtils.enforceNetworkStackPermission(mContext);
         mStats.noteNetworkInterfaceForTransports(iface, transportTypes);
     }
 
