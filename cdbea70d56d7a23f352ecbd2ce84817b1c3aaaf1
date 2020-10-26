@@ -16,6 +16,29 @@
       "message": "Hello, we are using this patch since KK times. I guess it is time to get it reviewed on aosp. Sadly I cannot touch the change in master.",
       "revId": "cdbea70d56d7a23f352ecbd2ce84817b1c3aaaf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1193c6d5_bc63742f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3990,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2020-10-26T15:25:54Z",
+      "side": 1,
+      "message": "doesn\u0027t this take care of it instead?",
+      "range": {
+        "startLine": 3990,
+        "startChar": 12,
+        "endLine": 3990,
+        "endChar": 42
+      },
+      "revId": "cdbea70d56d7a23f352ecbd2ce84817b1c3aaaf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
