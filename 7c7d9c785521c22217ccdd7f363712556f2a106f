@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af28b4ce_dbf787b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-26T06:49:26Z",
+      "side": 1,
+      "message": "As much as possible, the general rule to make our lives easier for jajar is:\njarjar should be applied on the final artifact (android_test, android_app, java_library that goes into an apex), not on any intermediate (android_library etc).\n\nThis is not followed in a number of places because I didn\u0027t realize what a good pattern would be a the time; because of that we end up with bugs like this where tests need to adapt to jarjar rules of the dependencies.\n\nTo fix this I think we should:\n - Remove the module.util -\u003e moduletests.util rule in NetworkStaticTestsLib\n - Add it to NetworkStaticTests instead (separate jarjar file)\n - Add a jarjar rule in Tethering for module.util -\u003e tetheringtests.util (or equivalent)",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "7c7d9c785521c22217ccdd7f363712556f2a106f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac869965_bc50f1fb",
+        "filename": "packages/Tethering/tests/integration/coverage-tests-jarjar-rules.jarjar",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-26T06:49:26Z",
+      "side": 1,
+      "message": "This change is missing Android.bp changes",
+      "revId": "7c7d9c785521c22217ccdd7f363712556f2a106f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
