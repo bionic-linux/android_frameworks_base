@@ -214,14 +214,10 @@ public class VpnTest {
         when(mContext.getOpPackageName()).thenReturn(TEST_VPN_PKG);
         when(mContext.getSystemService(eq(Context.USER_SERVICE))).thenReturn(mUserManager);
         when(mContext.getSystemService(eq(Context.APP_OPS_SERVICE))).thenReturn(mAppOps);
-        when(mContext.getSystemServiceName(NotificationManager.class))
-                .thenReturn(Context.NOTIFICATION_SERVICE);
-        when(mContext.getSystemService(eq(Context.NOTIFICATION_SERVICE)))
-                .thenReturn(mNotificationManager);
+        doReturn(mNotificationManager).when(mContext).getSystemService(NotificationManager.class);
+        doReturn(mConnectivityManager).when(mContext).getSystemService(ConnectivityManager.class);
         when(mContext.getSystemService(eq(Context.CONNECTIVITY_SERVICE)))
                 .thenReturn(mConnectivityManager);
-        when(mContext.getSystemServiceName(eq(ConnectivityManager.class)))
-                .thenReturn(Context.CONNECTIVITY_SERVICE);
         when(mContext.getSystemService(eq(Context.IPSEC_SERVICE))).thenReturn(mIpSecManager);
         when(mContext.getString(R.string.config_customVpnAlwaysOnDisconnectedDialogComponent))
                 .thenReturn(Resources.getSystem().getString(
