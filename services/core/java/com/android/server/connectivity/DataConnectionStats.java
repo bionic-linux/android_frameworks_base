@@ -24,17 +24,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.BatteryStatsManager;
 import android.os.Handler;
-import android.os.RemoteException;
 import android.telephony.NetworkRegistrationInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-
-import com.android.internal.app.IBatteryStats;
-import com.android.server.am.BatteryStatsService;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
@@ -44,7 +41,7 @@ public class DataConnectionStats extends BroadcastReceiver {
     private static final boolean DEBUG = false;
 
     private final Context mContext;
-    private final IBatteryStats mBatteryStats;
+    private final BatteryStatsManager mBatteryStatsManager;
     private final Handler mListenerHandler;
     private final PhoneStateListener mPhoneStateListener;
 
@@ -55,7 +52,7 @@ public class DataConnectionStats extends BroadcastReceiver {
 
     public DataConnectionStats(Context context, Handler listenerHandler) {
         mContext = context;
-        mBatteryStats = BatteryStatsService.getService();
+        mBatteryStatsManager = context.getSystemService(BatteryStatsManager.class);
         mListenerHandler = listenerHandler;
         mPhoneStateListener =
                 new PhoneStateListenerImpl(new PhoneStateListenerExecutor(listenerHandler));
@@ -105,9 +102,9 @@ public class DataConnectionStats extends BroadcastReceiver {
         if (DEBUG) Log.d(TAG, String.format("Noting data connection for network type %s: %svisible",
                 networkType, visible ? "" : "not "));
         try {
-            mBatteryStats.notePhoneDataConnectionState(networkType, visible,
+            mBatteryStatsManager.reportPhoneDataConnectionState(networkType, visible,
                     mServiceState.getState());
-        } catch (RemoteException e) {
+        } catch (RuntimeException e) {
             Log.w(TAG, "Error noting data connection state", e);
         }
     }

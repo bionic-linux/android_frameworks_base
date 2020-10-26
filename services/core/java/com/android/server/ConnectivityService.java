@@ -144,6 +144,7 @@ import android.net.netlink.InetDiagMessage;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
+import android.os.BatteryStatsManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -1014,7 +1015,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public IBatteryStats getBatteryStatsService() {
             return BatteryStatsService.getService();
         }
+
+        /**
+         * @see BatteryStatsManager
+         */
+        public void reportNetworkInterfaceForTransports(Context context, String iface,
+                int[] transportTypes) {
+            final BatteryStatsManager  batteryStats =
+                    context.getSystemService(BatteryStatsManager.class);
+            batteryStats.reportNetworkInterfaceForTransports(iface, transportTypes);
+        }
     }
+
+
 
     public ConnectivityService(Context context, INetworkManagementService netManager,
             INetworkStatsService statsService) {
@@ -6421,13 +6434,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 oldLp != null ? oldLp.getAllInterfaceNames() : null,
                 newLp != null ? newLp.getAllInterfaceNames() : null);
         if (!interfaceDiff.added.isEmpty()) {
-            final IBatteryStats bs = mDeps.getBatteryStatsService();
             for (final String iface : interfaceDiff.added) {
                 try {
                     if (DBG) log("Adding iface " + iface + " to network " + netId);
                     mNetd.networkAddInterface(netId, iface);
                     wakeupModifyInterface(iface, caps, true);
-                    bs.noteNetworkInterfaceForTransports(iface, caps.getTransportTypes());
+                    mDeps.reportNetworkInterfaceForTransports(mContext, iface,
+                            caps.getTransportTypes());
                 } catch (Exception e) {
                     loge("Exception adding interface: " + e);
                 }
