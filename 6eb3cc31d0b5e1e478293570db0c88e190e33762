@@ -72,6 +72,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f8257ed_17820ace",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-10-26T01:47:33Z",
+      "side": 1,
+      "message": "Awesome. No need to combine. Thanks.",
+      "parentUuid": "41acf625_93f6d60e",
+      "revId": "6eb3cc31d0b5e1e478293570db0c88e190e33762",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b4fd60d_28fe3517",
