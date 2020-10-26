@@ -151,6 +151,11 @@ public class MultipathPolicyTrackerTest {
         LocalServices.removeServiceForTest(NetworkStatsManagerInternal.class);
         LocalServices.addService(NetworkStatsManagerInternal.class, mNetworkStatsManagerInternal);
 
+        when(mContext.getSystemService(ConnectivityManager.class)).thenReturn(mCM);
+        when(mContext.getSystemService(NetworkPolicyManager.class)).thenReturn(mNPM);
+        when(mContext.getSystemService(NetworkStatsManager.class)).thenReturn(mStatsManager);
+        when(mContext.getSystemService(TelephonyManager.class)).thenReturn(mTelephonyManager);
+
         mTracker = new MultipathPolicyTracker(mContext, mHandler, mDeps);
     }
 
