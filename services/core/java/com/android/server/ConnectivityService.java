@@ -139,6 +139,7 @@ import android.net.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import android.net.util.LinkPropertiesUtils.CompareResult;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
+import android.os.BatteryStatsManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -178,7 +179,6 @@ import android.util.Xml;
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.app.IBatteryStats;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
@@ -192,7 +192,6 @@ import com.android.internal.util.LocationPermissionChecker;
 import com.android.internal.util.MessageUtils;
 import com.android.internal.util.XmlUtils;
 import com.android.modules.utils.BasicShellCommandHandler;
-import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.AutodestructReference;
 import com.android.server.connectivity.DataConnectionStats;
 import com.android.server.connectivity.DnsManager;
@@ -943,11 +942,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return IIpConnectivityMetrics.Stub.asInterface(
                     ServiceManager.getService(IpConnectivityLog.SERVICE_NAME));
         }
-
-        public IBatteryStats getBatteryStatsService() {
-            return BatteryStatsService.getService();
-        }
     }
+
+
 
     public ConnectivityService(Context context, INetworkManagementService netManager,
             INetworkStatsService statsService, INetworkPolicyManager policyManager) {
@@ -2281,12 +2278,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 final BroadcastOptions opts = BroadcastOptions.makeBasic();
                 opts.setMaxManifestReceiverApiLevel(Build.VERSION_CODES.M);
                 options = opts.toBundle();
-                final IBatteryStats bs = mDeps.getBatteryStatsService();
+                final BatteryStatsManager bs = mContext.getSystemService(BatteryStatsManager.class);
                 try {
-                    bs.noteConnectivityChanged(intent.getIntExtra(
+                    bs.reportConnectivityChanged(intent.getIntExtra(
                             ConnectivityManager.EXTRA_NETWORK_TYPE, ConnectivityManager.TYPE_NONE),
                             ni.getState().toString());
-                } catch (RemoteException e) {
+                } catch (RuntimeException e) {
                 }
                 intent.addFlags(Intent.FLAG_RECEIVER_VISIBLE_TO_INSTANT_APPS);
             }
@@ -6155,13 +6152,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 oldLp != null ? oldLp.getAllInterfaceNames() : null,
                 newLp != null ? newLp.getAllInterfaceNames() : null);
         if (!interfaceDiff.added.isEmpty()) {
-            final IBatteryStats bs = mDeps.getBatteryStatsService();
+            final BatteryStatsManager bs = mContext.getSystemService(BatteryStatsManager.class);
             for (final String iface : interfaceDiff.added) {
                 try {
                     if (DBG) log("Adding iface " + iface + " to network " + netId);
                     mNetd.networkAddInterface(netId, iface);
                     wakeupModifyInterface(iface, caps, true);
-                    bs.noteNetworkInterfaceType(iface, legacyType);
+                    bs.reportNetworkInterfaceType(iface, legacyType);
                 } catch (Exception e) {
                     loge("Exception adding interface: " + e);
                 }
