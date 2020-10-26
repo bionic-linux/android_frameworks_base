@@ -48,6 +48,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df10af21_d3c5dfd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-26T08:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3875e717_7b50f976",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "7c7d9c785521c22217ccdd7f363712556f2a106f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "095be6da_b9d4c613",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-26T08:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3875e717_7b50f976",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "7c7d9c785521c22217ccdd7f363712556f2a106f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac869965_bc50f1fb",
@@ -61,6 +109,24 @@
       "writtenOn": "2020-10-26T06:49:26Z",
       "side": 1,
       "message": "This change is missing Android.bp changes",
+      "revId": "7c7d9c785521c22217ccdd7f363712556f2a106f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c071cfe7_438cbd2b",
+        "filename": "packages/Tethering/tests/integration/coverage-tests-jarjar-rules.jarjar",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-26T08:43:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac869965_bc50f1fb",
       "revId": "7c7d9c785521c22217ccdd7f363712556f2a106f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
