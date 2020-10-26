@@ -117,6 +117,30 @@
       },
       "revId": "9b1ed6b0e644fa4abf0b637ea12209e83a3fd1ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dc9a8f6_998f85b1",
+        "filename": "services/core/java/com/android/server/connectivity/LingerMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-26T07:32:34Z",
+      "side": 1,
+      "message": "No, the LingerMonitorTest is using this method to mock PendingIntent. But I don\u0027t think we should inline it because it\u0027s more complicated to mock static method PendingIntent.getActivity() than overrid this method.\n\nhttps://source.corp.google.com/aosp-master/frameworks/base/tests/net/java/com/android/server/connectivity/LingerMonitorTest.java;l\u003d377",
+      "parentUuid": "08ac1d70_43e18f26",
+      "range": {
+        "startLine": 161,
+        "startChar": 28,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "9b1ed6b0e644fa4abf0b637ea12209e83a3fd1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
