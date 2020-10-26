@@ -376,4 +376,50 @@ public final class BatteryStatsManager {
             e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Reports the network changes.
+     *
+     * @param type Connection type.
+     * @param state Current state of the network.
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportConnectivityChanged(int type, @NonNull String state) {
+        try {
+            mBatteryStats.noteConnectivityChanged(type, state);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Reports the interface is changed.
+     *
+     * @param iface The interface of the network.
+     * @param networkType The type of the network. As defined in {@link ConnectivityManager}
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportNetworkInterfaceType(@NonNull String iface, int networkType) {
+        try {
+            mBatteryStats.noteNetworkInterfaceType(iface, networkType);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Reports the data connection state chnages.
+     *
+     * @param dataType The access network technology {@link NetworkType}.
+     * @param hasData A boolean indicates the data connection is visible.
+     * @param serviceType Current voice sevice state.
+     */
+    @RequiresPermission(android.Manifest.permission.UPDATE_DEVICE_STATS)
+    public void reportPhoneDataConnectionState(int dataType, boolean hasData, int serviceType) {
+        try {
+            mBatteryStats.notePhoneDataConnectionState(dataType, hasData, serviceType);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
 }
