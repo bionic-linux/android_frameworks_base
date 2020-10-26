@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00a4882d_edd28ce7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2020-10-26T01:07:25Z",
+      "side": 1,
+      "message": "Hello, we are using this patch since KK times. I guess it is time to get it reviewed on aosp. Sadly I cannot touch the change in master.",
+      "revId": "cdbea70d56d7a23f352ecbd2ce84817b1c3aaaf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
