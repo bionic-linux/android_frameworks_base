@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc3ebb72_e6f64373",
+        "filename": "packages/Tethering/tests/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-26T10:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d550f4e8_8bb60d07",
+      "range": {
+        "startLine": 21,
+        "startChar": 51,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "f4b469c79afa84b636ecd9f270cbbe073b3df161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd666c6e_2dc4eee8",
@@ -37,6 +61,24 @@
       "writtenOn": "2020-10-26T09:19:25Z",
       "side": 1,
       "message": "It would have been nice to reuse packages/Tethering/jarjar-rules instead (not the test version)...\nBut the problem is the internal utils used by the test, and the zap rules below.\nIdeally they should be removed to avoid @hide api references ?\nAnother option would be to have some genrule to combine the base jarjar rules with a \"no rename\" file that lists the internal utils used by the test.\n\nNothing new in this change so no need to do it now, but this should be considered.",
+      "revId": "f4b469c79afa84b636ecd9f270cbbe073b3df161",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09afaa50_f52d1266",
+        "filename": "packages/Tethering/tests/jarjar-rules.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-26T10:25:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd666c6e_2dc4eee8",
       "revId": "f4b469c79afa84b636ecd9f270cbbe073b3df161",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

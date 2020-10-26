@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31eb6c38_2fa463b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-26T10:25:21Z",
+      "side": 1,
+      "message": "Sorry, respin again that move jarjar rules from TetheringTestsDefaults to TetheringTests. So the rules would apply on the final artifact instead of intermediate(TetheringTestsLib).\n\nAlso fix one comment😊",
+      "revId": "7634bcfa49f025b166e762b4b006f8555b7a8560",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
