@@ -16,6 +16,9 @@
 
 // Tests in this folder are included both in unit tests and CTS.
 // They must be fast and stable, and exercise public or test APIs.
+// To support mock final and static method this library uses mokito extended library.
+// Thus, targets depend on this library also need to add the static JNI libraries
+// libstaticjvmtiagent and libdexmakerjvmtiagent.
 java_library {
     name: "FrameworksNetCommonTests",
     srcs: ["java/**/*.java", "java/**/*.kt"],
@@ -23,7 +26,7 @@ java_library {
         "androidx.core_core",
         "androidx.test.rules",
         "junit",
-        "mockito-target-minus-junit4",
+        "mockito-target-extended-minus-junit4",
         "net-tests-utils",
         "net-utils-framework-common",
         "platform-test-annotations",
