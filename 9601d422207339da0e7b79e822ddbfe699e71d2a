@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": false,
       "key": {
         "uuid": "3efff8a7_33f580c8",
         "filename": "/PATCHSET_LEVEL",
@@ -14,10 +15,10 @@
       "side": 1,
       "message": "Eric and Jack, can you please confirm\n(a) is this correct, or does it require additional software implementation work?\n(b) is it version-specific?\nThanks, Glenn",
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
       "key": {
         "uuid": "6edaefbd_fdfa4322",
         "filename": "/PATCHSET_LEVEL",
@@ -32,10 +33,10 @@
       "message": "p.s. once this CL is finalized and merged, I\u0027ll cherry pick to R docs maintenance branch.",
       "parentUuid": "3efff8a7_33f580c8",
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": false
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "745afa5c_efc1ae30",
         "filename": "media/java/android/media/AudioManager.java",
@@ -55,10 +56,34 @@
         "endChar": 78
       },
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2111a11_1f37456c",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2020-10-27T22:19:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "745afa5c_efc1ae30",
+      "range": {
+        "startLine": 1657,
+        "startChar": 70,
+        "endLine": 1657,
+        "endChar": 78
+      },
+      "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "08b7344c_4a2b7694",
         "filename": "media/java/android/media/AudioManager.java",
@@ -78,10 +103,34 @@
         "endChar": 12
       },
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a41807e_f7786968",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2020-10-27T22:19:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b7344c_4a2b7694",
+      "range": {
+        "startLine": 1673,
+        "startChar": 3,
+        "endLine": 1684,
+        "endChar": 12
+      },
+      "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
       "key": {
         "uuid": "2d15c681_86389491",
         "filename": "media/java/android/media/AudioManager.java",
@@ -95,10 +144,10 @@
       "side": 1,
       "message": "Should we add a note about how the A2DP pathway will be disabled while SCO is connected?\n\nWhat happens if this is called when an A2DP stream is already active?",
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
       "key": {
         "uuid": "5e38a4a6_06ae7076",
         "filename": "media/java/android/media/AudioManager.java",
@@ -113,8 +162,25 @@
       "message": "One problem is that this behavior is not specified by AOSP but depends on HW capabilities. So the documentation should use the conditional and say that A2DP (or other Bluetooth audio by the way) COULD be affected when SCO is active.",
       "parentUuid": "2d15c681_86389491",
       "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "770a790f_033b18af",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1689,
+      "author": {
+        "id": 1004395
+      },
+      "writtenOn": "2020-10-27T22:19:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e38a4a6_06ae7076",
+      "revId": "9601d422207339da0e7b79e822ddbfe699e71d2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
