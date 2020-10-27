@@ -207,7 +207,11 @@ public class PasswordTextView extends View {
             if (i != 0) {
                 width += mCharPadding * charState.currentWidthFactor;
             }
-            width += charLength * charState.currentWidthFactor;
+            if (i == length - 1) {
+                width += bounds.right * charState.currentWidthFactor;
+            } else {
+                width += charLength * charState.currentWidthFactor;
+            }
         }
         return width;
     }
