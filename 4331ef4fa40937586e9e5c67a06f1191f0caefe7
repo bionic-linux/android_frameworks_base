@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005754128",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1475901?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "96759a94_d3059461",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-27T08:47:08Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(BatteryStatsManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 950,
+        "startChar": 19,
+        "endLine": 950,
+        "endChar": 66
+      },
+      "revId": "4331ef4fa40937586e9e5c67a06f1191f0caefe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005754128",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1475901?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "86340659_cd58a2d2",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-27T08:47:08Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(BatteryStatsManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "4331ef4fa40937586e9e5c67a06f1191f0caefe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005754128",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1475901?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "61298d82_72a8af4b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2574,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-27T08:47:08Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(BatteryStatsManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 2574,
+        "startChar": 16,
+        "endLine": 2574,
+        "endChar": 64
+      },
+      "revId": "4331ef4fa40937586e9e5c67a06f1191f0caefe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
