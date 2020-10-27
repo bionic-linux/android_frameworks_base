@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "470f99c9_b2563bba",
+        "filename": "telephony/java/android/telephony/EpsBearerQosSessionAttributes.aidl",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2020-10-27T19:25:03Z",
+      "side": 1,
+      "message": "can you pls move them under telephony/data since its related to data",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "9449cc1e8aa3ba89909ea969c185ba08e42fd58f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
