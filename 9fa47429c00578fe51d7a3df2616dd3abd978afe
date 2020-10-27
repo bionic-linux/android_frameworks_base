@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9858cc5_d34630a7",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1949,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2020-10-27T23:15:25Z",
+      "side": 1,
+      "message": "Bluetooth",
+      "range": {
+        "startLine": 1949,
+        "startChar": 17,
+        "endLine": 1949,
+        "endChar": 26
+      },
+      "revId": "9fa47429c00578fe51d7a3df2616dd3abd978afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcc58833_d9eec6cb",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1970,
+      "author": {
+        "id": 1060750
+      },
+      "writtenOn": "2020-10-27T23:15:25Z",
+      "side": 1,
+      "message": "Would they be \"unavailable\"?",
+      "range": {
+        "startLine": 1970,
+        "startChar": 7,
+        "endLine": 1970,
+        "endChar": 15
+      },
+      "revId": "9fa47429c00578fe51d7a3df2616dd3abd978afe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
