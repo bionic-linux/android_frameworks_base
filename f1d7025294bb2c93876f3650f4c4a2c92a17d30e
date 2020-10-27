@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d9cb48c_7b92c96d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-27T11:52:40Z",
+      "side": 1,
+      "message": "Do you have a bug for this?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 2
+      },
+      "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "891344ce_d4225f58",
+        "filename": "tests/net/java/android/net/nsd/NsdManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-27T11:52:40Z",
+      "side": 1,
+      "message": "You do not use mMessenger in other place. Why do you do this? Maybe add a comment to explain this?",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9949ead_e3d6b9ff",
+        "filename": "tests/net/java/com/android/server/connectivity/MultipathPolicyTrackerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-27T11:52:40Z",
+      "side": 1,
+      "message": "It\u0027s kind of duplicate with l.141-1.146. Maybe just update it mockService().",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 94
+      },
+      "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
