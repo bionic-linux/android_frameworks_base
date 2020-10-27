@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c53987b_b8956d94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2020-10-27T15:34:08Z",
+      "side": 1,
+      "message": "It\u0027s unclear what you\u0027re trying to achieve. Please add a description",
+      "revId": "0334f22bc0a835c412cb215eed056ad50e7efaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "673b19ab_a094346c",
+        "filename": "packages/SystemUI/src/com/android/keyguard/PasswordTextView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2020-10-27T15:34:08Z",
+      "side": 1,
+      "message": "Why are you appending the right of the bounds?",
+      "revId": "0334f22bc0a835c412cb215eed056ad50e7efaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
