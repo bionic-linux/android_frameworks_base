@@ -6002,6 +6002,10 @@ package android.net {
     method @Deprecated public void onUpstreamChanged(@Nullable android.net.Network);
   }
 
+  public final class DnsResolverService {
+    method @Nullable public static android.os.IBinder getService();
+  }
+
   public class EthernetManager {
     method @NonNull @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STACK, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public android.net.EthernetManager.TetheredInterfaceRequest requestTetheredInterface(@NonNull java.util.concurrent.Executor, @NonNull android.net.EthernetManager.TetheredInterfaceCallback);
   }
