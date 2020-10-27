@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1b67b22_1956a29f",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-27T10:23:47Z",
+      "side": 1,
+      "message": "More precisely, move this to Line.432.",
+      "range": {
+        "startLine": 429,
+        "startChar": 8,
+        "endLine": 429,
+        "endChar": 99
+      },
+      "revId": "a141036238d2ecc94aae7be99a81517bfdf636ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "645f2696_18c7548e",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-27T10:23:47Z",
+      "side": 1,
+      "message": "It should not be any int value. At least, MOCK_UID1 should return different packages.\n\nYou should list all UIDs\n\nwhen(mPackageManager.getPackagesForUid(UserHandle.getUid(MOCK_USER1, SYSTEM_UID))).thenReturn(new String[]{SYSTEM_PACKAGE1});\nwhen(mPackageManager.getPackagesForUid(UserHandle.getUid(MOCK_USER2, SYSTEM_UID))).thenReturn(new String[]{SYSTEM_PACKAGE1});\n\nor simply use intThat()\n\nwhen(mPackageManager.getPackagesForUid(intThat(uid -\u003e UserHandle.getAppId(uid) \u003d\u003d SYSTEM_UID))).thenReturn(new String[]{SYSTEM_PACKAGE1});",
+      "range": {
+        "startLine": 447,
+        "startChar": 47,
+        "endLine": 447,
+        "endChar": 55
+      },
+      "revId": "a141036238d2ecc94aae7be99a81517bfdf636ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a64198a_41165147",
+        "filename": "tests/net/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-10-27T10:23:47Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 464,
+        "startChar": 47,
+        "endLine": 464,
+        "endChar": 56
+      },
+      "revId": "a141036238d2ecc94aae7be99a81517bfdf636ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
