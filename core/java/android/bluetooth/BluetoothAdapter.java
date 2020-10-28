@@ -18,6 +18,7 @@
 package android.bluetooth;
 
 import android.Manifest;
+import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -686,6 +687,8 @@ public final class BluetoothAdapter {
     private final Map<LeScanCallback, ScanCallback> mLeScanClients;
     private static final Map<BluetoothDevice, List<Pair<OnMetadataChangedListener, Executor>>>
                 sMetadataListeners = new HashMap<>();
+    private final Map<BluetoothConnectionCallback, Executor> mBluetoothConnectionCallbacks =
+            new HashMap<>();
 
     /**
      * Bluetooth metadata listener. Overrides the default BluetoothMetadataListener
@@ -3536,6 +3539,78 @@ public final class BluetoothAdapter {
          */
         void onMetadataChanged(@NonNull BluetoothDevice device, int key,
                 @Nullable byte[] value);
+    }
+
+    /**
+     * Gets the registered BluetoothConnectionCallbacks
+     *
+     * @return a map of the BluetoothConnectionCallbacks that have been registered
+     * @hide
+     */
+    public Map<BluetoothConnectionCallback, Executor> getBluetoothConnectionCallbacks() {
+        if (DBG) Log.d(TAG, "getBluetoothConnectionCallbacks()");
+        return mBluetoothConnectionCallbacks;
+    }
+
+    /**
+     * Registers the BluetoothConnectionCallback to receive callback events when a bluetooth device
+     * (classic or low energy) is connected or disconnected.
+     *
+     * @param executor is the callback executor
+     * @param callback is the connection callback you wish to register
+     * @return true if the callback was registered successfully, false otherwise
+     * @hide
+     */
+    public boolean registerBluetoothConnectionCallback(@NonNull @CallbackExecutor Executor executor,
+            @NonNull BluetoothConnectionCallback callback) {
+        if (DBG) Log.d(TAG, "registerBluetoothConnectionCallback()");
+        if (callback == null) {
+            return false;
+        }
+        synchronized (mBluetoothConnectionCallbacks) {
+            return mBluetoothConnectionCallbacks.put(callback, executor) == null;
+        }
+    }
+
+    /**
+     * Unregisters the BluetoothConnectionCallback that was previously registered by the application
+     *
+     * @param callback is the connection callback you wish to unregister
+     * @return true if the callback was unregistered successfully, false otherwise
+     * @hide
+     */
+    public boolean unregisterBluetoothConnectionCallback(
+            @NonNull BluetoothConnectionCallback callback) {
+        if (DBG) Log.d(TAG, "registerBluetoothConnectionCallback()");
+        if (callback == null) {
+            return false;
+        }
+
+        synchronized (mBluetoothConnectionCallbacks) {
+            mBluetoothConnectionCallbacks.remove(callback);
+        }
+
+        return true;
+    }
+
+    /**
+     * This abstract class is used to implement callbacks for when a bluetooth classic or Bluetooth
+     * Low Energy (BLE) device is either connected or disconnected.
+     *
+     * @hide
+     */
+    public abstract class BluetoothConnectionCallback {
+        /**
+         * Callback triggered when a bluetooth device (classic or BLE) is connected
+         * @param device is the connected bluetooth device
+         */
+        public void onDeviceConnected(BluetoothDevice device) {}
+
+        /**
+         * Callback triggered when a bluetooth device (classic or BLE) is disconnected
+         * @param device is the disconnected bluetooth device
+         */
+        public void onDeviceDisconnected(BluetoothDevice device) {}
     }
 
     /**
