@@ -544,6 +544,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "28497c44_2c3a6b0a",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T10:35:37Z",
+      "side": 1,
+      "message": "1. If unused, we should remove that.\nAlso we might need to put comments at l.320 to say uid tag recorder and uid recorder share the same snapshot but record different part of stats.\n\n2. From your code let me realize they are not actually need a mapping from recorder to snapshot. What we actually need, are snapshots per type, right?\nA mLastSnapshots[3] Array with @IntDef might be better to handle this, WDYT?\n\nAlso +Jean for input.",
+      "parentUuid": "2add22c3_49021432",
+      "range": {
+        "startLine": 1482,
+        "startChar": 8,
+        "endLine": 1482,
+        "endChar": 59
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0fde3136_5f7cb610",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 6
@@ -579,6 +603,30 @@
       "side": 1,
       "message": "Because in the original design, the mLastSnapshot of mUidRecorder also removes the uid in removeUidsLocked() so I think here just to keep the same behavior.",
       "parentUuid": "0fde3136_5f7cb610",
+      "range": {
+        "startLine": 1653,
+        "startChar": 12,
+        "endLine": 1653,
+        "endChar": 41
+      },
+      "revId": "f05549ab48bd17cf1a824ded8b6842ede4462a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0dcbf8f_fd4c53c4",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T10:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61e7e3f7_01dda27a",
       "range": {
         "startLine": 1653,
         "startChar": 12,
