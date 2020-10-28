@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc2b10c2_f13c17f0",
+        "filename": "packages/Connectivity/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-28T09:40:45Z",
+      "side": 1,
+      "message": "It is fine for now(on-going development), but this may have problem when building libservice-connectivity against NDK. The reason you don\u0027t statically build this is too many dependency library you also need to built it ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "2fddfeca654b63dbb3185ab77b614c1c7104eb18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2e51f331_2270aa27",
         "filename": "packages/Tethering/Android.bp",
         "patchSetId": 1
