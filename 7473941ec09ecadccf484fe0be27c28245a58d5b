@@ -43,6 +43,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "345f2151_f632f0cd",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-28T15:44:12Z",
+      "side": 1,
+      "message": "Will it be confusing that there are multiple providers with the same ID? Perhaps this is fine because none of the providers will be registered.\n\nAlso, per comment on other CL - the ID_VPN constant might become another system API that we need to expose. It might be better to register the provider instead. Even though this code runs on the handler thread, registerNetworkProvider should be able to run without deadlocks and return a real provider ID.\n\nLooking at the CS code, the provider could be unregistered in Vpn#onUserStopped which is always called just before the VPN is deleted.\n\nRegistering/unregistering NetworkProviders like this every time a user is started or stopped will result in the NetworkProvider IDs becoming larger over time, but this seems fine because the number would only grow when a user is started, the provider ID is 32 bits. For safety in pathological (more likely, \"impossible\") cases we might want to ensure that nextNetworkProviderId skips ID_NONE.",
+      "range": {
+        "startLine": 411,
+        "startChar": 32,
+        "endLine": 411,
+        "endChar": 54
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06f67840_88582739",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 8
@@ -59,6 +82,76 @@
         "startChar": 20,
         "endLine": 470,
         "endChar": 47
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28c5c2ad_a72eb2e3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-28T15:44:12Z",
+      "side": 1,
+      "message": "+1, it seems natural to null out mNetworkAgent here.",
+      "parentUuid": "06f67840_88582739",
+      "range": {
+        "startLine": 470,
+        "startChar": 20,
+        "endLine": 470,
+        "endChar": 47
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e5b4a0d_884a1077",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-28T15:44:12Z",
+      "side": 1,
+      "message": "Why null this out here? It doesn\u0027t seem to make sense for the agent ever to be non-null here.\n\nIs it because updateState will complain if the agent is non-null?\n\nBut if so, doesn\u0027t that indicate that there should be cleanup code somewhere else in this file, which should set mNetworkAgent to null?",
+      "range": {
+        "startLine": 1281,
+        "startChar": 9,
+        "endLine": 1281,
+        "endChar": 29
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76a3e24c_d8919293",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-28T15:44:12Z",
+      "side": 1,
+      "message": "ISTM that we\u0027re trying to move away from using mNetworkInfo to indicate the state of this code. Can we just remove this check as well?",
+      "range": {
+        "startLine": 1325,
+        "startChar": 8,
+        "endLine": 1325,
+        "endChar": 41
       },
       "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"

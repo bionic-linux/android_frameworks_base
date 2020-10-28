@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6f2064e_ef2d2a79",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7177,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-28T15:44:12Z",
+      "side": 0,
+      "message": "This special casing of VPNs was purposely added in ag/988402. Does this CL make that special casing unnecessary? If not then we need to keep it.\n\nMore in general, for a while I\u0027ve wanted to change this code so that ConnectivityService would create the network in netd before it goes to connected. Either, like VPNs, as soon as the NetworkAgent is registered, or, even better, as soon as registerNetworkAgent is called (which would require calling netd on whatever thread (including a binder thread) carried the registerNetworkAgent call, and thus minimally clearing binder caller identity.\n\nThis would allow transports to use the Network object they get back from registerNetworkAgent without calling markConnected and waiting for an unspecified amount of time ConnectivityService handler thread to process the markConnected event.\n\nThis also makes things a bit cleaner because we can apply routes, DNS servers, etc. etc. to netd as they arrive from the agent, not all at once when we enter connected state.\n\nWe don\u0027t need to do that, or all that, in this change or in this release, but in general, it seems like if we want to change the time when we tell netd to create networks, that time should be sooner than it is now, not later.",
+      "range": {
+        "startLine": 7174,
+        "startChar": 0,
+        "endLine": 7177,
+        "endChar": 86
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "89f4afd4_69a73c28",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 7
@@ -43,6 +66,29 @@
         "startChar": 12,
         "endLine": 1286,
         "endChar": 46
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ca2044d_61d1f0c3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-10-28T15:44:12Z",
+      "side": 0,
+      "message": "Why is this being removed?",
+      "range": {
+        "startLine": 2904,
+        "startChar": 0,
+        "endLine": 2912,
+        "endChar": 17
       },
       "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
