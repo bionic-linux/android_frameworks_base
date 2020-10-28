@@ -144,6 +144,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8b23e529_2e2fb1c2",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T11:53:50Z",
+      "side": 1,
+      "message": "Sorry for any unclear instructions.\nI just realized several steps are missing in this patch.\nAs you might already know, the biggest concern is we don\u0027t want to pay performance impact by calling performPoll.\nIf you recall what\u0027s inside the design doc, to reduce the performance impact, we need to decouple provider stats with others first. And only record that part into recorders in this function.\nIIUC currently we are still querying all snapshots in this function, which is incorrect and would cause heavy loading on the system.",
+      "range": {
+        "startLine": 2109,
+        "startChar": 20,
+        "endLine": 2109,
+        "endChar": 36
+      },
+      "revId": "10f6a5c6a48c5c69d374dabed022e2f92b42e93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0dc0bc8_6fc27e7b",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T11:53:50Z",
+      "side": 1,
+      "message": "1. Since the stats are actually updated, it looks to me that we need to send MSG_BROADCAST_NETWORK_STATS_UPDATED and calls performSampleLocked as what is done when performPollLocked is called.\nIf yes, IIUC it might need to be rate limited for safety.\n\n2. What do we do if there is actually no diff at all?",
+      "range": {
+        "startLine": 2110,
+        "startChar": 16,
+        "endLine": 2110,
+        "endChar": 17
+      },
+      "revId": "10f6a5c6a48c5c69d374dabed022e2f92b42e93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0984c24f_049dc330",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 1
@@ -179,6 +225,30 @@
       "side": 1,
       "message": "Yes, but I think it would be closer to current behavior with this. Keep it but I can remove it if you still think we don\u0027t need this.",
       "parentUuid": "0984c24f_049dc330",
+      "range": {
+        "startLine": 1170,
+        "startChar": 7,
+        "endLine": 1170,
+        "endChar": 34
+      },
+      "revId": "10f6a5c6a48c5c69d374dabed022e2f92b42e93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "571258d4_6b10dbea",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T11:53:50Z",
+      "side": 1,
+      "message": "We have to make sure old code couldn\u0027t pass new test, right?\nSo I think we need to remove it.\nBut IIUC we\u0027ll fail at l.1173.",
+      "parentUuid": "28345ed6_301e4d01",
       "range": {
         "startLine": 1170,
         "startChar": 7,
