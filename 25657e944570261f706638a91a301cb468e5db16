@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005782629",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1477323?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a7ddf69e_81d63b87",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2075,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-28T09:19:19Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2075,
+        "startChar": 5,
+        "endLine": 2075,
+        "endChar": 9
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005782629",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1477323?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1093020e_25108484",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-28T09:19:19Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2076,
+        "startChar": 0,
+        "endLine": 2076,
+        "endChar": 4
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005782629",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1477323?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "da807af5_ff66c173",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2107,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-10-28T09:19:19Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2107,
+        "startChar": 0,
+        "endLine": 2107,
+        "endChar": 4
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
