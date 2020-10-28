@@ -51,6 +51,24 @@
       "parentUuid": "673b19ab_a094346c",
       "revId": "0334f22bc0a835c412cb215eed056ad50e7efaa0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01a9388a_a51270ab",
+        "filename": "packages/SystemUI/src/com/android/keyguard/PasswordTextView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1312644
+      },
+      "writtenOn": "2020-10-28T04:02:05Z",
+      "side": 1,
+      "message": "I see.\ncharLength is the width of the character. If we\u0027re having issues with clipping it\u0027s because the width calculation is incorrect in general, not the size of the last character.",
+      "parentUuid": "377bbae1_1284df62",
+      "revId": "0334f22bc0a835c412cb215eed056ad50e7efaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
