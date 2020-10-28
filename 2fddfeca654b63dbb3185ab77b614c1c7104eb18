@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4913359_01befc8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-28T09:14:40Z",
+      "side": 1,
+      "message": "LGTM except for the question about make java_defaults available for apex.",
+      "revId": "2fddfeca654b63dbb3185ab77b614c1c7104eb18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e51f331_2270aa27",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-28T09:14:40Z",
+      "side": 1,
+      "message": "Why apex need to use java_defaults ? Apex just be a container that we always just include apk, jar, lib, or etc files in apex. So this default build rule don\u0027t need to available for apex, right ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 77
+      },
+      "revId": "2fddfeca654b63dbb3185ab77b614c1c7104eb18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "458b3a5e_bb023c50",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-28T09:14:40Z",
+      "side": 1,
+      "message": "same question as above.",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 77
+      },
+      "revId": "2fddfeca654b63dbb3185ab77b614c1c7104eb18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
