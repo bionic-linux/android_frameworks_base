@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f780416b_af50abca",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T06:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80052571_abf1eb25",
+      "range": {
+        "startLine": 1911,
+        "startChar": 23,
+        "endLine": 1911,
+        "endChar": 47
+      },
+      "revId": "2f7aaf3f874cc6ac1a2a21accaad6d89a7cc964d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99e48e3e_d2bd2ab4",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f909167_c2e3a114",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4835,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T06:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99e48e3e_d2bd2ab4",
+      "range": {
+        "startLine": 4835,
+        "startChar": 18,
+        "endLine": 4835,
+        "endChar": 19
+      },
+      "revId": "2f7aaf3f874cc6ac1a2a21accaad6d89a7cc964d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f92624a4_758339c9",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-10-26T01:41:56Z",
       "side": 1,
       "message": "nit: Add a new line after the class definition.",
+      "range": {
+        "startLine": 4845,
+        "startChar": 4,
+        "endLine": 4845,
+        "endChar": 5
+      },
+      "revId": "2f7aaf3f874cc6ac1a2a21accaad6d89a7cc964d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cabca7c4_be30a1e9",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4845,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-28T06:55:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f92624a4_758339c9",
       "range": {
         "startLine": 4845,
         "startChar": 4,
