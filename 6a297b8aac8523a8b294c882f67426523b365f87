@@ -46,6 +46,30 @@
       },
       "revId": "6a297b8aac8523a8b294c882f67426523b365f87",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8ca886e_d036f816",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-28T06:36:08Z",
+      "side": 1,
+      "message": "Ah, ok. I missed that the constructor of ConnectivityService will take mServiceContext(l.1236). Thanks.",
+      "parentUuid": "4db728c6_d9e40f12",
+      "range": {
+        "startLine": 362,
+        "startChar": 26,
+        "endLine": 362,
+        "endChar": 42
+      },
+      "revId": "6a297b8aac8523a8b294c882f67426523b365f87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
