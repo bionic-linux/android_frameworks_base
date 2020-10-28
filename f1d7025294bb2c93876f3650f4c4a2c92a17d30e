@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3025da4_c4ec33de",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-28T11:27:00Z",
+      "side": 0,
+      "message": "Ditto",
+      "range": {
+        "startLine": 2284,
+        "startChar": 25,
+        "endLine": 2284,
+        "endChar": 40
+      },
+      "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f907203_ccad7919",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-10-28T11:27:00Z",
+      "side": 0,
+      "message": "You still rethrow it. I think you should not remove it.",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
