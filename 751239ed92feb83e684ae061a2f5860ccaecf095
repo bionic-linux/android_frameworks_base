@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "33b1ddae_126ac835",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-10-28T17:36:43Z",
+      "side": 1,
+      "message": "Added more, ptal?",
+      "parentUuid": "83bb470d_4e363671",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "751239ed92feb83e684ae061a2f5860ccaecf095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9c9407a_03a7f844",
         "filename": "core/java/android/net/vcn/VcnManager.java",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-23T00:18:07Z",
       "side": 1,
       "message": "nit",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "751239ed92feb83e684ae061a2f5860ccaecf095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae56bc26_dc0c5bd1",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-10-28T17:36:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9c9407a_03a7f844",
       "range": {
         "startLine": 28,
         "startChar": 33,
@@ -60,6 +108,30 @@
       "writtenOn": "2020-10-23T00:18:07Z",
       "side": 1,
       "message": "@link",
+      "range": {
+        "startLine": 33,
+        "startChar": 54,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "751239ed92feb83e684ae061a2f5860ccaecf095",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e77c6809_8c8ed6b3",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-10-28T17:36:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc625ebd_848571c5",
       "range": {
         "startLine": 33,
         "startChar": 54,
