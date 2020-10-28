@@ -33,6 +33,24 @@
       "message": "Why are you appending the right of the bounds?",
       "revId": "0334f22bc0a835c412cb215eed056ad50e7efaa0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "377bbae1_1284df62",
+        "filename": "packages/SystemUI/src/com/android/keyguard/PasswordTextView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1269628
+      },
+      "writtenOn": "2020-10-28T01:04:05Z",
+      "side": 1,
+      "message": "When characters is very long, enough space is needed for the last character, otherwise small part on right of last character is not drawn.",
+      "parentUuid": "673b19ab_a094346c",
+      "revId": "0334f22bc0a835c412cb215eed056ad50e7efaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
