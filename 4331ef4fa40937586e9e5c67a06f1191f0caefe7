@@ -25,6 +25,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15c05033_20951fcd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-29T16:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da2dba63_b9c9e578",
+      "range": {
+        "startLine": 950,
+        "startChar": 19,
+        "endLine": 950,
+        "endChar": 66
+      },
+      "revId": "4331ef4fa40937586e9e5c67a06f1191f0caefe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2e86ff0_0b84d768",
@@ -39,6 +63,30 @@
       "side": 1,
       "message": "\u003e Prefer to use context.getSystemService(BatteryStatsManager.class) instead to avoid the cast.\n\nDo you want to fix it?",
       "parentUuid": "86340659_cd58a2d2",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "4331ef4fa40937586e9e5c67a06f1191f0caefe7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a33013b7_7f78ffd7",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-10-29T16:28:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e86ff0_0b84d768",
       "range": {
         "startLine": 57,
         "startChar": 16,
