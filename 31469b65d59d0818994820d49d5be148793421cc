@@ -22,6 +22,30 @@
       },
       "revId": "31469b65d59d0818994820d49d5be148793421cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56bdee7d_770ee64b",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-29T07:47:35Z",
+      "side": 1,
+      "message": "Here is the case I want to prevent: if someone create a new library and make it available outside of tethering, but unfortunately that library use TetheringApiCurrentLib. This may make TetheringApiCurrentLib be un-intendedly exposed outside of tethering module.",
+      "parentUuid": "2f31c7e2_e1db71a5",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "31469b65d59d0818994820d49d5be148793421cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
