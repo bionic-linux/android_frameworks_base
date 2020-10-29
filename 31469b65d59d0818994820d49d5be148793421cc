@@ -70,6 +70,30 @@
       },
       "revId": "31469b65d59d0818994820d49d5be148793421cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20b9ea87_911b6d03",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-29T09:07:50Z",
+      "side": 1,
+      "message": "Ohh, the build error you met means my concern is unnecessary. My original concern is in-directly include to other library which is expose to outside of tethering module. Now I know the compiler would protect this in-directly include case.",
+      "parentUuid": "458b0fea_a7fcc71b",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "31469b65d59d0818994820d49d5be148793421cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
