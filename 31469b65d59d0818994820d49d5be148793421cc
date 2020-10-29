@@ -46,6 +46,30 @@
       },
       "revId": "31469b65d59d0818994820d49d5be148793421cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "458b0fea_a7fcc71b",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-10-29T08:58:00Z",
+      "side": 1,
+      "message": "Yes it won\u0027t build:\n\nerror: frameworks/base/packages/Tethering/apex/Android.bp:32:1: module \"com.android.tethering.next\" variant \"android_common_com.android.tethering.next_image\": \"Tethering\" requires \"TetheringApiCurrentLib\" that is not available for the APEX. Dependency path:\n           via tag apex.dependencyTag: { name:androidApp payload:true}\n    -\u003e Tethering{os:android,arch:common,perform_override:,apex:apex10000}\n           via tag java.dependencyTag: { name:staticlib}\n    -\u003e TetheringApiCurrentLib{os:android,arch:common,apex:apex10000}\n17:52:51 soong bootstrap failed with: exit status 1\n\n\nI don\u0027t really understand your concern, this apex_available rule means that TetheringApiCurrentLib can (directly or not) be included in the tethering module; I don\u0027t understand how this relates to a library depending on TetheringApiCurrentLib, unless that library is part of the tethering module too ?\n\nNote that today it only works because TetheringApiCurrentLib is allowlisted in build/soong/apex/apex.go as a temporary measure, but TetheringApiCurrentLib should already say apex_available: [\"com.android.tethering\"] instead.",
+      "parentUuid": "56bdee7d_770ee64b",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "31469b65d59d0818994820d49d5be148793421cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
