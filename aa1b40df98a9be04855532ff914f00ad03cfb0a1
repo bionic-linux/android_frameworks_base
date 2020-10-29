@@ -16,6 +16,207 @@
       "message": "Merge conflict since aosp lacks of ag/12252518.",
       "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69de058f_d4b6351f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "Looks generally fine.",
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "355fc49f_0651d004",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "I know you didn\u0027t write this, but is this true ? ISTM we need to count, but not to restrict.",
+      "range": {
+        "startLine": 1921,
+        "startChar": 48,
+        "endLine": 1921,
+        "endChar": 78
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0e120cb_93450439",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1932,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "Do we need to honor the snooze ? Won\u0027t this result in a notification coming back every time we re-evaluate this code, once over the warning ?",
+      "range": {
+        "startLine": 1932,
+        "startChar": 37,
+        "endLine": 1932,
+        "endChar": 99
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3530c2ab_0066d903",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "Not necessarily. Maybe there is no cycle.",
+      "range": {
+        "startLine": 1934,
+        "startChar": 36,
+        "endLine": 1934,
+        "endChar": 55
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f941374_6a14c100",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "You don\u0027t know that any more. Suggest just removing this part of the comment",
+      "range": {
+        "startLine": 1934,
+        "startChar": 19,
+        "endLine": 1934,
+        "endChar": 36
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ada60af5_768bbaee",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4698,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "I know that\u0027s what the old code was doing but is this necessary ? It seems harmful ; ISTM this will simply create a window where the interface is not limited any more until the next line for no good reason.",
+      "range": {
+        "startLine": 4698,
+        "startChar": 20,
+        "endLine": 4698,
+        "endChar": 52
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fe1e7c9_573984fd",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4838,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "Please document the scheme here. It seems there are at least two special values : QUOTA_UNLIMITED and Long.MAX_VALUE. It also seems 0 is forbidden.",
+      "range": {
+        "startLine": 4838,
+        "startChar": 33,
+        "endLine": 4838,
+        "endChar": 34
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c01deab_94df5170",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4856,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "Do you want to document briefly why the async versions set both limit and warning but the sync versions only set the warning ?",
+      "range": {
+        "startLine": 4856,
+        "startChar": 12,
+        "endLine": 4856,
+        "endChar": 65
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71f346e0_d7e5169d",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T05:30:39Z",
+      "side": 1,
+      "message": "Can you exercise the new code ? This looks like it can fail in a number of ways without failing the test.",
+      "range": {
+        "startLine": 1810,
+        "startChar": 84,
+        "endLine": 1810,
+        "endChar": 93
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
