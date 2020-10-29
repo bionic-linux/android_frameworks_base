@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b346a2a_0193306f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-10-29T00:26:17Z",
+      "side": 1,
+      "message": "Why not squash this into the shell-add CL?",
+      "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
