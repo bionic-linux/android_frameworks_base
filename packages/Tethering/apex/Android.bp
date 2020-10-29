@@ -27,6 +27,22 @@ apex {
     androidManifest: "AndroidManifest.xml",
 }
 
+// Combined apex including Tethering + ConnectivityService module,
+// for use in S+ device images.
+// TODO: add ConnectivityService module libraries to this apex
+apex {
+    name: "com.android.tethering.next",
+    updatable: true,
+    min_sdk_version: "current",
+    java_libs: ["framework-tethering"],
+    bpfs: ["offload.o"],
+    apps: ["Tethering"],
+    manifest: "manifest.json",
+    key: "com.android.tethering.key",
+    androidManifest: "AndroidManifest.xml",
+    file_contexts: ":com.android.tethering-file_contexts",
+}
+
 apex_key {
     name: "com.android.tethering.key",
     public_key: "com.android.tethering.avbpubkey",
