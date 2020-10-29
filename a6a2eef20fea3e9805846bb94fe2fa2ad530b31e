@@ -22,6 +22,30 @@
       },
       "revId": "a6a2eef20fea3e9805846bb94fe2fa2ad530b31e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b296439_367ea73d",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-10-29T21:43:18Z",
+      "side": 1,
+      "message": "Strangely it was only in cuttlefish.  I didn\u0027t want to take any chances and so went with 1052.",
+      "parentUuid": "b156b541_2b4c3984",
+      "range": {
+        "startLine": 554,
+        "startChar": 35,
+        "endLine": 554,
+        "endChar": 39
+      },
+      "revId": "a6a2eef20fea3e9805846bb94fe2fa2ad530b31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
