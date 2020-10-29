@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4488d79_51c62171",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3626,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2020-10-29T23:36:30Z",
+      "side": 1,
+      "message": "if you register multiple callbacks in the app process, and then unregister one app callback, will this unregister the service-to-app callback for all of them?",
+      "range": {
+        "startLine": 3626,
+        "startChar": 16,
+        "endLine": 3626,
+        "endChar": 91
+      },
+      "revId": "b9b9380fea1f429b507dff5d977dbfd2273ae388",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
