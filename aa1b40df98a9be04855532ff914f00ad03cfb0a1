@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3543ea04_3675f256",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-10-29T02:59:00Z",
+      "side": 1,
+      "message": "Merge conflict since aosp lacks of ag/12252518.",
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
