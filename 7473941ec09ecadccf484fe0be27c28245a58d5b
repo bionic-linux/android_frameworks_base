@@ -66,6 +66,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "661d9855_938c479b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T13:42:09Z",
+      "side": 1,
+      "message": "It is also expensive in that CS will send all requests to this new agent which won\u0027t ever do anything with them. I agree the increase in provider IDs doesn\u0027t matter. We could also have only one provider for all VPNs.\n\nIn any case, I would prefer to do this in a separate patch if you don\u0027t mind. This one has fairly complex consequences that make it a bit harder to wrap one\u0027s head around already ; in case anything goes wrong I\u0027d prefer we can bisect to the patch really causing the issue.",
+      "parentUuid": "345f2151_f632f0cd",
+      "range": {
+        "startLine": 411,
+        "startChar": 32,
+        "endLine": 411,
+        "endChar": 54
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06f67840_88582739",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 8
@@ -136,6 +160,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fc485c1c_ce9698cc",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T13:42:09Z",
+      "side": 1,
+      "message": "It does. The best way is the way pointed out by Lucas and you and do it in l.470.",
+      "parentUuid": "6e5b4a0d_884a1077",
+      "range": {
+        "startLine": 1281,
+        "startChar": 9,
+        "endLine": 1281,
+        "endChar": 29
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "76a3e24c_d8919293",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 8
@@ -147,6 +195,30 @@
       "writtenOn": "2020-10-28T15:44:12Z",
       "side": 1,
       "message": "ISTM that we\u0027re trying to move away from using mNetworkInfo to indicate the state of this code. Can we just remove this check as well?",
+      "range": {
+        "startLine": 1325,
+        "startChar": 8,
+        "endLine": 1325,
+        "endChar": 41
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee20e192_a6e5a607",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T13:42:09Z",
+      "side": 1,
+      "message": "As I was fixing the issue above, I noticed this too. In fact, if the agent is currently CONNECTING, callers expect this method to still disconnect and it doesn\u0027t. I think it was in fact a bug before.\n\nDone.",
+      "parentUuid": "76a3e24c_d8919293",
       "range": {
         "startLine": 1325,
         "startChar": 8,
@@ -170,6 +242,30 @@
       "writtenOn": "2020-10-22T07:46:08Z",
       "side": 1,
       "message": "This can be removed if you clean the mNetworkAgent in updateStatee() when receiving DISCONNECTED state and mNetworkAgent is not null.",
+      "range": {
+        "startLine": 1327,
+        "startChar": 12,
+        "endLine": 1327,
+        "endChar": 33
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10c51329_1d5f47d6",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-29T13:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a8245bd_98d874d7",
       "range": {
         "startLine": 1327,
         "startChar": 12,
