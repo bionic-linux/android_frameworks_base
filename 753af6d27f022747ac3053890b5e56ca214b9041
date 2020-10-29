@@ -16,6 +16,24 @@
       "message": "Why not squash this into the shell-add CL?",
       "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cc53246_ecdae284",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2020-10-29T21:37:10Z",
+      "side": 1,
+      "message": "Just so we can revise separately. The shell-add CL blocks me from cherry-picking other CLs from our internal dev branch, but this shouldn\u0027t block implementation.",
+      "parentUuid": "9b346a2a_0193306f",
+      "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
