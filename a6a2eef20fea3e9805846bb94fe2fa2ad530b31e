@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b156b541_2b4c3984",
+        "filename": "telephony/java/com/android/internal/telephony/RILConstants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2020-10-29T19:05:58Z",
+      "side": 1,
+      "message": "assuming 1051 is taken?",
+      "range": {
+        "startLine": 554,
+        "startChar": 35,
+        "endLine": 554,
+        "endChar": 39
+      },
+      "revId": "a6a2eef20fea3e9805846bb94fe2fa2ad530b31e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
