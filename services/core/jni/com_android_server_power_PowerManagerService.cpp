@@ -24,6 +24,7 @@
 #include <android/hardware/power/Mode.h>
 #include <android/system/suspend/1.0/ISystemSuspend.h>
 #include <android/system/suspend/ISuspendControlService.h>
+#include <android/system/suspend/internal/ISuspendControlServiceInternal.h>
 #include <nativehelper/JNIHelp.h>
 #include "jni.h"
 
@@ -46,17 +47,18 @@
 
 #include "com_android_server_power_PowerManagerService.h"
 
+using android::String8;
 using android::hardware::Return;
 using android::hardware::Void;
 using android::hardware::power::Boost;
 using android::hardware::power::Mode;
-using android::hardware::power::V1_0::PowerHint;
 using android::hardware::power::V1_0::Feature;
-using android::String8;
+using android::hardware::power::V1_0::PowerHint;
+using android::system::suspend::ISuspendControlService;
+using android::system::suspend::internal::ISuspendControlServiceInternal;
 using android::system::suspend::V1_0::ISystemSuspend;
 using android::system::suspend::V1_0::IWakeLock;
 using android::system::suspend::V1_0::WakeLockType;
-using android::system::suspend::ISuspendControlService;
 using IPowerV1_1 = android::hardware::power::V1_1::IPower;
 using IPowerV1_0 = android::hardware::power::V1_0::IPower;
 using IPowerAidl = android::hardware::power::IPower;
@@ -355,6 +357,7 @@ void android_server_PowerManagerService_userActivity(nsecs_t eventTime, int32_t 
 
 static sp<ISystemSuspend> gSuspendHal = nullptr;
 static sp<ISuspendControlService> gSuspendControl = nullptr;
+static sp<ISuspendControlServiceInternal> gSuspendControlInternal = nullptr;
 static sp<IWakeLock> gSuspendBlocker = nullptr;
 static std::mutex gSuspendMutex;
 
@@ -379,10 +382,20 @@ sp<ISuspendControlService> getSuspendControl() {
     return gSuspendControl;
 }
 
+sp<ISuspendControlServiceInternal> getSuspendControlInternal() {
+    static std::once_flag suspendControlFlag;
+    std::call_once(suspendControlFlag, []() {
+        gSuspendControlInternal = waitForService<ISuspendControlServiceInternal>(
+                String16("suspend_control_internal"));
+        LOG_ALWAYS_FATAL_IF(gSuspendControlInternal == nullptr);
+    });
+    return gSuspendControlInternal;
+}
+
 void enableAutoSuspend() {
     static bool enabled = false;
     if (!enabled) {
-        sp<ISuspendControlService> suspendControl = getSuspendControl();
+        sp<ISuspendControlServiceInternal> suspendControl = getSuspendControlInternal();
         suspendControl->enableAutosuspend(&enabled);
     }
 
@@ -515,7 +528,7 @@ static void nativeSetFeature(JNIEnv* /* env */, jclass /* clazz */, jint feature
 
 static bool nativeForceSuspend(JNIEnv* /* env */, jclass /* clazz */) {
     bool retval = false;
-    getSuspendControl()->forceSuspend(&retval);
+    getSuspendControlInternal()->forceSuspend(&retval);
     return retval;
 }
 
