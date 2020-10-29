@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f31c7e2_e1db71a5",
+        "filename": "packages/Tethering/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-29T07:37:24Z",
+      "side": 1,
+      "message": "If we remove this, do we get build error ? This include the detail implementation of tethering(e.g. Tethering.java, IpServer.java, ...). Giving that you just make it available for tethering module itself so it is unlike to be used outside of tethering, but I still prefer don\u0027t make it available for any apex if we can.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "31469b65d59d0818994820d49d5be148793421cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
