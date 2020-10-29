@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5be48af0_5de165a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2020-10-29T09:12:24Z",
+      "side": 1,
+      "message": "BTW, now tethering is migrating to connectivity project. So this may not be able to merged before migration is done. And you need to respin this change again to different project...",
+      "revId": "f3431b87b123a1369ea7f481e92eb3f2f0f681b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
