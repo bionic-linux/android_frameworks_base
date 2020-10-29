@@ -3613,7 +3613,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         int result;
         boolean isWakeKey = (policyFlags & WindowManagerPolicy.FLAG_WAKE) != 0
                 || event.isWakeKey();
-        if (interactive || (isInjected && !isWakeKey)) {
+        if (!interactive && isInjected && !isWakeKey) {
+           result = 0;
+        } else if (interactive || (isInjected && !isWakeKey)) {
             // When the device is interactive or the key is injected pass the
             // key to the application.
             result = ACTION_PASS_TO_USER;
