@@ -886,14 +886,15 @@ bool ConfigDescription::Dominates(const ConfigDescription& o) const {
     return true;
   }
 
-  // Locale de-duping is not-trivial, disable for now (b/62409213).
+  if (*this == DefaultConfig()) {
+    return true;
+  }
+
+  // Locale de-duping is not-trivial, disable for now (b/62409213, b/171892595).
   if (diff(o) & CONFIG_LOCALE) {
     return false;
   }
 
-  if (*this == DefaultConfig()) {
-    return true;
-  }
   return MatchWithDensity(o) && !o.MatchWithDensity(*this) &&
          !isMoreSpecificThan(o) && !o.HasHigherPrecedenceThan(*this);
 }
@@ -967,7 +968,7 @@ bool ConfigDescription::ConflictsWith(const ConfigDescription& o) const {
   };
   // The values here can be found in ResTable_config#match. Density and range
   // values can't lead to conflicts, and are ignored.
-  return !pred(mcc, o.mcc) || !pred(mnc, o.mnc) || !pred(locale, o.locale) ||
+  return !pred(mcc, o.mcc) || !pred(mnc, o.mnc) ||
          !pred(screenLayout & MASK_LAYOUTDIR,
                o.screenLayout & MASK_LAYOUTDIR) ||
          !pred(screenLayout & MASK_SCREENLONG,

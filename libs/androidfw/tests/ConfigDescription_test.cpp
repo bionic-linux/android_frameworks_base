@@ -154,4 +154,14 @@ TEST(ConfigDescriptionTest, RangeQualifiersDoNotConflict) {
   EXPECT_FALSE(ParseConfigOrDie("600x400").ConflictsWith(ParseConfigOrDie("300x200")));
 }
 
+TEST(ConfigDescriptionTest, LocalesDoNotConflict) {
+  EXPECT_FALSE(ParseConfigOrDie("en").ConflictsWith(ParseConfigOrDie("en-GB")));
+  EXPECT_FALSE(ParseConfigOrDie("en").ConflictsWith(ParseConfigOrDie("en-US")));
+  EXPECT_FALSE(ParseConfigOrDie("en-US").ConflictsWith(ParseConfigOrDie("en-GB")));
+  EXPECT_FALSE(ParseConfigOrDie("fr").ConflictsWith(ParseConfigOrDie("fr-CA")));
+  EXPECT_FALSE(ParseConfigOrDie("fr").ConflictsWith(ParseConfigOrDie("fr-rFr")));
+  EXPECT_FALSE(ParseConfigOrDie("fr-CA").ConflictsWith(ParseConfigOrDie("fr-rFr")));
+  EXPECT_FALSE(ParseConfigOrDie("en").ConflictsWith(ParseConfigOrDie("fr")));
+}
+
 }  // namespace android

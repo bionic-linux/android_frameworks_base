@@ -118,8 +118,9 @@ struct ConfigDescription : public ResTable_config {
   /**
    * A configuration conflicts with another configuration if both
    * configurations define an incompatible configuration parameter. An
-   * incompatible configuration parameter is a non-range, non-density parameter
-   * that is defined in both configurations as a different, non-default value.
+   * incompatible configuration parameter is a non-range, non-density parameter,
+   * non-locale (b/62409213) that is defined in both configurations as a different,
+   * non-default value.
    */
   bool ConflictsWith(const ConfigDescription& o) const;
 
