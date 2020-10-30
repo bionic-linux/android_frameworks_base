@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3016d4b8_321722bc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7177,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-30T00:27:04Z",
+      "side": 0,
+      "message": "Yes, this patch makes the special casing unnecessary. Lucas had the same question, here was my reply.\n\n\u003c\u003c\u003c\nTL;DR : because VPN agents now have the same lifecycle as others, so they don\u0027t need special lifecycle treatment.\n\n\nWith this patch, there no longer is an UNKNOWN or IDLE state for VPN that Connectivity service sees. The VPN agent was the only one with a different lifecycle and this was done for legacy reasons originally. These reasons (in particular, the Settings app needed to see the network (through CONNECTIVITY_ACTION I presume)) have gone away. With the migration of the VPN agent to the modern lifecycle on the agent side, it can just have the same lifecycle as every other agent on the CS side too, so this is a simplification.\n\nNote that part of the reason other networks only enter this in CONNECTED is to let them update their capabilities without causing wrong callbacks to be sent (see the comment in l.7186 which explains what might happen to VPNs – I added this last year when I fixed that bug). With this bypass, VPNs agents can cause rematches with side effects by sending updates to their capabilities before they call markConnected, because created \u003d true means they can now match requests. In practice they don\u0027t do it, because VpnService calls establish() once and then can\u0027t ever update its capabilities, which is why it used to work.\n\nBut tests do this, and they *should* be able to, and it happened to work before because VPNs used to start in UNKNOWN. Without this patch, ConnectivityServiceTest#testVpnUnvalidated and ConnectivityServiceTest#testVpnStartsWithUnderlyingCaps fail because they update the capabilities between register() and markConnected(), which triggers the bad code path (it triggers a rematch, the test VPN agent starts matching the request put by the test, and when the VPN connects l.7234 sends a spurious callback).\n\nOf course technically I can go and update the tests instead, but this bypass here is still dangerous for future changes and it\u0027s much better that all agents are treated the same way.\n\u003e\u003e\u003e\n\nAs for the rest of the comment, I agree with the general direction. I observe that we\u0027ll have to be extra careful not to send spurious callbacks, but this can probably be achieved without too much trouble with judicious use of #everConnected. In any case, that work is way beyond the scope of this patch :)",
+      "parentUuid": "b6f2064e_ef2d2a79",
+      "range": {
+        "startLine": 7174,
+        "startChar": 0,
+        "endLine": 7177,
+        "endChar": 86
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89f4afd4_69a73c28",
@@ -84,6 +108,30 @@
       "writtenOn": "2020-10-28T15:44:12Z",
       "side": 0,
       "message": "Why is this being removed?",
+      "range": {
+        "startLine": 2904,
+        "startChar": 0,
+        "endLine": 2912,
+        "endChar": 17
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f14bc6ec_0e4eb729",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-10-30T00:27:04Z",
+      "side": 0,
+      "message": "Because this is in fact trivially a no-op. The semantics of this block are such that restart will only be false if all components of mArguments are null. \n\nmArguments is a final array initialized in the constructor. The components of the array are never overwritten (though the components of those components are), and if you trace the call to startLegacyVpn to see where they come from, at least one of these components will always be non-null. Unless somebody calls startLegacyVpnPrivileged with a non-existing type, but that never happens AFAICT. You can see that for safety, I added the check in l.2779 so that we\u0027ll get a crash with a clear message if this ever happens.\n\n\nOriginally I was touching this because I didn\u0027t want a case where the control comes here and the VPN is still connected, so I had simply lifted agentDisconnect() out of the if above. But Lucas pointed out that this code is never called, and at that point I thought it was safer to just remove the whole thing.\n\nI guess that means it is technically possible that there is a (purely hypothetical) race where some other VPN is brought up inbetween the critical sections where prepareInternal() is called in startLegacyVpn and the time the legacy runner thread enters the synchronized() block, but even if that is true this patch makes no change to that.\n\nThat being said, I am happy moving this removal to another patch if you feel uncomfortable about this.",
+      "parentUuid": "2ca2044d_61d1f0c3",
       "range": {
         "startLine": 2904,
         "startChar": 0,
