@@ -187,6 +187,7 @@ import com.android.server.am.MemInfoDumpProto;
 import dalvik.system.CloseGuard;
 import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
+import dalvik.system.ZygoteHooks;
 
 import libcore.io.ForwardingOs;
 import libcore.io.IoUtils;
@@ -6384,6 +6385,9 @@ public final class ActivityThread extends ClientTransactionHandler {
         Process.setStartTimes(SystemClock.elapsedRealtime(), SystemClock.uptimeMillis());
 
         AppCompatCallbacks.install(data.disabledCompatChanges);
+        // Let libcore handle any compat changes after installing the list of compat changes.
+        ZygoteHooks.handleCompatChangesBeforeBindingApplication();
+
         mBoundApplication = data;
         mConfiguration = new Configuration(data.config);
         mCompatConfiguration = new Configuration(data.config);
