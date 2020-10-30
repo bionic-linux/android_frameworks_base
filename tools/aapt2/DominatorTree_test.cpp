@@ -139,19 +139,19 @@ TEST(DominatorTreeTest, MoreSpecificConfigurationsAreDominated) {
 
   std::string expected =
       "<default>\n"
+      "  en\n"
+      "    en-v21\n"
       "  ldrtl-v4\n"
       "    ldrtl-xhdpi-v4\n"
       "  sw300dp-v13\n"
       "    sw540dp-v14\n"
       "      sw600dp-v14\n"
       "    sw720dp-v13\n"
-      "  v20\n"
-      "en\n"
-      "  en-v21\n";
+      "  v20\n";
   EXPECT_EQ(expected, printer.ToString(&tree));
 }
 
-TEST(DominatorTreeTest, LocalesAreNeverDominated) {
+TEST(DominatorTreeTest, LocalesNeverDominateEachOther) {
   const ConfigDescription fr_config = test::ParseConfigOrDie("fr");
   const ConfigDescription fr_rCA_config = test::ParseConfigOrDie("fr-rCA");
   const ConfigDescription fr_rFR_config = test::ParseConfigOrDie("fr-rFR");
@@ -167,9 +167,9 @@ TEST(DominatorTreeTest, LocalesAreNeverDominated) {
 
   std::string expected =
       "<default>\n"
-      "fr\n"
-      "fr-rCA\n"
-      "fr-rFR\n";
+      "  fr\n"
+      "  fr-rCA\n"
+      "  fr-rFR\n";
   EXPECT_EQ(expected, printer.ToString(&tree));
 }
 
@@ -197,6 +197,5 @@ TEST(DominatorTreeTest, NonZeroDensitiesMatch) {
       "      sw800dp-xxhdpi-v13\n";
   EXPECT_EQ(expected, printer.ToString(&tree));
 }
-
 
 }  // namespace aapt

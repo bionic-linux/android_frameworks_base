@@ -52,14 +52,16 @@ TEST(ResourceDeduperTest, SameValuesAreDeduped) {
           .Build();
 
   ASSERT_TRUE(ResourceDeduper().Consume(context.get(), table.get()));
+  EXPECT_THAT(table, HasValue("android:string/dedupe", default_config));
   EXPECT_THAT(table, Not(HasValue("android:string/dedupe", ldrtl_config)));
   EXPECT_THAT(table, Not(HasValue("android:string/dedupe", land_config)));
 
+  EXPECT_THAT(table, HasValue("android:string/dedupe2", default_config));
   EXPECT_THAT(table, HasValue("android:string/dedupe2", ldrtl_v21_config));
   EXPECT_THAT(table, Not(HasValue("android:string/dedupe2", ldrtl_config)));
 
   EXPECT_THAT(table, HasValue("android:string/dedupe3", default_config));
-  EXPECT_THAT(table, HasValue("android:string/dedupe3", en_config));
+  EXPECT_THAT(table, Not(HasValue("android:string/dedupe3", en_config)));
   EXPECT_THAT(table, Not(HasValue("android:string/dedupe3", en_v21_config)));
 }
 
@@ -132,23 +134,126 @@ TEST(ResourceDeduperTest, SameValuesAreDedupedCompatibleNonSiblings) {
   EXPECT_THAT(table, HasValue("android:string/keep", land_config));
 }
 
-TEST(ResourceDeduperTest, LocalesValuesAreKept) {
+TEST(ResourceDeduperTest, LocaleConflictsWithNonLocaleSibling) {
   std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
   const ConfigDescription default_config = {};
   const ConfigDescription fr_config = test::ParseConfigOrDie("fr");
   const ConfigDescription fr_rCA_config = test::ParseConfigOrDie("fr-rCA");
+  const ConfigDescription mcc262_mnc2_config = test::ParseConfigOrDie("mcc262-mnc2");
 
   std::unique_ptr<ResourceTable> table =
       test::ResourceTableBuilder()
           .AddString("android:string/keep", ResourceId{}, default_config, "keep")
           .AddString("android:string/keep", ResourceId{}, fr_config, "keep")
           .AddString("android:string/keep", ResourceId{}, fr_rCA_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, mcc262_mnc2_config, "keep2")
           .Build();
 
   ASSERT_TRUE(ResourceDeduper().Consume(context.get(), table.get()));
   EXPECT_THAT(table, HasValue("android:string/keep", default_config));
   EXPECT_THAT(table, HasValue("android:string/keep", fr_config));
   EXPECT_THAT(table, HasValue("android:string/keep", fr_rCA_config));
+  EXPECT_THAT(table, HasValue("android:string/keep", mcc262_mnc2_config));
+}
+
+TEST(ResourceDeduperTest, LocaleDoesNotConflictWithNonLocaleSibling) {
+  std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
+  const ConfigDescription default_config = {};
+  const ConfigDescription fr_config = test::ParseConfigOrDie("fr");
+  const ConfigDescription fr_rCA_config = test::ParseConfigOrDie("fr-rCA");
+  const ConfigDescription mcc262_mnc2_config = test::ParseConfigOrDie("mcc262-mnc2");
+
+  std::unique_ptr<ResourceTable> table =
+      test::ResourceTableBuilder()
+          .AddString("android:string/keep", ResourceId{}, default_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, fr_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, fr_rCA_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, mcc262_mnc2_config, "keep")
+          .Build();
+
+  ASSERT_TRUE(ResourceDeduper().Consume(context.get(), table.get()));
+  EXPECT_THAT(table, HasValue("android:string/keep", default_config));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", fr_config)));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", fr_rCA_config)));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", mcc262_mnc2_config)));
+}
+
+TEST(ResourceDeduperTest, LocaleConflictsWithLocaleSibling) {
+  std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
+  const ConfigDescription default_config = {};
+  const ConfigDescription fr_config = test::ParseConfigOrDie("fr");
+  const ConfigDescription fr_rCA_config = test::ParseConfigOrDie("fr-rCA");
+  const ConfigDescription en_config = test::ParseConfigOrDie("en");
+  const ConfigDescription en_v21_config = test::ParseConfigOrDie("en-v21");
+
+  std::unique_ptr<ResourceTable> table =
+      test::ResourceTableBuilder()
+          .AddString("android:string/keep", ResourceId{}, default_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, fr_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, fr_rCA_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, en_config, "keep2")
+          .AddString("android:string/keep", ResourceId{}, en_v21_config, "keep2")
+          .Build();
+
+  ASSERT_TRUE(ResourceDeduper().Consume(context.get(), table.get()));
+  EXPECT_THAT(table, HasValue("android:string/keep", default_config));
+  EXPECT_THAT(table, HasValue("android:string/keep", fr_config));
+  EXPECT_THAT(table, HasValue("android:string/keep", fr_rCA_config));
+  EXPECT_THAT(table, HasValue("android:string/keep", en_config));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", en_v21_config)));
+}
+
+TEST(ResourceDeduperTest, LocaleDoesNotConflictWithLocaleSibling) {
+  std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
+  const ConfigDescription default_config = {};
+  const ConfigDescription fr_config = test::ParseConfigOrDie("fr");
+  const ConfigDescription fr_rCA_config = test::ParseConfigOrDie("fr-rCA");
+  const ConfigDescription en_config = test::ParseConfigOrDie("en");
+  const ConfigDescription en_v21_config = test::ParseConfigOrDie("en-v21");
+
+  std::unique_ptr<ResourceTable> table =
+      test::ResourceTableBuilder()
+          .AddString("android:string/keep", ResourceId{}, default_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, fr_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, fr_rCA_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, en_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, en_v21_config, "keep")
+          .Build();
+
+  ASSERT_TRUE(ResourceDeduper().Consume(context.get(), table.get()));
+  EXPECT_THAT(table, HasValue("android:string/keep", default_config));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", fr_config)));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", fr_rCA_config)));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", en_config)));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", en_v21_config)));
+}
+
+TEST(ResourceDeduperTest, MultipleLocalesConflictWithNonLocaleSibling) {
+  std::unique_ptr<IAaptContext> context = test::ContextBuilder().Build();
+  const ConfigDescription default_config = {};
+  const ConfigDescription fr_config = test::ParseConfigOrDie("fr");
+  const ConfigDescription fr_rCA_config = test::ParseConfigOrDie("fr-rCA");
+  const ConfigDescription en_config = test::ParseConfigOrDie("en");
+  const ConfigDescription en_v21_config = test::ParseConfigOrDie("en-v21");
+  const ConfigDescription mcc262_mnc2_config = test::ParseConfigOrDie("mcc262-mnc2");
+
+  std::unique_ptr<ResourceTable> table =
+      test::ResourceTableBuilder()
+          .AddString("android:string/keep", ResourceId{}, default_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, fr_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, fr_rCA_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, en_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, en_v21_config, "keep")
+          .AddString("android:string/keep", ResourceId{}, mcc262_mnc2_config, "keep2")
+          .Build();
+
+  ASSERT_TRUE(ResourceDeduper().Consume(context.get(), table.get()));
+  EXPECT_THAT(table, HasValue("android:string/keep", default_config));
+  EXPECT_THAT(table, HasValue("android:string/keep", fr_config));
+  EXPECT_THAT(table, HasValue("android:string/keep", fr_rCA_config));
+  EXPECT_THAT(table, HasValue("android:string/keep", en_config));
+  EXPECT_THAT(table, Not(HasValue("android:string/keep", en_v21_config)));
+  EXPECT_THAT(table, HasValue("android:string/keep", mcc262_mnc2_config));
 }
 
 }  // namespace aapt
