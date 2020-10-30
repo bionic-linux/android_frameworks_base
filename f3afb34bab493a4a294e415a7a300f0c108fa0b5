@@ -39,6 +39,30 @@
       },
       "revId": "f3afb34bab493a4a294e415a7a300f0c108fa0b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51357289_8608f118",
+        "filename": "core/java/android/uwb/UwbAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-10-30T22:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d91c2b0_f8d42282",
+      "range": {
+        "startLine": 82,
+        "startChar": 51,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "f3afb34bab493a4a294e415a7a300f0c108fa0b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
