@@ -528,6 +528,7 @@ final class HistoricalRegistry {
 
     void offsetHistory(long offsetMillis) {
         synchronized (mOnDiskLock) {
+            List<HistoricalOps> mHistoryClone = null;
             synchronized (mInMemoryLock) {
                 if (!isPersistenceInitializedMLocked()) {
                     Slog.e(LOG_TAG, "Interaction before persistence initialized");
@@ -537,15 +538,21 @@ final class HistoricalRegistry {
                 clearHistory();
                 if (history != null) {
                     final int historySize = history.size();
+                    mHistoryClone = new ArrayList<>(historySize);
                     for (int i = 0; i < historySize; i++) {
                         final HistoricalOps ops = history.get(i);
                         ops.offsetBeginAndEndTime(offsetMillis);
+                        HistoricalOps opsClone = new HistoricalOps(ops.getBeginTimeMillis(),
+                                ops.getEndTimeMillis());
+                        mHistoryClone.add(opsClone);
                     }
                     if (offsetMillis < 0) {
-                        pruneFutureOps(history);
+                        pruneFutureOps(mHistoryClone);
                     }
-                    mPersistence.persistHistoricalOpsDLocked(history);
                 }
+            }
+            if (mHistoryClone != null) {
+                mPersistence.persistHistoricalOpsDLocked(mHistoryClone);
             }
         }
     }
@@ -681,10 +688,10 @@ final class HistoricalRegistry {
             synchronized (mInMemoryLock) {
                 pendingWrites = new ArrayList<>(mPendingWrites);
                 mPendingWrites.clear();
-                if (mPendingHistoryOffsetMillis != 0) {
-                    resampleHistoryOnDiskInMemoryDMLocked(mPendingHistoryOffsetMillis);
-                    mPendingHistoryOffsetMillis = 0;
-                }
+            }
+            if (mPendingHistoryOffsetMillis != 0) {
+                resampleHistoryOnDiskInMemoryDMLocked(mPendingHistoryOffsetMillis);
+                mPendingHistoryOffsetMillis = 0;
             }
             persistPendingHistory(pendingWrites);
         }
