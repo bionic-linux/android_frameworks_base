@@ -43,8 +43,8 @@ public final class CompatChange extends CompatibilityChangeInfo {
      * A change ID to be used only in the CTS test for this SystemApi
      */
     @ChangeId
-    @EnabledAfter(targetSdkVersion = 1234) // Needs to be > test APK targetSdkVersion.
-    private static final long CTS_SYSTEM_API_CHANGEID = 149391281; // This is a bug id.
+    @EnabledSince(targetSdkVersion = 1235) // Needs to be > test APK targetSdkVersion.
+    static final long CTS_SYSTEM_API_CHANGEID = 149391281; // This is a bug id.
 
     /**
      * Callback listener for when compat changes are updated for a package.
