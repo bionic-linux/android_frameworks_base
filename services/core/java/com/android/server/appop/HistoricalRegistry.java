@@ -535,17 +535,17 @@ final class HistoricalRegistry {
                 }
                 final List<HistoricalOps> history = mPersistence.readHistoryDLocked();
                 clearHistory();
-                if (history != null) {
-                    final int historySize = history.size();
-                    for (int i = 0; i < historySize; i++) {
-                        final HistoricalOps ops = history.get(i);
-                        ops.offsetBeginAndEndTime(offsetMillis);
-                    }
-                    if (offsetMillis < 0) {
-                        pruneFutureOps(history);
-                    }
-                    mPersistence.persistHistoricalOpsDLocked(history);
+            }
+            if (history != null) {
+                final int historySize = history.size();
+                for (int i = 0; i < historySize; i++) {
+                    final HistoricalOps ops = history.get(i);
+                    ops.offsetBeginAndEndTime(offsetMillis);
                 }
+                if (offsetMillis < 0) {
+                    pruneFutureOps(history);
+                }
+                mPersistence.persistHistoricalOpsDLocked(history);
             }
         }
     }
@@ -678,13 +678,11 @@ final class HistoricalRegistry {
     void persistPendingHistory() {
         final List<HistoricalOps> pendingWrites;
         synchronized (mOnDiskLock) {
-            synchronized (mInMemoryLock) {
-                pendingWrites = new ArrayList<>(mPendingWrites);
-                mPendingWrites.clear();
-                if (mPendingHistoryOffsetMillis != 0) {
-                    resampleHistoryOnDiskInMemoryDMLocked(mPendingHistoryOffsetMillis);
-                    mPendingHistoryOffsetMillis = 0;
-                }
+            pendingWrites = new ArrayList<>(mPendingWrites);
+            mPendingWrites.clear();
+            if (mPendingHistoryOffsetMillis != 0) {
+                resampleHistoryOnDiskInMemoryDMLocked(mPendingHistoryOffsetMillis);
+                mPendingHistoryOffsetMillis = 0;
             }
             persistPendingHistory(pendingWrites);
         }
