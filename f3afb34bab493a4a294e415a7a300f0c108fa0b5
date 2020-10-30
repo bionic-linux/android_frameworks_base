@@ -16,6 +16,29 @@
       "message": "Hi Jack, could you please take a look? Thanks!",
       "revId": "f3afb34bab493a4a294e415a7a300f0c108fa0b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d91c2b0_f8d42282",
+        "filename": "core/java/android/uwb/UwbAddress.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-10-30T20:07:54Z",
+      "side": 1,
+      "message": "nit: 0x?",
+      "range": {
+        "startLine": 82,
+        "startChar": 51,
+        "endLine": 82,
+        "endChar": 53
+      },
+      "revId": "f3afb34bab493a4a294e415a7a300f0c108fa0b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
