@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6d8c165_745ddd48",
+        "filename": "libs/androidfw/ConfigDescription.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1489207
+      },
+      "writtenOn": "2020-10-31T22:17:26Z",
+      "side": 0,
+      "message": "Given that b/171892595 was actually introduced via the workaround for b/62409213, can we just tweak this line?  AFAICT changing this to CONFIG_MCC|CONFIG_MNC|CONFIG_LOCALE would be sufficient.  Basically it is necessary to include all config bits with higher precedence in LOCALE here so that \"\" and \"de\"  (Or better yet, remove this and fix locale deduping.)",
+      "range": {
+        "startLine": 890,
+        "startChar": 16,
+        "endLine": 890,
+        "endChar": 29
+      },
+      "revId": "82cb76f90827c2925ae267f04f395a4e142f6a85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f71027c_d4b68188",
+        "filename": "libs/androidfw/ConfigDescription.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1489207
+      },
+      "writtenOn": "2020-10-31T22:17:26Z",
+      "side": 0,
+      "message": "Can we leave this in?\n\nRemoving this means implies that strings for \"fr\" can be used on a \"zh\" device, which seems strange.",
+      "range": {
+        "startLine": 970,
+        "startChar": 50,
+        "endLine": 970,
+        "endChar": 77
+      },
+      "revId": "82cb76f90827c2925ae267f04f395a4e142f6a85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
