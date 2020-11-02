@@ -16,6 +16,46 @@
       "message": "build error met. Please fix it.\n```\njava.jar:out/soong/.intermediates/external/icu/icu4j/icu4j_calendar_astronomer/android_common/turbine-combined/icu4j_calendar_astronomer.jar:out/soong/.intermediates/system/netd/server/netd_aidl_interfaces-platform-java/android_common/turbine-combined/netd_aidl_interfaces-platform-java.jar:out/soong/.intermediates/frameworks/base/cmds/idmap2/overlayable_policy_aidl-java/android_common/turbine-combined/overlayable_policy_aidl-java.jar:out/soong/.intermediates/frameworks/native/services/surfaceflinger/sysprop/SurfaceFlingerProperties/android_common/turbine-combined/SurfaceFlingerProperties.jar:out/soong/.intermediates/frameworks/base/core/sysprop/com.android.sysprop.watchdog/android_common/turbine-combined/com.android.sysprop.watchdog.jar -source 1.9 -target 1.9 -d out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/classes -s out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/anno @out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/services.core.unboosted.jar.rsp @out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/srcjars/list ; fi ) \u0026\u0026 out/soong/host/linux-x86/bin/soong_zip -jar -o out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/services.core.unboosted.jar -C out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/classes -D out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/classes \u0026\u0026 rm -rf \"out/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/srcjars\"\nOutput:\nout/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/srcjars/frameworks/base/services/core/java/com/android/server/appop/HistoricalRegistry.java:539: error: cannot find symbol\n            if (history !\u003d null) {\n                ^\n  symbol:   variable history\n  location: class HistoricalRegistry\nout/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/srcjars/frameworks/base/services/core/java/com/android/server/appop/HistoricalRegistry.java:540: error: cannot find symbol\n                final int historySize \u003d history.size();\n                                        ^\n  symbol:   variable history\n  location: class HistoricalRegistry\nout/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/srcjars/frameworks/base/services/core/java/com/android/server/appop/HistoricalRegistry.java:542: error: cannot find symbol\n                    final HistoricalOps ops \u003d history.get(i);\n                                              ^\n  symbol:   variable history\n  location: class HistoricalRegistry\nout/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/srcjars/frameworks/base/services/core/java/com/android/server/appop/HistoricalRegistry.java:546: error: cannot find symbol\n                    pruneFutureOps(history);\n                                   ^\n  symbol:   variable history\n  location: class HistoricalRegistry\nout/soong/.intermediates/frameworks/base/services/core/services.core.unboosted/android_common/javac/srcjars/frameworks/base/services/core/java/com/android/server/appop/HistoricalRegistry.java:548: error: cannot find symbol\n                mPersistence.persistHistoricalOpsDLocked(history);\n                                                         ^\n  symbol:   variable history\n  location: class HistoricalRegistry\n5 errors\n```",
       "revId": "591cb2209e6084585540c28dd07301d6bd475250",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8806e5e4_d22922b8",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2020-11-02T20:12:43Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to compile as the variable history was declared in the previous synchronized (mInMemoryLock) block.\n\nEven if we declare the variable out of the block, still it isn\u0027t safe to access `history` out of `mInMemoryLock`, which will lead to ConcurrentModificationExceptions.",
+      "revId": "591cb2209e6084585540c28dd07301d6bd475250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "551c1fa8_b91bd49b",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2020-11-02T20:12:43Z",
+      "side": 1,
+      "message": "mPendingWrites is in memory state and access needs to be guarded by mInMemoryLock. Accessing it outside of the mInMemoryLock will lead to ConcurrentModificationExceptions.",
+      "range": {
+        "startLine": 681,
+        "startChar": 44,
+        "endLine": 681,
+        "endChar": 58
+      },
+      "revId": "591cb2209e6084585540c28dd07301d6bd475250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
