@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "97509ea3_8ff4e5b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221112
+      },
+      "writtenOn": "2020-11-02T16:17:22Z",
+      "side": 1,
+      "message": "I have built with this and checked the below resources on a Sony device, seems to fix those just nicely\n\nResolution for 0x7f12166d com.android.settings:string/wifi_calling_settings_title\n\tFor config -mcc262-mnc2-de-rDE-ldltr-sw417dp-w417dp-h903dp-normal-long-notround-widecg-highdr-port-uiModeType\u003d2-notnight-420dpi-finger-keyssoft-nokeys-nonav-2434x1096-v30\n\tFound initial: com.android.settings\n\tFound better: com.android.settings -de\n\tFound better: com.android.settings -mcc262-mnc2\nWi-Fi calling\n\nResolution for 0x7f0e0512 com.android.phone:string/status_hint_label_wifi_call\n\tFor config -mcc262-mnc2-de-rDE-ldltr-sw417dp-w417dp-h903dp-normal-long-notround-widecg-highdr-port-uiModeType\u003d2-notnight-420dpi-finger-keyssoft-nokeys-nonav-2434x1096-v30\n\tFound initial: com.android.phone\n\tFound better: com.android.phone -de\n\tFound better: com.android.phone -mcc262-mnc2\nWi-Fi call",
+      "revId": "fb278edcaab59ff9d824d0f31286e998eadf6213",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "214fcf1c_d570ef9c",
         "filename": "tools/aapt2/DominatorTree_test.cpp",
         "patchSetId": 1
