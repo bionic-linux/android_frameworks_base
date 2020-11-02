@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32b631cd_bb8e69db",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6389,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-02T17:45:10Z",
+      "side": 1,
+      "message": "My only question here is if this belongs in ZygoteHooks or RuntimeHooks.\n\nElsewhere, there\u0027s a clearer mapping from framework classes to system.dalvik, i.e.:\nRuntimeInit -\u003e RuntimeHooks\nZygoteInit -\u003e ZygoteHooks\n\nNot every runtime process is a zygote process.\n\nSince this call is from ActivityThread, it\u0027s not immediately obvious whether this call is something you\u0027d want to make for all runtime processes, or just those that spawn from a zygote. \n\nDo you know if ActivityThread implies Zygote process? My guess is \"yes it does\", but I don\u0027t know for sure.",
+      "range": {
+        "startLine": 6389,
+        "startChar": 8,
+        "endLine": 6389,
+        "endChar": 19
+      },
+      "revId": "ae91844c30163c5b030e556f2951a7b68f2e61ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
