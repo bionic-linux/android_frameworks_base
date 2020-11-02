@@ -93,6 +93,30 @@
       },
       "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c21dbd7_fba3fef8",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-02T11:05:00Z",
+      "side": 0,
+      "message": "It\u0027s caught but it rethrows the exception. so there is still an exception. \nWe\u0027re talking about this, right? or do I misunderstand anything?\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1475899/4/core/java/android/os/BatteryStatsManager.java#428",
+      "parentUuid": "a0602e70_7b65141f",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
