@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bdfe983_2c0050c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-02T08:55:15Z",
+      "side": 1,
+      "message": "Tests failed with \"No capacity available to run this test.\" Retrying.",
+      "revId": "4a51385fd9825b33ce345a2beaa0534f39f7e8ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
