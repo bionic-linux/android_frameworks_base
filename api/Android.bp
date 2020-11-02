@@ -16,25 +16,6 @@ package {
     default_visibility: ["//visibility:private"],
 }
 
-// *-current.txt files for use by modules in other directories like cts
-filegroup {
-    name: "frameworks-base-api-current.txt",
-    srcs: ["current.txt"],
-    visibility: ["//visibility:public"],
-}
-
-filegroup {
-    name: "frameworks-base-api-system-current.txt",
-    srcs: ["system-current.txt"],
-    visibility: ["//visibility:public"],
-}
-
-filegroup {
-    name: "frameworks-base-api-system-removed.txt",
-    srcs: ["system-removed.txt"],
-    visibility: ["//visibility:public"],
-}
-
 genrule {
     name: "current-api-xml",
     tools: ["metalava"],
@@ -45,7 +26,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-current-merged.txt",
+    name: "frameworks-base-api-current.txt",
     srcs: [
         ":conscrypt.module.public.api{.public.api.txt}",
         ":framework-media{.public.api.txt}",
@@ -75,7 +56,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-removed-merged.txt",
+    name: "frameworks-base-api-removed.txt",
     srcs: [
         ":conscrypt.module.public.api{.public.removed-api.txt}",
         ":framework-media{.public.removed-api.txt}",
@@ -100,7 +81,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-system-current-merged.txt",
+    name: "frameworks-base-api-system-current.txt",
     srcs: [
         ":framework-media{.system.api.txt}",
         ":framework-mediaprovider{.system.api.txt}",
@@ -129,7 +110,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-system-removed-merged.txt",
+    name: "frameworks-base-api-system-removed.txt",
     srcs: [
         ":framework-media{.system.removed-api.txt}",
         ":framework-mediaprovider{.system.removed-api.txt}",
@@ -153,7 +134,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-module-lib-current-merged.txt",
+    name: "frameworks-base-api-module-lib-current.txt",
     srcs: [
         ":framework-media{.module-lib.api.txt}",
         ":framework-mediaprovider{.module-lib.api.txt}",
@@ -182,7 +163,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-module-lib-removed-merged.txt",
+    name: "frameworks-base-api-module-lib-removed.txt",
     srcs: [
         ":framework-media{.module-lib.removed-api.txt}",
         ":framework-mediaprovider{.module-lib.removed-api.txt}",
@@ -208,8 +189,8 @@ genrule {
 genrule {
     name: "combined-removed-dex",
     srcs: [
-        ":frameworks-base-api-removed-merged.txt",
-        ":frameworks-base-api-system-removed-merged.txt",
+        ":frameworks-base-api-removed.txt",
+        ":frameworks-base-api-system-removed.txt",
         ":android.car-stubs-docs{.removed-api.txt}",
         ":android.car-system-stubs-docs{.removed-api.txt}",
     ],
