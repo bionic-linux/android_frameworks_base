@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5aeab42d_c0efe4b4",
+        "filename": "libs/androidfw/ConfigDescription.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-02T16:37:39Z",
+      "side": 0,
+      "message": "I\u0027m fine with preventing with mcc/mnc qualifiers from being deduped as well until we fix locale deduping. In the current release timeframe, I\u0027ll look into b/137339827 and b/137230022.",
+      "parentUuid": "c6d8c165_745ddd48",
+      "range": {
+        "startLine": 890,
+        "startChar": 16,
+        "endLine": 890,
+        "endChar": 29
+      },
+      "revId": "82cb76f90827c2925ae267f04f395a4e142f6a85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f71027c_d4b68188",
         "filename": "libs/androidfw/ConfigDescription.cpp",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-31T22:17:26Z",
       "side": 0,
       "message": "Can we leave this in?\n\nRemoving this means implies that strings for \"fr\" can be used on a \"zh\" device, which seems strange.",
+      "range": {
+        "startLine": 970,
+        "startChar": 50,
+        "endLine": 970,
+        "endChar": 77
+      },
+      "revId": "82cb76f90827c2925ae267f04f395a4e142f6a85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f80c078_cbe0263a",
+        "filename": "libs/androidfw/ConfigDescription.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-02T16:37:39Z",
+      "side": 0,
+      "message": "Maybe !pred(language, o.language) would be more correct.",
+      "parentUuid": "2f71027c_d4b68188",
       "range": {
         "startLine": 970,
         "startChar": 50,

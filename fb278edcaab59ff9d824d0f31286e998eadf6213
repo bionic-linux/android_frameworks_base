@@ -33,6 +33,24 @@
       "message": "Can you include MCC/MNC in one of the tests here?\n\nWith the changes I proposed elsewhere you\u0027d get this:\n\n// Corollary to \"LocalesAreNeverDominated\"\nTEST(DominatorTreeTest, MccIsPeertoLocale) {\n  const ConfigDescription default_config \u003d {};\n  const ConfigDescription de_config \u003d test::ParseConfigOrDie(\"de\");\n  const ConfigDescription fr_config \u003d test::ParseConfigOrDie(\"fr\");\n  const ConfigDescription mcc_config \u003d test::ParseConfigOrDie(\"mcc262\");\n  const ConfigDescription mcc_fr_config \u003d test::ParseConfigOrDie(\"mcc262-fr\");\n\n  std::vector\u003cstd::unique_ptr\u003cResourceConfigValue\u003e\u003e configs;\n  configs.push_back(util::make_unique\u003cResourceConfigValue\u003e(default_config, \"\"));\n  configs.push_back(util::make_unique\u003cResourceConfigValue\u003e(de_config, \"\"));\n  configs.push_back(util::make_unique\u003cResourceConfigValue\u003e(fr_config, \"\"));\n  configs.push_back(util::make_unique\u003cResourceConfigValue\u003e(mcc_config, \"\"));\n  configs.push_back(util::make_unique\u003cResourceConfigValue\u003e(mcc_fr_config, \"\"));\n\n  DominatorTree tree(configs);\n  PrettyPrinter printer;\n\n  std::string expected \u003d\n      \"\u003cdefault\u003e\\n\"\n      \"de\\n\"\n      \"fr\\n\"\n      \"mcc262\\n\"\n      \"mcc262-fr\\n\";\n  EXPECT_EQ(expected, printer.ToString(\u0026tree));\n}",
       "revId": "fb278edcaab59ff9d824d0f31286e998eadf6213",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52b66ec4_3a169f57",
+        "filename": "tools/aapt2/DominatorTree_test.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-11-02T16:37:39Z",
+      "side": 1,
+      "message": "Added a separate mnc config into that test as well.",
+      "parentUuid": "214fcf1c_d570ef9c",
+      "revId": "fb278edcaab59ff9d824d0f31286e998eadf6213",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
