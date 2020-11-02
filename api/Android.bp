@@ -16,25 +16,6 @@ package {
     default_visibility: ["//visibility:private"],
 }
 
-// *-current.txt files for use by modules in other directories like cts
-filegroup {
-    name: "frameworks-base-api-current.txt",
-    srcs: ["current.txt"],
-    visibility: ["//visibility:public"],
-}
-
-filegroup {
-    name: "frameworks-base-api-system-current.txt",
-    srcs: ["system-current.txt"],
-    visibility: ["//visibility:public"],
-}
-
-filegroup {
-    name: "frameworks-base-api-system-removed.txt",
-    srcs: ["system-removed.txt"],
-    visibility: ["//visibility:public"],
-}
-
 genrule {
     name: "current-api-xml",
     tools: ["metalava"],
@@ -45,7 +26,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-current-merged.txt",
+    name: "frameworks-base-api-current.txt",
     srcs: [
         ":conscrypt.module.public.api{.public.api.txt}",
         ":framework-media{.public.api.txt}",
@@ -75,7 +56,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-removed-merged.txt",
+    name: "frameworks-base-api-system-removed.txt",
     srcs: [
         ":conscrypt.module.public.api{.public.removed-api.txt}",
         ":framework-media{.public.removed-api.txt}",
@@ -100,7 +81,7 @@ genrule {
 }
 
 genrule {
-    name: "frameworks-base-api-system-current-merged.txt",
+    name: "frameworks-base-api-system-current.txt",
     srcs: [
         ":framework-media{.system.api.txt}",
         ":framework-mediaprovider{.system.api.txt}",
