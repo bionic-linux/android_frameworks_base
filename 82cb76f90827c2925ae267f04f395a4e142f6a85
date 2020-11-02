@@ -93,6 +93,30 @@
       },
       "revId": "82cb76f90827c2925ae267f04f395a4e142f6a85",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "084a2fc8_28e20e01",
+        "filename": "libs/androidfw/ConfigDescription.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1489207
+      },
+      "writtenOn": "2020-11-02T16:51:15Z",
+      "side": 0,
+      "message": "I think you\u0027re right.  On that note, localeScript seems to be missing here (can be added in a separate change).",
+      "parentUuid": "7f80c078_cbe0263a",
+      "range": {
+        "startLine": 970,
+        "startChar": 50,
+        "endLine": 970,
+        "endChar": 77
+      },
+      "revId": "82cb76f90827c2925ae267f04f395a4e142f6a85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
