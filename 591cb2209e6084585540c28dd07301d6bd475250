@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "019d3bf2_1e771fea",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1247389
+      },
+      "writtenOn": "2020-11-03T02:39:24Z",
+      "side": 1,
+      "message": "The async operation also cannot avoid the lock will be held, if the scope of lock cannot be reduced, please help to provide us with some feasible solutions",
+      "parentUuid": "8806e5e4_d22922b8",
+      "revId": "591cb2209e6084585540c28dd07301d6bd475250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "551c1fa8_b91bd49b",
         "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2020-11-02T20:12:43Z",
       "side": 1,
       "message": "mPendingWrites is in memory state and access needs to be guarded by mInMemoryLock. Accessing it outside of the mInMemoryLock will lead to ConcurrentModificationExceptions.",
+      "range": {
+        "startLine": 681,
+        "startChar": 44,
+        "endLine": 681,
+        "endChar": 58
+      },
+      "revId": "591cb2209e6084585540c28dd07301d6bd475250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6054e6e_e5d00458",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1247389
+      },
+      "writtenOn": "2020-11-03T02:39:24Z",
+      "side": 1,
+      "message": "The async operation also cannot avoid the lock will be held, if the scope of lock cannot be reduced, please help to provide us with some feasible solutions",
+      "parentUuid": "551c1fa8_b91bd49b",
       "range": {
         "startLine": 681,
         "startChar": 44,
