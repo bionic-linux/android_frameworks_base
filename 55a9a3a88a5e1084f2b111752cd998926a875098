@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca610bd0_282a084a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2020-11-03T18:10:52Z",
+      "side": 1,
+      "message": "LGTM. This matches the current Conscrypt functionality + RFC 5705 defined function",
+      "revId": "55a9a3a88a5e1084f2b111752cd998926a875098",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
