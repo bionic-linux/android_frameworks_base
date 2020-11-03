@@ -22,6 +22,30 @@
       },
       "revId": "ae91844c30163c5b030e556f2951a7b68f2e61ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3e51c7c_067ee33b",
+        "filename": "core/java/android/app/ActivityThread.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6389,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-11-03T13:55:36Z",
+      "side": 1,
+      "message": "I do not know if ActivityThread implies Zygote process either. I will create a new class , e.g. ActivityThreadHooks instead.",
+      "parentUuid": "32b631cd_bb8e69db",
+      "range": {
+        "startLine": 6389,
+        "startChar": 8,
+        "endLine": 6389,
+        "endChar": 19
+      },
+      "revId": "ae91844c30163c5b030e556f2951a7b68f2e61ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
