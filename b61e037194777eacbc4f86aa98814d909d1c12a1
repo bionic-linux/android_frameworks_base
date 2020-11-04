@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8d81aff_072e9dbe",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7177,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-04T11:41:22Z",
+      "side": 0,
+      "message": "I\u0027m not sure I understand the reply. The special casing was not necessary because of the IDLE or UNKNOWN states, it was added to ensure that the network is created earlier (IIRC, before the UID ranges are applied).\n\nI think the bug was that when the network reached CONNECTED, onAvailable was sent, but the UID ranges had not yet been sent to netd. The problem might have been that netd cannot be told to apply UID ranges unless the network has already been created (because it has nowhere to store them). But I might be misremembering the details.\n\nThe code must still ensure that when a VPN comes up, the UID ranges are sent to netd (which has to happen after the network is already created) before onAvailable is sent. I think the current CL does do that.\n\nSpurious callbacks shouldn\u0027t be a concern because we can simply gate all callbacks on everConnected, not created. Historically there was an invariant in the code that networks that had not yet connected would never send callbacks. Unfortunately, it looks there aren\u0027t very strong guarantees in the code any more and it looks like there may even be cases where this is not true.",
+      "parentUuid": "3016d4b8_321722bc",
+      "range": {
+        "startLine": 7174,
+        "startChar": 0,
+        "endLine": 7177,
+        "endChar": 86
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "89f4afd4_69a73c28",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 7
@@ -132,6 +156,30 @@
       "side": 0,
       "message": "Because this is in fact trivially a no-op. The semantics of this block are such that restart will only be false if all components of mArguments are null. \n\nmArguments is a final array initialized in the constructor. The components of the array are never overwritten (though the components of those components are), and if you trace the call to startLegacyVpn to see where they come from, at least one of these components will always be non-null. Unless somebody calls startLegacyVpnPrivileged with a non-existing type, but that never happens AFAICT. You can see that for safety, I added the check in l.2779 so that we\u0027ll get a crash with a clear message if this ever happens.\n\n\nOriginally I was touching this because I didn\u0027t want a case where the control comes here and the VPN is still connected, so I had simply lifted agentDisconnect() out of the if above. But Lucas pointed out that this code is never called, and at that point I thought it was safer to just remove the whole thing.\n\nI guess that means it is technically possible that there is a (purely hypothetical) race where some other VPN is brought up inbetween the critical sections where prepareInternal() is called in startLegacyVpn and the time the legacy runner thread enters the synchronized() block, but even if that is true this patch makes no change to that.\n\nThat being said, I am happy moving this removal to another patch if you feel uncomfortable about this.",
       "parentUuid": "2ca2044d_61d1f0c3",
+      "range": {
+        "startLine": 2904,
+        "startChar": 0,
+        "endLine": 2912,
+        "endChar": 17
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2180131a_f86f531a",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-04T11:41:22Z",
+      "side": 0,
+      "message": "Yes, please do it in a separate CL.",
+      "parentUuid": "f14bc6ec_0e4eb729",
       "range": {
         "startLine": 2904,
         "startChar": 0,

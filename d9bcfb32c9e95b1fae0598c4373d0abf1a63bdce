@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28c8d2ac_764693ad",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7196,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-04T11:41:22Z",
+      "side": 1,
+      "message": "Actually, I believe that historically, \"all\" (modulo bugs) networkcallbacks were gated by nai.everConnected. It looks like we may be adding codepaths where this is no longer true (in particular, for CAP_CHANGED).\n\nI think such callbacks might mean that onCapabilitiesChanged can be sent before onAvailable (which makes no sense) or that onAvailable is sent for a network which has not yet been created (which is definitely incorrect).\n\nGiven that we plan to ensure that netd creates the network earlier in the lifecycle (as soon as the NetworkAgent is created), I think we will still need separate created and everConnected attributes.",
+      "range": {
+        "startLine": 7194,
+        "startChar": 0,
+        "endLine": 7196,
+        "endChar": 75
+      },
+      "revId": "d9bcfb32c9e95b1fae0598c4373d0abf1a63bdce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "187cdf43_b3289d3d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 7061,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-04T11:41:22Z",
+      "side": 1,
+      "message": "Did these expectations pass before this CL? If so, could they be a part of a CL that could be merged before this one?",
+      "range": {
+        "startLine": 7058,
+        "startChar": 0,
+        "endLine": 7061,
+        "endChar": 68
+      },
+      "revId": "d9bcfb32c9e95b1fae0598c4373d0abf1a63bdce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe8f676f_288f9ab1",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-04T11:41:22Z",
+      "side": 1,
+      "message": "Why is this in parentheses?",
+      "range": {
+        "startLine": 1030,
+        "startChar": 66,
+        "endLine": 1030,
+        "endChar": 79
+      },
+      "revId": "d9bcfb32c9e95b1fae0598c4373d0abf1a63bdce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

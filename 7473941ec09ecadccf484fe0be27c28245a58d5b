@@ -138,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75cd83d1_60cea989",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-04T11:41:22Z",
+      "side": 1,
+      "message": "Doing this in a separate CL is fine. Can you prepare that now, so that we can see how it looks and verify that it will actually work? We don\u0027t have to submit it as part of the same change stack.",
+      "parentUuid": "52229815_bc2314c9",
+      "range": {
+        "startLine": 411,
+        "startChar": 32,
+        "endLine": 411,
+        "endChar": 54
+      },
+      "revId": "7473941ec09ecadccf484fe0be27c28245a58d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06f67840_88582739",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 8
