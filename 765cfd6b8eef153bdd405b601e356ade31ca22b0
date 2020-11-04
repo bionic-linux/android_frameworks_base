@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a973241_28a28337",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-04T16:57:39Z",
+      "side": 1,
+      "message": "Which tests are failed by library change? Do we have bug to track this?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 47
+      },
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff14464d_b5285e9f",
+        "filename": "tests/net/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-04T16:57:39Z",
+      "side": 1,
+      "message": "Question: Is this for mockito inline?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cf22f0f_24ee1d09",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-04T16:57:39Z",
+      "side": 1,
+      "message": "Why do you also update this to inline lib? Does any FrameworksNetCommonTests fail by lib change?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d46fa19_d1e2b2d7",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-04T16:57:39Z",
+      "side": 1,
+      "message": "Don\u0027t we need to add jni_libs: [\"libdexmakerjvmtiagent\"] here for mockito inline?",
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
