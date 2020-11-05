@@ -16,6 +16,24 @@
       "message": "Could we somehow automatically collect these files as a future improvement? When someone adds a new module with APIs, there seems to be too many things they\u0027d have to update.",
       "revId": "ddf171aaf8699afaa32753aee980386447eb6d30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7698511e_eeaeb1a8",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-11-05T21:20:14Z",
+      "side": 1,
+      "message": "yes, we could make some soong extensions that we can feed a LIST_OF_MODULES, which would generate the right sub-modules for us, I have b/169103987 for that",
+      "parentUuid": "007c52fe_86c36cc1",
+      "revId": "ddf171aaf8699afaa32753aee980386447eb6d30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
