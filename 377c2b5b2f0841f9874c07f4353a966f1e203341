@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53ed4b68_3a0adaf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1729155
+      },
+      "writtenOn": "2020-11-05T06:17:07Z",
+      "side": 1,
+      "message": "Hello, Michael and Santos:\n\nI would like to invite you for the owner review of this CL. This CL is a part of SystemSuspend AIDL changes, which update PowerManager and Wakelock Reader to use the new interface. Thanks you for attention!",
+      "revId": "377c2b5b2f0841f9874c07f4353a966f1e203341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
