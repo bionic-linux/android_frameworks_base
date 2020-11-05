@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "966b0167_1ed8b5a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-11-05T08:28:35Z",
+      "side": 1,
+      "message": "I think we need a manual test to ensure the VPN(both of legacy VPN and 3rd-party VPN) function is working and the UI can also work properly.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "d9bcfb32c9e95b1fae0598c4373d0abf1a63bdce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28c8d2ac_764693ad",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 13
