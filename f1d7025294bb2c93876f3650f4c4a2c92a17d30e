@@ -117,6 +117,30 @@
       },
       "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79ec6aa5_8143ea71",
+        "filename": "services/core/java/com/android/server/connectivity/DataConnectionStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-06T08:51:45Z",
+      "side": 0,
+      "message": "Ah, okay, got your point. Because I got this error before.\nframeworks/base/services/core/java/com/android/server/connectivity/DataConnectionStats.java:107: error: exception RemoteException is never thrown in body of corresponding try statement\n        } catch (RemoteException e) {\n\nSo I think the methods in BatteryStatsManager should throws RuntimeException and then catch it here.",
+      "parentUuid": "1c21dbd7_fba3fef8",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 37
+      },
+      "revId": "f1d7025294bb2c93876f3650f4c4a2c92a17d30e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
