@@ -59,7 +59,11 @@ cc_defaults {
             cflags: [
                 "-Wno-unused-variable",
             ],
-        }
+        },
+        windows: {
+            // Counteract setting inherited from skia_deps.
+            enabled: false,
+        },
     }
 }
 
