@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "302e54c8_76f74f7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-11-06T19:17:46Z",
+      "side": 1,
+      "message": "I appreciate your efforts to clean this up, but I don\u0027t think we can promote these permissions to public APIs without the detailed advice of various teams represented.\n\nInstead, I think the signature generation code should quietly drop permissions that aren\u0027t part of the given API surface being generated.\n\nAs a specific example of why I think this is the right approach, consider the APIs protected by READ_PRIVILEGED_PHONE_STATE; many of them can legitimately be called by apps when they hold \"carrier privileges\" as part of the public API; the @RequiresPermission only actually applies when someone is using the API via its exposure in @SystemApi.\n\nI believe we do something similar when generated the @IntDef docs for constants; we only emit docs relevant for the API surface being generated.",
+      "revId": "829463c7378991a48fefaee7d5495bc31b11181a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
