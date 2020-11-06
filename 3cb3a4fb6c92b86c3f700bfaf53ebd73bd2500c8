@@ -81,6 +81,24 @@
       "parentUuid": "8f9f2ff2_42467f4b",
       "revId": "3cb3a4fb6c92b86c3f700bfaf53ebd73bd2500c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63946f77_d7b4a177",
+        "filename": "telephony/java/android/telephony/ims/stub/SipTransportImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-11-06T19:13:50Z",
+      "side": 1,
+      "message": "Whoops, been writing too much Python lately",
+      "parentUuid": "7ddf3539_adafe230",
+      "revId": "3cb3a4fb6c92b86c3f700bfaf53ebd73bd2500c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
