@@ -1,0 +1,394 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b92602c3_3d1f34bc",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 175,
+        "startChar": 37,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1c149214_ad481bbf",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 176,
+        "startChar": 37,
+        "endLine": 176,
+        "endChar": 46
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "60b7b037_2641db3b",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 11968,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 11968,
+        "startChar": 65,
+        "endLine": 11968,
+        "endChar": 74
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b3bc5dcf_7fdc733e",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12041,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 12041,
+        "startChar": 74,
+        "endLine": 12041,
+        "endChar": 83
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7be8702b_ab627194",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12047,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 12047,
+        "startChar": 65,
+        "endLine": 12047,
+        "endChar": 74
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bed58ad6_85a92323",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12067,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 12067,
+        "startChar": 65,
+        "endLine": 12067,
+        "endChar": 74
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "83a947d6_a954b7e0",
+        "filename": "api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12073,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 12073,
+        "startChar": 65,
+        "endLine": 12073,
+        "endChar": 74
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d6acd719_2d127053",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 175,
+        "startChar": 37,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7a8d43d8_1213e888",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 176,
+        "startChar": 37,
+        "endLine": 176,
+        "endChar": 46
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "756e776f_b5e94c3e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 11968,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 11968,
+        "startChar": 65,
+        "endLine": 11968,
+        "endChar": 74
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0d36a52e_f3bdddc4",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12041,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 12041,
+        "startChar": 74,
+        "endLine": 12041,
+        "endChar": 83
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cec61ad0_27f558d1",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12047,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 12047,
+        "startChar": 65,
+        "endLine": 12047,
+        "endChar": 74
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a9241d9c_5d4f7be8",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12067,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 12067,
+        "startChar": 65,
+        "endLine": 12067,
+        "endChar": 74
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b06a89fb_5bdeb8ef",
+        "filename": "core/api/current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12073,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 12073,
+        "startChar": 65,
+        "endLine": 12073,
+        "endChar": 74
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000005989730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1490123?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c59fff21_13a83acc",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3787,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-06T19:51:28Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 3787,
+        "startChar": 23,
+        "endLine": 3787,
+        "endChar": 32
+      },
+      "revId": "8370ce6c98649e29f47c0e860583c043984d9a39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
