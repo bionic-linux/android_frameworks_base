@@ -157,6 +157,7 @@ public final class RoleManager {
      *
      * @hide
      */
+    @SystemApi
     public static final String PERMISSION_MANAGE_ROLES_FROM_CONTROLLER =
             "com.android.permissioncontroller.permission.MANAGE_ROLES_FROM_CONTROLLER";
 
