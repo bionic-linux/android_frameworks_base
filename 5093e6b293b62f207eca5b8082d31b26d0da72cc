@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eb9844c_f8dee109",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSecretKeyFactorySpi.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-06T22:30:19Z",
+      "side": 1,
+      "message": "I don\u0027t think we are going to change this. It basically means introducing new tags, which would not be known by any old key blob. So we basically just add code paths without removing any. We could clean this up though, because technically we don\u0027t need an exception to tell us that something is not an encryption padding. - Done",
+      "parentUuid": "e819609f_944ebef1",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 136,
+        "endChar": 30
+      },
+      "revId": "5093e6b293b62f207eca5b8082d31b26d0da72cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "121d1056_0c938bd6",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-06T17:50:05Z",
       "side": 1,
       "message": "Should these not throw exceptions for having tags on a key that require secure hardware, if the key is not actually in secure hardware?",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 30
+      },
+      "revId": "5093e6b293b62f207eca5b8082d31b26d0da72cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "256eaf04_6a175a40",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSecretKeyFactorySpi.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-06T22:30:19Z",
+      "side": 1,
+      "message": "I don\u0027t think we should impose any of this here. At this point we are only reporting what the back end tells us.",
+      "parentUuid": "121d1056_0c938bd6",
       "range": {
         "startLine": 179,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e295050c_bbf2532b",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSecretKeyFactorySpi.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-06T22:30:19Z",
+      "side": 1,
+      "message": "oopsy - Done",
+      "parentUuid": "236bb9c6_16894542",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 9
+      },
+      "revId": "5093e6b293b62f207eca5b8082d31b26d0da72cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86630348_f0a3f489",
@@ -83,6 +155,30 @@
       "writtenOn": "2020-11-06T17:50:05Z",
       "side": 1,
       "message": "Given that there should only be one padding for a key, why is this an array/arraylist in the first place?",
+      "range": {
+        "startLine": 204,
+        "startChar": 47,
+        "endLine": 204,
+        "endChar": 60
+      },
+      "revId": "5093e6b293b62f207eca5b8082d31b26d0da72cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03b5ef71_8e2e5c44",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSecretKeyFactorySpi.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-06T22:30:19Z",
+      "side": 1,
+      "message": "This list specifies which paddings are allowed. There may be multiple.",
+      "parentUuid": "86630348_f0a3f489",
       "range": {
         "startLine": 204,
         "startChar": 47,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8303267_afdd494c",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSecretKeyFactorySpi.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-06T22:30:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c24e23a3_61df9552",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 61
+      },
+      "revId": "5093e6b293b62f207eca5b8082d31b26d0da72cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2402220_3d14ca3a",
@@ -129,6 +249,30 @@
       "writtenOn": "2020-11-06T17:50:05Z",
       "side": 1,
       "message": "Same question as above. One key should just have one configuration, right?",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 68
+      },
+      "revId": "5093e6b293b62f207eca5b8082d31b26d0da72cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3410849b_e2834cf3",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreSecretKeyFactorySpi.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-11-06T22:30:19Z",
+      "side": 1,
+      "message": "As above. You can allow multiple block modes and digests. When you start an operation you have to specify one combination. But when generating the key you can allow a list of allowed parameters. So the KeyInfo needs to reflect that.",
+      "parentUuid": "c2402220_3d14ca3a",
       "range": {
         "startLine": 212,
         "startChar": 0,
