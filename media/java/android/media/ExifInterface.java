@@ -2443,6 +2443,7 @@ public class ExifInterface {
         try {
             // The exif field is in local time. Parsing it as if it is UTC will yield time
             // since 1/1/1970 local time
+            sFormatter.setTimeZone(TimeZone.getDefault());
             Date datetime;
             synchronized (sFormatter) {
                 datetime = sFormatter.parse(dateTimeString, pos);
