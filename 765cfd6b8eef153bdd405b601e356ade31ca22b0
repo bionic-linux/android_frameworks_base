@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eda7b8c7_b40cdaf2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-06T08:26:29Z",
+      "side": 1,
+      "message": "No bug for this. NsdManagerTest and MultipathPolicyTrackerTest are failed after I change the mokito library in FrameworksNetCommonTest library.",
+      "parentUuid": "0a973241_28a28337",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 47
+      },
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff14464d_b5285e9f",
         "filename": "tests/net/AndroidManifest.xml",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-04T16:57:39Z",
       "side": 1,
       "message": "Question: Is this for mockito inline?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f69db42_d8acae93",
+        "filename": "tests/net/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-06T08:26:29Z",
+      "side": 1,
+      "message": "This is for the jni library.",
+      "parentUuid": "ff14464d_b5285e9f",
       "range": {
         "startLine": 52,
         "startChar": 4,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a71afca2_7f7ac9f2",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-06T08:26:29Z",
+      "side": 1,
+      "message": "When aosp/1475901 is applied, ConnectivityServiceTest still gets failure because BatteryStatsManager is a final class. Honestly, I have no idea why does it get the failure because the ConnectivityServiceTest is not inculded in FrameworksNetCommonTests. I tried to change the library here and the CS tests can pass. But NsdManagerTest and MultipathPolicyTrackerTest are failed so fix the two failed test case as well.",
+      "parentUuid": "7cf22f0f_24ee1d09",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d46fa19_d1e2b2d7",
         "filename": "tests/net/common/Android.bp",
         "patchSetId": 4
@@ -83,6 +155,24 @@
       "writtenOn": "2020-11-04T16:57:39Z",
       "side": 1,
       "message": "Don\u0027t we need to add jni_libs: [\"libdexmakerjvmtiagent\"] here for mockito inline?",
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ec54776_c654cfa2",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-06T08:26:29Z",
+      "side": 1,
+      "message": "It will encounter compile error: unrecognized property \"jni_libs\"\nI think it is because this target is a java library but not a test app.\nBut, your point makes me realize this will break CTS tests because this library is included in CtsNetTestCases. So we need another patch to address cts.",
+      "parentUuid": "6d46fa19_d1e2b2d7",
       "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

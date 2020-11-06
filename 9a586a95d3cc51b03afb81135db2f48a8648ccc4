@@ -22,6 +22,30 @@
       },
       "revId": "9a586a95d3cc51b03afb81135db2f48a8648ccc4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01be2978_2a33fa02",
+        "filename": "tests/net/java/com/android/server/connectivity/MultipathPolicyTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-06T08:26:29Z",
+      "side": 0,
+      "message": "It looks like we don\u0027t need l.114 after using mockito extended library. Not quite sure but test  passed. Remove this method since currently only need one line.",
+      "parentUuid": "7a898541_6dbad61c",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 73
+      },
+      "revId": "9a586a95d3cc51b03afb81135db2f48a8648ccc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
