@@ -389,7 +389,7 @@ public class Vpn {
         mIkev2SessionCreator = ikev2SessionCreator;
 
         mPackage = VpnConfig.LEGACY_VPN;
-        mOwnerUID = getAppUid(mPackage, mUserId);
+        mOwnerUID = getAppUid(mUserIdContext, mPackage);
         mIsPackageTargetingAtLeastQ = doesPackageTargetAtLeastQ(mPackage);
 
         try {
@@ -628,10 +628,10 @@ public class Vpn {
             Binder.restoreCallingIdentity(oldId);
         }
 
-        PackageManager pm = mContext.getPackageManager();
+        final PackageManager pm = mUserIdContext.getPackageManager();
         ApplicationInfo appInfo = null;
         try {
-            appInfo = pm.getApplicationInfoAsUser(packageName, 0 /*flags*/, mUserId);
+            appInfo = pm.getApplicationInfo(packageName, 0 /*flags*/);
         } catch (NameNotFoundException unused) {
             Log.w(TAG, "Can't find \"" + packageName + "\" when checking always-on support");
         }
@@ -642,7 +642,7 @@ public class Vpn {
         final Intent intent = new Intent(VpnConfig.SERVICE_INTERFACE);
         intent.setPackage(packageName);
         List<ResolveInfo> services =
-                pm.queryIntentServicesAsUser(intent, PackageManager.GET_META_DATA, mUserId);
+                pm.queryIntentServices(intent, PackageManager.GET_META_DATA);
         if (services == null || services.size() == 0) {
             return false;
         }
@@ -976,7 +976,7 @@ public class Vpn {
         // We can't just check that packageName matches mPackage, because if the app was uninstalled
         // and reinstalled it will no longer be prepared. Similarly if there is a shared UID, the
         // calling package may not be the same as the prepared package. Check both UID and package.
-        return getAppUid(packageName, mUserId) == mOwnerUID && mPackage.equals(packageName);
+        return getAppUid(mUserIdContext, packageName) == mOwnerUID && mPackage.equals(packageName);
     }
 
     /** Prepare the VPN for the given package. Does not perform permission checks. */
@@ -1016,7 +1016,7 @@ public class Vpn {
 
             Log.i(TAG, "Switched from " + mPackage + " to " + newPackage);
             mPackage = newPackage;
-            mOwnerUID = getAppUid(newPackage, mUserId);
+            mOwnerUID = getAppUid(mUserIdContext, newPackage);
             mIsPackageTargetingAtLeastQ = doesPackageTargetAtLeastQ(newPackage);
             try {
                 mNetd.allowProtect(mOwnerUID);
@@ -1037,7 +1037,7 @@ public class Vpn {
         // Check if the caller is authorized.
         enforceControlPermissionOrInternalCaller();
 
-        final int uid = getAppUid(packageName, mUserId);
+        final int uid = getAppUid(mUserIdContext, packageName);
         if (uid == -1 || VpnConfig.LEGACY_VPN.equals(packageName)) {
             // Authorization for nonexistent packages (or fake ones) can't be updated.
             return false;
@@ -1115,14 +1115,14 @@ public class Vpn {
                 || isVpnServicePreConsented(context, packageName);
     }
 
-    private int getAppUid(final String app, final int userId) {
+    private int getAppUid(final Context context, final String app) {
         if (VpnConfig.LEGACY_VPN.equals(app)) {
             return Process.myUid();
         }
-        PackageManager pm = mContext.getPackageManager();
+        final PackageManager pm = context.getPackageManager();
         return Binder.withCleanCallingIdentity(() -> {
             try {
-                return pm.getPackageUidAsUser(app, userId);
+                return pm.getPackageUid(app, 0 /* flags */);
             } catch (NameNotFoundException e) {
                 return -1;
             }
@@ -1133,10 +1133,9 @@ public class Vpn {
         if (VpnConfig.LEGACY_VPN.equals(packageName)) {
             return true;
         }
-        PackageManager pm = mContext.getPackageManager();
+        final PackageManager pm = mUserIdContext.getPackageManager();
         try {
-            ApplicationInfo appInfo =
-                    pm.getApplicationInfoAsUser(packageName, 0 /*flags*/, mUserId);
+            final ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0 /*flags*/);
             return appInfo.targetSdkVersion >= VERSION_CODES.Q;
         } catch (NameNotFoundException unused) {
             Log.w(TAG, "Can't find \"" + packageName + "\"");
@@ -1466,8 +1465,9 @@ public class Vpn {
     // Note: Return type guarantees results are deduped and sorted, which callers require.
     private SortedSet<Integer> getAppsUids(List<String> packageNames, int userId) {
         SortedSet<Integer> uids = new TreeSet<>();
+        final Context context = mContext.createContextAsUser(UserHandle.of(userId), 0 /* flags */);
         for (String app : packageNames) {
-            int uid = getAppUid(app, userId);
+            int uid = getAppUid(context, app);
             if (uid != -1) uids.add(uid);
         }
         return uids;
@@ -3078,7 +3078,7 @@ public class Vpn {
     }
 
     private void verifyCallingUidAndPackage(String packageName) {
-        if (getAppUid(packageName, mUserId) != Binder.getCallingUid()) {
+        if (getAppUid(mUserIdContext, packageName) != Binder.getCallingUid()) {
             throw new SecurityException("Mismatched package and UID");
         }
     }
