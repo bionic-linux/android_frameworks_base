@@ -271,7 +271,7 @@ package android.net {
     field public static final int BADGING_SD = 10; // 0xa
   }
 
-  @IntDef({0x0, 0xa, 0x14, 0x1e}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) public static @interface NetworkBadging.Badging {
+  @IntDef({android.net.NetworkBadging.BADGING_NONE, android.net.NetworkBadging.BADGING_SD, android.net.NetworkBadging.BADGING_HD, android.net.NetworkBadging.BADGING_4K}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) public static @interface NetworkBadging.Badging {
   }
 
   @Deprecated public class SSLCertificateSocketFactory extends javax.net.ssl.SSLSocketFactory {

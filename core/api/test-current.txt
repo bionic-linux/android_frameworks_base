@@ -11,15 +11,15 @@ package android {
     field public static final String CLEAR_APP_USER_DATA = "android.permission.CLEAR_APP_USER_DATA";
     field public static final String CONFIGURE_DISPLAY_BRIGHTNESS = "android.permission.CONFIGURE_DISPLAY_BRIGHTNESS";
     field public static final String CONTROL_DEVICE_LIGHTS = "android.permission.CONTROL_DEVICE_LIGHTS";
+    field public static final String DISABLE_INPUT_DEVICE = "android.permission.DISABLE_INPUT_DEVICE";
     field public static final String FORCE_STOP_PACKAGES = "android.permission.FORCE_STOP_PACKAGES";
     field public static final String MANAGE_ACTIVITY_STACKS = "android.permission.MANAGE_ACTIVITY_STACKS";
+    field public static final String MANAGE_APPOPS = "android.permission.MANAGE_APPOPS";
     field public static final String MANAGE_CRATES = "android.permission.MANAGE_CRATES";
     field public static final String MANAGE_ROLLBACKS = "android.permission.MANAGE_ROLLBACKS";
-    field public static final String NETWORK_SETTINGS = "android.permission.NETWORK_SETTINGS";
     field public static final String NETWORK_STACK = "android.permission.NETWORK_STACK";
     field public static final String OVERRIDE_DISPLAY_MODE_REQUESTS = "android.permission.OVERRIDE_DISPLAY_MODE_REQUESTS";
     field public static final String READ_CELL_BROADCASTS = "android.permission.READ_CELL_BROADCASTS";
-    field public static final String READ_PRIVILEGED_PHONE_STATE = "android.permission.READ_PRIVILEGED_PHONE_STATE";
     field public static final String REMOVE_TASKS = "android.permission.REMOVE_TASKS";
     field public static final String SUSPEND_APPS = "android.permission.SUSPEND_APPS";
     field public static final String TEST_MANAGE_ROLLBACKS = "android.permission.TEST_MANAGE_ROLLBACKS";
@@ -172,19 +172,19 @@ package android.app {
   }
 
   public class AppOpsManager {
-    method @RequiresPermission("android.permission.MANAGE_APPOPS") public void addHistoricalOps(@NonNull android.app.AppOpsManager.HistoricalOps);
-    method @RequiresPermission("android.permission.MANAGE_APPOPS") public void clearHistory();
-    method @RequiresPermission("android.permission.MANAGE_APPOPS") public void getHistoricalOpsFromDiskRaw(@NonNull android.app.AppOpsManager.HistoricalOpsRequest, @Nullable java.util.concurrent.Executor, @NonNull java.util.function.Consumer<android.app.AppOpsManager.HistoricalOps>);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APPOPS) public void addHistoricalOps(@NonNull android.app.AppOpsManager.HistoricalOps);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APPOPS) public void clearHistory();
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APPOPS) public void getHistoricalOpsFromDiskRaw(@NonNull android.app.AppOpsManager.HistoricalOpsRequest, @Nullable java.util.concurrent.Executor, @NonNull java.util.function.Consumer<android.app.AppOpsManager.HistoricalOps>);
     method public static int getNumOps();
     method public boolean isOperationActive(int, int, String);
-    method @RequiresPermission("android.permission.MANAGE_APPOPS") public void offsetHistory(long);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APPOPS) public void offsetHistory(long);
     method public static String opToPermission(int);
     method public static int permissionToOpCode(String);
-    method @RequiresPermission("android.permission.MANAGE_APPOPS") public void rebootHistory(long);
-    method @RequiresPermission("android.permission.MANAGE_APPOPS") public void reloadNonHistoricalState();
-    method @RequiresPermission("android.permission.MANAGE_APPOPS") public void resetHistoryParameters();
-    method @RequiresPermission("android.permission.MANAGE_APPOPS") public void setHistoryParameters(int, long, int);
-    method @RequiresPermission("android.permission.MANAGE_APP_OPS_MODES") public void setMode(int, int, String, int);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APPOPS) public void rebootHistory(long);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APPOPS) public void reloadNonHistoricalState();
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APPOPS) public void resetHistoryParameters();
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APPOPS) public void setHistoryParameters(int, long, int);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_APP_OPS_MODES) public void setMode(int, int, String, int);
     method public static int strOpToOp(@NonNull String);
     field public static final int HISTORICAL_MODE_DISABLED = 0; // 0x0
     field public static final int HISTORICAL_MODE_ENABLED_ACTIVE = 1; // 0x1
@@ -970,7 +970,7 @@ package android.media.tv {
 package android.net {
 
   public class ConnectivityManager {
-    method @RequiresPermission(anyOf={"android.permission.MANAGE_TEST_NETWORKS", android.Manifest.permission.NETWORK_STACK}) public void simulateDataStall(int, long, @NonNull android.net.Network, @NonNull android.os.PersistableBundle);
+    method @RequiresPermission(anyOf={android.Manifest.permission.MANAGE_TEST_NETWORKS, android.Manifest.permission.NETWORK_STACK}) public void simulateDataStall(int, long, @NonNull android.net.Network, @NonNull android.os.PersistableBundle);
   }
 
   public class EthernetManager {
@@ -1859,8 +1859,8 @@ package android.view {
   }
 
   public final class InputDevice implements android.os.Parcelable {
-    method @RequiresPermission("android.permission.DISABLE_INPUT_DEVICE") public void disable();
-    method @RequiresPermission("android.permission.DISABLE_INPUT_DEVICE") public void enable();
+    method @RequiresPermission(android.Manifest.permission.DISABLE_INPUT_DEVICE) public void disable();
+    method @RequiresPermission(android.Manifest.permission.DISABLE_INPUT_DEVICE) public void enable();
   }
 
   public class KeyEvent extends android.view.InputEvent implements android.os.Parcelable {
