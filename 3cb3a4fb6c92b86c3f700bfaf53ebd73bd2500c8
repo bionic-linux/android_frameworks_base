@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b37c1b9_8502f5f2",
+        "filename": "telephony/java/android/telephony/ims/aidl/SipDelegateAidlWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-11-06T00:25:32Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 172,
+        "startChar": 73,
+        "endLine": 172,
+        "endChar": 74
+      },
+      "revId": "3cb3a4fb6c92b86c3f700bfaf53ebd73bd2500c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f9f2ff2_42467f4b",
+        "filename": "telephony/java/android/telephony/ims/stub/SipTransportImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2020-11-06T00:25:32Z",
+      "side": 1,
+      "message": "throw a NotImplementedException?",
+      "revId": "3cb3a4fb6c92b86c3f700bfaf53ebd73bd2500c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
