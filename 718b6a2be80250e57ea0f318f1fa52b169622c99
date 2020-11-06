@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83189a62_cb78f9b4",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-06T18:06:10Z",
+      "side": 1,
+      "message": "Nit: \"both {@link PublicKey}\" and what?",
+      "range": {
+        "startLine": 200,
+        "startChar": 24,
+        "endLine": 200,
+        "endChar": 47
+      },
+      "revId": "718b6a2be80250e57ea0f318f1fa52b169622c99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c4a5eac_e0d4b8f0",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-06T18:06:10Z",
+      "side": 1,
+      "message": "Nit: original",
+      "range": {
+        "startLine": 202,
+        "startChar": 29,
+        "endLine": 202,
+        "endChar": 37
+      },
+      "revId": "718b6a2be80250e57ea0f318f1fa52b169622c99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc6ed9dc_a3f2f97f",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-06T18:06:10Z",
+      "side": 1,
+      "message": "Nit: \"The key metadata which includes the public key material, a reference to the stored private key material, and the key characteristics.\"",
+      "range": {
+        "startLine": 204,
+        "startChar": 23,
+        "endLine": 205,
+        "endChar": 94
+      },
+      "revId": "718b6a2be80250e57ea0f318f1fa52b169622c99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e78f8346_5e294c2f",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-06T18:06:10Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 206,
+        "startChar": 70,
+        "endLine": 206,
+        "endChar": 76
+      },
+      "revId": "718b6a2be80250e57ea0f318f1fa52b169622c99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "478a5c01_75f71ef6",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-06T18:06:10Z",
+      "side": 1,
+      "message": "Nit: b",
+      "range": {
+        "startLine": 208,
+        "startChar": 32,
+        "endLine": 208,
+        "endChar": 33
+      },
+      "revId": "718b6a2be80250e57ea0f318f1fa52b169622c99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f50bb30d_9356a9ab",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-06T18:06:10Z",
+      "side": 1,
+      "message": "Remove the spacing and/or fill out the documentation here. Missing return and throws.",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 331,
+        "endChar": 6
+      },
+      "revId": "718b6a2be80250e57ea0f318f1fa52b169622c99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
