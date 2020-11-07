@@ -30,13 +30,16 @@ import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.android.settingslib.testutils.shadow.ShadowCompatChanges;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 @RunWith(RobolectricTestRunner.class)
+@Config(shadows = {ShadowCompatChanges.class})
 public class ZenDurationDialogTest {
     private ZenDurationDialog mController;
 
