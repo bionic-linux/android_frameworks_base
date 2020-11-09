@@ -112,7 +112,6 @@ import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
 import com.android.internal.util.ArrayUtils;
-import com.android.server.ConnectivityService;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
@@ -1276,6 +1275,7 @@ public class Vpn {
         } finally {
             Binder.restoreCallingIdentity(token);
         }
+        mNetworkAgent.setUnderlyingNetworks(Arrays.asList(mConfig.underlyingNetworks));
         mNetworkInfo.setIsAvailable(true);
         updateState(DetailedState.CONNECTED, "agentConnect");
     }
@@ -1856,6 +1856,10 @@ public class Vpn {
                     mConfig.underlyingNetworks[i] = new Network(networks[i].netId);
                 }
             }
+        }
+        if (mNetworkAgent != null) {
+            mNetworkAgent.setUnderlyingNetworks((mConfig.underlyingNetworks != null)
+                    ? Arrays.asList(mConfig.underlyingNetworks) : null);
         }
         return true;
     }
