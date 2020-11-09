@@ -5257,6 +5257,7 @@ public class ConnectivityServiceTest {
 
         // Make that underlying network connect, and expect to see its capabilities immediately
         // reflected in the VPN's capabilities.
+        // TODO: this should probably happen AFTER the callbacks for the network that connected...
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         assertEquals(wifiNetwork, mWiFiNetworkAgent.getNetwork());
         mWiFiNetworkAgent.connect(false);
@@ -5272,6 +5273,7 @@ public class ConnectivityServiceTest {
                 .hasTransport(TRANSPORT_VPN));
         assertTrue(mCm.getNetworkCapabilities(vpnNetworkAgent.getNetwork())
                 .hasTransport(TRANSPORT_WIFI));
+        callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
 
         // Disconnect the network, and expect to see the VPN capabilities change accordingly.
         mWiFiNetworkAgent.disconnect();
