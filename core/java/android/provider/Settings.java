@@ -6491,7 +6491,7 @@ public final class Settings {
          * @deprecated
          */
         @Deprecated
-        @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+        @UnsupportedAppUsage(trackingBug = 172814136)
         public static final String LOCK_SCREEN_OWNER_INFO_ENABLED =
             "lock_screen_owner_info_enabled";
 
