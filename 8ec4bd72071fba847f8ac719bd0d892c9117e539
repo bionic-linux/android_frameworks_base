@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebbcf824_3fee694f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "maybe explain why we are doing this?",
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "935614ed_7670ba9b",
@@ -14,6 +31,190 @@
       "writtenOn": "2020-11-09T09:50:49Z",
       "side": 1,
       "message": "PTAL.",
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4e0a19a_c95b698d",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "maybe SnapshotType?",
+      "range": {
+        "startLine": 334,
+        "startChar": 22,
+        "endLine": 334,
+        "endChar": 27
+      },
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89e6dd6f_cf5c6db8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "MAX_SNAPSHOT_TYPE + 1 ?",
+      "range": {
+        "startLine": 337,
+        "startChar": 60,
+        "endLine": 337,
+        "endChar": 61
+      },
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "681ec7b2_e2d1a497",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 337,
+        "startChar": 4,
+        "endLine": 337,
+        "endChar": 11
+      },
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0acacb5_e9a016b6",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "IIUC we can directly use these?",
+      "range": {
+        "startLine": 1459,
+        "startChar": 45,
+        "endLine": 1459,
+        "endChar": 68
+      },
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8478da8_8f2cdbbb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1465,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "redundant space?",
+      "range": {
+        "startLine": 1465,
+        "startChar": 36,
+        "endLine": 1465,
+        "endChar": 37
+      },
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "168ec20e_643e4279",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "comment is mismatched. maybe for each type of snapshot?",
+      "range": {
+        "startLine": 1509,
+        "startChar": 32,
+        "endLine": 1509,
+        "endChar": 49
+      },
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16d5e2bb_48d96fb4",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "maybe explain why?",
+      "range": {
+        "startLine": 1509,
+        "startChar": 50,
+        "endLine": 1509,
+        "endChar": 74
+      },
+      "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93f113e3_429148b6",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-09T10:14:50Z",
+      "side": 1,
+      "message": "1. IIUC this is not needed anymore.\n2. do we need to keep null check? If so, do we need to add check at l.1464?",
+      "range": {
+        "startLine": 1664,
+        "startChar": 27,
+        "endLine": 1664,
+        "endChar": 42
+      },
       "revId": "8ec4bd72071fba847f8ac719bd0d892c9117e539",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
