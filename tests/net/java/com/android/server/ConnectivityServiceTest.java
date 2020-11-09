@@ -619,12 +619,17 @@ public class ConnectivityServiceTest {
         private String mRedirectUrl;
 
         TestNetworkAgentWrapper(int transport) throws Exception {
-            this(transport, new LinkProperties());
+            this(transport, new LinkProperties(), null);
         }
 
         TestNetworkAgentWrapper(int transport, LinkProperties linkProperties)
                 throws Exception {
-            super(transport, linkProperties, mServiceContext);
+            this(transport, linkProperties, null);
+        }
+
+        private TestNetworkAgentWrapper(int transport, LinkProperties linkProperties,
+                NetworkCapabilities ncTemplate) throws Exception {
+            super(transport, linkProperties, ncTemplate, mServiceContext);
 
             // Waits for the NetworkAgent to be registered, which includes the creation of the
             // NetworkMonitor.
@@ -863,6 +868,17 @@ public class ConnectivityServiceTest {
         }
     }
 
+    private TestNetworkAgentWrapper makeVpnWrapper(boolean isAlwaysMetered, LinkProperties lp)
+            throws Exception {
+        NetworkCapabilities nc = new NetworkCapabilities();
+        nc.setCapability(NET_CAPABILITY_NOT_METERED, !isAlwaysMetered);
+        return new TestNetworkAgentWrapper(TRANSPORT_VPN, lp, nc);
+    }
+
+    private TestNetworkAgentWrapper makeVpnWrapper() throws Exception {
+        return makeVpnWrapper(false /* isAlwaysMetered */, new LinkProperties());
+    }
+
     /**
      * A NetworkFactory that allows tests to wait until any in-flight NetworkRequest add or remove
      * operations have been processed. Before ConnectivityService can add or remove any requests,
@@ -1086,6 +1102,7 @@ public class ConnectivityServiceTest {
             mConfig.isMetered = isAlwaysMetered;
         }
 
+        // TODO: delete and get this from mMockNetworkAgent.
         public void connectAsAlwaysMetered() {
             connect(true /* isAlwaysMetered */);
         }
@@ -3201,8 +3218,7 @@ public class ConnectivityServiceTest {
         assertEquals(null, mCm.getActiveNetwork());
 
         final int uid = Process.myUid();
-        final TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        final TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
@@ -5426,8 +5442,7 @@ public class ConnectivityServiceTest {
         vpnNetworkCallback.assertNoCallback();
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
-        final TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        final TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
@@ -5519,8 +5534,7 @@ public class ConnectivityServiceTest {
         defaultCallback.expectAvailableThenValidatedCallbacks(mWiFiNetworkAgent);
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
-        TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
@@ -5551,8 +5565,7 @@ public class ConnectivityServiceTest {
         defaultCallback.expectAvailableThenValidatedCallbacks(mWiFiNetworkAgent);
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
-        TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
@@ -5584,8 +5597,7 @@ public class ConnectivityServiceTest {
 
         // Bring up a VPN that has the INTERNET capability, initially unvalidated.
         final int uid = Process.myUid();
-        final TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        final TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
@@ -5642,7 +5654,7 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
         mCellNetworkAgent.connect(true);
 
-        final TestNetworkAgentWrapper vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        final TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
@@ -5678,8 +5690,7 @@ public class ConnectivityServiceTest {
         mCm.registerNetworkCallback(vpnNetworkRequest, vpnNetworkCallback);
         vpnNetworkCallback.assertNoCallback();
 
-        final TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        final TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
@@ -5834,8 +5845,7 @@ public class ConnectivityServiceTest {
         mCm.registerNetworkCallback(vpnNetworkRequest, vpnNetworkCallback);
         vpnNetworkCallback.assertNoCallback();
 
-        final TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        final TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
@@ -5922,8 +5932,7 @@ public class ConnectivityServiceTest {
         assertTrue(mCm.isActiveNetworkMetered());
 
         // Connect VPN network. By default it is using current default network (Cell).
-        TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         final int uid = Process.myUid();
         ranges.add(new UidRange(uid, uid));
@@ -5983,8 +5992,7 @@ public class ConnectivityServiceTest {
         assertFalse(mCm.isActiveNetworkMetered());
 
         // Connect VPN network.
-        TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         final int uid = Process.myUid();
         ranges.add(new UidRange(uid, uid));
@@ -6049,8 +6057,8 @@ public class ConnectivityServiceTest {
         assertFalse(mCm.isActiveNetworkMetered());
 
         // Connect VPN network.
-        TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper(true /* isAlwaysMetered */,
+                new LinkProperties());
         final ArraySet<UidRange> ranges = new ArraySet<>();
         final int uid = Process.myUid();
         ranges.add(new UidRange(uid, uid));
@@ -6814,8 +6822,7 @@ public class ConnectivityServiceTest {
 
         // Set up a VPN network with a proxy
         final int uid = Process.myUid();
-        final TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN);
+        final TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper();
         final ArraySet<UidRange> ranges = new ArraySet<>();
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setUids(ranges);
@@ -7208,8 +7215,7 @@ public class ConnectivityServiceTest {
 
     private TestNetworkAgentWrapper establishVpn(
             LinkProperties lp, int ownerUid, Set<UidRange> vpnRange) throws Exception {
-        final TestNetworkAgentWrapper
-                vpnNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp);
+        final TestNetworkAgentWrapper vpnNetworkAgent = makeVpnWrapper(false, lp);
         vpnNetworkAgent.getNetworkCapabilities().setOwnerUid(ownerUid);
         mMockVpn.setNetworkAgent(vpnNetworkAgent);
         mMockVpn.connect();
