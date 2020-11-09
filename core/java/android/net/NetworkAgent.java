@@ -40,6 +40,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -172,6 +173,15 @@ public abstract class NetworkAgent {
      * @hide
      */
     public static final int EVENT_NETWORK_SCORE_CHANGED = BASE + 4;
+
+    /**
+     * Sent by the NetworkAgent to ConnectivityService to pass the current
+     * list of underlying networks.
+     * obj = array of Network objects
+     * @hide
+     */
+    public static final int EVENT_UNDERLYING_NETWORKS_CHANGED = BASE + 5;
+
 
     /**
      * Sent by ConnectivityService to the NetworkAgent to inform the agent of the
@@ -647,6 +657,16 @@ public abstract class NetworkAgent {
     public final void sendLinkProperties(@NonNull LinkProperties linkProperties) {
         Objects.requireNonNull(linkProperties);
         queueOrSendMessage(EVENT_NETWORK_PROPERTIES_CHANGED, new LinkProperties(linkProperties));
+    }
+
+    /**
+     * Must be called by the agent when the network's {@link LinkProperties} change.
+     * @param underlyingNetworks the new set of underlying networks.
+     * @see {@link VpnService.Builder#setUnderlyingNetworks(Network[])}
+     */
+    public final void setUnderlyingNetworks(@Nullable List<Network> underlyingNetworks) {
+        queueOrSendMessage(EVENT_UNDERLYING_NETWORKS_CHANGED,
+                (underlyingNetworks != null) ? new ArrayList<>(underlyingNetworks) : null);
     }
 
     /**
