@@ -26,6 +26,7 @@ import static android.view.autofill.AutofillManager.ACTION_START_SESSION;
 import static android.view.autofill.AutofillManager.ACTION_VALUE_CHANGED;
 import static android.view.autofill.AutofillManager.ACTION_VIEW_ENTERED;
 import static android.view.autofill.AutofillManager.ACTION_VIEW_EXITED;
+import static android.view.autofill.AutofillManager.FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL;
 import static android.view.autofill.AutofillManager.FLAG_SMART_SUGGESTION_SYSTEM;
 import static android.view.autofill.AutofillManager.getSmartSuggestionModeToString;
 
@@ -2517,10 +2518,13 @@ final class Session implements RemoteFillService.FillServiceCallbacks, ViewState
     @GuardedBy("mLock")
     private boolean requestNewFillResponseOnViewEnteredIfNecessaryLocked(@NonNull AutofillId id,
             @NonNull ViewState viewState, int flags) {
-        if ((flags & FLAG_MANUAL_REQUEST) != 0) {
+        if ((flags & (FLAG_MANUAL_REQUEST | FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL)) != 0) {
             mForAugmentedAutofillOnly = false;
             if (sDebug) Slog.d(TAG, "Re-starting session on view " + id + " and flags " + flags);
-            requestNewFillResponseLocked(viewState, ViewState.STATE_RESTARTED_SESSION, flags);
+            // Clear FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL as it should not be included in the
+            // new FillRequest.
+            final int newFlags = flags & ~FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL;
+            requestNewFillResponseLocked(viewState, ViewState.STATE_RESTARTED_SESSION, newFlags);
             return true;
         }
 
@@ -2718,8 +2722,9 @@ final class Session implements RemoteFillService.FillServiceCallbacks, ViewState
                     return;
                 }
 
-                if ((flags & FLAG_MANUAL_REQUEST) == 0) {
-                    // Not a manual request
+                if ((flags & (FLAG_MANUAL_REQUEST | FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL))
+                        == 0) {
+                    // Neither a manual request nor a request to reset augmented autofill
                     if (mAugmentedAutofillableIds != null && mAugmentedAutofillableIds.contains(
                             id)) {
                         // Regular autofill handled the view and returned null response, but it

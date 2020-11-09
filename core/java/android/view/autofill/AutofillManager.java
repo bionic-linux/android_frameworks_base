@@ -244,6 +244,7 @@ public final class AutofillManager {
     /** @hide */ public static final int FLAG_ADD_CLIENT_DEBUG = 0x2;
     /** @hide */ public static final int FLAG_ADD_CLIENT_VERBOSE = 0x4;
     /** @hide */ public static final int FLAG_ADD_CLIENT_ENABLED_FOR_AUGMENTED_AUTOFILL_ONLY = 0x8;
+    /** @hide */ public static final int FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL = 0x20;
 
     // NOTE: flag below is used by the session start receiver only, hence it can have values above
     /** @hide */ public static final int RECEIVER_FLAG_SESSION_FOR_AUGMENTED_AUTOFILL_ONLY = 0x1;
@@ -1036,6 +1037,16 @@ public final class AutofillManager {
                         }
                         mForAugmentedAutofillOnly = false;
                     }
+                    if (mForAugmentedAutofillOnly && mEnteredForAugmentedAutofillIds != null
+                            && !mEnteredForAugmentedAutofillIds.contains(id)) {
+                        if (sDebug) {
+                            Log.d(TAG, "notifyViewEntered(" + id + "): resetting "
+                                    + "mForAugmentedAutofillOnly on view not entered for "
+                                    + "augmented autofill");
+                        }
+                        mForAugmentedAutofillOnly = false;
+                        flags |= FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL;
+                    }
                     updateSessionLocked(id, null, value, ACTION_VIEW_ENTERED, flags);
                 }
                 addEnteredIdLocked(id);
@@ -1205,6 +1216,16 @@ public final class AutofillManager {
                                     + "mForAugmentedAutofillOnly on manual request");
                         }
                         mForAugmentedAutofillOnly = false;
+                    }
+                    if (mForAugmentedAutofillOnly && mEnteredForAugmentedAutofillIds != null
+                            && !mEnteredForAugmentedAutofillIds.contains(id)) {
+                        if (sDebug) {
+                            Log.d(TAG, "notifyViewEntered(" + id + "): resetting "
+                                    + "mForAugmentedAutofillOnly on view not entered for "
+                                    + "augmented autofill");
+                        }
+                        mForAugmentedAutofillOnly = false;
+                        flags |= FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL;
                     }
                     updateSessionLocked(id, bounds, null, ACTION_VIEW_ENTERED, flags);
                 }

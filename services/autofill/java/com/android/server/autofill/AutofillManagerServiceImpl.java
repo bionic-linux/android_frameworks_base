@@ -20,6 +20,7 @@ import static android.service.autofill.FillRequest.FLAG_MANUAL_REQUEST;
 import static android.view.autofill.AutofillManager.ACTION_START_SESSION;
 import static android.view.autofill.AutofillManager.FLAG_ADD_CLIENT_ENABLED;
 import static android.view.autofill.AutofillManager.FLAG_ADD_CLIENT_ENABLED_FOR_AUGMENTED_AUTOFILL_ONLY;
+import static android.view.autofill.AutofillManager.FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL;
 import static android.view.autofill.AutofillManager.NO_SESSION;
 import static android.view.autofill.AutofillManager.RECEIVER_FLAG_SESSION_FOR_AUGMENTED_AUTOFILL_ONLY;
 
@@ -587,6 +588,13 @@ final class AutofillManagerServiceImpl
                 if (sDebug) {
                     Slog.d(TAG, "restarting session " + sessionId + " due to manual request on "
                             + autofillId);
+                }
+                return true;
+            }
+            if ((flags & FLAG_RESET_TO_REENABLE_STANDARD_AUTOFILL) != 0) {
+                if (sDebug) {
+                    Slog.d(TAG, "restarting session " + sessionId + " due to request on view not "
+                            + "entered for augmented Autofill: " + autofillId);
                 }
                 return true;
             }
