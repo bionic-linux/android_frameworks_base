@@ -16,6 +16,23 @@
       "message": "An automated test is added in https://android-review.googlesource.com/c/platform/cts/+/1492756",
       "revId": "105b7f27ffa047eb1a10edb05ba17883803a3878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74ba3eb4_ef7b6a43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1792609
+      },
+      "writtenOn": "2020-11-09T17:38:51Z",
+      "side": 1,
+      "message": "@fengcao: Could you take a look at this change? It does interact directly with one of your changes (https://cs.android.com/android/_/android/platform/frameworks/base/+/a7de402a17621d9af66282366605304088a46850), so I figured you would be the best fit for a reviewer.\n\nI\u0027m very much open to changing the concrete implementation, passing through a flag simply allowed me to stay as close as possible to how manual requests reset augmented Autofill.",
+      "revId": "105b7f27ffa047eb1a10edb05ba17883803a3878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
