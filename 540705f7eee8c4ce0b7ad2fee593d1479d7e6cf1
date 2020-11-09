@@ -16,6 +16,23 @@
       "message": "Hi googler, could you help to review this CL? Thanks.",
       "revId": "540705f7eee8c4ce0b7ad2fee593d1479d7e6cf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "358f00bb_3c73ff04",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2020-11-09T07:02:04Z",
+      "side": 1,
+      "message": "I think Lee already sent a solution for this error pattern, maybe we just need to cherry-pick to aosp.\nLee, can you take a look if they\u0027re same? ag/12893205",
+      "revId": "540705f7eee8c4ce0b7ad2fee593d1479d7e6cf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
