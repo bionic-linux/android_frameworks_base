@@ -51,6 +51,23 @@
       "parentUuid": "74ba3eb4_ef7b6a43",
       "revId": "105b7f27ffa047eb1a10edb05ba17883803a3878",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb5bad0a_1c327402",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-11-09T18:40:04Z",
+      "side": 1,
+      "message": "Sorry, but I don\u0027t work on Autofill anymore.",
+      "revId": "105b7f27ffa047eb1a10edb05ba17883803a3878",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
