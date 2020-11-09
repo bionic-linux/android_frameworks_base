@@ -1081,7 +1081,7 @@ public class ConnectivityServiceTest {
                 throws Exception {
             if (mAgentRegistered) throw new IllegalStateException("already registered");
             setUids(uids);
-            mConfig.isMetered = isAlwaysMetered;
+            if (!isAlwaysMetered) mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_METERED);
             mInterface = VPN_IFNAME;
             mMockNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp,
                     mNetworkCapabilities);
