@@ -2765,6 +2765,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         networkCapabilities = new NetworkCapabilities(networkCapabilities);
                         networkCapabilities.restrictCapabilitesForTestNetwork(nai.creatorUid);
                     }
+                    processCapabilitiesFromAgent(nai, networkCapabilities);
                     updateCapabilities(nai.getCurrentScore(), nai, networkCapabilities);
                     break;
                 }
@@ -2802,6 +2803,31 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 case NetworkAgent.EVENT_SOCKET_KEEPALIVE: {
                     mKeepaliveTracker.handleEventSocketKeepalive(nai, msg);
                     break;
+                }
+                case NetworkAgent.EVENT_UNDERLYING_NETWORKS_CHANGED: {
+                    if (!nai.supportsUnderlyingNetworks()) {
+                        Log.wtf(TAG, "Non-virtual networks cannot have underlying networks");
+                        break;
+                    }
+                    final ArrayList<Network> underlying;
+                    try {
+                        underlying = ((Bundle) msg.obj).getParcelableArrayList(
+                                NetworkAgent.UNDERLYING_NETWORKS_KEY);
+                    } catch (NullPointerException | ClassCastException e) {
+                        break;
+                    }
+                    final Network[] oldUnderlying = nai.declaredUnderlyingNetworks;
+                    nai.declaredUnderlyingNetworks = (underlying != null)
+                            ? underlying.toArray(new Network[0]) : null;
+
+                    if (!Arrays.equals(oldUnderlying, nai.declaredUnderlyingNetworks)) {
+                        if (DBG) {
+                            log(nai.toShortString() + " changed underlying networks to "
+                                    + Arrays.toString(nai.declaredUnderlyingNetworks));
+                        }
+                        updateCapabilities(nai.getCurrentScore(), nai, nai.networkCapabilities);
+                        notifyIfacesChangedForNetworkStats();
+                    }
                 }
             }
         }
@@ -3388,7 +3414,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         mLegacyTypeTracker.remove(nai, wasDefault);
         if (!nai.networkCapabilities.hasTransport(TRANSPORT_VPN)) {
-            updateAllVpnsCapabilities();
+            propagateUnderlyingNetworkCapabilities();
         }
         rematchAllNetworksAndRequests();
         mLingerMonitor.noteDisconnect(nai);
@@ -4768,22 +4794,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /**
-     * Ask all VPN objects to recompute and update their capabilities.
+     * Ask all networks with underlying networks to recompute and update their capabilities.
      *
-     * When underlying networks change, VPNs may have to update capabilities to reflect things
-     * like the metered bit, their transports, and so on. This asks the VPN objects to update
-     * their capabilities, and as this will cause them to send messages to the ConnectivityService
-     * handler thread through their agent, this is asynchronous. When the capabilities objects
-     * are computed they will be up-to-date as they are computed synchronously from here and
-     * this is running on the ConnectivityService thread.
+     * When underlying networks change, such networks may have to update capabilities to reflect
+     * things like the metered bit, their transports, and so on. The capabilities are calculated
+     * immediately. This method runs on the ConnectivityService thread.
      */
-    private void updateAllVpnsCapabilities() {
-        Network defaultNetwork = getNetwork(getDefaultNetwork());
-        synchronized (mVpns) {
-            for (int i = 0; i < mVpns.size(); i++) {
-                final Vpn vpn = mVpns.valueAt(i);
-                NetworkCapabilities nc = vpn.updateCapabilities(defaultNetwork);
-                updateVpnCapabilities(vpn, nc);
+    private void propagateUnderlyingNetworkCapabilities() {
+        ensureRunningOnConnectivityServiceThread();
+        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+            if (nai.supportsUnderlyingNetworks()) {
+                updateCapabilities(nai.getCurrentScore(), nai, nai.networkCapabilities);
             }
         }
     }
@@ -5946,6 +5967,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 this, mNetd, mDnsResolver, mNMS, providerId, Binder.getCallingUid());
 
         // Make sure the LinkProperties and NetworkCapabilities reflect what the agent info says.
+        processCapabilitiesFromAgent(nai, nc);
         nai.getAndSetNetworkCapabilities(mixInCapabilities(nai, nc));
         processLinkPropertiesFromAgent(nai, nai.linkProperties);
 
@@ -5986,6 +6008,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateUids(nai, null, nai.networkCapabilities);
     }
 
+    /**
+     * Called when receiving LinkProperties directly from a NetworkAgent.
+     * Stores into |nai| any data coming from the agent that might also be written to the network's
+     * LinkProperties by ConnectivityService itself. This ensures that the data provided by the
+     * agent is not lost when updateLinkProperties is called.
+     */
     private void processLinkPropertiesFromAgent(NetworkAgentInfo nai, LinkProperties lp) {
         lp.ensureDirectlyConnectedRoutes();
         nai.clatd.setNat64PrefixFromRa(lp.getNat64Prefix());
@@ -6282,6 +6310,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /**
+     * Called when receiving NetworkCapabilities directly from a NetworkAgent.
+     * Stores into |nai| any data coming from the agent that might also be written to the network's
+     * NetworkCapabilities by ConnectivityService itself. This ensures that the data provided by the
+     * agent is not lost when updateCapabilities is called.
+     */
+    private void processCapabilitiesFromAgent(NetworkAgentInfo nai, NetworkCapabilities nc) {
+        nai.declaredMetered = !nc.hasCapability(NET_CAPABILITY_NOT_METERED);
+    }
+
+    /** Propagates to |nc| the capabilities declared by the underlying networks of |nai|. */
+    private void mixInUnderlyingCapabilities(NetworkAgentInfo nai, NetworkCapabilities nc) {
+        Network[] underlyingNetworks = nai.declaredUnderlyingNetworks;
+        Network defaultNetwork = getNetwork(getDefaultNetwork());
+        if (underlyingNetworks == null && defaultNetwork != null) {
+            // null underlying networks means to track the default.
+            underlyingNetworks = new Network[] { defaultNetwork };
+        }
+
+        // TODO(b/124469351): Get capabilities directly from ConnectivityService instead.
+        final ConnectivityManager cm = mContext.getSystemService(ConnectivityManager.class);
+        Vpn.applyUnderlyingCapabilities(cm, underlyingNetworks, nc, nai.declaredMetered);
+    }
+
+    /**
      * Augments the NetworkCapabilities passed in by a NetworkAgent with capabilities that are
      * maintained here that the NetworkAgent is not aware of (e.g., validated, captive portal,
      * and foreground status).
@@ -6332,6 +6384,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!newNc.hasTransport(TRANSPORT_CELLULAR)) {
             newNc.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
             newNc.addCapability(NET_CAPABILITY_NOT_ROAMING);
+        }
+
+        if (nai.supportsUnderlyingNetworks()) {
+            mixInUnderlyingCapabilities(nai, newNc);
         }
 
         return newNc;
@@ -6413,7 +6469,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!newNc.hasTransport(TRANSPORT_VPN)) {
             // Tell VPNs about updated capabilities, since they may need to
             // bubble those changes through.
-            updateAllVpnsCapabilities();
+            propagateUnderlyingNetworkCapabilities();
         }
 
         if (!newNc.equalsTransportTypes(prevNc)) {
@@ -6733,7 +6789,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 ? newNetwork.linkProperties.getTcpBufferSizes() : null);
         notifyIfacesChangedForNetworkStats();
         // Fix up the NetworkCapabilities of any VPNs that don't specify underlying networks.
-        updateAllVpnsCapabilities();
+        propagateUnderlyingNetworkCapabilities();
     }
 
     private void processListenRequests(@NonNull final NetworkAgentInfo nai) {
@@ -7195,7 +7251,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // onCapabilitiesUpdated being sent in updateAllVpnCapabilities below as
                 // the VPN would switch from its default, blank capabilities to those
                 // that reflect the capabilities of its underlying networks.
-                updateAllVpnsCapabilities();
+                propagateUnderlyingNetworkCapabilities();
             }
             networkAgent.created = true;
         }
@@ -7237,8 +7293,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // doing.
             updateSignalStrengthThresholds(networkAgent, "CONNECT", null);
 
-            if (networkAgent.isVPN()) {
-                updateAllVpnsCapabilities();
+            if (networkAgent.supportsUnderlyingNetworks()) {
+                propagateUnderlyingNetworkCapabilities();
             }
 
             // Consider network even though it is not yet validated.
@@ -7494,13 +7550,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         synchronized (mVpns) {
             throwIfLockdownEnabled();
             success = mVpns.get(user).setUnderlyingNetworks(networks);
-        }
-        if (success) {
-            mHandler.post(() -> {
-                // Update VPN's capabilities based on updated underlying network set.
-                updateAllVpnsCapabilities();
-                notifyIfacesChangedForNetworkStats();
-            });
         }
         return success;
     }
