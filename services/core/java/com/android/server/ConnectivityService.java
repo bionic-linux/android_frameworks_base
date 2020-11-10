@@ -82,6 +82,7 @@ import android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import android.net.ConnectivityDiagnosticsManager.DataStallReport;
 import android.net.ConnectivityManager;
 import android.net.DataStallReportParcelable;
+import android.net.DnsResolverServiceManager;
 import android.net.ICaptivePortal;
 import android.net.IConnectivityDiagnosticsCallback;
 import android.net.IConnectivityManager;
@@ -578,8 +579,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private static IDnsResolver getDnsResolver() {
-        return IDnsResolver.Stub
-                .asInterface(ServiceManager.getService("dnsresolver"));
+        return IDnsResolver.Stub.asInterface(DnsResolverServiceManager.getService());
     }
 
     /** Handler thread used for all of the handlers below. */
