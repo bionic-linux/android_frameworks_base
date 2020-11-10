@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "01c9aafb_09712f82",
+        "filename": "core/java/android/net/DnsResolverService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-10T07:34:00Z",
+      "side": 1,
+      "message": "Rename to DnsResolverServiceManager.",
+      "parentUuid": "005ec4f4_a19768b8",
+      "range": {
+        "startLine": 28,
+        "startChar": 19,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "a3861cc404f4ebb41cddd008fe7c073ccd74ab73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "752486ff_c133e74f",
         "filename": "core/java/android/net/DnsResolverService.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2020-10-27T08:03:46Z",
       "side": 1,
       "message": "Nit: i",
+      "range": {
+        "startLine": 37,
+        "startChar": 71,
+        "endLine": 37,
+        "endChar": 72
+      },
+      "revId": "a3861cc404f4ebb41cddd008fe7c073ccd74ab73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdc14c65_071fa0c7",
+        "filename": "core/java/android/net/DnsResolverService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-10T07:34:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752486ff_c133e74f",
       "range": {
         "startLine": 37,
         "startChar": 71,
@@ -60,6 +108,30 @@
       "writtenOn": "2020-10-27T08:03:46Z",
       "side": 1,
       "message": "Maybe in-process API? We probably do not want to allow other system apps to access that.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "a3861cc404f4ebb41cddd008fe7c073ccd74ab73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "393a9a83_07c8be65",
+        "filename": "core/java/android/net/DnsResolverService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-10T07:34:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27a0c624_3c208eec",
       "range": {
         "startLine": 41,
         "startChar": 4,
