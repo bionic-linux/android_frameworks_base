@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8043b6b_327a3079",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2020-11-10T03:53:04Z",
+      "side": 1,
+      "message": "Yeah, just commas and removing the errant period, sorry.",
+      "parentUuid": "5803276a_444ccabf",
+      "range": {
+        "startLine": 204,
+        "startChar": 23,
+        "endLine": 205,
+        "endChar": 94
+      },
+      "revId": "718b6a2be80250e57ea0f318f1fa52b169622c99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e78f8346_5e294c2f",
