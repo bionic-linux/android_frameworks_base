@@ -259,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccc17ea6_8b228c0b",
+        "filename": "core/java/android/net/QosCallbackException.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-10T19:58:36Z",
+      "side": 1,
+      "message": "Everytime an event is passed back the file descriptor is checked to make sure the socket has not closed and the local address has not changed.  If either occur, then an exception is passed back to the consumer and the callback is unregistered.\n\nEach of the individual exceptions have that information in the java doc.",
+      "parentUuid": "ca58a3a3_d5e4fb2b",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 6
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08dd06a9_e8fce8a3",
