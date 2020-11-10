@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7bdabb0_ab8ad137",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-10T05:04:23Z",
+      "side": 1,
+      "message": "As there are devices upgrading from P to S, I think that unfortunately this is necessary :(\n\nDon\u0027t you need to make API-update though ?",
+      "revId": "cc8b163dba9ea7683e515285c56e07a0f1fcb1b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
