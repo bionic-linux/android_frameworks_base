@@ -51,6 +51,8 @@ public final class UwbManager {
     private IUwbAdapter mUwbAdapter;
     private static final String SERVICE_NAME = "uwb";
 
+    private AdapterStateListener mAdapterStateListener;
+
     /**
      * Interface for receiving UWB adapter state changes
      */
@@ -115,6 +117,7 @@ public final class UwbManager {
      */
     private UwbManager(IUwbAdapter adapter) {
         mUwbAdapter = adapter;
+        mAdapterStateListener = new AdapterStateListener(adapter);
     }
 
     /**
@@ -147,7 +150,7 @@ public final class UwbManager {
      * @param callback user implementation of the {@link AdapterStateCallback}
      */
     public void registerAdapterStateCallback(Executor executor, AdapterStateCallback callback) {
-        throw new UnsupportedOperationException();
+        mAdapterStateListener.register(executor, callback);
     }
 
     /**
@@ -160,7 +163,7 @@ public final class UwbManager {
      * @param callback user implementation of the {@link AdapterStateCallback}
      */
     public void unregisterAdapterStateCallback(AdapterStateCallback callback) {
-        throw new UnsupportedOperationException();
+        mAdapterStateListener.unregister(callback);
     }
 
     /**
