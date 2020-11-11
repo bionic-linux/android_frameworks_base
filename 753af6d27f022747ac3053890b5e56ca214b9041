@@ -34,6 +34,144 @@
       "parentUuid": "9b346a2a_0193306f",
       "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fcd5fa0_7101a8dd",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T19:37:12Z",
+      "side": 1,
+      "message": "nit all \"subject\" lines should end with a \".\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 86,
+        "endLine": 25,
+        "endChar": 87
+      },
+      "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a627d40_13775556",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T19:37:12Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "065d5e80_57fbacfa",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T19:37:12Z",
+      "side": 1,
+      "message": "delete.",
+      "range": {
+        "startLine": 30,
+        "startChar": 77,
+        "endLine": 31,
+        "endChar": 58
+      },
+      "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77b85743_2b4f5868",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T19:37:12Z",
+      "side": 1,
+      "message": "nit delete",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6266a09_1726d876",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T19:37:12Z",
+      "side": 1,
+      "message": "not clear what \"failure\" means here. I think the next sentence should start this paragraph since it clarifies the meaning.",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 18
+      },
+      "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "787aca21_cf5aa28a",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2020-11-11T19:37:12Z",
+      "side": 1,
+      "message": "ensures that",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "753af6d27f022747ac3053890b5e56ca214b9041",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
