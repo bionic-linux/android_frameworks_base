@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d80f088a_b61f4b00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-11T08:37:28Z",
+      "side": 1,
+      "message": "You may need to also test FrameworksNetCommonTests since you also update FrameworksNetCommonTests.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dac9a460_bbaa1a60",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-11T08:37:28Z",
+      "side": 1,
+      "message": "why do you need to update this? I do not see any file in FrameworksNetCommonTests is updated.",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8cd9c3e_ceef1190",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-11T08:37:28Z",
+      "side": 1,
+      "message": "If you change MultipathPolicyTrackerTest due to the lib change, why this does not need to be removed?",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 58
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
