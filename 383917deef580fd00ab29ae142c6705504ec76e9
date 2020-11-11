@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1cf767c4_a3e9e249",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-11T16:59:32Z",
+      "side": 1,
+      "message": "FrameworksNetCommonTests are included in FrameworksNetTests. They have been tested when running FrameworksNetTests.",
+      "parentUuid": "d80f088a_b61f4b00",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dac9a460_bbaa1a60",
         "filename": "tests/net/common/Android.bp",
         "patchSetId": 7
@@ -60,6 +84,30 @@
       "writtenOn": "2020-11-11T08:37:28Z",
       "side": 1,
       "message": "If you change MultipathPolicyTrackerTest due to the lib change, why this does not need to be removed?",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 58
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a0d188d_b9ea769c",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-11T16:59:32Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "c8cd9c3e_ceef1190",
       "range": {
         "startLine": 220,
         "startChar": 8,

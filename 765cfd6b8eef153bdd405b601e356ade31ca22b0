@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8d0fcda_81d3aaac",
+        "filename": "tests/net/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-11T16:59:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f69db42_d8acae93",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7cf22f0f_24ee1d09",
@@ -142,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c9afd9c_cb69ef7b",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-11T16:59:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a71afca2_7f7ac9f2",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d46fa19_d1e2b2d7",
@@ -173,6 +221,24 @@
       "side": 1,
       "message": "It will encounter compile error: unrecognized property \"jni_libs\"\nI think it is because this target is a java library but not a test app.\nBut, your point makes me realize this will break CTS tests because this library is included in CtsNetTestCases. So we need another patch to address cts.",
       "parentUuid": "6d46fa19_d1e2b2d7",
+      "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd2d72cf_7b09add6",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-11T16:59:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ec54776_c654cfa2",
       "revId": "765cfd6b8eef153bdd405b601e356ade31ca22b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
