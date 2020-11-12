@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8b1b648_32c95316",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2020-11-12T23:54:44Z",
+      "side": 1,
+      "message": "hackbod@\n\nDianne, Just a friendly ping.  Does this look OK?",
+      "revId": "fea12b63b1ed5e1ab19d56118e7b2823979b6b3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
