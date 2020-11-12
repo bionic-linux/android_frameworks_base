@@ -16,6 +16,24 @@
       "message": "I think you want to remove the comment in TrafficStats.java about keeping the constants in sync with the cpp file",
       "revId": "6c170bd4853142cd23ebe44daede97ae2415417c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "764a637b_74d67a9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-12T06:09:50Z",
+      "side": 1,
+      "message": "Nah, that still needs to sync up with  com_android_server_net_NetworkStatsService.cpp l.46.\nComment updated in previous patch.",
+      "parentUuid": "dc14840f_c6e5c379",
+      "revId": "6c170bd4853142cd23ebe44daede97ae2415417c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
