@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "735f3bbf_c40ebae5",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2503,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2020-11-13T19:35:47Z",
+      "side": 1,
+      "message": "Is it for \"OperatorId\"  / \"Channel group\" in case 158236748 ?\nthen why use LIST_ID instead GROUP_ID",
+      "revId": "6b19ceac1a543eb00c93ae1c12792c8e08204975",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
