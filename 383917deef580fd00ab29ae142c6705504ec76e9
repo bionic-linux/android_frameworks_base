@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9d5add63_7f4592ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-13T09:50:08Z",
+      "side": 1,
+      "message": "Right, FrameworksNetCommonTests is a library which is included in FrameworksNetTests.",
+      "parentUuid": "1cf767c4_a3e9e249",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dac9a460_bbaa1a60",
         "filename": "tests/net/common/Android.bp",
         "patchSetId": 7
@@ -61,6 +85,30 @@
       "writtenOn": "2020-11-11T08:37:28Z",
       "side": 1,
       "message": "why do you need to update this? I do not see any file in FrameworksNetCommonTests is updated.",
+      "range": {
+        "startLine": 26,
+        "startChar": 9,
+        "endLine": 26,
+        "endChar": 45
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10e681ea_e827c65b",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-13T09:50:08Z",
+      "side": 1,
+      "message": "Answered on Paul\u0027s comment above. \nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1475900/comment/7cf22f0f_24ee1d09/",
+      "parentUuid": "dac9a460_bbaa1a60",
       "range": {
         "startLine": 26,
         "startChar": 9,
@@ -108,6 +156,30 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "c8cd9c3e_ceef1190",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 58
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6629f51_d904c28c",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-13T09:50:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0d188d_b9ea769c",
       "range": {
         "startLine": 220,
         "startChar": 8,
