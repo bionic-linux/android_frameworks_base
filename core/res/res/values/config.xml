@@ -517,10 +517,10 @@
     <bool name="config_smart_battery_available">false</bool>
 
     <!-- Fast brightness animation ramp rate in brightness units per second-->
-    <integer translatable="false" name="config_brightness_ramp_rate_fast">180</integer>
+    <item name="config_brightness_ramp_rate_fast" format="float" type="dimen">0.7058823</item>
 
     <!-- Slow brightness animation ramp rate in brightness units per second-->
-    <integer translatable="false" name="config_brightness_ramp_rate_slow">60</integer>
+    <item name="config_brightness_ramp_rate_slow" format="float" type="dimen">0.2352941</item>
 
     <!-- Don't name config resources like this.  It should look like config_annoyDianne -->
     <bool name="config_annoy_dianne">true</bool>
