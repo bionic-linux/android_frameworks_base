@@ -2545,6 +2545,14 @@ public class AudioService extends IAudioService.Stub
                 }
             }
 
+            if (device == AudioSystem.DEVICE_OUT_BLE_HEADSET) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "adjustSreamVolume postSetLeAudioVolumeIndex index="
+                            + newIndex + " stream=" + streamType);
+                }
+                mDeviceBroker.postSetLeAudioVolumeIndex(newIndex, streamType);
+            }
+
             // Check if volume update should be sent to Hdmi system audio.
             if (streamTypeAlias == AudioSystem.STREAM_MUSIC) {
                 setSystemAudioVolume(oldIndex, newIndex, getStreamMaxVolume(streamType), flags);
@@ -3047,6 +3055,14 @@ public class AudioService extends IAudioService.Stub
                 Log.i(TAG, "setStreamVolume postSetHearingAidVolumeIndex index=" + index
                         + " stream=" + streamType);
                 mDeviceBroker.postSetHearingAidVolumeIndex(index, streamType);
+            }
+
+            if (device == AudioSystem.DEVICE_OUT_BLE_HEADSET) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "adjustSreamVolume postSetLeAudioVolumeIndex index="
+                            + index + " stream=" + streamType);
+                }
+                mDeviceBroker.postSetLeAudioVolumeIndex(index, streamType);
             }
 
             if (streamTypeAlias == AudioSystem.STREAM_MUSIC) {
