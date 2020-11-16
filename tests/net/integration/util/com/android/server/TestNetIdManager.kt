@@ -35,4 +35,5 @@ class TestNetIdManager : NetIdManager() {
     private val nextId = AtomicInteger(MAX_NET_ID)
     override fun reserveNetId() = nextId.decrementAndGet()
     override fun releaseNetId(id: Int) = Unit
+    fun predictNextNetId() = nextId.get() - 1
 }
