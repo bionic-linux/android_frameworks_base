@@ -33,6 +33,23 @@
       "message": "Thanks a lot for this contribution.",
       "revId": "ec5cada58ce96124b15c2f71d0d2f58cfbf2d545",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb131321_273b096b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1797181
+      },
+      "writtenOn": "2020-11-16T00:09:53Z",
+      "side": 1,
+      "message": "Hello, Could you merge it? ",
+      "revId": "ec5cada58ce96124b15c2f71d0d2f58cfbf2d545",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
