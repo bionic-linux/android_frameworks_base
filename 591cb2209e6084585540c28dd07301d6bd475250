@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6a8810d_0457a76a",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2020-11-16T09:24:53Z",
+      "side": 1,
+      "message": "I think if you want to reduce the scope of in-memory lock being held, you may look into making a copy of the data to be persisted and writing that snapshot to disk, so that you may release the in-memory lock sooner, i.e. avoid holding the in-memory lock during the actual write to disk. mPersistence.readHistoryDLocked() may also be called without the in-memory lock as well.",
+      "parentUuid": "019d3bf2_1e771fea",
+      "revId": "591cb2209e6084585540c28dd07301d6bd475250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "551c1fa8_b91bd49b",
         "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
         "patchSetId": 1
