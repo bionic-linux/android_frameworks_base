@@ -1600,6 +1600,12 @@ package android.bluetooth {
     field public static final String ACTION_CONNECTION_STATE_CHANGED = "android.bluetooth.input.profile.action.CONNECTION_STATE_CHANGED";
   }
 
+  public final class BluetoothLeAudio implements java.lang.AutoCloseable android.bluetooth.BluetoothProfile {
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public boolean groupAddNode(int, @NonNull android.bluetooth.BluetoothDevice);
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public boolean groupRemoveNode(int, @NonNull android.bluetooth.BluetoothDevice);
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public void setVolume(int);
+  }
+
   public final class BluetoothMap implements java.lang.AutoCloseable android.bluetooth.BluetoothProfile {
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public void close();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) protected void finalize();
@@ -1663,6 +1669,7 @@ package android.bluetooth {
     field @NonNull public static final android.os.ParcelUuid AVRCP_TARGET;
     field @NonNull public static final android.os.ParcelUuid BASE_UUID;
     field @NonNull public static final android.os.ParcelUuid BNEP;
+    field @NonNull public static final android.os.ParcelUuid CAP;
     field @NonNull public static final android.os.ParcelUuid COORDINATED_SET;
     field @NonNull public static final android.os.ParcelUuid DIP;
     field @NonNull public static final android.os.ParcelUuid GENERIC_MEDIA_CONTROL;
