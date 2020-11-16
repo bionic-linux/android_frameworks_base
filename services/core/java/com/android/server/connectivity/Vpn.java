@@ -1787,13 +1787,6 @@ public class Vpn {
         return true;
     }
 
-    public synchronized Network[] getUnderlyingNetworks() {
-        if (!isRunningLocked()) {
-            return null;
-        }
-        return mConfig.underlyingNetworks;
-    }
-
     /**
      * This method should only be called by ConnectivityService because it doesn't
      * have enough data to fill VpnInfo.primaryUnderlyingIface field.
