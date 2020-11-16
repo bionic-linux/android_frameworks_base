@@ -1299,13 +1299,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private Network[] getVpnUnderlyingNetworks(int uid) {
-        synchronized (mVpns) {
-            if (!mLockdownEnabled) {
-                int user = UserHandle.getUserId(uid);
-                Vpn vpn = mVpns.get(user);
-                if (vpn != null && vpn.appliesToUid(uid)) {
-                    return vpn.getUnderlyingNetworks();
-                }
+        if (mLockdownEnabled) return null;
+        final int userId = UserHandle.getUserId(uid);
+        synchronized (mVpnForUserId) {
+            NetworkAgentInfo vpn = mVpnForUserId.get(userId);
+            if (vpn != null && vpn.networkCapabilities.appliesToUid(uid)) {
+                return (vpn.declaredUnderlyingNetworks != null)
+                        ? vpn.declaredUnderlyingNetworks.clone()
+                        : null;
             }
         }
         return null;
@@ -1567,22 +1568,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             nc, Binder.getCallingUid(), callingPackageName));
         }
 
-        synchronized (mVpns) {
-            if (!mLockdownEnabled) {
-                Vpn vpn = mVpns.get(userId);
-                if (vpn != null) {
-                    Network[] networks = vpn.getUnderlyingNetworks();
-                    if (networks != null) {
-                        for (Network network : networks) {
-                            nc = getNetworkCapabilitiesInternal(network);
-                            if (nc != null) {
-                                result.put(
-                                        network,
-                                        maybeSanitizeLocationInfoForCaller(
-                                                nc, Binder.getCallingUid(), callingPackageName));
-                            }
-                        }
-                    }
+        final Network[] networks = getVpnUnderlyingNetworks(Binder.getCallingUid());
+        if (networks != null) {
+            for (Network network : networks) {
+                nc = getNetworkCapabilitiesInternal(network);
+                if (nc != null) {
+                    result.put(
+                            network,
+                            maybeSanitizeLocationInfoForCaller(
+                                    nc, Binder.getCallingUid(), callingPackageName));
                 }
             }
         }
@@ -3366,6 +3360,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mDeps.getMetricsLogger().defaultNetworkMetrics().logDefaultNetworkEvent(now, null, nai);
         }
         notifyIfacesChangedForNetworkStats();
+
+        synchronized (mVpnForUserId) {
+            final int userId = UserHandle.getUserId(nai.creatorUid);
+            if (nai == mVpnForUserId.get(UserHandle.getUserId(nai.creatorUid))) {
+                mVpnForUserId.delete(userId);
+            }
+        }
+
         // TODO - we shouldn't send CALLBACK_LOST to requests that can be satisfied
         // by other networks that are already connected. Perhaps that can be done by
         // sending all CALLBACK_LOST messages (for requests, not listens) at the end
@@ -5969,6 +5971,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // Swapped on the handler thread.
     private volatile Set<UidRange> mVpnBlockedUidRanges = new HashSet<>();
 
+    @GuardedBy("mVpnForUserId")
+    private final SparseArray<NetworkAgentInfo> mVpnForUserId = new SparseArray<>();
+
     @GuardedBy("mBlockedAppUids")
     private final HashSet<Integer> mBlockedAppUids = new HashSet<>();
 
@@ -7428,6 +7433,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (!networkAgent.everConnected && state == NetworkInfo.State.CONNECTED) {
             networkAgent.everConnected = true;
+
+            if (networkAgent.isVPN()) {
+                synchronized (mVpnForUserId) {
+                    mVpnForUserId.put(UserHandle.getUserId(networkAgent.creatorUid), networkAgent);
+                }
+            }
 
             if (networkAgent.linkProperties == null) {
                 Slog.wtf(TAG, networkAgent.toShortString() + " connected with null LinkProperties");
