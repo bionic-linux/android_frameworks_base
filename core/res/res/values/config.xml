@@ -137,6 +137,9 @@
     <!-- Whether Hearing Aid profile is supported -->
     <bool name="config_hearing_aid_profile_supported">false</bool>
 
+    <!-- Whether LeAudio profile is supported -->
+    <bool name="config_le_audio_profile_supported">true</bool>
+
     <!-- Flag to disable all transition animations -->
     <bool name="config_disableTransitionAnimation">false</bool>
 

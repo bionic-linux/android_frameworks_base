@@ -4893,6 +4893,14 @@ public final class Settings {
         public static final String HEARING_AID = "hearing_aid";
 
         /**
+         * Whether the hearing aid is enabled. The value is
+         * boolean (1 or 0).
+         * @hide
+         */
+        @UnsupportedAppUsage
+        public static final String LE_AUDIO = "le_audio";
+
+        /**
          * CDMA only settings
          * TTY Mode
          * 0 = OFF
@@ -5160,6 +5168,7 @@ public final class Settings {
          */
 
         /**
+            LE_AUDIO,
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5252,6 +5261,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HIDE_ROTATION_LOCK_TOGGLE_FOR_ACCESSIBILITY);
             PRIVATE_SETTINGS.add(DTMF_TONE_TYPE_WHEN_DIALING);
             PRIVATE_SETTINGS.add(HEARING_AID);
+            PRIVATE_SETTINGS.add(LE_AUDIO);
             PRIVATE_SETTINGS.add(TTY_MODE);
             PRIVATE_SETTINGS.add(NOTIFICATION_LIGHT_PULSE);
             PRIVATE_SETTINGS.add(POINTER_LOCATION);
@@ -12790,7 +12800,9 @@ public final class Settings {
         @Readable
         public static final String
                 BLUETOOTH_HEARING_AID_PRIORITY_PREFIX = "bluetooth_hearing_aid_priority_";
-
+        /** {@hide} */
+        public static final String
+                BLUETOOTH_LE_AUDIO_PRIORITY_PREFIX = "bluetooth_le_audio_priority_";
         /**
          * Enable/disable radio bug detection
          *

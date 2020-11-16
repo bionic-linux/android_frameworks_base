@@ -9442,6 +9442,7 @@ package android.bluetooth {
     method @NonNull @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT) public java.util.List<android.bluetooth.BluetoothDevice> getDevicesMatchingConnectionStates(@NonNull int[]);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT) public int getGroupId(@NonNull android.bluetooth.BluetoothDevice);
     field @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT) public static final String ACTION_LE_AUDIO_CONNECTION_STATE_CHANGED = "android.bluetooth.action.LE_AUDIO_CONNECTION_STATE_CHANGED";
+    field public static final int CONTEXT_TYPE_LIVE = 1024; // 0x400
   }
 
   public final class BluetoothManager {
