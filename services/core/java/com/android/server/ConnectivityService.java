@@ -1309,6 +1309,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return null;
     }
 
+    private NetworkAgentInfo getVpnForOwner(int uid) {
+        for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+            if (nai.isVPN() && nai.creatorUid == uid) {
+                return nai;
+            }
+        }
+        return null;
+    }
+
     private NetworkState getUnfilteredActiveNetworkState(int uid) {
         NetworkAgentInfo nai = getDefaultNetwork();
 
@@ -8227,13 +8236,9 @@ if (nai.isVPN()) Log.d(TAG, "updateCapabilities: 5: newNc=" + newNc);
             return false;
         }
 
-        final Network[] underlyingNetworks;
-        synchronized (mVpns) {
-            final Vpn vpn = getVpnIfOwner(callbackUid);
-            underlyingNetworks = (vpn == null) ? null : vpn.getUnderlyingNetworks();
-        }
-        if (underlyingNetworks != null) {
-            if (Arrays.asList(underlyingNetworks).contains(nai.network)) return true;
+        final NetworkAgentInfo vpn = getVpnForOwner(callbackUid);
+        if (vpn != null && ArrayUtils.contains(vpn.declaredUnderlyingNetworks, nai.network)) {
+            return true;
         }
 
         // Administrator UIDs also contains the Owner UID
