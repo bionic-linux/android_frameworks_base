@@ -188,6 +188,30 @@
       },
       "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd972ac4_576fe0bc",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-11-16T10:54:23Z",
+      "side": 1,
+      "message": "Also for mIpSecManager, mConnectivityManager. But it seems it\u0027s not a necessary change? Otherwise, you should fail the test. So is that really a necessary change?",
+      "parentUuid": "e6629f51_d904c28c",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 58
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
