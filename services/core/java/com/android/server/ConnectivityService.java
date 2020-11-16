@@ -8265,13 +8265,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return false;
         }
 
-        final Network[] underlyingNetworks;
-        synchronized (mVpns) {
-            final Vpn vpn = getVpnIfOwner(callbackUid);
-            underlyingNetworks = (vpn == null) ? null : vpn.getUnderlyingNetworks();
-        }
-        if (underlyingNetworks != null) {
-            if (Arrays.asList(underlyingNetworks).contains(nai.network)) return true;
+        for (NetworkAgentInfo virtual : mNetworkAgentInfos.values()) {
+            if (virtual.supportsUnderlyingNetworks() && virtual.creatorUid == callbackUid
+                    && ArrayUtils.contains(virtual.declaredUnderlyingNetworks, nai.network)) {
+                return true;
+            }
         }
 
         // Administrator UIDs also contains the Owner UID
