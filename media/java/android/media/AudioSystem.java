@@ -1456,7 +1456,7 @@ public class AudioSystem
         if (aa.equals(new AudioAttributes.Builder().build())) {
             Log.e(TAG, "no attributes for stream " + stream
                     + ", prevent to overwrite default volume group");
-            return 0;
+            return BAD_VALUE;
         }
         return initVolumeForAttributes(aa, indexMin, indexMax);
     }
@@ -1471,12 +1471,13 @@ public class AudioSystem
         if (aa.equals(new AudioAttributes.Builder().build())) {
             Log.e(TAG, "no attributes for stream " + stream
                     + ", prevent to overwrite default volume group");
-            return -1;
+            return BAD_VALUE;
         }
         return setVolumeIndexForAttributes(aa , index, device);
     }
+
     /**
-     * @hide 
+     * @hide
      * @deprecated Use {@link #getVolumeIndexForAttributes() instead}
      */
     public static int getStreamVolumeIndex(int stream, int device) {
