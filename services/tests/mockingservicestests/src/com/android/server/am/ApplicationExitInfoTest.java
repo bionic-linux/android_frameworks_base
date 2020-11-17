@@ -162,18 +162,18 @@ public class ApplicationExitInfoTest {
     }
 
     private void updateExitInfo(ProcessRecord app) {
-        ApplicationExitInfo raw = mAppExitInfoTracker.obtainRawRecordLocked(app);
+        ApplicationExitInfo raw = mAppExitInfoTracker.obtainRawRecord(app);
         mAppExitInfoTracker.handleNoteProcessDiedLocked(raw);
-        mAppExitInfoTracker.recycleRawRecordLocked(raw);
+        mAppExitInfoTracker.recycleRawRecord(raw);
     }
 
     private void noteAppKill(ProcessRecord app, int reason, int subReason, String msg) {
-        ApplicationExitInfo raw = mAppExitInfoTracker.obtainRawRecordLocked(app);
+        ApplicationExitInfo raw = mAppExitInfoTracker.obtainRawRecord(app);
         raw.setReason(reason);
         raw.setSubReason(subReason);
         raw.setDescription(msg);
         mAppExitInfoTracker.handleNoteAppKillLocked(raw);
-        mAppExitInfoTracker.recycleRawRecordLocked(raw);
+        mAppExitInfoTracker.recycleRawRecord(raw);
     }
 
     @Test
