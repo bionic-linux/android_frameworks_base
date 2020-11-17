@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be144918_995272d3",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2020-11-17T18:03:26Z",
+      "side": 1,
+      "message": "remove this?",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 23
+      },
+      "revId": "903b09c0b26f98d0d0b600af0980117c89cf8d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03a94950_2de37968",
+        "filename": "services/core/java/com/android/server/am/AppExitInfoTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2020-11-17T18:03:26Z",
+      "side": 1,
+      "message": "This would grab a lock internally as well. So I\u0027m wondering that, by removing the \"mLock\", how much improvement it gains?",
+      "range": {
+        "startLine": 919,
+        "startChar": 35,
+        "endLine": 919,
+        "endChar": 58
+      },
+      "revId": "903b09c0b26f98d0d0b600af0980117c89cf8d0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
