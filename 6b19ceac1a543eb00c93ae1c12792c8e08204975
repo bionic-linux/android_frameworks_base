@@ -16,6 +16,24 @@
       "message": "Is it for \"OperatorId\"  / \"Channel group\" in case 158236748 ?\nthen why use LIST_ID instead GROUP_ID",
       "revId": "6b19ceac1a543eb00c93ae1c12792c8e08204975",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88ac82da_c0c0ef31",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2503,
+      "author": {
+        "id": 1787451
+      },
+      "writtenOn": "2020-11-17T04:01:36Z",
+      "side": 1,
+      "message": "After I confirmed the spec document, I found that,\n・\"channel group\" is NOT used.\n・\"channel list\" is used.\n(e.g. https://www.etsi.org/deliver/etsi_ts/103200_103299/103205/01.01.01_60/ts_103205v010101p.pdf)\nI thought it was better to use the terminology which was used in spec doc.\nThat\u0027s why I used the word CHANNEL_LIST_ID instead of CHANNEL_GROUP_ID.",
+      "parentUuid": "735f3bbf_c40ebae5",
+      "revId": "6b19ceac1a543eb00c93ae1c12792c8e08204975",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
