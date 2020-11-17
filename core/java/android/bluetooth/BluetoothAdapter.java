@@ -3090,6 +3090,9 @@ public final class BluetoothAdapter {
             BluetoothCsipSetCoordinator csipSetCoordinator =
                     new BluetoothCsipSetCoordinator(context, listener, this);
             return true;
+        } else if (profile == BluetoothProfile.TBS) {
+            BluetoothTbs tbs = new BluetoothTbs(context, listener);
+            return true;
         } else {
             return false;
         }
@@ -3191,6 +3194,10 @@ public final class BluetoothAdapter {
                 BluetoothCsipSetCoordinator csipSetCoordinator =
                         (BluetoothCsipSetCoordinator) proxy;
                 csipSetCoordinator.close();
+                break;
+            case BluetoothProfile.TBS:
+                BluetoothTbs tbs = (BluetoothTbs) proxy;
+                tbs.close();
                 break;
         }
     }
