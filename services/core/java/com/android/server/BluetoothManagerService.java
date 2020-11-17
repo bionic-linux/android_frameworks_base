@@ -45,6 +45,7 @@ import android.bluetooth.IBluetoothManager;
 import android.bluetooth.IBluetoothManagerCallback;
 import android.bluetooth.IBluetoothProfileServiceConnection;
 import android.bluetooth.IBluetoothStateChangeCallback;
+import android.bluetooth.IBluetoothTbs;
 import android.content.ActivityNotFoundException;
 import android.content.AttributionSource;
 import android.content.BroadcastReceiver;
@@ -1326,11 +1327,15 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
                             + bluetoothProfile);
                 }
 
-                if (bluetoothProfile != BluetoothProfile.HEADSET) {
+                Intent intent;
+                if (bluetoothProfile == BluetoothProfile.HEADSET) {
+                    intent = new Intent(IBluetoothHeadset.class.getName());
+                } else if (bluetoothProfile== BluetoothProfile.TBS) {
+                    intent = new Intent(IBluetoothTbs.class.getName());
+                } else {
                     return false;
                 }
 
-                Intent intent = new Intent(IBluetoothHeadset.class.getName());
                 psc = new ProfileServiceConnections(intent);
                 if (!psc.bindService()) {
                     return false;

@@ -1155,6 +1155,12 @@ android.bluetooth.IBluetoothSocketManager
 android.bluetooth.IBluetoothStateChangeCallback$Stub$Proxy
 android.bluetooth.IBluetoothStateChangeCallback$Stub
 android.bluetooth.IBluetoothStateChangeCallback
+android.bluetooth.IBluetoothTbs
+android.bluetooth.IBluetoothTbs$Stub
+android.bluetooth.IBluetoothTbsCallbacks
+android.bluetooth.IBluetoothTbsCallbacks$Stub
+android.bluetooth.IBluetoothTbsServer
+android.bluetooth.IBluetoothTbsServer$Stub
 android.bluetooth.OobData$1
 android.bluetooth.OobData
 android.bluetooth.UidTraffic$1
