@@ -4709,29 +4709,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (mLockdownEnabled) {
                 return new VpnInfo[0];
             }
-
             List<VpnInfo> infoList = new ArrayList<>();
-            for (int i = 0; i < mVpns.size(); i++) {
-                VpnInfo info = createVpnInfo(mVpns.valueAt(i));
-                if (info != null) {
-                    infoList.add(info);
-                }
+            for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
+                if (!nai.isVPN()) continue;
+                infoList.add(createVpnInfo(nai));
             }
             return infoList.toArray(new VpnInfo[infoList.size()]);
         }
     }
 
     /**
-     * @return VPN information for accounting, or null if we can't retrieve all required
-     *         information, e.g underlying ifaces.
+     * @return VPN information for accounting.
      */
-    @Nullable
-    private VpnInfo createVpnInfo(Vpn vpn) {
-        VpnInfo info = vpn.getVpnInfo();
-        if (info == null) {
-            return null;
-        }
-        Network[] underlyingNetworks = vpn.getUnderlyingNetworks();
+    @NonNull
+    private VpnInfo createVpnInfo(NetworkAgentInfo nai) {
+        VpnInfo info = new VpnInfo();
+        info.ownerUid = nai.creatorUid;
+        info.vpnIface = nai.linkProperties.getInterfaceName();
+
+        Network[] underlyingNetworks = nai.declaredUnderlyingNetworks;
         // see VpnService.setUnderlyingNetworks()'s javadoc about how to interpret
         // the underlyingNetworks list.
         if (underlyingNetworks == null) {
@@ -4740,23 +4736,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 underlyingNetworks = new Network[] { defaultNai.network };
             }
         }
-        if (underlyingNetworks != null && underlyingNetworks.length > 0) {
-            List<String> interfaces = new ArrayList<>();
+
+        List<String> interfaces = new ArrayList<>();
+        if (underlyingNetworks != null) {
             for (Network network : underlyingNetworks) {
-                LinkProperties lp = getLinkProperties(network);
-                if (lp != null) {
-                    for (String iface : lp.getAllInterfaceNames()) {
-                        if (!TextUtils.isEmpty(iface)) {
-                            interfaces.add(iface);
-                        }
+                NetworkAgentInfo underlyingNai = mNetworkForNetId.get(network.netId);
+                // TODO: add a test for a null or invalid underlying network.
+                if (underlyingNai == null) continue;
+                LinkProperties lp = underlyingNai.linkProperties;
+                for (String iface : lp.getAllInterfaceNames()) {
+                    if (!TextUtils.isEmpty(iface)) {
+                        interfaces.add(iface);
                     }
                 }
             }
-            if (!interfaces.isEmpty()) {
-                info.underlyingIfaces = interfaces.toArray(new String[interfaces.size()]);
-            }
         }
-        return info.underlyingIfaces == null ? null : info;
+
+        info.underlyingIfaces = interfaces.toArray(new String[0]);
+        return info;
     }
 
     /**
