@@ -298,7 +298,6 @@ filegroup {
     srcs: [
         // Java/AIDL sources under frameworks/base
         ":framework-blobstore-sources",
-        ":framework-connectivity-sources",
         ":framework-core-sources",
         ":framework-drm-sources",
         ":framework-graphics-sources",
@@ -358,6 +357,7 @@ filegroup {
 filegroup {
     name: "framework-updatable-sources",
     srcs: [
+        ":framework-connectivity-sources",
         ":framework-mediaprovider-sources",
         ":framework-permission-sources",
         ":framework-sdkextensions-sources",
@@ -389,6 +389,7 @@ java_library {
     installable: false,
     static_libs: [
         "framework-minus-apex",
+        "framework-connectivity.impl",
         "framework-mediaprovider.impl",
         "framework-permission.impl",
         "framework-sdkextensions.impl",
