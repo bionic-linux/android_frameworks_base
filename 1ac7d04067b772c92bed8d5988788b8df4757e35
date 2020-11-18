@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e55c36c_c4441a59",
+        "filename": "core/java/android/net/DnsResolverServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-18T07:10:41Z",
+      "side": 1,
+      "message": "You\u0027re right, we can\u0027t limit the usage only for CS mainline. Remove it.",
+      "parentUuid": "703f6c5a_6fb23c27",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 77
+      },
+      "revId": "1ac7d04067b772c92bed8d5988788b8df4757e35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa2c0fe1_5d69abdf",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-12T08:31:33Z",
       "side": 1,
       "message": "Sorry, what does registered mean here?",
+      "range": {
+        "startLine": 42,
+        "startChar": 81,
+        "endLine": 42,
+        "endChar": 96
+      },
+      "revId": "1ac7d04067b772c92bed8d5988788b8df4757e35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22aaad93_d07f28e7",
+        "filename": "core/java/android/net/DnsResolverServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-18T07:10:41Z",
+      "side": 1,
+      "message": "It means Dns resolver service. Update the message accordingly.",
+      "parentUuid": "aa2c0fe1_5d69abdf",
       "range": {
         "startLine": 42,
         "startChar": 81,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e325f04_a44358dd",
+        "filename": "core/java/android/net/DnsResolverServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-18T07:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce89f2bf_e6ef31dc",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "1ac7d04067b772c92bed8d5988788b8df4757e35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2d6b37c_0b3cd136",
@@ -83,6 +155,30 @@
       "writtenOn": "2020-11-12T08:31:33Z",
       "side": 1,
       "message": "System api will be requested to have a permission check. You may want to add permission check and annotate the permission required here.",
+      "range": {
+        "startLine": 47,
+        "startChar": 26,
+        "endLine": 47,
+        "endChar": 36
+      },
+      "revId": "1ac7d04067b772c92bed8d5988788b8df4757e35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "692b4e76_94ce2bb2",
+        "filename": "core/java/android/net/DnsResolverServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-18T07:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2d6b37c_0b3cd136",
       "range": {
         "startLine": 47,
         "startChar": 26,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8092e67c_5481f282",
+        "filename": "tests/net/common/java/android/net/DnsResolverServiceManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-18T07:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b464ea1_11cb26ff",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "1ac7d04067b772c92bed8d5988788b8df4757e35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3056d96f_876324dc",
@@ -129,6 +249,30 @@
       "writtenOn": "2020-11-12T08:31:33Z",
       "side": 1,
       "message": "do you verify this on both S and before S device? If yes, please also note it in the commit message.",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "1ac7d04067b772c92bed8d5988788b8df4757e35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fac0390_f6e85c1c",
+        "filename": "tests/net/common/java/android/net/DnsResolverServiceManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-18T07:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3056d96f_876324dc",
       "range": {
         "startLine": 46,
         "startChar": 10,
