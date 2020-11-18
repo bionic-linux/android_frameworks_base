@@ -16,6 +16,24 @@
       "message": "Code LGTM though I wonder why we need to test for an underlying network starting to exist, given that it is not supposed to happen in practice",
       "revId": "8e719f431f96e68744e085ec0285431decc1fbd2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e9a5ff1_baf250e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-18T11:52:49Z",
+      "side": 1,
+      "message": "I agree this shouldn\u0027t really happen in practice because predicting the next netId, and passing it in, requires reflection.\n\nStill I think it\u0027s good to ensure that something that can happen in the presence of app bugs behaves approximately reasonably.\n\nThe coverage for the underlying network disconnecting is also useful, though we may have that coverage elsewhere too.",
+      "parentUuid": "4b2d251c_3a608f3d",
+      "revId": "8e719f431f96e68744e085ec0285431decc1fbd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
