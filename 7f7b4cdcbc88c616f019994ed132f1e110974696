@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0022166_9ca88be4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T08:45:59Z",
+      "side": 1,
+      "message": "BatteryStatsManager is a final class so you\u0027ll need mockito extended to mock it.\nThis means frameworks/base/tests/net/Android.bp should be updated in its FrameworksNetTests rule so that it has a dependency to the extended mockito.\n\n(in practice, as you noticed in aosp/1475900, the version in FrameworksNetCommonTests seems to override it, and maybe in fact we should move the mockito lib above the dependencies to the other targets in that rule)\n\n+reminv@ for visibility",
+      "range": {
+        "startLine": 194,
+        "startChar": 18,
+        "endLine": 194,
+        "endChar": 37
+      },
+      "revId": "7f7b4cdcbc88c616f019994ed132f1e110974696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
