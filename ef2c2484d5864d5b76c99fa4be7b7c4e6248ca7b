@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04fa0370_beaacd0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-11-18T12:30:16Z",
+      "side": 1,
+      "message": "Why not just make these public? Marking them as @SystemApi doesn\u0027t provide any protections.",
+      "revId": "ef2c2484d5864d5b76c99fa4be7b7c4e6248ca7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
