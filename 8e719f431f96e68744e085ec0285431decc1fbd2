@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b2d251c_3a608f3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T06:33:20Z",
+      "side": 1,
+      "message": "Code LGTM though I wonder why we need to test for an underlying network starting to exist, given that it is not supposed to happen in practice",
+      "revId": "8e719f431f96e68744e085ec0285431decc1fbd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
