@@ -75,6 +75,7 @@ public class CaptivePortal implements Parcelable {
     private final IBinder mBinder;
 
     /** @hide */
+    /*
     @IntDef(value = {
         MetricsEvent.ACTION_CAPTIVE_PORTAL_LOGIN_ACTIVITY,
         MetricsEvent.ACTION_CAPTIVE_PORTAL_LOGIN_RESULT_DISMISSED,
@@ -84,6 +85,7 @@ public class CaptivePortal implements Parcelable {
     })
     public @interface EventId {
     }
+    */
 
     /** @hide */
     public CaptivePortal(@NonNull IBinder binder) {
@@ -176,7 +178,7 @@ public class CaptivePortal implements Parcelable {
      * @hide
      */
     @SystemApi
-    public void logEvent(@EventId int eventId, @NonNull String packageName) {
+    public void logEvent(/* @EventId */ int eventId, @NonNull String packageName) {
         try {
             ICaptivePortal.Stub.asInterface(mBinder).logEvent(eventId, packageName);
         } catch (RemoteException e) {

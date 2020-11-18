@@ -101,7 +101,7 @@ public class LowpanManager {
      * @hide - hide this because it takes in a parameter of type ILowpanManager, which is a system
      *     private class.
      */
-    public LowpanManager(Context context, ILowpanManager service, Looper looper) {
+    public  LowpanManager(Context context, ILowpanManager service, Looper looper) {
         mContext = context;
         mService = service;
         mLooper = looper;

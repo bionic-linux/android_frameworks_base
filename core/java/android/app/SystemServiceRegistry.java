@@ -113,20 +113,15 @@ import android.media.tv.tunerresourcemanager.ITunerResourceManager;
 import android.media.tv.tunerresourcemanager.TunerResourceManager;
 import android.net.ConnectivityDiagnosticsManager;
 import android.net.ConnectivityManager;
-import android.net.ConnectivityThread;
 import android.net.EthernetManager;
-import android.net.IConnectivityManager;
 import android.net.IEthernetManager;
 import android.net.IIpSecService;
 import android.net.INetworkPolicyManager;
-import android.net.ITestNetworkManager;
 import android.net.IpSecManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkScoreManager;
 import android.net.NetworkWatchlistManager;
-import android.net.TestNetworkManager;
 import android.net.TetheringManager;
-import android.net.VpnManager;
 import android.net.lowpan.ILowpanManager;
 import android.net.lowpan.LowpanManager;
 import android.net.nsd.INsdManager;
@@ -155,7 +150,6 @@ import android.os.IUserManager;
 import android.os.IncidentManager;
 import android.os.PowerManager;
 import android.os.RecoverySystem;
-import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
 import android.os.StatsFrameworkInitializer;
@@ -207,10 +201,12 @@ import com.android.internal.app.IAppOpsService;
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.app.ISoundTriggerService;
 import com.android.internal.appwidget.IAppWidgetService;
+import com.android.internal.net.ConnectivityThreadInternal;
 import com.android.internal.net.INetworkWatchlistManager;
 import com.android.internal.os.IDropBoxManagerService;
 import com.android.internal.policy.PhoneLayoutInflater;
 import com.android.internal.util.Preconditions;
+import android.net.ConnectivityServiceInitializer;
 
 import java.util.Map;
 import java.util.Objects;
@@ -349,15 +345,6 @@ public final class SystemServiceRegistry {
         // (which extends it).
         SYSTEM_SERVICE_NAMES.put(android.text.ClipboardManager.class, Context.CLIPBOARD_SERVICE);
 
-        registerService(Context.CONNECTIVITY_SERVICE, ConnectivityManager.class,
-                new StaticApplicationContextServiceFetcher<ConnectivityManager>() {
-            @Override
-            public ConnectivityManager createService(Context context) throws ServiceNotFoundException {
-                IBinder b = ServiceManager.getServiceOrThrow(Context.CONNECTIVITY_SERVICE);
-                IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
-                return new ConnectivityManager(context, service);
-            }});
-
         registerService(Context.NETD_SERVICE, IBinder.class, new StaticServiceFetcher<IBinder>() {
             @Override
             public IBinder createService() throws ServiceNotFoundException {
@@ -390,50 +377,6 @@ public final class SystemServiceRegistry {
                 IIpSecService service = IIpSecService.Stub.asInterface(b);
                 return new IpSecManager(ctx, service);
             }});
-
-        registerService(Context.VPN_MANAGEMENT_SERVICE, VpnManager.class,
-                new CachedServiceFetcher<VpnManager>() {
-            @Override
-            public VpnManager createService(ContextImpl ctx) throws ServiceNotFoundException {
-                IBinder b = ServiceManager.getService(Context.CONNECTIVITY_SERVICE);
-                IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
-                return new VpnManager(ctx, service);
-            }});
-
-        registerService(Context.CONNECTIVITY_DIAGNOSTICS_SERVICE,
-                ConnectivityDiagnosticsManager.class,
-                new CachedServiceFetcher<ConnectivityDiagnosticsManager>() {
-            @Override
-            public ConnectivityDiagnosticsManager createService(ContextImpl ctx)
-                    throws ServiceNotFoundException {
-                // ConnectivityDiagnosticsManager is backed by ConnectivityService
-                IBinder b = ServiceManager.getServiceOrThrow(Context.CONNECTIVITY_SERVICE);
-                IConnectivityManager service = IConnectivityManager.Stub.asInterface(b);
-                return new ConnectivityDiagnosticsManager(ctx, service);
-            }});
-
-        registerService(
-                Context.TEST_NETWORK_SERVICE,
-                TestNetworkManager.class,
-                new StaticApplicationContextServiceFetcher<TestNetworkManager>() {
-                    @Override
-                    public TestNetworkManager createService(Context context)
-                            throws ServiceNotFoundException {
-                        IBinder csBinder =
-                                ServiceManager.getServiceOrThrow(Context.CONNECTIVITY_SERVICE);
-                        IConnectivityManager csMgr =
-                                IConnectivityManager.Stub.asInterface(csBinder);
-
-                        final IBinder tnBinder;
-                        try {
-                            tnBinder = csMgr.startOrGetTestNetworkService();
-                        } catch (RemoteException e) {
-                            throw new ServiceNotFoundException(Context.TEST_NETWORK_SERVICE);
-                        }
-                        ITestNetworkManager tnMgr = ITestNetworkManager.Stub.asInterface(tnBinder);
-                        return new TestNetworkManager(tnMgr);
-                    }
-                });
 
         registerService(Context.COUNTRY_DETECTOR, CountryDetector.class,
                 new StaticServiceFetcher<CountryDetector>() {
@@ -760,7 +703,7 @@ public final class SystemServiceRegistry {
                 IBinder b = ServiceManager.getServiceOrThrow(Context.LOWPAN_SERVICE);
                 ILowpanManager service = ILowpanManager.Stub.asInterface(b);
                 return new LowpanManager(ctx.getOuterContext(), service,
-                        ConnectivityThread.getInstanceLooper());
+                        ConnectivityThreadInternal.getInstanceLooper());
             }});
 
         registerService(Context.ETHERNET_SERVICE, EthernetManager.class,
@@ -1348,6 +1291,12 @@ public final class SystemServiceRegistry {
         try {
             // Note: the following functions need to be @SystemApis, once they become mainline
             // modules.
+            try {
+                Thread.sleep(5000); // TODO: REMOVE
+            } catch (InterruptedException e) {
+                // nothing
+            }
+            ConnectivityServiceInitializer.registerServiceWrappers();
             JobSchedulerFrameworkInitializer.registerServiceWrappers();
             BlobStoreManagerFrameworkInitializer.initialize();
             TelephonyFrameworkInitializer.registerServiceWrappers();

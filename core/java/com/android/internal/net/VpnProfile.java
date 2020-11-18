@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -285,10 +286,14 @@ public final class VpnProfile implements Cloneable, Parcelable {
                 String exclList = (values.length > 17) ? values[17] : "";
                 String pacFileUrl = (values.length > 18) ? values[18] : "";
                 if (!host.isEmpty() || !port.isEmpty() || !exclList.isEmpty()) {
-                    profile.proxy = new ProxyInfo(host, port.isEmpty() ?
-                            0 : Integer.parseInt(port), exclList);
+                    final String[] exclListArray = exclList == null
+                            ? new String[0]
+                            : TextUtils.split(exclList.toLowerCase(Locale.ROOT), ",");
+                    profile.proxy = ProxyInfo.buildDirectProxy(host,
+                            port.isEmpty() ? 0 : Integer.parseInt(port),
+                            Arrays.asList(exclListArray));
                 } else if (!pacFileUrl.isEmpty()) {
-                    profile.proxy = new ProxyInfo(Uri.parse(pacFileUrl));
+                    profile.proxy = ProxyInfo.buildPacProxy(Uri.parse(pacFileUrl));
                 }
             } // else profile.proxy = null
 
@@ -336,10 +341,9 @@ public final class VpnProfile implements Cloneable, Parcelable {
             builder.append(VALUE_DELIMITER).append(proxy.getHost() != null ? proxy.getHost() : "");
             builder.append(VALUE_DELIMITER).append(proxy.getPort());
             builder.append(VALUE_DELIMITER)
-                    .append(
-                            proxy.getExclusionListAsString() != null
-                                    ? proxy.getExclusionListAsString()
-                                    : "");
+                    .append(proxy.getExclusionList() != null
+                            ? TextUtils.join(",", proxy.getExclusionList())
+                            : "");
             builder.append(VALUE_DELIMITER).append(proxy.getPacFileUrl().toString());
         } else {
             builder.append(ENCODED_NULL_PROXY_INFO);

@@ -72,6 +72,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
     private static final String MISSING_PARAM_MSG_TMPL = "Required parameter was not provided: %s";
     private static final String EMPTY_CERT = "";
 
+    private static final int MIN_MTU_V6 = 1280;
+
     /** @hide */
     public static final List<String> DEFAULT_ALGORITHMS =
             Collections.unmodifiableList(Arrays.asList(
@@ -158,9 +160,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         // IPv6 MTU is greater; since profiles may be started by the system on IPv4 and IPv6
         // networks, the VPN must provide a link fulfilling the stricter of the two conditions
         // (at least that of the IPv6 MTU).
-        if (mMaxMtu < LinkProperties.MIN_MTU_V6) {
-            throw new IllegalArgumentException(
-                    "Max MTU must be at least" + LinkProperties.MIN_MTU_V6);
+        if (mMaxMtu < MIN_MTU_V6) {
+            throw new IllegalArgumentException("Max MTU must be at least" + MIN_MTU_V6);
         }
 
         switch (mType) {
@@ -811,9 +812,8 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             // IPv6 MTU is greater; since profiles may be started by the system on IPv4 and IPv6
             // networks, the VPN must provide a link fulfilling the stricter of the two conditions
             // (at least that of the IPv6 MTU).
-            if (mtu < LinkProperties.MIN_MTU_V6) {
-                throw new IllegalArgumentException(
-                        "Max MTU must be at least " + LinkProperties.MIN_MTU_V6);
+            if (mtu < MIN_MTU_V6) {
+                throw new IllegalArgumentException("Max MTU must be at least " + MIN_MTU_V6);
             }
             mMaxMtu = mtu;
             return this;

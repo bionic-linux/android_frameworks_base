@@ -305,8 +305,8 @@ public final class SystemServer {
             "com.android.server.blob.BlobStoreManagerService";
     private static final String ROLLBACK_MANAGER_SERVICE_CLASS =
             "com.android.server.rollback.RollbackManagerService";
-    private static final String CONNECTIVITY_SERVICE_INITIALIZER_CLASS =
-            "com.android.server.ConnectivityServiceInitializer";
+    private static final String CONNECTIVITY_SYSTEM_SERVICE_CLASS =
+            "com.android.server.ConnectivitySystemService";
     private static final String IP_CONNECTIVITY_METRICS_CLASS =
             "com.android.server.connectivity.IpConnectivityMetrics";
 
@@ -1457,15 +1457,6 @@ public final class SystemServer {
             }
             t.traceEnd();
 
-            t.traceBegin("StartVcnManagementService");
-            try {
-                vcnManagement = VcnManagementService.create(context);
-                ServiceManager.addService(Context.VCN_MANAGEMENT_SERVICE, vcnManagement);
-            } catch (Throwable e) {
-                reportWtf("starting VCN Management Service", e);
-            }
-            t.traceEnd();
-
             t.traceBegin("StartTextServicesManager");
             mSystemServiceManager.startService(TextServicesManagerService.Lifecycle.class);
             t.traceEnd();
@@ -1552,12 +1543,21 @@ public final class SystemServer {
             // This has to be called after NetworkManagementService, NetworkStatsService
             // and NetworkPolicyManager because ConnectivityService needs to take these
             // services to initialize.
-            mSystemServiceManager.startServiceFromJar(CONNECTIVITY_SERVICE_INITIALIZER_CLASS,
+            mSystemServiceManager.startServiceFromJar(CONNECTIVITY_SYSTEM_SERVICE_CLASS,
                     CONNECTIVITY_SERVICE_APEX_PATH);
             connectivity = IConnectivityManager.Stub.asInterface(
                     ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
             // TODO: Use ConnectivityManager instead of ConnectivityService.
             networkPolicy.bindConnectivityManager(connectivity);
+            t.traceEnd();
+
+            t.traceBegin("StartVcnManagementService");
+            try {
+                vcnManagement = VcnManagementService.create(context);
+                ServiceManager.addService(Context.VCN_MANAGEMENT_SERVICE, vcnManagement);
+            } catch (Throwable e) {
+                reportWtf("starting VCN Management Service", e);
+            }
             t.traceEnd();
 
             t.traceBegin("StartNsdService");

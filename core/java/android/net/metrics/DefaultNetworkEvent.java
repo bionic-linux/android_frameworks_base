@@ -16,8 +16,6 @@
 
 package android.net.metrics;
 
-import static android.net.ConnectivityManager.NETID_UNSET;
-
 import android.net.NetworkCapabilities;
 
 import com.android.internal.util.BitUtils;
@@ -32,8 +30,8 @@ public class DefaultNetworkEvent {
 
     // The creation time in milliseconds of this DefaultNetworkEvent.
     public final long creationTimeMs;
-    // The network ID of the network or NETID_UNSET if none.
-    public int netId = NETID_UNSET;
+    // The network ID of the network or 0 if none.
+    public int netId = 0;
     // The list of transport types, as defined in NetworkCapabilities.java.
     public int transports;
     // The list of transport types of the last previous default network.
@@ -63,9 +61,7 @@ public class DefaultNetworkEvent {
     public String toString() {
         StringJoiner j = new StringJoiner(", ", "DefaultNetworkEvent(", ")");
         j.add("netId=" + netId);
-        for (int t : BitUtils.unpackBits(transports)) {
-            j.add(NetworkCapabilities.transportNameOf(t));
-        }
+        j.add("transports=" + Long.toHexString(transports));
         j.add("ip=" + ipSupport());
         if (initialScore > 0) {
             j.add("initial_score=" + initialScore);

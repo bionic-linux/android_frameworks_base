@@ -16,6 +16,9 @@
 
 package com.android.internal.os;
 
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.net.NetworkCapabilities.TRANSPORT_WIFI_AWARE;
 import static android.os.BatteryStatsManager.NUM_WIFI_STATES;
 import static android.os.BatteryStatsManager.NUM_WIFI_SUPPL_STATES;
 
@@ -6099,11 +6102,11 @@ public class BatteryStatsImpl extends BatteryStats {
     }
 
     /** @hide */
-    public void noteNetworkInterfaceType(String iface, int networkType) {
+    public void noteNetworkInterfaceType(String iface, int[] transportTypes) {
         if (TextUtils.isEmpty(iface)) return;
 
         synchronized (mModemNetworkLock) {
-            if (ConnectivityManager.isNetworkTypeMobile(networkType)) {
+            if (ArrayUtils.contains(transportTypes, TRANSPORT_CELLULAR)) {
                 mModemIfaces = includeInStringArray(mModemIfaces, iface);
                 if (DEBUG) Slog.d(TAG, "Note mobile iface " + iface + ": " + mModemIfaces);
             } else {
@@ -6113,7 +6116,8 @@ public class BatteryStatsImpl extends BatteryStats {
         }
 
         synchronized (mWifiNetworkLock) {
-            if (ConnectivityManager.isNetworkTypeWifi(networkType)) {
+            if (ArrayUtils.contains(transportTypes, TRANSPORT_WIFI)
+                    || ArrayUtils.contains(transportTypes, TRANSPORT_WIFI_AWARE)) {
                 mWifiIfaces = includeInStringArray(mWifiIfaces, iface);
                 if (DEBUG) Slog.d(TAG, "Note wifi iface " + iface + ": " + mWifiIfaces);
             } else {

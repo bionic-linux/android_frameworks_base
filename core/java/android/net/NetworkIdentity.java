@@ -17,8 +17,6 @@
 package android.net;
 
 import static android.net.ConnectivityManager.TYPE_WIFI;
-import static android.net.ConnectivityManager.getNetworkTypeName;
-import static android.net.ConnectivityManager.isNetworkTypeMobile;
 
 import android.content.Context;
 import android.net.wifi.WifiInfo;
@@ -84,7 +82,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder("{");
-        builder.append("type=").append(getNetworkTypeName(mType));
+        builder.append("type=").append(mType);
         builder.append(", subType=");
         if (mSubType == SUBTYPE_COMBINED) {
             builder.append("COMBINED");
@@ -194,7 +192,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         boolean metered = !state.networkCapabilities.hasCapability(
                 NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
 
-        if (isNetworkTypeMobile(type)) {
+    if (state.networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
             if (state.subscriberId == null) {
                 if (state.networkInfo.getState() != NetworkInfo.State.DISCONNECTED &&
                         state.networkInfo.getState() != NetworkInfo.State.UNKNOWN) {

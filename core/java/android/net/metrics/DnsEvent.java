@@ -86,10 +86,8 @@ final public class DnsEvent {
     @Override
     public String toString() {
         StringBuilder builder =
-                new StringBuilder("DnsEvent(").append("netId=").append(netId).append(", ");
-        for (int t : BitUtils.unpackBits(transports)) {
-            builder.append(NetworkCapabilities.transportNameOf(t)).append(", ");
-        }
+                new StringBuilder("DnsEvent(").append("netId=").append(netId)
+                        .append(", transports=").append(Long.toHexString(transports)).append(", ");
         builder.append(String.format("%d events, ", eventCount));
         builder.append(String.format("%d success)", successCount));
         return builder.toString();

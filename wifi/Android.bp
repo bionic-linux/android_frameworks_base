@@ -89,7 +89,10 @@ java_defaults {
     ],
     libs: [
         "unsupportedappusage", // for android.compat.annotation.UnsupportedAppUsage
+        // TODO: DO NOT SHIP: this is likely unsafe ?
+        "framework-connectivity.stubs.module_lib",
     ],
+    stub_only_libs: ["framework-connectivity.stubs.module_lib"],
     srcs: [
         ":framework-wifi-updatable-sources",
         ":framework-wifi-util-lib-aidls",

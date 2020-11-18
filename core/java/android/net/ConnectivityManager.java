@@ -17,6 +17,8 @@ package android.net;
 
 import static android.net.IpSecManager.INVALID_RESOURCE_ID;
 
+import static com.android.internal.util.Preconditions.checkNotNull;
+
 import android.annotation.CallbackExecutor;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
@@ -681,10 +683,8 @@ public class ConnectivityManager {
     /**
      * The network that uses proxy to achieve connectivity.
      * @deprecated Use {@link NetworkCapabilities} instead.
-     * {@hide}
      */
     @Deprecated
-    @UnsupportedAppUsage
     public static final int TYPE_PROXY = 16;
 
     /**
@@ -3046,7 +3046,9 @@ public class ConnectivityManager {
      *         permission to use {@code network}.
      * @hide
      */
-    public ProxyInfo getProxyForNetwork(Network network) {
+    @Nullable
+    @SystemApi
+    public ProxyInfo getProxyForNetwork(@Nullable Network network) {
         try {
             return mService.getProxyForNetwork(network);
         } catch (RemoteException e) {
@@ -4791,6 +4793,30 @@ public class ConnectivityManager {
             }
             Log.d(TAG, "StackLog:" + sb.toString());
         }
+    }
+
+    /**
+     * @hide
+     */
+    public TestNetworkManager startOrGetTestNetworkManager() {
+        final IBinder tnBinder;
+        try {
+            tnBinder = mService.startOrGetTestNetworkService();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+
+        return new TestNetworkManager(ITestNetworkManager.Stub.asInterface(tnBinder));
+    }
+
+    /** @hide */
+    public VpnManager createVpnManager() {
+        return new VpnManager(mContext, mService);
+    }
+
+    /** @hide */
+    public ConnectivityDiagnosticsManager createDiagnosticsManager() {
+        return new ConnectivityDiagnosticsManager(mContext, mService);
     }
 
     /**
