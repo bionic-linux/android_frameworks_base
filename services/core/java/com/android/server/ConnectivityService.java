@@ -2754,6 +2754,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             switch (msg.what) {
                 case NetworkAgent.EVENT_NETWORK_CAPABILITIES_CHANGED: {
                     NetworkCapabilities networkCapabilities = (NetworkCapabilities) msg.obj;
+                    Log.d(TAG, nai.toShortString() + " CAP_CHANGED nc=" + networkCapabilities);
                     if (networkCapabilities.hasConnectivityManagedCapability()) {
                         Slog.wtf(TAG, "BUG: " + nai + " has CS-managed capability.");
                     }
