@@ -17,6 +17,7 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -29,6 +30,7 @@ import com.android.internal.util.Preconditions;
  * @hide
  */
 @TestApi
+@SystemApi
 public class TestNetworkManager {
     /**
      * Prefix for tun interfaces created by this class.

@@ -238,6 +238,7 @@ java_library_static {
     srcs: [ ":api-stubs-docs-non-updatable" ],
     static_libs: [
         "conscrypt.module.public.api.stubs",
+        "framework-connectivity.stubs",
         "framework-media.stubs",
         "framework-mediaprovider.stubs",
         "framework-permission.stubs",
@@ -255,6 +256,7 @@ java_library_static {
     srcs: [ ":system-api-stubs-docs-non-updatable" ],
     static_libs: [
         "conscrypt.module.public.api.stubs",
+        "framework-connectivity.stubs.system",
         "framework-media.stubs.system",
         "framework-mediaprovider.stubs.system",
         "framework-permission.stubs.system",
@@ -288,6 +290,7 @@ java_library_static {
         // Modules do not have test APIs, but we want to include their SystemApis, like we include
         // the SystemApi of framework-non-updatable-sources.
         "conscrypt.module.public.api.stubs",
+        "framework-connectivity.stubs.system",
         "framework-media.stubs.system",
         "framework-mediaprovider.stubs.system",
         "framework-permission.stubs.system",

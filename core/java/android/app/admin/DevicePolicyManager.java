@@ -53,7 +53,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ParceledListSlice;
 import android.content.pm.UserInfo;
 import android.graphics.Bitmap;
-import android.net.NetworkUtils;
 import android.net.PrivateDnsConnectivityChecker;
 import android.net.ProxyInfo;
 import android.net.Uri;
@@ -90,6 +89,7 @@ import android.util.ArraySet;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.net.NetworkUtilsInternal;
 import com.android.internal.os.BackgroundThread;
 import com.android.internal.util.Preconditions;
 import com.android.org.conscrypt.TrustedCertificateStore;
@@ -4545,9 +4545,10 @@ public class DevicePolicyManager {
                         }
                         exclSpec = listBuilder.toString();
                     }
-                    if (android.net.Proxy.validate(hostName, Integer.toString(port), exclSpec)
-                            != android.net.Proxy.PROXY_VALID)
-                        throw new IllegalArgumentException();
+
+                    final ProxyInfo info = ProxyInfo.buildDirectProxy(hostName, port,
+                            exclusionList == null ? Collections.emptyList() : exclusionList);
+                    if (!info.isValid()) throw new IllegalArgumentException();
                 }
                 return mService.setGlobalProxy(admin, hostSpec, exclSpec);
             } catch (RemoteException e) {
@@ -11466,7 +11467,7 @@ public class DevicePolicyManager {
             return PRIVATE_DNS_SET_ERROR_FAILURE_SETTING;
         }
 
-        if (NetworkUtils.isWeaklyValidatedHostname(privateDnsHost)) {
+        if (NetworkUtilsInternal.isWeaklyValidatedHostname(privateDnsHost)) {
             if (!PrivateDnsConnectivityChecker.canConnectToPrivateDnsServer(privateDnsHost)) {
                 return PRIVATE_DNS_SET_ERROR_HOST_NOT_SERVING;
             }

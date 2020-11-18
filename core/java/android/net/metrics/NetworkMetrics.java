@@ -144,9 +144,7 @@ public class NetworkMetrics {
         public String toString() {
             StringJoiner j = new StringJoiner(", ", "{", "}");
             j.add("netId=" + netId);
-            for (int t : BitUtils.unpackBits(transports)) {
-                j.add(NetworkCapabilities.transportNameOf(t));
-            }
+            j.add("transports=" + Long.toHexString(transports));
             j.add(String.format("dns avg=%dms max=%dms err=%.1f%% tot=%d",
                     (int) dnsLatencies.average(), (int) dnsLatencies.max,
                     100 * dnsErrorRate.average(), dnsErrorRate.count));
