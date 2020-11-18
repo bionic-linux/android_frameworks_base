@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2253aed5_48330b75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-18T03:02:51Z",
+      "side": 1,
+      "message": "LGTM with nits that can be all ignored.",
+      "revId": "c83df5884b05610c2d53401a84fffab2f332b852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97b1d3b2_d94e0fc7",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1805,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-18T03:02:51Z",
+      "side": 1,
+      "message": "nit: Since this is not final, do we want to do null check against possible/future/corner cases that makes this null?\n   e.g. new NetworkCapabilities(null)\nI don\u0027t think this would lead to a practical issue unless someone can send arbitrary NC into system. So please ignore if this is not important.",
+      "range": {
+        "startLine": 1805,
+        "startChar": 31,
+        "endLine": 1805,
+        "endChar": 37
+      },
+      "revId": "c83df5884b05610c2d53401a84fffab2f332b852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe063b00_6a36c2dd",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1806,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-18T03:02:51Z",
+      "side": 1,
+      "message": "nit: since this is only for logging.\nmaybe use abbreviation like AdminUids or RequestorPkgName?\nOnly change if you think it is better.\nno strong opinion.",
+      "range": {
+        "startLine": 1806,
+        "startChar": 24,
+        "endLine": 1806,
+        "endChar": 36
+      },
+      "revId": "c83df5884b05610c2d53401a84fffab2f332b852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b8e1be3_759c89d3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-18T03:02:51Z",
+      "side": 1,
+      "message": "nit: I like PrivateDnsBroken more.\nBut this is also ok to me.",
+      "range": {
+        "startLine": 1823,
+        "startChar": 24,
+        "endLine": 1823,
+        "endChar": 40
+      },
+      "revId": "c83df5884b05610c2d53401a84fffab2f332b852",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
