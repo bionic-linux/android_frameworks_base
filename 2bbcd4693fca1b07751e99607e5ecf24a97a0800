@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "793a53d0_33bdea67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:16:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is really much better. It means part of the Vpn object will now represent it\u0027s connected before the test calls mockVpn.connect(). So it replaces some explicit trickery with rough edges with different, less explicit trickery with different rough edges.\n\nI also don\u0027t think it\u0027s really much worse, except maybe for the fact that now all classes inside com.android.server.connectivity with a ref to a Vpn can now just write to its mInterface member (not that I think anybody is going to actually do this, but). So if this is what you need for followup changes I\u0027m happy to take it.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "2bbcd4693fca1b07751e99607e5ecf24a97a0800",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5823b3a_fc7da202",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:16:50Z",
+      "side": 1,
+      "message": "Maybe have a constant for this",
+      "range": {
+        "startLine": 1056,
+        "startChar": 26,
+        "endLine": 1056,
+        "endChar": 34
+      },
+      "revId": "2bbcd4693fca1b07751e99607e5ecf24a97a0800",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76da81ca_893a05d6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5251,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:16:50Z",
+      "side": 1,
+      "message": "I can\u0027t find anything in handleRegisterNetworkAgent that will trigger the VPN updating its capabilities.\n\nIs this callback fired from connect \u003e updateNetworkInfo \u003e rematchAllNetworksAndRequests \u003e applyNetworkReassignment \u003e makeDefault \u003e updateAllVpnCapabilities \u003e updateVpnCapabilities \u003e updateCapabilities \u003e processListenRequests ? If so I\u0027m not sure the comment really helps understanding that.",
+      "range": {
+        "startLine": 5251,
+        "startChar": 18,
+        "endLine": 5251,
+        "endChar": 44
+      },
+      "revId": "2bbcd4693fca1b07751e99607e5ecf24a97a0800",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4476288_6b74a00d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7282,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-18T07:16:50Z",
+      "side": 1,
+      "message": "This should probably use the same constant as for mInterface in the VpnConfig object, at least for realism. Eventually we should be able to remove setVpnInfo() in MockVpn and just call through to the super method",
+      "range": {
+        "startLine": 7282,
+        "startChar": 25,
+        "endLine": 7282,
+        "endChar": 34
+      },
+      "revId": "2bbcd4693fca1b07751e99607e5ecf24a97a0800",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
