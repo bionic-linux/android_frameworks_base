@@ -28,6 +28,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
 
+import com.android.internal.net.ConnectivityThreadInternal;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.Executor;
@@ -45,7 +47,7 @@ public class EthernetManager {
 
     private final Context mContext;
     private final IEthernetManager mService;
-    private final Handler mHandler = new Handler(ConnectivityThread.getInstanceLooper()) {
+    private final Handler mHandler = new Handler(ConnectivityThreadInternal.getInstanceLooper()) {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == MSG_AVAILABILITY_CHANGED) {
