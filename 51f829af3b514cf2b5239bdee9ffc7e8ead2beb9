@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2746d7a_a15c2ce4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-19T03:09:29Z",
+      "side": 1,
+      "message": "LGTM with minor nits can be all ignored.",
+      "revId": "51f829af3b514cf2b5239bdee9ffc7e8ead2beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3901ca3f_92cd4d8e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5245,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-19T03:09:29Z",
+      "side": 1,
+      "message": "nit: maybe add more context here, say this should not happen in pratice, but why you want to test it anyway?\nno strong opinion.",
+      "range": {
+        "startLine": 5245,
+        "startChar": 86,
+        "endLine": 5245,
+        "endChar": 87
+      },
+      "revId": "51f829af3b514cf2b5239bdee9ffc7e8ead2beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "863662dd_e6629874",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5252,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-19T03:09:29Z",
+      "side": 1,
+      "message": "nit: for the app maybe it is predict, but for mNetIdManager I think it is more like peekNextNetId or something. No strong opinion.",
+      "range": {
+        "startLine": 5252,
+        "startChar": 62,
+        "endLine": 5252,
+        "endChar": 78
+      },
+      "revId": "51f829af3b514cf2b5239bdee9ffc7e8ead2beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4310338a_7ef82036",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5259,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-19T03:09:29Z",
+      "side": 1,
+      "message": "nit: do we want to verify the NC got from onCapabilitiesChanged is also correct?\nno strong opinion.",
+      "revId": "51f829af3b514cf2b5239bdee9ffc7e8ead2beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
