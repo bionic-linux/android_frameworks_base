@@ -52,6 +52,24 @@
       "parentUuid": "88ac82da_c0c0ef31",
       "revId": "6b19ceac1a543eb00c93ae1c12792c8e08204975",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff42665e_32fbd00d",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2503,
+      "author": {
+        "id": 1787451
+      },
+      "writtenOn": "2020-11-19T07:50:24Z",
+      "side": 1,
+      "message": "Is it OK to submit ? Or anything to confirm ?",
+      "parentUuid": "5452c7de_91b0ff0b",
+      "revId": "6b19ceac1a543eb00c93ae1c12792c8e08204975",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
