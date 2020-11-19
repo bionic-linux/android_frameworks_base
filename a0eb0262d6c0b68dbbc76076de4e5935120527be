@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98ed49fe_90ba75f5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2757,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T07:35:23Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "a4e22112_ea79871d",
+      "range": {
+        "startLine": 2757,
+        "startChar": 0,
+        "endLine": 2757,
+        "endChar": 95
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ece4344_a885afc4",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-19T05:39:33Z",
       "side": 1,
       "message": "Not sure \u0027template\u0027 is very appropriate here, as they are taken wholesale. Maybe just \u0027nc\u0027",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cab39f4_e80b14ab",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T07:35:23Z",
+      "side": 1,
+      "message": "I used \"template\" because the first thing the code does with the object is to set the transport and possibly remove the suspended capability. So the object is not used as is. \"template\" seemed a good word for this. Other candidates might be \"reference\" (but they are actually modified, and the reference goes away) or \"initial\" (but it doesn\u0027t actually change over time)...\n\nLeft as is for now, if you have a better suggestion or feel strongly I can change it.",
+      "parentUuid": "2ece4344_a885afc4",
       "range": {
         "startLine": 80,
         "startChar": 32,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69f59e1f_20f3ea2c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T07:35:23Z",
+      "side": 1,
+      "message": "Oops. Done :-)",
+      "parentUuid": "88ff5218_b0674f39",
+      "range": {
+        "startLine": 1130,
+        "startChar": 8,
+        "endLine": 1130,
+        "endChar": 14
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00ff8459_644a531d",
@@ -83,6 +155,30 @@
       "writtenOn": "2020-11-19T05:39:33Z",
       "side": 1,
       "message": "So this is no longer true, according to l.5416. So this was in fact just an artifact of having to call both connects() in some order, but now that we have MockVpn.connectAgent the problem no longer exists ?\nIf that\u0027s the case, maybe we just want to remove the comment.",
+      "range": {
+        "startLine": 5405,
+        "startChar": 8,
+        "endLine": 5406,
+        "endChar": 43
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1208549a_ad3e75cd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5406,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T07:35:23Z",
+      "side": 1,
+      "message": "The bug is still there if you do things in the right (or wrong?) order. I\u0027ve brought it back and left the comment as is.",
+      "parentUuid": "00ff8459_644a531d",
       "range": {
         "startLine": 5405,
         "startChar": 8,
