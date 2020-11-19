@@ -6008,8 +6008,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         nai.asyncChannel.connect(mContext, mTrackerHandler, nai.messenger);
         NetworkInfo networkInfo = nai.networkInfo;
+        Log.d(TAG, "handleRegisterNetworkAgent: 0: nc=" + nai.networkCapabilities);
         updateNetworkInfo(nai, networkInfo);
+        Log.d(TAG, "handleRegisterNetworkAgent: 1: nc=" + nai.networkCapabilities);
         updateUids(nai, null, nai.networkCapabilities);
+        Log.d(TAG, "handleRegisterNetworkAgent: 2: nc=" + nai.networkCapabilities);
     }
 
     // Called when receiving LinkProperties directly from a NetworkAgent.
@@ -6398,11 +6401,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void updateCapabilities(final int oldScore, @NonNull final NetworkAgentInfo nai,
             @NonNull final NetworkCapabilities nc) {
         NetworkCapabilities newNc = mixInCapabilities(nai, nc);
+if (nai.isVPN()) Log.d(TAG, "updateCapabilities: 1: newNc=" + newNc);
         if (Objects.equals(nai.networkCapabilities, newNc)) return;
         updateNetworkPermissions(nai, newNc);
+if (nai.isVPN()) Log.d(TAG, "updateCapabilities: 2: newNc=" + newNc);
         final NetworkCapabilities prevNc = nai.getAndSetNetworkCapabilities(newNc);
 
         updateUids(nai, prevNc, newNc);
+if (nai.isVPN()) Log.d(TAG, "updateCapabilities: 3: newNc=" + newNc);
+        if (nai.isVPN()) Log.d(TAG, "updateCapabilities: 3a: nai.nc=" + nai.networkCapabilities);
 
         if (nai.getCurrentScore() == oldScore && newNc.equalRequestableCapabilities(prevNc)) {
             // If the requestable capabilities haven't changed, and the score hasn't changed, then
@@ -6452,11 +6459,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
+if (nai.isVPN()) Log.d(TAG, "updateCapabilities: 4: newNc=" + newNc);
         if (!newNc.hasTransport(TRANSPORT_VPN)) {
             // Tell VPNs about updated capabilities, since they may need to
             // bubble those changes through.
             propagateUnderlyingNetworkCapabilities();
         }
+if (nai.isVPN()) Log.d(TAG, "updateCapabilities: 5: newNc=" + newNc);
 
         if (!newNc.equalsTransportTypes(prevNc)) {
             mDnsManager.updateTransportsForNetwork(nai.network.netId, newNc.getTransportTypes());
