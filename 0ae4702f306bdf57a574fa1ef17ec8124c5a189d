@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4680faa8_52ccbc9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T06:02:16Z",
+      "side": 1,
+      "message": "Review comments adressed, carrying forward +2.",
+      "revId": "0ae4702f306bdf57a574fa1ef17ec8124c5a189d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
