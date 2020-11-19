@@ -5543,9 +5543,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final SortedSet<Integer> thresholds = new TreeSet<>();
         synchronized (nai) {
             for (NetworkRequestInfo nri : mNetworkRequests.values()) {
-                if (nri.request.networkCapabilities.hasSignalStrength() &&
-                        nai.satisfiesImmutableCapabilitiesOf(nri.request)) {
-                    thresholds.add(nri.request.networkCapabilities.getSignalStrength());
+                for (NetworkRequest req : nri.mRequests) {
+                    if (req.networkCapabilities.hasSignalStrength()
+                            && nai.satisfiesImmutableCapabilitiesOf(req)) {
+                        thresholds.add(req.networkCapabilities.getSignalStrength());
+                    }
                 }
             }
         }
