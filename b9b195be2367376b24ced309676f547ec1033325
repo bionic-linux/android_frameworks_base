@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f837e41e_7ff7a002",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-19T23:54:16Z",
+      "side": 1,
+      "message": "Ran FrameworksTelephonyTests on aosp version",
+      "revId": "b9b195be2367376b24ced309676f547ec1033325",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
