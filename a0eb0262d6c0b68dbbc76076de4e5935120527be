@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4e22112_ea79871d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2757,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T05:39:33Z",
+      "side": 1,
+      "message": "Forgot to remove ? Or do you want to at least move this behind if (DBG)",
+      "range": {
+        "startLine": 2757,
+        "startChar": 0,
+        "endLine": 2757,
+        "endChar": 95
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ece4344_a885afc4",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T05:39:33Z",
+      "side": 1,
+      "message": "Not sure \u0027template\u0027 is very appropriate here, as they are taken wholesale. Maybe just \u0027nc\u0027",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88ff5218_b0674f39",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T05:39:33Z",
+      "side": 1,
+      "message": "Love how this *Internal method is public :)\nYou\u0027re not using it from outside this class.",
+      "range": {
+        "startLine": 1130,
+        "startChar": 8,
+        "endLine": 1130,
+        "endChar": 14
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00ff8459_644a531d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5406,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T05:39:33Z",
+      "side": 1,
+      "message": "So this is no longer true, according to l.5416. So this was in fact just an artifact of having to call both connects() in some order, but now that we have MockVpn.connectAgent the problem no longer exists ?\nIf that\u0027s the case, maybe we just want to remove the comment.",
+      "range": {
+        "startLine": 5405,
+        "startChar": 8,
+        "endLine": 5406,
+        "endChar": 43
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
