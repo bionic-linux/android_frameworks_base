@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.hardware.boot.V1_2.IBootControl;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.Binder;
@@ -51,6 +52,7 @@ import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
 
 /**
  * The recovery system service is responsible for coordinating recovery related
@@ -175,6 +177,15 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
                 return null;
             }
             return socket;
+        }
+
+        public IBootControl getBootControl() {
+            try {
+                return IBootControl.getService(true);
+            } catch (NoSuchElementException | RemoteException e) {
+                Slog.w(TAG, "Device doesn't implement boot control HAL: " + e);
+            }
+            return null;
         }
 
         public void threadSleep(long millis) throws InterruptedException {
@@ -481,11 +492,19 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
             Slog.w(TAG, "Missing packageName when rebooting with lskf.");
             return false;
         }
+
+        IBootControl bootControl = mInjector.getBootControl();
+        try {
+            int slot = bootControl.getActiveBootSlot();
+            Slog.w(TAG, "Active slot is " + slot);
+        } catch (Exception e) {
+            Slog.w(TAG, "Failed to get current slot");
+        }
+
         if (!isLskfCaptured(packageName)) {
             return false;
         }
 
-        // TODO(xunchang) check the slot to boot into, and fail the reboot upon slot mismatch.
         // TODO(xunchang) write the vbmeta digest along with the escrowKey before reboot.
         if (!mInjector.getLockSettingsService().armRebootEscrow()) {
             Slog.w(TAG, "Failure to escrow key for reboot");
