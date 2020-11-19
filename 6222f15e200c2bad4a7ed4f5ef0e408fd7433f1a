@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2182c428_9b5a42f9",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:58:13Z",
+      "side": 1,
+      "message": "underlying networks",
+      "range": {
+        "startLine": 663,
+        "startChar": 54,
+        "endLine": 663,
+        "endChar": 76
+      },
+      "revId": "6222f15e200c2bad4a7ed4f5ef0e408fd7433f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66695cf0_e7abab60",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2808,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:58:13Z",
+      "side": 1,
+      "message": "Should we at least have a log ? This is pretty clearly a programming error. I get that it\u0027s not easy to just throw in NetworkAgent because NA doesn\u0027t know if this is a VPN, but ignoring it without so much as a log feels a bit insufficient.",
+      "range": {
+        "startLine": 2808,
+        "startChar": 20,
+        "endLine": 2808,
+        "endChar": 65
+      },
+      "revId": "6222f15e200c2bad4a7ed4f5ef0e408fd7433f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "339e029b_4c725285",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4793,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:58:13Z",
+      "side": 1,
+      "message": "Should we call ensureRunningOnConnectivityServiceThread() then ?",
+      "range": {
+        "startLine": 4793,
+        "startChar": 20,
+        "endLine": 4793,
+        "endChar": 71
+      },
+      "revId": "6222f15e200c2bad4a7ed4f5ef0e408fd7433f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02ac4ce6_5a9faf27",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4803,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:58:13Z",
+      "side": 1,
+      "message": "Should this move close to updateCapabilities ? It\u0027s a lot more related to that one than to propagateUnderlyingCapabilities above.",
+      "range": {
+        "startLine": 4803,
+        "startChar": 17,
+        "endLine": 4803,
+        "endChar": 44
+      },
+      "revId": "6222f15e200c2bad4a7ed4f5ef0e408fd7433f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d75de00_aa3cf68b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7544,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:58:13Z",
+      "side": 1,
+      "message": "IIUC since that message is sent during setUnderlyingNetworks above it is guaranteed to run before this runnable, so presumably it\u0027s fine.",
+      "range": {
+        "startLine": 7543,
+        "startChar": 84,
+        "endLine": 7544,
+        "endChar": 56
+      },
+      "revId": "6222f15e200c2bad4a7ed4f5ef0e408fd7433f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3184e16_603c0095",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:58:13Z",
+      "side": 1,
+      "message": "That\u0027s not how the code behave since we call processNetworkCapabilities unconditionally. Did you mean only {valid,useful,relevant} for VPNs ?",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "6222f15e200c2bad4a7ed4f5ef0e408fd7433f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e67324d8_6f312405",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:58:13Z",
+      "side": 1,
+      "message": "Nit : I think \"declaredMeteredByAgent\" is clearer.",
+      "range": {
+        "startLine": 143,
+        "startChar": 19,
+        "endLine": 143,
+        "endChar": 31
+      },
+      "revId": "6222f15e200c2bad4a7ed4f5ef0e408fd7433f1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

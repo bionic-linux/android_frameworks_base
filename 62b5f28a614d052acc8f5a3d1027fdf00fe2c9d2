@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c3bc876_915d6a56",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4785,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:58:13Z",
+      "side": 0,
+      "message": "As we discussed offline, no longer calling this means the caps stored in vpn.mNetworkCapabilities will no longer be in sync.\n\nIn fact, I can\u0027t find a place where that makes a difference. Best I can tell there are three read accesses to Vpn.mNetworkCapabilities :\n• In calling the constructor to NetworkAgent, which necessarily happens before this and is not affected\n• In the return value of vpn.updateCapabilities, but when that is called it will be made correct before being returned\n• In Vpn.appliesToUid(), which is not affected by this issue because it doesn\u0027t read the fields mutated by Vpn.updateCapabilities.\n\nIt is still pretty confusing.",
+      "range": {
+        "startLine": 4785,
+        "startChar": 45,
+        "endLine": 4785,
+        "endChar": 63
+      },
+      "revId": "62b5f28a614d052acc8f5a3d1027fdf00fe2c9d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
