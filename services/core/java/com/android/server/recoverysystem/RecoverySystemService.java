@@ -20,6 +20,7 @@ import android.annotation.IntDef;
 import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.hardware.boot.V1_0.IBootControl;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.Binder;
@@ -175,6 +176,28 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
                 return null;
             }
             return socket;
+        }
+
+        public android.hardware.boot.V1_2.IBootControl getBootControl() {
+            IBootControl bootControlV10;
+            try {
+                bootControlV10 = IBootControl.getService(true);
+                if (bootControlV10 == null) {
+                    Slog.w(TAG, "Boot control HAL V1_0 should not be null.");
+                    return null;
+                }
+            } catch (RemoteException e) {
+                Slog.w(TAG, "Failed to get the boot control HAL: " + e);
+                return null;
+            }
+
+            android.hardware.boot.V1_2.IBootControl bootControlV12 =
+                    android.hardware.boot.V1_2.IBootControl.castFrom(bootControlV10);
+            if (bootControlV12 == null) {
+                Slog.w(TAG, "Device doesn't implement boot control HAL V1_2.");
+                return null;
+            }
+            return bootControlV12;
         }
 
         public void threadSleep(long millis) throws InterruptedException {
@@ -476,16 +499,54 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         return needClear ? ROR_REQUESTED_NEED_CLEAR : ROR_REQUESTED_SKIP_CLEAR;
     }
 
+    private boolean verifySlotForNextBoot(boolean slotSwitch) {
+        android.hardware.boot.V1_2.IBootControl bootControl = mInjector.getBootControl();
+        // TODO(xunchang) enforce boot control V1_2
+        if (bootControl == null) {
+            Slog.w(TAG, "Failed to get the boot control HAL, skipping slot verification.");
+            return true;
+        }
+
+        int current_slot;
+        int next_active_slot;
+        try {
+            current_slot = bootControl.getCurrentSlot();
+            if (current_slot != 0 && current_slot != 1) {
+                throw new IllegalStateException("Current boot slot should be 0 or 1, get "
+                        + current_slot);
+            }
+            next_active_slot = bootControl.getActiveBootSlot();
+        } catch (RemoteException e) {
+            Slog.w(TAG, "Failed to query the active slots " + e);
+            return false;
+        }
+
+        int expected_active_slot = current_slot;
+        if (slotSwitch) {
+            expected_active_slot = current_slot == 0 ? 1 : 0;
+        }
+        if (next_active_slot != expected_active_slot) {
+            Slog.w(TAG, "The next active boot slot doesn't match the expected value, expect "
+                    + expected_active_slot + ", get " + next_active_slot);
+            return false;
+        }
+        return true;
+    }
+
     private boolean rebootWithLskfImpl(String packageName, String reason, boolean slotSwitch) {
         if (packageName == null) {
             Slog.w(TAG, "Missing packageName when rebooting with lskf.");
             return false;
         }
+
         if (!isLskfCaptured(packageName)) {
             return false;
         }
 
-        // TODO(xunchang) check the slot to boot into, and fail the reboot upon slot mismatch.
+        if (!verifySlotForNextBoot(slotSwitch)) {
+            return false;
+        }
+
         // TODO(xunchang) write the vbmeta digest along with the escrowKey before reboot.
         if (!mInjector.getLockSettingsService().armRebootEscrow()) {
             Slog.w(TAG, "Failure to escrow key for reboot");
