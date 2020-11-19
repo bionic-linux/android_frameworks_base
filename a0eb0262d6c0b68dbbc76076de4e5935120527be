@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "518512b1_947e04f5",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-19T07:37:39Z",
+      "side": 1,
+      "message": "Fair enough",
+      "parentUuid": "3cab39f4_e80b14ab",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "a0eb0262d6c0b68dbbc76076de4e5935120527be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88ff5218_b0674f39",
