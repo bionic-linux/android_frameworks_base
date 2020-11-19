@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25d1358c_f6926bec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T10:31:45Z",
+      "side": 1,
+      "message": "Failing tests are all in CtsWifiTestCases(module-abi\u003dx86_64). They all fail with:\n\n\u003d\u003d\u003d\u003d\u003d\nTest failed to run to completion. Reason: \u0027Test run failed to complete. Expected 224 tests, received 110\u0027. Check device logcat for details\n\u003d\u003d\u003d\u003d\u003d\n\nThis failure is unrelated because this CL is a test-only change in another test suite.",
+      "revId": "62b5f28a614d052acc8f5a3d1027fdf00fe2c9d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
