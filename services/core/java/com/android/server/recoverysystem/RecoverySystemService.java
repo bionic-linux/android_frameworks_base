@@ -31,7 +31,7 @@ import android.os.ResultReceiver;
 import android.os.ShellCallback;
 import android.os.SystemProperties;
 import android.util.Slog;
-
+import android.hardware.boot.V1_0.IBootControl;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.widget.LockSettingsInternal;
 import com.android.internal.widget.RebootEscrowListener;
@@ -156,6 +156,15 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
                 return null;
             }
             return socket;
+        }
+
+        public IBootControl getBootControl() {
+            try {
+                return IBootControl.getService(true);
+            } catch (Exception e) {
+                Slog.w(TAG, "Device doesn't implement boot control HAL");
+            }
+            return null;
         }
 
         public void threadSleep(long millis) throws InterruptedException {
@@ -460,6 +469,15 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     @Override // Binder call
     public boolean rebootWithLskf(String callerId, String reason, boolean slotSwitch) {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.RECOVERY, null);
+        // TODO(xunchang) check the slot to boot into, and fail the reboot upon slot mismatch.
+        IBootControl bootControl = mInjector.getBootControl();
+        try {
+            int slot = bootControl.getCurrentSlot();
+            Slog.w(TAG, "Current slot is " + slot);
+        } catch (Exception e) {
+            Slog.w(TAG, "Failed to get current slot");
+        }
+
         if (callerId == null) {
             Slog.w(TAG, "Missing callerId when rebooting with lskf.");
             return false;
@@ -468,7 +486,9 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
             return false;
         }
 
-        // TODO(xunchang) check the slot to boot into, and fail the reboot upon slot mismatch.
+
+
+
         // TODO(xunchang) write the vbmeta digest along with the escrowKey before reboot.
         if (!mInjector.getLockSettingsService().armRebootEscrow()) {
             Slog.w(TAG, "Failure to escrow key for reboot");
