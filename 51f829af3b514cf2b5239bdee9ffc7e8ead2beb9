@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b14c13e6_ef7b9bc8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5245,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T05:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3901ca3f_92cd4d8e",
+      "range": {
+        "startLine": 5245,
+        "startChar": 86,
+        "endLine": 5245,
+        "endChar": 87
+      },
+      "revId": "51f829af3b514cf2b5239bdee9ffc7e8ead2beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "863662dd_e6629874",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e4784e2_84d9493e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5252,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T05:52:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "863662dd_e6629874",
+      "range": {
+        "startLine": 5252,
+        "startChar": 62,
+        "endLine": 5252,
+        "endChar": 78
+      },
+      "revId": "51f829af3b514cf2b5239bdee9ffc7e8ead2beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4310338a_7ef82036",
@@ -77,6 +125,24 @@
       "writtenOn": "2020-11-19T03:09:29Z",
       "side": 1,
       "message": "nit: do we want to verify the NC got from onCapabilitiesChanged is also correct?\nno strong opinion.",
+      "revId": "51f829af3b514cf2b5239bdee9ffc7e8ead2beb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac55172_fe135712",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5259,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-19T05:52:23Z",
+      "side": 1,
+      "message": "I think that would require reimplementing expectAvailableCallbacksUnvalidated and I don\u0027t think it\u0027s worth it.",
+      "parentUuid": "4310338a_7ef82036",
       "revId": "51f829af3b514cf2b5239bdee9ffc7e8ead2beb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
