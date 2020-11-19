@@ -368,12 +368,13 @@ public class IpConfigStore {
                     switch (proxySettings) {
                         case STATIC:
                             ProxyInfo proxyInfo =
-                                    new ProxyInfo(proxyHost, proxyPort, exclusionList);
+                                    ProxyInfo.buildDirectProxy(proxyHost, proxyPort, exclusionList);
                             config.proxySettings = proxySettings;
                             config.httpProxy = proxyInfo;
                             break;
                         case PAC:
-                            ProxyInfo proxyPacProperties = new ProxyInfo(Uri.parse(pacFileUrl));
+                            ProxyInfo proxyPacProperties =
+                                    ProxyInfo.buildPacProxy(Uri.parse(pacFileUrl));
                             config.proxySettings = proxySettings;
                             config.httpProxy = proxyPacProperties;
                             break;
