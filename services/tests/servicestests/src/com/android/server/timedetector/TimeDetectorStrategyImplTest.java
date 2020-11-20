@@ -37,9 +37,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.Duration;
+import java.time.Instant;
 
 @RunWith(AndroidJUnit4.class)
 public class TimeDetectorStrategyImplTest {
+
+    private static final Instant TIME_LOWER_BOUND = Instant.ofEpochMilli(
+            createUtcTime(2009, 1, 1, 12, 0, 0));
 
     private static final TimestampedValue<Long> ARBITRARY_CLOCK_INITIALIZATION_INFO =
             new TimestampedValue<>(
@@ -87,7 +91,7 @@ public class TimeDetectorStrategyImplTest {
 
         int slotIndex = ARBITRARY_SLOT_INDEX;
         TelephonyTimeSuggestion timeSuggestion =
-                mScript.generateTelephonyTimeSuggestion(slotIndex, null);
+                mScript.generateTelephonyTimeSuggestion(slotIndex, (Long) null);
         mScript.simulateTelephonyTimeSuggestion(timeSuggestion)
                 .verifySystemClockWasNotSetAndResetCallTracking()
                 .assertLatestTelephonySuggestion(slotIndex, null);
@@ -108,7 +112,7 @@ public class TimeDetectorStrategyImplTest {
             TelephonyTimeSuggestion timeSuggestion1 =
                     mScript.generateTelephonyTimeSuggestion(slotIndex, ARBITRARY_TEST_TIME_MILLIS);
 
-            // Increment the the device clocks to simulate the passage of time.
+            // Increment the device clocks to simulate the passage of time.
             mScript.simulateTimePassing(clockIncrementMillis);
 
             long expectedSystemClockMillis1 =
@@ -300,6 +304,23 @@ public class TimeDetectorStrategyImplTest {
     }
 
     @Test
+    public void telephonyTimeSuggestion_ignoredWhenReferencedTimeIsInThePast() {
+        mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
+                .pokeAutoTimeDetectionEnabled(true);
+
+        int slotIndex = ARBITRARY_SLOT_INDEX;
+        Instant suggestedTime = TIME_LOWER_BOUND.minus(Duration.ofDays(1));
+
+        TelephonyTimeSuggestion timeSuggestion =
+                mScript.generateTelephonyTimeSuggestion(
+                        slotIndex, suggestedTime);
+
+        mScript.simulateTelephonyTimeSuggestion(timeSuggestion)
+                .verifySystemClockWasNotSetAndResetCallTracking()
+                .assertLatestTelephonySuggestion(slotIndex, null);
+    }
+
+    @Test
     public void testSuggestTelephonyTime_timeDetectionToggled() {
         final int clockIncrementMillis = 100;
         final int systemClockUpdateThreshold = 2000;
@@ -486,6 +507,19 @@ public class TimeDetectorStrategyImplTest {
     }
 
     @Test
+    public void suggestManualTime_ignoresTimeLowerBound() {
+        mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
+                .pokeAutoTimeDetectionEnabled(false);
+        Instant suggestedTime = TIME_LOWER_BOUND.minus(Duration.ofDays(1));
+
+        ManualTimeSuggestion timeSuggestion =
+                mScript.generateManualTimeSuggestion(suggestedTime);
+
+        mScript.simulateManualTimeSuggestion(timeSuggestion)
+                .verifySystemClockWasSetAndResetCallTracking(suggestedTime.toEpochMilli());
+    }
+
+    @Test
     public void testSuggestNetworkTime_autoTimeEnabled() {
         mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
                 .pokeAutoTimeDetectionEnabled(true);
@@ -612,6 +646,20 @@ public class TimeDetectorStrategyImplTest {
         assertNull(mScript.peekBestTelephonySuggestion());
     }
 
+    @Test
+    public void networkTimeSuggestion_ignoredWhenReferencedTimeIsThePast() {
+        mScript.pokeFakeClocks(ARBITRARY_CLOCK_INITIALIZATION_INFO)
+                .pokeAutoTimeDetectionEnabled(true);
+
+        Instant suggestedTime = TIME_LOWER_BOUND.minus(Duration.ofDays(1));
+        NetworkTimeSuggestion timeSuggestion = mScript
+                .generateNetworkTimeSuggestion(suggestedTime);
+
+        mScript.simulateNetworkTimeSuggestion(timeSuggestion)
+                .verifySystemClockWasNotSetAndResetCallTracking()
+                .assertLatestNetworkSuggestion(null);
+    }
+
     /**
      * A fake implementation of TimeDetectorStrategy.Callback. Besides tracking changes and behaving
      * like the real thing should, it also asserts preconditions.
@@ -634,6 +682,11 @@ public class TimeDetectorStrategyImplTest {
         @Override
         public boolean isAutoTimeDetectionEnabled() {
             return mAutoTimeDetectionEnabled;
+        }
+
+        @Override
+        public Instant timeSuggestionLowerBound() {
+            return TIME_LOWER_BOUND;
         }
 
         @Override
@@ -703,7 +756,10 @@ public class TimeDetectorStrategyImplTest {
         }
 
         void verifySystemClockNotSet() {
-            assertFalse(mSystemClockWasSet);
+            assertFalse(
+                    String.format("System clock was manipulated and set to %s(=%s)",
+                            Instant.ofEpochMilli(mSystemClockMillis), mSystemClockMillis),
+                    mSystemClockWasSet);
         }
 
         void verifySystemClockWasSet(long expectedSystemClockMillis) {
@@ -809,7 +865,10 @@ public class TimeDetectorStrategyImplTest {
          * White box test info: Asserts the latest suggestion for the slotIndex is as expected.
          */
         Script assertLatestTelephonySuggestion(int slotIndex, TelephonyTimeSuggestion expected) {
-            assertEquals(expected, mTimeDetectorStrategy.getLatestTelephonySuggestion(slotIndex));
+            assertEquals(
+                    "Expected to see " + expected + " at slotIndex=" + slotIndex + ", but got "
+                        + mTimeDetectorStrategy.getLatestTelephonySuggestion(slotIndex),
+                    expected, mTimeDetectorStrategy.getLatestTelephonySuggestion(slotIndex));
             return this;
         }
 
@@ -847,6 +906,10 @@ public class TimeDetectorStrategyImplTest {
             return new ManualTimeSuggestion(utcTime);
         }
 
+        ManualTimeSuggestion generateManualTimeSuggestion(Instant suggestedTime) {
+            return generateManualTimeSuggestion(suggestedTime.toEpochMilli());
+        }
+
         /**
          * Generates a {@link TelephonyTimeSuggestion} using the current elapsed realtime clock for
          * the reference time.
@@ -859,6 +922,11 @@ public class TimeDetectorStrategyImplTest {
             return createTelephonyTimeSuggestion(slotIndex, time);
         }
 
+        TelephonyTimeSuggestion generateTelephonyTimeSuggestion(
+                int slotIndex, Instant suggestedTime) {
+            return generateTelephonyTimeSuggestion(slotIndex, suggestedTime.toEpochMilli());
+        }
+
         /**
          * Generates a NetworkTimeSuggestion using the current elapsed realtime clock for the
          * reference time.
@@ -867,6 +935,10 @@ public class TimeDetectorStrategyImplTest {
             TimestampedValue<Long> utcTime =
                     new TimestampedValue<>(mFakeCallback.peekElapsedRealtimeMillis(), timeMillis);
             return new NetworkTimeSuggestion(utcTime);
+        }
+
+        NetworkTimeSuggestion generateNetworkTimeSuggestion(Instant suggestedTime) {
+            return generateNetworkTimeSuggestion(suggestedTime.toEpochMilli());
         }
 
         /**
