@@ -16,11 +16,14 @@
 
 package android.net.wifi.aware;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.NetworkCapabilities;
 import android.net.TransportInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.android.modules.utils.build.SdkLevel;
 
 import java.net.Inet6Address;
 import java.net.NetworkInterface;
@@ -51,6 +54,9 @@ public final class WifiAwareNetworkInfo implements TransportInfo, Parcelable {
     private int mTransportProtocol = -1; // a value of -1 is considered invalid
 
     /** @hide */
+    public WifiAwareNetworkInfo() {}
+
+    /** @hide */
     public WifiAwareNetworkInfo(Inet6Address ipv6Addr) {
         mIpv6Addr = ipv6Addr;
     }
@@ -60,6 +66,14 @@ public final class WifiAwareNetworkInfo implements TransportInfo, Parcelable {
         mIpv6Addr = ipv6Addr;
         mPort = port;
         mTransportProtocol = transportProtocol;
+    }
+
+    /** @hide */
+    public WifiAwareNetworkInfo(@Nullable WifiAwareNetworkInfo source) {
+        if (source == null) return;
+        mIpv6Addr = source.mIpv6Addr;
+        mPort = source.mPort;
+        mTransportProtocol = source.mTransportProtocol;
     }
 
     /**
@@ -137,7 +151,7 @@ public final class WifiAwareNetworkInfo implements TransportInfo, Parcelable {
                         ipv6Addr = Inet6Address.getByAddress(null, addr, ni);
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
-                        return new WifiAwareNetworkInfo(null);
+                        return new WifiAwareNetworkInfo();
                     }
                     return new WifiAwareNetworkInfo(ipv6Addr, port, transportProtocol);
                 }
@@ -178,5 +192,15 @@ public final class WifiAwareNetworkInfo implements TransportInfo, Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(mIpv6Addr, mPort, mTransportProtocol);
+    }
+
+    @Override
+    @NonNull
+    public WifiAwareNetworkInfo makeCopy(boolean parcelSensitiveFields) {
+        if (!SdkLevel.isAtLeastS()) {
+            throw new UnsupportedOperationException();
+        }
+        // No location sensitive data, ignore parcelSensitiveFields.
+        return new WifiAwareNetworkInfo(this);
     }
 }
