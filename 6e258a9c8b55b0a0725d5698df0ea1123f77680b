@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a50ed098_cae0fcac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2020-11-20T19:00:40Z",
+      "side": 1,
+      "message": "I have to admit it\u0027s still not clear to me what java.library.path is used for, and what it safely can be used for without breaking namespace isolation. \n\nE.g. in https://cs.android.com/android/platform/superproject/+/master:libcore/ojluni/src/main/java/java/lang/System.java;l\u003d1111;drc\u003d56f48d7d7c69b49d35ebf122877f58528a59d76c I see the example \"/vendor/lib:/system/lib\", but including /vendor in it wouldn\u0027t be a good idea since we want namespace isolation between /vendor and /system, don\u0027t we? I can send out another CL to correct that too, but I still wonder what vendors may do with it, and I couldn\u0027t find a test for it in CTS.",
+      "revId": "6e258a9c8b55b0a0725d5698df0ea1123f77680b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
