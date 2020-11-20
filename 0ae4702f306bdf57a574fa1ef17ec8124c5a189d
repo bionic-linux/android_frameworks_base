@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34c56b87_b055d8d2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7306,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-20T02:52:32Z",
+      "side": 0,
+      "message": "Question: just to make sure I understand what you are trying to say:\nThe original test is trying to test this without connecting the Vpn.\nBut the production code in getUnderlyingNetworks will only return underlyingNetworks when running anyway. \nSo the new code make it more realistic by removing the overrided getUnderlyingNetworks and actually connect the mocked vpn.",
+      "range": {
+        "startLine": 7306,
+        "startChar": 25,
+        "endLine": 7306,
+        "endChar": 64
+      },
+      "revId": "0ae4702f306bdf57a574fa1ef17ec8124c5a189d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
