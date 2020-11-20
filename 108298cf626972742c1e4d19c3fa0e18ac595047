@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02df007a_b4dca2e8",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2020-11-20T21:42:34Z",
+      "side": 1,
+      "message": "Nit: This isn\u0027t a member variable, but instead is a local variable, so it should be named simply `historyClone`.",
+      "range": {
+        "startLine": 531,
+        "startChar": 32,
+        "endLine": 531,
+        "endChar": 45
+      },
+      "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdcd023e_42943957",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2020-11-20T21:42:34Z",
+      "side": 1,
+      "message": "This isn\u0027t properly copying the ops, see\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/core/java/android/app/AppOpsManager.java;l\u003d4621;drc\u003d74207ec1fb9fcfb49268ef919ffb2063c39e4035\nSimply `new HistoricalOps(ops)` should do it.",
+      "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99125bb0_040549f3",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2020-11-20T21:42:34Z",
+      "side": 1,
+      "message": "This methods is DMLocked and thus needs the inMemoryLock. Actually mPendingHistoryOffsetMillis needs locking as well.",
+      "range": {
+        "startLine": 693,
+        "startChar": 16,
+        "endLine": 693,
+        "endChar": 53
+      },
+      "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
