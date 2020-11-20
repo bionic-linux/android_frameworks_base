@@ -3570,9 +3570,6 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("      --only-sessionid: show only sessionId of each session");
         pw.println("      --only-parent: hide all children sessions");
         pw.println("");
-        pw.println("  list users");
-        pw.println("    Prints all users.");
-        pw.println("");
         pw.println("  resolve-activity [--brief] [--components] [--query-flags FLAGS]");
         pw.println("       [--user USER_ID] INTENT");
         pw.println("    Prints the activity that resolves to the given INTENT.");
