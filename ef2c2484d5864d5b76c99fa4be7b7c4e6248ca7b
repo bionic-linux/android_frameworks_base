@@ -16,6 +16,24 @@
       "message": "Why not just make these public? Marking them as @SystemApi doesn\u0027t provide any protections.",
       "revId": "ef2c2484d5864d5b76c99fa4be7b7c4e6248ca7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60422abc_006c0bff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-11-20T08:08:36Z",
+      "side": 1,
+      "message": "Thanks for your reminder. I have updated them to public APIs.",
+      "parentUuid": "04fa0370_beaacd0f",
+      "revId": "ef2c2484d5864d5b76c99fa4be7b7c4e6248ca7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
