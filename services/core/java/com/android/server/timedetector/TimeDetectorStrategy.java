@@ -24,6 +24,7 @@ import android.app.timedetector.TelephonyTimeSuggestion;
 import android.os.TimestampedValue;
 
 import java.io.PrintWriter;
+import java.time.Instant;
 
 /**
  * The interface for the class that implements the time detection algorithm used by the
@@ -57,6 +58,13 @@ public interface TimeDetectorStrategy {
 
         /** Returns true if automatic time detection is enabled. */
         boolean isAutoTimeDetectionEnabled();
+
+        /** Returns a lower bound for valid automatic times. It is guaranteed to be in the past,
+         * i.e. it is unrelated to the current system clock time.
+         * It holds no other meaning; it could be related to when the device system image was built,
+         * or could be updated by a mainline module. */
+        @NonNull
+        Instant autoTimeLowerBound();
 
         /** Acquire a suitable wake lock. Must be followed by {@link #releaseWakeLock()} */
         void acquireWakeLock();
