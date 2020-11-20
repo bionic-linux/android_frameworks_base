@@ -212,6 +212,30 @@
       },
       "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3605d30a_a6303166",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-11-20T07:34:04Z",
+      "side": 1,
+      "message": "For MultipathPolicyTrackerTest, I got the following error so it needs to change.\nAttempt to invoke virtual method \u0027void android.net.ConnectivityManager.registerNetworkCallback(android.net.NetworkRequest, android.net.ConnectivityManager$NetworkCallback, android.os.Handler)\u0027 on a null object reference\n\nFor others, I did not get such kind of failure so it might not matter.",
+      "parentUuid": "dd972ac4_576fe0bc",
+      "range": {
+        "startLine": 220,
+        "startChar": 8,
+        "endLine": 221,
+        "endChar": 58
+      },
+      "revId": "383917deef580fd00ab29ae142c6705504ec76e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
