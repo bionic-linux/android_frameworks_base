@@ -16,10 +16,31 @@
 
 package android.net;
 
+import android.annotation.NonNull;
+import android.annotation.SystemApi;
+
 /**
  * A container for transport-specific capabilities which is returned by
  * {@link NetworkCapabilities#getTransportInfo()}. Specific networks
  * may provide concrete implementations of this interface.
+ * @see android.net.wifi.aware.WifiAwareNetworkInfo
+ * @see android.net.wifi.WifiInfo
  */
 public interface TransportInfo {
+
+    /**
+     * Create a copy of a {@link TransportInfo} that will preserve location sensitive fields that
+     * were set based on the permissions of the process that originally received it.
+     *
+     * <p>By default {@link TransportInfo} does not preserve such fields during parceling, as
+     * they should not be shared outside of the process that receives them without appropriate
+     * checks.
+     *
+     * @param parcelLocationSensitiveFields Whether the location sensitive fields should be kept
+     *                                      when parceling
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    TransportInfo makeCopy(boolean parcelLocationSensitiveFields);
 }
