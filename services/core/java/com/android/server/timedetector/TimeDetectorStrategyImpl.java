@@ -36,6 +36,7 @@ import com.android.server.timezonedetector.ReferenceWithHistory;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.time.Instant;
 
 /**
  * An implementation of {@link TimeDetectorStrategy} that passes telephony and manual suggestions to
@@ -141,7 +142,7 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
 
     @Override
     public synchronized void suggestNetworkTime(@NonNull NetworkTimeSuggestion timeSuggestion) {
-        if (!validateSuggestionTime(timeSuggestion.getUtcTime(), timeSuggestion)) {
+        if (!validateAutoSuggestionTime(timeSuggestion.getUtcTime(), timeSuggestion)) {
             return;
         }
 
@@ -175,9 +176,12 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
             return;
         }
 
-        // Perform validation / input filtering and record the validated suggestion against the
-        // slotIndex.
-        if (!validateAndStoreTelephonySuggestion(timeSuggestion)) {
+        if (!validateAutoSuggestionTime(timeSuggestion.getUtcTime(), timeSuggestion)) {
+            return;
+        }
+
+        // Perform input filtering and record the validated suggestion against the slotIndex.
+        if (!storeTelephonySuggestion(timeSuggestion)) {
             return;
         }
 
@@ -236,14 +240,9 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
     }
 
     @GuardedBy("this")
-    private boolean validateAndStoreTelephonySuggestion(
+    private boolean storeTelephonySuggestion(
             @NonNull TelephonyTimeSuggestion suggestion) {
         TimestampedValue<Long> newUtcTime = suggestion.getUtcTime();
-        if (!validateSuggestionTime(newUtcTime, suggestion)) {
-            // There's probably nothing useful we can do: elsewhere we assume that reference
-            // times are in the past so just stop here.
-            return false;
-        }
 
         int slotIndex = suggestion.getSlotIndex();
         TelephonyTimeSuggestion previousSuggestion = mSuggestionBySlotIndex.get(slotIndex);
@@ -291,6 +290,26 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
                     + ", suggestion=" + suggestion);
             return false;
         }
+        return true;
+    }
+
+    private boolean validateAutoSuggestionTime(
+            @NonNull TimestampedValue<Long> newUtcTime, @NonNull Object suggestion)  {
+        return validateSuggestionTime(newUtcTime, suggestion)
+                && validateSuggestionAgainstLowerBound(newUtcTime, suggestion);
+    }
+
+    private boolean validateSuggestionAgainstLowerBound(
+            @NonNull TimestampedValue<Long> newUtcTime, @NonNull Object suggestion) {
+        Instant lowerBound = mCallback.autoTimeLowerBound();
+
+        // Suggestion is definitely wrong if it comes before lower time bound.
+        if (lowerBound.isAfter(Instant.ofEpochMilli(newUtcTime.getValue()))) {
+            Slog.w(LOG_TAG, "Suggestion points to time before lower bound, skipping it. "
+                    + "suggestion=" + suggestion + ", lower bound=" + lowerBound);
+            return false;
+        }
+
         return true;
     }
 
