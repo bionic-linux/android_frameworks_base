@@ -429,7 +429,8 @@ public abstract class NetworkAgent {
             throw new IllegalArgumentException();
         }
 
-        mInitialConfiguration = new InitialConfiguration(context, new NetworkCapabilities(nc),
+        mInitialConfiguration = new InitialConfiguration(context,
+                new NetworkCapabilities(nc, /* parcelLocationSensitiveFields */ true),
                 new LinkProperties(lp), score, config, ni);
     }
 
@@ -788,7 +789,8 @@ public abstract class NetworkAgent {
         mBandwidthUpdatePending.set(false);
         mLastBwRefreshTime = System.currentTimeMillis();
         queueOrSendMessage(EVENT_NETWORK_CAPABILITIES_CHANGED,
-                new NetworkCapabilities(networkCapabilities));
+                new NetworkCapabilities(networkCapabilities,
+                        /* parcelLocationSensitiveFields */ true));
     }
 
     /**

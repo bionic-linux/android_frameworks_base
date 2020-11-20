@@ -1565,7 +1565,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nc != null) {
             result.put(
                     nai.network,
-                    maybeSanitizeLocationInfoForCaller(
+                    createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                             nc, Binder.getCallingUid(), callingPackageName));
         }
 
@@ -1580,7 +1580,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             if (nc != null) {
                                 result.put(
                                         network,
-                                        maybeSanitizeLocationInfoForCaller(
+                                        createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                                                 nc, Binder.getCallingUid(), callingPackageName));
                             }
                         }
@@ -1665,7 +1665,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public NetworkCapabilities getNetworkCapabilities(Network network, String callingPackageName) {
         mAppOpsManager.checkPackage(Binder.getCallingUid(), callingPackageName);
         enforceAccessPermission();
-        return maybeSanitizeLocationInfoForCaller(
+        return createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                 getNetworkCapabilitiesInternal(network),
                 Binder.getCallingUid(), callingPackageName);
     }
@@ -1688,34 +1688,29 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @VisibleForTesting
     @Nullable
-    NetworkCapabilities maybeSanitizeLocationInfoForCaller(
+    NetworkCapabilities createWithLocationInfoSanitizedIfNecessaryWhenParceled(
             @Nullable NetworkCapabilities nc, int callerUid, @NonNull String callerPkgName) {
         if (nc == null) {
             return null;
         }
-        final NetworkCapabilities newNc = new NetworkCapabilities(nc);
-        if (callerUid != newNc.getOwnerUid()) {
+        final boolean hasLocationPermission = Binder.withCleanCallingIdentity(
+                () -> mLocationPermissionChecker.checkLocationPermission(
+                        callerPkgName, null /* featureId */, callerUid, null /* message */));
+        final NetworkCapabilities newNc = new NetworkCapabilities(nc, hasLocationPermission);
+        // Reset owner uid if not destined for the owner app.
+        if (callerUid != nc.getOwnerUid()) {
             newNc.setOwnerUid(INVALID_UID);
             return newNc;
         }
-
         // Allow VPNs to see ownership of their own VPN networks - not location sensitive.
         if (nc.hasTransport(TRANSPORT_VPN)) {
             // Owner UIDs already checked above. No need to re-check.
             return newNc;
         }
-
-        Binder.withCleanCallingIdentity(
-                () -> {
-                    if (!mLocationPermissionChecker.checkLocationPermission(
-                            callerPkgName, null /* featureId */, callerUid, null /* message */)) {
-                        // Caller does not have the requisite location permissions. Reset the
-                        // owner's UID in the NetworkCapabilities.
-                        newNc.setOwnerUid(INVALID_UID);
-                    }
-                }
-        );
-
+        // Reset owner uid the app has no location permission.
+        if (!hasLocationPermission) {
+            newNc.setOwnerUid(INVALID_UID);
+        }
         return newNc;
     }
 
@@ -6796,7 +6791,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                                 networkAgent.networkCapabilities, nri.mPid, nri.mUid);
                 putParcelable(
                         bundle,
-                        maybeSanitizeLocationInfoForCaller(
+                        createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                                 nc, nri.mUid, nri.request.getRequestorPackageName()));
                 putParcelable(bundle, linkPropertiesRestrictedForCallerPermissions(
                         networkAgent.linkProperties, nri.mPid, nri.mUid));
@@ -6815,7 +6810,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                                 networkAgent.networkCapabilities, nri.mPid, nri.mUid);
                 putParcelable(
                         bundle,
-                        maybeSanitizeLocationInfoForCaller(
+                        createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                                 netCap, nri.mUid, nri.request.getRequestorPackageName()));
                 break;
             }
