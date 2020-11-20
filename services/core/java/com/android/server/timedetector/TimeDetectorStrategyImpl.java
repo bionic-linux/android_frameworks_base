@@ -36,6 +36,7 @@ import com.android.server.timezonedetector.ReferenceWithHistory;
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.time.Instant;
 
 /**
  * An implementation of {@link TimeDetectorStrategy} that passes telephony and manual suggestions to
@@ -145,6 +146,11 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
             return;
         }
 
+        // No further actions needed if suggestion is below lower bound.
+        if (!validateSuggestionAgainstLowerBound(timeSuggestion.getUtcTime(), timeSuggestion)) {
+            return;
+        }
+
         // The caller submits suggestions with the best available information when there are network
         // changes. The best available information may have been cached and if they were all stored
         // this would lead to duplicates showing up in the suggestion history. The suggestions may
@@ -172,6 +178,11 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
         // do want to "forget" old signals. Suggestions that are too old are discarded later in the
         // detection algorithm.
         if (timeSuggestion.getUtcTime() == null) {
+            return;
+        }
+
+        // No further actions needed if suggestion is below lower bound.
+        if (!validateSuggestionAgainstLowerBound(timeSuggestion.getUtcTime(), timeSuggestion)) {
             return;
         }
 
@@ -291,6 +302,20 @@ public final class TimeDetectorStrategyImpl implements TimeDetectorStrategy {
                     + ", suggestion=" + suggestion);
             return false;
         }
+        return true;
+    }
+
+    private boolean validateSuggestionAgainstLowerBound(
+            @NonNull TimestampedValue<Long> newUtcTime, @NonNull Object suggestion) {
+        Instant lowerBound = mCallback.timeSuggestionLowerBound();
+
+        // Suggestion is definitely wrong if is before lower time bound.
+        if (lowerBound.isAfter(Instant.ofEpochMilli(newUtcTime.getValue()))) {
+            Slog.w(LOG_TAG, "Suggestion points to time before lower bound, skipping it. "
+                    + "suggestion=" + suggestion + ", lower bound=" + lowerBound);
+            return false;
+        }
+
         return true;
     }
 
