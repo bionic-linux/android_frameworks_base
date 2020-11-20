@@ -76,14 +76,36 @@ public final class NetworkCapabilities implements Parcelable {
      */
     private String mRequestorPackageName;
 
+    /**
+     * Indicates whether parceling should preserve fields that are set based on permissions of
+     * the process receiving the {@link NetworkCapabilities}.
+     */
+    private boolean mParcelLocationSensitiveFields;
+
     public NetworkCapabilities() {
         clearAll();
         mNetworkCapabilities = DEFAULT_CAPABILITIES;
+        mParcelLocationSensitiveFields = false;
     }
 
     public NetworkCapabilities(NetworkCapabilities nc) {
         if (nc != null) {
-            set(nc);
+            set(nc, false /* parcelLocationSensitiveFields */);
+        }
+    }
+
+    /**
+     * Make a copy of NetworkCapabilities.
+     *
+     * @param nc Original NetworkCapabilities
+     * @param parcelLocationSensitiveFields Whether to parcel location sensitive data or not.
+     * @hide
+     */
+    @SystemApi
+    public NetworkCapabilities(
+            @Nullable NetworkCapabilities nc, boolean parcelLocationSensitiveFields) {
+        if (nc != null) {
+            set(nc, parcelLocationSensitiveFields);
         }
     }
 
@@ -93,6 +115,10 @@ public final class NetworkCapabilities implements Parcelable {
      * @hide
      */
     public void clearAll() {
+        if (mParcelLocationSensitiveFields) {
+            throw new UnsupportedOperationException(
+                    "Cannot clear NetworkCapabilities when parcelLocationSensitiveFields is set");
+        }
         mNetworkCapabilities = mTransportTypes = mUnwantedNetworkCapabilities = 0;
         mLinkUpBandwidthKbps = mLinkDownBandwidthKbps = LINK_BANDWIDTH_UNSPECIFIED;
         mNetworkSpecifier = null;
@@ -109,15 +135,31 @@ public final class NetworkCapabilities implements Parcelable {
 
     /**
      * Set all contents of this object to the contents of a NetworkCapabilities.
+     *
+     * @param nc Original NetworkCapabilities
      * @hide
      */
     public void set(@NonNull NetworkCapabilities nc) {
+        set(nc, false);
+    }
+
+    /**
+     * Set all contents of this object to the contents of a NetworkCapabilities.
+     *
+     * @param nc Original NetworkCapabilities
+     * @param parcelLocationSensitiveFields Whether to parcel location sensitive data or not.
+     * @hide
+     */
+    public void set(@NonNull NetworkCapabilities nc, boolean parcelLocationSensitiveFields) {
+        mParcelLocationSensitiveFields = parcelLocationSensitiveFields;
         mNetworkCapabilities = nc.mNetworkCapabilities;
         mTransportTypes = nc.mTransportTypes;
         mLinkUpBandwidthKbps = nc.mLinkUpBandwidthKbps;
         mLinkDownBandwidthKbps = nc.mLinkDownBandwidthKbps;
         mNetworkSpecifier = nc.mNetworkSpecifier;
-        mTransportInfo = nc.mTransportInfo;
+        if (nc.getTransportInfo() != null) {
+            setTransportInfo(nc.getTransportInfo().makeCopy(parcelLocationSensitiveFields));
+        }
         mSignalStrength = nc.mSignalStrength;
         setUids(nc.mUids); // Will make the defensive copy
         setAdministratorUids(nc.getAdministratorUids());
@@ -1726,7 +1768,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeString(mSSID);
         dest.writeBoolean(mPrivateDnsBroken);
         dest.writeIntArray(getAdministratorUids());
-        dest.writeInt(mOwnerUid);
+        dest.writeInt(mParcelLocationSensitiveFields ? mOwnerUid : Process.INVALID_UID);
         dest.writeInt(mRequestorUid);
         dest.writeString(mRequestorPackageName);
     }
