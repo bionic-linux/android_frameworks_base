@@ -2289,6 +2289,7 @@ interface ITelephony {
             in ThermalMitigationRequest thermalMitigationRequest);
 
     /**
+<<<<<<< HEAD
      * Get the Generic Bootstrapping Architecture authentication keys
      */
     void bootstrapAuthenticationRequest(int subId, int appType, in Uri nafUrl,
@@ -2367,4 +2368,12 @@ interface ITelephony {
      *  their mobile plan.
      */
     String getMobileProvisioningUrl();
+
+    /**
+     * Checks whether the device supports the given capability on the radio interface.
+     *
+     * @param capability the name of the capability
+     * @return the availability of the capability
+     */
+    boolean isRadioInterfaceCapabilitySupported(String capability);
 }
