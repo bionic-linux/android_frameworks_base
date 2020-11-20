@@ -3571,7 +3571,7 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("      --only-parent: hide all children sessions");
         pw.println("");
         pw.println("  list users");
-        pw.println("    Prints all users.");
+        pw.println("    Prints the current users.");
         pw.println("");
         pw.println("  resolve-activity [--brief] [--components] [--query-flags FLAGS]");
         pw.println("       [--user USER_ID] INTENT");
@@ -3735,9 +3735,6 @@ class PackageManagerShellCommand extends ShellCommand {
         pw.println("");
         pw.println("  trim-caches DESIRED_FREE_SPACE [internal|UUID]");
         pw.println("    Trim cache files to reach the given free space.");
-        pw.println("");
-        pw.println("  list users");
-        pw.println("    Lists the current users.");
         pw.println("");
         pw.println("  create-user [--profileOf USER_ID] [--managed] [--restricted] [--ephemeral]");
         pw.println("      [--guest] [--pre-create-only] [--user-type USER_TYPE] USER_NAME");
