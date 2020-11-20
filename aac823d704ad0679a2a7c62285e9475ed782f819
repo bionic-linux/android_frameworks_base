@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69ce7944_ff05941d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2020-11-20T04:18:17Z",
+      "side": 1,
+      "message": "Can anyone give this +2? If something\u0027s wrong, please let me know.\nThanks.",
+      "revId": "aac823d704ad0679a2a7c62285e9475ed782f819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
