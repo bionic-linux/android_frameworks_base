@@ -8,6 +8,14 @@ package android.app {
 
 }
 
+package android.net {
+
+  public class DnsResolverServiceManager {
+    method @Nullable @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public static android.os.IBinder getService(@NonNull android.content.Context);
+  }
+
+}
+
 package android.os {
 
   public class Binder implements android.os.IBinder {
