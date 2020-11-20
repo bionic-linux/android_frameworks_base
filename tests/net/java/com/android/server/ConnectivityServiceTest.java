@@ -88,6 +88,7 @@ import static com.android.testutils.MiscAsserts.assertEmpty;
 import static com.android.testutils.MiscAsserts.assertLength;
 import static com.android.testutils.MiscAsserts.assertRunsInAtMost;
 import static com.android.testutils.MiscAsserts.assertThrows;
+import static com.android.testutils.ParcelUtils.parcelingRoundTrip;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -190,6 +191,7 @@ import android.net.metrics.IpConnectivityLog;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
 import android.net.util.MultinetworkPolicyTracker;
+import android.net.wifi.WifiInfo;
 import android.os.BadParcelableException;
 import android.os.Binder;
 import android.os.Build;
@@ -7015,9 +7017,18 @@ public class ConnectivityServiceTest {
     private int getOwnerUidNetCapsForCallerPermission(int ownerUid, int callerUid) {
         final NetworkCapabilities netCap = new NetworkCapabilities().setOwnerUid(ownerUid);
 
-        return mService
-                .maybeSanitizeLocationInfoForCaller(netCap, callerUid, mContext.getPackageName())
-                .getOwnerUid();
+        return mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
+                netCap, callerUid, mContext.getPackageName()).getOwnerUid();
+    }
+
+    private WifiInfo getWifiInfoNetCapsForCallerPermission(final WifiInfo wifiInfo, int callerUid) {
+        final NetworkCapabilities netCap = new NetworkCapabilities().setTransportInfo(wifiInfo);
+
+        // Need to parcel to mask location sensitive data.
+        return (WifiInfo) parcelingRoundTrip(
+                mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
+                        netCap, callerUid, mContext.getPackageName()))
+                .getTransportInfo();
     }
 
     @Test
@@ -7027,6 +7038,9 @@ public class ConnectivityServiceTest {
 
         final int myUid = Process.myUid();
         assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+
+        final WifiInfo wifiInfo = new WifiInfo.Builder().setSsid("test1234".getBytes()).build();
+        assertEquals(wifiInfo, getWifiInfoNetCapsForCallerPermission(wifiInfo, myUid));
     }
 
     @Test
@@ -7036,6 +7050,9 @@ public class ConnectivityServiceTest {
 
         final int myUid = Process.myUid();
         assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+
+        final WifiInfo wifiInfo = new WifiInfo.Builder().setSsid("test1234".getBytes()).build();
+        assertEquals(wifiInfo, getWifiInfoNetCapsForCallerPermission(wifiInfo, myUid));
     }
 
     @Test
@@ -7046,6 +7063,13 @@ public class ConnectivityServiceTest {
 
         final int myUid = Process.myUid();
         assertEquals(Process.INVALID_UID, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+
+        final WifiInfo wifiInfo = new WifiInfo.Builder().setSsid("test1234".getBytes()).build();
+        assertEquals(new WifiInfo.Builder()
+                        .setSsid(new byte[0])
+                        .setBssid(WifiInfo.DEFAULT_MAC_ADDRESS)
+                        .build(),
+                getWifiInfoNetCapsForCallerPermission(wifiInfo, myUid));
     }
 
     @Test
@@ -7056,6 +7080,9 @@ public class ConnectivityServiceTest {
 
         final int myUid = Process.myUid();
         assertEquals(Process.INVALID_UID, getOwnerUidNetCapsForCallerPermission(myUid + 1, myUid));
+
+        final WifiInfo wifiInfo = new WifiInfo.Builder().setSsid("test1234".getBytes()).build();
+        assertEquals(wifiInfo, getWifiInfoNetCapsForCallerPermission(wifiInfo, myUid));
     }
 
     @Test
@@ -7067,6 +7094,13 @@ public class ConnectivityServiceTest {
         // Test that without the location permission, the owner field is sanitized.
         final int myUid = Process.myUid();
         assertEquals(Process.INVALID_UID, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+
+        final WifiInfo wifiInfo = new WifiInfo.Builder().setSsid("test1234".getBytes()).build();
+        assertEquals(new WifiInfo.Builder()
+                        .setSsid(new byte[0])
+                        .setBssid(WifiInfo.DEFAULT_MAC_ADDRESS)
+                        .build(),
+                getWifiInfoNetCapsForCallerPermission(wifiInfo, myUid));
     }
 
     @Test
@@ -7076,6 +7110,13 @@ public class ConnectivityServiceTest {
         // Test that without the location permission, the owner field is sanitized.
         final int myUid = Process.myUid();
         assertEquals(Process.INVALID_UID, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
+
+        final WifiInfo wifiInfo = new WifiInfo.Builder().setSsid("test1234".getBytes()).build();
+        assertEquals(new WifiInfo.Builder()
+                        .setSsid(new byte[0])
+                        .setBssid(WifiInfo.DEFAULT_MAC_ADDRESS)
+                        .build(),
+                getWifiInfoNetCapsForCallerPermission(wifiInfo, myUid));
     }
 
     private void setupConnectionOwnerUid(int vpnOwnerUid, @VpnManager.VpnType int vpnType)
