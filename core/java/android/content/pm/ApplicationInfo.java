@@ -2100,8 +2100,10 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         return (flags & ApplicationInfo.FLAG_EXTERNAL_STORAGE) == 0;
     }
 
-    /** @hide */
-    @SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
+    /**
+     * Returns whether or not this application was pre-installed on the OEM partition of the system
+     * image.
+     */
     public boolean isOem() {
         return (privateFlags & ApplicationInfo.PRIVATE_FLAG_OEM) != 0;
     }
@@ -2148,13 +2150,18 @@ public class ApplicationInfo extends PackageItemInfo implements Parcelable {
         return (flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0;
     }
 
-    /** @hide */
-    @SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
+    /**
+     * Returns whether or not this application was pre-installed on the vendor partition of the
+     * system image.
+     */
     public boolean isVendor() {
         return (privateFlags & ApplicationInfo.PRIVATE_FLAG_VENDOR) != 0;
     }
 
-    /** @hide */
+    /**
+     * Returns whether or not this application was pre-installed on the product partition of the
+     * system image.
+     */
     @SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
     public boolean isProduct() {
         return (privateFlags & ApplicationInfo.PRIVATE_FLAG_PRODUCT) != 0;
