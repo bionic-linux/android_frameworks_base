@@ -1694,29 +1694,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nc == null) {
             return null;
         }
-        final NetworkCapabilities newNc = new NetworkCapabilities(nc);
-        if (callerUid != newNc.getOwnerUid()) {
+        class BooleanAnswerBox {
+            public boolean value;
+        }
+        final BooleanAnswerBox parcelLocationSensitiveFields = new BooleanAnswerBox();
+        Binder.withCleanCallingIdentity(
+                () -> {
+                    parcelLocationSensitiveFields.value =
+                            mLocationPermissionChecker.checkLocationPermission(
+                                    callerPkgName, null /* featureId */, callerUid,
+                                    null /* message */);
+                }
+        );
+        final NetworkCapabilities newNc =
+                new NetworkCapabilities(nc, parcelLocationSensitiveFields.value);
+        // Reset owner uid if not destined for the owner app (regardless of location permission).
+        if (callerUid != nc.getOwnerUid()) {
             newNc.setOwnerUid(INVALID_UID);
             return newNc;
         }
-
-        // Allow VPNs to see ownership of their own VPN networks - not location sensitive.
+        // Allow VPNs to see ownership of their own VPN network (regardless of location permission).
         if (nc.hasTransport(TRANSPORT_VPN)) {
             // Owner UIDs already checked above. No need to re-check.
-            return newNc;
+            newNc.setOwnerUid(nc.getOwnerUid());
         }
-
-        Binder.withCleanCallingIdentity(
-                () -> {
-                    if (!mLocationPermissionChecker.checkLocationPermission(
-                            callerPkgName, null /* featureId */, callerUid, null /* message */)) {
-                        // Caller does not have the requisite location permissions. Reset the
-                        // owner's UID in the NetworkCapabilities.
-                        newNc.setOwnerUid(INVALID_UID);
-                    }
-                }
-        );
-
         return newNc;
     }
 
