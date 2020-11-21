@@ -161,4 +161,6 @@ interface IBatteryStats {
 
     /** {@hide} */
     boolean setChargingStateUpdateDelayMillis(int delay);
+
+    void noteWakeupReason(String reason);
 }
