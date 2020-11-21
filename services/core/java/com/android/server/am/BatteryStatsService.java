@@ -664,6 +664,17 @@ public final class BatteryStatsService extends IBatteryStats.Stub
         }
     }
 
+    /**
+     * Propagates the wakeup reason to BatteryStats
+     * @param reason is the wakeup reason
+     */
+    public void noteWakeupReason(String reason) {
+        enforceCallingPermission();
+        synchronized (mStats) {
+            mStats.noteWakeupReasonLocked(reason);
+        }
+    }
+
     public void noteInteractive(boolean interactive) {
         enforceCallingPermission();
         synchronized (mStats) {
