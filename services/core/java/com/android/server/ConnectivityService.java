@@ -1379,7 +1379,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         final String action = blocked ? "BLOCKED" : "UNBLOCKED";
         final NetworkRequest satisfierRequest = nri.getSatisfiedRequest();
-        int requestId =  satisfierRequest != null
+        final int requestId = satisfierRequest != null
                 ? satisfierRequest.requestId : nri.mRequests.get(0).requestId;
         mNetworkInfoBlockingLogs.log(String.format(
                 "%s %d(%d) on netId %d", action, nri.mUid, requestId, net.netId));
@@ -2702,7 +2702,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * Return an array of all current NetworkRequest sorted by request id.
      */
     @VisibleForTesting
-    protected NetworkRequestInfo[] requestsSortedById() {
+    NetworkRequestInfo[] requestsSortedById() {
         NetworkRequestInfo[] requests = new NetworkRequestInfo[0];
         requests = mNetworkRequests.values().toArray(requests);
         // Sort the array based off the NRI containing the min requestId in its requests.
@@ -5506,7 +5506,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public void binderDied() {
             log("ConnectivityService NetworkRequestInfo binderDied(" +
                     mRequests + ", " + mBinder + ")");
-            releaseNetworkRequest(mRequests);
+            releaseNetworkRequests(mRequests);
         }
 
         @Override
@@ -5833,7 +5833,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return mNextNetworkProviderId.getAndIncrement();
     }
 
-    private void releaseNetworkRequest(List<NetworkRequest> networkRequests) {
+    private void releaseNetworkRequests(List<NetworkRequest> networkRequests) {
         for (int i = 0; i < networkRequests.size(); i++) {
             releaseNetworkRequest(networkRequests.get(i));
         }
