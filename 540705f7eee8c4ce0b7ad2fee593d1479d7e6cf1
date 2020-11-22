@@ -33,6 +33,24 @@
       "message": "I think Lee already sent a solution for this error pattern, maybe we just need to cherry-pick to aosp.\nLee, can you take a look if they\u0027re same? ag/12893205",
       "revId": "540705f7eee8c4ce0b7ad2fee593d1479d7e6cf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91a5768a_ca00f374",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2020-11-22T14:44:06Z",
+      "side": 1,
+      "message": "Hi lee, if you would like to cherry-pick your CL, I will abandon myself.",
+      "parentUuid": "358f00bb_3c73ff04",
+      "revId": "540705f7eee8c4ce0b7ad2fee593d1479d7e6cf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
