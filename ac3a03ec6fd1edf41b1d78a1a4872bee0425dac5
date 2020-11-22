@@ -829,6 +829,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "866ec0dd_12adfdf4",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-22T00:48:15Z",
+      "side": 1,
+      "message": "Jean and I spoke in a meeting and aligned:\n\nPass-through ConnectivityManager#registerQosCallback(new QosSocketFilter(), callback);\n\t-\u003e IConnectivityManager#registerQosSocketFilter(new QosSocketFilter());\n\t-\u003e ConnectivityService#registerQosSocketFilter(QosSocketFilter qsf)\n\t-\u003e convert from QosSocketFilter to QosFilter which will be an internal representation and store QosSocketFilter separately",
+      "parentUuid": "6f1984a3_44509e0a",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca638fea_65f8d510",
         "filename": "core/java/android/net/QosFilter.java",
         "patchSetId": 24
