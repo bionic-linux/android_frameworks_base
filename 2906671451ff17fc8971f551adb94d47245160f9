@@ -16,6 +16,23 @@
       "message": "Hello @Felipe, could you set \"Autosubmit\" to proceed with this CL?",
       "revId": "2906671451ff17fc8971f551adb94d47245160f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "506f0276_52ed9498",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-11-23T20:45:16Z",
+      "side": 1,
+      "message": "It still needs Owner +1, which I don\u0027t have",
+      "revId": "2906671451ff17fc8971f551adb94d47245160f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
