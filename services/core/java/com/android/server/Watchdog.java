@@ -98,6 +98,7 @@ public class Watchdog extends Thread {
         "/system/bin/mediaserver",
         "/system/bin/netd",
         "/system/bin/sdcard",
+        "/system/bin/servicemanager",
         "/system/bin/surfaceflinger",
         "/system/bin/vold",
         "media.extractor", // system/bin/mediaextractor
@@ -106,6 +107,11 @@ public class Watchdog extends Thread {
         "media.swcodec", // /apex/com.android.media.swcodec/bin/mediaswcodec
         "com.android.bluetooth",  // Bluetooth service
         "/apex/com.android.os.statsd/bin/statsd",  // Stats daemon
+        "/vendor/bin/systemcontrol",
+        "/vendor/bin/tvserver",
+        "/vendor/bin/hdmicecd",
+        "/vendor/bin/hw/android.hardware.graphics.composer@2.4-service.droidlogic",
+        "/vendor/bin/hw/android.hardware.graphics.allocator@4.0-service",
     };
 
     public static final List<String> HAL_INTERFACES_OF_INTEREST = Arrays.asList(
