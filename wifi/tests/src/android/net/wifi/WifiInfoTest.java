@@ -17,13 +17,17 @@
 package android.net.wifi;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeTrue;
 
 import android.os.Parcel;
 
 import androidx.test.filters.SmallTest;
+
+import com.android.modules.utils.build.SdkLevel;
 
 import org.junit.Test;
 
@@ -147,5 +151,32 @@ public class WifiInfoTest {
         assertEquals(TEST_BSSID, info2.getBSSID());
         assertEquals(TEST_RSSI, info2.getRssi());
         assertEquals(TEST_NETWORK_ID2, info2.getNetworkId());
+    }
+
+    @Test
+    public void testWifiInfoEquals() throws Exception {
+        assumeTrue(SdkLevel.isAtLeastS());
+
+        WifiInfo.Builder builder = new WifiInfo.Builder()
+                .setSsid(TEST_SSID.getBytes(StandardCharsets.UTF_8))
+                .setBssid(TEST_BSSID)
+                .setRssi(TEST_RSSI)
+                .setNetworkId(TEST_NETWORK_ID);
+
+        WifiInfo info1 = builder.build();
+        WifiInfo info2 = builder.build();
+        assertEquals(info1, info2);
+
+        info1.setSubscriptionId(TEST_SUB_ID);
+        assertNotEquals(info1, info2);
+
+        info2.setSubscriptionId(TEST_SUB_ID);
+        assertEquals(info1, info2);
+
+        info1.setSSID(WifiSsid.createFromHex(null));
+        assertNotEquals(info1, info2);
+
+        info2.setSSID(WifiSsid.createFromHex(null));
+        assertEquals(info1, info2);
     }
 }
