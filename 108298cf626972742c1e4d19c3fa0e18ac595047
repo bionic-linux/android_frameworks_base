@@ -62,6 +62,30 @@
       },
       "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ef26a23_c60a52cf",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1247389
+      },
+      "writtenOn": "2020-11-23T03:00:19Z",
+      "side": 1,
+      "message": "If the resampleHistoryOnDiskInMemoryDMLocked hold mInMemoryLock, other changes to the issue will be meaningless, so what can we do to avoid SWT.",
+      "parentUuid": "99125bb0_040549f3",
+      "range": {
+        "startLine": 693,
+        "startChar": 16,
+        "endLine": 693,
+        "endChar": 53
+      },
+      "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
