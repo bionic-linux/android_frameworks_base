@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "558f4c5c_ba413b14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "Congrats on the first time review. Mostly nits while I point out some style points in the code and you get used to the things I look for.",
+      "revId": "aefdd4126de442b29d787dda820ea6dd33032a43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5b86d3a_29c7e952",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "Would be nice for the javadoc to say what this its intended use is and perhaps what guarantees there are. When I remember I also start with a verb in the correct case, so I\u0027d suggest you do too. I\u0027ve failed in the top method (should be \"Returns...\") and acquireWakeLock() (should be \"Acquires\")\n\nSuggestion:\n\n\"Returns a lower bound for valid automatic times. It is guaranteed to be in the past, i.e. it is unrelated to the current system clock time. It holds no other meaning; it could be related to when the device system image was built, or could be updated by a mainline module.\"\n\nGiven we have manual suggestion too, and we don\u0027t use this for manual suggestions, then perhaps \"autoTimeLowerBound()\"\n\nLooks like I\u0027ve generally been good at using @NonNull / @Nullable in this class, so please add @NonNull here too.",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6b1bbe2_db7b2b6f",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "Super nit: \"passed\" is slightly awkward in English (AIUI, you\u0027re correct, but it reads strangely) so perhaps just \"in the past\".\n\n\"non-manual\" -\u003e \"automatic\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d12ee39b_7bd1cedb",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "Super nit: A newline after **",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e776141_006f3914",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "Did you investigate why the AlarmManagerService had the fallback to a file timestamp? I\u0027m wondering what circumstances this won\u0027t be set to a reasonable value.",
+      "range": {
+        "startLine": 45,
+        "startChar": 79,
+        "endLine": 45,
+        "endChar": 83
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9db335c5_8481690d",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "Both auto detect code paths already appear to call this method. Could you just put your check in here instead?\n\nFeels like it would slot in at the bottom well enough.\n\nFeel free to refactor - the \"validateAndStoreTelephonySuggestion()\" may not be a reasonable factoring after your change. It\u0027s a little weird right now, but all methods involved are private so you can shift method boundaries without breaking anything.",
+      "range": {
+        "startLine": 289,
+        "startChar": 20,
+        "endLine": 289,
+        "endChar": 42
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d200359_ab8f9180",
+        "filename": "services/tests/servicestests/src/com/android/server/timedetector/TimeDetectorStrategyImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "To be most realistic, it feels like this value should be before the value used in ARBITRARY_CLOCK_INITIALIZATION_INFO. Not essential, though.\n\nOne of my conventions is to use \"ARBITRARY\" when it really doesn\u0027t matter what the value is as it\u0027s not important to a test. I _think_ that\u0027s still true here with your changes as we still don\u0027t compare suggestions to the system clock value held here, so there\u0027s no real relationship with TIME_LOWER_BOUND.\n\nSo, feel free to shift ARBITRARY_CLOCK_INITIALIZATION_INFO forward to 2010 or something, or leave it. If you do move it and any test breaks then it turns out that it\u0027s not so arbitrary after all.",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77bdf7af_301184ec",
+        "filename": "services/tests/servicestests/src/com/android/server/timedetector/TimeDetectorStrategyImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "Thanks!",
+      "range": {
+        "startLine": 115,
+        "startChar": 25,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb883ba7_9468290e",
+        "filename": "services/tests/servicestests/src/com/android/server/timedetector/TimeDetectorStrategyImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-23T14:48:25Z",
+      "side": 1,
+      "message": "The new methods stand out without having javadoc. I think you should add.\n\nBTW - if you feel like this test code should be using Instant for times generally, I\u0027d support a follow up to change it. Consistency would be nice and Instant is often easier to work with.",
+      "range": {
+        "startLine": 909,
+        "startChar": 29,
+        "endLine": 909,
+        "endChar": 57
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
