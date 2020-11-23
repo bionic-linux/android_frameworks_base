@@ -16,6 +16,24 @@
       "message": "Congrats on the first time review. Mostly nits while I point out some style points in the code and you get used to the things I look for.",
       "revId": "aefdd4126de442b29d787dda820ea6dd33032a43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a2ae729_9aa9a10c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-23T16:37:11Z",
+      "side": 1,
+      "message": "Thanks!\n\nWhile writing CL I kept \"manual suggestion ignores lower bound\" as implementation detail. Do we want to explicitly highlight it in method names/java docs?",
+      "parentUuid": "558f4c5c_ba413b14",
+      "revId": "aefdd4126de442b29d787dda820ea6dd33032a43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

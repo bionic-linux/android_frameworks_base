@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4b7856b_d0c713ec",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategy.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-23T16:37:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a5b86d3a_29c7e952",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6b1bbe2_db7b2b6f",
@@ -70,6 +94,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69e14cad_c9e73b10",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-23T16:37:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6b1bbe2_db7b2b6f",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58683e7f_9b8b6511",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-23T16:37:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d12ee39b_7bd1cedb",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e776141_006f3914",
@@ -83,6 +155,30 @@
       "writtenOn": "2020-11-23T14:48:25Z",
       "side": 1,
       "message": "Did you investigate why the AlarmManagerService had the fallback to a file timestamp? I\u0027m wondering what circumstances this won\u0027t be set to a reasonable value.",
+      "range": {
+        "startLine": 45,
+        "startChar": 79,
+        "endLine": 45,
+        "endChar": 83
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bedb8605_0352c1cb",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-23T16:37:11Z",
+      "side": 1,
+      "message": "I\u0027ve added that fallback too.\n\nThere is a comment from 2009: https://source.corp.google.com/aosp-master/frameworks/base/core/java/android/os/Build.java;l\u003d1237?q\u003dBuild.java\u0026ss\u003dpiper%2FGoogle%2Faosp-master\n\nWhom/what group should I ask to find out any guarantees about Build.TIME and root dir timestamp?",
+      "parentUuid": "7e776141_006f3914",
       "range": {
         "startLine": 45,
         "startChar": 79,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9be169a3_7fd1663d",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-23T16:37:11Z",
+      "side": 1,
+      "message": "I\u0027ve refactored it a little bit.\n\nI can\u0027t see obvious way to simplify it even more.",
+      "parentUuid": "9db335c5_8481690d",
+      "range": {
+        "startLine": 289,
+        "startChar": 20,
+        "endLine": 289,
+        "endChar": 42
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d200359_ab8f9180",
@@ -129,6 +249,30 @@
       "writtenOn": "2020-11-23T14:48:25Z",
       "side": 1,
       "message": "To be most realistic, it feels like this value should be before the value used in ARBITRARY_CLOCK_INITIALIZATION_INFO. Not essential, though.\n\nOne of my conventions is to use \"ARBITRARY\" when it really doesn\u0027t matter what the value is as it\u0027s not important to a test. I _think_ that\u0027s still true here with your changes as we still don\u0027t compare suggestions to the system clock value held here, so there\u0027s no real relationship with TIME_LOWER_BOUND.\n\nSo, feel free to shift ARBITRARY_CLOCK_INITIALIZATION_INFO forward to 2010 or something, or leave it. If you do move it and any test breaks then it turns out that it\u0027s not so arbitrary after all.",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0be75265_9d3fe2bb",
+        "filename": "services/tests/servicestests/src/com/android/server/timedetector/TimeDetectorStrategyImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-23T16:37:11Z",
+      "side": 1,
+      "message": "Makes sense, done.\n\nUnfortunately tests are still green.",
+      "parentUuid": "5d200359_ab8f9180",
       "range": {
         "startLine": 46,
         "startChar": 26,
@@ -175,6 +319,30 @@
       "writtenOn": "2020-11-23T14:48:25Z",
       "side": 1,
       "message": "The new methods stand out without having javadoc. I think you should add.\n\nBTW - if you feel like this test code should be using Instant for times generally, I\u0027d support a follow up to change it. Consistency would be nice and Instant is often easier to work with.",
+      "range": {
+        "startLine": 909,
+        "startChar": 29,
+        "endLine": 909,
+        "endChar": 57
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40e973f2_a3141d4a",
+        "filename": "services/tests/servicestests/src/com/android/server/timedetector/TimeDetectorStrategyImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-23T16:37:11Z",
+      "side": 1,
+      "message": "Both done.",
+      "parentUuid": "bb883ba7_9468290e",
       "range": {
         "startLine": 909,
         "startChar": 29,
