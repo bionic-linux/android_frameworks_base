@@ -33,6 +33,24 @@
       "message": "It still needs Owner +1, which I don\u0027t have",
       "revId": "2906671451ff17fc8971f551adb94d47245160f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b628af0f_1bfdca81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2020-11-23T20:55:03Z",
+      "side": 1,
+      "message": "Thanks for the clarification!",
+      "parentUuid": "506f0276_52ed9498",
+      "revId": "2906671451ff17fc8971f551adb94d47245160f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
