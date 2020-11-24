@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9426023e_b0861971",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-24T16:39:48Z",
+      "side": 1,
+      "message": "Probably best not to put this here - I\u0027ve never seen people reference a specific commit before. That URL could change, etc.\n\nIt\u0027s great practice to put information in source that anyone can see so I like the fact you used external code search, but I don\u0027t think this is worth the clutter.\n\nSuggestion:\n\nDefinitely put the info in the bug. Maybe put the link in the commit comment instead. And/or, explain the reasoning in text here rather than the link.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "94d70e320aae3512ffe37370940f849a1625d817",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
