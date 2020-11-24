@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44750b2a_cefdebc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2020-11-24T06:14:32Z",
+      "side": 1,
+      "message": "LGTM - see comments.",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c700cea6_8b1b2afe",
@@ -88,6 +105,29 @@
       "writtenOn": "2020-11-24T01:53:03Z",
       "side": 1,
       "message": "unit test for hashCode too please",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88c5f6df_f9d24d34",
+        "filename": "wifi/tests/src/android/net/wifi/WifiInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2020-11-24T06:14:32Z",
+      "side": 1,
+      "message": "Is there a way to test pre-S behavior?",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 42
+      },
       "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
