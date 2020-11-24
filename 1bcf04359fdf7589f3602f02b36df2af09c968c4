@@ -33,6 +33,144 @@
       "message": "When can this be null?",
       "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2a28d65_6ddea0d5",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-11-24T18:33:07Z",
+      "side": 1,
+      "message": "Per Android API guidelines, this should be a listener because there is only 1 callback function and this is the interface that the callers will utilize. Also, the name of the Listener should match the single callback function followed by \"Listener\". By that pattern, this should be called \"OnStateChangedListener\" or if you opt to change the naming of the callback function, this should be adjusted accordingly.",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 41
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8391d0d3_3279c4d0",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-11-24T18:33:07Z",
+      "side": 1,
+      "message": "This should be addOnStateChangedListener as per naming convention for listeners.",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 44
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa1f14a6_46cdb7ff",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-11-24T18:33:07Z",
+      "side": 1,
+      "message": "Should add the @CallbackExecutor annotation to the executor param as it\u0027ll generate docs about common options. Not a huge deal while it\u0027s only a system API because we don\u0027t generate docs for those, but good to have if this ever becomes public.",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 62
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9859c22e_e12d91f6",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-11-24T18:33:07Z",
+      "side": 1,
+      "message": "Add @NonNull to each param and the executor should always come second to make it more Kotlin friendly.",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 93
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6494a56c_5b17b332",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-11-24T18:33:07Z",
+      "side": 1,
+      "message": "This should be removeOnStateChangedListener as per naming convention for listeners.",
+      "range": {
+        "startLine": 165,
+        "startChar": 16,
+        "endLine": 165,
+        "endChar": 46
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "014b3e67_ddc040b2",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-11-24T18:33:07Z",
+      "side": 1,
+      "message": "Add @NonNull for the param",
+      "range": {
+        "startLine": 165,
+        "startChar": 47,
+        "endLine": 165,
+        "endChar": 76
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
