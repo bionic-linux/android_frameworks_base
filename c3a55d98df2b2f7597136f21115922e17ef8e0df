@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ab99349_244dbc30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2020-11-24T06:06:13Z",
+      "side": 1,
+      "message": "Javadoc nits.",
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bd4fa27_6c42ee08",
@@ -82,6 +99,29 @@
         "startChar": 37,
         "endLine": 2762,
         "endChar": 65
+      },
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eb74ace_d254bd56",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1039103
+      },
+      "writtenOn": "2020-11-24T06:06:13Z",
+      "side": 1,
+      "message": "Remove \u0027etc\u0027 - either spell it out or the word \"like\" is sufficient (could be replaced with \u0027such as\u0027).",
+      "range": {
+        "startLine": 2779,
+        "startChar": 69,
+        "endLine": 2779,
+        "endChar": 72
       },
       "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
