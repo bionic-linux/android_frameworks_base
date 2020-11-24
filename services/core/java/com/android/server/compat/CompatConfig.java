@@ -141,6 +141,10 @@ final class CompatConfig {
                 // we know nothing about this change: default behaviour is enabled.
                 return true;
             }
+            if (app != null && c.hasDeferredOverride(app.packageName)) {
+                Slog.d(TAG, "Package " + app.packageName + " still has a deferred override for "
+                        + "change " + changeId + ".");
+            }
             return c.isEnabled(app);
         }
     }
@@ -173,7 +177,17 @@ final class CompatConfig {
                 c = new CompatChange(changeId);
                 addChange(c);
             }
-            c.addPackageOverride(packageName, enabled);
+            switch (allowedState.state) {
+                case OverrideAllowedState.ALLOWED:
+                    c.addPackageOverride(packageName, enabled);
+                    break;
+                case OverrideAllowedState.DEFERRED_VERIFICATION:
+                    c.addPackageDeferredOverride(packageName, enabled);
+                    break;
+                default:
+                    throw new IllegalStateException("Should only be able to override changes that "
+                                                    + "are allowed or can be deferred.");
+            }
             invalidateCache();
         }
         return alreadyKnown;
@@ -248,22 +262,22 @@ final class CompatConfig {
         boolean overrideExists = false;
         synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
-            try {
-                if (c != null) {
-                    overrideExists = c.hasOverride(packageName);
-                    if (overrideExists) {
-                        OverrideAllowedState allowedState =
-                                mOverrideValidator.getOverrideAllowedState(changeId, packageName);
-                        allowedState.enforce(changeId, packageName);
-                        c.removePackageOverride(packageName);
-                    }
+            if (c != null) {
+                // Always allow removing a deferred override.
+                if (c.hasDeferredOverride(packageName)) {
+                    c.removePackageOverride(packageName);
+                    overrideExists = true;
+                } else if (c.hasOverride(packageName)) {
+                    // Regular overrides need to pass the policy.
+                    overrideExists = true;
+                    OverrideAllowedState allowedState =
+                            mOverrideValidator.getOverrideAllowedState(changeId, packageName);
+                    allowedState.enforce(changeId, packageName);
+                    c.removePackageOverride(packageName);
                 }
-            } catch (RemoteException e) {
-                // Should never occur, since validator is in the same process.
-                throw new RuntimeException("Unable to call override validator!", e);
             }
-            invalidateCache();
         }
+        invalidateCache();
         return overrideExists;
     }
 
@@ -293,29 +307,15 @@ final class CompatConfig {
      * Removes all overrides previously added via {@link #addOverride(long, String, boolean)} or
      * {@link #addOverrides(CompatibilityChangeConfig, String)} for a certain package.
      *
-     * <p>This restores the default behaviour for the given change and app, once any app
-     * processes have been restarted.
+     * <p>This restores the default behaviour for the given app.
      *
      * @param packageName The package for which the overrides should be purged.
      */
     void removePackageOverrides(String packageName) throws RemoteException, SecurityException {
         synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
-                try {
-                    CompatChange change = mChanges.valueAt(i);
-                    if (change.hasOverride(packageName)) {
-                        OverrideAllowedState allowedState =
-                                mOverrideValidator.getOverrideAllowedState(change.getId(),
-                                        packageName);
-                        allowedState.enforce(change.getId(), packageName);
-                        if (change != null) {
-                            mChanges.valueAt(i).removePackageOverride(packageName);
-                        }
-                    }
-                } catch (RemoteException e) {
-                    // Should never occur, since validator is in the same process.
-                    throw new RuntimeException("Unable to call override validator!", e);
-                }
+                CompatChange change = mChanges.valueAt(i);
+                removeOverride(change.getId(), packageName);
             }
             invalidateCache();
         }
@@ -510,5 +510,28 @@ final class CompatConfig {
 
     private void invalidateCache() {
         ChangeIdStateCache.invalidate();
+    }
+    /**
+     * Rechecks all the existing overrides for a package.
+     */
+    void recheckOverrides(String packageName) {
+        synchronized (mChanges) {
+            boolean shouldInvalidateCache = false;
+            for (int idx = 0; idx < mChanges.size(); ++idx) {
+                CompatChange c = mChanges.valueAt(idx);
+                try {
+                    OverrideAllowedState allowedState =
+                            mOverrideValidator.getOverrideAllowedState(c.getId(), packageName);
+                    boolean allowedOverride = (allowedState.state == OverrideAllowedState.ALLOWED);
+                    shouldInvalidateCache |= c.recheckOverride(packageName, allowedOverride);
+                } catch (RemoteException e) {
+                    // Should never occur, since validator is in the same process.
+                    throw new RuntimeException("Unable to call override validator!", e);
+                }
+            }
+            if (shouldInvalidateCache) {
+                invalidateCache();
+            }
+        }
     }
 }
