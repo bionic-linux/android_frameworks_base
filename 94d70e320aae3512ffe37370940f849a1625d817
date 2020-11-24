@@ -22,6 +22,30 @@
       },
       "revId": "94d70e320aae3512ffe37370940f849a1625d817",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "006ef64c_3dae06e0",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-24T17:04:42Z",
+      "side": 1,
+      "message": "I\u0027ve added comment to the bug.",
+      "parentUuid": "9426023e_b0861971",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 11
+      },
+      "revId": "94d70e320aae3512ffe37370940f849a1625d817",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
