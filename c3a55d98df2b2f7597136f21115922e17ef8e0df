@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b76427cb_ee9b8195",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:52:08Z",
+      "side": 1,
+      "message": "LGTM, just a few nits.",
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bd4fa27_6c42ee08",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:52:08Z",
+      "side": 1,
+      "message": "maybe change to \"sensitive fields\" since it\u0027s not just SSID \u0026 BSSID?",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 55
+      },
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5eff875_440e61ef",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:52:08Z",
+      "side": 1,
+      "message": "nit: {@link ...}",
+      "range": {
+        "startLine": 2748,
+        "startChar": 33,
+        "endLine": 2748,
+        "endChar": 54
+      },
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "399f5118_0ded719e",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2762,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:52:08Z",
+      "side": 1,
+      "message": "nit: ConnectivityManager.class",
+      "range": {
+        "startLine": 2762,
+        "startChar": 37,
+        "endLine": 2762,
+        "endChar": 65
+      },
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
