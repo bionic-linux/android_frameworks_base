@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb849053_152fc582",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:53:03Z",
+      "side": 1,
+      "message": "LGTM, just a few nits.",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c700cea6_8b1b2afe",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:53:03Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48172dcc_281d6d2c",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:53:03Z",
+      "side": 1,
+      "message": "nit: too many spaces",
+      "range": {
+        "startLine": 1070,
+        "startChar": 29,
+        "endLine": 1070,
+        "endChar": 31
+      },
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f1cf325_451085a0",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:53:03Z",
+      "side": 1,
+      "message": "fortunately nothing here is an array 😊",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecdcd9f8_e772b590",
+        "filename": "wifi/tests/src/android/net/wifi/WifiInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-11-24T01:53:03Z",
+      "side": 1,
+      "message": "unit test for hashCode too please",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
