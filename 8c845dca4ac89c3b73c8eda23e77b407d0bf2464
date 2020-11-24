@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0da947ff_752e3dd1",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2374,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2020-11-24T23:27:53Z",
+      "side": 1,
+      "message": "Note: this was reformatted by clang-format.",
+      "range": {
+        "startLine": 2371,
+        "startChar": 0,
+        "endLine": 2374,
+        "endChar": 88
+      },
+      "revId": "8c845dca4ac89c3b73c8eda23e77b407d0bf2464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
