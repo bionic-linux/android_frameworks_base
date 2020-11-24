@@ -1,0 +1,133 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006371366",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1386623?revision\u003d28",
+      "fixSuggestions": [
+        {
+          "fixId": "91dd059e_78e7d9d4",
+          "description": "Change to \"tests/net/java/com/android/server/ConnectivityServiceTest.java\"",
+          "replacements": [
+            {
+              "path": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+              "range": {
+                "startLine": 7732,
+                "startChar": 35,
+                "endLine": 7732,
+                "endChar": 43
+              },
+              "replacement": "available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "62e03462_1f8bc7f0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 7732,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-24T23:08:55Z",
+      "side": 1,
+      "message": "Common typo found: \"availble\" -- should it be \"available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 7732,
+        "startChar": 35,
+        "endLine": 7732,
+        "endChar": 43
+      },
+      "revId": "1a4f66971a5dbfe5f110b0caba77ffec407c582e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006371366",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1386623?revision\u003d28",
+      "fixSuggestions": [
+        {
+          "fixId": "3ffda5d2_66af844d",
+          "description": "Change to \"tests/net/java/com/android/server/ConnectivityServiceTest.java\"",
+          "replacements": [
+            {
+              "path": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+              "range": {
+                "startLine": 7734,
+                "startChar": 16,
+                "endLine": 7734,
+                "endChar": 24
+              },
+              "replacement": "available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "9b119ff4_d0d47132",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 7734,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-24T23:08:55Z",
+      "side": 1,
+      "message": "Common typo found: \"availble\" -- should it be \"available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 7734,
+        "startChar": 16,
+        "endLine": 7734,
+        "endChar": 24
+      },
+      "revId": "1a4f66971a5dbfe5f110b0caba77ffec407c582e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006371366",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1386623?revision\u003d28",
+      "fixSuggestions": [
+        {
+          "fixId": "0cf0907a_167e8c31",
+          "description": "Change to \"tests/net/java/com/android/server/ConnectivityServiceTest.java\"",
+          "replacements": [
+            {
+              "path": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+              "range": {
+                "startLine": 7735,
+                "startChar": 21,
+                "endLine": 7735,
+                "endChar": 29
+              },
+              "replacement": "available"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "873980ea_caf0bd86",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 7735,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-11-24T23:08:55Z",
+      "side": 1,
+      "message": "Common typo found: \"availble\" -- should it be \"available\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027NO_TYPO_CHECK\u003d\u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 7735,
+        "startChar": 21,
+        "endLine": 7735,
+        "endChar": 29
+      },
+      "revId": "1a4f66971a5dbfe5f110b0caba77ffec407c582e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
