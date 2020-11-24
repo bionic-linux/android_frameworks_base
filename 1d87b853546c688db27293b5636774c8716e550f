@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e2ec46e_ce70c3ce",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-11-24T02:58:07Z",
+      "side": 1,
+      "message": "Some implementations my have a total (initiator + responder) maximum too. How do we want to convey that?",
+      "revId": "1d87b853546c688db27293b5636774c8716e550f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
