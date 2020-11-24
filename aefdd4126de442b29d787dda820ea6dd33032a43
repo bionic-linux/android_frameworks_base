@@ -34,6 +34,24 @@
       "parentUuid": "558f4c5c_ba413b14",
       "revId": "aefdd4126de442b29d787dda820ea6dd33032a43",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11304f41_110bd029",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-24T16:31:52Z",
+      "side": 1,
+      "message": "These method names / javadocs are for us. They don\u0027t constitute a stable API and we can be as specific as we like. The split between Service / Strategy / Callback is entirely for ease of unit testing.\n\nSo, I think it\u0027s fine to document what it\u0027s used for - we can change it later without problems.\n\n[My internal code around time detection is *unusually* highly documented for internal code (and has a lot of tests) - this is good and bad: it means there\u0027s more docs and tests to update when we change how things work, but it\u0027s the way I prefer, personally]",
+      "parentUuid": "8a2ae729_9aa9a10c",
+      "revId": "aefdd4126de442b29d787dda820ea6dd33032a43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
