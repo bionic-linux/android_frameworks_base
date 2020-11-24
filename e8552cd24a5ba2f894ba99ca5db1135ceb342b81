@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0546f080_fb56309c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047769
+      },
+      "writtenOn": "2020-11-24T21:56:48Z",
+      "side": 1,
+      "message": "Build-cop override for broken build.",
+      "revId": "e8552cd24a5ba2f894ba99ca5db1135ceb342b81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
