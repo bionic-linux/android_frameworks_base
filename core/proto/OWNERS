@@ -26,6 +26,11 @@ hyunyoungs@google.com
 # Graphics stats
 jreck@google.com
 
+# Accessibility
+pweaver@google.com
+hongmingjin@google.com
+cbrower@google.com
+
 # Temporary Block to assist in migration
 # Bug: 143080132
 per-file *enums.proto = baligh@google.com, yro@google.com, jeffreyhuang@google.com
