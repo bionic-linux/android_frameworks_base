@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93ee645d_c738efbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-11-24T18:34:20Z",
+      "side": 1,
+      "message": "Going to set this as -1 on the code review until the comments are resolved to ensure it is not accidentally submitted.",
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd5b7343_601dea92",
