@@ -189,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5440d644_67636087",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyCallbackImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-24T16:33:02Z",
+      "side": 1,
+      "message": "Think we covered this over chat.",
+      "parentUuid": "bedb8605_0352c1cb",
+      "range": {
+        "startLine": 45,
+        "startChar": 79,
+        "endLine": 45,
+        "endChar": 83
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9db335c5_8481690d",
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "I\u0027ve refactored it a little bit.\n\nI can\u0027t see obvious way to simplify it even more.",
       "parentUuid": "9db335c5_8481690d",
+      "range": {
+        "startLine": 289,
+        "startChar": 20,
+        "endLine": 289,
+        "endChar": 42
+      },
+      "revId": "f66e8e957f5527edfe865043df854bda17a804ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5803c206_8f0f9764",
+        "filename": "services/core/java/com/android/server/timedetector/TimeDetectorStrategyImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-24T16:33:02Z",
+      "side": 1,
+      "message": "Looks great to me.",
+      "parentUuid": "9be169a3_7fd1663d",
       "range": {
         "startLine": 289,
         "startChar": 20,
