@@ -22,6 +22,30 @@
       },
       "revId": "d06115dc0cd3579e2d9cf896279207d6ee231462",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7fcf413_3206370d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2020-11-24T17:48:33Z",
+      "side": 1,
+      "message": "That\u0027s better indeed, thanks!",
+      "parentUuid": "67b1e1b3_c428a2c8",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "d06115dc0cd3579e2d9cf896279207d6ee231462",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
