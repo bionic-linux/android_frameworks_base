@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67b1e1b3_c428a2c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-24T17:43:01Z",
+      "side": 1,
+      "message": "Sorry, just one last thing. I try to imagine that somebody in a partner org or a downstream distro like LineageOS is coming across a commit for the first time (probably because it causes them a problem) and doesn\u0027t have access to our bug tracker. Or, I might need to point to the commit later for some reason and I don\u0027t want to repeat myself.\n\nIMO, good commit comments are a real test of a SWE\u0027s empathy / ability to put themselves in another\u0027s shoes.\n\nI think a good commit comment should contain an explanation enough to understand what the (1) before, (2) what changed, (3) expected impact.\n\nYou can do the edit in gerrit.\n\nSomething like this:\n\nBefore this change, automatic time detection would not validate the incoming UTC time suggested. When the device time is set to a bad value it can cause problems with connectivity and fail enterprise policy checks.\n\nAfter this change, automatic time detection (currently NITZ or NTP) will disregard times before a lower bound. The lower bound value is initially set from a date derived from the build timestamp. This works on the principle that a valid time cannot be before the system image was built. There is no upper bound currently as we haven\u0027t seen invalid dates in the future, and it\u0027s harder to come up with a timestamp that we know will always be invalid.\n\nThis change may impact automated or manual tests that use dates in the distant past: these dates will no longer be accepted. Tests will have to be updated to use dates in the future.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "d06115dc0cd3579e2d9cf896279207d6ee231462",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
