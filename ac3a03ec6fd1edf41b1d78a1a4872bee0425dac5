@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "d5d6257c_09cc65ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf37247_f926477b",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c76349be_7572fc86",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 24
@@ -78,6 +102,30 @@
       "side": 1,
       "message": "I did mean for this to be a key so that I could link the two objects together.  I didn\u0027t consider the use case of an inherited class overriding equals \\ hahscode.  I switched the map to a list and search through the list with \"\u003d\u003d\" so that it\u0027s a by reference check.",
       "parentUuid": "2e145c7c_c5a39e5c",
+      "range": {
+        "startLine": 4826,
+        "startChar": 22,
+        "endLine": 4826,
+        "endChar": 33
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a06f1d65_e156bfc6",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 4826,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fcf0a41_e7fca760",
       "range": {
         "startLine": 4826,
         "startChar": 22,
@@ -172,6 +220,30 @@
       "side": 1,
       "message": "I would need to create a different aidl call per filter type.  At the time, I learned recently that you can\u0027t reuse method names with different parameter types which is what I was thinking here (clearly this would need an instanceof check in that case but that would have been easy to tack on.)\n\nLike you said, the other comment is the place to focus on.",
       "parentUuid": "d2e21ae7_6bd2f13a",
+      "range": {
+        "startLine": 4858,
+        "startChar": 49,
+        "endLine": 4858,
+        "endChar": 73
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b1ebdc4_fd76e830",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 4858,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "Changed per our design discussion",
+      "parentUuid": "3a67c25b_96834e0a",
       "range": {
         "startLine": 4858,
         "startChar": 49,
@@ -851,6 +923,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27e9fa95_61a515e0",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "Code updated to the design on the previous comment",
+      "parentUuid": "866ec0dd_12adfdf4",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca638fea_65f8d510",
@@ -888,6 +984,30 @@
       "side": 1,
       "message": "Let\u0027s wait on the \"abstract question\" and then come back to this.",
       "parentUuid": "ca638fea_65f8d510",
+      "range": {
+        "startLine": 53,
+        "startChar": 34,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45231eb9_0f05647b",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdfb3e4d_c8ddc16d",
       "range": {
         "startLine": 53,
         "startChar": 34,
@@ -1015,6 +1135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd264a12_0af59997",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "A single Qos Session becomes available and is then lost.  In order to support that life cycle, a unique id is required.\n\nI added a new getter called getUniqueId() which is the session id + type id.",
+      "parentUuid": "b0238dda_684552cd",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 67
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e74ee857_6bc9c485",
@@ -1062,6 +1206,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01ccb84b_613d9b34",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "My previous reply was way off.  I removed the constructor.",
+      "parentUuid": "d0eaf7b8_295ecd39",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ef226ad_5e69ceff",
@@ -1085,6 +1253,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12bf9698_0fd07a59",
+        "filename": "core/java/android/net/QosSessionAttributes.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "I removed all of the methods within because after our discussions on API surfaces, I decided it made the most sense to wait until we have a well though out plan on what properties make sense to be shared.\n\nThe comments were equally as bad on the derived class.  I updated those and added a reference to the 3gpp section where they are defined.",
+      "parentUuid": "3ef226ad_5e69ceff",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15d2e168_0f91dd8e",
@@ -1098,6 +1290,30 @@
       "writtenOn": "2020-11-12T10:29:28Z",
       "side": 1,
       "message": "How does this interact with the advice to use instanceof in l.25 ?",
+      "range": {
+        "startLine": 56,
+        "startChar": 35,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f9ac1c2_45f5c0d3",
+        "filename": "core/java/android/net/QosSessionAttributes.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-24T23:59:22Z",
+      "side": 1,
+      "message": "Not very well \u003d ).\n\nRemoved the session type from the attribute classes.",
+      "parentUuid": "15d2e168_0f91dd8e",
       "range": {
         "startLine": 56,
         "startChar": 35,
