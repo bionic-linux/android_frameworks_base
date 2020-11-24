@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04e98376_4e5b4d15",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-11-24T17:48:40Z",
+      "side": 1,
+      "message": "I line wrapped for you - one problem with using gerrit is that it doesn\u0027t enforce the line width. Another quirk of gerrit / Android.",
+      "revId": "17fbe69a29275752070c9b33b2f05a3229b5967b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
