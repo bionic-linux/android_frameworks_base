@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12894b2d_39c0b816",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 8236,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-25T05:03:16Z",
+      "side": 1,
+      "message": "I fear this may not work like before. The old code was getting the VPN for the correct user handle first and then checking its creator is the callbackUid. The new code only looks up the callbackUid.\n\nThe only case where this might return a different result is if a single UID is responsible for establishing multiple VPNs. I think this is possible in two cases :\n• For Settings VPNs, which are established by the system ; I don\u0027t think the ownerUid field will contain a UID for the system scoped by a different user. This means you might get the wrong VPN here in this case, which in practice won\u0027t matter because the system probably never asks for diagnostics and it has NETWORK_STACK anyway, but it\u0027s still a bit of a landmine.\n• For some of our partner OEMs, where a central security component may be in charge of establishing VPN for a number of cases. I can think of multiple partners who *may* be doing this, though I don\u0027t have any specific example to exhibit. We could ask our partners to update their code, but I fear some use cases might be very difficult to make work with this.",
+      "range": {
+        "startLine": 8236,
+        "startChar": 37,
+        "endLine": 8236,
+        "endChar": 51
+      },
+      "revId": "dc9d5555a643a9ce89276b47ded16ab74f442a58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
