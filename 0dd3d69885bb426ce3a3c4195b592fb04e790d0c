@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "860faf02_79d1df51",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-25T04:54:02Z",
+      "side": 1,
+      "message": "A bit late here but I think we should disallow this.\nIn https://android-review.googlesource.com/c/platform/frameworks/base/+/1501816/15/services/core/java/com/android/server/ConnectivityService.java#4724 the new code will crash the system server if one element of the Network array is null (while before it used to silently ignore it). I don\u0027t think that ignoring it is great policy.\n\nI see two options then, to keep backward compatibility : either this code here removes nulls, or we continue to ignore null underlying networks in CS#createVpnInfo. I think the former is a better solution, even though it\u0027s a bit annoying for the size of the array here.",
+      "range": {
+        "startLine": 1863,
+        "startChar": 20,
+        "endLine": 1863,
+        "endChar": 57
+      },
+      "revId": "0dd3d69885bb426ce3a3c4195b592fb04e790d0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab7ccf03_5c2c8a0b",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 12
