@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "560b6429_adab01df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-25T04:54:56Z",
+      "side": 1,
+      "message": "+2 but see comment in https://android-review.googlesource.com/c/platform/frameworks/base/+/1501815/comment/860faf02_79d1df51/ as I believe this may lead to a crash and I think the previous patch is a better place to avoid it than to change this patch.",
+      "revId": "cf84022cfec39a204e43d672bec51f02d571bf70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "506c3221_4d5fe05b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 4724,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-25T04:54:56Z",
+      "side": 1,
+      "message": "Given that createVpnInfo() will return null first thing if this nai is not a VPN, maybe you don\u0027t need this line or you can remove line 4739.",
+      "range": {
+        "startLine": 4724,
+        "startChar": 16,
+        "endLine": 4724,
+        "endChar": 43
+      },
+      "revId": "cf84022cfec39a204e43d672bec51f02d571bf70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
