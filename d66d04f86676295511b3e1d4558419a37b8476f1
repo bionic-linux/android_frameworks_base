@@ -16,6 +16,23 @@
       "message": "LGTM from Bluetooth perspective that we need such API to allow non BatteryStats Service log the detailed wakeup reason. ",
       "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71d8c353_62c82a03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-11-25T06:28:11Z",
+      "side": 1,
+      "message": "Would it be possible to get more information about exactly how this will be used and what the purpose is?\n\nWithout knowing that, it seems like this will corrupt the collection of wakeup data.  BSS already collects data from the kernel for each kernel resume, so if some other entity (e.g. BT) decides to log additional wakeup reasons for those same wakeups, suddenly we\u0027re going to have more wakeup reasons than wakeups, and that\u0027s likely to cause problems with troubleshooting battery issues.\n\n(I presume this is part of BTAA, and I\u0027m excited to see the improvements from that... I\u0027m just curious about all of the follow-on ramifications of this specific change.)",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
