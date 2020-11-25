@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46d5e12b_2534c3e5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4990,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-25T23:37:42Z",
+      "side": 1,
+      "message": "If they are \"ignored\" I\u0027d expect it wouldn\u0027t cause a force update as cellAndWifi and cellNullAndWifi end up being semantically equivalent. I don\u0027t think that\u0027s a real issue in practice, but you might want to leave a todo.",
+      "range": {
+        "startLine": 4990,
+        "startChar": 8,
+        "endLine": 4990,
+        "endChar": 31
+      },
+      "revId": "b775128dd55868897a3f4d7a5840585cc09b9534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
