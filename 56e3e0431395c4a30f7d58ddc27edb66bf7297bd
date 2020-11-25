@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "897287c1_81de3e0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1339423
+      },
+      "writtenOn": "2020-11-25T05:40:47Z",
+      "side": 1,
+      "message": "Sorry for the late review. I didn\u0027t realize this was on my plate.\n\nI don\u0027t think we should merge this change because we should rely on the EXIF data to tell us what the time zone is, not the location from the device. If the EXIF data contains timezone data (e.g. TAG_OFFSET_TIME), that should be used; otherwise, we should assume that it is UTC time.\n\nIs there an issue that this CL is addressing?",
+      "revId": "56e3e0431395c4a30f7d58ddc27edb66bf7297bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
