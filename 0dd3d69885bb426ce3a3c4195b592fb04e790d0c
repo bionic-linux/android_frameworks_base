@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b84f423_fdb5eda3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-25T04:37:49Z",
+      "side": 1,
+      "message": "Did you want to keep the `break;` though",
+      "range": {
+        "startLine": 2810,
+        "startChar": 19,
+        "endLine": 2810,
+        "endChar": 21
+      },
+      "revId": "0dd3d69885bb426ce3a3c4195b592fb04e790d0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab7ccf03_5c2c8a0b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-25T04:37:49Z",
+      "side": 1,
+      "message": "So IIUC this should never happen, right ? Or maybe it does in the test ?\n\nVpnService clients can\u0027t call this before calling `establish()` :\n\n  setUnderlyingNetworks\n  [...]\n  This call will succeed only if the VPN is currently established. For setting this value when \n  the VPN has not yet been established, see Builder#setUnderlyingNetworks.",
+      "range": {
+        "startLine": 1869,
+        "startChar": 12,
+        "endLine": 1869,
+        "endChar": 33
+      },
+      "revId": "0dd3d69885bb426ce3a3c4195b592fb04e790d0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
