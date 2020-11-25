@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6689a0d_b15b88ef",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5904,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-25T22:52:40Z",
+      "side": 1,
+      "message": "nit : not sure this line is useful considering the next line",
+      "range": {
+        "startLine": 5904,
+        "startChar": 8,
+        "endLine": 5904,
+        "endChar": 45
+      },
+      "revId": "e486aec1a2ab532dbea4f9b26af17fdbe9d6cc43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
