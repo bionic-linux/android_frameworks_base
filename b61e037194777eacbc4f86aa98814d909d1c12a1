@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21d1410a_6b546e89",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7177,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-26T14:25:27Z",
+      "side": 0,
+      "message": "It\u0027s the other way around. The VPNs were special-cased first because that was the only way to do it at the time, then they remained the only exception that were going through this code path. This patch is removing that exception, and it does take care of making sure the UID ranges are sent to netd before the network can be used, as this can now be done without special-casing VPNs.\n\nI don\u0027t think this is adding any spurious callback. You can also see that after this patch, created and everConnected now mean the same thing, but the cleanup would be in a separate patch.",
+      "parentUuid": "a8d81aff_072e9dbe",
+      "range": {
+        "startLine": 7174,
+        "startChar": 0,
+        "endLine": 7177,
+        "endChar": 86
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89f4afd4_69a73c28",
@@ -180,6 +204,30 @@
       "side": 0,
       "message": "Yes, please do it in a separate CL.",
       "parentUuid": "f14bc6ec_0e4eb729",
+      "range": {
+        "startLine": 2904,
+        "startChar": 0,
+        "endLine": 2912,
+        "endChar": 17
+      },
+      "revId": "b61e037194777eacbc4f86aa98814d909d1c12a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e7daadb_aa1bf10c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2912,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-26T14:25:27Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "2180131a_f86f531a",
       "range": {
         "startLine": 2904,
         "startChar": 0,
