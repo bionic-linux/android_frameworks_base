@@ -2031,6 +2031,29 @@ public class CarrierConfigManager {
 
     /**
      * Flag indicating whether the carrier supports RCS presence indication for
+     * User Capability Exchange (UCE). When presence is supported, the device could would use SIP
+     * SUBSCRIBE to query the capability with the result on
+     * {@link android.telephony.ims.RcsContactPresenceTuple}.
+     */
+    public static final String KEY_RCS_PRESENCE_SUPPORTED_BOOL = "rcs_presence_supported_bool";
+
+    /**
+     * Flag indicating whether the carrier supports the perodical capability polling of the contact
+     * in the database.
+     */
+    public static final String KEY_RCS_PERODICAL_CAPABILITY_POLLING_SUPPORTED_BOOL =
+            "rcs_perodical_capability_polling_supported_bool";
+
+    /**
+     * Flag indicating whether the carrier supports the capability exchange with a bulk size. When
+     * {@code true}, device could query the capability with a list of contact. When {@code false},
+     * device could only query the capability of one contact at a time.
+     */
+    public static final String KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL =
+            "rcs_bulk_capability_exchange_bool";
+
+    /**
+     * Flag indicating whether the carrier supports RCS presence indication for
      * User Capability Exchange (UCE).  When presence is supported, the device should use the
      * {@link android.provider.ContactsContract.Data#CARRIER_PRESENCE} bit mask and set the
      * {@link android.provider.ContactsContract.Data#CARRIER_PRESENCE_VT_CAPABLE} bit to indicate
@@ -4258,6 +4281,9 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_ALLOW_HOLD_CALL_DURING_EMERGENCY_BOOL, true);
         sDefaults.putBoolean(KEY_USE_RCS_PRESENCE_BOOL, false);
         sDefaults.putBoolean(KEY_USE_RCS_SIP_OPTIONS_BOOL, false);
+        sDefaults.putBoolean(KEY_RCS_PRESENCE_SUPPORTED_BOOL, false);
+        sDefaults.putBoolean(KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL, false);
+        sDefaults.putBoolean(KEY_RCS_PERODICAL_CAPABILITY_POLLING_SUPPORTED_BOOL, false);
         sDefaults.putBoolean(KEY_FORCE_IMEI_BOOL, false);
         sDefaults.putInt(
                 KEY_CDMA_ROAMING_MODE_INT, TelephonyManager.CDMA_ROAMING_MODE_RADIO_DEFAULT);
