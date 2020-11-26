@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4eeb1e7_20ea668e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-26T11:33:39Z",
+      "side": 1,
+      "message": "WIP because it\u0027s not clear that the concept of \"the VPN of record for a given userId\" is something that makes sense in ConnectivityService. This is because:\n\n1. Most of the reasons CS looks mVpns are to find out information that applies to a given calling uid. That information is uid-specific, not userId-specific.\n2. CS has no idea whether the VPN for a given userId created a given NetworkAgent. So it has no way to verify that the UID ranges declared by a given VPN correspond to a given userId. If the VPN for userId 0 were to claim UIDs 500000 - 1000000, CS would happily accept it.\n3. Some OEMs have multiple VPNs for a given userId and even support more than one VPN applying to the same UID.\n\nHopefully it\u0027s possible to convert all the methods that look up per-UID state (i.e., #1) so that instead of getting the userId for the calling UID and finding the corresponding VPN, they just scan all the currently-connected VPNs to find the one that applies to the given uid.\n\nOnce that is done we can evaluate whether it is necessary to re-introduce the concept of \"the VPN of record for a given userId\".",
+      "revId": "452600d04ee1672e8a3e57662554542a95c26a79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
