@@ -343,7 +343,8 @@ public class VpnTest {
     }
 
     @Test
-    public void testLockdownChangingPackage() throws Exception {
+    public void testLo
+    ckdownChangingPackage() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRange user = UidRange.createForUser(primaryUser.id);
 
