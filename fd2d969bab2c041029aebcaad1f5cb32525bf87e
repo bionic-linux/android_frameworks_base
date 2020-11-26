@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8dd003e_5031ef4f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5888,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-26T01:38:28Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. Done.",
+      "parentUuid": "513531f7_566d7154",
+      "range": {
+        "startLine": 5887,
+        "startChar": 8,
+        "endLine": 5888,
+        "endChar": 36
+      },
+      "revId": "fd2d969bab2c041029aebcaad1f5cb32525bf87e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "137d1cf6_4bb4dec1",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-25T15:30:59Z",
       "side": 1,
       "message": "Maybe add a comment to describe that this is checking the uid range of main user.",
+      "range": {
+        "startLine": 5935,
+        "startChar": 16,
+        "endLine": 5935,
+        "endChar": 66
+      },
+      "revId": "fd2d969bab2c041029aebcaad1f5cb32525bf87e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f287d5c_7e69ce54",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5935,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-26T01:38:28Z",
+      "side": 1,
+      "message": "Added this to the comment above.",
+      "parentUuid": "137d1cf6_4bb4dec1",
       "range": {
         "startLine": 5935,
         "startChar": 16,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80dc6c9d_d6abf09e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5936,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-26T01:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d7b8fbf_42b3339b",
+      "range": {
+        "startLine": 5936,
+        "startChar": 16,
+        "endLine": 5936,
+        "endChar": 84
+      },
+      "revId": "fd2d969bab2c041029aebcaad1f5cb32525bf87e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9746048d_bd7b21e4",
@@ -83,6 +155,30 @@
       "writtenOn": "2020-11-25T15:30:59Z",
       "side": 1,
       "message": "nit: extra space.",
+      "range": {
+        "startLine": 5940,
+        "startChar": 64,
+        "endLine": 5940,
+        "endChar": 65
+      },
+      "revId": "fd2d969bab2c041029aebcaad1f5cb32525bf87e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "041b389c_affceb5b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5940,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-26T01:38:28Z",
+      "side": 1,
+      "message": "Oops. Done.",
+      "parentUuid": "9746048d_bd7b21e4",
       "range": {
         "startLine": 5940,
         "startChar": 64,
