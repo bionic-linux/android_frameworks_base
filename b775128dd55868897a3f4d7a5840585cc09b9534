@@ -22,6 +22,30 @@
       },
       "revId": "b775128dd55868897a3f4d7a5840585cc09b9534",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28cb6917_34a1d934",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4990,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-26T01:40:03Z",
+      "side": 1,
+      "message": "Well, the nulls are, in fact, ignored. It\u0027s just that there\u0027s no deduplication of updates, so calling setUnderlyingNetworksForVpn twice with the same values causes forceUpdateIfaces to be called twice. Something to consider fixing, for sure.",
+      "parentUuid": "46d5e12b_2534c3e5",
+      "range": {
+        "startLine": 4990,
+        "startChar": 8,
+        "endLine": 4990,
+        "endChar": 31
+      },
+      "revId": "b775128dd55868897a3f4d7a5840585cc09b9534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
