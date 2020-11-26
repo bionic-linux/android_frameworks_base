@@ -213,6 +213,12 @@ public class TaskInfo {
         return configuration;
     }
 
+    /** @hide */
+    @TestApi
+    public boolean isResizeable() {
+        return isResizeable;
+    }
+
     /**
      * Reads the TaskInfo from a parcel.
      */
