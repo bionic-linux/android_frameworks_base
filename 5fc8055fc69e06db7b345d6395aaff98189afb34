@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "162764cf_1da3472e",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-26T07:19:14Z",
+      "side": 1,
+      "message": "1. maybe: \"The snapshots that accumulated since boot. Note that the snapshots do not contain stats from providers.\"\n\n2. This is ugly since it named snapshot but surprisingly it does not have all stats.\nIt violates principle of least surprise.\nIdeally it should be mLastSnapshotWithoutProviderStats but apparently too long.\nMaybe jchalard@ would have better idea.",
+      "range": {
+        "startLine": 337,
+        "startChar": 4,
+        "endLine": 337,
+        "endChar": 52
+      },
+      "revId": "5fc8055fc69e06db7b345d6395aaff98189afb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e62c20d1_9d462565",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-26T07:19:14Z",
+      "side": 1,
+      "message": "wait what currently this does not contain provider stats?!\nMaybe create a bug and add a todo with bug id?",
+      "range": {
+        "startLine": 915,
+        "startChar": 24,
+        "endLine": 915,
+        "endChar": 50
+      },
+      "revId": "5fc8055fc69e06db7b345d6395aaff98189afb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "900f07ff_3dcc4c36",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-26T07:19:14Z",
+      "side": 1,
+      "message": "IIUC it needs to be filtered by requiredIfaces",
+      "range": {
+        "startLine": 948,
+        "startChar": 12,
+        "endLine": 949,
+        "endChar": 28
+      },
+      "revId": "5fc8055fc69e06db7b345d6395aaff98189afb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f89b6c7_fe8d63d7",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1930,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-26T07:19:14Z",
+      "side": 1,
+      "message": "maybe we need to add comment here says this does not contains provider stats.",
+      "range": {
+        "startLine": 1930,
+        "startChar": 13,
+        "endLine": 1930,
+        "endChar": 14
+      },
+      "revId": "5fc8055fc69e06db7b345d6395aaff98189afb34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

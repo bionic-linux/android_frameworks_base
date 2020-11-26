@@ -238,6 +238,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "322970ab_0a7e86e4",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-26T07:19:14Z",
+      "side": 1,
+      "message": "SGTM\nFor 1, for integrity, I think todo is needed in this patch.",
+      "parentUuid": "673daa06_16aac30d",
+      "range": {
+        "startLine": 2110,
+        "startChar": 16,
+        "endLine": 2110,
+        "endChar": 17
+      },
+      "revId": "10f6a5c6a48c5c69d374dabed022e2f92b42e93c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0984c24f_049dc330",
         "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
         "patchSetId": 1
