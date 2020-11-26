@@ -5135,7 +5135,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 loge("Stopped user has no VPN");
                 return;
             }
-            userVpn.onUserStopped();
+            userVpn.onUserStop();
             mVpns.delete(userId);
         }
     }
