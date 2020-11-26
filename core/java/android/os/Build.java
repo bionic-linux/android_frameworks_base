@@ -191,7 +191,8 @@ public class Build {
      *
      * See {@link #SUPPORTED_32_BIT_ABIS} and {@link #SUPPORTED_64_BIT_ABIS}.
      */
-    public static final String[] SUPPORTED_ABIS = getStringList("ro.product.cpu.abilist", ",");
+    public static final String[] SUPPORTED_ABIS =
+            getStringList("ro.vendor.product.cpu.abilist", ",");
 
     /**
      * An ordered list of <b>32 bit</b> ABIs supported by this device. The most preferred ABI
@@ -200,7 +201,7 @@ public class Build {
      * See {@link #SUPPORTED_ABIS} and {@link #SUPPORTED_64_BIT_ABIS}.
      */
     public static final String[] SUPPORTED_32_BIT_ABIS =
-            getStringList("ro.product.cpu.abilist32", ",");
+            getStringList("ro.vendor.product.cpu.abilist32", ",");
 
     /**
      * An ordered list of <b>64 bit</b> ABIs supported by this device. The most preferred ABI
@@ -209,7 +210,7 @@ public class Build {
      * See {@link #SUPPORTED_ABIS} and {@link #SUPPORTED_32_BIT_ABIS}.
      */
     public static final String[] SUPPORTED_64_BIT_ABIS =
-            getStringList("ro.product.cpu.abilist64", ",");
+            getStringList("ro.vendor.product.cpu.abilist64", ",");
 
     /** {@hide} */
     @TestApi
