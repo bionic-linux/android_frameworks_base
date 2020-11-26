@@ -49,7 +49,6 @@ import android.graphics.GraphicsStatsService;
 import android.hardware.display.DisplayManagerInternal;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityModuleConnector;
-import android.net.IConnectivityManager;
 import android.net.NetworkStackClient;
 import android.os.BaseBundle;
 import android.os.Binder;
@@ -1021,7 +1020,7 @@ public final class SystemServer {
         VcnManagementService vcnManagement = null;
         NetworkStatsService networkStats = null;
         NetworkPolicyManagerService networkPolicy = null;
-        IConnectivityManager connectivity = null;
+        ConnectivityManager connectivity = null;
         NsdService serviceDiscovery = null;
         WindowManagerService wm = null;
         SerialService serial = null;
@@ -1551,9 +1550,8 @@ public final class SystemServer {
             // services to initialize.
             // TODO: Dynamically load service-connectivity.jar by using startServiceFromJar.
             mSystemServiceManager.startService(CONNECTIVITY_SERVICE_INITIALIZER_CLASS);
-            connectivity = IConnectivityManager.Stub.asInterface(
-                    ServiceManager.getService(Context.CONNECTIVITY_SERVICE));
-            // TODO: Use ConnectivityManager instead of ConnectivityService.
+            connectivity = (ConnectivityManager)
+                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
             networkPolicy.bindConnectivityManager(connectivity);
             t.traceEnd();
 
