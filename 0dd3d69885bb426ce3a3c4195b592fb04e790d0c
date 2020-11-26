@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4a27df1_c8ad7c59",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-26T03:39:14Z",
+      "side": 1,
+      "message": "Fair enough I guess, and with the new test the risk seems low",
+      "parentUuid": "c6008e9a_03e72669",
+      "range": {
+        "startLine": 1863,
+        "startChar": 20,
+        "endLine": 1863,
+        "endChar": 57
+      },
+      "revId": "0dd3d69885bb426ce3a3c4195b592fb04e790d0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab7ccf03_5c2c8a0b",
