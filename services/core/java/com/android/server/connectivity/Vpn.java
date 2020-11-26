@@ -196,6 +196,7 @@ public class Vpn {
     private final INetworkManagementService mNetd;
     @VisibleForTesting
     protected VpnConfig mConfig;
+    private final NetworkProvider mNetworkProvider;
     @VisibleForTesting
     protected NetworkAgent mNetworkAgent;
     private final Looper mLooper;
@@ -398,6 +399,8 @@ public class Vpn {
             Log.wtf(TAG, "Problem registering observer", e);
         }
 
+        mNetworkProvider = new NetworkProvider(context, looper, VPN_AGENT_NAME);
+        mConnectivityManager.registerNetworkProvider(mNetworkProvider);
         mLegacyState = LegacyVpnInfo.STATE_DISCONNECTED;
         mNetworkInfo = new NetworkInfo(ConnectivityManager.TYPE_VPN, 0 /* subtype */, NETWORKTYPE,
                 "" /* subtypeName */);
@@ -1271,7 +1274,7 @@ public class Vpn {
             mNetworkAgent = new NetworkAgent(mContext, mLooper, NETWORKTYPE /* logtag */,
                     mNetworkCapabilities, lp,
                     ConnectivityConstants.VPN_DEFAULT_SCORE, networkAgentConfig,
-                    new NetworkProvider(mContext, mLooper, VPN_AGENT_NAME)) {
+                    mNetworkProvider) {
                             @Override
                             public void unwanted() {
                                 // We are user controlled, not driven by NetworkRequest.
@@ -1390,6 +1393,8 @@ public class Vpn {
                     && updateLinkPropertiesInPlaceIfPossible(mNetworkAgent, oldConfig)) {
                 // Keep mNetworkAgent unchanged
             } else {
+                // Initialize the state for a new agent, while keeping the old one connected
+                // in case this new connection fails.
                 mNetworkAgent = null;
                 updateState(DetailedState.CONNECTING, "establish");
                 // Set up forwarding and DNS rules.
@@ -1623,6 +1628,7 @@ public class Vpn {
 
         // Quit any active connections
         agentDisconnect();
+        mConnectivityManager.unregisterNetworkProvider(mNetworkProvider);
     }
 
     /**
