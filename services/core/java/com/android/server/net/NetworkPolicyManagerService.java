@@ -145,7 +145,6 @@ import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
-import android.net.IConnectivityManager;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
@@ -418,7 +417,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private final CarrierConfigManager mCarrierConfigManager;
     private final MultipathPolicyTracker mMultipathPolicyTracker;
 
-    private IConnectivityManager mConnManager;
+    private ConnectivityManager mConnManager;
     private PowerManagerInternal mPowerManagerInternal;
     private PowerWhitelistManager mPowerWhitelistManager;
 
@@ -663,8 +662,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 new NetworkPolicyManagerInternalImpl());
     }
 
-    public void bindConnectivityManager(IConnectivityManager connManager) {
-        mConnManager = Objects.requireNonNull(connManager, "missing IConnectivityManager");
+    /**
+     *  To bind connectivity manager in system server when connectivity service start.
+     */
+    public void bindConnectivityManager(ConnectivityManager connManager) {
+        mConnManager = Objects.requireNonNull(connManager, "missing ConnectivityManager");
     }
 
     @GuardedBy("mUidRulesFirstLock")
@@ -1501,8 +1503,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     }
 
     /**
-     * Receiver that watches for {@link IConnectivityManager} to claim network
-     * interfaces. Used to apply {@link NetworkPolicy} to matching networks.
+     * Receiver that watches for the connectivity changes.
+     * Used to apply {@link NetworkPolicy} to matching networks.
      */
     private BroadcastReceiver mConnReceiver = new BroadcastReceiver() {
         @Override
@@ -1894,7 +1896,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final NetworkState[] states;
         try {
             states = defeatNullable(mConnManager.getAllNetworkState());
-        } catch (RemoteException e) {
+        } catch (RuntimeException e) {
             // ignored; service lives in system_server
             return;
         }

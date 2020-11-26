@@ -98,7 +98,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.net.ConnectivityManager;
-import android.net.IConnectivityManager;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.LinkProperties;
@@ -232,7 +231,6 @@ public class NetworkPolicyManagerServiceTest {
 
     private @Mock IActivityManager mActivityManager;
     private @Mock INetworkManagementService mNetworkManager;
-    private @Mock IConnectivityManager mConnManager;
     private @Mock ConnectivityManager mConnectivityManager;
     private @Mock NotificationManager mNotifManager;
     private @Mock PackageManager mPackageManager;
@@ -378,7 +376,7 @@ public class NetworkPolicyManagerServiceTest {
         mFutureIntent = newRestrictBackgroundChangedFuture();
         mService = new NetworkPolicyManagerService(mServiceContext, mActivityManager,
                 mNetworkManager, mIpm, mClock, mPolicyDir, true);
-        mService.bindConnectivityManager(mConnManager);
+        mService.bindConnectivityManager(mConnectivityManager);
         mPolicyListener = new NetworkPolicyListenerAnswer(mService);
 
         // Sets some common expectations.
@@ -1070,7 +1068,7 @@ public class NetworkPolicyManagerServiceTest {
         // first, pretend that wifi network comes online. no policy active,
         // which means we shouldn't push limit to interface.
         state = new NetworkState[] { buildWifi() };
-        when(mConnManager.getAllNetworkState()).thenReturn(state);
+        when(mConnectivityManager.getAllNetworkState()).thenReturn(state);
 
         mPolicyListener.expect().onMeteredIfacesChanged(any());
         mServiceContext.sendBroadcast(new Intent(CONNECTIVITY_ACTION));
@@ -1078,7 +1076,7 @@ public class NetworkPolicyManagerServiceTest {
 
         // now change cycle to be on 15th, and test in early march, to verify we
         // pick cycle day in previous month.
-        when(mConnManager.getAllNetworkState()).thenReturn(state);
+        when(mConnectivityManager.getAllNetworkState()).thenReturn(state);
 
         // pretend that 512 bytes total have happened
         stats = new NetworkStats(getElapsedRealtime(), 1)
@@ -1339,7 +1337,7 @@ public class NetworkPolicyManagerServiceTest {
                 .insertEntry(TEST_IFACE, 0L, 0L, 0L, 0L);
 
         {
-            when(mConnManager.getAllNetworkState()).thenReturn(state);
+            when(mConnectivityManager.getAllNetworkState()).thenReturn(state);
             when(mStatsService.getNetworkTotalBytes(sTemplateWifi, TIME_FEB_15,
                     currentTimeMillis())).thenReturn(stats.getTotalBytes());
 
@@ -1462,7 +1460,7 @@ public class NetworkPolicyManagerServiceTest {
     }
 
     private PersistableBundle setupUpdateMobilePolicyCycleTests() throws RemoteException {
-        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkState[0]);
+        when(mConnectivityManager.getAllNetworkState()).thenReturn(new NetworkState[0]);
 
         setupTelephonySubscriptionManagers(FAKE_SUB_ID, FAKE_SUBSCRIBER_ID);
 
@@ -1474,7 +1472,7 @@ public class NetworkPolicyManagerServiceTest {
 
     @Test
     public void testUpdateMobilePolicyCycleWithNullConfig() throws RemoteException {
-        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkState[0]);
+        when(mConnectivityManager.getAllNetworkState()).thenReturn(new NetworkState[0]);
 
         setupTelephonySubscriptionManagers(FAKE_SUB_ID, FAKE_SUBSCRIBER_ID);
 
@@ -1970,7 +1968,7 @@ public class NetworkPolicyManagerServiceTest {
     private void expectNetworkState(boolean roaming) throws Exception {
         when(mCarrierConfigManager.getConfigForSubId(eq(TEST_SUB_ID)))
                 .thenReturn(mCarrierConfig);
-        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkState[] {
+        when(mConnectivityManager.getAllNetworkState()).thenReturn(new NetworkState[] {
                 new NetworkState(buildNetworkInfo(),
                         buildLinkProperties(TEST_IFACE),
                         buildNetworkCapabilities(TEST_SUB_ID, roaming),

@@ -2108,6 +2108,18 @@ public class ConnectivityManager {
         // ignored
     }
 
+    /** @hide */
+    @RequiresPermission(anyOf = {
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+            android.Manifest.permission.NETWORK_STACK})
+    public NetworkState[] getAllNetworkState() {
+        try {
+            return mService.getAllNetworkState();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /**
      * @hide
      * @deprecated Talk to TelephonyManager directly
