@@ -416,7 +416,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private final UserManager mUserManager;
     private final CarrierConfigManager mCarrierConfigManager;
 
-    private IConnectivityManager mConnManager;
+    private ConnectivityManager mConnManager;
     private PowerManagerInternal mPowerManagerInternal;
     private PowerWhitelistManager mPowerWhitelistManager;
 
@@ -661,8 +661,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 new NetworkPolicyManagerInternalImpl());
     }
 
-    public void bindConnectivityManager(IConnectivityManager connManager) {
-        mConnManager = Objects.requireNonNull(connManager, "missing IConnectivityManager");
+    /**
+     *  To bind connectivity manager in system server when connectivity service start.
+     */
+    public void bindConnectivityManager(ConnectivityManager connManager) {
+        mConnManager = Objects.requireNonNull(connManager, "missing ConnectivityManager");
     }
 
     @GuardedBy("mUidRulesFirstLock")
@@ -1891,7 +1894,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final NetworkState[] states;
         try {
             states = defeatNullable(mConnManager.getAllNetworkState());
-        } catch (RemoteException e) {
+        } catch (RuntimeException e) {
             // ignored; service lives in system_server
             return;
         }
