@@ -16,13 +16,18 @@
 
 package com.android.server.connectivity;
 
-import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.*;
+import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.LOST_INTERNET;
+import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.NETWORK_SWITCH;
+import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.NO_INTERNET;
+import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.PARTIAL_CONNECTIVITY;
+import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.PRIVATE_DNS_BROKEN;
+import static com.android.server.connectivity.NetworkNotificationManager.NotificationType.SIGN_IN;
+import static com.android.testutils.ContextUtils.mockContextAsUser;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
@@ -37,7 +42,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.os.UserHandle;
 import android.telephony.TelephonyManager;
 
 import androidx.test.filters.SmallTest;
@@ -49,7 +53,6 @@ import com.android.server.connectivity.NetworkNotificationManager.NotificationTy
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.AdditionalAnswers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -58,6 +61,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import kotlin.Unit;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -107,11 +112,9 @@ public class NetworkNotificationManagerTest {
         when(mCtx.getResources()).thenReturn(mResources);
         when(mCtx.getPackageManager()).thenReturn(mPm);
         when(mCtx.getApplicationInfo()).thenReturn(new ApplicationInfo());
-        final Context asUserCtx = mock(Context.class, AdditionalAnswers.delegatesTo(mCtx));
-        doReturn(UserHandle.ALL).when(asUserCtx).getUser();
-        when(mCtx.createContextAsUser(eq(UserHandle.ALL), anyInt())).thenReturn(asUserCtx);
-        when(mCtx.getSystemService(eq(Context.NOTIFICATION_SERVICE)))
-                .thenReturn(mNotificationManager);
+        mockContextAsUser(mCtx, (context, user) ->
+                (Unit) doReturn(mNotificationManager).when(context)
+                    .getSystemService(eq(Context.NOTIFICATION_SERVICE)));
         when(mNetworkInfo.getExtraInfo()).thenReturn("extra");
         when(mResources.getColor(anyInt(), any())).thenReturn(0xFF607D8B);
 

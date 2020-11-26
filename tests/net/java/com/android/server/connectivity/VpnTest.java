@@ -31,6 +31,8 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 
+import static com.android.testutils.ContextUtils.mockContextAsUser;
+
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -131,6 +133,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
+import kotlin.Unit;
+
 /**
  * Tests for {@link Vpn}.
  *
@@ -213,19 +217,15 @@ public class VpnTest {
 
         when(mContext.getPackageManager()).thenReturn(mPackageManager);
 
-        doAnswer(invocation -> {
-            final Context asUserContext = mock(Context.class, delegatesTo(mContext));
+        mockContextAsUser(mContext, (context, user) -> {
             final PackageManager asUserPackageManager = mock(PackageManager.class,
                     delegatesTo(mPackageManager));
-            final UserHandle user = (UserHandle) invocation.getArguments()[0];
             final int userId = user.getIdentifier();
-            doReturn(user).when(asUserContext).getUser();
-            doReturn(userId).when(asUserContext).getUserId();
             doReturn(userId).when(asUserPackageManager).getUserId();
-            doReturn(asUserPackageManager).when(asUserContext).getPackageManager();
+            doReturn(asUserPackageManager).when(context).getPackageManager();
             setMockedPackages(asUserPackageManager, mPackages);
-            return asUserContext;
-        }).when(mContext).createContextAsUser(any(), anyInt());
+            return Unit.INSTANCE;
+        });
 
         when(mContext.getPackageName()).thenReturn(TEST_VPN_PKG);
         when(mContext.getOpPackageName()).thenReturn(TEST_VPN_PKG);
