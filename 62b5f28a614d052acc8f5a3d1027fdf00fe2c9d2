@@ -22,6 +22,30 @@
       },
       "revId": "62b5f28a614d052acc8f5a3d1027fdf00fe2c9d2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf394f58_22dabe52",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 4785,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-26T12:38:24Z",
+      "side": 0,
+      "message": "This is now simpler because the NetworkCapabilities in Vpn are never affected by ConnectivityService, and the only changes to them are for UID range changes. I added more test coverage for this to ConnectivityServiceTest#testVpnRestrictedUsers to ensure that capability changes made by Vpn (e.g., via setUids()) do not include capabilities propagated by underlying networks.",
+      "parentUuid": "3c3bc876_915d6a56",
+      "range": {
+        "startLine": 4785,
+        "startChar": 45,
+        "endLine": 4785,
+        "endChar": 63
+      },
+      "revId": "62b5f28a614d052acc8f5a3d1027fdf00fe2c9d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
