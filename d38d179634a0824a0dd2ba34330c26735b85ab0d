@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00471cdb_6ba71212",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T00:55:07Z",
+      "side": 1,
+      "message": "LGTM. Feel free to merge as is and address comments in a follow-up.",
+      "revId": "d38d179634a0824a0dd2ba34330c26735b85ab0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d4fc63a_3f4bdb20",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T00:55:07Z",
+      "side": 1,
+      "message": "This ends up being a log tag, right? If so, suggest removing spaces from it facilitate its use via \"adb logcat -s. Something like VpnNetworkAgent would allow running \"adb logcat -s ConnectivityService,VpnNetworkAgent\", for example.",
+      "range": {
+        "startLine": 156,
+        "startChar": 49,
+        "endLine": 156,
+        "endChar": 68
+      },
+      "revId": "d38d179634a0824a0dd2ba34330c26735b85ab0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "193d2c3e_fed5cca0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T00:55:07Z",
+      "side": 1,
+      "message": "This null check at least should hopefully be easy to avoid. I think the code can never go into CONNECTED unless the agent is null. As far as I can tell entering CONNECTED only happens in line 1308 and the agent is guaranteed to be non-null at that point. See comment below as well.\n\nIdle musing: while the previous code would set mNetworkAgent to be null if registering the agent threw an exception, the new code will not because constructing the NetworkAgent will not throw (unless nc, lp or ni are null, which as far as I can tell cannot happen here). I don\u0027t think RemoteException could ever happen though, since Vpn runs in the system server.",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 463,
+        "endChar": 17
+      },
+      "revId": "d38d179634a0824a0dd2ba34330c26735b85ab0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4221f35b_9c0230aa",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T00:55:07Z",
+      "side": 1,
+      "message": "Can this code actually throw anything? Does it depend on having a clean calling identity? If not, can we move it out of the try block? That would have the advantage that mNetworkAgent is guaranteed non-null in line 1308, which will make it easy to address the comment at line 463.",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1302,
+        "endChar": 26
+      },
+      "revId": "d38d179634a0824a0dd2ba34330c26735b85ab0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
