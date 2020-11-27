@@ -22,6 +22,30 @@
       },
       "revId": "dc9d5555a643a9ce89276b47ded16ab74f442a58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6662717_ea0d6e3a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 8236,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T10:12:12Z",
+      "side": 1,
+      "message": "Good catch. Addressed this by scanning all networks owned by callbackUid and returning true if any of them have this network as an underlying network.",
+      "parentUuid": "12894b2d_39c0b816",
+      "range": {
+        "startLine": 8236,
+        "startChar": 37,
+        "endLine": 8236,
+        "endChar": 51
+      },
+      "revId": "dc9d5555a643a9ce89276b47ded16ab74f442a58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
