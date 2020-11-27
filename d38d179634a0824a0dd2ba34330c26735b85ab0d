@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5e4265a_6820a855",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T05:27:25Z",
+      "side": 1,
+      "message": "Somehow this patch had dropped the changes to ConnectivityService so it\u0027s not functional. Had to respin anyway, so I addressed the comments.",
+      "parentUuid": "00471cdb_6ba71212",
+      "revId": "d38d179634a0824a0dd2ba34330c26735b85ab0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d4fc63a_3f4bdb20",
@@ -31,6 +49,30 @@
       "writtenOn": "2020-11-27T00:55:07Z",
       "side": 1,
       "message": "This ends up being a log tag, right? If so, suggest removing spaces from it facilitate its use via \"adb logcat -s. Something like VpnNetworkAgent would allow running \"adb logcat -s ConnectivityService,VpnNetworkAgent\", for example.",
+      "range": {
+        "startLine": 156,
+        "startChar": 49,
+        "endLine": 156,
+        "endChar": 68
+      },
+      "revId": "d38d179634a0824a0dd2ba34330c26735b85ab0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "730a11ad_b8f3bbd1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T05:27:25Z",
+      "side": 1,
+      "message": "No, this is used in a variety of places for logging but never as a log tag.\n\nThat being said, shortening it is still a good thing, and having no spaces may help highlighting this is a single unit, so done.",
+      "parentUuid": "6d4fc63a_3f4bdb20",
       "range": {
         "startLine": 156,
         "startChar": 49,
@@ -64,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81cead9f_e320e71b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T05:27:25Z",
+      "side": 1,
+      "message": "In production code yes it\u0027s very easy to avoid. The big problem I had to achieve this is as described in the comments : I needed new instrumentation in the tests, which liberally call updateState without ever calling agentConnect or anything calling through to it, and depend on later code checking mNetworkInfo.isConnected. It is a fair amount of work to update the tests, so I bailed on that and added a null check.\n\nAs for throwing in register, I think it can only happen in case of a programming error. So if we don\u0027t already have crashes there I don\u0027t think this patch changes things. In the interest of serenity, I caught exceptions and reset the agent to null if register throws.",
+      "parentUuid": "193d2c3e_fed5cca0",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 463,
+        "endChar": 17
+      },
+      "revId": "d38d179634a0824a0dd2ba34330c26735b85ab0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4221f35b_9c0230aa",
@@ -77,6 +143,30 @@
       "writtenOn": "2020-11-27T00:55:07Z",
       "side": 1,
       "message": "Can this code actually throw anything? Does it depend on having a clean calling identity? If not, can we move it out of the try block? That would have the advantage that mNetworkAgent is guaranteed non-null in line 1308, which will make it easy to address the comment at line 463.",
+      "range": {
+        "startLine": 1294,
+        "startChar": 0,
+        "endLine": 1302,
+        "endChar": 26
+      },
+      "revId": "d38d179634a0824a0dd2ba34330c26735b85ab0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d2ed42c_f7780949",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1302,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T05:27:25Z",
+      "side": 1,
+      "message": "IIUC in the case of a VPN service establish() is called with the identity of the VPN app, which won\u0027t have permission to register the agent. So we do need to clear the calling identity to register, but not to create the agent. Moved out of the try{} block.\n\nThat being said, if register throws, I think we should still null out the agent. So did that.",
+      "parentUuid": "4221f35b_9c0230aa",
       "range": {
         "startLine": 1294,
         "startChar": 0,
