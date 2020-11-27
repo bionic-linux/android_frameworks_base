@@ -39,6 +39,30 @@
       },
       "revId": "7f64d14fe353adb75f3bd85567fb780adfc99f39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0874cca8_c2340e38",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T05:27:37Z",
+      "side": 1,
+      "message": "This can never return null (it will throw instead).\nMy reading of the code makes me think this can happen immediately as CS is instantiated, which happens immediately before it\u0027s registered as a service. So I think there is a window of opportunity for this to throw, though I couldn\u0027t repro it by rebooting the device a few times.\n\nChanged into a method.",
+      "parentUuid": "3444e62e_20079801",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 84
+      },
+      "revId": "7f64d14fe353adb75f3bd85567fb780adfc99f39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
