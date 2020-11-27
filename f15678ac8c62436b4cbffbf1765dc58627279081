@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "726aca8d_edd2ff53",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T01:08:48Z",
+      "side": 1,
+      "message": "Given that there will be more than one of these, suggest distinguishing them in some way. For example, \"VpnNetworkProvider:\" + mUserId. (The downside of that is that \"adb logcat -s VpnNetworkProvider\" wouldn\u0027t work, you\u0027d have to use \"VpnNetworkProvider:1\"\n\nVPN_AGENT_NAME isn\u0027t necessarily the best choice for this string since it contains the word agent and this is not an agent, but a provider.",
+      "range": {
+        "startLine": 402,
+        "startChar": 64,
+        "endLine": 402,
+        "endChar": 78
+      },
+      "revId": "f15678ac8c62436b4cbffbf1765dc58627279081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "772f4336_8087034e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T01:08:48Z",
+      "side": 1,
+      "message": "This looks like it could be unbalanced, because the provider is unregistered here but registered in the constructor, but it\u0027s not. Suggest adding a comment somewhere saying that the calls to the constructor and to onUserStopped are balanced, because onUserStopped is always called when the user is stopped, and the constructor is always called when the user is started.",
+      "range": {
+        "startLine": 1631,
+        "startChar": 8,
+        "endLine": 1631,
+        "endChar": 73
+      },
+      "revId": "f15678ac8c62436b4cbffbf1765dc58627279081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
