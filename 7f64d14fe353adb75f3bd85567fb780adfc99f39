@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6f33784_d8f07b74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T01:00:12Z",
+      "side": 1,
+      "message": "LGTM assuming it\u0027s guaranteed that ConnectivityManager is available when the Vpn constructor is called. See inline comment.",
+      "revId": "7f64d14fe353adb75f3bd85567fb780adfc99f39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3444e62e_20079801",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T01:00:12Z",
+      "side": 1,
+      "message": "Is it guaranteed that this will return non-null if this code is called very early on boot? Specifically I think this code can be called in the USER_STARTED broadcast. Currently, for that to happen the ConnectivityService handler thread must be started. Maybe that\u0027s late enough to guarantee that ConnectivityManager is available.",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 84
+      },
+      "revId": "7f64d14fe353adb75f3bd85567fb780adfc99f39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
