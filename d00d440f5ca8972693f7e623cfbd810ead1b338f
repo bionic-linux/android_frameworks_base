@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f9a8a89_44f78d51",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4781,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T10:22:32Z",
+      "side": 1,
+      "message": "If it can\u0027t happen in production code I\u0027d prefer we change the tests so it also doesn\u0027t happen in tests",
+      "range": {
+        "startLine": 4781,
+        "startChar": 11,
+        "endLine": 4781,
+        "endChar": 43
+      },
+      "revId": "d00d440f5ca8972693f7e623cfbd810ead1b338f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
