@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a54621d3_9ca039e2",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-11-27T00:52:28Z",
+      "side": 1,
+      "message": "Jean- I\u0027m not loving putting a separate method per avaialable and lost for each type of attributes.  I saw that when with NetworkCapabilities is parceled that it casts mTransportInfo as a Parcelable in #writeToParcel.\n\nIt\u0027s obviously brittle, but considering it\u0027s NetworkAgent and that the instances are all well known framework classes (...I\u0027m assuming here...) it seems like the trade off is worth it.  Let me know which direction you want to go.",
+      "range": {
+        "startLine": 1106,
+        "startChar": 22,
+        "endLine": 1106,
+        "endChar": 48
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
