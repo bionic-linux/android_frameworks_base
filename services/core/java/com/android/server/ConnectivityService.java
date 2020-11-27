@@ -6354,7 +6354,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * This method should never alter the agent's NetworkCapabilities, only store data in |nai|.
      */
     private void processCapabilitiesFromAgent(NetworkAgentInfo nai, NetworkCapabilities nc) {
-        nai.declaredMetered = !nc.hasCapability(NET_CAPABILITY_NOT_METERED);
+        if (nai.networkCapabilities.getOwnerUid() != nc.getOwnerUid()) {
+            Log.e(TAG, nai.toShortString() + ": ignoring attempt to change owner from "
+                    + nai.networkCapabilities.getOwnerUid() + " to " + nc.getOwnerUid());
+            nc.setOwnerUid(nai.networkCapabilities.getOwnerUid());
+        }
     }
 
     /** Modifies |caps| based on the capabilities of the specified underlying networks. */
