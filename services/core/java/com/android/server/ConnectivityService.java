@@ -6353,6 +6353,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private void processCapabilitiesFromAgent(NetworkAgentInfo nai, NetworkCapabilities nc) {
         nai.declaredMetered = !nc.hasCapability(NET_CAPABILITY_NOT_METERED);
+        if (nai.networkCapabilities.getOwnerUid() != nc.getOwnerUid()) {
+            Log.w(TAG, nai.toShortString() + ": ignoring attempt to change owner from "
+                    + nai.networkCapabilities.getOwnerUid() + " to " + nc.getOwnerUid());
+            nc.setOwnerUid(nai.networkCapabilities.getOwnerUid());
+        }
     }
 
     /** Propagates to |nc| the capabilities declared by the underlying networks of |nai|. */
