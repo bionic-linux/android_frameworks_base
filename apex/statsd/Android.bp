@@ -16,6 +16,7 @@ apex {
     name: "com.android.os.statsd",
     defaults: ["com.android.os.statsd-defaults"],
     manifest: "apex_manifest.json",
+    compressible: false,
 }
 
 apex_defaults {
