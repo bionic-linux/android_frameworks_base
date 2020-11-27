@@ -69,6 +69,23 @@
       "parentUuid": "91a5768a_ca00f374",
       "revId": "540705f7eee8c4ce0b7ad2fee593d1479d7e6cf1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93aca610_9ff9644c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1615850
+      },
+      "writtenOn": "2020-11-27T05:51:26Z",
+      "side": 1,
+      "message": "Code cherry picked as\nhttps://android-review.googlesource.com/c/platform/external/robolectric-shadows/+/1512632",
+      "revId": "540705f7eee8c4ce0b7ad2fee593d1479d7e6cf1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
