@@ -22,6 +22,30 @@
       },
       "revId": "c4a6081f989fd9ff959b0b358e7b7fb0e49f084d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03b1313d_b6235b5d",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T06:36:38Z",
+      "side": 1,
+      "message": "Ack. I thought the @see was enough. But copied the documentation instead.",
+      "parentUuid": "30ee20e6_ecad3692",
+      "range": {
+        "startLine": 669,
+        "startChar": 0,
+        "endLine": 669,
+        "endChar": 68
+      },
+      "revId": "c4a6081f989fd9ff959b0b358e7b7fb0e49f084d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
