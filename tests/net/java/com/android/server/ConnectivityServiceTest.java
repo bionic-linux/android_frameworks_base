@@ -1958,6 +1958,39 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    public void testOwnerUidCannotChange() throws Exception {
+        // Owner UIDs are not visible without location permission.
+        setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+        final NetworkCapabilities ncTemplate = new NetworkCapabilities();
+        final int originalOwnerUid = Process.myUid();
+        ncTemplate.setOwnerUid(originalOwnerUid);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI, new LinkProperties(),
+                ncTemplate);
+        mWiFiNetworkAgent.connect(false);
+        waitForIdle();
+
+        // Send ConnectivityService an update to the mWiFiNetworkAgent's capabilities that changes
+        // both its owner UID and an unrelated capability (NOT_CONGESTED).
+        NetworkCapabilities nc = mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork());
+        assertFalse(nc.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
+        assertEquals(originalOwnerUid, nc.getOwnerUid());
+
+        nc.setOwnerUid(42);
+        nc.addCapability(NET_CAPABILITY_NOT_CONGESTED);
+        mWiFiNetworkAgent.setNetworkCapabilities(nc, true);
+        waitForIdle();
+
+        // Check that the update was been made (i.e., the network now has NOT_CONGESTED), but that
+        // the attempt to change the owner UID was ignored.
+        nc = mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork());
+        assertTrue(nc.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
+        assertEquals(originalOwnerUid, nc.getOwnerUid());
+    }
+
+    @Test
     public void testMultipleLingering() throws Exception {
         // This test would be flaky with the default 120ms timer: that is short enough that
         // lingered networks are torn down before assertions can be run. We don't want to mock the
