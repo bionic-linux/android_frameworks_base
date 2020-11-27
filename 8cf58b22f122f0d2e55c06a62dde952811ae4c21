@@ -16,6 +16,23 @@
       "message": "Hi Michael,\n\nI am working on GSI (generic system image) `aosp_arm64` (and `aosp_x86_64`) supportting both `zygote64_32` and `zygote64` devices at same time. It means, we can flash the `system.img` of `aosp_arm64` on a either `zygote64_32` or `zygote64` device. The Android framework in the `system.img` the can detect the hardware and decided what to do dynamically.\n\nSo far, we use the property `ro.zygote` in vendor partition to decide which `init.zygote*.rc` should be loaded. However, the `Build.SUPPORTED_*_ABIS` in framework come from the properties `ro.product.cpu.abilist` which are defined in system partition. They could not consistent with ``ro.zygote` in vendor. For example, it is `ro.zygote \u003d zygote64` in the vendor of a 64-bit only device, but `ro.product.cpu.abilist` always contains 32bits ABI in the system of `aosp_arm64`.\n\nMy idea is `Build.SUPPORTED_*_ABIS` should come from the properties `ro.vendor.product.cpu.abilist*` which are define in vendor. And these properties are able to describe the correct supporting ABIs on the device.\n\nDo you think it is reasonable?",
       "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9466efd0_014f452b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2020-11-27T14:55:09Z",
+      "side": 1,
+      "message": "Given these are already coming from vendor BoardConfig files, seems reasonable to me.\n\nCan we move this to use go/sysprop-api at the same time though? That way we\u0027re appropriately tracking these as API.",
+      "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
