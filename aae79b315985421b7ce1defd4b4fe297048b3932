@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52b1b9d1_694883cd",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T09:57:05Z",
+      "side": 1,
+      "message": "Technically this might not be true: if getSystemService can return null once, it can do so again :-)\n\nFWIW I think it\u0027s worth a try to simply make this a final member again. If it crashes when always-on VPN starts up immediately on boot, we can always go back to the method.",
+      "range": {
+        "startLine": 375,
+        "startChar": 5,
+        "endLine": 375,
+        "endChar": 12
+      },
+      "revId": "aae79b315985421b7ce1defd4b4fe297048b3932",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

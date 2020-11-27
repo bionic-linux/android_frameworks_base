@@ -63,6 +63,30 @@
       },
       "revId": "7f64d14fe353adb75f3bd85567fb780adfc99f39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f724a86f_1f516423",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T09:57:05Z",
+      "side": 1,
+      "message": "FWIW: it\u0027s possible that this race can never actually happen. So if you want to make this a final member again, and that works, it would be preferable. If it seems to work and then we find out that it crashes sometimes, we can always go back to a method.\n\nLGTM either way.",
+      "parentUuid": "0874cca8_c2340e38",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 84
+      },
+      "revId": "7f64d14fe353adb75f3bd85567fb780adfc99f39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
