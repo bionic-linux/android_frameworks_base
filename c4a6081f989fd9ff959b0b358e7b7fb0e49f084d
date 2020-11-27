@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30ee20e6_ecad3692",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-27T05:43:41Z",
+      "side": 1,
+      "message": "I think you need to document the difference between a null array and an empty array, as they mean different things.",
+      "range": {
+        "startLine": 669,
+        "startChar": 0,
+        "endLine": 669,
+        "endChar": 68
+      },
+      "revId": "c4a6081f989fd9ff959b0b358e7b7fb0e49f084d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
