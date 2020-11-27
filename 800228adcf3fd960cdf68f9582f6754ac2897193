@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5bd9a9c_3b58b560",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-27T01:22:23Z",
+      "side": 1,
+      "message": "This failed lots of tests due to a bug in this CL. Fixed:\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1511317/1..2/services/core/java/com/android/server/ConnectivityService.java",
+      "revId": "800228adcf3fd960cdf68f9582f6754ac2897193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
