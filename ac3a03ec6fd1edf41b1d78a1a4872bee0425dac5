@@ -737,6 +737,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e871ebe_bdd8a685",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Well to start with you have a getter, and you don\u0027t know what thread it\u0027s invoked on. Then, the constructor, which sets the member is very unlikely to be invoked on the executor. Finally, there is no guarantee all runnables passed to an executor will run on the same thread (in fact, you should expect the opposite in most cases).\n\nThis will give you issues in production without a doubt. Consider the following code :\n\n  final QosCallbackConnection(connectivityManager, callback, Executors.newSingleThreadExecutor())\n\nFirst callback runs on this new thread. New thread doesn\u0027t observe the write to mCallback in the next callback. You don\u0027t crash because you take it in a member, but you just skip sending the callback. In fact, you can even send the first callback, but skip sending the second one, because the thread running the first callback might observe that write and the thread running the second might not if it\u0027s, say, a thread pool executor.\n\nYou have only two ways to fix this : either add explicit synchronization, or make it final to take advantage of the 17.5 rule.",
+      "parentUuid": "4f75ab65_25b62423",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "275d5da3_9c90b941",
         "filename": "core/java/android/net/QosCallbackConnection.java",
         "patchSetId": 24

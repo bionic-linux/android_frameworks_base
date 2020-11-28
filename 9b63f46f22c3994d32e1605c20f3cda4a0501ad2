@@ -1,6 +1,322 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cb38894_b131b1e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "First serious attempt at a full review. Expect that I missed things, but hopefully subsequent rounds will be easier.\n\nThe general architecture is reasonable. The test strategy is sound.\n\nHigh-level, here are the important points :\n• Please make sure you want the files you added to the connectivity jar part of the CS mainline module. That will place on your team the burden to keep this API working in AOSP at all times, since we ship from HEAD.\n• You need to guard your new @SystemApi with a permission. If callers don\u0027t need a permission to call this, it should be part of the public SDK.\n• Please don\u0027t have NetworkAgentInfo escape. It\u0027s fine to have proxy methods in ConnectivityService to tell you what you need about the networks.\n• Please be careful of threading (and read the Java spec chapter 17.5). I found a fairly large number of trivial threading issues ; it\u0027s likely I missed some more. The easiest way to be safe with threads is to mark stuff final. While you\u0027re at it, please also make locals final every chance you get – this will help future readers and reviewers who won\u0027t have to worry about possible reassignments.\n• Please take a quick pass at visibility modifiers, as this patch looks to me a number of them were just forgotten. No modifiers in Java means package-private, which has its uses but is rarely what you want. Some people write /* package private */ in front of members/methods to clarify when it\u0027s intentional.\n• We need to clarify where lies the responsibility of the unicity of the QosSession IDs.\n• Please throw TooManyRequestsException synchronously instead of feeding it to onError for consistency with other methods that use it (especially if you keep the request count shared).\n• With the count shared I think adding a third source of callbacks becomes unmanagable without a refactoring to create a new facility to help us manage them.\n\nOther random notes : I don\u0027t know enough about ParcelFileDescriptor to comment on your use. I am trying to get up to speed with that so I can give you good quality feedback.",
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7d57e6d_ae3a7825",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4827,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "nit : will fit on the same line",
+      "range": {
+        "startLine": 4827,
+        "startChar": 12,
+        "endLine": 4827,
+        "endChar": 30
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d19a1a3e_dee69ec4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4831,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Maybe explicit what this function calls a \"filter\" (it used to be clear when you had an object called filter, but now it\u0027s not as clear)",
+      "range": {
+        "startLine": 4831,
+        "startChar": 59,
+        "endLine": 4831,
+        "endChar": 65
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d85e58a4_78d17f96",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4834,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Can we also have TooManyRequestsException be thrown immediately, for consistency with requestNetwork or registerConnectivityDiagnosticsCallback ?",
+      "range": {
+        "startLine": 4834,
+        "startChar": 79,
+        "endLine": 4834,
+        "endChar": 80
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "081b42d4_c2093acf",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4848,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "This method needs to be guarded by a permission. Because it\u0027s @SystemApi apps can just call it through reflection, so you need to annotate it with the required permissions here and enforce it on the system server side.",
+      "range": {
+        "startLine": 4848,
+        "startChar": 16,
+        "endLine": 4848,
+        "endChar": 35
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cec1d3c7_12451d12",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4871,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "nit : space",
+      "range": {
+        "startLine": 4871,
+        "startChar": 13,
+        "endLine": 4871,
+        "endChar": 15
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcc46b89_638f68e7",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4894,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Why package-private ? If this is for testing, please tag @VisibleForTesting. I think you might also need to make it @hide",
+      "range": {
+        "startLine": 4894,
+        "startChar": 4,
+        "endLine": 4894,
+        "endChar": 8
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0d83b11_97ea3a40",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4895,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Considering that mService.unregisterQosCallback is already a no-op with a callback that\u0027s not registered, I don\u0027t think you need this internal method with package-private visibility. Just always call unregisterQosCallback, and maybe just comment that it\u0027s a no-op if the callback is not registered.",
+      "range": {
+        "startLine": 4895,
+        "startChar": 12,
+        "endLine": 4895,
+        "endChar": 43
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afc8f8d8_d3503301",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4918,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Possibly comment that this is intentionally using reference equality",
+      "range": {
+        "startLine": 4918,
+        "startChar": 50,
+        "endLine": 4918,
+        "endChar": 51
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11014cee_c45bd052",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Can you document the type of the object clients should expect ? Likewise below.",
+      "range": {
+        "startLine": 224,
+        "startChar": 95,
+        "endLine": 224,
+        "endChar": 96
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ef18f52_d3f04e8e",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "nit : this reads like a class but it\u0027s really an int, so suggest wording this \"QoS agent callback ID\"",
+      "range": {
+        "startLine": 348,
+        "startChar": 14,
+        "endLine": 348,
+        "endChar": 32
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e51ee07_df55d505",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 612,
+        "startChar": 20,
+        "endLine": 612,
+        "endChar": 29
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37fc1d51_2a0405ab",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Is this ever actually expected ? (e.g. benign but unfixable race condition or something).\nIf this is necessarily a programming error, then please make this a Log.wtf",
+      "range": {
+        "startLine": 616,
+        "startChar": 24,
+        "endLine": 616,
+        "endChar": 29
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f46d6b80_31c27725",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Maybe document the behavior if it does. Hopefully any further messages will be ignored.",
+      "range": {
+        "startLine": 1091,
+        "startChar": 7,
+        "endLine": 1091,
+        "endChar": 70
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a54621d3_9ca039e2",
@@ -19,6 +335,2324 @@
         "startChar": 22,
         "endLine": 1106,
         "endChar": 48
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae33bfbb_04ea1356",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I tend to agree with the argument in principle. You can have an interface and make sure that all subclasses implement Parcelable, and if not let it crash with ClassCastException. This is after all a system API method, and users are supposed to know what they are doing.\n\nBut I also observe that today you don\u0027t really have any other use case, and we don\u0027t know what future use cases would look like.\n\nNetworkAgent is going to be part of the CS mainline module. Anything you add here will have to be supported for the long term in a backward compatible way. Using EpsBearerQosSessionAttributes has the advantage that it is easy to understand and keep working. Using an interface with a single subclass will turn out to be a better choice in the future if future use cases happen to all fit right into what you need here : parcelable, need no other argument, need no concrete methods. If anything is unforeseen, we\u0027ll have to come up with something new and abandon this, but still keep it working somehow.\n\nSo it\u0027s a difficult call, but I tend to think keeping only what we know we have will serve us better in the future. I really don\u0027t see a future where we have 5 different subclasses of QosSessionAttributes ; I can see one, maybe two of them ?\n\nHow about the following : we call this sendQosSessionAvailable, but it takes an EpsBearerQosSessionAttributes. In the future, we can keep the name and have it take a broader type, the old one calling the new one trivially ; if future use cases can\u0027t be part of the same hierarchy (or if they are but we want to treat them differently) then overloading will help us. Then sure, we\u0027ll need multiple AIDL calls, but we\u0027ll need this anyway because you won\u0027t be able to just list the supertype in AIDL anyway.",
+      "parentUuid": "a54621d3_9ca039e2",
+      "range": {
+        "startLine": 1106,
+        "startChar": 22,
+        "endLine": 1106,
+        "endChar": 48
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb3f16fd_bb53e2a5",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "nit : will fit on the previous line",
+      "range": {
+        "startLine": 1107,
+        "startChar": 12,
+        "endLine": 1107,
+        "endChar": 25
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d757f90_80b9cc82",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Bikeshedding on the name : the agent shouldn\u0027t care that there will be a callback, that\u0027s the job of ConnectivityService. So I think this method should simply be called sendQosError or similar.",
+      "range": {
+        "startLine": 1138,
+        "startChar": 22,
+        "endLine": 1138,
+        "endChar": 44
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d63e9e1d_ac3738cb",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "time",
+      "range": {
+        "startLine": 1163,
+        "startChar": 60,
+        "endLine": 1163,
+        "endChar": 64
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0019b3bd_640e1a67",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "This is a strange contract. I think it\u0027s never expected that this is an unknown type, can\u0027t we just throw IllegalExceptionArgument or something ?",
+      "range": {
+        "startLine": 1167,
+        "startChar": 7,
+        "endLine": 1167,
+        "endChar": 53
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9de0a361_3e567a31",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Taking arguments to write into is uncustomary and generally frowned upon in Java. Instead can you just have this method return the object or null ? Also, be aware that AsyncChannel not being public API, we will have to replace it with something strongly-typed in S (aosp/1483962), which will probably have an impact on your static typing here.\n\nAlso I\u0027m not sure NetworkAgent is the right place for this method. Maybe you could host this in QosFilter, or have a QosFilterUtils class.",
+      "range": {
+        "startLine": 1171,
+        "startChar": 50,
+        "endLine": 1171,
+        "endChar": 67
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0c5405c_84e14b30",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 1174,
+        "startChar": 12,
+        "endLine": 1174,
+        "endChar": 27
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6877b16b_e9e087b8",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "For my own education : is this some kind of convention ? I don\u0027t remember seeing this before",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c343725_06d21e52",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final (likewise below)",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 23
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b21f665_8c10ba58",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final or inline.\nIn fact QosCallbackException#createException never returns null, so you can probably just inline",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 36
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4d8100c_42c2814b",
+        "filename": "core/java/android/net/QosCallbackException.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "It\u0027s more customary (and simpler) to just call super with your message",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 9
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80265847_9b28b8a5",
+        "filename": "core/java/android/net/QosFilter.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "API guideline 2.6 : do not use Optional in public API. Generally instead have your function return a @Nullable object (but not on Integer, see below). (Using Optional internally if you prefer it is fine, as long as it\u0027s not exposed in API)\n\nAPI guideline 5.15 : do not return boxed primitive types. Instead, have a value in your @IntDef that represents the absence of a value.",
+      "range": {
+        "startLine": 63,
+        "startChar": 20,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f05ce47f_8c98f25d",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "nit : QoS",
+      "range": {
+        "startLine": 26,
+        "startChar": 41,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12da5b5f_32f8ab74",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Remaining questions from last round :\n• Who is in charge of making sure two sessions with the same type don\u0027t collide ? If it\u0027s the client, why require unicity within types but not global unicity ?\n• How is this enforced ?\n• It sounds like unicity is all that\u0027s required, so why not have an internal class in charge of assigning IDs automatically ?",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 67
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "535d518c_1e00e4b4",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Can this be private ?",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 14
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83948ca5_d86ad26b",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "optionally requireNonNull",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 38
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe7092d1_489d4d9a",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "As this is not an API class it\u0027s fine if that\u0027s really what you want, but keep in mind almost nobody uses this inside Android",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 19
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31f0957c_5ae1fd9c",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final (likewise below)",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c58e44df_ee7cd1b5",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "What are guarantees provided by this class ? I\u0027m not sure what \"should\" mean here. Is this a bug in the caller ? If so, is there a way to crash as soon as possible ? Or should the code throw ? Or is this actually allowed but discouraged ? If we need to know about this, do we want to Log.wtf ?\n\nThe same questions apply to l.112.",
+      "range": {
+        "startLine": 107,
+        "startChar": 73,
+        "endLine": 107,
+        "endChar": 79
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cfb678a_9c74943f",
+        "filename": "core/java/android/net/QosSocketFilter.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Please try to limit the code inside the try{} block to the code that can actually throw this exception (I think getParcelFileDescriptor() can\u0027t for example)",
+      "range": {
+        "startLine": 116,
+        "startChar": 10,
+        "endLine": 116,
+        "endChar": 15
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "420dc32a_a2f81b60",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Is this necessary ? It offers new avenues to mess up the ownership I think. It\u0027s not necessarily bad, but maybe we should only expose it if it\u0027s really needed.",
+      "range": {
+        "startLine": 74,
+        "startChar": 32,
+        "endLine": 74,
+        "endChar": 55
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5ce62b0_c42e925f",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "IIUC this is only nullable because we allow it in the case of TRANSPORT_TEST. I don\u0027t think testing dispositions should bleed into public API, and @Nullable has relatively uncomfortable consequences. It\u0027s likely an API council pod would also not let this through. Can we improve ?\n\n(the same applies to the PFD)",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 13
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c1a7d6a_6b87556a",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Can this be private ?",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 17
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dcc58cc_214cc492",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I think the standard way of doing this is to call readParcelable() ? Not too sure and not feeling strongly.",
+      "range": {
+        "startLine": 124,
+        "startChar": 58,
+        "endLine": 124,
+        "endChar": 74
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bd461bc_a2e0c908",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Is this necessary ? To start with, it\u0027s not really possible that this is null considering the parceling code, so you\u0027d have to get some kind of garbled or malicious buffer.\n\nAnd if it\u0027s the case, if createFromParcel returns null, this will crash callers in unparceling, which is not very helpful. If we let it go we\u0027ll have a null member, which is likely to either crash or misbehave later, which is also not going to be very helpful. I\u0027m not sure it\u0027s super different\n\nNot feeling strongly",
+      "range": {
+        "startLine": 127,
+        "startChar": 20,
+        "endLine": 127,
+        "endChar": 43
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b44f1bc_ca2e7ccc",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Thrown\n\n(\"raise\" is used in some other languages, but Java says \"throw\")",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 13
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c05e133_0e9e30a1",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "As on the other exception",
+      "range": {
+        "startLine": 209,
+        "startChar": 22,
+        "endLine": 209,
+        "endChar": 32
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6caba3da_dad19cc5",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 31
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "This means the code will go into the Connectivity Service mainline module.\n\nI don\u0027t have objections to putting it in the module, but our teams need to understand what the shared responsibility means. In particular, that means Telephony is going to be on the hook for keeping this in a releasable shape in AOSP at essentially all times, synchronizing with our module leads (most importantly reminv@ in this case) to write release notes and so forth.\n\nI\u0027m happy to go there if we collectively think this is the best choice. It will give us better updatability of this code which is good for everybody. I just want to make sure that all parties understand the implications.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 71
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e425270d_8474caf4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 3717,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I know you didn\u0027t write this, but maybe while you\u0027re here change to `delete(uid)` ?",
+      "range": {
+        "startLine": 3717,
+        "startChar": 42,
+        "endLine": 3717,
+        "endChar": 92
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c35bf3b_dcbcabe0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 5656,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "The enforce* family of functions are all void and will either do nothing or throw. At the very least this should be renamed to check*, or you could just keep the old implementation and have a separate implementation for your new needs.",
+      "range": {
+        "startLine": 5656,
+        "startChar": 20,
+        "endLine": 5656,
+        "endChar": 27
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "297e74d7_e7bd2dfb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 8371,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I think this should throw IllegalArgumentException, as it\u0027s a clear programming error. If called by a test, it should crash the test. If called by an app, it should crash the app.",
+      "range": {
+        "startLine": 8370,
+        "startChar": 12,
+        "endLine": 8371,
+        "endChar": 19
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f80c499f_5eabf588",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 8380,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Looks like we should let the caller know this network no longer exists.",
+      "range": {
+        "startLine": 8380,
+        "startChar": 16,
+        "endLine": 8380,
+        "endChar": 83
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f32c482_c0f0ca3d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 8382,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Please don\u0027t catch a SecurityException sent by an enforce* method. Instead, use a check* method that will return a boolean to see if the caller holds sufficient permission. It\u0027s fine to create one if you need a new one, and if enforceRestrictedNetworkCapabilitiesPermission happens to do exactly what you need, you can change its implementation to say simply\nif (!checkRestrictedNetworkCapabilitiesPermission()) throw new SecurityException()",
+      "range": {
+        "startLine": 8382,
+        "startChar": 17,
+        "endLine": 8382,
+        "endChar": 34
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c108b2ab_af1ae07a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 8384,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Here too, there is very little point in checking this considering you need to catch RemoteException anyway.",
+      "range": {
+        "startLine": 8384,
+        "startChar": 16,
+        "endLine": 8384,
+        "endChar": 58
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7df9a371_ab4f4b9a",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Are you sure you want the same tag as this other class ? That sounds confusing to me.",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 53
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99af83a8_c5ab9cb4",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 10
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "493a7b86_06866ee0",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "package-private is rarely what you want. Maybe it is in this case and I haven\u0027t taken the time to think it through, but I do find a class with 10 package-private methods peculiar and just wanted to make sure this is not just forgotten visibility modifiers.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 7
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb486b6d_e4e53702",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Why return an Integer instead of an int when you know for sure this can\u0027t be null ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7491aa8f_101a2f4d",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "This is a very internal class to ConnectivityService and really don\u0027t think I want it to escape (especially in a getter, but I also would really prefer this class doesn\u0027t use it directly). \n\nThis is probably the biggest architectural issue in the patch. My suggestion would be to use Network instead. It\u0027s fine to add proxy functions in ConnectivityService to get what you need.",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 20
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9408e730_3e634413",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Do you need this mutable member ? Would mBinder.isBinderAlive() not be sufficient ?",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ececa901_0f286e57",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do this kind of side effect in a method called isBinderAlive. Normally getters avoid side effects.\n\nSome of the code in this class is calling directly mBinder.isBinderAlive(), other places calling this method. Unless there is a strong reason to I think it\u0027s just simpler to call mBinder.isBinderAlive() everywhere and remove the mutable member which introduces threading danger and the like.\n\nAlso note that if you\u0027re doing this to avoid calling unregisterCallback() multiple times it doesn\u0027t actually work as you might be calling this on multiple threads at a time so multiple threads may enter the if() in l.106.",
+      "range": {
+        "startLine": 118,
+        "startChar": 11,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb50038e_472afbb8",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "You went though the work of having this method return a boolean, but the only usage doesn\u0027t check the return value ?",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 39
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4fb4080_5f9b20f7",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "You have to catch RemoteException anyway so I see no point in testing this here (in fact it will remove the log, which you\u0027d probably want)",
+      "range": {
+        "startLine": 153,
+        "startChar": 15,
+        "endLine": 153,
+        "endChar": 46
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6005414_463b9651",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Looks like a missing argument",
+      "range": {
+        "startLine": 155,
+        "startChar": 64,
+        "endLine": 155,
+        "endChar": 66
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af6ba61f_5963b8ae",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Usually we use Message.obtain",
+      "range": {
+        "startLine": 165,
+        "startChar": 32,
+        "endLine": 165,
+        "endChar": 39
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d085a2a5_352eb691",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I think getParcelable already returns a Parcelable. Doesn\u0027t this give you a warning ?",
+      "range": {
+        "startLine": 175,
+        "startChar": 17,
+        "endLine": 175,
+        "endChar": 27
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "058c2824_d02e42fb",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Likewise, maybe not useful",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 180,
+        "endChar": 38
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51193768_5fd6eadd",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnectionCollection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "If you\u0027re going to implement a collection primitive, you probably need to do a number of things :\n• Implement the appropriate interface, in this case at least Collection as that\u0027s what you name it, but consider implementing List or Set.\n• Define the complexity of the various actions\n• Outline the use cases that make it a good idea to implement a new collection on top of what Java already has\n\nPersonally I think this is not worth the trouble in your case. If performance allows, you could simply be having an ArrayList\u003cQosCallbackAgentCollection\u003e, and simple methods to get by what you need. Android has CollectionUtils#find() and #filter() and you could say\n\n  CollectionUtils.find(callback -\u003e callback.getAgentCallbackId() \u003d\u003d id);\n\n...to get a unique callback, or\n\n  CollectionUtils.filter(callback -\u003e callback.getNetwork().equals(network))\n\n...to get a new collection with all elements matching the predicate.\n\nThis really depends on the expected size of the set.",
+      "range": {
+        "startLine": 34,
+        "startChar": 32,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8faba83e_87e62fab",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnectionCollection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "No strong opinion on whether to put the annotations on the same line or on the previous line but try to be consistent in the file 😊",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0413eb81_95efb1da",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnectionCollection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Will fit on the previous line.",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11880fdf_c9660b6f",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnectionCollection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "HashMap of Integer is almost always a bad idea in terms of memory usage and performance. If you need to associate ints to objects, consider SparseArray.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f02ee4e_798ecc5a",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnectionCollection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Style guide prefers to cut lines on the assignment operator where possible",
+      "range": {
+        "startLine": 41,
+        "startChar": 36,
+        "endLine": 41,
+        "endChar": 37
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85d76043_9b21e9b9",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnectionCollection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "HashMap is O(1) amortized for getting and putting but k is fairly large and tends to dominate. What is the expected size of your set ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 42,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "860819a9_f157e04f",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnectionCollection.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Not sure what you are trying to accomplish with this, can you add comments on why have this package-private constructor ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2f27423_a39703cd",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "private",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9c9c978_d9195aef",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "This is not going to work as you expect.\n\nThis class is created in the constructor for ConnectivityService, which means this initialization here will run inline on that thread. But l.92 is mutating it on the connectivity service handler thread, which is a different thread.\n\nIn practice that means l.92 is under no obligation to observe this initialization (Java spec 17.5), and may see either 0 (the default value for ints) or 1 (the value used in the initializer).\n\nIn this case you have a loophole to make it work : you can initialize it to 0, and use prefix ++ in l.92. That will not per se fix the race, but both possible values seen by the handler thread at first are 0, so in practice you will get the guarantee you need. If you do this, please read the Java spec chapter 17.5 and document this VERY carefully on the member, because it\u0027s very unobvious to readers that 0 is special for the JVM and that it won\u0027t work with any other value.\n\nOr, you can use appropriate synchronization to make this work.",
+      "range": {
+        "startLine": 53,
+        "startChar": 40,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01d62b5d_db82c810",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Please document the arguments. Callers need to understand clearly what these consumers are expected to do.",
+      "range": {
+        "startLine": 61,
+        "startChar": 11,
+        "endLine": 61,
+        "endChar": 29
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a896b20b_c10ba69c",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 16
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68314478_b89928bb",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "So this consumer is expected to return nothing and throw ServiceSpecificException with a specific error code if the request count limit is hit ? That sounds counter-intuitive and very specific for something that\u0027s not documented. Should we simply return a boolean ?\n\nIf you wanted to manage that count separately from the other requests counts, the best is to remove the two sources of truth for this. You have a class to manage the collection : maybe that class should be in charge of checking it as you add to it. After all, you\u0027ll need to remove the callbacks when they are unregistered or the remote end dies, so rather than managing the count separated from the collection, the current count could just be whatever the collection knows about.\n\nOtherwise, I think it\u0027s time to bite the bullet and create a class to manage the counts and/or the three different pieces of info that contribute to it. What you have now it too ad-hoc and lets escape info that is very private to ConnectivityService by passing references to internal private methods. If you want to inscribe your new callbacks in that, I\u0027m afraid this is the additional complexity that requires it to be refactored in something more encapsulated.",
+      "range": {
+        "startLine": 106,
+        "startChar": 38,
+        "endLine": 106,
+        "endChar": 44
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86fffbd3_4c18738c",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Can you please use the return-early convention like the rest of our codebase\n\n  get\n  if (agentConnection \u003d\u003d null) {\n    logw\n    return;\n  }\n  ...",
+      "range": {
+        "startLine": 155,
+        "startChar": 10,
+        "endLine": 155,
+        "endChar": 14
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ea79ef1_1e3ee6bc",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Do you want to log something like in other places when the connection is dead ?",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 9
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7639f000_f7652e97",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Nit : extra blank line",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 2
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69c61519_f94f22aa",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "While I personally don\u0027t mind, I think the style guide forbids creating two members on the same line like this",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cdc8029_0d0b0fef",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "If it\u0027s a pair, maybe it should return an instance of Pair ? Or is this an arbitrary sized list, then you need to update this comment.",
+      "range": {
+        "startLine": 118,
+        "startChar": 17,
+        "endLine": 118,
+        "endChar": 21
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5784022e_9aa0efb5",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "double space",
+      "range": {
+        "startLine": 122,
+        "startChar": 14,
+        "endLine": 122,
+        "endChar": 16
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9e5175b_7fc424f2",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "While this is fine in tests, the framework team doesn\u0027t want framework code to use the stream API because of its bad memory efficiency.\n\nYeah I know, sorry :((",
+      "range": {
+        "startLine": 144,
+        "startChar": 43,
+        "endLine": 144,
+        "endChar": 51
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ceca5d9_51d0bc8f",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Does this return an unmodifiable list ? If not, you may want to create one here.",
+      "range": {
+        "startLine": 146,
+        "startChar": 25,
+        "endLine": 146,
+        "endChar": 44
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3806221_d7978414",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Private",
+      "range": {
+        "startLine": 149,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 33
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00828886_1ee31930",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final here and on other locals below",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 11
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9839b994_66306cb6",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "...also (I think) it\u0027s impossible for getByAddress to throw with a byte array argument because it can\u0027t be making a DNS lookup",
+      "range": {
+        "startLine": 165,
+        "startChar": 35,
+        "endLine": 165,
+        "endChar": 80
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81fcc965_4fe5073f",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "SparseIntArray if you need the Map semantics (and rename if what you\u0027re storing is counts), but I don\u0027t think this is what you want. What you want is probably a TrackRecord that will record all the callbacks you receive, which will let you count them but also do a lot more with them. The example that\u0027s closest to what you need here is probably in TestableNetworkStatsProvider.\n\nYou can also add methods in TrackRecord if it doesn\u0027t offer what you need to test your callbacks ; it\u0027s a specialized utility for this and we\u0027re happy to enrich it.",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50ec491d_d966b3f0",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "will fit on the previous line",
+      "range": {
+        "startLine": 346,
+        "startChar": 12,
+        "endLine": 346,
+        "endChar": 30
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00bd2fde_367a1018",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final on all these locals please",
+      "range": {
+        "startLine": 348,
+        "startChar": 12,
+        "endLine": 348,
+        "endChar": 19
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4de98d5_92eed52e",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "its",
+      "range": {
+        "startLine": 387,
+        "startChar": 42,
+        "endLine": 387,
+        "endChar": 46
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3237539e_9feb81c0",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Style nit : space after //",
+      "range": {
+        "startLine": 387,
+        "startChar": 12,
+        "endLine": 387,
+        "endChar": 15
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bb5f55b_a4502f75",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Maybe call verifyNoMoreInteractions before calling this, just in case.",
+      "range": {
+        "startLine": 388,
+        "startChar": 20,
+        "endLine": 388,
+        "endChar": 25
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a3941f3_33c3e861",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "never() is more customary :)",
+      "range": {
+        "startLine": 391,
+        "startChar": 29,
+        "endLine": 391,
+        "endChar": 37
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e2f9eef_cf94d104",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I must be missing something, but what\u0027s the point of declaring a consumer and using it like this ? It will run the contents of the consumer inline, meaning it\u0027s exactly equivalent to deleting ll.347, 395 and 396 and replacing l.347 with final Executor executor \u003d r -\u003e r.run();",
+      "range": {
+        "startLine": 396,
+        "startChar": 8,
+        "endLine": 396,
+        "endChar": 39
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5abfc3ed_2b704529",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7637,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "private for all these members ?",
+      "range": {
+        "startLine": 7637,
+        "startChar": 23,
+        "endLine": 7637,
+        "endChar": 38
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2697c983_e37ddae7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7644,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Who is \"we\" here ? go/avoidwe generally.",
+      "range": {
+        "startLine": 7644,
+        "startChar": 57,
+        "endLine": 7644,
+        "endChar": 59
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e086904_2f34aa8f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7647,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Is it better to just assertNull(mCellNetworkAgent) ?",
+      "range": {
+        "startLine": 7645,
+        "startChar": 0,
+        "endLine": 7647,
+        "endChar": 13
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ce6e653_003a8935",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7651,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Please use NetworkCallback instead. The broadcast has been deprecated for many years, and while this test file still needs to make sure it continues to work, nobody should be writing new logic depending on it. It is also vastly slower and nobody likes slower tests. There are a lot of tests using callbacks to wait for a network to be connected in this file to look for examples.",
+      "range": {
+        "startLine": 7651,
+        "startChar": 35,
+        "endLine": 7651,
+        "endChar": 64
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6b4209_793cfff2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7651,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 7651,
+        "startChar": 12,
+        "endLine": 7651,
+        "endChar": 29
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "459048a5_e92d142c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7670,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "As this is public, consider just putting it on the top level and calling it createQosCallback.",
+      "range": {
+        "startLine": 7670,
+        "startChar": 8,
+        "endLine": 7670,
+        "endChar": 57
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dca0595_1038e7ae",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7688,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Here with TrackRecord you could test the order of the callbacks and the arguments. You also could make the test faster because you\u0027d obviate the need to use waitForIdle() by calling a blocking method on TrackRecord.\n\nIf it\u0027s useful you could do the same thing in the QosCallbackMockHelper to gather and test the callbacks sent.",
+      "range": {
+        "startLine": 7688,
+        "startChar": 45,
+        "endLine": 7688,
+        "endChar": 59
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81e7a950_81ddcc26",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7691,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I guess you don\u0027t want the same number you\u0027re testing for as the default value :)",
+      "range": {
+        "startLine": 7691,
+        "startChar": 80,
+        "endLine": 7691,
+        "endChar": 81
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca212b0c_5d113287",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7706,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Can you arrange to make sure all these callbacks are unregistered, ideally in tearDown() rather than having to remember in each test ? As there is a limit to their registration, accumulating tests that don\u0027t unregister make following tests at risk of crashing for the unability to register a callback.",
+      "range": {
+        "startLine": 7706,
+        "startChar": 17,
+        "endLine": 7706,
+        "endChar": 44
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "820080c1_55507134",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7718,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final here and on other locals",
+      "range": {
+        "startLine": 7718,
+        "startChar": 8,
+        "endLine": 7718,
+        "endChar": 11
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96399657_79d061f2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7722,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Will fit on the previous line",
+      "range": {
+        "startLine": 7722,
+        "startChar": 17,
+        "endLine": 7722,
+        "endChar": 46
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e118d22_baf22049",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7734,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "You can simplify this with :\n\n  argThat(session -\u003e session.getSessionId() \u003d\u003d sessionId\n          \u0026\u0026 session.getSessionType() \u003d\u003d TYPE_EPS_BEARER)\n\n...then you don\u0027t need the captor and sacrifice none of the checks.",
+      "range": {
+        "startLine": 7734,
+        "startChar": 16,
+        "endLine": 7734,
+        "endChar": 41
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a98c0d43_4ef5fbee",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7752,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Will fit on the previous line",
+      "range": {
+        "startLine": 7752,
+        "startChar": 16,
+        "endLine": 7752,
+        "endChar": 46
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a372793_698e5658",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7757,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "How long does this test take ? I\u0027m a bit worried that this will make running CSTest significantly slower. Can you not wait for this, just register them all once, then wait once and test for all the callbacks ?\n\nThis will also give you the opportunity to make sure that ∃ n \u003e 50 such as for all callbacks until the nth there is no error, and for all callbacks above n there is a TOO_MANY_REQUESTS error.",
+      "range": {
+        "startLine": 7757,
+        "startChar": 11,
+        "endLine": 7757,
+        "endChar": 26
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5797a88_8857b1d5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7773,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "...and now unregister all these :)",
+      "range": {
+        "startLine": 7773,
+        "startChar": 4,
+        "endLine": 7773,
+        "endChar": 5
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef9e092c_db7bfa14",
+        "filename": "tests/net/java/com/android/server/connectivity/QosCallbackAgentCollectionTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "If you decide to keep this collection class I think it needs much beefier tests, even with simple put() and get() methods, because programmers expect a lot of things from their collections.\n\nYou\u0027d need to add tests that multiple put()s with same and different values work, put() with elements with the same hashcode() but different equals(), get() for stuff that\u0027s not been added, all exception cases.",
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a3f597c_5cd7f015",
+        "filename": "tests/net/java/com/android/server/connectivity/QosCallbackAgentCollectionTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "This is only used in createAgentConnection and it\u0027s in spirit private to it. Let\u0027s move it to immediately before that method.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "224e5efe_006d77c5",
+        "filename": "tests/net/java/com/android/server/connectivity/QosCallbackAgentCollectionTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "All these members should be private.\n\nThey should also be final if you can initialize them inline, which is much preferred than to use setup()",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d580ba94_ee59bece",
+        "filename": "tests/net/java/com/android/server/connectivity/QosCallbackAgentCollectionTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "Too bad : setup() is not always called on the same thread as test methods. You\u0027ll see flakiness in this test.\n\nSimplest way to fix that is to replace int mCallbackId with\n\n  final AtomicInteger mNextCallbackId \u003d new AtomicInteger(0);\n\n...and mCallback++ with\n\n  mNextCallbackId.incrementAndGet();\n\n(it would also work to initialize to 1 and use getAndIncrement, but preincrement is normally preferred)",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 24
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a139a05c_b4d02521",
+        "filename": "tests/net/java/com/android/server/connectivity/QosCallbackAgentCollectionTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "will fit on the same line",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 59
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3386e91f_9a76bbb4",
+        "filename": "tests/net/java/com/android/server/connectivity/QosCallbackAgentCollectionTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "This looks like a very convoluted way of saying\n\n  assertNotEquals(-1, mConnections.get(mNetworkAgentInfoA).indexOf(mConnectionA1));",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 75
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06360e25_eef412ee",
+        "filename": "tests/net/java/com/android/server/connectivity/QosCallbackAgentCollectionTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "final on all locals",
+      "range": {
+        "startLine": 102,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 15
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aac24371_61ee032f",
+        "filename": "tests/net/java/com/android/server/connectivity/QosCallbackAgentCollectionTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-28T12:59:47Z",
+      "side": 1,
+      "message": "I think checkstyle should complain about this indentation (it should be 8 spaces more).\nOur code usually styles this as :\n\n  final QosCallbackAgentConnection ac \u003d new QosCallbackAgentConnection(mTracker, mCallbackId++,\n          networkAgentInfo, callback, filter, uid);",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 17
       },
       "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
