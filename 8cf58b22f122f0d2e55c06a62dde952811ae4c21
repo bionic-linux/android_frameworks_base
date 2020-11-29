@@ -33,6 +33,23 @@
       "message": "Given these are already coming from vendor BoardConfig files, seems reasonable to me.\n\nCan we move this to use go/sysprop-api at the same time though? That way we\u0027re appropriately tracking these as API.",
       "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e3680b3_ac36dc48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-11-29T23:49:36Z",
+      "side": 1,
+      "message": "I see many places referencing ro.product.cpu.abilist*, not ro.vendor.product.cpu.abilist*. We are not sure if there has been an implicit assumption that these Java APIs are from the sysprops.\n\nIf this change is just for consistency, I\u0027d rather not have this.\n\nI think, ideally, the abilist should be synthesized by reading sysprops from multiple partitions (ro.\u003cpart\u003e.product.cpu.abilist). Either vendor or system alone can\u0027t be the sole source of truth for this information.",
+      "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
