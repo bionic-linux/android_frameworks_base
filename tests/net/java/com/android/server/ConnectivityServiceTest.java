@@ -93,6 +93,7 @@ import static com.android.testutils.MiscAsserts.assertLength;
 import static com.android.testutils.MiscAsserts.assertRunsInAtMost;
 import static com.android.testutils.MiscAsserts.assertThrows;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -100,6 +101,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -131,6 +133,7 @@ import android.app.AppOpsManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -139,6 +142,8 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.content.pm.ServiceInfo;
 import android.content.pm.UserInfo;
 import android.content.res.Resources;
 import android.location.LocationManager;
@@ -331,7 +336,7 @@ public class ConnectivityServiceTest {
     private static final String WIFI_WOL_IFNAME = "test_wlan_wol";
     private static final String VPN_IFNAME = "tun10042";
     private static final String TEST_PACKAGE_NAME = "com.android.test.package";
-    private static final String[] EMPTY_STRING_ARRAY = new String[0];
+    private static final String ALWAYS_ON_VPN_PACKAGE = "com.android.test.alwaysonvpn";
 
     private static final String INTERFACE_NAME = "interface";
 
@@ -352,6 +357,7 @@ public class ConnectivityServiceTest {
     @Mock IIpConnectivityMetrics mIpConnectivityMetrics;
     @Mock IpConnectivityMetrics.Logger mMetricsService;
     @Mock DefaultNetworkMetrics mDefaultNetworkMetrics;
+    @Mock DeviceIdleInternal mDeviceIdleInternal;
     @Mock INetworkManagementService mNetworkManagementService;
     @Mock INetworkStatsService mStatsService;
     @Mock IBatteryStats mBatteryStatsService;
@@ -446,6 +452,15 @@ public class ConnectivityServiceTest {
                 assertNull("Received unexpected Intent to start activity",
                         mStartedActivities.poll(timeoutMs, TimeUnit.MILLISECONDS));
             } catch (InterruptedException e) {}
+        }
+
+        @Override
+        public ComponentName startService(Intent service) {
+            final String action = service.getAction();
+            if (!VpnConfig.SERVICE_INTERFACE.equals(action)) {
+                fail("Attempt to start unknown service, action=" + action);
+            }
+            return new ComponentName(service.getPackage(), "com.android.test.Service");
         }
 
         @Override
@@ -1053,9 +1068,19 @@ public class ConnectivityServiceTest {
         private VpnInfo mVpnInfo;
 
         public MockVpn(int userId) {
-            super(startHandlerThreadAndReturnLooper(), mServiceContext, mNetworkManagementService,
-                    userId, mock(KeyStore.class));
-            mConfig = new VpnConfig();
+            super(startHandlerThreadAndReturnLooper(), mServiceContext,
+                    new Dependencies() {
+                        @Override
+                        public boolean isCallerSystem() {
+                            return true;
+                        }
+
+                        @Override
+                        public DeviceIdleInternal getDeviceIdleInternal() {
+                            return mDeviceIdleInternal;
+                        }
+                    },
+                    mNetworkManagementService, userId, mock(KeyStore.class));
         }
 
         public void setUids(Set<UidRange> uids) {
@@ -1087,6 +1112,7 @@ public class ConnectivityServiceTest {
         private void registerAgent(boolean isAlwaysMetered, Set<UidRange> uids, LinkProperties lp)
                 throws Exception {
             if (mAgentRegistered) throw new IllegalStateException("already registered");
+            mConfig = new VpnConfig();
             setUids(uids);
             if (!isAlwaysMetered) mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_METERED);
             mInterface = VPN_IFNAME;
@@ -1368,13 +1394,13 @@ public class ConnectivityServiceTest {
     }
 
     private void mockDefaultPackages() throws Exception {
-        final String testPackageName = mContext.getPackageName();
-        final PackageInfo testPackageInfo = mContext.getPackageManager().getPackageInfo(
-                testPackageName, PackageManager.GET_PERMISSIONS);
+        final String myPackageName = mContext.getPackageName();
+        final PackageInfo myPackageInfo = mContext.getPackageManager().getPackageInfo(
+                myPackageName, PackageManager.GET_PERMISSIONS);
         when(mPackageManager.getPackagesForUid(Binder.getCallingUid())).thenReturn(
-                new String[] {testPackageName});
-        when(mPackageManager.getPackageInfoAsUser(eq(testPackageName), anyInt(),
-                eq(UserHandle.getCallingUserId()))).thenReturn(testPackageInfo);
+                new String[] {myPackageName});
+        when(mPackageManager.getPackageInfoAsUser(eq(myPackageName), anyInt(),
+                eq(UserHandle.getCallingUserId()))).thenReturn(myPackageInfo);
 
         when(mPackageManager.getInstalledPackages(eq(GET_PERMISSIONS | MATCH_ANY_USER))).thenReturn(
                 Arrays.asList(new PackageInfo[] {
@@ -1382,6 +1408,25 @@ public class ConnectivityServiceTest {
                         buildPackageInfo(/* SYSTEM */ false, APP2_UID),
                         buildPackageInfo(/* SYSTEM */ false, VPN_UID)
                 }));
+
+        // Create a fake always-on VPN package.
+        final int userId = UserHandle.getCallingUserId();
+        final ApplicationInfo applicationInfo = new ApplicationInfo();
+        applicationInfo.targetSdkVersion = Build.VERSION_CODES.R;
+        when(mPackageManager.getApplicationInfoAsUser(eq(ALWAYS_ON_VPN_PACKAGE), anyInt(),
+                eq(userId))).thenReturn(applicationInfo);
+
+        // Minimal mocking to keep Vpn#isAlwaysOnPackageSupported happy.
+        ResolveInfo rInfo = new ResolveInfo();
+        rInfo.serviceInfo = new ServiceInfo();
+        rInfo.serviceInfo.metaData = new Bundle();
+        final List<ResolveInfo> services = Arrays.asList(new ResolveInfo[]{rInfo});
+        when(mPackageManager.queryIntentServicesAsUser(any(), eq(PackageManager.GET_META_DATA),
+                eq(userId))).thenReturn(services);
+        when(mPackageManager.getPackageUidAsUser(TEST_PACKAGE_NAME, userId))
+                .thenReturn(Process.myUid());
+        when(mPackageManager.getPackageUidAsUser(ALWAYS_ON_VPN_PACKAGE, userId))
+                .thenReturn(VPN_UID);
     }
 
     private void verifyActiveNetwork(int transport) {
@@ -6373,6 +6418,123 @@ public class ConnectivityServiceTest {
         defaultCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
         defaultCallback.assertNoCallback();
 
+        mCm.unregisterNetworkCallback(defaultCallback);
+    }
+
+    private void expectNetworkRejectNonSecureVpn(InOrder inOrder, boolean add,
+            UidRange... expected) throws Exception {
+        ArgumentCaptor<UidRange[]> rangesCaptor = ArgumentCaptor.forClass(
+                UidRange[].class);
+        inOrder.verify(mNetworkManagementService).setAllowOnlyVpnForUids(eq(add),
+                rangesCaptor.capture());
+        final UidRange[] actual = rangesCaptor.getValue();
+        assertEquals(expected.length, actual.length);
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testNetworkBlockedStatusAlwaysOnVpn() throws Exception {
+        mServiceContext.setPermission(
+                Manifest.permission.CONTROL_ALWAYS_ON_VPN, PERMISSION_GRANTED);
+        mServiceContext.setPermission(
+                Manifest.permission.CONTROL_VPN, PERMISSION_GRANTED);
+        mServiceContext.setPermission(
+                Manifest.permission.NETWORK_SETTINGS, PERMISSION_GRANTED);
+
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        final NetworkRequest request = new NetworkRequest.Builder()
+                .removeCapability(NET_CAPABILITY_NOT_VPN)
+                .build();
+        mCm.registerNetworkCallback(request, callback);
+
+        final TestNetworkCallback defaultCallback = new TestNetworkCallback();
+        mCm.registerDefaultNetworkCallback(defaultCallback);
+
+        final int uid = Process.myUid();
+        final int userId = UserHandle.getUserId(uid);
+        final ArrayList<String> allowList = new ArrayList<>();
+        mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, true, allowList);
+
+        UidRange firstHalf = new UidRange(1, VPN_UID - 1);
+        UidRange secondHalf = new UidRange(VPN_UID + 1, 99999);
+        InOrder inOrder = inOrder(mNetworkManagementService);
+        expectNetworkRejectNonSecureVpn(inOrder, true, firstHalf, secondHalf);
+
+        // Connect a network when lockdown is active, expect to see it blocked.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(false /* validated */);
+        callback.expectAvailableCallbacksUnvalidatedAndBlocked(mWiFiNetworkAgent);
+        defaultCallback.expectAvailableCallbacksUnvalidatedAndBlocked(mWiFiNetworkAgent);
+        assertNull(mCm.getActiveNetwork());
+
+        // Disable lockdown, expect to see the network unblocked.
+        // There are no callbacks because they are not implemented yet.
+        mService.setAlwaysOnVpnPackage(userId, null, true, allowList);
+        expectNetworkRejectNonSecureVpn(inOrder, false, firstHalf, secondHalf);
+        assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // Add our UID to the allowlist and re-enable lockdown, expect network is not blocked.
+        allowList.add(TEST_PACKAGE_NAME);
+        mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, true, allowList);
+        defaultCallback.assertNoCallback();
+        UidRange piece1 = new UidRange(1, VPN_UID - 1);
+        UidRange piece2 = new UidRange(VPN_UID + 1, uid - 1);
+        UidRange piece3 = new UidRange(uid + 1, 99999);
+        expectNetworkRejectNonSecureVpn(inOrder, true, piece1, piece2, piece3);
+        assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // Connect a new network, expect it to be unblocked.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(false /* validated */);
+        callback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        defaultCallback.assertNoCallback();
+        assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // Disable lockdown, remove our UID from the whitelist, and re-enable lockdown.
+        // Everything should now be blocked.
+        mService.setAlwaysOnVpnPackage(userId, null, true, allowList);
+        expectNetworkRejectNonSecureVpn(inOrder, false, piece1, piece2, piece3);
+        allowList.clear();
+        mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, true, allowList);
+        expectNetworkRejectNonSecureVpn(inOrder, true, firstHalf, secondHalf);
+        assertNull(mCm.getActiveNetwork());
+
+        // Disable lockdown. Everything is unblocked.
+        mService.setAlwaysOnVpnPackage(userId, null, true, allowList);
+        assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // Enable and disable an always-on VPN package without lockdown. Expect no changes.
+        reset(mNetworkManagementService);
+        mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, false, allowList);
+        inOrder.verify(mNetworkManagementService, never())
+                .setAllowOnlyVpnForUids(anyBoolean(), any());
+        callback.assertNoCallback();
+        defaultCallback.assertNoCallback();
+        assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        mService.setAlwaysOnVpnPackage(userId, null, false, allowList);
+        inOrder.verify(mNetworkManagementService, never())
+                .setAllowOnlyVpnForUids(anyBoolean(), any());
+        callback.assertNoCallback();
+        defaultCallback.assertNoCallback();
+        assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+
+        // Enable lockdown and connect a VPN. The VPN is blocked (bug).
+        mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, true, allowList);
+        assertNull(mCm.getActiveNetwork());
+
+        mMockVpn.establishForMyUid();
+        defaultCallback.expectAvailableCallbacksUnvalidatedAndBlocked(mMockVpn);
+        defaultCallback.expectCapabilitiesThat(mMockVpn,
+                (nc) -> nc.hasCapability(NET_CAPABILITY_VALIDATED));
+        assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
+
+        mMockVpn.disconnect();
+        defaultCallback.expectCallback(CallbackEntry.LOST, mMockVpn);
+        defaultCallback.expectAvailableCallbacksUnvalidatedAndBlocked(mWiFiNetworkAgent);
+        assertNull(mCm.getActiveNetwork());
+
+        mCm.unregisterNetworkCallback(callback);
         mCm.unregisterNetworkCallback(defaultCallback);
     }
 
