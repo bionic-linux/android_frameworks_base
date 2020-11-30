@@ -5427,74 +5427,75 @@ public class ConnectivityServiceTest {
         final Network mobile = mCellNetworkAgent.getNetwork();
         final Network wifi = mWiFiNetworkAgent.getNetwork();
 
-        final NetworkCapabilities caps = new NetworkCapabilities();
+        final NetworkCapabilities initialCaps = new NetworkCapabilities();
+        initialCaps.addCapability(NET_CAPABILITY_INTERNET);
+        initialCaps.removeCapability(NET_CAPABILITY_NOT_VPN);
 
-        mService.applyUnderlyingCapabilities(new Network[]{}, caps, false);
-        assertTrue(caps.hasTransport(TRANSPORT_VPN));
-        assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
-        assertFalse(caps.hasTransport(TRANSPORT_WIFI));
-        assertEquals(LINK_BANDWIDTH_UNSPECIFIED, caps.getLinkDownstreamBandwidthKbps());
-        assertEquals(LINK_BANDWIDTH_UNSPECIFIED, caps.getLinkUpstreamBandwidthKbps());
-        assertFalse(caps.hasCapability(NET_CAPABILITY_NOT_METERED));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        final NetworkCapabilities withNoUnderlying = new NetworkCapabilities();
+        withNoUnderlying.addCapability(NET_CAPABILITY_INTERNET);
+        withNoUnderlying.addCapability(NET_CAPABILITY_NOT_CONGESTED);
+        withNoUnderlying.addCapability(NET_CAPABILITY_NOT_ROAMING);
+        withNoUnderlying.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
+        withNoUnderlying.addTransportType(TRANSPORT_VPN);
+        withNoUnderlying.removeCapability(NET_CAPABILITY_NOT_VPN);
 
-        NetworkCapabilities otherCaps = new NetworkCapabilities(caps);
+        final NetworkCapabilities withMobileUnderlying = new NetworkCapabilities(withNoUnderlying);
+        withMobileUnderlying.addTransportType(TRANSPORT_CELLULAR);
+        withMobileUnderlying.removeCapability(NET_CAPABILITY_NOT_ROAMING);
+        withMobileUnderlying.removeCapability(NET_CAPABILITY_NOT_SUSPENDED);
+        withMobileUnderlying.setLinkDownstreamBandwidthKbps(10);
+
+        final NetworkCapabilities withWifiUnderlying = new NetworkCapabilities(withNoUnderlying);
+        withWifiUnderlying.addTransportType(TRANSPORT_WIFI);
+        withWifiUnderlying.addCapability(NET_CAPABILITY_NOT_METERED);
+        withWifiUnderlying.setLinkUpstreamBandwidthKbps(20);
+
+        final NetworkCapabilities withWifiAndMobileUnderlying =
+                new NetworkCapabilities(withNoUnderlying);
+        withWifiAndMobileUnderlying.addTransportType(TRANSPORT_CELLULAR);
+        withWifiAndMobileUnderlying.addTransportType(TRANSPORT_WIFI);
+        withWifiAndMobileUnderlying.removeCapability(NET_CAPABILITY_NOT_METERED);
+        withWifiAndMobileUnderlying.removeCapability(NET_CAPABILITY_NOT_ROAMING);
+        withWifiAndMobileUnderlying.setLinkDownstreamBandwidthKbps(10);
+        withWifiAndMobileUnderlying.setLinkUpstreamBandwidthKbps(20);
+
+        NetworkCapabilities caps = new NetworkCapabilities(initialCaps);
         boolean declaredMetered = false;
-        mService.applyUnderlyingCapabilities(new Network[]{null}, otherCaps, declaredMetered);
-        assertEquals(caps, otherCaps);
+        mService.applyUnderlyingCapabilities(new Network[]{}, caps, declaredMetered);
+        assertEquals(withNoUnderlying, caps);
 
+        caps = new NetworkCapabilities(initialCaps);
+        mService.applyUnderlyingCapabilities(new Network[]{null}, caps, declaredMetered);
+        assertEquals(withNoUnderlying, caps);
+
+        caps = new NetworkCapabilities(initialCaps);
         mService.applyUnderlyingCapabilities(new Network[]{mobile}, caps, declaredMetered);
-        assertTrue(caps.hasTransport(TRANSPORT_VPN));
-        assertTrue(caps.hasTransport(TRANSPORT_CELLULAR));
-        assertFalse(caps.hasTransport(TRANSPORT_WIFI));
-        assertEquals(10, caps.getLinkDownstreamBandwidthKbps());
-        assertEquals(LINK_BANDWIDTH_UNSPECIFIED, caps.getLinkUpstreamBandwidthKbps());
-        assertFalse(caps.hasCapability(NET_CAPABILITY_NOT_METERED));
-        assertFalse(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
-        assertFalse(caps.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        assertEquals(withMobileUnderlying, caps);
 
         mService.applyUnderlyingCapabilities(new Network[]{wifi}, caps, declaredMetered);
-        assertTrue(caps.hasTransport(TRANSPORT_VPN));
-        assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
-        assertTrue(caps.hasTransport(TRANSPORT_WIFI));
-        assertEquals(LINK_BANDWIDTH_UNSPECIFIED, caps.getLinkDownstreamBandwidthKbps());
-        assertEquals(20, caps.getLinkUpstreamBandwidthKbps());
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_METERED));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        assertEquals(withWifiUnderlying, caps);
 
         declaredMetered = true;
+        withWifiUnderlying.removeCapability(NET_CAPABILITY_NOT_METERED);
+        caps = new NetworkCapabilities(initialCaps);
         mService.applyUnderlyingCapabilities(new Network[]{wifi}, caps, declaredMetered);
-        assertTrue(caps.hasTransport(TRANSPORT_VPN));
-        assertFalse(caps.hasTransport(TRANSPORT_CELLULAR));
-        assertTrue(caps.hasTransport(TRANSPORT_WIFI));
-        assertEquals(LINK_BANDWIDTH_UNSPECIFIED, caps.getLinkDownstreamBandwidthKbps());
-        assertEquals(20, caps.getLinkUpstreamBandwidthKbps());
-        assertFalse(caps.hasCapability(NET_CAPABILITY_NOT_METERED));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        assertEquals(withWifiUnderlying, caps);
+
+        caps = new NetworkCapabilities(initialCaps);
+        mService.applyUnderlyingCapabilities(new Network[]{mobile, wifi}, caps, declaredMetered);
+        assertEquals(withWifiAndMobileUnderlying, caps);
 
         declaredMetered = false;
-        mService.applyUnderlyingCapabilities(new Network[]{mobile, wifi}, caps, declaredMetered);
-        assertTrue(caps.hasTransport(TRANSPORT_VPN));
-        assertTrue(caps.hasTransport(TRANSPORT_CELLULAR));
-        assertTrue(caps.hasTransport(TRANSPORT_WIFI));
-        assertEquals(10, caps.getLinkDownstreamBandwidthKbps());
-        assertEquals(20, caps.getLinkUpstreamBandwidthKbps());
-        assertFalse(caps.hasCapability(NET_CAPABILITY_NOT_METERED));
-        assertFalse(caps.hasCapability(NET_CAPABILITY_NOT_ROAMING));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
-        assertTrue(caps.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
-
-        otherCaps = new NetworkCapabilities(caps);
+        withWifiUnderlying.addCapability(NET_CAPABILITY_NOT_METERED);
+        caps = new NetworkCapabilities(initialCaps);
         mService.applyUnderlyingCapabilities(new Network[]{null, mobile, null, wifi},
-                otherCaps, declaredMetered);
-        assertEquals(otherCaps, caps);
+                caps, declaredMetered);
+        assertEquals(withWifiAndMobileUnderlying, caps);
+
+        caps = new NetworkCapabilities(initialCaps);
+        mService.applyUnderlyingCapabilities(new Network[]{null, mobile, null, wifi},
+                caps, declaredMetered);
+        assertEquals(withWifiAndMobileUnderlying, caps);
     }
 
     @Test
