@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "373fa2d1_2242fcff",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-30T01:32:37Z",
+      "side": 1,
+      "message": "The agent doesn\u0027t have a name, this is only used as the provider name. Renamed the constant and applied the userId suggestion, as this isn\u0027t actually used as a tag anyway.",
+      "parentUuid": "726aca8d_edd2ff53",
+      "range": {
+        "startLine": 402,
+        "startChar": 64,
+        "endLine": 402,
+        "endChar": 78
+      },
+      "revId": "f15678ac8c62436b4cbffbf1765dc58627279081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "772f4336_8087034e",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-11-27T01:08:48Z",
       "side": 1,
       "message": "This looks like it could be unbalanced, because the provider is unregistered here but registered in the constructor, but it\u0027s not. Suggest adding a comment somewhere saying that the calls to the constructor and to onUserStopped are balanced, because onUserStopped is always called when the user is stopped, and the constructor is always called when the user is started.",
+      "range": {
+        "startLine": 1631,
+        "startChar": 8,
+        "endLine": 1631,
+        "endChar": 73
+      },
+      "revId": "f15678ac8c62436b4cbffbf1765dc58627279081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b11abc5c_dd47419e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1631,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-30T01:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "772f4336_8087034e",
       "range": {
         "startLine": 1631,
         "startChar": 8,
