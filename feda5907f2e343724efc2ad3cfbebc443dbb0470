@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84d15489_1d546e3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-11-30T07:15:09Z",
+      "side": 1,
+      "message": "Not very clear to me that for the modules that register agent outside of system server, what will be the actual problem if we don\u0027t do this?\nOr it is generally a good thing that we should do this for NAI creation?",
+      "revId": "feda5907f2e343724efc2ad3cfbebc443dbb0470",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
