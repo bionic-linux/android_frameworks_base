@@ -6067,8 +6067,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // the LinkProperties for the network are accurate.
         networkAgent.clatd.fixupLinkProperties(oldLp, newLp);
 
-        updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities,
-                networkAgent.networkInfo.getType());
+        updateInterfaces(newLp, oldLp, netId, networkAgent.networkCapabilities);
 
         // update filtering rules, need to happen after the interface update so netd knows about the
         // new interface (the interface name -> index map becomes initialized)
@@ -6154,7 +6153,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void updateInterfaces(final @Nullable LinkProperties newLp,
             final @Nullable LinkProperties oldLp, final int netId,
-            final @Nullable NetworkCapabilities caps, final int legacyType) {
+            final @NonNull NetworkCapabilities caps) {
         final CompareResult<String> interfaceDiff = new CompareResult<>(
                 oldLp != null ? oldLp.getAllInterfaceNames() : null,
                 newLp != null ? newLp.getAllInterfaceNames() : null);
@@ -6165,7 +6164,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     if (DBG) log("Adding iface " + iface + " to network " + netId);
                     mNetd.networkAddInterface(netId, iface);
                     wakeupModifyInterface(iface, caps, true);
-                    bs.noteNetworkInterfaceType(iface, legacyType);
+                    bs.noteNetworkInterfaceTransport(
+                            iface, getBatteryAccountingTransportType(caps));
                 } catch (Exception e) {
                     loge("Exception adding interface: " + e);
                 }
@@ -6180,6 +6180,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 loge("Exception removing interface: " + e);
             }
         }
+    }
+
+    /**
+     * Get the {@link NetworkCapabilities.Transport} that should be used for battery accounting
+     * purposes for a given network type.
+     *
+     * While networks may have multiple transports, for battery accounting purposes they need to be
+     * classified in one transport to have a simple view of the hardware component (often radio)
+     * responsible for the battery usage. For example TRANSPORT_VPN and TRANSPORT_TEST can often
+     * be combined with other transports.
+     * @return The transport, or -1 if no transport applies.
+     */
+    private int getBatteryAccountingTransportType(@NonNull NetworkCapabilities nc) {
+        if (nc.hasTransport(TRANSPORT_VPN)) {
+            // VPN networks are backed by other networks, which are accounted separately
+            return -1;
+        }
+        final int[] physicalTransports = nc.getPhysicalTransports();
+        return physicalTransports.length > 0 ? physicalTransports[0] : -1;
     }
 
     // TODO: move to frameworks/libs/net.

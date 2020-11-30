@@ -785,6 +785,17 @@ public final class NetworkCapabilities implements Parcelable {
     /** @hide */
     public static final int MAX_TRANSPORT = TRANSPORT_TEST;
 
+    /**
+     * Bitmask of transport types that correspond to physical network technologies.
+     */
+    private static final int PHYSICAL_TRANSPORTS =
+            1 << TRANSPORT_CELLULAR
+            | 1 << TRANSPORT_WIFI
+            | 1 << TRANSPORT_WIFI_AWARE
+            | 1 << TRANSPORT_BLUETOOTH
+            | 1 << TRANSPORT_ETHERNET
+            | 1 << TRANSPORT_LOWPAN;
+
     /** @hide */
     public static boolean isValidTransport(@Transport int transportType) {
         return (MIN_TRANSPORT <= transportType) && (transportType <= MAX_TRANSPORT);
@@ -903,6 +914,18 @@ public final class NetworkCapabilities implements Parcelable {
     /** @hide */
     public boolean equalsTransportTypes(NetworkCapabilities nc) {
         return (nc.mTransportTypes == this.mTransportTypes);
+    }
+
+    /**
+     * Get the physical transports that are backing this network.
+     *
+     * This should only be used for use-cases that need to tie the network to hardware usage, such
+     * as battery accounting.
+     * @hide
+     */
+    @NonNull
+    public @Transport int[] getPhysicalTransports() {
+        return BitUtils.unpackBits(mTransportTypes & PHYSICAL_TRANSPORTS);
     }
 
     /**

@@ -1006,10 +1006,19 @@ public final class BatteryStatsService extends IBatteryStats.Stub
         }
     }
 
+    /**
+     * Register a network interface and its associated transport for battery accounting purposes.
+     *
+     * While networks may have multiple transports, for battery accounting purposes they are
+     * classified in one transport to have a simple view of the hardware component (often radio)
+     * responsible for the battery usage. For example TRANSPORT_VPN or TRANSPORT_TEST are often
+     * combined with other transports for e.g. "Wifi VPN" or "Test Ethernet" networks, and the
+     * battery usage should be accounted as wifi and ethernet respectively.
+     */
     @Override
-    public void noteNetworkInterfaceType(String iface, int networkType) {
+    public void noteNetworkInterfaceTransport(String iface, int transportType) {
         enforceCallingPermission();
-        mStats.noteNetworkInterfaceType(iface, networkType);
+        mStats.noteNetworkInterfaceTransport(iface, transportType);
     }
 
     @Override
