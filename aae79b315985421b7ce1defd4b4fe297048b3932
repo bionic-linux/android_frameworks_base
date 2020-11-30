@@ -46,6 +46,30 @@
       },
       "revId": "aae79b315985421b7ce1defd4b4fe297048b3932",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df49cc91_be129935",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-11-30T03:30:07Z",
+      "side": 1,
+      "message": "LGTM. If there is actual stability impact, I think we will probably see it in device boot time metrics.\n\nBut actually - I don\u0027t think this can happen at all. Currently, Vpn objects can only be instantiated once ActivityManagerService sends the first ACTION_USER_STARTED. AFAICS that happens in ActivityManagerService#systemReady which is called here:\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/java/com/android/server/SystemServer.java;l\u003d2251\n\nwhich is just a few lines *after* code that does:\n\n        final ConnectivityManager connectivityF \u003d (ConnectivityManager)\n                context.getSystemService(Context.CONNECTIVITY_SERVICE);\n\nand a few lines before SystemServer actually uses that object to call ConnectivityService#systemReady here:\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/java/com/android/server/SystemServer.java;l\u003d2351\n\nwhich means that if context.getSystemService(Context.CONNECTIVITY_SERVICE) must return non-null before the first ACTION_USER_STARTED is sent.",
+      "parentUuid": "1870e1e5_91d6a098",
+      "range": {
+        "startLine": 375,
+        "startChar": 5,
+        "endLine": 375,
+        "endChar": 12
+      },
+      "revId": "aae79b315985421b7ce1defd4b4fe297048b3932",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
