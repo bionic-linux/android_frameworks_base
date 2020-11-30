@@ -50,6 +50,42 @@
       "message": "Should we also freeze f/b/apex/statsd and system/core/libstats?",
       "revId": "86e53e5db7fb9ff20b59d2c18c4e7a61bb561e4d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c05eefe3_5220ad44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2020-11-30T23:11:06Z",
+      "side": 1,
+      "message": "Marking as unresolved, and I\u0027ll add\nsystem/core/libstats to the list.",
+      "parentUuid": "2519e829_546d40a8",
+      "revId": "86e53e5db7fb9ff20b59d2c18c4e7a61bb561e4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da575551_b29166dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2020-11-30T23:11:06Z",
+      "side": 1,
+      "message": "Just realized Jeffrey asked the same question.",
+      "parentUuid": "e4c74ebf_2b23e551",
+      "revId": "86e53e5db7fb9ff20b59d2c18c4e7a61bb561e4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
