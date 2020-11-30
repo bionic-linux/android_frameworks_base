@@ -16,6 +16,24 @@
       "message": "Some implementations my have a total (initiator + responder) maximum too. How do we want to convey that?",
       "revId": "1d87b853546c688db27293b5636774c8716e550f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84398332_1592e3c7",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:44Z",
+      "side": 1,
+      "message": "This change is to align with the UwbManager API, but the question is still valid. Can you have multiple initiators in a single session? If so, then we need to think about this further. Otherwise, max responders should be set accordingly.",
+      "parentUuid": "4e2ec46e_ce70c3ce",
+      "revId": "1d87b853546c688db27293b5636774c8716e550f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
