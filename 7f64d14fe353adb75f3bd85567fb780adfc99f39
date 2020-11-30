@@ -87,6 +87,30 @@
       },
       "revId": "7f64d14fe353adb75f3bd85567fb780adfc99f39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1877a75c_8c408970",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-11-30T01:32:19Z",
+      "side": 1,
+      "message": "Of course I did try to boot a device a couple times and couldn\u0027t produce a crash. But reasoning seems to indicate this is likely to happen occasionally. Also, if it can\u0027t for some obscure reason somewhere, it\u0027s possible this comes back to bite us in a few releases.\n\nBut I think the advantages of having a final member are very large anyway, so let\u0027s keep it and deal with any issue if they do surface.",
+      "parentUuid": "f724a86f_1f516423",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 84
+      },
+      "revId": "7f64d14fe353adb75f3bd85567fb780adfc99f39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
