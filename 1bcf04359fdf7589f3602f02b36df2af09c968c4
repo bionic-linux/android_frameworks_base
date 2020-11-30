@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f53f44e3_4063d5bc",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "It shouldn\u0027t ever be. Removed.",
+      "parentUuid": "dd5b7343_601dea92",
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e73f218_93005bd7",
@@ -54,6 +72,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54739ebb_2282c151",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "Currently, never. But since sendCurrentState isn\u0027t synchronized, it could end up being called from another context (in the future) at the same time that `unregister` is called causing the callback to be removed from the map. I\u0027ll add synchronized around mCallbackMap.get",
+      "parentUuid": "8e73f218_93005bd7",
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "250be551_79d5bb53",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "Need to clear the calling Binder Identity prior to invoking the callback.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 55
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2a28d65_6ddea0d5",
         "filename": "core/java/android/uwb/UwbManager.java",
         "patchSetId": 1
@@ -65,6 +124,30 @@
       "writtenOn": "2020-11-24T18:33:07Z",
       "side": 1,
       "message": "Per Android API guidelines, this should be a listener because there is only 1 callback function and this is the interface that the callers will utilize. Also, the name of the Listener should match the single callback function followed by \"Listener\". By that pattern, this should be called \"OnStateChangedListener\" or if you opt to change the naming of the callback function, this should be adjusted accordingly.",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 41
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88aca48a_65a1ea9c",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "This is a bit more interesting than just a single function since we also define the StateChangedReason within the interface which actually causes the API guidelines to tell us to use a Callback. \n\nAlso, can we be certain that no additional functions will ever be added to this  interface? If not, the recommendation is for a callback.",
+      "parentUuid": "b2a28d65_6ddea0d5",
       "range": {
         "startLine": 59,
         "startChar": 21,
@@ -146,6 +229,78 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a35f1566_23c029c5",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "Added @NonNull. Are you sure that the executor should come second? This doesn\u0027t seem to be the case anywhere else and doesn\u0027t follow the examples provided in the API guidelines.",
+      "parentUuid": "9859c22e_e12d91f6",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 93
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "992cac45_ba7b882b",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa1f14a6_46cdb7ff",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 62
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abb15964_23be0154",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "See comment above. I believe this should still be a callback.",
+      "parentUuid": "8391d0d3_3279c4d0",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 44
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6494a56c_5b17b332",
         "filename": "core/java/android/uwb/UwbManager.java",
         "patchSetId": 1
@@ -185,6 +340,54 @@
         "startChar": 47,
         "endLine": 165,
         "endChar": 76
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5baa12c_955ddb6a",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "014b3e67_ddc040b2",
+      "range": {
+        "startLine": 165,
+        "startChar": 47,
+        "endLine": 165,
+        "endChar": 76
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "234a2522_684769b8",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-11-30T20:27:55Z",
+      "side": 1,
+      "message": "See comment above. I believe this should still be a callback.",
+      "parentUuid": "6494a56c_5b17b332",
+      "range": {
+        "startLine": 165,
+        "startChar": 16,
+        "endLine": 165,
+        "endChar": 46
       },
       "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
