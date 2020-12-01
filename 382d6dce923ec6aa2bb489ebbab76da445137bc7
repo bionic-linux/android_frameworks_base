@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "972cf5bf_ce5a6156",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-01T01:58:10Z",
+      "side": 1,
+      "message": "I\u0027m not aware of a way to re-use the AIDL enum in the API -- is it possible to do? Perhaps something like parcelable with objects? I\u0027d be very happy to consolidate these and remove this conversion.",
+      "parentUuid": "c52ff718_f832aa3f",
+      "range": {
+        "startLine": 246,
+        "startChar": 21,
+        "endLine": 246,
+        "endChar": 58
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d4e0a41_bba7175a",
         "filename": "core/java/android/uwb/UwbManager.java",
         "patchSetId": 2
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9af7eaa4_17f3e2f5",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-01T01:58:10Z",
+      "side": 1,
+      "message": "Hm, I had thought that AIDL didn\u0027t support List\u003cInteger\u003e but I seem to be mistaken. I can change that if we want.",
+      "parentUuid": "5d4e0a41_bba7175a",
+      "range": {
+        "startLine": 278,
+        "startChar": 31,
+        "endLine": 278,
+        "endChar": 65
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4bff9a48_368b79ac",
         "filename": "core/java/android/uwb/UwbManager.java",
         "patchSetId": 2
@@ -60,6 +108,30 @@
       "writtenOn": "2020-12-01T00:35:46Z",
       "side": 1,
       "message": "Same question here about int array vs list of integers on the backend",
+      "range": {
+        "startLine": 297,
+        "startChar": 32,
+        "endLine": 297,
+        "endChar": 71
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97b30bea_1c7dbddb",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-01T01:58:10Z",
+      "side": 1,
+      "message": "Same as above, let me know!",
+      "parentUuid": "4bff9a48_368b79ac",
       "range": {
         "startLine": 297,
         "startChar": 32,
