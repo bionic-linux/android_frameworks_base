@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85292302_eda7befc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-12-01T03:07:18Z",
+      "side": 1,
+      "message": "I\u0027d be fine with revisiting initiator/responder maximums as a follow-up.",
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bb6f0c0_b1638808",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-12-01T03:07:18Z",
+      "side": 1,
+      "message": "If we\u0027re assuming single initiator, I\u0027m not sure what restriction this aims to capture. A responder is unaffected by other responders.",
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c52ff718_f832aa3f",
@@ -38,6 +72,30 @@
       "side": 1,
       "message": "I\u0027m not aware of a way to re-use the AIDL enum in the API -- is it possible to do? Perhaps something like parcelable with objects? I\u0027d be very happy to consolidate these and remove this conversion.",
       "parentUuid": "c52ff718_f832aa3f",
+      "range": {
+        "startLine": 246,
+        "startChar": 21,
+        "endLine": 246,
+        "endChar": 58
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9752a8cd_f098e754",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-12-01T03:07:18Z",
+      "side": 1,
+      "message": "In VibrationEffect.java:\n- For Effect, which is defined by a HIDL, they declare the constants to be equal to the IDL constants:\n  http://cs/android/frameworks/base/core/java/android/os/VibrationEffect.java?l\u003d71\u0026rcl\u003d977d342bf6737c53f10043009ed0d8dbb6781cc8\n- For Primitive, which is defined by AIDL, they are manually defined with the same value:\n  http://cs/android/frameworks/base/core/java/android/os/VibrationEffect.java?l\u003d1060\u0026rcl\u003d977d342bf6737c53f10043009ed0d8dbb6781cc8\n\nIf we do the latter, we should ensure there\u0027s some sort of enforcement (i.e. static asserts).",
+      "parentUuid": "972cf5bf_ce5a6156",
       "range": {
         "startLine": 246,
         "startChar": 21,

@@ -34,6 +34,24 @@
       "parentUuid": "4e2ec46e_ce70c3ce",
       "revId": "1d87b853546c688db27293b5636774c8716e550f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f7805a9_8cd76600",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-12-01T03:07:18Z",
+      "side": 1,
+      "message": "Yeah, multi-initiator sessions are supported by the IEEE standard, though it\u0027s not likely to be in common usage.",
+      "parentUuid": "84398332_1592e3c7",
+      "revId": "1d87b853546c688db27293b5636774c8716e550f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
