@@ -50,6 +50,29 @@
       "message": "@dmitri, ptal?",
       "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c575ae91_87b25a57",
+        "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2020-12-01T00:18:37Z",
+      "side": 1,
+      "message": "What is the difference between this new method and noteWakeUp(reason)?",
+      "range": {
+        "startLine": 165,
+        "startChar": 9,
+        "endLine": 165,
+        "endChar": 25
+      },
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
