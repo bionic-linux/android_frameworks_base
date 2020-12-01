@@ -878,6 +878,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e27627a1_c3e9a9d4",
+        "filename": "core/java/android/net/QosCallbackException.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-01T01:58:32Z",
+      "side": 1,
+      "message": "Since these aren\u0027t runtime exceptions and are all generated in well known places in the framework, I\u0027m hoping we can just stick with what we have right now.",
+      "parentUuid": "e8c82cbd_b28250bb",
+      "range": {
+        "startLine": 85,
+        "startChar": 44,
+        "endLine": 85,
+        "endChar": 84
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "428d0abb_e01c83c4",
         "filename": "core/java/android/net/QosFilter.java",
         "patchSetId": 24
