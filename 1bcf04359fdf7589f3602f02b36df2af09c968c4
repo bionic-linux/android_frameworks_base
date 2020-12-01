@@ -88,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "273b966a_e65493b6",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1418133
+      },
+      "writtenOn": "2020-12-01T03:12:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54739ebb_2282c151",
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "250be551_79d5bb53",
