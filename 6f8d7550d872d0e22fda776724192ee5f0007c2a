@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3872810_6fb1ffb5",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "We may need to be more detailed here, how about:\n\nFlag indicating whether or not this carrier supports the exchange of phone numbers with the carrier\u0027s RCS presence server in order to retrieve the RCS capabilities of requested contacts used in the RCS User Capability Exchange (UCE) procedure. See RCC.71, section 3 for more information.\n\u003cp\u003e\nWhen presence is supported, the device uses the SIP SUBSCRIBE/NOTIFY procedure internally to retrieve the requested RCS capabilities. See {@link RcsUceAdapter} for more information on how RCS capabilities can be retrieved from the carrier\u0027s network.",
+      "range": {
+        "startLine": 2033,
+        "startChar": 6,
+        "endLine": 2036,
+        "endChar": 61
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b306d805_b3dbdf1b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "Can these new keys be moved into the IMS class namespace below?",
+      "range": {
+        "startLine": 2038,
+        "startChar": 31,
+        "endLine": 2038,
+        "endChar": 62
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ba6c274_83a9141b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "Need to also relate this to the specs, specifically RCC.07 A.19 \"DISABLE INITIAL ADDRESS BOOK SCAN\" parameter. Can we change these docs to:\n\nFlag indicating whether or not the carrier expects the RCS UCE service to periodically refresh the RCS capabilities cache of the user\u0027s contacts as well as request the capabilities of call contacts when the SIM card is first inserted or when a new contact is added, removed, or modified. This corresponds to the RCC.07 A.19 \"DISABLE INITIAL ADDRESS BOOK SCAN\" parameter.\n\u003cp\u003e\nIf this flag is disabled, the capabilities cache will not be refreshed internally at all and will only be updated if the cached capabilities are stale when an application requests them.",
+      "range": {
+        "startLine": 2041,
+        "startChar": 7,
+        "endLine": 2042,
+        "endChar": 26
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5bdaa68_07d61657",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "nit grammar: \"Flag indicating whether or not the carrier supports capability exchange with a list of contacts.\"",
+      "range": {
+        "startLine": 2048,
+        "startChar": 7,
+        "endLine": 2048,
+        "endChar": 99
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8b43837_294680c4",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "Should",
+      "range": {
+        "startLine": 2049,
+        "startChar": 37,
+        "endLine": 2049,
+        "endChar": 42
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50e05559_fd4fe2a1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "nit: \"When\"",
+      "range": {
+        "startLine": 2049,
+        "startChar": 7,
+        "endLine": 2049,
+        "endChar": 8
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ad7ee18_9eca94a4",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "We may need to reference the specs here: When true, the device will batch together multiple requests and construct a RLMI document in the SIP SUBSCRIBE request (see RFC 4662). If false, the request will be split up into one SIP SUBSCRIBE request per contact.",
+      "range": {
+        "startLine": 2049,
+        "startChar": 0,
+        "endLine": 2050,
+        "endChar": 90
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0030898c_911e9143",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "can you mark this as @deprecated and document that KEY_RCS_PRESENCE_SUPPORTED_BOOL \u003d true is equivalent to KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL \u003d true and  KEY_RCS_PRESENCE_SUPPORTED_BOOL \u003d true?",
+      "range": {
+        "startLine": 2065,
+        "startChar": 31,
+        "endLine": 2065,
+        "endChar": 56
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c0ac25a_ad3fe0a6",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "Can you reference both? Apps like dialer may still be looking at the old key.",
+      "range": {
+        "startLine": 66,
+        "startChar": 35,
+        "endLine": 66,
+        "endChar": 66
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbac2a3e_ed597feb",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:45:47Z",
+      "side": 1,
+      "message": "Same as above, can you reference both KEY_USE_RCS_PRESENCE_BOOL and KEY_RCS_PRESENCE_SUPPORTED_BOOL as apps may still use the old version?",
+      "range": {
+        "startLine": 398,
+        "startChar": 51,
+        "endLine": 398,
+        "endChar": 82
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
