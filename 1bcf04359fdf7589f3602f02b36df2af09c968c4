@@ -158,6 +158,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9a114a2_71c7bf75",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-01T01:05:25Z",
+      "side": 1,
+      "message": "That\u0027s fair! I was think the StateCahngedReason could go either way because it could technically be defined outside of the interface, but if it\u0027s only being used within the interface, then it seems fine to me!",
+      "parentUuid": "88aca48a_65a1ea9c",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 41
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8391d0d3_3279c4d0",
@@ -299,6 +323,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6766834a_3cb70e06",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-01T01:05:25Z",
+      "side": 1,
+      "message": "My apologies, I got this the wrong way. The callback comes last for kotlin-friendliness. This is fine as-is.",
+      "parentUuid": "a35f1566_23c029c5",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 93
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6211f5e9_ea9d5eb1",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-01T01:05:25Z",
+      "side": 1,
+      "message": "Resolving as per my above comment.",
+      "parentUuid": "abb15964_23be0154",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 44
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6494a56c_5b17b332",
@@ -383,6 +455,30 @@
       "side": 1,
       "message": "See comment above. I believe this should still be a callback.",
       "parentUuid": "6494a56c_5b17b332",
+      "range": {
+        "startLine": 165,
+        "startChar": 16,
+        "endLine": 165,
+        "endChar": 46
+      },
+      "revId": "1bcf04359fdf7589f3602f02b36df2af09c968c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69c2ed5b_1cbbd6cc",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-01T01:05:25Z",
+      "side": 1,
+      "message": "Resolving as per my above comment.",
+      "parentUuid": "234a2522_684769b8",
       "range": {
         "startLine": 165,
         "startChar": 16,

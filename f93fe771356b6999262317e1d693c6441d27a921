@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebfce313_793a385e",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-01T01:05:25Z",
+      "side": 1,
+      "message": "It\u0027s not too big of a deal because this isn\u0027t being exposed to apps, but I\u0027m curious why you\u0027re referring to this as a listener.",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "f93fe771356b6999262317e1d693c6441d27a921",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
