@@ -3420,7 +3420,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             ensureNetworkTransitionWakelock(nai.toShortString());
         }
         mLegacyTypeTracker.remove(nai, wasDefault);
-        if (!nai.networkCapabilities.hasTransport(TRANSPORT_VPN)) {
+        if (!nai.supportsUnderlyingNetworks()) {
             propagateUnderlyingNetworkCapabilities();
         }
         rematchAllNetworksAndRequests();
@@ -6360,21 +6360,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     + nai.networkCapabilities.getOwnerUid() + " to " + nc.getOwnerUid());
             nc.setOwnerUid(nai.networkCapabilities.getOwnerUid());
         }
+        nai.agentCapabilities = new NetworkCapabilities(nc);
     }
 
-    /** Modifies |caps| based on the capabilities of the specified underlying networks. */
+    /** Modifies |caps| based on the capabilities of |underlyingNetworks| and |originalCaps|. */
     @VisibleForTesting
     void applyUnderlyingCapabilities(@Nullable Network[] underlyingNetworks,
-            @NonNull NetworkCapabilities caps,  boolean declaredMetered) {
+            @NonNull NetworkCapabilities originalCaps, @NonNull NetworkCapabilities caps) {
         final Network defaultNetwork = getNetwork(getDefaultNetwork());
         if (underlyingNetworks == null && defaultNetwork != null) {
             // null underlying networks means to track the default.
             underlyingNetworks = new Network[] { defaultNetwork };
         }
-        int[] transportTypes = new int[] { NetworkCapabilities.TRANSPORT_VPN };
+        int[] transportTypes = originalCaps.getTransportTypes();
         int downKbps = NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
         int upKbps = NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
-        boolean metered = declaredMetered; // metered if any underlying is metered, or agentMetered
+        // metered if any underlying is metered, or originally declared metered by the agent.
+        boolean metered = !originalCaps.hasCapability(NET_CAPABILITY_NOT_METERED);
         boolean roaming = false; // roaming if any underlying is roaming
         boolean congested = false; // congested if any underlying is congested
         boolean suspended = true; // suspended if all underlying are suspended
@@ -6483,7 +6485,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         if (nai.supportsUnderlyingNetworks()) {
-            applyUnderlyingCapabilities(nai.declaredUnderlyingNetworks, newNc, nai.declaredMetered);
+            applyUnderlyingCapabilities(nai.declaredUnderlyingNetworks, nai.agentCapabilities,
+                    newNc);
         }
 
         return newNc;
@@ -6562,9 +6565,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        if (!newNc.hasTransport(TRANSPORT_VPN)) {
-            // Tell VPNs about updated capabilities, since they may need to
-            // bubble those changes through.
+        if (!nai.supportsUnderlyingNetworks()) {
+            // This network might have been underlying another network. Propagate its capabilities.
             propagateUnderlyingNetworkCapabilities();
         }
 
