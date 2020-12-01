@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adaf6e61_d76c6226",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1524317
+      },
+      "writtenOn": "2020-12-01T15:51:09Z",
+      "side": 1,
+      "message": "Merging this change into AOSP as discussed.",
+      "revId": "f1291ba703ec7b6e6f4f020f72085801194d029e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
