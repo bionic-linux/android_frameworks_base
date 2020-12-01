@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31366149_f2e6e4fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-01T20:05:13Z",
+      "side": 1,
+      "message": "Thanks, filed b/174571797 for tracking that discussion.",
+      "parentUuid": "85292302_eda7befc",
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2bb6f0c0_b1638808",
@@ -31,6 +49,24 @@
       "writtenOn": "2020-12-01T03:07:18Z",
       "side": 1,
       "message": "If we\u0027re assuming single initiator, I\u0027m not sure what restriction this aims to capture. A responder is unaffected by other responders.",
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff427f73_8882158b",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-01T20:05:13Z",
+      "side": 1,
+      "message": "Filed b/174571797 for follow up. Thanks!",
+      "parentUuid": "2bb6f0c0_b1638808",
       "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -108,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "71a3c0e1_79190a31",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-01T20:05:13Z",
+      "side": 1,
+      "message": "My concern with option 1 is that if a new type is introduced into the AngleOfArrivalSupport.aidl enum, then it could make its way to client applications without explicitly adding the corresponding value to UwbManager.AngleOfArrivalSupportType.\n\nMy concern with option 2 is inline with Harpreet: it is really easy to fall out of alignment.\n\nWith the current approach, only well-defined values are able to make it to clients. If the UWB Service were to return some new value in the future, the client would end up receiving \"NONE\" which is may be better than an unknown value?",
+      "parentUuid": "9752a8cd_f098e754",
+      "range": {
+        "startLine": 246,
+        "startChar": 21,
+        "endLine": 246,
+        "endChar": 58
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d4e0a41_bba7175a",
         "filename": "core/java/android/uwb/UwbManager.java",
         "patchSetId": 2
@@ -143,6 +203,30 @@
       "side": 1,
       "message": "Hm, I had thought that AIDL didn\u0027t support List\u003cInteger\u003e but I seem to be mistaken. I can change that if we want.",
       "parentUuid": "5d4e0a41_bba7175a",
+      "range": {
+        "startLine": 278,
+        "startChar": 31,
+        "endLine": 278,
+        "endChar": 65
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ad084ce_178676b8",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-01T20:05:13Z",
+      "side": 1,
+      "message": "So it looks like I can\u0027t specify it as a List\u003cInteger\u003e and instead only as a List which in my opinion isn\u0027t ideal. Thoughts?",
+      "parentUuid": "9af7eaa4_17f3e2f5",
       "range": {
         "startLine": 278,
         "startChar": 31,

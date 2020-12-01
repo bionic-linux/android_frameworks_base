@@ -52,6 +52,24 @@
       "parentUuid": "84398332_1592e3c7",
       "revId": "1d87b853546c688db27293b5636774c8716e550f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc58fea0_dd806c13",
+        "filename": "core/java/android/uwb/IUwbAdapter.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-01T20:05:13Z",
+      "side": 1,
+      "message": "Filed b/174571797 for follow up. Thanks!",
+      "parentUuid": "1f7805a9_8cd76600",
+      "revId": "1d87b853546c688db27293b5636774c8716e550f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
