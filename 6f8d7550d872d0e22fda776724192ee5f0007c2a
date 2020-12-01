@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb106a1e_41282b1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-01T23:47:26Z",
+      "side": 1,
+      "message": "I am looking at some of the changes here and unfortunately, we still need to support the old KEY_USE_RCS_PRESENCE_BOOL key (basically KEY_USE_RCS_PRESENCE_BOOL \u003d KEY_RCS_PRESENCE_SUPPORTED_BOOL + KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL). I see the code just replaces KEY_USE_RCS_PRESENCE_BOOL, but we can not unfortunately do that",
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3872810_6fb1ffb5",
