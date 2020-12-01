@@ -1160,6 +1160,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "011e22f0_a9c4ca16",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-01T05:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4915ead7_500e5968",
+      "range": {
+        "startLine": 48,
+        "startChar": 11,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0238dda_684552cd",

@@ -1331,6 +1331,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d353e0e_4870ca71",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-01T05:16:20Z",
+      "side": 1,
+      "message": "Looks like my inline answers ended up with bullets instead of \"-\", I reformatted my answers below:\n\n• Who is in charge of making sure two sessions with the same type don\u0027t collide ? If it\u0027s the client, why require unicity within types but not global unicity ?\n-\u003e The network agent that provides the session handles uniqueness within a type.\n\n• How is this enforced ?\n-\u003e If it\u0027s not unique, then they would overwrite each other.  Not sure how else it could be enforced.\n\n• It sounds like unicity is all that\u0027s required, so why not have an internal class in charge of assigning IDs automatically ?\n-\u003e This was my first proposal, but Lorenzo specifically thought that this was quite difficult to ensure.  Also, it turns out that it makes a lot of sense for the vendor to handle this right now because they have the same issue such that they need to tell the framework which events related to which sessions, and an id works just as well here.",
+      "parentUuid": "e30d7b9a_b123c37c",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 67
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "535d518c_1e00e4b4",
         "filename": "core/java/android/net/QosSession.java",
         "patchSetId": 31
