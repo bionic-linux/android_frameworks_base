@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdeda33d_dc1f3b56",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd4fa27_6c42ee08",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 55
+      },
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5eff875_440e61ef",
@@ -71,6 +95,30 @@
       "writtenOn": "2020-11-24T01:52:08Z",
       "side": 1,
       "message": "nit: {@link ...}",
+      "range": {
+        "startLine": 2748,
+        "startChar": 33,
+        "endLine": 2748,
+        "endChar": 54
+      },
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57a2b63a_aa157532",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5eff875_440e61ef",
       "range": {
         "startLine": 2748,
         "startChar": 33,
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19cb9f28_69b5268e",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2762,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399f5118_0ded719e",
+      "range": {
+        "startLine": 2762,
+        "startChar": 37,
+        "endLine": 2762,
+        "endChar": 65
+      },
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8eb74ace_d254bd56",
@@ -117,6 +189,30 @@
       "writtenOn": "2020-11-24T06:06:13Z",
       "side": 1,
       "message": "Remove \u0027etc\u0027 - either spell it out or the word \"like\" is sufficient (could be replaced with \u0027such as\u0027).",
+      "range": {
+        "startLine": 2779,
+        "startChar": 69,
+        "endLine": 2779,
+        "endChar": 72
+      },
+      "revId": "c3a55d98df2b2f7597136f21115922e17ef8e0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9f09159_979a8fb1",
+        "filename": "wifi/java/android/net/wifi/WifiManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eb74ace_d254bd56",
       "range": {
         "startLine": 2779,
         "startChar": 69,
