@@ -103,6 +103,30 @@
       },
       "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cae601eb_055e7582",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2020-12-02T06:19:27Z",
+      "side": 1,
+      "message": "Not following the locking requirements will lead to more severe runtime crashes than the rare slowness. It would be very hard call resampleHistoryOnDiskInMemoryDMLocked() without holding mInMemoryLock, unless one does a major redesign/refactoring of this class.",
+      "parentUuid": "7ef26a23_c60a52cf",
+      "range": {
+        "startLine": 693,
+        "startChar": 16,
+        "endLine": 693,
+        "endChar": 53
+      },
+      "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
