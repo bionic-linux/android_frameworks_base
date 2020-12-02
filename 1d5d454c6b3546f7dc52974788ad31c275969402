@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2d260ab_bd3b937f",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T22:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e96aae69_8ebe30a4",
+      "range": {
+        "startLine": 379,
+        "startChar": 4,
+        "endLine": 379,
+        "endChar": 10
+      },
+      "revId": "1d5d454c6b3546f7dc52974788ad31c275969402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc602f8b_e7d6bb78",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-12-02T21:16:50Z",
       "side": 1,
       "message": "Instead of a boolean param (which has no meaning to the reader), consider creating 2 methods named WifiInfo.copyWithSensitiveFieldsParceled() and WifiInfo.copyWithoutSensitiveFieldsParceled().",
+      "range": {
+        "startLine": 1192,
+        "startChar": 20,
+        "endLine": 1192,
+        "endChar": 28
+      },
+      "revId": "1d5d454c6b3546f7dc52974788ad31c275969402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bd5e297_cefb2f6b",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T22:05:40Z",
+      "side": 1,
+      "message": "Ack. I\u0027m going to wait for jean to also review before making more changes to avoid more back n forth.",
+      "parentUuid": "dc602f8b_e7d6bb78",
       "range": {
         "startLine": 1192,
         "startChar": 20,
