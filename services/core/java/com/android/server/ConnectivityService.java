@@ -5215,6 +5215,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (mUserManager.getUserInfo(userId).isPrimary() && LockdownVpnTracker.isEnabled()) {
                 updateLockdownVpn();
             } else {
+                final Vpn vpn = mVpns.get(userId);
+                if (vpn == null || !vpn.getAlwaysOn()) {
+                    return;
+                }
                 startAlwaysOnVpn(userId);
             }
         }
