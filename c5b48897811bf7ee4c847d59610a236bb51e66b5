@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e78ef6ff_1e3f2055",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T21:21:49Z",
+      "side": 1,
+      "message": "can we clarify this a little more based on conversations we had in yesterday\u0027s meeting: \"No longer used in framework code, however it may still be used by applications that have not updated their code. This config should still be set to {@code true} if {@link #KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL} is set to {@code true} and {@link #KEY_RCS_PRESENCE_SUPPORTED_BOOL} is set to {@code true}.",
+      "range": {
+        "startLine": 2050,
+        "startChar": 19,
+        "endLine": 2052,
+        "endChar": 56
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
