@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8ac4594_810fbaa1",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c700cea6_8b1b2afe",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48172dcc_281d6d2c",
@@ -65,6 +83,30 @@
       "writtenOn": "2020-11-24T01:53:03Z",
       "side": 1,
       "message": "nit: too many spaces",
+      "range": {
+        "startLine": 1070,
+        "startChar": 29,
+        "endLine": 1070,
+        "endChar": 31
+      },
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7eba30d_730832b4",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48172dcc_281d6d2c",
       "range": {
         "startLine": 1070,
         "startChar": 29,
@@ -92,6 +134,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a412f814_7d3e28ec",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:38Z",
+      "side": 1,
+      "message": "😊",
+      "parentUuid": "1f1cf325_451085a0",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecdcd9f8_e772b590",
@@ -109,6 +169,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f205303_a7bb97f8",
+        "filename": "wifi/tests/src/android/net/wifi/WifiInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecdcd9f8_e772b590",
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88c5f6df_f9d24d34",
@@ -122,6 +200,30 @@
       "writtenOn": "2020-11-24T06:14:32Z",
       "side": 1,
       "message": "Is there a way to test pre-S behavior?",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 42
+      },
+      "revId": "5ffb312fb6f2541db27251ec0a8f2fd01a40387b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dc089e6_56c38e56",
+        "filename": "wifi/tests/src/android/net/wifi/WifiInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c5f6df_f9d24d34",
       "range": {
         "startLine": 158,
         "startChar": 8,
