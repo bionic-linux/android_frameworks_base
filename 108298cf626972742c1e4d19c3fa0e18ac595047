@@ -127,6 +127,30 @@
       },
       "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "996f1ea7_2ba73da0",
+        "filename": "services/core/java/com/android/server/appop/HistoricalRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2020-12-02T06:22:05Z",
+      "side": 1,
+      "message": "Besides, the current patch is already failing presubmit, and HistoricalAppopsTest.testHistoryTimeTravel() and testRebootHistory() are real test failures caused by this patch.",
+      "parentUuid": "cae601eb_055e7582",
+      "range": {
+        "startLine": 693,
+        "startChar": 16,
+        "endLine": 693,
+        "endChar": 53
+      },
+      "revId": "108298cf626972742c1e4d19c3fa0e18ac595047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
