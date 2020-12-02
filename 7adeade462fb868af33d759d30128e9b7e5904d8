@@ -16,6 +16,75 @@
       "message": "From your description, IConnectivityManager will not accessible in framework?\nHow about ConnectivityDiagnosticsManager, VpnManager, etc? I do not see them in the connectivity-service-srcs. Do we need to also update them?",
       "revId": "7adeade462fb868af33d759d30128e9b7e5904d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93dda2ce_9e53784c",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-02T08:13:58Z",
+      "side": 1,
+      "message": "Also this needs to be an API (@SystemApi(client \u003d SYSTEM_SERVER) ?), otherwise this would just move the @hide dependency to a @hide method\n\nBut... Do we really want to have NetworkState be an API ? I think the plan is to move it to libs/net instead.\nSo NetworkPolicyManagerService would need to implement this differently: can it get the right information through getAllNetworkInfo / LinkProperties / NetworkCapabilities ? Careful about races though, since LPs / NCs can change after NetworkInfo was queried.",
+      "range": {
+        "startLine": 2115,
+        "startChar": 26,
+        "endLine": 2115,
+        "endChar": 44
+      },
+      "revId": "7adeade462fb868af33d759d30128e9b7e5904d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f19c5a6_32c2305f",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-02T08:13:58Z",
+      "side": 1,
+      "message": "Can you also remove the import ?",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 40
+      },
+      "revId": "7adeade462fb868af33d759d30128e9b7e5904d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ea954a2_fc740682",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-02T08:13:58Z",
+      "side": 1,
+      "message": "Also remove reference here",
+      "range": {
+        "startLine": 1504,
+        "startChar": 40,
+        "endLine": 1504,
+        "endChar": 60
+      },
+      "revId": "7adeade462fb868af33d759d30128e9b7e5904d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
