@@ -190,6 +190,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "caae131e_73e0f139",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-02T21:57:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "269b6454_e87d70f7",
+      "range": {
+        "startLine": 246,
+        "startChar": 21,
+        "endLine": 246,
+        "endChar": 58
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d4e0a41_bba7175a",
@@ -285,6 +309,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bdeb7b7_fe652c0a",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-02T21:57:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06ad6a2f_6ba032e0",
+      "range": {
+        "startLine": 278,
+        "startChar": 31,
+        "endLine": 278,
+        "endChar": 65
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4bff9a48_368b79ac",
@@ -322,6 +370,30 @@
       "side": 1,
       "message": "Same as above, let me know!",
       "parentUuid": "4bff9a48_368b79ac",
+      "range": {
+        "startLine": 297,
+        "startChar": 32,
+        "endLine": 297,
+        "endChar": 71
+      },
+      "revId": "382d6dce923ec6aa2bb489ebbab76da445137bc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7862e314_3c850f6a",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-02T21:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97b30bea_1c7dbddb",
       "range": {
         "startLine": 297,
         "startChar": 32,
