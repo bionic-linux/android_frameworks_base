@@ -16,6 +16,23 @@
       "message": "Addressed the comment. PTAL, Thanks!",
       "revId": "7a4ecd8f56b7a3a1e5500ef51360bb57078e966e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10ac4ca0_6d5511d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-02T20:32:52Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "7a4ecd8f56b7a3a1e5500ef51360bb57078e966e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
