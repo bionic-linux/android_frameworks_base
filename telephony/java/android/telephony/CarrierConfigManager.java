@@ -2046,7 +2046,12 @@ public class CarrierConfigManager {
      * via {@link android.telecom.PhoneAccount#CAPABILITY_VIDEO_CALLING_RELIES_ON_PRESENCE}
      * and can choose to hide or show the video calling icon based on whether a contact supports
      * video.
+     *
+     * @deprecated When {@true}, it is equivalent to that
+     * {@link #KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL} is true and
+     * {@link #KEY_RCS_PRESENCE_SUPPORTED_BOOL} is true.
      */
+    @Deprecated
     public static final String KEY_USE_RCS_PRESENCE_BOOL = "use_rcs_presence_bool";
 
     /**
@@ -3869,6 +3874,43 @@ public class CarrierConfigManager {
         public static final String KEY_ENABLE_PRESENCE_PUBLISH_BOOL =
                 KEY_PREFIX + "enable_presence_publish_bool";
 
+        /**
+         * Flag indicating whether or not this carrier supports the exchange of phone numbers with
+         * the carrier's RCS presence server in order to retrieve the RCS capabilities of requested
+         * contacts used in the RCS User Capability Exchange (UCE) procedure. See RCC.71, section 3
+         * for more information.
+         * <p>
+         * When presence is supported, the device uses the SIP SUBSCRIBE/NOTIFY procedure internally
+         * to retrieve the requested RCS capabilities. See {@link RcsUceAdapter} for more
+         * information on how RCS capabilities can be retrieved from the carrier's network.
+         */
+        public static final String KEY_RCS_PRESENCE_SUPPORTED_BOOL =
+                KEY_PREFIX + "rcs_presence_supported_bool";
+
+
+        /**
+         * Flag indicating whether or not the carrier expects the RCS UCE service to periodically
+         * refresh the RCS capabilities cache of the user's contacts as well as request the
+         * capabilities of call contacts when the SIM card is first inserted or when a new contact
+         * is added, removed, or modified. This corresponds to the RCC.07 A.19
+         * "DISABLE INITIAL ADDRESS BOOK SCAN" parameter.
+         * <p>
+         * If this flag is disabled, the capabilities cache will not be refreshed internally at all
+         * and will only be updated if the cached capabilities are stale when an application
+         * requests them.
+         */
+        public static final String KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL =
+                KEY_PREFIX + "rcs_bulk_capability_exchange_bool";
+
+        /**
+         * Flag indicating whether or not the carrier supports capability exchange with a list of
+         * contacts. When {@code true}, the device will batch together multiple requests and
+         * construct a RLMI document in the SIP SUBSCRIBE request (see RFC 4662). If {@code false},
+         * the request will be split up into one SIP SUBSCRIBE request per contact.
+         */
+        public static final String KEY_RCS_CAPABILITY_EXCHANGE_WITH_CONTACT_LIST_BOOL =
+                KEY_PREFIX + "rcs_capability_exchange_with_contact_list_bool";
+
         private Ims() {}
 
         private static PersistableBundle getDefaults() {
@@ -3876,6 +3918,9 @@ public class CarrierConfigManager {
             defaults.putInt(KEY_WIFI_OFF_DEFERRING_TIME_MILLIS_INT, 4000);
             defaults.putBoolean(KEY_IMS_SINGLE_REGISTRATION_REQUIRED_BOOL, false);
             defaults.putBoolean(KEY_ENABLE_PRESENCE_PUBLISH_BOOL, false);
+            defaults.putBoolean(KEY_RCS_PRESENCE_SUPPORTED_BOOL, false);
+            defaults.putBoolean(KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL, false);
+            defaults.putBoolean(KEY_RCS_CAPABILITY_EXCHANGE_WITH_CONTACT_LIST_BOOL, false);
             return defaults;
         }
     }
