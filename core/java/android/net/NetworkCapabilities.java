@@ -712,6 +712,9 @@ public final class NetworkCapabilities implements Parcelable {
         if (ArrayUtils.contains(originalAdministratorUids, creatorUid)) {
             setAdministratorUids(new int[] {creatorUid});
         }
+        if (hasTransport(TRANSPORT_VPN) && ((originalCapabilities & NET_CAPABILITY_NOT_VPN) == 0)) {
+            removeCapability(NET_CAPABILITY_NOT_VPN);
+        }
         // There is no need to clear the UIDs, they have already been cleared by clearAll() above.
     }
 
