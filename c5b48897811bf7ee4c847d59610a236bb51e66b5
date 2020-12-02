@@ -22,6 +22,29 @@
       },
       "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "337f50dd_f9280432",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T21:28:30Z",
+      "side": 1,
+      "message": "clarify this to \"supports bulk RCS contact exchange, which can be queried using the key {@link KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL}\"",
+      "range": {
+        "startLine": 64,
+        "startChar": 34,
+        "endLine": 65,
+        "endChar": 90
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
