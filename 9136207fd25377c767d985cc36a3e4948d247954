@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b98ffa97_448c4862",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-12-02T11:37:13Z",
+      "side": 1,
+      "message": "PTAL. Done for all except the naming. ",
+      "revId": "9136207fd25377c767d985cc36a3e4948d247954",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
