@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c92cfca3_1799b14b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T22:14:30Z",
+      "side": 1,
+      "message": "Actually, can we deprecate Data#CARRIER_PRESENCE and Data#CARRIER_PRESENCE_VT_CAPABLE, but keep CAPABILITY_VIDEO_CALLING_RELIES_ON_PRESENCE and update the docs of that to say that contacts db will only show presence information on devices where KEY_USE_RCS_PRESENCE_BOOL is true, otherwise use RcsUceAdapter?",
+      "parentUuid": "2e0dc000_64e003ca",
+      "range": {
+        "startLine": 2043,
+        "startChar": 6,
+        "endLine": 2046,
+        "endChar": 91
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e78ef6ff_1e3f2055",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 5
