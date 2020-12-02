@@ -24,6 +24,12 @@ import static android.Manifest.permission.UPDATE_DEVICE_STATS;
 import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PackageManager.GET_PERMISSIONS;
 import static android.content.pm.PackageManager.MATCH_ANY_USER;
+import static android.net.INetd.PERMISSION_INTERNET;
+import static android.net.INetd.PERMISSION_NETWORK;
+import static android.net.INetd.PERMISSION_NONE;
+import static android.net.INetd.PERMISSION_SYSTEM;
+import static android.net.INetd.PERMISSION_UNINSTALLED;
+import static android.net.INetd.PERMISSION_UPDATE_DEVICE_STATS;
 import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.Process.INVALID_UID;
 import static android.os.Process.SYSTEM_UID;
@@ -186,13 +192,12 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         for (int i = 0; i < systemPermission.size(); i++) {
             ArraySet<String> perms = systemPermission.valueAt(i);
             int uid = systemPermission.keyAt(i);
-            int netdPermission = 0;
+            int netdPermission = PERMISSION_NONE;
             // Get the uids of native services that have UPDATE_DEVICE_STATS or INTERNET permission.
             if (perms != null) {
                 netdPermission |= perms.contains(UPDATE_DEVICE_STATS)
-                        ? INetd.PERMISSION_UPDATE_DEVICE_STATS : 0;
-                netdPermission |= perms.contains(INTERNET)
-                        ? INetd.PERMISSION_INTERNET : 0;
+                        ? PERMISSION_UPDATE_DEVICE_STATS : PERMISSION_NONE;
+                netdPermission |= perms.contains(INTERNET) ? PERMISSION_INTERNET : PERMISSION_NONE;
             }
             netdPermsUids.put(uid, netdPermsUids.get(uid) | netdPermission);
         }
@@ -273,8 +278,8 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         }
         try {
             if (add) {
-                mNetd.networkSetPermissionForUser(INetd.PERMISSION_NETWORK, toIntArray(network));
-                mNetd.networkSetPermissionForUser(INetd.PERMISSION_SYSTEM, toIntArray(system));
+                mNetd.networkSetPermissionForUser(PERMISSION_NETWORK, toIntArray(network));
+                mNetd.networkSetPermissionForUser(PERMISSION_SYSTEM, toIntArray(system));
             } else {
                 mNetd.networkClearPermissionForUser(toIntArray(network));
                 mNetd.networkClearPermissionForUser(toIntArray(system));
@@ -343,7 +348,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     }
 
     private int getPermissionForUid(final int uid) {
-        int permission = INetd.PERMISSION_NONE;
+        int permission = PERMISSION_NONE;
         // Check all the packages for this UID. The UID has the permission if any of the
         // packages in it has the permission.
         final String[] packages = mPackageManager.getPackagesForUid(uid);
@@ -357,7 +362,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             }
         } else {
             // The last package of this uid is removed from device. Clean the package up.
-            permission = INetd.PERMISSION_UNINSTALLED;
+            permission = PERMISSION_UNINSTALLED;
         }
         return permission;
     }
@@ -470,16 +475,16 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
 
     private static int getNetdPermissionMask(String[] requestedPermissions,
                                              int[] requestedPermissionsFlags) {
-        int permissions = 0;
+        int permissions = PERMISSION_NONE;
         if (requestedPermissions == null || requestedPermissionsFlags == null) return permissions;
         for (int i = 0; i < requestedPermissions.length; i++) {
             if (requestedPermissions[i].equals(INTERNET)
                     && ((requestedPermissionsFlags[i] & REQUESTED_PERMISSION_GRANTED) != 0)) {
-                permissions |= INetd.PERMISSION_INTERNET;
+                permissions |= PERMISSION_INTERNET;
             }
             if (requestedPermissions[i].equals(UPDATE_DEVICE_STATS)
                     && ((requestedPermissionsFlags[i] & REQUESTED_PERMISSION_GRANTED) != 0)) {
-                permissions |= INetd.PERMISSION_UPDATE_DEVICE_STATS;
+                permissions |= PERMISSION_UPDATE_DEVICE_STATS;
             }
         }
         return permissions;
@@ -649,19 +654,19 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         for (int i = 0; i < netdPermissionsAppIds.size(); i++) {
             int permissions = netdPermissionsAppIds.valueAt(i);
             switch(permissions) {
-                case (INetd.PERMISSION_INTERNET | INetd.PERMISSION_UPDATE_DEVICE_STATS):
+                case (PERMISSION_INTERNET | PERMISSION_UPDATE_DEVICE_STATS):
                     allPermissionAppIds.add(netdPermissionsAppIds.keyAt(i));
                     break;
-                case INetd.PERMISSION_INTERNET:
+                case PERMISSION_INTERNET:
                     internetPermissionAppIds.add(netdPermissionsAppIds.keyAt(i));
                     break;
-                case INetd.PERMISSION_UPDATE_DEVICE_STATS:
+                case PERMISSION_UPDATE_DEVICE_STATS:
                     updateStatsPermissionAppIds.add(netdPermissionsAppIds.keyAt(i));
                     break;
-                case INetd.PERMISSION_NONE:
+                case PERMISSION_NONE:
                     noPermissionAppIds.add(netdPermissionsAppIds.keyAt(i));
                     break;
-                case INetd.PERMISSION_UNINSTALLED:
+                case PERMISSION_UNINSTALLED:
                     uninstalledAppIds.add(netdPermissionsAppIds.keyAt(i));
                     break;
                 default:
@@ -673,24 +678,23 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             // TODO: add a lock inside netd to protect IPC trafficSetNetPermForUids()
             if (allPermissionAppIds.size() != 0) {
                 mNetd.trafficSetNetPermForUids(
-                        INetd.PERMISSION_INTERNET | INetd.PERMISSION_UPDATE_DEVICE_STATS,
-                        ArrayUtils.convertToIntArray(allPermissionAppIds));
+                        PERMISSION_INTERNET | PERMISSION_UPDATE_DEVICE_STATS,
+                        toIntArray(allPermissionAppIds));
             }
             if (internetPermissionAppIds.size() != 0) {
-                mNetd.trafficSetNetPermForUids(INetd.PERMISSION_INTERNET,
-                        ArrayUtils.convertToIntArray(internetPermissionAppIds));
+                mNetd.trafficSetNetPermForUids(PERMISSION_INTERNET,
+                        toIntArray(internetPermissionAppIds));
             }
             if (updateStatsPermissionAppIds.size() != 0) {
-                mNetd.trafficSetNetPermForUids(INetd.PERMISSION_UPDATE_DEVICE_STATS,
-                        ArrayUtils.convertToIntArray(updateStatsPermissionAppIds));
+                mNetd.trafficSetNetPermForUids(PERMISSION_UPDATE_DEVICE_STATS,
+                        toIntArray(updateStatsPermissionAppIds));
             }
             if (noPermissionAppIds.size() != 0) {
-                mNetd.trafficSetNetPermForUids(INetd.PERMISSION_NONE,
-                        ArrayUtils.convertToIntArray(noPermissionAppIds));
+                mNetd.trafficSetNetPermForUids(PERMISSION_NONE, toIntArray(noPermissionAppIds));
             }
             if (uninstalledAppIds.size() != 0) {
-                mNetd.trafficSetNetPermForUids(INetd.PERMISSION_UNINSTALLED,
-                        ArrayUtils.convertToIntArray(uninstalledAppIds));
+                mNetd.trafficSetNetPermForUids(PERMISSION_UNINSTALLED,
+                        toIntArray(uninstalledAppIds));
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Pass appId list of special permission failed." + e);
