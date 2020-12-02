@@ -328,7 +328,8 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             return currentPermission;
         }
         try {
-            final PackageInfo app = mPackageManager.getPackageInfo(name, GET_PERMISSIONS);
+            final PackageInfo app = mPackageManager.getPackageInfo(name,
+                    GET_PERMISSIONS | MATCH_ANY_USER);
             final boolean isNetwork = hasNetworkPermission(app);
             final boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
             if (isNetwork || hasRestrictedPermission) {
@@ -662,6 +663,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
                     break;
                 case INetd.PERMISSION_UNINSTALLED:
                     uninstalledAppIds.add(netdPermissionsAppIds.keyAt(i));
+                    break;
                 default:
                     Log.e(TAG, "unknown permission type: " + permissions + "for uid: "
                             + netdPermissionsAppIds.keyAt(i));

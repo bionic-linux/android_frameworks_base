@@ -2212,8 +2212,9 @@ public class ConnectivityServiceTest {
 
     private void grantUsingBackgroundNetworksPermissionForUid(final int uid) throws Exception {
         final String testPackageName = mContext.getPackageName();
-        when(mPackageManager.getPackageInfo(eq(testPackageName), eq(GET_PERMISSIONS)))
-                .thenReturn(buildPackageInfo(true, uid));
+        when(mPackageManager.getPackageInfo(
+                eq(testPackageName), eq(GET_PERMISSIONS | MATCH_ANY_USER)))
+                .thenReturn(buildPackageInfo(true /* hasSystemPermission */, uid));
         mService.mPermissionMonitor.onPackageAdded(testPackageName, uid);
     }
 
