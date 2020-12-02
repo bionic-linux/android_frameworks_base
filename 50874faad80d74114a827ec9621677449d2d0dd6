@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "800e0289_7ea74215",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:32Z",
+      "side": 1,
+      "message": "This field should only be set when the object instance is leaving the process boundary. This method i.e reset() should only be called on the internal master reference of WifiInfo that wifi stack holds. We should never have set this field on this master instance. This is just a failsafe to ensure that we don\u0027t accidentally misuse this bit (having the main copy set this bit may result in this accidentally being sent out in copies we make for apps).\n\nNote this entire masking framework is based on existing LinkProperties design.  See reference of a similar functionality here: https://source.corp.google.com/android/frameworks/base/core/java/android/net/LinkProperties.java;rcl\u003def8b3c04b449f84a961bb5fcaff3cd1f2152ce16;l\u003d871\nThis is the mechanism preferred by the core networking team and seems to be a safe way to handle masking because it avoids the hassle of masking copies when passed internally within the same process (since masking does not help within the same process). The masking only takes effect/needed in the public API handling where the object instance can leave the process boundary.\n\n\nAdded a comment to that effect.",
+      "parentUuid": "ed62cff7_f36575f5",
+      "range": {
+        "startLine": 334,
+        "startChar": 12,
+        "endLine": 335,
+        "endChar": 87
+      },
+      "revId": "50874faad80d74114a827ec9621677449d2d0dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06fcc659_fdfe6892",
         "filename": "wifi/java/android/net/wifi/WifiInfo.java",
         "patchSetId": 2
@@ -37,6 +61,24 @@
       "writtenOn": "2020-11-24T02:47:16Z",
       "side": 1,
       "message": "I think we need an isAtLeastS() check here.",
+      "revId": "50874faad80d74114a827ec9621677449d2d0dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3500657e_4da715d8",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-02T19:08:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06fcc659_fdfe6892",
       "revId": "50874faad80d74114a827ec9621677449d2d0dd6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
