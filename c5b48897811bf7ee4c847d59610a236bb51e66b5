@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e0dc000_64e003ca",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T22:06:14Z",
+      "side": 1,
+      "message": "can you deprecate these columns in contacts db as well as CAPABILITY_VIDEO_CALLING_RELIES_ON_PRESENCE?",
+      "range": {
+        "startLine": 2043,
+        "startChar": 6,
+        "endLine": 2046,
+        "endChar": 91
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e78ef6ff_1e3f2055",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 5
@@ -14,6 +37,30 @@
       "writtenOn": "2020-12-02T21:21:49Z",
       "side": 1,
       "message": "can we clarify this a little more based on conversations we had in yesterday\u0027s meeting: \"No longer used in framework code, however it may still be used by applications that have not updated their code. This config should still be set to {@code true} if {@link #KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL} is set to {@code true} and {@link #KEY_RCS_PRESENCE_SUPPORTED_BOOL} is set to {@code true}.",
+      "range": {
+        "startLine": 2050,
+        "startChar": 19,
+        "endLine": 2052,
+        "endChar": 56
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29ce90c8_a5197340",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T22:06:14Z",
+      "side": 1,
+      "message": "Actually, I dont think we need to fully remove this from platform code. Instead, it can represent older devices that still use the old service that syncs the contacts db with the vt capabilities...\n\nSo, maybe we can make this distinction: older devices still use KEY_USE_RCS_PRESENCE_BOOL and check the contacts db for vt capabilities.\n\nNewer devices use Ims.KEY_RCS_PRESENCE_SUPPORTED_BOOL and Ims.KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL as well as the API defined in RcsUceAdapter. That way, we can also deprecate the bit .",
+      "parentUuid": "e78ef6ff_1e3f2055",
       "range": {
         "startLine": 2050,
         "startChar": 19,
@@ -42,6 +89,75 @@
         "startChar": 19,
         "endLine": 3870,
         "endChar": 44
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be977ae2_a8500c05",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3887,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T22:06:14Z",
+      "side": 1,
+      "message": "KEY_ENABLE_PRESENCE_PUBLISH_BOOL and KEY_RCS_PRESENCE_SUPPORTED_BOOL is a little confusing, can we rename KEY_RCS_PRESENCE_SUPPORTED_BOOL -\u003e KEY_ENABLE_PRESENCE_CAPABILITY_EXCHANGE_BOOL to keep the convention similar?",
+      "range": {
+        "startLine": 3887,
+        "startChar": 35,
+        "endLine": 3887,
+        "endChar": 66
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f41147a_b5ade222",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3911,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T22:06:14Z",
+      "side": 1,
+      "message": "Sorry, can we rename this to: KEY_ENABLE_PRESENCE_GROUP_SUBSCRIBE_BOOL?",
+      "range": {
+        "startLine": 3911,
+        "startChar": 35,
+        "endLine": 3911,
+        "endChar": 85
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "342a961f_56e05b00",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3923,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T22:06:14Z",
+      "side": 1,
+      "message": "this should probably be true by default.",
+      "range": {
+        "startLine": 3923,
+        "startChar": 84,
+        "endLine": 3923,
+        "endChar": 89
       },
       "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
