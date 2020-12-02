@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcc5b77a_efb7682a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3870,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-02T21:31:11Z",
+      "side": 1,
+      "message": "can you also update this to KEY_RCS_PRESENCE_SUPPORTED_BOOL",
+      "range": {
+        "startLine": 3870,
+        "startChar": 19,
+        "endLine": 3870,
+        "endChar": 44
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "337f50dd_f9280432",
         "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
         "patchSetId": 5
