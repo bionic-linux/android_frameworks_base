@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36ecba69_343d7424",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-02T07:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3872810_6fb1ffb5",
+      "range": {
+        "startLine": 2033,
+        "startChar": 6,
+        "endLine": 2036,
+        "endChar": 61
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b306d805_b3dbdf1b",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-12-01T23:45:47Z",
       "side": 1,
       "message": "Can these new keys be moved into the IMS class namespace below?",
+      "range": {
+        "startLine": 2038,
+        "startChar": 31,
+        "endLine": 2038,
+        "endChar": 62
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f643fdac_1216dc79",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2038,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-02T07:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b306d805_b3dbdf1b",
       "range": {
         "startLine": 2038,
         "startChar": 31,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f5a598b_cdc8689b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2042,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-02T07:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba6c274_83a9141b",
+      "range": {
+        "startLine": 2041,
+        "startChar": 7,
+        "endLine": 2042,
+        "endChar": 26
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5bdaa68_07d61657",
@@ -100,6 +172,30 @@
       "writtenOn": "2020-12-01T23:45:47Z",
       "side": 1,
       "message": "nit grammar: \"Flag indicating whether or not the carrier supports capability exchange with a list of contacts.\"",
+      "range": {
+        "startLine": 2048,
+        "startChar": 7,
+        "endLine": 2048,
+        "endChar": 99
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "930e8529_547a432c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-02T07:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5bdaa68_07d61657",
       "range": {
         "startLine": 2048,
         "startChar": 7,
@@ -156,6 +252,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83494c36_42aa4fdf",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-02T07:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50e05559_fd4fe2a1",
+      "range": {
+        "startLine": 2049,
+        "startChar": 7,
+        "endLine": 2049,
+        "endChar": 8
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91695c7a_339517e2",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-02T07:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8b43837_294680c4",
+      "range": {
+        "startLine": 2049,
+        "startChar": 37,
+        "endLine": 2049,
+        "endChar": 42
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ad7ee18_9eca94a4",
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1551f489_56e993ff",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2050,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-02T07:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ad7ee18_9eca94a4",
+      "range": {
+        "startLine": 2049,
+        "startChar": 0,
+        "endLine": 2050,
+        "endChar": 90
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0030898c_911e9143",
@@ -192,6 +360,30 @@
       "writtenOn": "2020-12-01T23:45:47Z",
       "side": 1,
       "message": "can you mark this as @deprecated and document that KEY_RCS_PRESENCE_SUPPORTED_BOOL \u003d true is equivalent to KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL \u003d true and  KEY_RCS_PRESENCE_SUPPORTED_BOOL \u003d true?",
+      "range": {
+        "startLine": 2065,
+        "startChar": 31,
+        "endLine": 2065,
+        "endChar": 56
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9085c9c8_31a5e19b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-02T07:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0030898c_911e9143",
       "range": {
         "startLine": 2065,
         "startChar": 31,
