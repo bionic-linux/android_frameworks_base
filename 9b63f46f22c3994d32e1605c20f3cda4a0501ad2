@@ -1987,6 +1987,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdde325a_11e8a0b4",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 31
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-02T23:30:22Z",
+      "side": 1,
+      "message": "Spoke to Robert to verify, we are good with it being part of the mainline module.",
+      "parentUuid": "62db5282_214f5fc6",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 71
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e425270d_8474caf4",
@@ -3984,6 +4008,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60c43661_77dbc245",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-02T23:30:22Z",
+      "side": 1,
+      "message": "Switched it to TrackRecord, I realized had used it in my CTS test written in Kotlin so there wasn\u0027t a learning curve.  (Although figuring out what type returns #getReadHead was pretty annoying.)",
+      "parentUuid": "78b5bb92_becc533e",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 33
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50ec491d_d966b3f0",
@@ -4519,6 +4567,30 @@
         "startChar": 12,
         "endLine": 7651,
         "endChar": 29
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc50047f_4bf5f9e3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7651,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-02T23:30:22Z",
+      "side": 1,
+      "message": "I just copied and pasted it.  I looked more closely at TestNetworkAgentWrapper#connect and it looks like it\u0027s waiting on NetworkCallback and so I think we are good here.\n\nI removed the broadcast and it worked (which of course could be a timing thing.)",
+      "parentUuid": "9ce6e653_003a8935",
+      "range": {
+        "startLine": 7651,
+        "startChar": 35,
+        "endLine": 7651,
+        "endChar": 64
       },
       "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"

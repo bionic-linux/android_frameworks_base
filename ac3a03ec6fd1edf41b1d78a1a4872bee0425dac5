@@ -759,6 +759,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cd897cc_0124c7ca",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-02T23:30:22Z",
+      "side": 1,
+      "message": "Did some reading, I definitely learned something, thank you!\n\nI switched the callback to volatile which looks to be enough, but... let me know.",
+      "parentUuid": "6e871ebe_bdd8a685",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 43
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "275d5da3_9c90b941",
