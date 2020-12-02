@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa498a64_1f5a7a60",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-02T21:16:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "800e0289_7ea74215",
+      "range": {
+        "startLine": 334,
+        "startChar": 12,
+        "endLine": 335,
+        "endChar": 87
+      },
+      "revId": "50874faad80d74114a827ec9621677449d2d0dd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06fcc659_fdfe6892",
