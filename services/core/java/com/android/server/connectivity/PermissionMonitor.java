@@ -73,8 +73,8 @@ import java.util.Set;
 
 
 /**
- * A utility class to inform Netd of UID permisisons.
- * Does a mass update at boot and then monitors for app install/remove.
+ * A utility class to inform Netd of UID permissions.
+ * Does a mass update at boot and then monitors for app install/remove/change.
  *
  * @hide
  */
@@ -94,7 +94,8 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     @GuardedBy("this")
     private final Set<Integer> mUsers = new HashSet<>();
 
-    // Keys are app uids. Values are true for SYSTEM permission and false for NETWORK permission.
+    // Keys are UIDs. Values are true for SYSTEM permission and false for NETWORK permission.
+    // update() will use its key and user id to generate uid list.
     @GuardedBy("this")
     private final Map<Integer, Boolean> mApps = new HashMap<>();
 
@@ -156,11 +157,12 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         SparseIntArray netdPermsUids = new SparseIntArray();
 
         for (PackageInfo app : apps) {
+            // This is UID not uid that composed by user id and app id.
             int uid = app.applicationInfo != null ? app.applicationInfo.uid : INVALID_UID;
             if (uid < 0) {
                 continue;
             }
-            mAllApps.add(UserHandle.getAppId(uid));
+            mAllApps.add(uid); // appId is the same as a UID.
 
             boolean isNetwork = hasNetworkPermission(app);
             boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
@@ -193,7 +195,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             ArraySet<String> perms = systemPermission.valueAt(i);
             int uid = systemPermission.keyAt(i);
             int netdPermission = PERMISSION_NONE;
-            // Get the uids of native services that have UPDATE_DEVICE_STATS or INTERNET permission.
+            // Get the UIDs of native services that have UPDATE_DEVICE_STATS or INTERNET permission.
             if (perms != null) {
                 netdPermission |= perms.contains(UPDATE_DEVICE_STATS)
                         ? PERMISSION_UPDATE_DEVICE_STATS : PERMISSION_NONE;
@@ -250,12 +252,12 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
 
     /** Returns whether the given uid has using background network permission. */
     public synchronized boolean hasUseBackgroundNetworksPermission(final int uid) {
-        // Apps with any of the CHANGE_NETWORK_STATE, NETWORK_STACK, CONNECTIVITY_INTERNAL or
-        // CONNECTIVITY_USE_RESTRICTED_NETWORKS permission has the permission to use background
-        // networks. mApps contains the result of checks for both hasNetworkPermission and
-        // hasRestrictedNetworkPermission. If uid is in the mApps list that means uid has one of
-        // permissions at least.
-        return mApps.containsKey(uid);
+        // Apps with any of the CHANGE_NETWORK_STATE, NETWORK_STACK,
+        // CONNECTIVITY_USE_RESTRICTED_NETWORKS or PERMISSION_MAINLINE_NETWORK_STACK permission has
+        // the permission to use background networks. mApps contains the result of checks for both
+        // hasNetworkPermission and hasRestrictedNetworkPermission. If the appId (same as a UID) is
+        // in the mApps list that means given uid has one of permissions at least.
+        return mApps.containsKey(UserHandle.getAppId(uid));
     }
 
     private int[] toIntArray(Collection<Integer> list) {
@@ -385,7 +387,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
         if (permission != mApps.get(uid)) {
             mApps.put(uid, permission);
 
-            Map<Integer, Boolean> apps = new HashMap<>();
+            final Map<Integer, Boolean> apps = new HashMap<>();
             apps.put(uid, permission);
             update(mUsers, apps, true);
         }
@@ -432,7 +434,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             mAllApps.remove(UserHandle.getAppId(uid));
         }
 
-        Map<Integer, Boolean> apps = new HashMap<>();
+        final Map<Integer, Boolean> apps = new HashMap<>();
         Boolean permission = null;
         String[] packages = mPackageManager.getPackagesForUid(uid);
         if (packages != null && packages.length > 0) {
@@ -580,7 +582,8 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
      */
     private void removeBypassingUids(Set<Integer> uids, int vpnAppUid) {
         uids.remove(vpnAppUid);
-        uids.removeIf(uid -> mApps.getOrDefault(uid, NETWORK) == SYSTEM);
+        // Use appId (same as a UID) to get value from mApps.
+        uids.removeIf(uid -> mApps.getOrDefault(UserHandle.getAppId(uid), NETWORK) == SYSTEM);
     }
 
     /**
