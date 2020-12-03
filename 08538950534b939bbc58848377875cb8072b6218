@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "453e4740_99ba5bc9",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T23:14:14Z",
+      "side": 1,
+      "message": "Would this reference change over the life time of this class? If not, please consider making it final so that constructor has to initialize it.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 33
+      },
+      "revId": "08538950534b939bbc58848377875cb8072b6218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5e52ca9_90fd419c",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T23:14:14Z",
+      "side": 1,
+      "message": "Please consider mark this one \"final\" and initialize it on declaration\n\ne.g.\n\nfinal Map\u003cAdapterStateCallback, Executor\u003e mCallbackMap \u003d new HashMap\u003c\u003e();\n\nso that you don\u0027t have to initialize it in the constructor.\n\nAlso, why is this one package private? I did not see any usage outside of this class yet.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "08538950534b939bbc58848377875cb8072b6218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76db3e6b_8d283350",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T23:14:14Z",
+      "side": 1,
+      "message": "nit: mCallbackMap.isEmpty()",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 40
+      },
+      "revId": "08538950534b939bbc58848377875cb8072b6218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5335b05c_e7b4b5de",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T23:14:14Z",
+      "side": 1,
+      "message": "The iteration order here is non-deterministic. If we want it to be deterministic, please consider using LinkedHashMap instead. In LikedHashMap, keySet(), values(), and entrySet() are guaranteed to be ordered.",
+      "range": {
+        "startLine": 124,
+        "startChar": 43,
+        "endLine": 124,
+        "endChar": 64
+      },
+      "revId": "08538950534b939bbc58848377875cb8072b6218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
