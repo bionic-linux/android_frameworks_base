@@ -97,6 +97,30 @@
       },
       "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc1d7497_8d3b4f76",
+        "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2020-12-03T19:57:14Z",
+      "side": 1,
+      "message": "Do you mean that it overwrites the wakeup reason for the most recent wakeup?  Is there a possibility of a race?",
+      "parentUuid": "0745fa42_19e19c00",
+      "range": {
+        "startLine": 165,
+        "startChar": 9,
+        "endLine": 165,
+        "endChar": 25
+      },
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
