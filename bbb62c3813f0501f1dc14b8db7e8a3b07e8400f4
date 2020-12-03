@@ -16,6 +16,46 @@
       "message": "Please kindly review this commit.",
       "revId": "bbb62c3813f0501f1dc14b8db7e8a3b07e8400f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b0ca54a_6831de50",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2517,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2020-12-03T22:04:15Z",
+      "side": 1,
+      "message": "Can we reuse like\npublic static final String COLUMN_BROADCAST_GENRE \u003d Programs.COLUMN_BROADCAST_GENRE;",
+      "revId": "bbb62c3813f0501f1dc14b8db7e8a3b07e8400f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ddc6858_40fe83d7",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2522,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2020-12-03T22:04:15Z",
+      "side": 1,
+      "message": "It looks same as Programs.Genres.\nCan we use Programs.Genres#encode/decode ?",
+      "range": {
+        "startLine": 2522,
+        "startChar": 1,
+        "endLine": 2522,
+        "endChar": 42
+      },
+      "revId": "bbb62c3813f0501f1dc14b8db7e8a3b07e8400f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
