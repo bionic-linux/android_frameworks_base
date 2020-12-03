@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94969d7b_104065a1",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-03T07:09:37Z",
+      "side": 1,
+      "message": "IIUC this is misleading.\nIt should define as latest type, and use MAX_SNAPSHOT_TYPE+1 here.\nOr something like SNAPSHOT_TYPE_LENGTH \u003d SNAPSHOT_TYPE_DEV + 1",
+      "range": {
+        "startLine": 338,
+        "startChar": 66,
+        "endLine": 338,
+        "endChar": 83
+      },
+      "revId": "fa9df471336b7df1a2629e962c0acd6399884745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
