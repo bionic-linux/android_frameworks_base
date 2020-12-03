@@ -94,7 +94,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
     @GuardedBy("this")
     private final Set<Integer> mUsers = new HashSet<>();
 
-    // Keys are app uids. Values are true for SYSTEM permission and false for NETWORK permission.
+    // Keys are app ids. Values are true for SYSTEM permission and false for NETWORK permission.
     @GuardedBy("this")
     private final Map<Integer, Boolean> mApps = new HashMap<>();
 
@@ -160,17 +160,18 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             if (uid < 0) {
                 continue;
             }
-            mAllApps.add(UserHandle.getAppId(uid));
+            final int appId = UserHandle.getAppId(uid);
+            mAllApps.add(appId);
 
             boolean isNetwork = hasNetworkPermission(app);
             boolean hasRestrictedPermission = hasRestrictedNetworkPermission(app);
 
             if (isNetwork || hasRestrictedPermission) {
-                Boolean permission = mApps.get(uid);
+                Boolean permission = mApps.get(appId);
                 // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
                 // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
                 if (permission == null || permission == NETWORK) {
-                    mApps.put(uid, hasRestrictedPermission);
+                    mApps.put(appId, hasRestrictedPermission);
                 }
             }
 
@@ -250,12 +251,12 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
 
     /** Returns whether the given uid has using background network permission. */
     public synchronized boolean hasUseBackgroundNetworksPermission(final int uid) {
-        // Apps with any of the CHANGE_NETWORK_STATE, NETWORK_STACK, CONNECTIVITY_INTERNAL or
-        // CONNECTIVITY_USE_RESTRICTED_NETWORKS permission has the permission to use background
-        // networks. mApps contains the result of checks for both hasNetworkPermission and
-        // hasRestrictedNetworkPermission. If uid is in the mApps list that means uid has one of
-        // permissions at least.
-        return mApps.containsKey(uid);
+        // Apps with any of the CHANGE_NETWORK_STATE, NETWORK_STACK,
+        // CONNECTIVITY_USE_RESTRICTED_NETWORKS or PERMISSION_MAINLINE_NETWORK_STACK permission has
+        // the permission to use background networks. mApps contains the result of checks for both
+        // hasNetworkPermission and hasRestrictedNetworkPermission. If app id(base uid) is in the
+        // mApps list that means given uid has one of permissions at least.
+        return mApps.containsKey(UserHandle.getAppId(uid));
     }
 
     private int[] toIntArray(Collection<Integer> list) {
@@ -381,12 +382,13 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
 
         // If multiple packages share a UID (cf: android:sharedUserId) and ask for different
         // permissions, don't downgrade (i.e., if it's already SYSTEM, leave it as is).
-        final Boolean permission = highestPermissionForUid(mApps.get(uid), packageName);
-        if (permission != mApps.get(uid)) {
-            mApps.put(uid, permission);
+        final int appId = UserHandle.getAppId(uid);
+        final Boolean permission = highestPermissionForUid(mApps.get(appId), packageName);
+        if (permission != mApps.get(appId)) {
+            mApps.put(appId, permission);
 
             Map<Integer, Boolean> apps = new HashMap<>();
-            apps.put(uid, permission);
+            apps.put(appId, permission);
             update(mUsers, apps, true);
         }
 
@@ -401,7 +403,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
                 updateVpnUids(vpn.getKey(), changedUids, true);
             }
         }
-        mAllApps.add(UserHandle.getAppId(uid));
+        mAllApps.add(appId);
     }
 
     /**
@@ -428,8 +430,9 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
             }
         }
         // If the package has been removed from all users on the device, clear it form mAllApps.
+        final int appId = UserHandle.getAppId(uid);
         if (mPackageManager.getNameForUid(uid) == null) {
-            mAllApps.remove(UserHandle.getAppId(uid));
+            mAllApps.remove(appId);
         }
 
         Map<Integer, Boolean> apps = new HashMap<>();
@@ -446,16 +449,16 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
                 }
             }
         }
-        if (permission == mApps.get(uid)) {
+        if (permission == mApps.get(appId)) {
             // The permissions of this UID have not changed. Nothing to do.
             return;
         } else if (permission != null) {
-            mApps.put(uid, permission);
-            apps.put(uid, permission);
+            mApps.put(appId, permission);
+            apps.put(appId, permission);
             update(mUsers, apps, true);
         } else {
-            mApps.remove(uid);
-            apps.put(uid, NETWORK);  // doesn't matter which permission we pick here
+            mApps.remove(appId);
+            apps.put(appId, NETWORK);  // doesn't matter which permission we pick here
             update(mUsers, apps, false);
         }
     }
@@ -580,7 +583,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
      */
     private void removeBypassingUids(Set<Integer> uids, int vpnAppUid) {
         uids.remove(vpnAppUid);
-        uids.removeIf(uid -> mApps.getOrDefault(uid, NETWORK) == SYSTEM);
+        uids.removeIf(uid -> mApps.getOrDefault(UserHandle.getAppId(uid), NETWORK) == SYSTEM);
     }
 
     /**
