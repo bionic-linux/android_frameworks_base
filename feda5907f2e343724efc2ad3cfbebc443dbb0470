@@ -16,6 +16,24 @@
       "message": "Not very clear to me that for the modules that register agent outside of system server, what will be the actual problem if we don\u0027t do this?\nOr it is generally a good thing that we should do this for NAI creation?",
       "revId": "feda5907f2e343724efc2ad3cfbebc443dbb0470",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbc777f6_3ecc383c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-03T07:45:23Z",
+      "side": 1,
+      "message": "Calling identity determines Android permissions. I think one issue we\u0027ve seen in the past is that we were trying to create NetworkMonitor with the calling identity of whoever created the network, and that NetworkMonitor did not have the right permissions to do what it needed to do. I can\u0027t remember the details, perhaps Remi or Chiachang do.",
+      "parentUuid": "84d15489_1d546e3b",
+      "revId": "feda5907f2e343724efc2ad3cfbebc443dbb0470",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
