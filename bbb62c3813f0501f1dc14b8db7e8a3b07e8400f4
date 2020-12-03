@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8a4abbe_8fad8d3e",
+        "filename": "media/java/android/media/tv/TvContract.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2508,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2020-12-03T22:07:31Z",
+      "side": 1,
+      "message": "Can you give same example for use case, like the comments for Programs#COLUMN_BROADCAST_GENRE",
+      "revId": "bbb62c3813f0501f1dc14b8db7e8a3b07e8400f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0b0ca54a_6831de50",
         "filename": "media/java/android/media/tv/TvContract.java",
         "patchSetId": 4
