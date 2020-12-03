@@ -39,6 +39,30 @@
       },
       "revId": "488fbe379b17202f686ea9865149a29759f10679",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d5ab836_75bcc3bc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5219,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-03T09:47:40Z",
+      "side": 1,
+      "message": "Oops!\nYeah, I think Lorenzo is right, so we need to figure out why wtf log was printed.\nIt shoudln\u0027t be printed if vpn never be null.\n---\nif (vpn \u003d\u003d null) {\n    // Shouldn\u0027t happen as all code paths that point here should have checked the Vpn\n    // exists already.\n    Slog.wtf(TAG, \"User \" + userId + \" has no Vpn configuration\");\n    return false;\n}",
+      "parentUuid": "01fe091f_8d096628",
+      "range": {
+        "startLine": 5219,
+        "startChar": 20,
+        "endLine": 5219,
+        "endChar": 32
+      },
+      "revId": "488fbe379b17202f686ea9865149a29759f10679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
