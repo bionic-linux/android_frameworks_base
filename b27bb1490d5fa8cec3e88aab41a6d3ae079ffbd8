@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "187d2855_5831f887",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T22:56:43Z",
+      "side": 1,
+      "message": "Prefer UwbManager or UwbManager.class.getSimpleName() so that we know which class printed this log",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc5991fd_c94d794d",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T22:56:43Z",
+      "side": 1,
+      "message": "Add \"return X on error\"?",
+      "range": {
+        "startLine": 311,
+        "startChar": 7,
+        "endLine": 311,
+        "endChar": 54
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ab88589_770f7dad",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T22:56:43Z",
+      "side": 1,
+      "message": "Just to confirm, 0 means error or invalid resolution. Therefore, is the smallest resolution 1 to indicate +/- 1 nanosecond?",
+      "range": {
+        "startLine": 319,
+        "startChar": 19,
+        "endLine": 319,
+        "endChar": 20
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "542762f8_c9213dd7",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T22:56:43Z",
+      "side": 1,
+      "message": "Same here, please adjust the comments to reflect error condition",
+      "range": {
+        "startLine": 326,
+        "startChar": 4,
+        "endLine": 326,
+        "endChar": 98
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd6a2fc6_093ca65e",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T22:56:43Z",
+      "side": 1,
+      "message": "Same here, please adjust the comments to reflect error condition",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 78
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06fc08ed_db3922c9",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T22:56:43Z",
+      "side": 1,
+      "message": "Same here, please adjust the comments to reflect error condition",
+      "range": {
+        "startLine": 356,
+        "startChar": 4,
+        "endLine": 356,
+        "endChar": 78
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
