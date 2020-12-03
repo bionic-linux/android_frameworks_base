@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5f9e464_3f9ee0c4",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-03T21:04:41Z",
+      "side": 1,
+      "message": "Because this is the interface (i.e NetworkAgent) from the various transports (wifi, mobile, aware, etc) to connectivity service. So, the instance passed from the transports to connectivity should always contain all the data. The stripping out should only happen from the API surface from ConnectivityManager to external apps.",
+      "parentUuid": "05521afc_fefbeeaa",
+      "range": {
+        "startLine": 418,
+        "startChar": 80,
+        "endLine": 418,
+        "endChar": 84
+      },
+      "revId": "c722af49d5c4f38d9a91dc1c8cea25e0b8840742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e5742ef0_747bf9cb",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 5
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-03T02:53:59Z",
       "side": 1,
       "message": "Do you need to strip out the information here or is the assumption that it is already done when the NC was initiated via the set method?",
+      "range": {
+        "startLine": 1765,
+        "startChar": 42,
+        "endLine": 1765,
+        "endChar": 56
+      },
+      "revId": "c722af49d5c4f38d9a91dc1c8cea25e0b8840742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aac24d16_88ac2141",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1765,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-03T21:04:41Z",
+      "side": 1,
+      "message": "Yeah, The TransportInfo instance in this copy (initiated via set() method) should have the parcelLocationSensitiveFields set (or reset) as well. So, the parcelling code in TransportInfo will take care of stripping out the necessary info.",
+      "parentUuid": "e5742ef0_747bf9cb",
       "range": {
         "startLine": 1765,
         "startChar": 42,
