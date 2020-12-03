@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f63948ea_86c30bd4",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-03T04:35:06Z",
+      "side": 1,
+      "message": "Also add a comment that dependencies should add the JNI libs",
+      "range": {
+        "startLine": 18,
+        "startChar": 65,
+        "endLine": 18,
+        "endChar": 66
+      },
+      "revId": "3266dea4dbf01aedaf36c1a08f5ca6dd6c20545c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35c8e707_32b619f3",
+        "filename": "tests/net/java/android/net/nsd/NsdManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-03T04:35:06Z",
+      "side": 1,
+      "message": "But does it need to be a member variable instead of a local ?\nAlso would this work ?\ndoReturn(new Messenger(...)).when(mService).getMessenger();\n\nI think the problem is linked with the fact that Messenger constructor calls mServiceHandler.getIMessenger(), which is final so not registered previously, but now it finds 2 mock calls when trying to setup the mock: mServiceHandler.getIMessenger and mService.getMessenger().",
+      "range": {
+        "startLine": 70,
+        "startChar": 53,
+        "endLine": 71,
+        "endChar": 56
+      },
+      "revId": "3266dea4dbf01aedaf36c1a08f5ca6dd6c20545c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

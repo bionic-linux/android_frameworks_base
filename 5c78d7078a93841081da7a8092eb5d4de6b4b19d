@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0668a0f6_30dfadb7",
+        "filename": "tests/net/java/com/android/server/connectivity/MultipathPolicyTrackerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-03T04:35:06Z",
+      "side": 0,
+      "message": "This means that if ConnectivityService calls getSystemService(String) it won\u0027t be mocked\nCould you instead replace this call by:\nwhen(mContext.getSystemService(serviceClass)).thenReturn(service);\n\nso that both methods are mocked ?",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 82
+      },
+      "revId": "5c78d7078a93841081da7a8092eb5d4de6b4b19d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
