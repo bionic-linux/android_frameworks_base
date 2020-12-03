@@ -110,6 +110,30 @@
       },
       "revId": "1d5d454c6b3546f7dc52974788ad31c275969402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3942bcda_04a415ef",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-03T03:02:19Z",
+      "side": 1,
+      "message": "Just FYI, Jean is OOO til Dec 7.",
+      "parentUuid": "0bd5e297_cefb2f6b",
+      "range": {
+        "startLine": 1192,
+        "startChar": 20,
+        "endLine": 1192,
+        "endChar": 28
+      },
+      "revId": "1d5d454c6b3546f7dc52974788ad31c275969402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
