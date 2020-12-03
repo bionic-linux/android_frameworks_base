@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26757d34_51b5e71f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-03T09:38:35Z",
+      "side": 1,
+      "message": "I don\u0027t think simply accepting a null Vpn object is OK here. On the surface it looks like this cannot happen (see inline). If we are actually observing this log.wtf, then that suggests some deeper problem in the code, or at least, something we don\u0027t understand.",
+      "revId": "488fbe379b17202f686ea9865149a29759f10679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01fe091f_8d096628",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5219,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-03T09:38:35Z",
+      "side": 1,
+      "message": "How can this be null? Don\u0027t we always create a new Vpn object in onUserStarted? Can onUserUnlocked be called before onUserStarted?",
+      "range": {
+        "startLine": 5219,
+        "startChar": 20,
+        "endLine": 5219,
+        "endChar": 32
+      },
+      "revId": "488fbe379b17202f686ea9865149a29759f10679",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
