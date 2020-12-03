@@ -16,6 +16,52 @@
       "message": "Friendly ping!",
       "revId": "3163bf0d35e1434022c95d9661a034665d2d68fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99d26edd_79e4cac2",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T22:51:36Z",
+      "side": 1,
+      "message": "please consider reuse Context.UWB_SERVICE to avoid duplicate definition",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "3163bf0d35e1434022c95d9661a034665d2d68fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d98fc825_735ac944",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-03T22:51:36Z",
+      "side": 1,
+      "message": "please consider reuse Context.UWB_SERVICE to avoid duplicate definition",
+      "range": {
+        "startLine": 118,
+        "startChar": 46,
+        "endLine": 118,
+        "endChar": 58
+      },
+      "revId": "3163bf0d35e1434022c95d9661a034665d2d68fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
