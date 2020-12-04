@@ -87,6 +87,14 @@ public class Build {
     /** The end-user-visible name for the end product. */
     public static final String MODEL = getString("ro.product.model");
 
+    /** The manufacturer of the device's primary system-on-chip. */
+    @NonNull
+    public static final String SOC_MANUFACTURER = getString("ro.soc.manufacturer");
+
+    /** The model name of the device's primary system-on-chip. */
+    @NonNull
+    public static final String SOC_MODEL = getString("ro.soc.model");
+
     /** The system bootloader version number. */
     public static final String BOOTLOADER = getString("ro.bootloader");
 
