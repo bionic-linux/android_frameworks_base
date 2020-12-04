@@ -421,4 +421,12 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         filter.addDataScheme("package");
         context.registerReceiver(receiver, filter);
     }
+
+    /**
+     * Register the observer for
+     * {@link android.provider.Settings.Global#FORCE_COMPAT_USER_FINAL_BUILD}
+     */
+    public void registerContentObserver() {
+        mCompatConfig.registerContentObserver();
+    }
 }
