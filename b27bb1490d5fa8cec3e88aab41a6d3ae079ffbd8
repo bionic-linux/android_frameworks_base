@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9125e9e8_ff5c216d",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-04T00:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187d2855_5831f887",
+      "range": {
+        "startLine": 49,
+        "startChar": 39,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc5991fd_c94d794d",
@@ -61,6 +85,30 @@
       "side": 1,
       "message": "So looking into this more, it looks like we should actually rethrow the exception as e.rethrowFromSystemServer().",
       "parentUuid": "dc5991fd_c94d794d",
+      "range": {
+        "startLine": 311,
+        "startChar": 7,
+        "endLine": 311,
+        "endChar": 54
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3af07c96_16dd643d",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-04T00:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e023b1d8_0f378bbd",
       "range": {
         "startLine": 311,
         "startChar": 7,
@@ -117,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09eb9a81_30d4918b",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-04T00:59:17Z",
+      "side": 1,
+      "message": "Changed to rethrow",
+      "parentUuid": "542762f8_c9213dd7",
+      "range": {
+        "startLine": 326,
+        "startChar": 4,
+        "endLine": 326,
+        "endChar": 98
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd6a2fc6_093ca65e",
@@ -140,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "857ea076_9400bc0f",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-04T00:59:17Z",
+      "side": 1,
+      "message": "Changed to rethrow",
+      "parentUuid": "bd6a2fc6_093ca65e",
+      "range": {
+        "startLine": 341,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 78
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06fc08ed_db3922c9",
@@ -153,6 +249,30 @@
       "writtenOn": "2020-12-03T22:56:43Z",
       "side": 1,
       "message": "Same here, please adjust the comments to reflect error condition",
+      "range": {
+        "startLine": 356,
+        "startChar": 4,
+        "endLine": 356,
+        "endChar": 78
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "add063b8_3aa38d81",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-04T00:59:17Z",
+      "side": 1,
+      "message": "Changed to rethrow",
+      "parentUuid": "06fc08ed_db3922c9",
       "range": {
         "startLine": 356,
         "startChar": 4,
