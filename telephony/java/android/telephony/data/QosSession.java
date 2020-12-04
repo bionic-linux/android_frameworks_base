@@ -30,42 +30,59 @@ import java.util.Objects;
  *
  * @hide
  */
-public final class QosSession implements Parcelable{
+public final class QosSession implements Parcelable {
 
-    final int qosSessionId;
-    final Qos qos;
-    final List<QosFilter> qosFilterList;
+    private final int mQosSessionId;
 
-    public QosSession(int qosSessionId, @NonNull Qos qos, @NonNull List<QosFilter> qosFilterList) {
-        this.qosSessionId = qosSessionId;
-        this.qos = qos;
-        this.qosFilterList = qosFilterList;
+    @NonNull
+    private final Qos mQos;
+
+    @NonNull
+    private final List<QosFilter> mQosFilterList;
+
+    public QosSession(final int qosSessionId, @NonNull final Qos qos,
+            @NonNull final List<QosFilter> qosFilterList) {
+        this.mQosSessionId = qosSessionId;
+        this.mQos = qos;
+        this.mQosFilterList = qosFilterList;
     }
 
-    private QosSession(Parcel source) {
-        qosSessionId = source.readInt();
-        qos = source.readParcelable(Qos.class.getClassLoader());
-        qosFilterList = new ArrayList<>();
-        source.readList(qosFilterList, QosFilter.class.getClassLoader());
+    private QosSession(final Parcel source) {
+        mQosSessionId = source.readInt();
+        mQos = source.readParcelable(Qos.class.getClassLoader());
+        mQosFilterList = new ArrayList<>();
+        source.readList(mQosFilterList, QosFilter.class.getClassLoader());
+    }
+
+    public int getQosSessionId() {
+        return mQosSessionId;
+    }
+
+    public Qos getQos() {
+        return mQos;
+    }
+
+    public List<QosFilter> getQosFilterList() {
+        return mQosFilterList;
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(qosSessionId);
-        if (qos.getType() == Qos.QOS_TYPE_EPS) {
-            dest.writeParcelable((EpsQos)qos, flags);
+    public void writeToParcel(@NonNull final Parcel dest, final int flags) {
+        dest.writeInt(mQosSessionId);
+        if (mQos.getType() == Qos.QOS_TYPE_EPS) {
+            dest.writeParcelable((EpsQos) mQos, flags);
         } else {
-            dest.writeParcelable((NrQos)qos, flags);
+            dest.writeParcelable((NrQos) mQos, flags);
         }
-        dest.writeList(qosFilterList);
+        dest.writeList(mQosFilterList);
     }
 
     public static @NonNull QosSession create(
-            @NonNull android.hardware.radio.V1_6.QosSession qosSession) {
-        List<QosFilter> qosFilters = new ArrayList<>();
+            @NonNull final android.hardware.radio.V1_6.QosSession qosSession) {
+        final List<QosFilter> qosFilters = new ArrayList<>();
 
         if (qosSession.qosFilters != null) {
-            for (android.hardware.radio.V1_6.QosFilter filter : qosSession.qosFilters) {
+            for (final android.hardware.radio.V1_6.QosFilter filter : qosSession.qosFilters) {
                 qosFilters.add(QosFilter.create(filter));
             }
         }
@@ -84,41 +101,40 @@ public final class QosSession implements Parcelable{
     @Override
     public String toString() {
         return "QosSession {"
-                + " qosSessionId=" + qosSessionId
-                + " qos=" + qos
-                + " qosFilterList=" + qosFilterList + "}";
+                + " mQosSessionId=" + mQosSessionId
+                + " mQos=" + mQos
+                + " mQosFilterList=" + mQosFilterList + "}";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(qosSessionId, qos, qosFilterList);
+        return Objects.hash(mQosSessionId, mQos, mQosFilterList);
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
 
-        if (o == null || !(o instanceof QosSession)) {
+        if (!(o instanceof QosSession)) {
             return false;
         }
 
-        QosSession other = (QosSession) o;
-        return this.qosSessionId == other.qosSessionId
-                && this.qos.equals(other.qos)
-                && this.qosFilterList.size() == other.qosFilterList.size()
-                && this.qosFilterList.containsAll(other.qosFilterList);
+        final QosSession other = (QosSession) o;
+        return this.mQosSessionId == other.mQosSessionId
+                && this.mQos.equals(other.mQos)
+                && this.mQosFilterList.size() == other.mQosFilterList.size()
+                && this.mQosFilterList.containsAll(other.mQosFilterList);
     }
-
 
     public static final @NonNull Parcelable.Creator<QosSession> CREATOR =
             new Parcelable.Creator<QosSession>() {
                 @Override
-                public QosSession createFromParcel(Parcel source) {
+                public QosSession createFromParcel(final Parcel source) {
                     return new QosSession(source);
                 }
 
                 @Override
-                public QosSession[] newArray(int size) {
+                public QosSession[] newArray(final int size) {
                     return new QosSession[size];
                 }
             };
