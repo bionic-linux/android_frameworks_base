@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51c080ad_ee9a2ac1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2020-12-04T14:08:48Z",
+      "side": 1,
+      "message": "@elaurent\nThis is a continuation of the upload from pa/1620206 and pa/1624394\n\nPlease see b/152446017 for reference.",
+      "revId": "2eb0c323156d1dd80e97a00611037c7a3a7cea10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
