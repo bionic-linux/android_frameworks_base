@@ -4,6 +4,7 @@ per-file ConnectivityService.java,ConnectivityServiceInitializer.java,NetworkMan
 # Vibrator / Threads
 per-file VibratorService.java, DisplayThread.java = michaelwr@google.com
 per-file VibratorService.java, DisplayThread.java = ogunwale@google.com
+per-file VibratorService.java = lsandrade@google.com
 
 # Zram writeback
 per-file ZramWriteback.java = minchan@google.com, rajekumar@google.com, srnvs@google.com
