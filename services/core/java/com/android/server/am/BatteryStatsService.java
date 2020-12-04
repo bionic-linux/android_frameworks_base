@@ -21,11 +21,14 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.INetworkManagementEventObserver;
 import android.os.BatteryStats;
 import android.os.BatteryStatsInternal;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.INetworkManagementService;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.ParcelFormatException;
@@ -33,6 +36,7 @@ import android.os.PowerManager.ServiceType;
 import android.os.PowerManagerInternal;
 import android.os.PowerSaveState;
 import android.os.Process;
+import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
@@ -62,6 +66,7 @@ import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.ParseUtils;
 import com.android.server.LocalServices;
+import com.android.server.net.BaseNetworkObserver;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -107,6 +112,40 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     private ByteBuffer mUtf8BufferStat = ByteBuffer.allocateDirect(MAX_LOW_POWER_STATS_SIZE);
     private CharBuffer mUtf16BufferStat = CharBuffer.allocate(MAX_LOW_POWER_STATS_SIZE);
     private static final int MAX_LOW_POWER_STATS_SIZE = 4096;
+
+    private INetworkManagementService mNMService;
+    private int mLastPowerStateFromRadio = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
+    private int mLastPowerStateFromWifi = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
+    private final INetworkManagementEventObserver mActivityChangeObserver =
+            new BaseNetworkObserver() {
+                @Override
+                public void interfaceClassDataActivityChanged(String label, boolean active,
+                        long tsNanos, int uid) {
+                    final int powerState = active
+                            ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
+                            : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
+                    final long timestampNanos;
+                    if (tsNanos <= 0) {
+                        timestampNanos = SystemClock.elapsedRealtimeNanos();
+                    } else {
+                        timestampNanos = tsNanos;
+                    }
+                    final int type = Integer.parseInt(label);
+                    if (ConnectivityManager.isNetworkTypeMobile(type)) {
+                        // Ignore if no power state change.
+                        if (mLastPowerStateFromRadio == powerState) return;
+
+                        mLastPowerStateFromRadio = powerState;
+                        noteMobileRadioPowerState(powerState, timestampNanos, uid);
+                    } else if (ConnectivityManager.isNetworkTypeWifi(type)) {
+                        // Ignore if no power state change.
+                        if (mLastPowerStateFromWifi == powerState) return;
+
+                        mLastPowerStateFromWifi = powerState;
+                        noteWifiRadioPowerState(powerState, timestampNanos, uid);
+                    }
+                }
+            };
 
     /**
      * Replaces the information in the given rpmStats with up-to-date information.
@@ -195,6 +234,8 @@ public final class BatteryStatsService extends IBatteryStats.Stub
         mStats.setRadioScanningTimeoutLocked(mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_radioScanningTimeout) * 1000L);
         mStats.setPowerProfileLocked(new PowerProfile(context));
+
+
     }
 
     public void publish() {
@@ -203,6 +244,13 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     }
 
     public void systemServicesReady() {
+        mNMService = INetworkManagementService.Stub.asInterface(
+                ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE));
+        try {
+            mNMService.registerObserver(mActivityChangeObserver);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Could not register INetworkManagement event observer " + e);
+        }
         mStats.systemServicesReady(mContext);
     }
 
@@ -1680,5 +1728,4 @@ public final class BatteryStatsService extends IBatteryStats.Stub
             Binder.restoreCallingIdentity(ident);
         }
     }
-
 }

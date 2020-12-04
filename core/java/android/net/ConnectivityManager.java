@@ -2190,7 +2190,7 @@ public class ConnectivityManager {
         };
 
         try {
-            getNetworkManagementService().registerNetworkActivityListener(rl);
+            mService.registerNetworkActivityListener(rl);
             mNetworkActivityListeners.put(l, rl);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -2207,7 +2207,7 @@ public class ConnectivityManager {
         INetworkActivityListener rl = mNetworkActivityListeners.get(l);
         Preconditions.checkArgument(rl != null, "Listener was not registered.");
         try {
-            getNetworkManagementService().unregisterNetworkActivityListener(rl);
+            mService.registerNetworkActivityListener(rl);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -2223,7 +2223,7 @@ public class ConnectivityManager {
      */
     public boolean isDefaultNetworkActive() {
         try {
-            return getNetworkManagementService().isNetworkActive();
+            return mService.isDefaultNetworkActive();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
