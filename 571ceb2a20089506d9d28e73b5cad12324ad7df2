@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f70814e_54013012",
+        "filename": "core/java/android/uwb/AdapterStateListener.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2020-12-04T01:40:35Z",
+      "side": 1,
+      "message": "nit: final? so that it won\u0027t be changed in the life time of this class",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "571ceb2a20089506d9d28e73b5cad12324ad7df2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
