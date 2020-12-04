@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e023b1d8_0f378bbd",
+        "filename": "core/java/android/uwb/UwbManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1355916
+      },
+      "writtenOn": "2020-12-04T00:00:34Z",
+      "side": 1,
+      "message": "So looking into this more, it looks like we should actually rethrow the exception as e.rethrowFromSystemServer().",
+      "parentUuid": "dc5991fd_c94d794d",
+      "range": {
+        "startLine": 311,
+        "startChar": 7,
+        "endLine": 311,
+        "endChar": 54
+      },
+      "revId": "b27bb1490d5fa8cec3e88aab41a6d3ae079ffbd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1ab88589_770f7dad",
