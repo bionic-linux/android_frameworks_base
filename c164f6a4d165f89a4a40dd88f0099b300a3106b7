@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36424e2c_f67d2f7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2020-12-04T22:01:57Z",
+      "side": 1,
+      "message": "Jean-Michel PTAL, a CP of ag/12999918.",
+      "revId": "c164f6a4d165f89a4a40dd88f0099b300a3106b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
