@@ -20,12 +20,12 @@ package com.android.server.blob;
 option java_multiple_files = true;
 
 // The nested messages are used for statsd logging and should be kept in sync with the messages
-// of the same name in frameworks/base/cmds/statsd/src/atoms.proto
+// of the same name in frameworks/proto_logging/stats/atoms.proto
 message BlobStatsEventProto {
   // Blob Committer stats
   // Keep in sync between:
   //     frameworks/base/core/proto/android/server/blobstoremanagerservice.proto
-  //     frameworks/base/cmds/statsd/src/atoms.proto
+  //     frameworks/proto_logging/stats/atoms.proto
   message BlobCommitterProto {
     // Committer app's uid
     optional int32 uid = 1;
@@ -43,7 +43,7 @@ message BlobStatsEventProto {
   // Blob Leasee stats
   // Keep in sync between:
   //     frameworks/base/core/proto/android/server/blobstoremanagerservice.proto
-  //     frameworks/base/cmds/statsd/src/atoms.proto
+  //     frameworks/proto_logging/stats/atoms.proto
   message BlobLeaseeProto {
     // Leasee app's uid
     optional int32 uid = 1;

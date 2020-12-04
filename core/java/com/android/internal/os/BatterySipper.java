@@ -132,7 +132,7 @@ public class BatterySipper implements Comparable<BatterySipper> {
     public double wifiPowerMah;
 
     //                           ****************
-    // This list must be kept current with atoms.proto (frameworks/base/cmds/statsd/src/atoms.proto)
+    // This list must be kept current with atoms.proto (frameworks/proto_logging/stats/atoms.proto)
     // so the ordinal values (and therefore the order) must never change.
     //                           ****************
     @UnsupportedAppUsage(implicitMember =

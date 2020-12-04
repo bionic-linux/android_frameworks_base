@@ -26,7 +26,7 @@ message StatsDataDumpProto {
     option (android.msg_privacy).dest = DEST_AUTOMATIC;
 
     // The following is an android.os.statsd.ConfigMetricsReportList, which is defined
-    // in frameworks/base/cmds/statsd/src/stats_log.proto. It should not be imported (even weakly)
+    // in packages/modules/StatsD/bin/src/stats_log.proto. It should not be imported (even weakly)
     // in AOSP because it would drag with it atoms.proto, which is enormous and awkward.
     repeated bytes config_metrics_report_list = 1;
 
