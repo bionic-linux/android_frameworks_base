@@ -45,6 +45,12 @@ public class DurationsTable extends SparseMappingTable.Table {
      * and the new value.
      */
     public void addDuration(int state, long value) {
+        // There is likely a bug in ServiceState that causes it to add negative values sometimes
+        // which will crash the system if the sum is less than zero
+        // see https://issuetracker.google.com/issues/174786928
+        if (value < 0) {
+            return;
+        }
         final int key = getOrAddKey((byte)state, 1);
         setValue(key, getValue(key) + value);
     }
