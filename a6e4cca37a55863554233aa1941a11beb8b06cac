@@ -16,6 +16,23 @@
       "message": "I think that if you\u0027re going to do the libcore changes as separate changes then you should split this into 3 separate changes to match.",
       "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ead0e0e8_69e4a642",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-12-04T18:55:00Z",
+      "side": 1,
+      "message": "I assume you included me because you\u0027re touching the core platform API and I originated it. Paul or one of the others can own rubber stamping the core platform API changes, you don\u0027t need to ask me to review it.\n\n\nFWIW - the changes look good to me. I\u0027m happy to review a few changes in their entirety if I can add value.\n",
+      "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
