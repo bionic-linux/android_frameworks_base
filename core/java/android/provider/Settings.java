@@ -13252,6 +13252,15 @@ public final class Settings {
         @TestApi
         public static final String HIDDEN_API_POLICY = "hidden_api_policy";
 
+         /**
+         * Flag for forcing {@link com.android.server.compat.OverrideValidatorImpl}
+         * to consider this a release final build.
+         *
+         * @hide
+         */
+        public static final String FORCE_COMPAT_USER_FINAL_BUILD = "force_compat_userfinal";
+
+
         /**
          * Current version of signed configuration applied.
          *
