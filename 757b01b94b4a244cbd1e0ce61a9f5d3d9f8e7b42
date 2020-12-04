@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68d94724_d95a9058",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1409782
+      },
+      "writtenOn": "2020-12-04T21:12:19Z",
+      "side": 1,
+      "message": "LGTM can +2 once someone else approves.",
+      "revId": "757b01b94b4a244cbd1e0ce61a9f5d3d9f8e7b42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
