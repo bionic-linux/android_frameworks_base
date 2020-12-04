@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9464138d_9f151cf1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1049750
+      },
+      "writtenOn": "2020-12-04T23:54:15Z",
+      "side": 1,
+      "message": "Hi Dianne, we met at Android Dev Summit 2019. This is just a workaround for this issue, the real issue is likely somewhere in ServiceState.java",
+      "revId": "25cc4e04cb4755c7785226563ae75992dc664bd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
