@@ -6860,7 +6860,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         Bundle bundle = new Bundle();
         // TODO: check if defensive copies of data is needed.
-        putParcelable(bundle, new NetworkRequest(nri.request));
+        final NetworkRequest nrForCallback = nri.mActiveRequest != null
+                ? new NetworkRequest(nri.mActiveRequest) : new NetworkRequest(nri.mRequests.get(0));
+        putParcelable(bundle, nrForCallback);
         Message msg = Message.obtain();
         if (notificationType != ConnectivityManager.CALLBACK_UNAVAIL) {
             putParcelable(bundle, networkAgent.network);
@@ -6873,7 +6875,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 putParcelable(
                         bundle,
                         maybeSanitizeLocationInfoForCaller(
-                                nc, nri.mUid, nri.request.getRequestorPackageName()));
+                                nc, nri.mUid, nri.mActiveRequest.getRequestorPackageName()));
                 putParcelable(bundle, linkPropertiesRestrictedForCallerPermissions(
                         networkAgent.linkProperties, nri.mPid, nri.mUid));
                 // For this notification, arg1 contains the blocked status.
@@ -6892,7 +6894,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 putParcelable(
                         bundle,
                         maybeSanitizeLocationInfoForCaller(
-                                netCap, nri.mUid, nri.request.getRequestorPackageName()));
+                                netCap, nri.mUid, nri.mActiveRequest.getRequestorPackageName()));
                 break;
             }
             case ConnectivityManager.CALLBACK_IP_CHANGED: {
@@ -6911,12 +6913,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         try {
             if (VDBG) {
                 String notification = ConnectivityManager.getCallbackName(notificationType);
-                log("sending notification " + notification + " for " + nri.request);
+                log("sending notification " + notification + " for " + nrForCallback);
             }
             nri.messenger.send(msg);
         } catch (RemoteException e) {
             // may occur naturally in the race of binder death.
-            loge("RemoteException caught trying to send a callback msg for " + nri.request);
+            loge("RemoteException caught trying to send a callback msg for " + nrForCallback);
         }
     }
 
