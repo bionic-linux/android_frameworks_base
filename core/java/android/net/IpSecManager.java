@@ -714,9 +714,7 @@ public final class IpSecManager {
      * applied to provide IPsec security to packets sent through the tunnel. While a tunnel
      * cannot be used in standalone mode within Android, the higher layers may use the tunnel
      * to create Network objects which are accessible to the Android system.
-     * @hide
      */
-    @SystemApi
     public static final class IpSecTunnelInterface implements AutoCloseable {
         private final String mOpPackageName;
         private final IIpSecService mService;
@@ -741,9 +739,7 @@ public final class IpSecManager {
          *
          * @param address the local address for traffic inside the tunnel
          * @param prefixLen length of the InetAddress prefix
-         * @hide
          */
-        @SystemApi
         @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
         @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
         public void addAddress(@NonNull InetAddress address, int prefixLen) throws IOException {
@@ -764,9 +760,7 @@ public final class IpSecManager {
          *
          * @param address to be removed
          * @param prefixLen length of the InetAddress prefix
-         * @hide
          */
-        @SystemApi
         @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
         @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
         public void removeAddress(@NonNull InetAddress address, int prefixLen) throws IOException {
@@ -839,7 +833,11 @@ public final class IpSecManager {
             }
         }
 
-        /** Check that the Interface was closed properly. */
+        /**
+         * Check that the Interface was closed properly.
+         *
+         * @hide
+         */
         @Override
         protected void finalize() throws Throwable {
             if (mCloseGuard != null) {
@@ -875,19 +873,50 @@ public final class IpSecManager {
      *
      * @param localAddress The local addres of the tunnel
      * @param remoteAddress The local addres of the tunnel
-     * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel.
-     *        This network should almost certainly be a network such as WiFi with an L2 address.
+     * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel. This
+     *     network should almost certainly be a network such as WiFi with an L2 address.
+     * @return a new {@link IpSecManager#IpSecTunnelInterface} with the specified properties
+     * @throws IOException indicating that the socket could not be opened or bound
+     * @throws ResourceUnavailableException indicating that too many encapsulation sockets are open
+     */
+    @NonNull
+    @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
+    @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
+    public IpSecTunnelInterface createIpSecTunnelInterface(@NonNull Network underlyingNetwork)
+            throws ResourceUnavailableException, IOException {
+
+        // TODO: Remove the need for adding two unused addresses with IPsec tunnels when {@link
+        // #createIpSecTunnelInterface(localAddress, remoteAddress, underlyingNetwork)} can be
+        // safely removed.
+        final InetAddress address = InetAddress.getLocalHost();
+        return createIpSecTunnelInterface(address, address, underlyingNetwork);
+    }
+
+    /**
+     * Create a new IpSecTunnelInterface as a local endpoint for tunneled IPsec traffic.
+     *
+     * <p>An application that creates tunnels is responsible for cleaning up the tunnel when the
+     * underlying network goes away, and the onLost() callback is received.
+     *
+     * @param localAddress The local addres of the tunnel
+     * @param remoteAddress The local addres of the tunnel
+     * @param underlyingNetwork the {@link Network} that will carry traffic for this tunnel. This
+     *     network should almost certainly be a network such as WiFi with an L2 address.
      * @return a new {@link IpSecManager#IpSecTunnelInterface} with the specified properties
      * @throws IOException indicating that the socket could not be opened or bound
      * @throws ResourceUnavailableException indicating that too many encapsulation sockets are open
      * @hide
+     * @deprecated Callers should use {@link #createIpSecTunnelInterface(Network)}
      */
+    @Deprecated
     @SystemApi
     @NonNull
     @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
     @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
-    public IpSecTunnelInterface createIpSecTunnelInterface(@NonNull InetAddress localAddress,
-            @NonNull InetAddress remoteAddress, @NonNull Network underlyingNetwork)
+    public IpSecTunnelInterface createIpSecTunnelInterface(
+            @NonNull InetAddress localAddress,
+            @NonNull InetAddress remoteAddress,
+            @NonNull Network underlyingNetwork)
             throws ResourceUnavailableException, IOException {
         try {
             return new IpSecTunnelInterface(
@@ -912,9 +941,7 @@ public final class IpSecManager {
      * @param transform an {@link IpSecTransform} created in tunnel mode
      * @throws IOException indicating that the transform could not be applied due to a lower
      *         layer failure.
-     * @hide
      */
-    @SystemApi
     @RequiresFeature(PackageManager.FEATURE_IPSEC_TUNNELS)
     @RequiresPermission(android.Manifest.permission.MANAGE_IPSEC_TUNNELS)
     public void applyTunnelModeTransform(@NonNull IpSecTunnelInterface tunnel,
