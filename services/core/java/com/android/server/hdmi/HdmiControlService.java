@@ -511,16 +511,6 @@ public class HdmiControlService extends SystemService {
         if (mCecController == null) {
             mCecController = HdmiCecController.create(this);
         }
-        if (mCecController != null) {
-            if (mHdmiControlEnabled) {
-                initializeCec(INITIATED_BY_BOOT_UP);
-            } else {
-                mCecController.setOption(OptionKey.ENABLE_CEC, false);
-            }
-        } else {
-            Slog.i(TAG, "Device does not support HDMI-CEC.");
-            return;
-        }
         if (mMhlController == null) {
             mMhlController = HdmiMhlControllerStub.create(this);
         }
@@ -2866,6 +2856,8 @@ public class HdmiControlService extends SystemService {
                     startReason = INITIATED_BY_WAKE_UP_MESSAGE;
                 }
                 initializeCec(startReason);
+            } else {
+                mCecController.setOption(OptionKey.ENABLE_CEC, false);
             }
         } else {
             Slog.i(TAG, "Device does not support HDMI-CEC.");
