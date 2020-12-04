@@ -588,8 +588,6 @@ public class HdmiControlService extends SystemService {
             mTvInputManager = (TvInputManager) getContext().getSystemService(
                     Context.TV_INPUT_SERVICE);
             mPowerManager = getContext().getSystemService(PowerManager.class);
-        } else if (phase == SystemService.PHASE_BOOT_COMPLETED) {
-            runOnServiceThread(this::bootCompleted);
         }
     }
 
