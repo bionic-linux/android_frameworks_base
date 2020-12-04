@@ -1744,6 +1744,7 @@ package android.util {
     field public static final String DYNAMIC_SYSTEM = "settings_dynamic_system";
     field public static final String FFLAG_OVERRIDE_PREFIX = "sys.fflag.override.";
     field public static final String FFLAG_PREFIX = "sys.fflag.";
+    field public static final String FORCE_COMPAT_USER_FINAL_BUILD = "force_compat_userfinal";
     field public static final String HEARING_AID_SETTINGS = "settings_bluetooth_hearing_aid";
     field public static final String PERSIST_PREFIX = "persist.sys.fflag.override.";
     field public static final String SCREENRECORD_LONG_PRESS = "settings_screenrecord_long_press";

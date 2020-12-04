@@ -42,6 +42,7 @@ public class FeatureFlagUtils {
     public static final String DYNAMIC_SYSTEM = "settings_dynamic_system";
     public static final String SETTINGS_WIFITRACKER2 = "settings_wifitracker2";
     public static final String SETTINGS_FUSE_FLAG = "settings_fuse";
+    public static final String FORCE_COMPAT_USER_FINAL_BUILD = "force_compat_userfinal";
     /** @hide */
     public static final String SETTINGS_DO_NOT_RESTORE_PRESERVED =
             "settings_do_not_restore_preserved";
@@ -62,6 +63,7 @@ public class FeatureFlagUtils {
         DEFAULT_FLAGS.put(SETTINGS_WIFITRACKER2, "true");
         DEFAULT_FLAGS.put("settings_controller_loading_enhancement", "true");
         DEFAULT_FLAGS.put("settings_conditionals", "false");
+        DEFAULT_FLAGS.put(FORCE_COMPAT_USER_FINAL_BUILD, "false");
         // This flags guards a feature introduced in R and will be removed in the next release
         // (b/148367230).
         DEFAULT_FLAGS.put(SETTINGS_DO_NOT_RESTORE_PRESERVED, "true");

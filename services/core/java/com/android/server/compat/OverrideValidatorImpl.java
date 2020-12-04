@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.util.FeatureFlagUtils;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.compat.AndroidBuildClassifier;
@@ -41,6 +42,7 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
     private AndroidBuildClassifier mAndroidBuildClassifier;
     private Context mContext;
     private CompatConfig mCompatConfig;
+    private Boolean mForceUserFinalBuild;
 
     @VisibleForTesting
     OverrideValidatorImpl(AndroidBuildClassifier androidBuildClassifier,
@@ -48,6 +50,7 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
         mAndroidBuildClassifier = androidBuildClassifier;
         mContext = context;
         mCompatConfig = config;
+        mForceUserFinalBuild = null;
     }
 
     @Override
@@ -56,8 +59,11 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
             return new OverrideAllowedState(LOGGING_ONLY_CHANGE, -1, -1);
         }
 
-        boolean debuggableBuild = mAndroidBuildClassifier.isDebuggableBuild();
-        boolean finalBuild = mAndroidBuildClassifier.isFinalBuild();
+        boolean forcedUserFinalBuild = isForcedUserFinalBuild();
+
+        boolean debuggableBuild = mAndroidBuildClassifier.isDebuggableBuild()
+                                    && !forcedUserFinalBuild;
+        boolean finalBuild = mAndroidBuildClassifier.isFinalBuild() || forcedUserFinalBuild;
         int maxTargetSdk = mCompatConfig.maxTargetSdkForChangeIdOptIn(changeId);
         boolean disabled = mCompatConfig.isDisabled(changeId);
 
@@ -93,5 +99,16 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
             return new OverrideAllowedState(ALLOWED, appTargetSdk, maxTargetSdk);
         }
         return new OverrideAllowedState(DISABLED_TARGET_SDK_TOO_HIGH, appTargetSdk, maxTargetSdk);
+    }
+
+    void forceUserFinalForTest(boolean value) {
+        mForceUserFinalBuild = value;
+    }
+
+    private boolean isForcedUserFinalBuild() {
+        if (mForceUserFinalBuild != null) {
+            return mForceUserFinalBuild;
+        }
+        return FeatureFlagUtils.isEnabled(mContext, FeatureFlagUtils.FORCE_COMPAT_USER_FINAL_BUILD);
     }
 }
