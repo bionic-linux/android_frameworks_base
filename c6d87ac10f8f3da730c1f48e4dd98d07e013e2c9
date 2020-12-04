@@ -16,6 +16,24 @@
       "message": "From an API perspective, it doesn\u0027t really make sense to expose a class as SystemApi if it has no methods and no fields. Is there an alternative? Given that this is only for test code, what about IBinder?",
       "revId": "c6d87ac10f8f3da730c1f48e4dd98d07e013e2c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "993bf572_0237ce1a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-04T02:42:08Z",
+      "side": 1,
+      "message": "Let\u0027s put this on hold, need to double check",
+      "parentUuid": "61d18df8_2e1c053b",
+      "revId": "c6d87ac10f8f3da730c1f48e4dd98d07e013e2c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
