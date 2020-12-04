@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07892486_e0ea5f8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-12-04T16:57:30Z",
+      "side": 1,
+      "message": "I think that if you\u0027re going to do the libcore changes as separate changes then you should split this into 3 separate changes to match.",
+      "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
