@@ -117,6 +117,7 @@ class CompatConfigBuilder {
 
     CompatConfig build() {
         CompatConfig config = new CompatConfig(mBuildClassifier, mContext);
+        config.forceUserFinalForTest(false);
         for (CompatChange change : mChanges) {
             config.addChange(change);
         }
