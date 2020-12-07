@@ -285,6 +285,7 @@ import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.LockSettingsInternal;
 import com.android.internal.widget.LockscreenCredential;
 import com.android.internal.widget.PasswordValidationError;
+import com.android.net.module.util.ProxyUtils;
 import com.android.server.LocalServices;
 import com.android.server.LockGuard;
 import com.android.server.PersistentDataBlockManagerInternal;
@@ -1062,7 +1063,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 = "permitted-accessiblity-services";
         private static final String TAG_ENCRYPTION_REQUESTED = "encryption-requested";
         private static final String TAG_MANAGE_TRUST_AGENT_FEATURES = "manage-trust-agent-features";
-        private static final String TAG_TRUST_AGENT_COMPONENT_OPTIONS = "trust-agent-component-options";
+        private static final String TAG_TRUST_AGENT_COMPONENT_OPTIONS =
+                "trust-agent-component-options";
         private static final String TAG_TRUST_AGENT_COMPONENT = "component";
         private static final String TAG_PASSWORD_EXPIRATION_DATE = "password-expiration-date";
         private static final String TAG_PASSWORD_EXPIRATION_TIMEOUT = "password-expiration-timeout";
@@ -7759,7 +7761,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         }
         exclusionList = exclusionList.trim();
 
-        ProxyInfo proxyProperties = new ProxyInfo(data[0], proxyPort, exclusionList);
+        ProxyInfo proxyProperties = ProxyInfo.buildDirectProxy(data[0], proxyPort,
+                ProxyUtils.exclusionStringAsList(exclusionList));
         if (!proxyProperties.isValid()) {
             Slog.e(LOG_TAG, "Invalid proxy properties, ignoring: " + proxyProperties.toString());
             return;
