@@ -279,7 +279,7 @@ applications that come with the platform
     </privapp-permissions>
 
     <privapp-permissions package="com.android.server.telecom">
-        <permission name="android.permission.BIND_CONNECTION_SERVICE"/>
+        <permission name="android.permission.BIND_TELECOM_CONNECTION_SERVICE"/>
         <permission name="android.permission.BIND_INCALL_SERVICE"/>
         <permission name="android.permission.CALL_PRIVILEGED"/>
         <permission name="android.permission.HANDLE_CAR_MODE_CHANGES"/>
