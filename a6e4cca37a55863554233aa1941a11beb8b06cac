@@ -51,6 +51,24 @@
       "parentUuid": "ead0e0e8_69e4a642",
       "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7806917_50fce4b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2020-12-07T14:07:21Z",
+      "side": 1,
+      "message": "My mistake - I saw \"core\" and leapt to conclusions that must be \"core platform\" and why I was included. I lost track of where core platform .txt. now lives - I think Paul split / moved the files.\n\nIn which case: I don\u0027t really know why I was included on _just_ this review of this topic. Seems like there are plenty of people who can +2 this specific change. If not, LMK.",
+      "parentUuid": "5148ee22_1db2bdc6",
+      "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
