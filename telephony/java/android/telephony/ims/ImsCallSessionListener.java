@@ -53,8 +53,38 @@ public class ImsCallSessionListener {
     }
 
     /**
-     * A request has been sent out to initiate a new IMS call session and a 1xx response has been
-     * received from the network.
+     * A request has been sent out to initiate a new IMS call session and a 180 response, which
+     * represents DIALING, has been received from the network.  This is called between the time a
+     * call session is first started, which is indicated by receiving a 200 response from the
+     * network, and when {@link #callSessionProgressing(ImsStreamMediaProfile)} is first called.
+     *
+     * @param profile the associated {@link ImsStreamMediaProfile}.
+     */
+    public void callSessionInitiating(@NonNull ImsStreamMediaProfile profile) {
+        try {
+            mListener.callSessionInitiating(profile);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * The IMS call session establishment has failed while initiating.
+     *
+     * @param reasonInfo {@link ImsReasonInfo} detailing the reason of the IMS call session
+     * establishment failure.
+     */
+    public void callSessionInitiatingFailed(@NonNull ImsReasonInfo reasonInfo) {
+        try {
+            mListener.callSessionInitiatingFailed(reasonInfo);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * A request has been sent out to initiate a new IMS call session and a 1xx (with the exception
+     * of 183) response has been received from the network.
      */
     public void callSessionProgressing(ImsStreamMediaProfile profile) {
         try {
@@ -82,7 +112,12 @@ public class ImsCallSessionListener {
      *
      * @param reasonInfo {@link ImsReasonInfo} detailing the reason of the IMS call session
      * establishment failure.
+     * @deprecated {@link #callSessionInitiated(ImsCallProfile)} is called immediately after
+     * the session is first started which meant that there was no time in which a call to this
+     * method was technically valid.  This method is replaced starting Android S in favor of
+     * {@link #callSessionInitiatingFailed(ImsReasonInfo)}.
      */
+    @Deprecated
     public void callSessionInitiatedFailed(ImsReasonInfo reasonInfo) {
         try {
             mListener.callSessionInitiatedFailed(reasonInfo);
