@@ -101,8 +101,25 @@ public class ImsCallSession {
      */
     public static class Listener {
         /**
-         * Called when a request is sent out to initiate a new session
-         * and 1xx response is received from the network.
+         * Called when the network first begins to establish the call session and is now connecting
+         * to the remote party.  This should be called just once, and before any other method on
+         * the listener.  This could be called, for example, after a 183 response is received.
+         * <p/>
+         * Once this is called, {@link Listener#callSessionTerminated} must be called
+         * to end the call session session.  In the event that the session never successfully
+         * started, {@link Listener#callSessionInitiatingFailed} should be called instead of
+         * this.
+         *
+         * @param session the session object that carries out the IMS session
+         */
+        public void callSessionInitiating(ImsCallSession session,
+                ImsStreamMediaProfile profile) {
+            // no-op
+        }
+
+        /**
+         * Called when the network has contacted the remote party.  This could be called, for
+         * example, after a 180 RINGING response was received by the network.
          *
          * @param session the session object that carries out the IMS session
          */
@@ -1176,6 +1193,17 @@ public class ImsCallSession {
      */
     private class IImsCallSessionListenerProxy extends IImsCallSessionListener.Stub {
         /**
+         * Provides updated information when 180 RINGING is received which should occur
+         * before callSessionProgressing is called.
+         */
+        @Override
+        public void callSessionInitiating(ImsStreamMediaProfile profile) {
+            if (mListener != null) {
+                mListener.callSessionInitiating(ImsCallSession.this, profile);
+            }
+        }
+
+        /**
          * Notifies the result of the basic session operation (setup / terminate).
          */
         @Override
@@ -1189,6 +1217,13 @@ public class ImsCallSession {
         public void callSessionInitiated(ImsCallProfile profile) {
             if (mListener != null) {
                 mListener.callSessionStarted(ImsCallSession.this, profile);
+            }
+        }
+
+        @Override
+        public void callSessionInitiatingFailed(ImsReasonInfo reasonInfo) {
+            if (mListener != null) {
+                mListener.callSessionStartFailed(ImsCallSession.this, reasonInfo);
             }
         }
 
