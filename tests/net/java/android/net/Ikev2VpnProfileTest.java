@@ -67,7 +67,8 @@ public class Ikev2VpnProfileTest {
                     return "fooPackage";
                 }
             };
-    private final ProxyInfo mProxy = new ProxyInfo(SERVER_ADDR_STRING, -1, EXCL_LIST);
+    private final ProxyInfo mProxy = ProxyInfo.buildDirectProxy(
+            SERVER_ADDR_STRING, -1, Arrays.asList(TextUtils.split(",", EXCL_LIST)));
 
     private X509Certificate mUserCert;
     private X509Certificate mServerRootCa;
