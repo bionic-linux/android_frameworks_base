@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "886a18a8_b7ca1041",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-07T09:30:11Z",
+      "side": 1,
+      "message": "I fear I\u0027m missing something big, but I don\u0027t think this works and I\u0027m not even sure I understand what you\u0027re really trying to do here.",
+      "revId": "6b24b2379683fe5ae7604925b060b1b5ae5e0a3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e26f006f_b4c745b3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-07T09:30:11Z",
+      "side": 1,
+      "message": "If you find the courage to fix the typo while you\u0027re at it... Otherwise don\u0027t bother.",
+      "range": {
+        "startLine": 693,
+        "startChar": 32,
+        "endLine": 693,
+        "endChar": 35
+      },
+      "revId": "6b24b2379683fe5ae7604925b060b1b5ae5e0a3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7e9aec4_a1d99432",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-07T09:30:11Z",
+      "side": 1,
+      "message": "Am I missing something big here ?\n\nIf the original capabilities don\u0027t have NET_CAPABILITY_NOT_VPN, I don\u0027t see how mNetworkCapabilities could now have it, and therefore removeCapabilities should be a no-op. clearAll will set mNetworkCapabilities to 0, and then it\u0027s only modified in l.703 where old caps are \u0026\u0027d with the allowed caps, so if the old caps don\u0027t have NOT_VPN, then the new caps also won\u0027t have it.\n\nBesides, this looks to me like it contradicts the cover comment. « Ensure that test VPNs don\u0027t have the NOT_VPN capability. » If that\u0027s the intent, then I think we should just remove this clause and remove it always if hasTransport(TRANSPORT_VPN), but I\u0027m not sure we want to do this anyway : test code should be in charge of setting its capabilities correctly, and this function should only be in charge of checking it can\u0027t abuse the privileges. The cover comment reads to me like instead we are adding the logic here so that test code doesn\u0027t have to know about the NOT_VPN capability, and I don\u0027t think that\u0027s the right direction.",
+      "range": {
+        "startLine": 715,
+        "startChar": 39,
+        "endLine": 715,
+        "endChar": 97
+      },
+      "revId": "6b24b2379683fe5ae7604925b060b1b5ae5e0a3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
