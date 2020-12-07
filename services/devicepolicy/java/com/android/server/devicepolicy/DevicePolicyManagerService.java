@@ -199,6 +199,7 @@ import android.net.NetworkUtils;
 import android.net.ProxyInfo;
 import android.net.Uri;
 import android.net.metrics.IpConnectivityLog;
+import android.net.util.NetUtils;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.Build;
@@ -1062,7 +1063,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                 = "permitted-accessiblity-services";
         private static final String TAG_ENCRYPTION_REQUESTED = "encryption-requested";
         private static final String TAG_MANAGE_TRUST_AGENT_FEATURES = "manage-trust-agent-features";
-        private static final String TAG_TRUST_AGENT_COMPONENT_OPTIONS = "trust-agent-component-options";
+        private static final String TAG_TRUST_AGENT_COMPONENT_OPTIONS =
+                "trust-agent-component-options";
         private static final String TAG_TRUST_AGENT_COMPONENT = "component";
         private static final String TAG_PASSWORD_EXPIRATION_DATE = "password-expiration-date";
         private static final String TAG_PASSWORD_EXPIRATION_TIMEOUT = "password-expiration-timeout";
@@ -6062,11 +6064,13 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                         }
                         if (parent) {
                             throw new IllegalArgumentException(
-                                    "Cannot set FLAG_EVICT_CREDENTIAL_ENCRYPTION_KEY for the parent");
+                                    "Cannot set FLAG_EVICT_CREDENTIAL_ENCRYPTION_KEY for the"
+                                        + " parent");
                         }
                         if (!mInjector.storageManagerIsFileBasedEncryptionEnabled()) {
                             throw new UnsupportedOperationException(
-                                    "FLAG_EVICT_CREDENTIAL_ENCRYPTION_KEY only applies to FBE devices");
+                                    "FLAG_EVICT_CREDENTIAL_ENCRYPTION_KEY only applies to FBE"
+                                        + " devices");
                         }
                         mUserManager.evictCredentialEncryptionKey(callingUserId);
                     }
@@ -7759,7 +7763,9 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         }
         exclusionList = exclusionList.trim();
 
-        ProxyInfo proxyProperties = new ProxyInfo(data[0], proxyPort, exclusionList);
+        ProxyInfo proxyProperties =
+                ProxyInfo.buildDirectProxy(
+                        data[0], proxyPort, NetUtils.exclusionStringAsList(exclusionList));
         if (!proxyProperties.isValid()) {
             Slog.e(LOG_TAG, "Invalid proxy properties, ignoring: " + proxyProperties.toString());
             return;

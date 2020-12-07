@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import android.net.util.ProxyUtils;
 import android.test.mock.MockContext;
 
 import androidx.test.filters.SmallTest;
@@ -67,7 +68,8 @@ public class Ikev2VpnProfileTest {
                     return "fooPackage";
                 }
             };
-    private final ProxyInfo mProxy = new ProxyInfo(SERVER_ADDR_STRING, -1, EXCL_LIST);
+    private final ProxyInfo mProxy = ProxyInfo.buildDirectProxy(
+            SERVER_ADDR_STRING, -1, ProxyUtils.exclusionStringAsList(EXCL_LIST));
 
     private X509Certificate mUserCert;
     private X509Certificate mServerRootCa;

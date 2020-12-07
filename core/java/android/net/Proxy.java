@@ -20,6 +20,7 @@ import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
+import android.net.util.NetUtils;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
@@ -251,7 +252,7 @@ public final class Proxy {
         if (p != null) {
             host = p.getHost();
             port = Integer.toString(p.getPort());
-            exclList = p.getExclusionListAsString();
+            exclList = NetUtils.exclusionListAsString(p.getExclusionList());
             pacFileUrl = p.getPacFileUrl();
         }
         setHttpProxySystemProperty(host, port, exclList, pacFileUrl);
