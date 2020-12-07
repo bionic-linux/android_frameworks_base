@@ -53,8 +53,51 @@ public class ImsCallSessionListener {
     }
 
     /**
-     * A request has been sent out to initiate a new IMS call session and a 1xx response has been
+     * Called when the network first begins to establish the call session and is now connecting
+     * to the remote party. This must be called once after {@link ImsCallSessionImplBase#start} and
+     * before any other method on this listener.  After this is called,
+     * {@link #callSessionProgressing(ImsStreamMediaProfile)} must be called to communicate any
+     * further updates.
+     * <p/>
+     * This could be called, for example, after the first 183 Session Progressing response is
      * received from the network.
+     * <p/>
+     * Once this is called, {@link #callSessionTerminated} must be called
+     * to end the call session.  In the event that the session never successfully
+     * started, {@link #callSessionInitiatingFailed} should be called
+     * instead.
+     *
+     * @param profile the associated {@link ImsCallProfile}.
+     */
+    public void callSessionInitiating(@NonNull ImsCallProfile profile) {
+        try {
+            mListener.callSessionInitiating(profile);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * The IMS call session establishment has failed while initiating.
+     *
+     * @param reasonInfo {@link ImsReasonInfo} detailing the reason of the IMS call session
+     * establishment failure.
+     */
+    public void callSessionInitiatingFailed(@NonNull ImsReasonInfo reasonInfo) {
+        try {
+            mListener.callSessionInitiatingFailed(reasonInfo);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Called after the network has contacted the remote party and there is an update to the
+     * SDP parameters.  This must be called after
+     * {@link #callSessionInitiating(ImsCallProfile)}.
+     * <p/>
+     * This could be called, for example, after a 180 RINGING response was received by the
+     * network.
      */
     public void callSessionProgressing(ImsStreamMediaProfile profile) {
         try {
@@ -82,7 +125,12 @@ public class ImsCallSessionListener {
      *
      * @param reasonInfo {@link ImsReasonInfo} detailing the reason of the IMS call session
      * establishment failure.
+     * @deprecated {@link #callSessionInitiated(ImsCallProfile)} is called immediately after
+     * the session is first started which meant that there was no time in which a call to this
+     * method was technically valid.  This method is replaced starting Android S in favor of
+     * {@link #callSessionInitiatingFailed(ImsReasonInfo)}.
      */
+    @Deprecated
     public void callSessionInitiatedFailed(ImsReasonInfo reasonInfo) {
         try {
             mListener.callSessionInitiatedFailed(reasonInfo);
