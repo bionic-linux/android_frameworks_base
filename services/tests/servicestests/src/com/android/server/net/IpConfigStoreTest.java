@@ -82,7 +82,7 @@ public class IpConfigStoreTest {
         staticIpConfiguration.dnsServers.add(NetworkUtils.numericToInetAddress(DNS_IP_ADDR_1));
         staticIpConfiguration.dnsServers.add(NetworkUtils.numericToInetAddress(DNS_IP_ADDR_2));
 
-        ProxyInfo proxyInfo = new ProxyInfo("10.10.10.10", 88, "host1,host2");
+        ProxyInfo proxyInfo = ProxyInfo.buildDirectProxy("10.10.10.10", 88, "host1,host2");
 
         IpConfiguration expectedConfig1 = new IpConfiguration(IpAssignment.STATIC,
                 ProxySettings.STATIC, staticIpConfiguration, proxyInfo);

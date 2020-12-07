@@ -25,6 +25,7 @@ import android.net.ProxyInfo;
 import android.net.RouteInfo;
 import android.net.StaticIpConfiguration;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
@@ -41,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.util.Arrays;
 
 public class IpConfigStore {
     private static final String TAG = "IpConfigStore";
@@ -368,12 +370,16 @@ public class IpConfigStore {
                     switch (proxySettings) {
                         case STATIC:
                             ProxyInfo proxyInfo =
-                                    new ProxyInfo(proxyHost, proxyPort, exclusionList);
+                                    ProxyInfo.buildDirectProxy(
+                                            proxyHost,
+                                            proxyPort,
+                                            Arrays.asList(TextUtils.split(",", exclusionList)));
                             config.proxySettings = proxySettings;
                             config.httpProxy = proxyInfo;
                             break;
                         case PAC:
-                            ProxyInfo proxyPacProperties = new ProxyInfo(Uri.parse(pacFileUrl));
+                            ProxyInfo proxyPacProperties =
+                                    ProxyInfo.buildPacProxy(Uri.parse(pacFileUrl));
                             config.proxySettings = proxySettings;
                             config.httpProxy = proxyPacProperties;
                             break;
