@@ -102,6 +102,17 @@ public class ImsCallSession {
     public static class Listener {
         /**
          * Called when a request is sent out to initiate a new session
+         * and 180 DIALING response is received from the network.
+         *
+         * @param session the session object that carries out the IMS session
+         */
+        public void callSessionInitiating(ImsCallSession session,
+                ImsStreamMediaProfile profile) {
+            // no-op
+        }
+
+        /**
+         * Called when a request is sent out to initiate a new session
          * and 1xx response is received from the network.
          *
          * @param session the session object that carries out the IMS session
@@ -1186,9 +1197,27 @@ public class ImsCallSession {
         }
 
         @Override
+        public void callSessionInitiating(ImsStreamMediaProfile profile) {
+            if (mListener != null) {
+                mListener.callSessionInitiating(ImsCallSession.this, profile);
+            }
+        }
+
+        @Override
         public void callSessionInitiated(ImsCallProfile profile) {
             if (mListener != null) {
                 mListener.callSessionStarted(ImsCallSession.this, profile);
+            }
+        }
+
+        @Override
+        public void callSessionInitiatingFailed(ImsReasonInfo reasonInfo) {
+            if (mListener != null) {
+
+                // Is calling the same method Ok here? Or...
+                // should callSessionStartFailed be deprecated for callSessionStartingFailed? and
+                // then have compat call callSessionStartFailed?
+                mListener.callSessionStartFailed(ImsCallSession.this, reasonInfo);
             }
         }
 

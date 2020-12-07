@@ -65,6 +65,19 @@ public class ImsCallSessionListener {
     }
 
     /**
+     * The IMS call session is initiating
+     *
+     * @param profile the associated {@link ImsStreamMediaProfile}.
+     */
+    public void callSessionInitiating(@NonNull ImsStreamMediaProfile profile) {
+        try {
+            mListener.callSessionInitiating(profile);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * The IMS call session has been initiated.
      *
      * @param profile the associated {@link ImsCallProfile}.
@@ -83,6 +96,21 @@ public class ImsCallSessionListener {
      * @param reasonInfo {@link ImsReasonInfo} detailing the reason of the IMS call session
      * establishment failure.
      */
+    public void callSessionInitiatingFailed(@NonNull ImsReasonInfo reasonInfo) {
+        try {
+            mListener.callSessionInitiatingFailed(reasonInfo);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * The IMS call session establishment has failed.
+     *
+     * @param reasonInfo {@link ImsReasonInfo} detailing the reason of the IMS call session
+     * establishment failure.
+     */
+    @Deprecated
     public void callSessionInitiatedFailed(ImsReasonInfo reasonInfo) {
         try {
             mListener.callSessionInitiatedFailed(reasonInfo);
