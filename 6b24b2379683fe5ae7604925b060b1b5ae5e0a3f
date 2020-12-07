@@ -62,6 +62,30 @@
       },
       "revId": "6b24b2379683fe5ae7604925b060b1b5ae5e0a3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b80954ed_b6121cd1",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-07T14:49:17Z",
+      "side": 1,
+      "message": "You\u0027re right, this does not make sense. Thanks for catching it. 8-|",
+      "parentUuid": "f7e9aec4_a1d99432",
+      "range": {
+        "startLine": 715,
+        "startChar": 39,
+        "endLine": 715,
+        "endChar": 97
+      },
+      "revId": "6b24b2379683fe5ae7604925b060b1b5ae5e0a3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
