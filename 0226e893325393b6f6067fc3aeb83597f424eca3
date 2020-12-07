@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a1c88da_471ff383",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-07T20:10:44Z",
+      "side": 0,
+      "message": "Looks like there may still be some usages: https://android.googlesource.com/platform/packages/apps/Bluetooth/+/refs/heads/master/AndroidManifest.xml#385",
+      "range": {
+        "startLine": 282,
+        "startChar": 45,
+        "endLine": 282,
+        "endChar": 68
+      },
+      "revId": "0226e893325393b6f6067fc3aeb83597f424eca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
