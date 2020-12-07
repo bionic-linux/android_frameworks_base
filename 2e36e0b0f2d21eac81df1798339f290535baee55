@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dfc650a_7241d828",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2020-12-07T17:05:33Z",
+      "side": 1,
+      "message": "Interesting.  I\u0027d write (and find more readable):\n\n!key instanceof AndroidKeyStorePrivateKey \u0026\u0026 !key instance of AndroidKeyStoreSecretKey\n\nI\u0027m guessing you find what you wrote to be more readable?\n\n(Note that I\"m not asking you to change it, unless you agree. Just a bit surprised that someone would see this differently than I do.)",
+      "range": {
+        "startLine": 123,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "2e36e0b0f2d21eac81df1798339f290535baee55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
