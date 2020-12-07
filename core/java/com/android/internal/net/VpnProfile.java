@@ -22,6 +22,7 @@ import android.net.Ikev2VpnProfile;
 import android.net.PlatformVpnProfile;
 import android.net.ProxyInfo;
 import android.net.Uri;
+import android.net.util.NetUtils;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -285,10 +286,12 @@ public final class VpnProfile implements Cloneable, Parcelable {
                 String exclList = (values.length > 17) ? values[17] : "";
                 String pacFileUrl = (values.length > 18) ? values[18] : "";
                 if (!host.isEmpty() || !port.isEmpty() || !exclList.isEmpty()) {
-                    profile.proxy = new ProxyInfo(host, port.isEmpty() ?
-                            0 : Integer.parseInt(port), exclList);
+                    profile.proxy =
+                            ProxyInfo.buildDirectProxy(host, port.isEmpty() ?
+                                    0 : Integer.parseInt(port),
+                                    NetUtils.exclusionStringAsList(exclList));
                 } else if (!pacFileUrl.isEmpty()) {
-                    profile.proxy = new ProxyInfo(Uri.parse(pacFileUrl));
+                    profile.proxy = ProxyInfo.buildPacProxy(Uri.parse(pacFileUrl));
                 }
             } // else profile.proxy = null
 
@@ -337,8 +340,8 @@ public final class VpnProfile implements Cloneable, Parcelable {
             builder.append(VALUE_DELIMITER).append(proxy.getPort());
             builder.append(VALUE_DELIMITER)
                     .append(
-                            proxy.getExclusionListAsString() != null
-                                    ? proxy.getExclusionListAsString()
+                            NetUtils.exclusionListAsString(proxy.getExclusionList()) != null
+                                    ? NetUtils.exclusionListAsString(proxy.getExclusionList())
                                     : "");
             builder.append(VALUE_DELIMITER).append(proxy.getPacFileUrl().toString());
         } else {
