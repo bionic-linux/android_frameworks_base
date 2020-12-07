@@ -82,8 +82,7 @@ public class ProxyInfo implements Parcelable {
     }
 
     /**
-     * Construct a {@link ProxyInfo} that will download and run the PAC script
-     * at the specified URL.
+     * Construct a {@link ProxyInfo} that will download and run the PAC script at the specified URL.
      */
     public static ProxyInfo buildPacProxy(Uri pacUri) {
         return new ProxyInfo(pacUri);
