@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "488f8fbd_d3c16cfa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2020-12-07T20:27:20Z",
+      "side": 1,
+      "message": "What was the trigger for inclusive language checker?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f634af5_6eb605be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2020-12-07T20:27:20Z",
+      "side": 1,
+      "message": "General question: what is the purpose of this XML and why isn\u0027t it just in the same directory as the reference app?",
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f891e403_7f9ed972",
+        "filename": "data/etc/car/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2020-12-07T20:27:20Z",
+      "side": 1,
+      "message": "How about having some more descriptive name? Like Policy Updater. So the package could be named com.google.android.car.networking.policyupdater.",
+      "range": {
+        "startLine": 168,
+        "startChar": 57,
+        "endLine": 168,
+        "endChar": 69
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "598f265d_e7d033b1",
+        "filename": "data/etc/car/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2020-12-07T20:27:20Z",
+      "side": 1,
+      "message": "PANS is a codename (is it?). Shoudn\u0027t we use some more official namespace?\n\nJames, WDYT?",
+      "range": {
+        "startLine": 168,
+        "startChar": 52,
+        "endLine": 168,
+        "endChar": 56
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
