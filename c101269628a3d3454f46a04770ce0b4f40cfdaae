@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a192da05_f9466dfe",
+        "filename": "telephony/java/android/telephony/ims/DelegateRegistrationState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-12-07T19:05:03Z",
+      "side": 1,
+      "message": "Womp.  closeDialog",
+      "range": {
+        "startLine": 66,
+        "startChar": 36,
+        "endLine": 66,
+        "endChar": 49
+      },
+      "revId": "c101269628a3d3454f46a04770ce0b4f40cfdaae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19bb3a61_e608150d",
+        "filename": "telephony/java/android/telephony/ims/DelegateRegistrationState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-12-07T19:05:03Z",
+      "side": 1,
+      "message": "The Diacxlog is real.",
+      "range": {
+        "startLine": 77,
+        "startChar": 42,
+        "endLine": 77,
+        "endChar": 55
+      },
+      "revId": "c101269628a3d3454f46a04770ce0b4f40cfdaae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe0bfbc7_fac1abde",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2020-12-07T19:05:03Z",
+      "side": 1,
+      "message": "It\u0027s a bit of a flaw that we can\u0027t actually refer to Intdefs, but thy\u0027re @hide.",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 70,
+        "endChar": 71
+      },
+      "revId": "c101269628a3d3454f46a04770ce0b4f40cfdaae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
