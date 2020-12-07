@@ -102,6 +102,17 @@ public class ImsCallSession {
     public static class Listener {
         /**
          * Called when a request is sent out to initiate a new session
+         * and 180 DIALING response is received from the network.
+         *
+         * @param session the session object that carries out the IMS session
+         */
+        public void callSessionInitiating(ImsCallSession session,
+                ImsStreamMediaProfile profile) {
+            // no-op
+        }
+
+        /**
+         * Called when a request is sent out to initiate a new session
          * and 1xx response is received from the network.
          *
          * @param session the session object that carries out the IMS session
@@ -1176,6 +1187,17 @@ public class ImsCallSession {
      */
     private class IImsCallSessionListenerProxy extends IImsCallSessionListener.Stub {
         /**
+         * Provides updated information when 180 RINGING is received which should occur
+         * before callSessionProgressing is called.
+         */
+        @Override
+        public void callSessionInitiating(ImsStreamMediaProfile profile) {
+            if (mListener != null) {
+                mListener.callSessionInitiating(ImsCallSession.this, profile);
+            }
+        }
+
+        /**
          * Notifies the result of the basic session operation (setup / terminate).
          */
         @Override
@@ -1189,6 +1211,13 @@ public class ImsCallSession {
         public void callSessionInitiated(ImsCallProfile profile) {
             if (mListener != null) {
                 mListener.callSessionStarted(ImsCallSession.this, profile);
+            }
+        }
+
+        @Override
+        public void callSessionInitiatingFailed(ImsReasonInfo reasonInfo) {
+            if (mListener != null) {
+                mListener.callSessionStartFailed(ImsCallSession.this, reasonInfo);
             }
         }
 
