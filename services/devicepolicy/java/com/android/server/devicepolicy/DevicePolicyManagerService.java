@@ -7759,7 +7759,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         }
         exclusionList = exclusionList.trim();
 
-        ProxyInfo proxyProperties = new ProxyInfo(data[0], proxyPort, exclusionList);
+        ProxyInfo proxyProperties = ProxyInfo.buildDirectProxy(data[0], proxyPort, exclusionList);
         if (!proxyProperties.isValid()) {
             Slog.e(LOG_TAG, "Invalid proxy properties, ignoring: " + proxyProperties.toString());
             return;

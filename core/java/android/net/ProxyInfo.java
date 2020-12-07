@@ -82,8 +82,22 @@ public class ProxyInfo implements Parcelable {
     }
 
     /**
-     * Construct a {@link ProxyInfo} that will download and run the PAC script
-     * at the specified URL.
+     * Constructs a {@link ProxyInfo} object that points at a Direct proxy on the specified host and
+     * port.
+     *
+     * <p>The proxy will not be used to access any host in exclusion list, exclList.
+     *
+     * @param exclList Comma separated hosts to exclude using the proxy on connections for. These
+     *     hosts can use wildcards such as *.example.com.
+     */
+    @NonNull
+    public static ProxyInfo buildDirectProxy(
+            @NonNull String host, int port, @NonNull String exclList) {
+        return new ProxyInfo(host, port, exclList);
+    }
+
+    /**
+     * Construct a {@link ProxyInfo} that will download and run the PAC script at the specified URL.
      */
     public static ProxyInfo buildPacProxy(Uri pacUri) {
         return new ProxyInfo(pacUri);
