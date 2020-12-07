@@ -85,6 +85,30 @@
       },
       "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0796a8b3_27433310",
+        "filename": "data/etc/car/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2020-12-07T20:30:09Z",
+      "side": 1,
+      "message": "yes, agreed on not using internal naming.",
+      "parentUuid": "f891e403_7f9ed972",
+      "range": {
+        "startLine": 168,
+        "startChar": 57,
+        "endLine": 168,
+        "endChar": 69
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
