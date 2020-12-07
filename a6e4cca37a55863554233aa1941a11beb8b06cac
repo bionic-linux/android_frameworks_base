@@ -33,6 +33,24 @@
       "message": "I assume you included me because you\u0027re touching the core platform API and I originated it. Paul or one of the others can own rubber stamping the core platform API changes, you don\u0027t need to ask me to review it.\n\n\nFWIW - the changes look good to me. I\u0027m happy to review a few changes in their entirety if I can add value.\n",
       "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5148ee22_1db2bdc6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-12-07T12:56:13Z",
+      "side": 1,
+      "message": "this list is just public APIs, not core platform APIs, or am I missing something?",
+      "parentUuid": "ead0e0e8_69e4a642",
+      "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
