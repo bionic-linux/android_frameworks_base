@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ad88916_7b4eb856",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-08T06:19:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c23f2bdd_febf10f4",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "b36264faa096f93227ad8787fc174c290156c2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7f7dc6c_d03a5345",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-08T00:51:32Z",
       "side": 1,
       "message": "see comment on other CL",
+      "range": {
+        "startLine": 168,
+        "startChar": 19,
+        "endLine": 168,
+        "endChar": 28
+      },
+      "revId": "b36264faa096f93227ad8787fc174c290156c2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2aadbf90_90d22456",
+        "filename": "data/etc/car/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-08T06:19:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e7f7dc6c_d03a5345",
       "range": {
         "startLine": 168,
         "startChar": 19,
