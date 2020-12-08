@@ -6800,19 +6800,40 @@ public class ConnectivityService extends IConnectivityManager.Stub
     /** Sends all current NetworkRequests to the specified factory. */
     private void sendAllRequestsToProvider(NetworkProviderInfo npi) {
         ensureRunningOnConnectivityServiceThread();
-        for (NetworkRequestInfo nri : mNetworkRequests.values()) {
-            if (nri.request.isListen()) continue;
-            NetworkAgentInfo nai = nri.mSatisfier;
-            final int score;
-            final int serial;
-            if (nai != null) {
-                score = nai.getCurrentScore();
-                serial = nai.factorySerialNumber;
-            } else {
-                score = 0;
-                serial = NetworkProvider.ID_NONE;
+        for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
+            for (final NetworkRequest req : nri.mRequests) {
+                // Listen requests are processed elsewhere. We can stop right here in that case for
+                // non-multilayer requests. For multilayer requests, we need to process each
+                // NetworkRequest in-order.
+                if (req.isListen() && !nri.isMultilayerRequest()) {
+                    break;
+                }
+                // If a multilayer listen request is already active, no need to evaluate further.
+                if (req.isListen() && req == nri.mActiveRequest) {
+                    break;
+                }
+                // Listen requests are not evaluated here.
+                if (req.isListen()) {
+                    continue;
+                }
+                final NetworkAgentInfo nai = nri.mSatisfier;
+                final int score;
+                final int serial;
+                if (nai != null) {
+                    score = nai.getCurrentScore();
+                    serial = nai.factorySerialNumber;
+                } else {
+                    score = 0;
+                    serial = NetworkProvider.ID_NONE;
+                }
+                npi.requestNetwork(req, score, serial);
+
+                // There is no reason to evaluate further lower priority network requests if the
+                // current one is already associated with a network.
+                if (nri.isMultilayerRequest() && req == nri.mActiveRequest) {
+                    break;
+                }
             }
-            npi.requestNetwork(nri.request, score, serial);
         }
     }
 
