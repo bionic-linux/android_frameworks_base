@@ -15,6 +15,10 @@ per-file IPowerManager.aidl = michaelwr@google.com, santoscordon@google.com
 per-file PowerManager.java = michaelwr@google.com, santoscordon@google.com
 per-file PowerManagerInternal.java = michaelwr@google.com, santoscordon@google.com
 
+# Factory reset
+per-file RecoverySystem.java = xunchang@google.com, zhaojiac@google.com, rvrolyk@google.com, eranm@google.com, rubinxu@google.com
+per-file FactoryResetter.java = xunchang@google.com, zhaojiac@google.com, rvrolyk@google.com, eranm@google.com, rubinxu@google.com, felipeal@google.com
+
 
 per-file GraphicsEnvironment.java = chrisforbes@google.com, cnorthrop@google.com, lpy@google.com, timvp@google.com, zzyiwei@google.com
 
