@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ace76b28_2cb07b96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-08T02:30:36Z",
+      "side": 1,
+      "message": "Thanks for the change !",
+      "revId": "c27007fd56826517b86ab1d191e1cb4d31020a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c19e337_220bbbc8",
+        "filename": "core/java/android/net/ProxyInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-08T02:30:36Z",
+      "side": 1,
+      "message": "As an API I don\u0027t think that will be considered acceptable, especially since there is another overload that can be used with a list of strings above.\nIs it possible to have users of this method call the one above ? For example with something like buildDirectProxy(host, port, TextUtils.split(\",\", exclList)) ?",
+      "range": {
+        "startLine": 90,
+        "startChar": 23,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "c27007fd56826517b86ab1d191e1cb4d31020a7a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
