@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ac6eb0f_db1fa992",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2020-12-08T17:55:05Z",
+      "side": 1,
+      "message": "wondering about documentation needs to go with this 32/64 bit differentiation.",
+      "revId": "337336ad1023da7ffd8886f4e4353765b7e28974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df340fa4_45a838ab",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2020-12-08T17:55:05Z",
+      "side": 1,
+      "message": "should we have a corresponding documentation update somewhere to point out\nthis difference for 32/64 bit applications?",
+      "range": {
+        "startLine": 199,
+        "startChar": 58,
+        "endLine": 199,
+        "endChar": 78
+      },
+      "revId": "337336ad1023da7ffd8886f4e4353765b7e28974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
