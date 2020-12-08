@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "423ddff9_5a098ae9",
+        "filename": "core/java/android/os/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2020-12-08T19:41:16Z",
+      "side": 1,
+      "message": "Drive-by comment. Shouldn\u0027t OTA folks be in the owners as well?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 88
+      },
+      "revId": "fc0dba53c5e36602e17efb20034358702eac64e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
