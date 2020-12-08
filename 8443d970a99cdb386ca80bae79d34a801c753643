@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0db897a_9f1eaf9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-12-08T21:29:39Z",
+      "side": 1,
+      "message": "If it\u0027s failing to auto-merge, most likely you\u0027ll need to merge internally first, than use Merged-In: in the AOSP CLs",
+      "parentUuid": "bb9906f6_e1757079",
+      "revId": "8443d970a99cdb386ca80bae79d34a801c753643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "411df6fb_9007ec11",
