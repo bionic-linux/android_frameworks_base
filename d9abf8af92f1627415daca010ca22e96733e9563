@@ -46,6 +46,30 @@
       },
       "revId": "d9abf8af92f1627415daca010ca22e96733e9563",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bec62ff2_401a9c47",
+        "filename": "services/core/java/com/android/server/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110928
+      },
+      "writtenOn": "2020-12-08T21:07:23Z",
+      "side": 1,
+      "message": "Good point thank Jeff :)\n\nCamera does not have OWNERS file in aosp so we will just add EmergencyInfo/OWNERS for now.",
+      "parentUuid": "d8dde435_40812cd6",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 143
+      },
+      "revId": "d9abf8af92f1627415daca010ca22e96733e9563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
