@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c23f2bdd_febf10f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-12-08T00:51:32Z",
+      "side": 1,
+      "message": "why not?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "b36264faa096f93227ad8787fc174c290156c2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7f7dc6c_d03a5345",
+        "filename": "data/etc/car/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-12-08T00:51:32Z",
+      "side": 1,
+      "message": "see comment on other CL",
+      "range": {
+        "startLine": 168,
+        "startChar": 19,
+        "endLine": 168,
+        "endChar": 28
+      },
+      "revId": "b36264faa096f93227ad8787fc174c290156c2b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
