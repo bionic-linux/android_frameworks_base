@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dca335c_856880c0",
+        "filename": "core/java/android/os/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-08T20:34:29Z",
+      "side": 1,
+      "message": "To improve maintenance in the future, I\u0027d recommend listing people related to Recovery by using a directive like this:\n\n  file:platform/bootable/recovery:/OWNERS\n\nThis ensures that updates to that team propagate consistently across the tree in the future.\n\nThis feedback applies to the others listed here too; whenever possible I\u0027d strongly encourage using relevant \"includes\" of other existing OWNERS files.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 129
+      },
+      "revId": "eac83688d9f73c1ce511cba0dadc06cb311c2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79668ab_82d551e8",
+        "filename": "core/java/android/os/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-08T20:34:29Z",
+      "side": 1,
+      "message": "I know you\u0027re the author of this OWNERS CL, and perhaps you\u0027ve made several recent contributions in this area, but I\u0027d like someone responsible for this subsystem to confirm that they\u0027re comfortable listing you here.",
+      "range": {
+        "startLine": 20,
+        "startChar": 132,
+        "endLine": 20,
+        "endChar": 151
+      },
+      "revId": "eac83688d9f73c1ce511cba0dadc06cb311c2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
