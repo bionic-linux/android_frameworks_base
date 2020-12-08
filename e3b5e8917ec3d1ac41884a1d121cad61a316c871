@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9b9975d7_a5aaf3a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-08T01:01:02Z",
+      "side": 1,
+      "message": "The trigger is having whitelist word in the name of the entry",
+      "parentUuid": "488f8fbd_d3c16cfa",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3f634af5_6eb605be",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -101,6 +125,54 @@
       "side": 1,
       "message": "yes, agreed on not using internal naming.",
       "parentUuid": "f891e403_7f9ed972",
+      "range": {
+        "startLine": 168,
+        "startChar": 57,
+        "endLine": 168,
+        "endChar": 69
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faa9636b_3d2f3e2c",
+        "filename": "data/etc/car/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-08T01:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "598f265d_e7d033b1",
+      "range": {
+        "startLine": 168,
+        "startChar": 52,
+        "endLine": 168,
+        "endChar": 56
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29537426_6457ee55",
+        "filename": "data/etc/car/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-08T01:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0796a8b3_27433310",
       "range": {
         "startLine": 168,
         "startChar": 57,
