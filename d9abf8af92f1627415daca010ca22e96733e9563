@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be800960_6d77949f",
+        "filename": "services/core/java/com/android/server/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-08T20:27:41Z",
+      "side": 1,
+      "message": "Instead of adding a list of manual human users in multiple locations (which can be hard to maintain over time), is there a single OWNERS file elsewhere in the tree that you could reference in both of these places?\n\nThe surrounding examples of \"file:\" directives are typical example of how to dynamically include a file defined elsewhere in the tree.\n\nFor example, you may want to reference:\n\n  include platform/frameworks/av:/camera/OWNERS",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 143
+      },
+      "revId": "d9abf8af92f1627415daca010ca22e96733e9563",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
