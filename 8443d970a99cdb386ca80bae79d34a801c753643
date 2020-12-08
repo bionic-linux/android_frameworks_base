@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb9906f6_e1757079",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2020-12-08T21:13:51Z",
+      "side": 1,
+      "message": "Looks like you are still getting merge conflicts on internal? You can try cherry picking this change directly into a local instance of internal to see what the issue is as well as the fix.",
+      "revId": "8443d970a99cdb386ca80bae79d34a801c753643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "411df6fb_9007ec11",
