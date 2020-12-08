@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fa32f84_20b3a3f5",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-08T09:15:36Z",
+      "side": 0,
+      "message": "I think we should probably keep this. I don\u0027t think markConnected() will throw if called twice, so deleting this check will mean that agents can be registered more than once. Given that most of ConnectivityServiceTest always stores agents only mWiFiNetworkAgent and mCellNetworkAgent, this could results in agents leaking and not being disconnected in tearDown.",
+      "range": {
+        "startLine": 215,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 86
+      },
+      "revId": "06ae59be43bfe63fa6cf2a08c91a9e11a4c7de00",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

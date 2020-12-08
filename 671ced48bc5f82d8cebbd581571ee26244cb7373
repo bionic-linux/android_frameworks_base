@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75eb34a1_27a9ec75",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-08T09:15:36Z",
+      "side": 1,
+      "message": "Nit: It\u0027s often better to avoid spaces to aid in grepping.\n\nAlso, does this end up in a log tag? If so, I think it\u0027s too long.",
+      "range": {
+        "startLine": 118,
+        "startChar": 53,
+        "endLine": 118,
+        "endChar": 87
+      },
+      "revId": "671ced48bc5f82d8cebbd581571ee26244cb7373",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
