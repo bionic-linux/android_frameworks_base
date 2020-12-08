@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a925e825_57162fe4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2020-12-08T18:40:36Z",
+      "side": 1,
+      "message": "Ah, okay I see it now. Indeed the entry name would be different than rest of the files.\n\nI\u0027m not sure if we should diverge, but let\u0027s let the owner decide.",
+      "parentUuid": "9b9975d7_a5aaf3a4",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3f634af5_6eb605be",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
