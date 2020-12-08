@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "45365591_192ec7eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-08T20:07:49Z",
+      "side": 1,
+      "message": "Ah so for context on that, I cherry-picked this CL to internal master and got feedback that noteWakeupReasonLocked would override the kernel-provided wakeup reason (please correct me if that\u0027s incorrect). I didn\u0027t know this myself (I originally thought it would create an additional wakeup entry) and that\u0027s why I was hoping to get some guidance on how to proceed as i\u0027m not too familiar with BatteryStats. I\u0027m open to making any changes necessary to make sure we avoid race conditions and avoid possibly overwriting anything we may want to keep.",
+      "parentUuid": "4886ad1a_ba5d7ee8",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c575ae91_87b25a57",
         "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
         "patchSetId": 2
