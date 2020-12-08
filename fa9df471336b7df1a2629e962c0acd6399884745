@@ -46,6 +46,30 @@
       },
       "revId": "fa9df471336b7df1a2629e962c0acd6399884745",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f23661da_0957cff3",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-08T06:59:25Z",
+      "side": 1,
+      "message": "Slightly think MAX_SNAPSHOT_TYPE +1 might be better since we might deprecate some of them in future.\nIf so if we want to keep the number mapping, in that case MAX_TYPE +1 could be bigger than LENGTH.\nBut since this is private and we can shrink the array as we want.\nSo this is also fine for now, we can change that whenever we want.\nNo action needed for now.",
+      "parentUuid": "0305a162_f29a2460",
+      "range": {
+        "startLine": 338,
+        "startChar": 66,
+        "endLine": 338,
+        "endChar": 83
+      },
+      "revId": "fa9df471336b7df1a2629e962c0acd6399884745",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
