@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "526d55be_7f86c400",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-12-08T20:20:54Z",
+      "side": 1,
+      "message": "Please fix the copyright year before merging.",
+      "revId": "8443d970a99cdb386ca80bae79d34a801c753643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "411df6fb_9007ec11",
+        "filename": "data/etc/car/com.google.android.car.networking.policyupdater.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-12-08T20:20:54Z",
+      "side": 1,
+      "message": "nit: 2020",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "8443d970a99cdb386ca80bae79d34a801c753643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
