@@ -4,3 +4,4 @@ per-file *Bluetooth* = file:/core/java/android/bluetooth/OWNERS
 per-file *Gnss* = file:/services/core/java/com/android/server/location/OWNERS
 per-file *Network* = file:/services/core/java/com/android/server/net/OWNERS
 per-file *Vibrator* = file:/services/core/java/com/android/server/vibrator/OWNERS
+per-file GestureLauncherServiceTest.java = joselima@google.com, codelogic@google.com, lawrencecyh@google.com, zhfan@google.com, zhijunhe@google.com
