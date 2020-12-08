@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "879fa1d5_86c2d8e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-12-08T17:15:46Z",
+      "side": 1,
+      "message": "This is a cherry-pick of ag/Iae073c13ce64b5db48f22f7e723bc8c0c5fcd2c9. I\u0027ll add Todd and I to the OWNERS fro the resources files in core/jni.",
+      "revId": "6532483950eb0e75a5caf9645cae5ef4ac02fffc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
