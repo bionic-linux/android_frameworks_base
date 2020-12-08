@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c227f16f_36e2716a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-08T00:20:49Z",
+      "side": 1,
+      "message": "\u003e Would it be possible to get more information about exactly how this will be used and what the purpose is?\n\u003e \n\u003e Without knowing that, it seems like this will corrupt the collection of wakeup data.  BSS already collects data from the kernel for each kernel resume, so if some other entity (e.g. BT) decides to log additional wakeup reasons for those same wakeups, suddenly we\u0027re going to have more wakeup reasons than wakeups, and that\u0027s likely to cause problems with troubleshooting battery issues.\n\u003e \n\u003e (I presume this is part of BTAA, and I\u0027m excited to see the improvements from that... I\u0027m just curious about all of the follow-on ramifications of this specific change.)\n\nYeah absolutely! Our goal is to use this to understand the wakeup reasons a bit better. As part of the power attribution project, we want to be able to note what bluetooth-related reason caused the wakeup and what bluetooth device it corresponded to. Currently, wakeup reasons for bluetooth tend to just be a generic message (e.g. for the qualcomm bluetooth kernel, the wakeup reason is hs_uart_wakeup). We have absolutely no problem with keeping that in place and appending our string of bluetooth activity + device address to the kernel provided wakeup reason. The primary use case will be to analyze bug reports for power-related issues and identify which device is causing higher than normal battery drain.\n\nWe\u0027re not trying to break the 1:1 relationship between a wakeup and the reason, so if you have any guidance on how we could best achieve this, that would be great!",
+      "parentUuid": "71d8c353_62c82a03",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c575ae91_87b25a57",
