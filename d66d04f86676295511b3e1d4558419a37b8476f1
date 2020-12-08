@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fec21844_70be45b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-12-08T20:26:09Z",
+      "side": 1,
+      "message": "(Sorry, I wrote this up yesterday and apparently didn\u0027t post it.  Reply to your latest comment is after the horizontal line)\n\nAt the very least, it does look like both reasons will get logged separately to statsd no matter what happens in the BatteryStats history timeline.  What happens internal to BatteryStats and whether the second reason overwrites the first or is registered as another reason after the first is a bit Byzantine, but it _looks_ like it may actually depend partially on how much time elapses between the kernel reason being logged and the augmented BT reason coming in, and since that timing can\u0027t be guaranteed, I think the outcome might be non-deterministic?\n\nAlso, has PWG reviewed this proposal?  I\u0027m wondering because any caller of this new API can essentially send any arbitrary string to Westworld for uploading as a wake reason, and while they may be okay with that thanks to the PII removal mechanisms in place for Westworld, they might at least be interested in hearing about it.\n\n----\n\nI can\u0027t claim to be certain what the code will do; it\u0027s pretty rough to follow without investing a large chunk of time.  But it at least looks to me like the behavior will depend on how much time elapses between the kernel wakeup reason being captured and the BT reason coming in, which - since you can\u0027t do anything to guarantee that timing - seems to suggest non-deterministic behavior?  Again, I\u0027m not certain.\n\nThe race condition is tricky.  Without grabbing a wakelock to prevent it from occurring (which would be a bad idea), I don\u0027t know that you can even guarantee that there isn\u0027t a second suspend/resume cycle before your process registers the additional wakeup information for the first one, meaning you could end up overwriting or augmenting (whichever it is that actually happens) a non-BT wakeup with your additional info.\n\nMaybe I\u0027m overthinking it; that does happen sometimes.  But the more we talk about it, the more difficult it seems like it would be for this approach to work seamlessly.  Maybe somebody who understands BatteryStats better than me can chime in and offer some assurance that the issues I\u0027m concerned about aren\u0027t real.\n\nIf not, there might be a different (much more involved, but perhaps more effective and less disruptive) way to tackle this:\n* Change the wakeup callback from SuspendControlService (again) to add the _time_ of the wakeup (in elapsed realtime) in addition to the reason strings from the kernel and the success/failure of the suspend\n* Add support in BatteryStats for a new kind of \"wake detail\" data instead of trying to overload the existing wake reasons\n* When a process calls in to provide a \"wake detail\", it also provides the timestamp (from the SCS callback) of the wakeup that the detail applies to, so BatteryStats can place it in the right part of its history\n* Update tooling to use the new history entry type",
+      "parentUuid": "4886ad1a_ba5d7ee8",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c575ae91_87b25a57",
         "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
         "patchSetId": 2
