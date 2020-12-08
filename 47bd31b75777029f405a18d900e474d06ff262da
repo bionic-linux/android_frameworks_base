@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2006bd52_5b84f88c",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-08T12:58:15Z",
+      "side": 1,
+      "message": "An atomic seems excessive given that:\n\n- TestNetworkAgents are pretty much always manipulated by test code, which only runs on one thread\n- Much (most?) of this class isn\u0027t thread-safe either (see various unsynchronized reads/writes of members such as mScore, mNetworkAgent, etc. etc. in many of the methods).\n\nThat said, it\u0027s not incorrect, so if you want to keep it, that\u0027s fine by me. I\u0027d also be fine if you replaced it with a simple member.",
+      "range": {
+        "startLine": 65,
+        "startChar": 49,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "47bd31b75777029f405a18d900e474d06ff262da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
