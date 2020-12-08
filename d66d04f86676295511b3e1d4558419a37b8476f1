@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "da8220b7_2f980d72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-08T23:35:13Z",
+      "side": 1,
+      "message": "I don\u0027t believe we\u0027ve had this reviewed by PWG, but michaelfsun@ please correct that if you\u0027ve touched base with them. I completely understand the potential ramifications of this API.\n\nI agree that the race condition is a tricky (and potentially unsolvable) situation. This mechanism only works if another wakeup does not occur before we are able to propagate our more detailed wakeup reason. To my understanding, logging to BatteryStats would be the only way to get the timeline visualization offered by existing frontend tools such as volta and transponder. Otherwise, we would consider other logging mechanisms.\n\nI do think the approach you provided would work pretty well, but I am not sure if tooling is going to be updated in the short term to support any new functionality (based on my conversation with the transponder team). That\u0027s why I\u0027ve been hesitant to make any changes that would require the frontend tools to be updated.",
+      "parentUuid": "fec21844_70be45b7",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c575ae91_87b25a57",
         "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
         "patchSetId": 2
