@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "be3385b3_d0bf2022",
+        "filename": "core/java/android/os/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-12-08T20:43:39Z",
+      "side": 1,
+      "message": "So, who should make that change, the real OWNERS or I (in this CL)?",
+      "parentUuid": "4dca335c_856880c0",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 129
+      },
+      "revId": "eac83688d9f73c1ce511cba0dadc06cb311c2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a79668ab_82d551e8",
         "filename": "core/java/android/os/OWNERS",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-08T20:34:29Z",
       "side": 1,
       "message": "I know you\u0027re the author of this OWNERS CL, and perhaps you\u0027ve made several recent contributions in this area, but I\u0027d like someone responsible for this subsystem to confirm that they\u0027re comfortable listing you here.",
+      "range": {
+        "startLine": 20,
+        "startChar": 132,
+        "endLine": 20,
+        "endChar": 151
+      },
+      "revId": "eac83688d9f73c1ce511cba0dadc06cb311c2ddf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f736eb6f_c047e3f3",
+        "filename": "core/java/android/os/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-12-08T20:43:39Z",
+      "side": 1,
+      "message": "I don\u0027t mind be left out...",
+      "parentUuid": "a79668ab_82d551e8",
       "range": {
         "startLine": 20,
         "startChar": 132,
