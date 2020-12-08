@@ -69,6 +69,24 @@
       "parentUuid": "5148ee22_1db2bdc6",
       "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7fd50f2_1706e588",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2020-12-08T15:16:53Z",
+      "side": 1,
+      "message": "Neil, as you correctly assumed I included you here since you were touching APIs in the past and thought you should see these changes. Removing you from reviewers list.",
+      "parentUuid": "e7806917_50fce4b9",
+      "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
