@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdd43273_27165ffb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-08T07:25:18Z",
+      "side": 1,
+      "message": "LGTM with nits, IIUC Jean might wants to take a look.",
+      "revId": "b446b044a8dd259a248f319fb7eb1e9becc09e44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "778c6b56_889d493f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-08T07:25:18Z",
+      "side": 1,
+      "message": "Maybe \n// TODO: Broadcast stats updated event to listeners and protect against frequently updating.\nAnd move to l.2125?\n\nAlso this would need to be fixed by S timeframe so a bug to track this might be needed.",
+      "range": {
+        "startLine": 2096,
+        "startChar": 8,
+        "endLine": 2096,
+        "endChar": 67
+      },
+      "revId": "b446b044a8dd259a248f319fb7eb1e9becc09e44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
