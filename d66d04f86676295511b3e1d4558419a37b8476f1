@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4886ad1a_ba5d7ee8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-12-08T01:11:59Z",
+      "side": 1,
+      "message": "Off the cuff, an API like appendWakeupDetails() rather than kind of overloading notifyWakeupReason() seems preferable.  But based on the exchange w/ Dmitri, I\u0027m wondering if I misunderstood how this patchset will affect the data.\n\nWould it be possible to get a bugreport where this change and corresponding BT changes are both running and the BatteryStats data shows what the consequences of this CL will actually look like?",
+      "parentUuid": "c227f16f_36e2716a",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c575ae91_87b25a57",
         "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
         "patchSetId": 2
