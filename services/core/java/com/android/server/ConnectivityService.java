@@ -6966,21 +6966,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /** Sends all current NetworkRequests to the specified factory. */
-    private void sendAllRequestsToProvider(NetworkProviderInfo npi) {
+    private void sendAllRequestsToProvider(@NonNull final NetworkProviderInfo npi) {
         ensureRunningOnConnectivityServiceThread();
-        for (NetworkRequestInfo nri : mNetworkRequests.values()) {
-            if (nri.request.isListen()) continue;
-            NetworkAgentInfo nai = nri.getSatisfier();
-            final int score;
-            final int serial;
-            if (nai != null) {
-                score = nai.getCurrentScore();
-                serial = nai.factorySerialNumber;
-            } else {
-                score = 0;
-                serial = NetworkProvider.ID_NONE;
+        for (final NetworkRequestInfo nri : getNrisFromGlobalRequests()) {
+            for (final NetworkRequest req : nri.mRequests) {
+                if (req.isListen()) {
+                    continue;
+                }
+                final NetworkAgentInfo nai = nri.getSatisfier();
+                final int score;
+                final int serial;
+                if (null != nai) {
+                    score = nai.getCurrentScore();
+                    serial = nai.factorySerialNumber;
+                } else {
+                    score = 0;
+                    serial = NetworkProvider.ID_NONE;
+                }
+                npi.requestNetwork(req, score, serial);
             }
-            npi.requestNetwork(nri.request, score, serial);
         }
     }
 
