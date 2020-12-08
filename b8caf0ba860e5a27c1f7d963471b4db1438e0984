@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "160f3b2f_b7e9b819",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-08T03:31:58Z",
+      "side": 1,
+      "message": "Explain that there are different actors per session type, for example, EPS vs. NR.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 5
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
