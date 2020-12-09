@@ -226,6 +226,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e813df52_f15a84ac",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4848,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-09T01:31:53Z",
+      "side": 1,
+      "message": "Keeping open another round so that I can review options, like we said, a decision is needed but the code is simple both ways.",
+      "parentUuid": "07407116_224f4e45",
+      "range": {
+        "startLine": 4848,
+        "startChar": 16,
+        "endLine": 4848,
+        "endChar": 35
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cec1d3c7_12451d12",
         "filename": "core/java/android/net/ConnectivityManager.java",
         "patchSetId": 31
@@ -1353,6 +1377,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79bac008_2fdf2152",
+        "filename": "core/java/android/net/QosSession.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-09T01:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d353e0e_4870ca71",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 67
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "535d518c_1e00e4b4",
@@ -1719,6 +1767,30 @@
       "side": 1,
       "message": "This goes to the general testing around the socket.\n\nLorenzo- your input might be very helpful here.",
       "parentUuid": "c5ce62b0_c42e925f",
+      "range": {
+        "startLine": 85,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 13
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ba6d393_9d5211a6",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-09T01:31:53Z",
+      "side": 1,
+      "message": "Can\u0027t believe how easy this was to do... ; ( Done.",
+      "parentUuid": "eebb1c81_aa97c5fa",
       "range": {
         "startLine": 85,
         "startChar": 5,
@@ -4596,6 +4668,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c082a18e_27e69c40",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7651,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-09T01:31:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc50047f_4bf5f9e3",
+      "range": {
+        "startLine": 7651,
+        "startChar": 35,
+        "endLine": 7651,
+        "endChar": 64
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "459048a5_e92d142c",
@@ -4680,6 +4776,30 @@
       "side": 1,
       "message": "Same as comment above, will look into.",
       "parentUuid": "6dca0595_1038e7ae",
+      "range": {
+        "startLine": 7688,
+        "startChar": 45,
+        "endLine": 7688,
+        "endChar": 59
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35047b15_7dc19bac",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 7688,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-09T01:31:53Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cdd4bee5_9dc12d80",
       "range": {
         "startLine": 7688,
         "startChar": 45,

@@ -926,6 +926,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f14e18c_484cc2c4",
+        "filename": "core/java/android/net/QosCallbackException.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-09T01:31:53Z",
+      "side": 1,
+      "message": "Never got a chance to look at this, based off of time, I would like to keep it as is. These are mostly known exceptions where the stack trace wouldn\u0027t be particularly helpful and easy to track down.",
+      "parentUuid": "e27627a1_c3e9a9d4",
+      "range": {
+        "startLine": 85,
+        "startChar": 44,
+        "endLine": 85,
+        "endChar": 84
+      },
+      "revId": "ac3a03ec6fd1edf41b1d78a1a4872bee0425dac5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "428d0abb_e01c83c4",
         "filename": "core/java/android/net/QosFilter.java",
         "patchSetId": 24
