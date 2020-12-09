@@ -1,0 +1,8 @@
+# TODO: should be:
+#
+# include /services/core/java/com/android/server/recoverysystem/OWNERS
+#
+# but repo upload fails because that file doesn't exist yet, will need
+# to be fixed in a follow-up CL
+
+include platform/bootable/recovery:/OWNERS
