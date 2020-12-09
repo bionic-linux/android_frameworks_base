@@ -198,6 +198,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "84f0ad17_c554f733",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-09T21:36:48Z",
+      "side": 1,
+      "message": "Perfect, thank you so much! 😊",
+      "parentUuid": "9ea5be92_75a234cd",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c575ae91_87b25a57",
         "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
         "patchSetId": 2
