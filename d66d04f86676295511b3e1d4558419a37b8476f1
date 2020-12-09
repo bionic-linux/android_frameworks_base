@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee00f74d_56b396e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1241955
+      },
+      "writtenOn": "2020-12-09T00:05:19Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a fair point about the tooling.  But Thierry (my L1-and-sometimes-L2 manager) has been working to try to get all of the visualization support brought up in web-abt as the official home, since _both_ Historian and Transponder Front End are left without support roadmaps at this point.  So hopefully there will be an actual, supported path forward, even if it isn\u0027t either of the two tools primarily used today.",
+      "parentUuid": "da8220b7_2f980d72",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c575ae91_87b25a57",
         "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
         "patchSetId": 2
