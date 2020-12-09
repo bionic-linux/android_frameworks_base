@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "892faf35_f0878b07",
+        "filename": "packages/EasterEgg/.project",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-12-09T10:03:02Z",
+      "side": 1,
+      "message": "??",
+      "range": {
+        "startLine": 4,
+        "startChar": 10,
+        "endLine": 4,
+        "endChar": 49
+      },
+      "revId": "f732730f95bd8c42f526df0dc43d43a3572f5046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c46a49c1_3614431e",
+        "filename": "packages/SettingsProvider/test/src/android/provider/SettingsBackupTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-12-09T10:03:02Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 303,
+        "startChar": 30,
+        "endLine": 303,
+        "endChar": 31
+      },
+      "revId": "f732730f95bd8c42f526df0dc43d43a3572f5046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57dbac3e_bd8f42ee",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/OverrideValidatorImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-12-09T10:03:02Z",
+      "side": 1,
+      "message": "isn\u0027t this the default? Is it necessary?",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 44
+      },
+      "revId": "f732730f95bd8c42f526df0dc43d43a3572f5046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecec2a41_7328ab1a",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/OverrideValidatorImplTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-12-09T10:03:02Z",
+      "side": 1,
+      "message": "we should reset this when the test finishes to avoid leaving residual state?\n\nMaybe do that in an @After method?",
+      "range": {
+        "startLine": 539,
+        "startChar": 37,
+        "endLine": 539,
+        "endChar": 41
+      },
+      "revId": "f732730f95bd8c42f526df0dc43d43a3572f5046",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
