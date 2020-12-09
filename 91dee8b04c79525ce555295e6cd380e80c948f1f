@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f5d6273_88192285",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2020-12-09T08:28:11Z",
+      "side": 1,
+      "message": "The proposed change causes HdmiControlService to be in POWER_STATUS_STANDBY after a regular boot, even though the device is awake. That is not desired.",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
