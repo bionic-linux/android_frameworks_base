@@ -91,6 +91,30 @@
       },
       "revId": "8443d970a99cdb386ca80bae79d34a801c753643",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fa32dc9_0b47503d",
+        "filename": "data/etc/car/com.google.android.car.networking.policyupdater.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-09T00:00:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "411df6fb_9007ec11",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "8443d970a99cdb386ca80bae79d34a801c753643",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
