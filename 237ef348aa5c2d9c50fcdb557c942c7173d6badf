@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "653e4765_abb548d7",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T06:33:49Z",
+      "side": 1,
+      "message": "The old code would call .toLowerCase(Locale.ROOT) on this before splitting it. I doubt this ever makes a difference in practice, but let\u0027s not take any risk.\n\nYou might find it useful to make a helper function, considering this will have to do in multiple places in this change.",
+      "range": {
+        "startLine": 292,
+        "startChar": 71,
+        "endLine": 292,
+        "endChar": 79
+      },
+      "revId": "237ef348aa5c2d9c50fcdb557c942c7173d6badf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82da2e20_fee36195",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T06:33:49Z",
+      "side": 1,
+      "message": "Please don\u0027t change the local coding style to something that\u0027s different from all the code in the directory ; none of the files around use this style with one argument per line.\n\nThe same applies to various other places in this change.",
+      "range": {
+        "startLine": 289,
+        "startChar": 28,
+        "endLine": 292,
+        "endChar": 83
+      },
+      "revId": "237ef348aa5c2d9c50fcdb557c942c7173d6badf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
