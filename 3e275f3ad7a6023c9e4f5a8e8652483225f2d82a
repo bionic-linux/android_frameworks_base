@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16a1e937_ef091e36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2020-12-09T20:47:05Z",
+      "side": 1,
+      "message": "Could someone please approve this CL? It\u0027s blocking other changes...",
+      "revId": "3e275f3ad7a6023c9e4f5a8e8652483225f2d82a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
