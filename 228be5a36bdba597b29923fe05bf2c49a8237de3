@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db415caa_e73f4a6f",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "Sorry this MUST be final. I know it\u0027s going to be annoying in terms of implementation but for safety I don\u0027t think it\u0027s even close to being acceptable that this is mutable.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "169d1301_5803dcc2",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "I think this needs to be documented in comments.\n\nWhat are some problems you want to avoid by forbidding this ?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 98
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1800bb7f_cfb3d68e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "You\u0027ll need to have an else branch to set it to null, or you\u0027ll fail to overwrite it when the source is null",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 9
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51a9668e_c3732985",
+        "filename": "core/java/android/net/TransportInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "will ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 53,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2905da1a_dacf6886",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1692,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "This no longer really sanitizes it, instead it returns an instance of NC that will be sanitized when parceled.\n\nThis is quite different ; in particular, if sent to the same process it will behave differently. This new code won\u0027t care that the location toggle is off when sending callbacks to WiFi, for example.\n\nConsidering CS runs inside the system server and anybody running inside the system server always has permission to see everything, I don\u0027t think this is a problem in practice. But at the very least, we should rename this method to reflect what it really does now.",
+      "range": {
+        "startLine": 1692,
+        "startChar": 24,
+        "endLine": 1692,
+        "endChar": 58
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a00ff4b6_2e41e629",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1697,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "This embarks a pointer to ConnectivityService because you didn\u0027t declare it static",
+      "range": {
+        "startLine": 1697,
+        "startChar": 8,
+        "endLine": 1697,
+        "endChar": 13
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2213d6d_edf0eace",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1697,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "You don\u0027t need this class. Just pick up the return value of withCleanCallingIdentity. Like all such methods, there is a T-returning \u003cT\u003e version that takes a supplier returning T.\n\n  final boolean parcelLocationSensitiveFields \u003d Binder.withCleanCallingIdentity(() -\u003e\n    mLocationPermissionChecker.checLocationPermission(...));",
+      "range": {
+        "startLine": 1697,
+        "startChar": 14,
+        "endLine": 1697,
+        "endChar": 30
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c79bcb6_c6368110",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1716,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "Not going to help – the owner UID will still not be parceled in your new scheme. Can you please have a test that would have detected this bug ?",
+      "range": {
+        "startLine": 1716,
+        "startChar": 7,
+        "endLine": 1716,
+        "endChar": 100
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d3a0b7f_226f52f8",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "final please. Also final the two strings, or simply inline them",
+      "range": {
+        "startLine": 338,
+        "startChar": 8,
+        "endLine": 338,
+        "endChar": 16
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13044749_e9c99f17",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "Can you please have a helper method instead of copy-pasting this ?",
+      "range": {
+        "startLine": 364,
+        "startChar": 0,
+        "endLine": 383,
+        "endChar": 0
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d55d1595_44d45f35",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 384,
+        "startChar": 8,
+        "endLine": 384,
+        "endChar": 27
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45f313d0_b9c9d3ca",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 7034,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "Since all you\u0027re doing here is exercising the sanitizing code of WifiInfo, isn\u0027t it simpler to eschew usage of NC, and just say something like\n\n  return parcelingRoundTrip(wifiInfo.makeCopy(false /* parcelLocationSensitiveFields */)\n\n?\n\nIf the point is to check that NC will actually behave correctly, maybe we should just have a specific test for that, rather than running it as an implementation detail of a helper method called in other places.",
+      "range": {
+        "startLine": 7028,
+        "startChar": 0,
+        "endLine": 7034,
+        "endChar": 36
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb66db80_715b9a54",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 7045,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 7045,
+        "startChar": 8,
+        "endLine": 7045,
+        "endChar": 16
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2f62955_8b2082c8",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "Suggest making this a blank final for ease of reading",
+      "range": {
+        "startLine": 988,
+        "startChar": 12,
+        "endLine": 988,
+        "endChar": 20
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad72cc5c_98a3a90a",
+        "filename": "wifi/java/android/net/wifi/aware/WifiAwareNetworkInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "This is your code, but given this is only ever assigned in constructors, shouldn\u0027t it be final ? The same applies to mPort and mTransportProtocol, and the lack of final here makes these objects unsafe for sharing in multiple threads per the Java memory model spec.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcc407ec_c3dcede8",
+        "filename": "wifi/java/android/net/wifi/aware/WifiAwareNetworkInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T14:19:28Z",
+      "side": 1,
+      "message": "Is this necessary ? I don\u0027t have a large issue with it, but I wonder if we need to both test this every time we call this function and to crash the system if this happens to be called by a module on an R device – is there a security issue I\u0027m missing or a bug this might help reveal ?\n\nThe same question applies to WifiInfo",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 9
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
