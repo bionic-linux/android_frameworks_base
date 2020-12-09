@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3917afaf_cbd128f0",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-09T17:49:02Z",
+      "side": 1,
+      "message": "This though means that set() will now preserve the original mParcelLocationSensitiveFields value for that instance (which does not seem to be problematic).",
+      "parentUuid": "db415caa_e73f4a6f",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 11
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "169d1301_5803dcc2",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 9
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-09T14:19:28Z",
       "side": 1,
       "message": "I think this needs to be documented in comments.\n\nWhat are some problems you want to avoid by forbidding this ?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 98
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2387d2a2_77e701dd",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-09T17:49:02Z",
+      "side": 1,
+      "message": "I was following the pattern used in LinkProperties.clear(). I\u0027m assuming the purpose there is to avoid the internal copy (since clearAll is @hide, this should legitimately only used internally) having `mParcelLocationSensitiveFields` bit set.",
+      "parentUuid": "169d1301_5803dcc2",
       "range": {
         "startLine": 119,
         "startChar": 0,
@@ -175,6 +223,30 @@
       "writtenOn": "2020-12-09T14:19:28Z",
       "side": 1,
       "message": "Not going to help – the owner UID will still not be parceled in your new scheme. Can you please have a test that would have detected this bug ?",
+      "range": {
+        "startLine": 1716,
+        "startChar": 7,
+        "endLine": 1716,
+        "endChar": 100
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b49a35dd_bc6860eb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1716,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-09T17:49:02Z",
+      "side": 1,
+      "message": "Oops. That is true. Follow up question: Are we saying that TRANSPORT_VPN apps can see all location data (i.e including stuff in TransportInfo) or is this true only for the owner UID. If latter, then it is probably best to revert to the old behavior of masking here and not masking inside NetworkCapabilities (since we may have orthogonal behavior in the same instance - don\u0027t make owner UID, but mask TransportInfo).",
+      "parentUuid": "5c79bcb6_c6368110",
       "range": {
         "startLine": 1716,
         "startChar": 7,
