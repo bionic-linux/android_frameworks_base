@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d442917_edbe058f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T11:53:25Z",
+      "side": 1,
+      "message": "No issues per se with this code but having to return Unit is a bit annoying, see comments on aosp/1512270 about that.",
+      "revId": "be3d0f0060bc3801f037ab6e8c3b848d990cded9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "594f5b9d_793a5b83",
+        "filename": "tests/net/java/com/android/server/connectivity/NetworkNotificationManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-09T11:53:25Z",
+      "side": 1,
+      "message": "Argh sorry, I didn\u0027t realize you\u0027d need to do this. Please see comments on aosp/1512270 on a suggestion to remove the need for this.",
+      "range": {
+        "startLine": 116,
+        "startChar": 17,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "be3d0f0060bc3801f037ab6e8c3b848d990cded9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
