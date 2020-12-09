@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "40bde120_88e02718",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-09T19:31:43Z",
+      "side": 1,
+      "message": "Oh yeah I did hear that it would be integrated into abt, but I wasn\u0027t sure what the progress or timeline would be on that. Do you know who would be the best person to get in touch with to determine the timeline for this change as well as full visualization support in abt? If we can be sure that the tooling can support this, then I have no objections to taking that approach!",
+      "parentUuid": "ee00f74d_56b396e4",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c575ae91_87b25a57",
         "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
         "patchSetId": 2
