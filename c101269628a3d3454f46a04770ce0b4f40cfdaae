@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca9982be_d9b6fd65",
+        "filename": "telephony/java/android/telephony/ims/DelegateRegistrationState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-09T00:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a192da05_f9466dfe",
+      "range": {
+        "startLine": 66,
+        "startChar": 36,
+        "endLine": 66,
+        "endChar": 49
+      },
+      "revId": "c101269628a3d3454f46a04770ce0b4f40cfdaae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19bb3a61_e608150d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71044e82_1af88848",
+        "filename": "telephony/java/android/telephony/ims/DelegateRegistrationState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-09T00:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19bb3a61_e608150d",
+      "range": {
+        "startLine": 77,
+        "startChar": 42,
+        "endLine": 77,
+        "endChar": 55
+      },
+      "revId": "c101269628a3d3454f46a04770ce0b4f40cfdaae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe0bfbc7_fac1abde",
@@ -60,6 +108,30 @@
       "writtenOn": "2020-12-07T19:05:03Z",
       "side": 1,
       "message": "It\u0027s a bit of a flaw that we can\u0027t actually refer to Intdefs, but thy\u0027re @hide.",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 70,
+        "endChar": 71
+      },
+      "revId": "c101269628a3d3454f46a04770ce0b4f40cfdaae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2ea5bb8_0a9134a3",
+        "filename": "telephony/java/android/telephony/ims/SipDelegateConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-09T00:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0bfbc7_fac1abde",
       "range": {
         "startLine": 70,
         "startChar": 52,
