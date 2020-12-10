@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26ce5084_b4b91c4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-10T03:51:13Z",
+      "side": 1,
+      "message": "LGTM as it\u0027s the same pattern as NetworkStack.getService, and DnsResolver is a native service since Q with a stable AIDL interface.",
+      "revId": "e150dfbaab3c5dd6f262b87a965fc07213dac3a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
