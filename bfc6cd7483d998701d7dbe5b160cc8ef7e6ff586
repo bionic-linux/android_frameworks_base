@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54902e98_9f748d06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-10T18:54:59Z",
+      "side": 1,
+      "message": "Clean CP to AOSP, applying +2",
+      "revId": "bfc6cd7483d998701d7dbe5b160cc8ef7e6ff586",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
