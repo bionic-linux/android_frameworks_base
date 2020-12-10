@@ -205,6 +205,30 @@
       },
       "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2098d4d6_888bbcff",
+        "filename": "data/etc/car/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2020-12-10T18:20:18Z",
+      "side": 1,
+      "message": "Actually, apologize for not mentioning this earlier. Can we go with this?\ncom.google.android.car.networking.preferenceupdater\n\nThis would then align with the API naming we chose here for this feature since \"network policy\" is already defined somewhere else in Networking. Please update other places you used \"policy\" to \"preference\" as well. Thanks.",
+      "parentUuid": "29537426_6457ee55",
+      "range": {
+        "startLine": 168,
+        "startChar": 57,
+        "endLine": 168,
+        "endChar": 69
+      },
+      "revId": "e3b5e8917ec3d1ac41884a1d121cad61a316c871",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
