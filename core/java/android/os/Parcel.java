@@ -333,7 +333,7 @@ public final class Parcel {
     @FastNative
     private static native String nativeReadString16(long nativePtr);
     @FastNative
-    private static native IBinder nativeReadStrongBinder(long nativePtr);
+    private static native IBinder nativeReadStrongBinder(long nativePtr, Parcel parcel);
     @FastNative
     private static native FileDescriptor nativeReadFileDescriptor(long nativePtr);
 
@@ -2490,7 +2490,7 @@ public final class Parcel {
      * Read an object from the parcel at the current dataPosition().
      */
     public final IBinder readStrongBinder() {
-        return nativeReadStrongBinder(mNativePtr);
+        return nativeReadStrongBinder(mNativePtr, this);
     }
 
     /**

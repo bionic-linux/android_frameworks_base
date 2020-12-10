@@ -501,11 +501,72 @@ static jstring android_os_Parcel_readString16(JNIEnv* env, jclass clazz, jlong n
     return NULL;
 }
 
-static jobject android_os_Parcel_readStrongBinder(JNIEnv* env, jclass clazz, jlong nativePtr)
+static JavaVM* jnienv_to_javavm(JNIEnv* env)
+{
+    JavaVM* vm;
+    return env->GetJavaVM(&vm) >= 0 ? vm : NULL;
+}
+
+static JNIEnv* javavm_to_jnienv(JavaVM* vm)
+{
+    JNIEnv* env;
+    return vm->GetEnv((void **)&env, JNI_VERSION_1_4) >= 0 ? env : NULL;
+}
+
+class JavaObjectTempRef : public RefBase
+{
+public:
+    static void createTempRef(JNIEnv* env, jobject object)
+    {
+        if (object)
+        {
+            auto * p = new JavaObjectTempRef(env, object);
+            p->incStrong(reinterpret_cast<const void *>(JavaObjectTempRef::createTempRef));
+            IPCThreadState::self()->appendPostWriteStrongDeref(p);
+        }
+    }
+
+protected:
+    JavaObjectTempRef(JNIEnv* env, jobject object)
+        : mVM(jnienv_to_javavm(env)), mObject(env->NewGlobalRef(object))
+    {
+    }
+
+    virtual ~JavaObjectTempRef()
+    {
+        JNIEnv* env = javavm_to_jnienv(mVM);
+        bool attached = false;
+        if (!env)
+        {
+            const int result = mVM->AttachCurrentThread(&env, NULL);
+            attached = (env != nullptr);
+            if (!attached)
+            {
+                ALOGE("thread attach failed: %#x", result);
+            }
+        }
+        if (env)
+        {
+            env->DeleteGlobalRef(mObject);
+        }
+        if (attached)
+        {
+            mVM->DetachCurrentThread();
+        }
+    }
+
+private:
+    JavaVM* const   mVM;
+    jobject const   mObject;  // GlobalRef to Java Obj
+};
+
+static jobject android_os_Parcel_readStrongBinder(JNIEnv* env, jclass clazz, jlong nativePtr, jobject javaObj)
 {
     Parcel* parcel = reinterpret_cast<Parcel*>(nativePtr);
     if (parcel != NULL) {
-        return javaObjectForIBinder(env, parcel->readStrongBinder());
+        const jobject result = javaObjectForIBinder(env, parcel->readStrongBinder());
+        JavaObjectTempRef::createTempRef(env, javaObj);
+        return result;
     }
     return NULL;
 }
@@ -822,7 +883,7 @@ static const JNINativeMethod gParcelMethods[] = {
     // @FastNative
     {"nativeReadString16",        "(J)Ljava/lang/String;", (void*)android_os_Parcel_readString16},
     // @FastNative
-    {"nativeReadStrongBinder",    "(J)Landroid/os/IBinder;", (void*)android_os_Parcel_readStrongBinder},
+    {"nativeReadStrongBinder",    "(JLandroid/os/Parcel;)Landroid/os/IBinder;", (void*)android_os_Parcel_readStrongBinder},
     // @FastNative
     {"nativeReadFileDescriptor",  "(J)Ljava/io/FileDescriptor;", (void*)android_os_Parcel_readFileDescriptor},
 
