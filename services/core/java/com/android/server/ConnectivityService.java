@@ -31,8 +31,10 @@ import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
+import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.ConnectivityManager.TYPE_VPN;
+import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.ConnectivityManager.getNetworkTypeName;
 import static android.net.ConnectivityManager.isNetworkTypeValid;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_PRIVDNS;
@@ -140,6 +142,7 @@ import android.net.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import android.net.util.LinkPropertiesUtils.CompareResult;
 import android.net.util.MultinetworkPolicyTracker;
 import android.net.util.NetdService;
+import android.os.BatteryStatsManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
@@ -156,6 +159,7 @@ import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.os.PowerManager;
 import android.os.Process;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
@@ -217,6 +221,7 @@ import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.utils.PriorityDump;
 
 import com.google.android.collect.Lists;
+import com.google.android.collect.Maps;
 
 import libcore.io.IoUtils;
 
@@ -338,7 +343,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private INetworkStatsService mStatsService;
     private INetworkPolicyManager mPolicyManager;
     private NetworkPolicyManagerInternal mPolicyManagerInternal;
+    private final RemoteCallbackList<INetworkActivityListener> mNetworkActivityListeners =
+            new RemoteCallbackList<>();
 
+    private boolean mNetworkActive;
+    @GuardedBy("mActiveIdleTimers")
+    private HashMap<String, IdleTimerParams> mActiveIdleTimers = Maps.newHashMap();
     /**
      * TestNetworkService (lazily) created upon first usage. Locked to prevent creation of multiple
      * instances.
@@ -1806,7 +1816,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         public void interfaceClassDataActivityChanged(String label, boolean active, long tsNanos,
                 int uid) {
             int deviceType = Integer.parseInt(label);
+            mNetworkActive = active;
             sendDataActivityBroadcast(deviceType, active, tsNanos);
+
+            synchronized (mActiveIdleTimers) {
+                if (mNetworkActive || mActiveIdleTimers.isEmpty()) reportNetworkActive();
+            }
+
         }
     };
 
@@ -2341,26 +2357,63 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SYSTEM_READY));
     }
 
+    private void updateRadioPowerState(boolean isActive, boolean isMobile) {
+        final BatteryStatsManager bs = mContext.getSystemService(BatteryStatsManager.class);
+        final int noUid = -1;
+        if (isMobile) {
+            bs.reportMobileRadioPowerState(isActive, noUid);
+        } else {
+            bs.reportWifiRadioPowerState(isActive, noUid);
+        }
+    }
+
     /**
      * Start listening for mobile activity state changes.
      */
     public void registerNetworkActivityListener(@NonNull INetworkActivityListener l) {
-        // TODO: Replace network activity listener registery in ConnectivityManager from NMS to here
+        mNetworkActivityListeners.register(l);
     }
 
     /**
      * Stop listening for mobile activity state changes.
      */
     public void unregisterNetworkActivityListener(@NonNull INetworkActivityListener l) {
-        // TODO: Replace network activity listener registery in ConnectivityManager from NMS to here
+        mNetworkActivityListeners.unregister(l);
     }
 
     /**
      * Check whether the mobile radio is currently active.
      */
     public boolean isDefaultNetworkActive() {
-        // TODO: Replace isNetworkActive() in NMS.
-        return false;
+        synchronized (mActiveIdleTimers) {
+            return mNetworkActive || mActiveIdleTimers.isEmpty();
+        }
+    }
+
+    private static class IdleTimerParams {
+        public final int timeout;
+        public final int type;
+
+        IdleTimerParams(int timeout, int type) {
+            this.timeout = timeout;
+            this.type = type;
+        }
+    }
+
+    private void reportNetworkActive() {
+        final int length = mNetworkActivityListeners.beginBroadcast();
+        if (DDBG) log("reportNetworkActive, notify " + length + " listeners");
+        try {
+            for (int i = 0; i < length; i++) {
+                try {
+                    mNetworkActivityListeners.getBroadcastItem(i).onNetworkActive();
+                } catch (RemoteException | RuntimeException e) {
+                    Log.e(TAG, "Fail to send network activie to listener " + e);
+                }
+            }
+        } finally {
+            mNetworkActivityListeners.finishBroadcast();
+        }
     }
 
     /**
@@ -2380,20 +2433,28 @@ public class ConnectivityService extends IConnectivityManager.Stub
             timeout = Settings.Global.getInt(mContext.getContentResolver(),
                                              Settings.Global.DATA_ACTIVITY_TIMEOUT_MOBILE,
                                              10);
-            type = ConnectivityManager.TYPE_MOBILE;
+            type = TYPE_MOBILE;
+            updateRadioPowerState(true /* isActive */, true /* isMobile */);
+            // Networks start up.
+            mNetworkActive = false;
         } else if (networkAgent.networkCapabilities.hasTransport(
                 NetworkCapabilities.TRANSPORT_WIFI)) {
             timeout = Settings.Global.getInt(mContext.getContentResolver(),
                                              Settings.Global.DATA_ACTIVITY_TIMEOUT_WIFI,
                                              15);
-            type = ConnectivityManager.TYPE_WIFI;
+            type = TYPE_WIFI;
+            updateRadioPowerState(true /* isActive */, false /* isMobile */);
         } else {
             return; // do not track any other networks
         }
 
         if (timeout > 0 && iface != null) {
             try {
-                mNMS.addIdleTimer(iface, timeout, type);
+                synchronized (mActiveIdleTimers) {
+                    mActiveIdleTimers.put(iface, new IdleTimerParams(timeout, type));
+                }
+                mNetd.idletimerAddInterface(iface, timeout, Integer.toString(type));
+                reportNetworkActive();
             } catch (Exception e) {
                 // You shall not crash!
                 loge("Exception in setupDataActivityTracking " + e);
@@ -2407,13 +2468,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void removeDataActivityTracking(NetworkAgentInfo networkAgent) {
         final String iface = networkAgent.linkProperties.getInterfaceName();
         final NetworkCapabilities caps = networkAgent.networkCapabilities;
-
-        if (iface != null && (caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                              caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))) {
+        final boolean isMobile = caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR);
+        if (iface != null && (isMobile || caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))) {
             try {
-                // the call fails silently if no idle timer setup for this interface
-                mNMS.removeIdleTimer(iface);
+                updateRadioPowerState(false /* isActive */, isMobile);
+                synchronized (mActiveIdleTimers) {
+                    final IdleTimerParams params = mActiveIdleTimers.get(iface);
+                    mActiveIdleTimers.remove(iface);
+                    // The call fails silently if no idle timer setup for this interface
+                    mNetd.idletimerRemoveInterface(iface, params.timeout,
+                            Integer.toString(params.type));
+                }
             } catch (Exception e) {
+                // You shall not crash!
                 loge("Exception in removeDataActivityTracking " + e);
             }
         }
@@ -2431,6 +2498,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             removeDataActivityTracking(oldNetwork);
         }
     }
+
     /**
      * Reads the network specific MTU size from resources.
      * and set it on it's iface.
@@ -2688,6 +2756,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.increaseIndent();
         mPermissionMonitor.dump(pw);
         pw.decreaseIndent();
+
+        pw.print("mNetworkActive="); pw.println(mNetworkActive);
+        synchronized (mActiveIdleTimers) {
+            pw.println("Idle timers:");
+            for (HashMap.Entry<String, IdleTimerParams> ent : mActiveIdleTimers.entrySet()) {
+                pw.print("  "); pw.print(ent.getKey()); pw.println(":");
+                final IdleTimerParams params = ent.getValue();
+                pw.print("    timeout="); pw.print(params.timeout);
+                pw.print(" type="); pw.print(params.type);
+            }
+        }
     }
 
     private void dumpNetworks(IndentingPrintWriter pw) {

@@ -70,7 +70,6 @@ import android.os.BatteryStats;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.INetworkActivityListener;
 import android.os.INetworkManagementService;
 import android.os.Process;
 import android.os.RemoteCallbackList;
@@ -81,7 +80,6 @@ import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
-import android.telephony.DataConnectionRealTimeInfo;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Slog;
@@ -230,31 +228,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     @GuardedBy("mQuotaLock")
     private volatile boolean mDataSaverMode;
 
-    private final Object mIdleTimerLock = new Object();
-    /** Set of interfaces with active idle timers. */
-    private static class IdleTimerParams {
-        public final int timeout;
-        public final int type;
-        public int networkCount;
-
-        IdleTimerParams(int timeout, int type) {
-            this.timeout = timeout;
-            this.type = type;
-            this.networkCount = 1;
-        }
-    }
-    private HashMap<String, IdleTimerParams> mActiveIdleTimers = Maps.newHashMap();
-
     private volatile boolean mFirewallEnabled;
     private volatile boolean mStrictEnabled;
-
-    private boolean mMobileActivityFromRadio = false;
-    private int mLastPowerStateFromRadio = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
-    private int mLastPowerStateFromWifi = DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
-
-    private final RemoteCallbackList<INetworkActivityListener> mNetworkActivityListeners =
-            new RemoteCallbackList<>();
-    private boolean mNetworkActive;
 
     /**
      * Constructs a new NetworkManagementService instance
@@ -398,65 +373,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
      */
     private void notifyInterfaceClassActivity(int type, boolean isActive, long tsNanos,
             int uid, boolean fromRadio) {
-        final boolean isMobile = ConnectivityManager.isNetworkTypeMobile(type);
-        int powerState = isActive
-                ? DataConnectionRealTimeInfo.DC_POWER_STATE_HIGH
-                : DataConnectionRealTimeInfo.DC_POWER_STATE_LOW;
-        if (isMobile) {
-            if (!fromRadio) {
-                if (mMobileActivityFromRadio) {
-                    // If this call is not coming from a report from the radio itself, but we
-                    // have previously received reports from the radio, then we will take the
-                    // power state to just be whatever the radio last reported.
-                    powerState = mLastPowerStateFromRadio;
-                }
-            } else {
-                mMobileActivityFromRadio = true;
-            }
-            if (mLastPowerStateFromRadio != powerState) {
-                mLastPowerStateFromRadio = powerState;
-                try {
-                    getBatteryStats().noteMobileRadioPowerState(powerState, tsNanos, uid);
-                } catch (RemoteException e) {
-                }
-            }
-        }
-
-        if (ConnectivityManager.isNetworkTypeWifi(type)) {
-            if (mLastPowerStateFromWifi != powerState) {
-                mLastPowerStateFromWifi = powerState;
-                try {
-                    getBatteryStats().noteWifiRadioPowerState(powerState, tsNanos, uid);
-                } catch (RemoteException e) {
-                }
-            }
-        }
-
-        if (!isMobile || fromRadio || !mMobileActivityFromRadio) {
-            // Report the change in data activity.  We don't do this if this is a change
-            // on the mobile network, that is not coming from the radio itself, and we
-            // have previously seen change reports from the radio.  In that case only
-            // the radio is the authority for the current state.
-            final boolean active = isActive;
-            invokeForAllObservers(o -> o.interfaceClassDataActivityChanged(
-                    Integer.toString(type), active, tsNanos, uid));
-        }
-
-        boolean report = false;
-        synchronized (mIdleTimerLock) {
-            if (mActiveIdleTimers.isEmpty()) {
-                // If there are no idle timers, we are not monitoring activity, so we
-                // are always considered active.
-                isActive = true;
-            }
-            if (mNetworkActive != isActive) {
-                mNetworkActive = isActive;
-                report = isActive;
-            }
-        }
-        if (report) {
-            reportNetworkActive();
-        }
+        invokeForAllObservers(o -> o.interfaceClassDataActivityChanged(
+                Integer.toString(type), isActive, tsNanos, uid));
     }
 
     @Override
@@ -1129,60 +1047,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             mNetdService.tetherRemoveForward(internalInterface, externalInterface);
         } catch (RemoteException | ServiceSpecificException e) {
             throw new IllegalStateException(e);
-        }
-    }
-
-    @Override
-    public void addIdleTimer(String iface, int timeout, final int type) {
-        NetworkStack.checkNetworkStackPermission(mContext);
-
-        if (DBG) Slog.d(TAG, "Adding idletimer");
-
-        synchronized (mIdleTimerLock) {
-            IdleTimerParams params = mActiveIdleTimers.get(iface);
-            if (params != null) {
-                // the interface already has idletimer, update network count
-                params.networkCount++;
-                return;
-            }
-
-            try {
-                mNetdService.idletimerAddInterface(iface, timeout, Integer.toString(type));
-            } catch (RemoteException | ServiceSpecificException e) {
-                throw new IllegalStateException(e);
-            }
-            mActiveIdleTimers.put(iface, new IdleTimerParams(timeout, type));
-
-            // Networks start up.
-            if (ConnectivityManager.isNetworkTypeMobile(type)) {
-                mNetworkActive = false;
-            }
-            mDaemonHandler.post(() -> notifyInterfaceClassActivity(type, true,
-                    SystemClock.elapsedRealtimeNanos(), -1, false));
-        }
-    }
-
-    @Override
-    public void removeIdleTimer(String iface) {
-        NetworkStack.checkNetworkStackPermission(mContext);
-
-        if (DBG) Slog.d(TAG, "Removing idletimer");
-
-        synchronized (mIdleTimerLock) {
-            final IdleTimerParams params = mActiveIdleTimers.get(iface);
-            if (params == null || --(params.networkCount) > 0) {
-                return;
-            }
-
-            try {
-                mNetdService.idletimerRemoveInterface(iface,
-                        params.timeout, Integer.toString(params.type));
-            } catch (RemoteException | ServiceSpecificException e) {
-                throw new IllegalStateException(e);
-            }
-            mActiveIdleTimers.remove(iface);
-            mDaemonHandler.post(() -> notifyInterfaceClassActivity(params.type, false,
-                    SystemClock.elapsedRealtimeNanos(), -1, false));
         }
     }
 
@@ -1877,43 +1741,8 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     }
 
     @Override
-    public void registerNetworkActivityListener(INetworkActivityListener listener) {
-        mNetworkActivityListeners.register(listener);
-    }
-
-    @Override
-    public void unregisterNetworkActivityListener(INetworkActivityListener listener) {
-        mNetworkActivityListeners.unregister(listener);
-    }
-
-    @Override
-    public boolean isNetworkActive() {
-        synchronized (mNetworkActivityListeners) {
-            return mNetworkActive || mActiveIdleTimers.isEmpty();
-        }
-    }
-
-    private void reportNetworkActive() {
-        final int length = mNetworkActivityListeners.beginBroadcast();
-        try {
-            for (int i = 0; i < length; i++) {
-                try {
-                    mNetworkActivityListeners.getBroadcastItem(i).onNetworkActive();
-                } catch (RemoteException | RuntimeException e) {
-                }
-            }
-        } finally {
-            mNetworkActivityListeners.finishBroadcast();
-        }
-    }
-
-    @Override
     protected void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         if (!DumpUtils.checkDumpPermission(mContext, TAG, pw)) return;
-
-        pw.print("mMobileActivityFromRadio="); pw.print(mMobileActivityFromRadio);
-                pw.print(" mLastPowerStateFromRadio="); pw.println(mLastPowerStateFromRadio);
-        pw.print("mNetworkActive="); pw.println(mNetworkActive);
 
         synchronized (mQuotaLock) {
             pw.print("Active quota ifaces: "); pw.println(mActiveQuotas.toString());
@@ -1944,17 +1773,6 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
             pw.println(getFirewallChainState(FIREWALL_CHAIN_RESTRICTED));
             dumpUidFirewallRule(pw, FIREWALL_CHAIN_NAME_RESTRICTED,
                     mUidFirewallRestrictedRules);
-        }
-
-        synchronized (mIdleTimerLock) {
-            pw.println("Idle timers:");
-            for (HashMap.Entry<String, IdleTimerParams> ent : mActiveIdleTimers.entrySet()) {
-                pw.print("  "); pw.print(ent.getKey()); pw.println(":");
-                IdleTimerParams params = ent.getValue();
-                pw.print("    timeout="); pw.print(params.timeout);
-                pw.print(" type="); pw.print(params.type);
-                pw.print(" networkCount="); pw.println(params.networkCount);
-            }
         }
 
         pw.print("Firewall enabled: "); pw.println(mFirewallEnabled);
