@@ -39,6 +39,30 @@
       },
       "revId": "b446b044a8dd259a248f319fb7eb1e9becc09e44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bad44388_d7dd0d67",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2020-12-10T07:34:54Z",
+      "side": 1,
+      "message": "Bug filed, b/175278077",
+      "parentUuid": "778c6b56_889d493f",
+      "range": {
+        "startLine": 2096,
+        "startChar": 8,
+        "endLine": 2096,
+        "endChar": 67
+      },
+      "revId": "b446b044a8dd259a248f319fb7eb1e9becc09e44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
