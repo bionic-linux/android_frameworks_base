@@ -32,6 +32,7 @@ import android.net.ISocketKeepaliveCallback;
 import android.net.ProxyInfo;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.INetworkActivityListener;
 import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
 import android.os.PersistableBundle;
@@ -235,4 +236,10 @@ interface IConnectivityManager
                 in PersistableBundle extras);
 
     void systemReady();
+
+    void registerNetworkActivityListener(in INetworkActivityListener l);
+
+    void unregisterNetworkActivityListener(in INetworkActivityListener l);
+
+    boolean isDefaultNetworkActive();
 }
