@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bd2bfff_c17b7708",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-12-10T19:44:30Z",
+      "side": 1,
+      "message": "This forces the MGF1 digest to SHA1. I am not quite happy with this though. I tend to add another abstract method that returns the OAEP paramters for the given transform.\n\nAnd I am not sure how to handle the cases where parameters are give below.",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 17
+      },
+      "revId": "3625ca03985ded544d46724d857e2414148f7e01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
