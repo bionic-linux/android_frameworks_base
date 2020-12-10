@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1218503_de396243",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-12-10T02:30:42Z",
+      "side": 1,
+      "message": "Hi Michael\n\nCould you please review this commit. Thanks.",
+      "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
