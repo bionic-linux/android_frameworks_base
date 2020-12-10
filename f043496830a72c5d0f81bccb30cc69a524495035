@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77a6a87a_f69ac09d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2020-12-10T22:21:29Z",
+      "side": 1,
+      "message": "Thank you for the patch Sergii.",
+      "revId": "f043496830a72c5d0f81bccb30cc69a524495035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
