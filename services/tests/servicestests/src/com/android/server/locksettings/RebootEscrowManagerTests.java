@@ -70,7 +70,7 @@ public class RebootEscrowManagerTests {
     protected static final int NONSECURE_SECONDARY_USER_ID = 20;
     protected static final int SECURE_SECONDARY_USER_ID = 21;
     private static final byte FAKE_SP_VERSION = 1;
-    private static final byte[] FAKE_AUTH_TOKEN = new byte[] {
+    private static final byte[] FAKE_AUTH_TOKEN = new byte[]{
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
             0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,

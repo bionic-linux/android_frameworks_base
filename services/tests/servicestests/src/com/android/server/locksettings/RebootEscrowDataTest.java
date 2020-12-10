@@ -19,11 +19,20 @@ package com.android.server.locksettings;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
+import android.util.Slog;
+
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.security.GeneralSecurityException;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 
 /**
  * atest FrameworksServicesTests:RebootEscrowDataTest
@@ -31,10 +40,25 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class RebootEscrowDataTest {
     private RebootEscrowKey mKey;
+    private SecretKey mAdditionalKey;
+
+    private SecretKey generateNewRebootEscrowEncryptionKey() throws GeneralSecurityException {
+        KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES);
+        generator.init(new KeyGenParameterSpec.Builder(
+                "my_test_key",
+                KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                .setKeySize(256)
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                .build());
+        return generator.generateKey();
+    }
 
     @Before
     public void generateKey() throws Exception {
         mKey = RebootEscrowKey.generate();
+        mAdditionalKey = generateNewRebootEscrowEncryptionKey();
+        Slog.e("testttt", "algorithm add " + mAdditionalKey.getAlgorithm());
     }
 
     private static byte[] getTestSp() {
@@ -47,34 +71,37 @@ public class RebootEscrowDataTest {
 
     @Test(expected = NullPointerException.class)
     public void fromEntries_failsOnNull() throws Exception {
-        RebootEscrowData.fromSyntheticPassword(mKey, (byte) 2, null);
+        RebootEscrowData.fromSyntheticPassword(mKey, (byte) 2, null, mAdditionalKey);
     }
 
     @Test(expected = NullPointerException.class)
     public void fromEncryptedData_failsOnNullData() throws Exception {
         byte[] testSp = getTestSp();
-        RebootEscrowData expected = RebootEscrowData.fromSyntheticPassword(mKey, (byte) 2, testSp);
+        RebootEscrowData expected = RebootEscrowData.fromSyntheticPassword(mKey, (byte) 2, testSp,
+                mAdditionalKey);
         RebootEscrowKey key = RebootEscrowKey.fromKeyBytes(expected.getKey().getKeyBytes());
-        RebootEscrowData.fromEncryptedData(key, null);
+        RebootEscrowData.fromEncryptedData(key, null, mAdditionalKey);
     }
 
     @Test(expected = NullPointerException.class)
     public void fromEncryptedData_failsOnNullKey() throws Exception {
         byte[] testSp = getTestSp();
-        RebootEscrowData expected = RebootEscrowData.fromSyntheticPassword(mKey, (byte) 2, testSp);
-        RebootEscrowData.fromEncryptedData(null, expected.getBlob());
+        RebootEscrowData expected = RebootEscrowData.fromSyntheticPassword(mKey, (byte) 2, testSp,
+                mAdditionalKey);
+        RebootEscrowData.fromEncryptedData(null, expected.getBlob(), mAdditionalKey);
     }
 
     @Test
     public void fromEntries_loopback_success() throws Exception {
         byte[] testSp = getTestSp();
-        RebootEscrowData expected = RebootEscrowData.fromSyntheticPassword(mKey, (byte) 2, testSp);
+        RebootEscrowData expected = RebootEscrowData.fromSyntheticPassword(mKey, (byte) 2, testSp,
+                mAdditionalKey);
 
         RebootEscrowKey key = RebootEscrowKey.fromKeyBytes(expected.getKey().getKeyBytes());
-        RebootEscrowData actual = RebootEscrowData.fromEncryptedData(key, expected.getBlob());
+        RebootEscrowData actual = RebootEscrowData.fromEncryptedData(key, expected.getBlob(),
+                mAdditionalKey);
 
         assertThat(actual.getSpVersion(), is(expected.getSpVersion()));
-        assertThat(actual.getIv(), is(expected.getIv()));
         assertThat(actual.getKey().getKeyBytes(), is(expected.getKey().getKeyBytes()));
         assertThat(actual.getBlob(), is(expected.getBlob()));
         assertThat(actual.getSyntheticPassword(), is(expected.getSyntheticPassword()));

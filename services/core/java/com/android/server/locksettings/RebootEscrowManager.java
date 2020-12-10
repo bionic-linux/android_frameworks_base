@@ -25,6 +25,10 @@ import android.os.SystemClock;
 import android.os.UserManager;
 import android.provider.DeviceConfig;
 import android.provider.Settings;
+import android.security.keystore.AndroidKeyStoreSpi;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
+import android.security.keystore2.AndroidKeyStoreProvider;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
@@ -34,11 +38,16 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.widget.RebootEscrowListener;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 
 class RebootEscrowManager {
     private static final String TAG = "RebootEscrowManager";
@@ -49,6 +58,11 @@ class RebootEscrowManager {
      */
     @VisibleForTesting
     public static final String REBOOT_ESCROW_ARMED_KEY = "reboot_escrow_armed_count";
+
+    public static final String REBOOT_ESCROW_KEY_STORE_ENCRYPTION_KEY_NAME =
+            "reboot_escrow_key_store_encryption_key";
+
+    public static final int KEY_LENGTH = 256;
 
     /**
      * Number of boots until we consider the escrow data to be stale for the purposes of metrics.
@@ -87,6 +101,11 @@ class RebootEscrowManager {
     private final Object mKeyGenerationLock = new Object();
 
     /**
+     * Hold this lock when getting or generating the reboot escrow encryption key in keystore.
+     */
+    private final Object mKeyStoreAccessLock = new Object();
+
+    /**
      * Stores the reboot escrow data between when it's supplied and when
      * {@link #armRebootEscrowIfNeeded()} is called.
      */
@@ -115,7 +134,6 @@ class RebootEscrowManager {
         Injector(Context context) {
             mContext = context;
             RebootEscrowProviderInterface rebootEscrowProvider = null;
-            // TODO(xunchang) add implementation for server based ror.
             if (DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_RESUME_ON_REBOOT,
                     "server_based_ror_enabled", false)) {
                 Slog.e(TAG, "Server based ror isn't implemented yet.");
@@ -168,6 +186,75 @@ class RebootEscrowManager {
         mStorage = storage;
         mUserManager = injector.getUserManager();
         mEventLog = injector.getEventLog();
+    }
+
+    /**
+     * TODO This function redirects keystore access to the legacy keystore during a transitional
+     * phase during which not all calling code has been adjusted to use Keystore 2.0.
+     * This can be reverted to a constant of "AndroidKeyStore" when b/171305684 is complete.
+     * The specific bug for this component is b/171305115.
+     */
+    static String androidKeystoreProviderName() {
+        if (AndroidKeyStoreProvider.isInstalled()) {
+            return "AndroidKeyStoreLegacy";
+        } else {
+            return "AndroidKeystore";
+        }
+    }
+
+    private SecretKey getKeyStoreEncryptionKeyUnguarded() {
+        try {
+            KeyStore keyStore = KeyStore.getInstance(androidKeystoreProviderName());
+            keyStore.load(/*param=*/ null);
+            return (SecretKey) keyStore.getKey(REBOOT_ESCROW_KEY_STORE_ENCRYPTION_KEY_NAME, null);
+        } catch (IOException | GeneralSecurityException e) {
+            Slog.e(TAG, "Unable to get encryption key from keystore.", e);
+        }
+        return null;
+    }
+
+    private SecretKey getKeyStoreEncryptionKey() {
+        synchronized (mKeyStoreAccessLock) {
+            return getKeyStoreEncryptionKeyUnguarded();
+        }
+    }
+
+    private void clearKeyStoreEncryptionKey() {
+        synchronized (mKeyStoreAccessLock) {
+            try {
+                KeyStore keyStore = KeyStore.getInstance(androidKeystoreProviderName());
+                keyStore.load(/*param=*/ null);
+                keyStore.deleteEntry(REBOOT_ESCROW_KEY_STORE_ENCRYPTION_KEY_NAME);
+            } catch (IOException | GeneralSecurityException e) {
+                Slog.e(TAG, "Unable to delete encryption in keystore.", e);
+            }
+        }
+    }
+
+    private SecretKey generateKeyStoreEncryptionKeyIfNeeded() {
+        synchronized (mKeyStoreAccessLock) {
+            SecretKey kk = getKeyStoreEncryptionKeyUnguarded();
+            if (kk != null) {
+                return kk;
+            }
+
+            try {
+                KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES,
+                        AndroidKeyStoreSpi.NAME);
+                generator.init(new KeyGenParameterSpec.Builder(
+                        REBOOT_ESCROW_KEY_STORE_ENCRYPTION_KEY_NAME,
+                        KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                        .setKeySize(KEY_LENGTH)
+                        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                        .build());
+                return generator.generateKey();
+            } catch (GeneralSecurityException e) {
+                // Should never happen.
+                Slog.e(TAG, "Unable to generate key.", e);
+            }
+            return null;
+        }
     }
 
     void loadRebootEscrowDataIfAvailable() {
@@ -232,11 +319,14 @@ class RebootEscrowManager {
             return false;
         }
 
+        SecretKey kk = getKeyStoreEncryptionKey();
+        if (kk == null) {
+            return false;
+        }
+
         try {
             byte[] blob = mStorage.readRebootEscrow(userId);
-            mStorage.removeRebootEscrow(userId);
-
-            RebootEscrowData escrowData = RebootEscrowData.fromEncryptedData(key, blob);
+            RebootEscrowData escrowData = RebootEscrowData.fromEncryptedData(key, blob, kk);
 
             mCallbacks.onRebootEscrowRestored(escrowData.getSpVersion(),
                     escrowData.getSyntheticPassword(), userId);
@@ -246,6 +336,10 @@ class RebootEscrowManager {
         } catch (IOException e) {
             Slog.w(TAG, "Could not load reboot escrow data for user " + userId, e);
             return false;
+        } finally {
+            mStorage.removeRebootEscrow(userId);
+            // Clear the old key in keystore. A new key will be generated by new RoR requests.
+            clearKeyStoreEncryptionKey();
         }
     }
 
@@ -267,11 +361,16 @@ class RebootEscrowManager {
             return;
         }
 
+        SecretKey kk = generateKeyStoreEncryptionKeyIfNeeded();
+        if (kk == null) {
+            return;
+        }
+
         final RebootEscrowData escrowData;
         try {
             // TODO(xunchang) further wrap the escrowData with a key from keystore.
             escrowData = RebootEscrowData.fromSyntheticPassword(escrowKey, spVersion,
-                    syntheticPassword);
+                    syntheticPassword, kk);
         } catch (IOException e) {
             setRebootEscrowReady(false);
             Slog.w(TAG, "Could not escrow reboot data", e);
@@ -348,7 +447,12 @@ class RebootEscrowManager {
             return false;
         }
 
-        boolean armedRebootEscrow = rebootEscrowProvider.storeRebootEscrowKey(escrowKey, null);
+        // We will use the same key from keystore to encrypt escrow key and escrow data blob.
+        SecretKey kk = getKeyStoreEncryptionKey();
+        if (kk == null) {
+            return false;
+        }
+        boolean armedRebootEscrow = rebootEscrowProvider.storeRebootEscrowKey(escrowKey, kk);
         if (armedRebootEscrow) {
             mStorage.setInt(REBOOT_ESCROW_ARMED_KEY, mInjector.getBootCount(), USER_SYSTEM);
             mEventLog.addEntry(RebootEscrowEvent.SET_ARMED_STATUS);
