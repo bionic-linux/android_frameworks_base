@@ -16,6 +16,23 @@
       "message": "Hi Michael\n\nCould you please review this commit. Thanks.",
       "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd6df610_150dd797",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-12-10T16:01:05Z",
+      "side": 1,
+      "message": "Could I have ApplicationInfo owner help to review this change. Thanks.",
+      "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
