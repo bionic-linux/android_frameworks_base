@@ -98,6 +98,24 @@
       "parentUuid": "8a3782b9_cf3aacc6",
       "revId": "04cda3c9b600e13f07f3fdf903982873b905ec3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a269401_0ede8d74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2020-12-10T20:33:39Z",
+      "side": 1,
+      "message": "nit; up to you but I think you can add it back to the topic but only keep the merged in flag on this CL and not the other CL in the topic. That way you can keep that association in place while only this CL is the one that doesn\u0027t get automerged. \n\nnit in any case so up to you.",
+      "parentUuid": "05cc4956_2efabd02",
+      "revId": "04cda3c9b600e13f07f3fdf903982873b905ec3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
