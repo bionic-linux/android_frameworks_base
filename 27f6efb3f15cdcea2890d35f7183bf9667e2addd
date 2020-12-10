@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006666203",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1506616?revision\u003d10",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9f3584b4_5bc1fc68",
+        "filename": "services/core/java/com/android/server/connectivity/ProxyTracker.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-10T00:30:03Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 210,
+        "startChar": 80,
+        "endLine": 210,
+        "endChar": 81
+      },
+      "revId": "27f6efb3f15cdcea2890d35f7183bf9667e2addd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
