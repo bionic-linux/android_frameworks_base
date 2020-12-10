@@ -33,6 +33,23 @@
       "message": "Could I have ApplicationInfo owner help to review this change. Thanks.",
       "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05b19787_aa541b9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-10T16:02:11Z",
+      "side": 1,
+      "message": "The PM folks are the best ones to review; I\u0027ve removed other OWNERS.",
+      "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
