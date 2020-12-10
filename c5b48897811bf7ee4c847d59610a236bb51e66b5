@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2334a8a_74ce0ba1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c92cfca3_1799b14b",
+      "range": {
+        "startLine": 2043,
+        "startChar": 6,
+        "endLine": 2046,
+        "endChar": 91
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e78ef6ff_1e3f2055",
@@ -97,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6622f9db_698b8332",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2052,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Is it totally App\u0027s responsibility to make this check or framework need to make any change for this distinction?",
+      "parentUuid": "29ce90c8_a5197340",
+      "range": {
+        "startLine": 2050,
+        "startChar": 19,
+        "endLine": 2052,
+        "endChar": 56
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fcc5b77a_efb7682a",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 5
@@ -108,6 +156,30 @@
       "writtenOn": "2020-12-02T21:31:11Z",
       "side": 1,
       "message": "can you also update this to KEY_RCS_PRESENCE_SUPPORTED_BOOL",
+      "range": {
+        "startLine": 3870,
+        "startChar": 19,
+        "endLine": 3870,
+        "endChar": 44
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad569eab_8a27e97a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3870,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc5b77a_efb7682a",
       "range": {
         "startLine": 3870,
         "startChar": 19,
@@ -141,6 +213,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41ab3e70_b5459f2a",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3887,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be977ae2_a8500c05",
+      "range": {
+        "startLine": 3887,
+        "startChar": 35,
+        "endLine": 3887,
+        "endChar": 66
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f41147a_b5ade222",
@@ -154,6 +250,30 @@
       "writtenOn": "2020-12-02T22:06:14Z",
       "side": 1,
       "message": "Sorry, can we rename this to: KEY_ENABLE_PRESENCE_GROUP_SUBSCRIBE_BOOL?",
+      "range": {
+        "startLine": 3911,
+        "startChar": 35,
+        "endLine": 3911,
+        "endChar": 85
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "981ca7bc_ae2f0077",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3911,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f41147a_b5ade222",
       "range": {
         "startLine": 3911,
         "startChar": 35,
@@ -187,6 +307,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a252512_1ab05b26",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3923,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342a961f_56e05b00",
+      "range": {
+        "startLine": 3923,
+        "startChar": 84,
+        "endLine": 3923,
+        "endChar": 89
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "337f50dd_f9280432",
@@ -200,6 +344,30 @@
       "writtenOn": "2020-12-02T21:28:30Z",
       "side": 1,
       "message": "clarify this to \"supports bulk RCS contact exchange, which can be queried using the key {@link KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL}\"",
+      "range": {
+        "startLine": 64,
+        "startChar": 34,
+        "endLine": 65,
+        "endChar": 90
+      },
+      "revId": "c5b48897811bf7ee4c847d59610a236bb51e66b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0767fa3_e26bfaab",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337f50dd_f9280432",
       "range": {
         "startLine": 64,
         "startChar": 34,

@@ -417,6 +417,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65f7d0a9_7ffec8c6",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c0ac25a_ad3fe0a6",
+      "range": {
+        "startLine": 66,
+        "startChar": 35,
+        "endLine": 66,
+        "endChar": 66
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbac2a3e_ed597feb",
@@ -430,6 +454,30 @@
       "writtenOn": "2020-12-01T23:45:47Z",
       "side": 1,
       "message": "Same as above, can you reference both KEY_USE_RCS_PRESENCE_BOOL and KEY_RCS_PRESENCE_SUPPORTED_BOOL as apps may still use the old version?",
+      "range": {
+        "startLine": 398,
+        "startChar": 51,
+        "endLine": 398,
+        "endChar": 82
+      },
+      "revId": "6f8d7550d872d0e22fda776724192ee5f0007c2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "959e73df_03bca347",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2020-12-10T11:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbac2a3e_ed597feb",
       "range": {
         "startLine": 398,
         "startChar": 51,
