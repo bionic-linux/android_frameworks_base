@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36105d04_f551407f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2020-12-10T07:24:27Z",
+      "side": 1,
+      "message": "+ Paul \u0026 Janis for the use of keystore",
+      "revId": "8f8bf9f61c41590beab65ffdcd3559d1b668144a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
