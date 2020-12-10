@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2551452f_97756a69",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-10T19:51:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43dcc184_f7f65836",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "04cda3c9b600e13f07f3fdf903982873b905ec3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c3f9f020_f517dce4",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 9
@@ -54,6 +78,24 @@
       "writtenOn": "2020-12-10T18:20:18Z",
       "side": 1,
       "message": "Any reason we decided to take this out of the topic for the other CL? ",
+      "revId": "04cda3c9b600e13f07f3fdf903982873b905ec3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05cc4956_2efabd02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-10T19:51:07Z",
+      "side": 1,
+      "message": "To make it easier to land, I can try bundling app and this change together if you want",
+      "parentUuid": "8a3782b9_cf3aacc6",
       "revId": "04cda3c9b600e13f07f3fdf903982873b905ec3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
