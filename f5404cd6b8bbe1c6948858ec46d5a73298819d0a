@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58de6103_b3758e4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-12-10T13:14:32Z",
+      "side": 1,
+      "message": "LGTM, just *one* nit in a comment!\n\nI like how the many test overlay apks collapse into a single apk.",
+      "revId": "f5404cd6b8bbe1c6948858ec46d5a73298819d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1abf9282_de6bcd26",
+        "filename": "cmds/idmap2/libidmap2/ResourceUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-12-10T13:14:32Z",
+      "side": 1,
+      "message": "s/a//",
+      "range": {
+        "startLine": 124,
+        "startChar": 58,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "f5404cd6b8bbe1c6948858ec46d5a73298819d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4e9c25a_63e45035",
+        "filename": "cmds/idmap2/tests/data/overlay/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-12-10T13:14:32Z",
+      "side": 1,
+      "message": "This looks neat.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "f5404cd6b8bbe1c6948858ec46d5a73298819d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "666df74c_6c679414",
+        "filename": "cmds/idmap2/tests/data/overlay/build",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2020-12-10T13:14:32Z",
+      "side": 1,
+      "message": "I can\u0027t find this file; I assume it was added in a commit that\u0027s on internal master but not on AOSP.",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "f5404cd6b8bbe1c6948858ec46d5a73298819d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
