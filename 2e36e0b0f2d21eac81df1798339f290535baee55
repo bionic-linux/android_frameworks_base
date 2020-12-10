@@ -22,6 +22,30 @@
       },
       "revId": "2e36e0b0f2d21eac81df1798339f290535baee55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "603b8eb7_6a385c01",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-12-10T19:41:13Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about this. If I had to simulate it in my head, less operations are a little easier for me though.",
+      "parentUuid": "2dfc650a_7241d828",
+      "range": {
+        "startLine": 123,
+        "startChar": 12,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "2e36e0b0f2d21eac81df1798339f290535baee55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
