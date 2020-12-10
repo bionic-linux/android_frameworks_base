@@ -45,6 +45,54 @@
       },
       "revId": "237ef348aa5c2d9c50fcdb557c942c7173d6badf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84dcbd8d_7c5f16ff",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-10T00:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "653e4765_abb548d7",
+      "range": {
+        "startLine": 292,
+        "startChar": 71,
+        "endLine": 292,
+        "endChar": 79
+      },
+      "revId": "237ef348aa5c2d9c50fcdb557c942c7173d6badf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c299db4_ad35cca1",
+        "filename": "core/java/com/android/internal/net/VpnProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-10T00:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82da2e20_fee36195",
+      "range": {
+        "startLine": 289,
+        "startChar": 28,
+        "endLine": 292,
+        "endChar": 83
+      },
+      "revId": "237ef348aa5c2d9c50fcdb557c942c7173d6badf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
