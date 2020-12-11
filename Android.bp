@@ -377,6 +377,7 @@ java_library {
         "framework-statsd.stubs.module_lib",
         "framework-tethering.stubs.module_lib",
         "framework-wifi.stubs.module_lib",
+        "android.net.ipsec.ike.stubs.module_lib",
     ],
     sdk_version: "module_current",
     visibility: ["//visibility:private"],
