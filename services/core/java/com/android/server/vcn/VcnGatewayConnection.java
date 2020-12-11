@@ -22,6 +22,8 @@ import android.net.vcn.VcnGatewayConnectionConfig;
 import android.os.Handler;
 import android.os.ParcelUuid;
 
+import static android.net.ipsec.ike.IkeSessionParams.fromPersistableBundle;
+
 import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkRecord;
 import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkTrackerCallback;
 
