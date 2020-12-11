@@ -67,6 +67,24 @@
       "message": "These are aleady @SystemApi; why do we need to make the change?",
       "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cf1fda5_ac632c3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-12-11T03:11:46Z",
+      "side": 1,
+      "message": "They are in-procss APIs not just system APIs, in-process API only applies to code in frameworks/base/services. But connectivity service is not in that scope after it becomes a mainline module. So we need to make these APIs to either @SystemApi or public API and I update them to public APIs as Michael\u0027s suggestion on above commet.",
+      "parentUuid": "288d8268_dc781438",
+      "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
