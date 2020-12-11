@@ -98,6 +98,7 @@ java_library_static {
         "android.hardware.power-V1.0-java",
         "android.hardware.vibrator-java",
         "android.net.ipsec.ike.stubs.module_lib",
+        "android.net.ipsec.ike.stubs.system_server",
         "app-compat-annotations",
         "framework-tethering.stubs.module_lib",
         "service-permission.stubs.system_server",
