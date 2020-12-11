@@ -773,12 +773,12 @@ public final class SystemServiceRegistry {
             }});
 
         registerService(Context.ETHERNET_SERVICE, EthernetManager.class,
-                new CachedServiceFetcher<EthernetManager>() {
+                new StaticServiceFetcher<EthernetManager>() {
             @Override
-            public EthernetManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+            public EthernetManager createService() throws ServiceNotFoundException {
                 IBinder b = ServiceManager.getServiceOrThrow(Context.ETHERNET_SERVICE);
                 IEthernetManager service = IEthernetManager.Stub.asInterface(b);
-                return new EthernetManager(ctx.getOuterContext(), service);
+                return new EthernetManager(service);
             }});
 
         registerService(Context.WIFI_NL80211_SERVICE, WifiNl80211Manager.class,
