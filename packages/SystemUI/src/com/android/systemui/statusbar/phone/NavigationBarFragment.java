@@ -533,6 +533,9 @@ public class NavigationBarFragment extends LifecycleFragment implements Callback
         }
 
         initSecondaryHomeHandleForRotation();
+        if (!mIsOnDefaultDisplay && mStatusBarLazy.get().isKeyguardShowing()) {
+            mNavigationBarView.getRootView().setVisibility(View.GONE);
+        }
     }
 
     @Override
