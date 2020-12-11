@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006705596",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1525419?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d79415f7_2cd18282",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardDisplayManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-11T03:08:23Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 102
+      },
+      "revId": "492ef84baeaf479626e939402f060c3a5a5d738c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
