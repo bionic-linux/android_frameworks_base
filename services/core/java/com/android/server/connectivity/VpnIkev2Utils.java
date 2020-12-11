@@ -107,6 +107,7 @@ public class VpnIkev2Utils {
             ikeOptionsBuilder.addSaProposal(ikeProposal);
         }
 
+        ikeOptionsBuilder.build().toPersistableBundle();
         return ikeOptionsBuilder.build();
     }
 
