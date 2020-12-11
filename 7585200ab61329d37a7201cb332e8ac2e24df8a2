@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f0a546a_343e044c",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-12-11T03:30:53Z",
+      "side": 1,
+      "message": "I think the @Nullable doesn\u0027t imply that resolver service may be null, it just align the returning value of ServiceManager#getService(). Agree with you that resolver service must never be null. Maybe we can change getService() to getServiceOrThrow() that will throw ServiceNotFoundException if resolver service is null to force the system crash to know the problem. What do you think?",
+      "parentUuid": "2d3e65a4_54015391",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "7585200ab61329d37a7201cb332e8ac2e24df8a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9d0bf2c_1d42923b",
         "filename": "core/java/android/net/DnsResolverServiceManager.java",
         "patchSetId": 4
