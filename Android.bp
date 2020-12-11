@@ -565,6 +565,7 @@ java_library {
     ],
     libs: [
         "app-compat-annotations",
+        "android.net.ipsec.ike.stubs.module_lib",
         "ext",
         "framework-updatable-stubs-module_libs_api",
         "unsupportedappusage",
