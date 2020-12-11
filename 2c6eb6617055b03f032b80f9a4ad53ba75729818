@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a7e02c0_c14eabb0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-11T07:54:18Z",
+      "side": 1,
+      "message": "Do you want to add a comment to describe why here should call reportNetworkActive() when mActiveIdleTimers is empty? e.g. https://android-review.googlesource.com/c/platform/frameworks/base/+/1517817/5/services/core/java/com/android/server/NetworkManagementService.java#b448",
+      "range": {
+        "startLine": 1823,
+        "startChar": 38,
+        "endLine": 1823,
+        "endChar": 65
+      },
+      "revId": "2c6eb6617055b03f032b80f9a4ad53ba75729818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd5a6ca2_83305a79",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2439,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-11T07:54:18Z",
+      "side": 1,
+      "message": "I don\u0027t get this comment and why we name this var to mNetworkActive.\nI think it\u0027s better to describe why we set mNetworkActive to false when network is mobile.\nOr maybe we can have a more clear name for this var?",
+      "range": {
+        "startLine": 2438,
+        "startChar": 12,
+        "endLine": 2439,
+        "endChar": 35
+      },
+      "revId": "2c6eb6617055b03f032b80f9a4ad53ba75729818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "960de6fe_1375dc70",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-11T07:54:18Z",
+      "side": 1,
+      "message": "It looks like we can remove this parameter because:\n- It\u0027s always false.\n- We don\u0027t use it anymore.",
+      "range": {
+        "startLine": 375,
+        "startChar": 21,
+        "endLine": 375,
+        "endChar": 38
+      },
+      "revId": "2c6eb6617055b03f032b80f9a4ad53ba75729818",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

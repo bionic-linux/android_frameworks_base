@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5436b17_ea8a185e",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-11T07:54:18Z",
+      "side": 0,
+      "message": "Note: Because fromRadio is always false, mMobileActivityFromRadio has no chance to be true.",
+      "range": {
+        "startLine": 413,
+        "startChar": 14,
+        "endLine": 415,
+        "endChar": 13
+      },
+      "revId": "50bd250b11cfa00996ba5f7b861b7cacaf044265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ccbfce5_333e02bf",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-11T07:54:18Z",
+      "side": 0,
+      "message": "Note: This condition is useless because mMobileActivityFromRadio is always false. That\u0027s why this change can remove it.",
+      "range": {
+        "startLine": 435,
+        "startChar": 8,
+        "endLine": 435,
+        "endChar": 66
+      },
+      "revId": "50bd250b11cfa00996ba5f7b861b7cacaf044265",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
