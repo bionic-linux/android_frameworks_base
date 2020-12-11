@@ -248,6 +248,7 @@ import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.testutils.ExceptionUtils;
 import com.android.testutils.HandlerUtils;
 import com.android.testutils.RecorderCallback.CallbackEntry;
+import com.android.testutils.RecorderCallback.CallbackEntry.CapabilitiesChanged;
 import com.android.testutils.TestableNetworkCallback;
 
 import org.junit.After;
@@ -636,7 +637,12 @@ public class ConnectivityServiceTest {
 
         private TestNetworkAgentWrapper(int transport, LinkProperties linkProperties,
                 NetworkCapabilities ncTemplate) throws Exception {
-            super(transport, linkProperties, ncTemplate, mServiceContext);
+            this(new int[] { transport }, linkProperties, ncTemplate);
+        }
+
+        private TestNetworkAgentWrapper(int[] transports, LinkProperties linkProperties,
+                NetworkCapabilities ncTemplate) throws Exception {
+            super(transports, linkProperties, ncTemplate, mServiceContext);
 
             // Waits for the NetworkAgent to be registered, which includes the creation of the
             // NetworkMonitor.
@@ -1084,14 +1090,14 @@ public class ConnectivityServiceTest {
             return mVpnType;
         }
 
-        private void registerAgent(boolean isAlwaysMetered, Set<UidRange> uids, LinkProperties lp)
-                throws Exception {
+        private void registerAgent(boolean isAlwaysMetered, Set<UidRange> uids, LinkProperties lp,
+                int[] baseTransports) throws Exception {
             if (mAgentRegistered) throw new IllegalStateException("already registered");
             setUids(uids);
             if (!isAlwaysMetered) mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_METERED);
             mInterface = VPN_IFNAME;
-            mMockNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp,
-                    mNetworkCapabilities);
+            final int[] transports = ArrayUtils.appendInt(baseTransports, TRANSPORT_VPN);
+            mMockNetworkAgent = new TestNetworkAgentWrapper(transports, lp, mNetworkCapabilities);
             mMockNetworkAgent.waitForIdle(TIMEOUT_MS);
             verify(mNetworkManagementService, times(1))
                     .addVpnUidRanges(eq(mMockVpn.getNetId()), eq(uids.toArray(new UidRange[0])));
@@ -1103,7 +1109,7 @@ public class ConnectivityServiceTest {
         }
 
         private void registerAgent(Set<UidRange> uids) throws Exception {
-            registerAgent(false /* isAlwaysMetered */, uids, new LinkProperties());
+            registerAgent(false /* isAlwaysMetered */, uids, new LinkProperties(), null);
         }
 
         private void connect(boolean validated, boolean hasInternet, boolean isStrictMode) {
@@ -1119,28 +1125,28 @@ public class ConnectivityServiceTest {
         }
 
         public void establish(LinkProperties lp, int uid, Set<UidRange> ranges, boolean validated,
-                boolean hasInternet, boolean isStrictMode) throws Exception {
+                boolean hasInternet, boolean isStrictMode, int[] baseTransports) throws Exception {
             mNetworkCapabilities.setOwnerUid(uid);
             mNetworkCapabilities.setAdministratorUids(new int[]{uid});
-            registerAgent(false, ranges, lp);
+            registerAgent(false, ranges, lp, baseTransports);
             connect(validated, hasInternet, isStrictMode);
             waitForIdle();
         }
 
         public void establish(LinkProperties lp, int uid, Set<UidRange> ranges) throws Exception {
-            establish(lp, uid, ranges, true, true, false);
+            establish(lp, uid, ranges, true, true, false, null);
         }
 
         public void establishForMyUid(LinkProperties lp) throws Exception {
             final int uid = Process.myUid();
-            establish(lp, uid, uidRangesForUid(uid), true, true, false);
+            establish(lp, uid, uidRangesForUid(uid), true, true, false, null);
         }
 
         public void establishForMyUid(boolean validated, boolean hasInternet, boolean isStrictMode)
                 throws Exception {
             final int uid = Process.myUid();
             establish(new LinkProperties(), uid, uidRangesForUid(uid), validated, hasInternet,
-                    isStrictMode);
+                    isStrictMode, null);
         }
 
         public void establishForMyUid() throws Exception {
@@ -6218,7 +6224,7 @@ public class ConnectivityServiceTest {
 
         // Connect VPN network.
         mMockVpn.registerAgent(true /* isAlwaysMetered */, uidRangesForUid(Process.myUid()),
-                new LinkProperties());
+                new LinkProperties(), null /* baseTransports */);
         mMockVpn.connect(true);
         waitForIdle();
         assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
@@ -6398,12 +6404,33 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.disconnect();
         mWiFiNetworkAgent.disconnect();
 
+        final NetworkRequest cellRequest = new NetworkRequest.Builder()
+                .addTransportType(TRANSPORT_CELLULAR)
+                .removeCapability(NET_CAPABILITY_NOT_VPN)
+                .build();
+        final TestNetworkCallback cellCallback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(cellRequest, cellCallback);
+
         cellLp.setInterfaceName("wifi0");
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR, cellLp);
         mCellNetworkAgent.connect(true);
         waitForIdle();
+        cellCallback.eventuallyExpect(CallbackEntry.NETWORK_CAPS_UPDATED, TEST_CALLBACK_TIMEOUT_MS,
+                cb -> true);
         verify(mBatteryStatsService).noteNetworkInterfaceTransport(cellLp.getInterfaceName(),
                 TRANSPORT_CELLULAR);
+
+        mMockVpn.establish(new LinkProperties(), Process.myUid(), uidRangesForUid(Process.myUid()),
+                true /* validated */, true /* hasInternet */, false /* isStrictMode */,
+                new int[] { TRANSPORT_CELLULAR });
+        waitForIdle();
+        cellCallback.eventuallyExpect(CallbackEntry.NETWORK_CAPS_UPDATED, TEST_CALLBACK_TIMEOUT_MS,
+                cb -> ((CapabilitiesChanged) cb).getCaps().hasTransport(TRANSPORT_VPN));
+        // Still only one call to noteNetworkInterfaceTransport (the previous one)
+        verify(mBatteryStatsService, times(1)).noteNetworkInterfaceTransport(any(), anyInt());
+
+        mCm.unregisterNetworkCallback(cellCallback);
+        mMockVpn.disconnect();
         mCellNetworkAgent.disconnect();
     }
 

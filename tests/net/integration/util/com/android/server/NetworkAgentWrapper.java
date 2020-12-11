@@ -24,7 +24,7 @@ import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI_AWARE;
 
-import static com.android.server.ConnectivityServiceTestUtils.transportToLegacyType;
+import static com.android.server.ConnectivityServiceTestUtils.transportsToLegacyType;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -48,6 +48,7 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
 
+import com.android.internal.util.ArrayUtils;
 import com.android.server.connectivity.ConnectivityConstants;
 import com.android.testutils.HandlerUtils;
 import com.android.testutils.TestableNetworkCallback;
@@ -74,34 +75,33 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
 
     public NetworkAgentWrapper(int transport, LinkProperties linkProperties,
             NetworkCapabilities ncTemplate, Context context) throws Exception {
-        final int type = transportToLegacyType(transport);
+        this(new int[] { transport }, linkProperties, ncTemplate, context);
+    }
+
+    public NetworkAgentWrapper(int[] transports, LinkProperties linkProperties,
+            NetworkCapabilities ncTemplate, Context context) throws Exception {
+        final int type = transportsToLegacyType(transports);
         final String typeName = ConnectivityManager.getNetworkTypeName(type);
         mNetworkInfo = new NetworkInfo(type, 0, typeName, "Mock");
         mNetworkCapabilities = (ncTemplate != null) ? ncTemplate : new NetworkCapabilities();
         mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
-        mNetworkCapabilities.addTransportType(transport);
-        switch (transport) {
-            case TRANSPORT_ETHERNET:
-                mScore = 70;
-                break;
-            case TRANSPORT_WIFI:
-                mScore = 60;
-                break;
-            case TRANSPORT_CELLULAR:
-                mScore = 50;
-                break;
-            case TRANSPORT_WIFI_AWARE:
-                mScore = 20;
-                break;
-            case TRANSPORT_VPN:
-                mNetworkCapabilities.removeCapability(NET_CAPABILITY_NOT_VPN);
-                // VPNs deduce the SUSPENDED capability from their underlying networks and there
-                // is no public API to let VPN services set it.
-                mNetworkCapabilities.removeCapability(NET_CAPABILITY_NOT_SUSPENDED);
-                mScore = ConnectivityConstants.VPN_DEFAULT_SCORE;
-                break;
-            default:
-                throw new UnsupportedOperationException("unimplemented network type");
+        for (int transport : transports) mNetworkCapabilities.addTransportType(transport);
+        if (ArrayUtils.contains(transports, TRANSPORT_VPN)) {
+            mNetworkCapabilities.removeCapability(NET_CAPABILITY_NOT_VPN);
+            // VPNs deduce the SUSPENDED capability from their underlying networks and there
+            // is no public API to let VPN services set it.
+            mNetworkCapabilities.removeCapability(NET_CAPABILITY_NOT_SUSPENDED);
+            mScore = ConnectivityConstants.VPN_DEFAULT_SCORE;
+        } else if (ArrayUtils.contains(transports, TRANSPORT_ETHERNET)) {
+            mScore = 70;
+        } else if (ArrayUtils.contains(transports, TRANSPORT_WIFI)) {
+            mScore = 60;
+        } else if (ArrayUtils.contains(transports, TRANSPORT_CELLULAR)) {
+            mScore = 50;
+        } else if (ArrayUtils.contains(transports, TRANSPORT_WIFI_AWARE)) {
+            mScore = 20;
+        } else {
+            throw new UnsupportedOperationException("unimplemented network type");
         }
         mContext = context;
         mLogTag = "Mock-" + typeName;

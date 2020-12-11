@@ -32,12 +32,19 @@ import android.net.NetworkCapabilities.TRANSPORT_TEST
 import android.net.NetworkCapabilities.TRANSPORT_VPN
 import android.net.NetworkCapabilities.TRANSPORT_WIFI
 
-fun transportToLegacyType(transport: Int) = when (transport) {
-    TRANSPORT_BLUETOOTH -> TYPE_BLUETOOTH
-    TRANSPORT_CELLULAR -> TYPE_MOBILE
-    TRANSPORT_ETHERNET -> TYPE_ETHERNET
-    TRANSPORT_TEST -> TYPE_TEST
-    TRANSPORT_VPN -> TYPE_VPN
-    TRANSPORT_WIFI -> TYPE_WIFI
-    else -> TYPE_NONE
+fun transportToLegacyType(transport: Int) =
+        transportsToLegacyType(intArrayOf(transport))
+
+fun transportsToLegacyType(transports: IntArray): Int {
+    return when {
+        // A network that has VPN and any other transport is VPN type
+        transports.contains(TRANSPORT_VPN) -> TYPE_VPN
+        transports.contains(TRANSPORT_BLUETOOTH) -> TYPE_BLUETOOTH
+        transports.contains(TRANSPORT_CELLULAR) -> TYPE_MOBILE
+        transports.contains(TRANSPORT_ETHERNET) -> TYPE_ETHERNET
+        transports.contains(TRANSPORT_WIFI) -> TYPE_WIFI
+        // Only qualify as TYPE_TEST if it is not combined with another known transport
+        transports.contains(TRANSPORT_TEST) -> TYPE_TEST
+        else -> TYPE_NONE
+    }
 }
