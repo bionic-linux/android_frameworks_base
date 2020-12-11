@@ -93,7 +93,7 @@ public class EthernetManager {
      * the standard {@link android.content.Context#ETHERNET_SERVICE Context.ETHERNET_SERVICE}.
      * @hide
      */
-    public EthernetManager(Context context, IEthernetManager service) {
+    public EthernetManager(IEthernetManager service) {
         mService = service;
     }
 
