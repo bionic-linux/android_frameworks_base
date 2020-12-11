@@ -289,11 +289,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // connect anyway?" dialog after the user selects a network that doesn't validate.
     private static final int PROMPT_UNVALIDATED_DELAY_MS = 8 * 1000;
 
-    // Default to 30s linger time-out. Modifiable only for testing.
+    // Default to 30s linger time-out, and 5s for new network linger. Modifiable only for testing.
     private static final String LINGER_DELAY_PROPERTY = "persist.netmon.linger";
     private static final int DEFAULT_LINGER_DELAY_MS = 30_000;
+    private static final String LINGER_NEW_NETWORK_DELAY_PROPERTY = "persist.netmon.newnet_linger";
+    private static final int DEFAULT_NEW_NETWORK_LINGER_DELAY_MS = 5_000;
     @VisibleForTesting
     protected int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
+    protected int mNewNetworkLingerDelayMs;
 
     // How long to delay to removal of a pending intent based request.
     // See Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS
@@ -993,6 +996,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000);
 
         mLingerDelayMs = mSystemProperties.getInt(LINGER_DELAY_PROPERTY, DEFAULT_LINGER_DELAY_MS);
+        mNewNetworkLingerDelayMs = mSystemProperties.getInt(
+                LINGER_NEW_NETWORK_DELAY_PROPERTY, DEFAULT_NEW_NETWORK_LINGER_DELAY_MS);
 
         mNMS = Objects.requireNonNull(netManager, "missing INetworkManagementService");
         mStatsService = Objects.requireNonNull(statsService, "missing INetworkStatsService");
@@ -6898,6 +6903,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         + " request " + nri.request.requestId);
             }
             previousSatisfier.removeRequest(nri.request.requestId);
+
+            // Linger the newly connected network for a short time. This is mainly used by VCN,
+            // where VCN-eligible networks might become VCN-underlying networks by losing network
+            // capabilities. Hence the network might end up here since it no longer satisfies any
+            // request. Linger for a short period to let VCN management service fire new network
+            // requests to prevent the network from immediately dropping.
+            if (previousSatisfier.connectedTimeStamp + mNewNetworkLingerDelayMs > now) {
+                previousSatisfier.lingerRequest(nri.request, now, mNewNetworkLingerDelayMs);
+            }
         }
         nri.mSatisfier = newSatisfier;
     }
@@ -7235,6 +7249,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (!networkAgent.everConnected && state == NetworkInfo.State.CONNECTED) {
             networkAgent.everConnected = true;
+            networkAgent.connectedTimeStamp = SystemClock.elapsedRealtime();
 
             if (networkAgent.linkProperties == null) {
                 Slog.wtf(TAG, networkAgent.toShortString() + " connected with null LinkProperties");

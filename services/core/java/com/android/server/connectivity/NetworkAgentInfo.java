@@ -140,6 +140,10 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // shows up in API calls, is able to satisfy NetworkRequests and can become the default network.
     // This is a sticky bit; once set it is never cleared.
     public boolean everConnected;
+    // The connected timestamp in milliseconds format, this is used to determine if the network
+    // is a newly created network. This should be set once when connected and never changed
+    // after that.
+    public long connectedTimeStamp;
     // Set to true if this Network successfully passed validation or if it did not satisfy the
     // default NetworkRequest in which case validation will not be attempted.
     // This is a sticky bit; once set it is never cleared even if future validation attempts fail.

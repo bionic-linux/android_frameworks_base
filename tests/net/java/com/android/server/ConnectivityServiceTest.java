@@ -302,7 +302,8 @@ public class ConnectivityServiceTest {
     private static final String TAG = "ConnectivityServiceTest";
 
     private static final int TIMEOUT_MS = 500;
-    private static final int TEST_LINGER_DELAY_MS = 300;
+    private static final int TEST_LINGER_DELAY_MS = 400;
+    private static final int TEST_NEW_NETWORK_LINGER_DELAY_MS = 300;
     // Chosen to be less than the linger timeout. This ensures that we can distinguish between a
     // LOST callback that arrives immediately and a LOST callback that arrives after the linger
     // timeout. For this, our assertions should run fast enough to leave less than
@@ -1285,6 +1286,7 @@ public class ConnectivityServiceTest {
                 mMockNetd,
                 deps);
         mService.mLingerDelayMs = TEST_LINGER_DELAY_MS;
+        mService.mNewNetworkLingerDelayMs = TEST_NEW_NETWORK_LINGER_DELAY_MS;
         verify(deps).makeMultinetworkPolicyTracker(any(), any(), any());
 
         final ArgumentCaptor<INetworkPolicyListener> policyListenerCaptor =
@@ -1558,6 +1560,46 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.disconnect();
         waitFor(cv);
         verifyNoNetwork();
+    }
+
+    /**
+     * Test a newly created network will be lingered instead of torndown if losing capabilities
+     * and cannot satisfy any request.
+     */
+    @Test
+    public void testNewNetworkLoseCapabilityLingering() throws Exception {
+        // Create a callback that monitoring the testing network.
+        final NetworkRequest nontrustedRequest = new NetworkRequest.Builder().removeCapability(
+                NET_CAPABILITY_TRUSTED).build();
+        final TestNetworkCallback nontrustedCallback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(nontrustedRequest, nontrustedCallback);
+
+        // Request a trusted network.
+        final NetworkRequest trustedRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_TRUSTED)
+                .build();
+        final TestNetworkCallback trustedCallback = new TestNetworkCallback();
+        mCm.requestNetwork(trustedRequest, trustedCallback);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        trustedCallback.expectAvailableThenValidatedCallbacks(mWiFiNetworkAgent);
+        nontrustedCallback.expectAvailableThenValidatedCallbacks(mWiFiNetworkAgent);
+        reset(mMockNetd);
+
+        // Change mutable capability and verify the network is disconnected after new network linger
+        // timeout. For the unsatisfied request, verify lost is received immediately.
+        mWiFiNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
+        trustedCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        nontrustedCallback.expectCallback(CallbackEntry.LOSING, mWiFiNetworkAgent);
+        nontrustedCallback.expectCapabilitiesWithout(NET_CAPABILITY_TRUSTED, mWiFiNetworkAgent);
+        final int lingerTimeoutMs =
+                mService.mNewNetworkLingerDelayMs + mService.mNewNetworkLingerDelayMs / 4;
+        nontrustedCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent, lingerTimeoutMs);
+        reset(mMockNetd);
+
+        mCm.unregisterNetworkCallback(trustedCallback);
+        mCm.unregisterNetworkCallback(nontrustedCallback);
     }
 
     @Test
