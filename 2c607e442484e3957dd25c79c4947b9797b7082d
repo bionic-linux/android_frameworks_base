@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4c2d307_6987d14e",
+        "filename": "telephony/java/android/telephony/ims/ImsRcsManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-11T00:01:04Z",
+      "side": 1,
+      "message": "this is unclear, isntead, perhaps say: \"which will be true if either key {@link android.telephony.CarrierConfigManager.Ims#KEY_RCS_BULK_CAPABILITY_EXCHANGE_BOOL} or {@link android.telephony.CarrierConfigManager#KEY_USE_RCS_PRESENCE_BOOL} is set to true.",
+      "range": {
+        "startLine": 64,
+        "startChar": 70,
+        "endLine": 65,
+        "endChar": 11
+      },
+      "revId": "2c607e442484e3957dd25c79c4947b9797b7082d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
