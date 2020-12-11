@@ -39,6 +39,30 @@
       },
       "revId": "337336ad1023da7ffd8886f4e4353765b7e28974",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e49ad56a_f5a9bb61",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2020-12-11T20:28:14Z",
+      "side": 1,
+      "message": "Added the documentation --- I wonder if we need to be more specific about the restriction though. Please let me know what you think.",
+      "parentUuid": "df340fa4_45a838ab",
+      "range": {
+        "startLine": 199,
+        "startChar": 58,
+        "endLine": 199,
+        "endChar": 78
+      },
+      "revId": "337336ad1023da7ffd8886f4e4353765b7e28974",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
