@@ -193,6 +193,7 @@ import android.net.RouteInfo;
 import android.net.RouteInfoParcel;
 import android.net.SocketKeepalive;
 import android.net.UidRange;
+import android.net.UidRangeParcel;
 import android.net.Uri;
 import android.net.VpnManager;
 import android.net.metrics.IpConnectivityLog;
@@ -294,6 +295,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -408,6 +410,7 @@ public class ConnectivityServiceTest {
 
         @Spy private Resources mResources;
         private final LinkedBlockingQueue<Intent> mStartedActivities = new LinkedBlockingQueue<>();
+
         // Map of permission name -> PermissionManager.Permission_{GRANTED|DENIED} constant
         private final HashMap<String, Integer> mMockedPermissions = new HashMap<>();
 
@@ -6421,15 +6424,45 @@ public class ConnectivityServiceTest {
         mCm.unregisterNetworkCallback(defaultCallback);
     }
 
+    private UidRange[] fromStableParcel(UidRangeParcel[] in) {
+        UidRange[] out = new UidRange[in.length];
+        for (int i = 0; i < in.length; i++) {
+            out[i] = new UidRange(in[i].start, in[i].stop);
+        }
+        return out;
+    }
+
     private void expectNetworkRejectNonSecureVpn(InOrder inOrder, boolean add,
             UidRange... expected) throws Exception {
-        ArgumentCaptor<UidRange[]> rangesCaptor = ArgumentCaptor.forClass(
-                UidRange[].class);
-        inOrder.verify(mNetworkManagementService).setAllowOnlyVpnForUids(eq(add),
-                rangesCaptor.capture());
-        final UidRange[] actual = rangesCaptor.getValue();
-        assertEquals(expected.length, actual.length);
+        // TODO: simplify by adding @JavaDerive(equals=true) to UidRangeParcel, converting
+        // |expected| to UidRangeParcel, just using eq() in the verify().
+        ArgumentCaptor<UidRangeParcel[]> rangesCaptor = ArgumentCaptor.forClass(
+                UidRangeParcel[].class);
+        inOrder.verify(mMockNetd).networkRejectNonSecureVpn(eq(add), rangesCaptor.capture());
+        assertEquals(expected.length, rangesCaptor.getValue().length);
+        UidRange[] actual = fromStableParcel(rangesCaptor.getValue());
         assertArrayEquals(expected, actual);
+    }
+
+    // Checks that two networks receive a blocked status change callback with the specified
+    // |blocked| value, in either order. This is needed because when an event affects multiple
+    // networks, ConnectivityService does not guarantee the order in which callbacks are fired.
+    private void assertBlockedCallbackInEitherOrder(TestNetworkCallback callback, boolean blocked,
+            TestNetworkAgentWrapper a1, TestNetworkAgentWrapper a2) {
+        Network n1 = a1.getNetwork();
+        Network n2 = a2.getNetwork();
+
+        // Expect the first callback. If it arrives, store in firstNetwork the network it was about.
+        final AtomicReference<Network> firstNetwork = new AtomicReference<>();
+        callback.expectCallbackThat(TIMEOUT_MS, (c) ->
+                c instanceof CallbackEntry.BlockedStatus
+                        && (c.getNetwork().equals(n1) || c.getNetwork().equals(n2))
+                        && firstNetwork.getAndSet(c.getNetwork()) == null);
+
+        // Expect a callback for the other network.
+        final Network secondNetwork = (firstNetwork.get().equals(n1)) ? n2 : n1;
+        callback.expectCallbackThat(TIMEOUT_MS, (c) ->
+                c instanceof CallbackEntry.BlockedStatus && (c.getNetwork().equals(secondNetwork)));
     }
 
     @Test
@@ -6457,7 +6490,7 @@ public class ConnectivityServiceTest {
 
         UidRange firstHalf = new UidRange(1, VPN_UID - 1);
         UidRange secondHalf = new UidRange(VPN_UID + 1, 99999);
-        InOrder inOrder = inOrder(mNetworkManagementService);
+        InOrder inOrder = inOrder(mMockNetd);
         expectNetworkRejectNonSecureVpn(inOrder, true, firstHalf, secondHalf);
 
         // Connect a network when lockdown is active, expect to see it blocked.
@@ -6468,9 +6501,10 @@ public class ConnectivityServiceTest {
         assertNull(mCm.getActiveNetwork());
 
         // Disable lockdown, expect to see the network unblocked.
-        // There are no callbacks because they are not implemented yet.
         mService.setAlwaysOnVpnPackage(userId, null, true, allowList);
         expectNetworkRejectNonSecureVpn(inOrder, false, firstHalf, secondHalf);
+        callback.expectBlockedStatusCallback(false, mWiFiNetworkAgent);
+        defaultCallback.expectBlockedStatusCallback(false, mWiFiNetworkAgent);
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
 
         // Add our UID to the allowlist and re-enable lockdown, expect network is not blocked.
@@ -6497,36 +6531,38 @@ public class ConnectivityServiceTest {
         allowList.clear();
         mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, true, allowList);
         expectNetworkRejectNonSecureVpn(inOrder, true, firstHalf, secondHalf);
+        defaultCallback.expectBlockedStatusCallback(true, mWiFiNetworkAgent);
+        assertBlockedCallbackInEitherOrder(callback, true, mWiFiNetworkAgent, mCellNetworkAgent);
         assertNull(mCm.getActiveNetwork());
 
         // Disable lockdown. Everything is unblocked.
         mService.setAlwaysOnVpnPackage(userId, null, true, allowList);
+        defaultCallback.expectBlockedStatusCallback(false, mWiFiNetworkAgent);
+        assertBlockedCallbackInEitherOrder(callback, false, mWiFiNetworkAgent, mCellNetworkAgent);
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
 
         // Enable and disable an always-on VPN package without lockdown. Expect no changes.
-        reset(mNetworkManagementService);
+        reset(mMockNetd);
         mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, false, allowList);
-        inOrder.verify(mNetworkManagementService, never())
-                .setAllowOnlyVpnForUids(anyBoolean(), any());
+        inOrder.verify(mMockNetd, never()).networkRejectNonSecureVpn(anyBoolean(), any());
         callback.assertNoCallback();
         defaultCallback.assertNoCallback();
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
 
         mService.setAlwaysOnVpnPackage(userId, null, false, allowList);
-        inOrder.verify(mNetworkManagementService, never())
-                .setAllowOnlyVpnForUids(anyBoolean(), any());
+        inOrder.verify(mMockNetd, never()).networkRejectNonSecureVpn(anyBoolean(), any());
         callback.assertNoCallback();
         defaultCallback.assertNoCallback();
         assertEquals(mWiFiNetworkAgent.getNetwork(), mCm.getActiveNetwork());
 
-        // Enable lockdown and connect a VPN. The VPN is blocked (bug).
+        // Enable lockdown and connect a VPN. The VPN is not blocked.
         mService.setAlwaysOnVpnPackage(userId, ALWAYS_ON_VPN_PACKAGE, true, allowList);
+        defaultCallback.expectBlockedStatusCallback(true, mWiFiNetworkAgent);
+        assertBlockedCallbackInEitherOrder(callback, true, mWiFiNetworkAgent, mCellNetworkAgent);
         assertNull(mCm.getActiveNetwork());
 
         mMockVpn.establishForMyUid();
-        defaultCallback.expectAvailableCallbacksUnvalidatedAndBlocked(mMockVpn);
-        defaultCallback.expectCapabilitiesThat(mMockVpn,
-                (nc) -> nc.hasCapability(NET_CAPABILITY_VALIDATED));
+        defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
 
         mMockVpn.disconnect();
