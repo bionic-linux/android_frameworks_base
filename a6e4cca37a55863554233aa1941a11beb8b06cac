@@ -123,6 +123,24 @@
       "parentUuid": "a5cd91be_90402ac4",
       "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "326d0f3b_a9298d51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2020-12-11T16:08:21Z",
+      "side": 1,
+      "message": "+1, should be three separate changes.",
+      "parentUuid": "3b6e8530_a4a518fe",
+      "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
