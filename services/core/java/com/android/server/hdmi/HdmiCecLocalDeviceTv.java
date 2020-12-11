@@ -1149,7 +1149,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             mService.maySendFeatureAbortCommand(message, Constants.ABORT_REFUSED);
             return true;
         }
-        removeAction(SystemAudioAutoInitiationAction.class);
         SystemAudioActionFromAvr action = new SystemAudioActionFromAvr(this,
                 message.getSource(), systemAudioStatus, null);
         addAndStartAction(action);
