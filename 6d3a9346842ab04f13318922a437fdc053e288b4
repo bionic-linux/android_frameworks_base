@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006704150",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1525419?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9005fcd2_701ffabf",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardDisplayManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-11T02:21:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 102
+      },
+      "revId": "6d3a9346842ab04f13318922a437fdc053e288b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006704150",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1525419?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a8513672_b129fa28",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarFragment.java.orig",
+        "patchSetId": 1
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-11T02:21:51Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027they\u0027, \u0027them\u0027, or \u0027person\u0027; see https://developers.google.com/style/word-list#gender for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 1016,
+        "startChar": 15,
+        "endLine": 1016,
+        "endChar": 18
+      },
+      "revId": "6d3a9346842ab04f13318922a437fdc053e288b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
