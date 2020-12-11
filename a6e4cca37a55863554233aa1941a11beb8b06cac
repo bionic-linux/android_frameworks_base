@@ -105,6 +105,24 @@
       "parentUuid": "07892486_e0ea5f8e",
       "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b6e8530_a4a518fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2020-12-11T16:07:06Z",
+      "side": 1,
+      "message": "Ping. Nikita would you mind addressing my concerns in this comment?\n\nSplitting this into separate changes, one for each corresponding change in libcore will mean that you can submit each pair of changes separately without waiting for them all to be approved.",
+      "parentUuid": "a5cd91be_90402ac4",
+      "revId": "a6e4cca37a55863554233aa1941a11beb8b06cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
