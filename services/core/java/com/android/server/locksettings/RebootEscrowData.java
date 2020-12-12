@@ -16,8 +16,6 @@
 
 package com.android.server.locksettings;
 
-import com.android.internal.util.Preconditions;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -26,12 +24,15 @@ import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.GCMParameterSpec;
 
 /**
  * Holds the data necessary to complete a reboot escrow of the Synthetic Password.
@@ -41,32 +42,118 @@ class RebootEscrowData {
      * This is the current version of the escrow data format. This should be incremented if the
      * format on disk is changed.
      */
-    private static final int CURRENT_VERSION = 1;
+    private static final int CURRENT_VERSION = 2;
 
-    /** The algorithm used for the encryption of the key blob. */
-    private static final String CIPHER_ALGO = "AES/GCM/NoPadding";
+    static class AesEncryptedBlob {
+        /** The algorithm used for the encryption of the key blob. */
+        private static final String CIPHER_ALGO = "AES/GCM/NoPadding";
 
-    private RebootEscrowData(byte spVersion, byte[] iv, byte[] syntheticPassword, byte[] blob,
+        private final byte[] mUnencryptedData;
+        private final byte[] mEncryptedBlob;
+        private final byte[] mIv;
+        private final SecretKey mKey;
+
+        AesEncryptedBlob(byte[] unencryptedData,  byte[] encryptedBlob, byte[] iv, SecretKey key) {
+            mUnencryptedData = unencryptedData;
+            mEncryptedBlob = encryptedBlob;
+            mIv = iv;
+            mKey = key;
+        }
+
+        public byte[] getUnencryptedData() {
+            return mUnencryptedData;
+        }
+
+        public byte[] getEncryptedBlob() {
+            return mEncryptedBlob;
+        }
+
+        public byte[] getIv() {
+            return mIv;
+        }
+
+        public SecretKey getKey() {
+            return mKey;
+        }
+
+        static AesEncryptedBlob decryptBlob(SecretKey key, byte[] blob) throws IOException {
+            Objects.requireNonNull(key);
+            Objects.requireNonNull(blob);
+
+            DataInputStream dis = new DataInputStream(new ByteArrayInputStream(blob));
+            int ivSize = dis.readInt();
+            if (ivSize < 0 || ivSize > 32) {
+                throw new IOException("IV out of range: " + ivSize);
+            }
+            byte[] iv = new byte[ivSize];
+            dis.readFully(iv);
+
+            int cipherTextSize = dis.readInt();
+            if (cipherTextSize < 0) {
+                throw new IOException("Invalid cipher text size: " + cipherTextSize);
+            }
+
+            byte[] cipherText = new byte[cipherTextSize];
+            dis.readFully(cipherText);
+
+            final byte[] unencryptedData;
+            try {
+                Cipher c = Cipher.getInstance(CIPHER_ALGO);
+                c.init(Cipher.DECRYPT_MODE, key, new GCMParameterSpec(128, iv));
+                unencryptedData = c.doFinal(cipherText);
+            } catch (NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
+                    | IllegalBlockSizeException | NoSuchPaddingException
+                    | InvalidAlgorithmParameterException e) {
+                throw new IOException("Could not decrypt cipher text", e);
+            }
+
+            return new AesEncryptedBlob(unencryptedData, blob, iv, key);
+        }
+
+        static AesEncryptedBlob encryptBlob(SecretKey key, byte[] blob)
+                throws IOException {
+            Objects.requireNonNull(key);
+            Objects.requireNonNull(blob);
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            DataOutputStream dos = new DataOutputStream(bos);
+
+            final byte[] cipherText;
+            final byte[] iv;
+            try {
+                Cipher cipher = Cipher.getInstance(CIPHER_ALGO);
+                cipher.init(Cipher.ENCRYPT_MODE, key);
+                cipherText = cipher.doFinal(blob);
+                iv = cipher.getIV();
+            } catch (NoSuchAlgorithmException | BadPaddingException | IllegalBlockSizeException
+                    | NoSuchPaddingException | InvalidKeyException e) {
+                throw new IOException("Could not encrypt input data", e);
+            }
+
+            dos.writeInt(iv.length);
+            dos.write(iv);
+            dos.writeInt(cipherText.length);
+            dos.write(cipherText);
+
+            return new AesEncryptedBlob(blob, bos.toByteArray(), iv, key);
+        }
+    }
+
+    private RebootEscrowData(byte spVersion, byte[] syntheticPassword, byte[] blob,
             RebootEscrowKey key) {
         mSpVersion = spVersion;
-        mIv = iv;
         mSyntheticPassword = syntheticPassword;
         mBlob = blob;
         mKey = key;
     }
 
     private final byte mSpVersion;
-    private final byte[] mIv;
     private final byte[] mSyntheticPassword;
     private final byte[] mBlob;
     private final RebootEscrowKey mKey;
 
     public byte getSpVersion() {
         return mSpVersion;
-    }
-
-    public byte[] getIv() {
-        return mIv;
     }
 
     public byte[] getSyntheticPassword() {
@@ -81,76 +168,49 @@ class RebootEscrowData {
         return mKey;
     }
 
-    static RebootEscrowData fromEncryptedData(RebootEscrowKey key, byte[] blob)
+    static RebootEscrowData fromEncryptedData(RebootEscrowKey ks, byte[] blob,
+            SecretKey kk)
             throws IOException {
-        Preconditions.checkNotNull(key);
-        Preconditions.checkNotNull(blob);
+        Objects.requireNonNull(ks);
+        Objects.requireNonNull(blob);
 
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(blob));
         int version = dis.readInt();
         if (version != CURRENT_VERSION) {
             throw new IOException("Unsupported version " + version);
         }
-
         byte spVersion = dis.readByte();
 
-        int ivSize = dis.readInt();
-        if (ivSize < 0 || ivSize > 32) {
-            throw new IOException("IV out of range: " + ivSize);
-        }
-        byte[] iv = new byte[ivSize];
-        dis.readFully(iv);
+        // Decrypt the blob with the key from keystore first, then decrypt again with the reboot
+        // escrow key.
+        AesEncryptedBlob ksEncryptedBlob = AesEncryptedBlob.decryptBlob(kk,
+                Arrays.copyOfRange(blob, 5, blob.length));
+        AesEncryptedBlob decryptedBlob = AesEncryptedBlob.decryptBlob(ks.getKey(),
+                ksEncryptedBlob.getUnencryptedData());
 
-        int cipherTextSize = dis.readInt();
-        if (cipherTextSize < 0) {
-            throw new IOException("Invalid cipher text size: " + cipherTextSize);
-        }
+        final byte[] syntheticPassword = decryptedBlob.getUnencryptedData();
 
-        byte[] cipherText = new byte[cipherTextSize];
-        dis.readFully(cipherText);
-
-        final byte[] syntheticPassword;
-        try {
-            Cipher c = Cipher.getInstance(CIPHER_ALGO);
-            c.init(Cipher.DECRYPT_MODE, key.getKey(), new IvParameterSpec(iv));
-            syntheticPassword = c.doFinal(cipherText);
-        } catch (NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
-                | IllegalBlockSizeException | NoSuchPaddingException
-                | InvalidAlgorithmParameterException e) {
-            throw new IOException("Could not decrypt ciphertext", e);
-        }
-
-        return new RebootEscrowData(spVersion, iv, syntheticPassword, blob, key);
+        return new RebootEscrowData(spVersion, syntheticPassword, blob, ks);
     }
 
-    static RebootEscrowData fromSyntheticPassword(RebootEscrowKey key, byte spVersion,
-            byte[] syntheticPassword)
+    static RebootEscrowData fromSyntheticPassword(RebootEscrowKey ks, byte spVersion,
+            byte[] syntheticPassword, SecretKey kk)
             throws IOException {
-        Preconditions.checkNotNull(syntheticPassword);
+        Objects.requireNonNull(syntheticPassword);
+
+        // Encrypt synthetic password with the escrow key first; then encrypt the blob again with
+        // the key from keystore.
+        AesEncryptedBlob encryptedBlob = AesEncryptedBlob.encryptBlob(ks.getKey(),
+                syntheticPassword);
+        AesEncryptedBlob wrappedBlob = AesEncryptedBlob.encryptBlob(kk,
+                encryptedBlob.getEncryptedBlob());
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(bos);
-
-        final byte[] cipherText;
-        final byte[] iv;
-        try {
-            Cipher cipher = Cipher.getInstance(CIPHER_ALGO);
-            cipher.init(Cipher.ENCRYPT_MODE, key.getKey());
-            cipherText = cipher.doFinal(syntheticPassword);
-            iv = cipher.getIV();
-        } catch (NoSuchAlgorithmException | BadPaddingException | IllegalBlockSizeException
-                | NoSuchPaddingException | InvalidKeyException e) {
-            throw new IOException("Could not encrypt reboot escrow data", e);
-        }
-
         dos.writeInt(CURRENT_VERSION);
         dos.writeByte(spVersion);
-        dos.writeInt(iv.length);
-        dos.write(iv);
-        dos.writeInt(cipherText.length);
-        dos.write(cipherText);
+        dos.write(wrappedBlob.getEncryptedBlob());
 
-        return new RebootEscrowData(spVersion, iv, syntheticPassword, bos.toByteArray(),
-                key);
+        return new RebootEscrowData(spVersion, syntheticPassword, bos.toByteArray(), ks);
     }
 }
