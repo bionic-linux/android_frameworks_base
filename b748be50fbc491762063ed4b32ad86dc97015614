@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fd46be2_50f7927e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2020-12-12T00:08:25Z",
+      "side": 1,
+      "message": "i\u0027d add the numbers (32-bit means \u003c\u003d 4k) into the documentation. might as well be \nset the expectations appropriately.\n\nother than the doc piece, looks good.",
+      "revId": "b748be50fbc491762063ed4b32ad86dc97015614",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
