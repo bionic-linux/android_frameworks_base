@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a14f70e_75a080b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-14T05:00:01Z",
+      "side": 1,
+      "message": "LGTM but see inline.",
+      "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d66c6d5_e01f60d8",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-14T05:00:01Z",
+      "side": 1,
+      "message": "Actually a better TODO is to write code to add/remove IP addresses in Java.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 29
+      },
+      "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d511ec_466ddb1a",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-14T05:00:01Z",
+      "side": 1,
+      "message": "This looks like it could be quite large (hundreds of kb). Do we need these long term?",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 23
+      },
+      "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8de48234_25c4080e",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-14T05:00:01Z",
+      "side": 1,
+      "message": "Do we really want to keep IpConnectivityMetrics in the module?",
+      "range": {
+        "startLine": 1216,
+        "startChar": 54,
+        "endLine": 1216,
+        "endChar": 83
+      },
+      "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
