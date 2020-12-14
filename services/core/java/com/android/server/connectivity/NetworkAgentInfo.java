@@ -558,7 +558,12 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     /**
      * Sets the specified requestId to linger on this network for the specified time. Called by
-     * ConnectivityService when the request is moved to another network with a higher score.
+     * ConnectivityService when the request is moved to another network with a higher score, or
+     * when a network is newly created.
+     *
+     * @param requestId The requestId of the request that no longer need to be served by this
+     *                  network. Or {@link NetworkRequest.REQUEST_ID_NONE} if this is the
+     *                  {@code LingerTimer} for the newly created network.
      */
     public void lingerRequest(int requestId, long now, long duration) {
         if (mLingerTimerForRequest.get(requestId) != null) {
