@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d6e7079_abbed1fe",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-14T07:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d66c6d5_e01f60d8",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 29
+      },
+      "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06d511ec_466ddb1a",
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92ef81d8_540d01cd",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-14T07:59:07Z",
+      "side": 1,
+      "message": "Not long term since it won\u0027t build once service-connectivity builds against API.\nThis is \"libs\" not \"static_libs\", so does not take space and only used to build against the hidden APIs for now, will be removed once the dependency is removed (this shows up as a dependency on hidden APIs in our dashboards as expected).",
+      "parentUuid": "06d511ec_466ddb1a",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 23
+      },
+      "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8de48234_25c4080e",
         "filename": "services/java/com/android/server/SystemServer.java",
         "patchSetId": 12
@@ -77,6 +125,30 @@
       "writtenOn": "2020-12-14T05:00:01Z",
       "side": 1,
       "message": "Do we really want to keep IpConnectivityMetrics in the module?",
+      "range": {
+        "startLine": 1216,
+        "startChar": 54,
+        "endLine": 1216,
+        "endChar": 83
+      },
+      "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04e69877_fd35f5f4",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-14T07:59:07Z",
+      "side": 1,
+      "message": "If we don\u0027t put it in the module, we need to either have the module stop using it, or define a manager class and add APIs.\n\nRight now I\u0027m starting it from the jar because it\u0027s already part of it with the current build rules, but we can move it out easily.",
+      "parentUuid": "8de48234_25c4080e",
       "range": {
         "startLine": 1216,
         "startChar": 54,
