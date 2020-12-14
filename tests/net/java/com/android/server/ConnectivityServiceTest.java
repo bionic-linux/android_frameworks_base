@@ -314,7 +314,8 @@ public class ConnectivityServiceTest {
     private static final String TAG = "ConnectivityServiceTest";
 
     private static final int TIMEOUT_MS = 500;
-    private static final int TEST_LINGER_DELAY_MS = 300;
+    private static final int TEST_LINGER_DELAY_MS = 400;
+    private static final int TEST_NEW_NETWORK_LINGER_DELAY_MS = 300;
     // Chosen to be less than the linger timeout. This ensures that we can distinguish between a
     // LOST callback that arrives immediately and a LOST callback that arrives after the linger
     // timeout. For this, our assertions should run fast enough to leave less than
@@ -1332,6 +1333,7 @@ public class ConnectivityServiceTest {
                 mMockNetd,
                 mDeps);
         mService.mLingerDelayMs = TEST_LINGER_DELAY_MS;
+        mService.mNewNetworkLingerDelayMs = TEST_NEW_NETWORK_LINGER_DELAY_MS;
         verify(mDeps).makeMultinetworkPolicyTracker(any(), any(), any());
 
         final ArgumentCaptor<INetworkPolicyListener> policyListenerCaptor =
@@ -1628,6 +1630,114 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.disconnect();
         waitFor(cv);
         verifyNoNetwork();
+    }
+
+    /**
+     * Verify a newly created network will be lingered instead of torndown even if no one is
+     * requesting.
+     */
+    @Test
+    public void testNewNetworkLingering() throws Exception {
+        // Create a callback that monitoring the testing network.
+        final TestNetworkCallback listenCallback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(new NetworkRequest.Builder().build(), listenCallback);
+
+        // 1. Create a network that is not requested by anyone, and does not satisfy any of default
+        // requests. Verify that the network will be lingered instead of torndown.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connectWithoutInternet();
+        listenCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        listenCallback.expectCallback(CallbackEntry.LOSING, mWiFiNetworkAgent);
+        listenCallback.assertNoCallback();
+        reset(mMockNetd);
+
+        // Verify that the network will be torndown after linger expiry.
+        final int lingerTimeoutMs =
+                mService.mNewNetworkLingerDelayMs + mService.mNewNetworkLingerDelayMs / 4;
+        listenCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent, lingerTimeoutMs);
+
+        // 2. Create a network that is satisfied by a request comes later.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connectWithoutInternet();
+        listenCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        listenCallback.expectCallback(CallbackEntry.LOSING, mWiFiNetworkAgent);
+        final NetworkRequest wifiRequest = new NetworkRequest.Builder()
+                .addTransportType(TRANSPORT_WIFI).build();
+        final TestableNetworkCallback wifiCallback = new TestableNetworkCallback();
+        mCm.requestNetwork(wifiRequest, wifiCallback);
+        wifiCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        reset(mMockNetd);
+
+        // Verify that the network will be kept since the request is still satisfied. And is able
+        // to get disconnected as usual if the request is released after new network linger delay.
+        listenCallback.assertNoCallback(lingerTimeoutMs);
+        mCm.unregisterNetworkCallback(wifiCallback);
+        listenCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+
+        // 3. Create a network that is satisfied by a request comes later.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connectWithoutInternet();
+        listenCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        listenCallback.expectCallback(CallbackEntry.LOSING, mWiFiNetworkAgent);
+        mCm.requestNetwork(wifiRequest, wifiCallback);
+        wifiCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        reset(mMockNetd);
+
+        // Verify that the network will still be kept for a while after the request gets removed.
+        mCm.unregisterNetworkCallback(wifiCallback);
+        listenCallback.expectCallback(CallbackEntry.LOSING, mWiFiNetworkAgent);
+        listenCallback.assertNoCallback();
+        listenCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent, lingerTimeoutMs);
+
+        mCm.unregisterNetworkCallback(listenCallback);
+
+    }
+
+    /**
+     * Verify a newly created network will be lingered and switch to background if only background
+     * request is satisfied.
+     */
+    @Test
+    public void testNewNetworkLingering_bgNetwork() throws Exception {
+        // Create a callback that monitoring the wifi network.
+        final TestNetworkCallback wifiListenCallback = new TestNetworkCallback();
+        mCm.registerNetworkCallback(new NetworkRequest.Builder()
+                .addTransportType(TRANSPORT_WIFI).build(), wifiListenCallback);
+
+        // Create a callback that can monitor background mobile networks.
+        grantUsingBackgroundNetworksPermissionForUid(Binder.getCallingUid());
+        final TestableNetworkCallback bgMobileListenCallback = new TestableNetworkCallback();
+        mCm.registerNetworkCallback(new NetworkRequest.Builder()
+                .addTransportType(TRANSPORT_CELLULAR).build(), bgMobileListenCallback);
+
+        // Connect wifi, which satisfies default request.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        wifiListenCallback.expectAvailableThenValidatedCallbacks(mWiFiNetworkAgent);
+
+        // Connect a cellular network which only satisfies mobile background request.
+        setAlwaysOnNetworks(true);
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        bgMobileListenCallback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        // For networks that bring up without satisfying any foreground request, a losing will
+        // be sent to listeners after first rematch. Verify that the cellular network
+        // loses foreground only after new network linger timer expiry.
+        bgMobileListenCallback.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
+        bgMobileListenCallback.expectCapabilitiesThat(mCellNetworkAgent,
+                (it) -> it.hasCapability(NET_CAPABILITY_VALIDATED)
+                && it.hasCapability(NET_CAPABILITY_FOREGROUND));
+        assertTrue(isForegroundNetwork(mCellNetworkAgent));
+
+        final int lingerTimeoutMs =
+                mService.mNewNetworkLingerDelayMs + mService.mNewNetworkLingerDelayMs / 4;
+        bgMobileListenCallback.expectCapabilitiesWithout(
+                NET_CAPABILITY_FOREGROUND, mCellNetworkAgent, lingerTimeoutMs);
+        assertFalse(isForegroundNetwork(mCellNetworkAgent));
+
+        reset(mMockNetd);
+        mCm.unregisterNetworkCallback(wifiListenCallback);
+        mCm.unregisterNetworkCallback(bgMobileListenCallback);
     }
 
     @Test
@@ -3646,7 +3756,12 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
         testFactory.expectAddRequestsWithScores(10, 50);  // Unvalidated, then validated
         mCellNetworkAgent.connect(true);
-        cellNetworkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        cellNetworkCallback.expectAvailableCallbacksUnvalidated(mCellNetworkAgent);
+        // For networks that bring up without satisfying any foreground request, a losing will
+        // be sent to listeners after first rematch.
+        cellNetworkCallback.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
+        cellNetworkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mCellNetworkAgent);
+
         testFactory.waitForNetworkRequests(2);
         assertFalse(testFactory.getMyStartRequested());  // Because the cell network outscores us.
 
@@ -3660,8 +3775,9 @@ public class ConnectivityServiceTest {
         setAlwaysOnNetworks(false);
         testFactory.waitForNetworkRequests(1);
 
-        // ...  and cell data to be torn down.
-        cellNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        // ...  and cell data to be torn down after new network linger timeout.
+        cellNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent,
+                mService.mNewNetworkLingerDelayMs + TEST_CALLBACK_TIMEOUT_MS);
         assertLength(1, mCm.getAllNetworks());
 
         testFactory.terminate();
@@ -4858,6 +4974,9 @@ public class ConnectivityServiceTest {
         // Bring up wifi aware network.
         wifiAware.connect(false, false, false /* isStrictMode */);
         callback.expectAvailableCallbacksUnvalidated(wifiAware);
+        // For networks that bring up without satisfying any foreground request, a losing will
+        // be sent to listeners after first rematch.
+        callback.expectCallback(CallbackEntry.LOSING, wifiAware);
 
         assertNull(mCm.getActiveNetworkInfo());
         assertNull(mCm.getActiveNetwork());
