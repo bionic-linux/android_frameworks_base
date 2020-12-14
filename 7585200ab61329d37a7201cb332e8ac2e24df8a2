@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "41d79383_c3eeacef",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-14T03:28:33Z",
+      "side": 1,
+      "message": "I think that\u0027s a fine way of dealing with it yes.",
+      "parentUuid": "9f0a546a_343e044c",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "7585200ab61329d37a7201cb332e8ac2e24df8a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9d0bf2c_1d42923b",
         "filename": "core/java/android/net/DnsResolverServiceManager.java",
         "patchSetId": 4
