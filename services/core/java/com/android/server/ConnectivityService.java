@@ -288,11 +288,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // connect anyway?" dialog after the user selects a network that doesn't validate.
     private static final int PROMPT_UNVALIDATED_DELAY_MS = 8 * 1000;
 
-    // Default to 30s linger time-out. Modifiable only for testing.
+    // Default to 30s linger time-out, and 5s for new network linger. Modifiable only for testing.
     private static final String LINGER_DELAY_PROPERTY = "persist.netmon.linger";
     private static final int DEFAULT_LINGER_DELAY_MS = 30_000;
+    private static final int DEFAULT_NEW_NETWORK_LINGER_DELAY_MS = 5_000;
     @VisibleForTesting
     protected int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
+    @VisibleForTesting
+    protected int mNewNetworkLingerDelayMs;
 
     // How long to delay to removal of a pending intent based request.
     // See Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS
@@ -988,6 +991,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000);
 
         mLingerDelayMs = mSystemProperties.getInt(LINGER_DELAY_PROPERTY, DEFAULT_LINGER_DELAY_MS);
+        // TODO: Consider make the timer customizable.
+        mNewNetworkLingerDelayMs = DEFAULT_NEW_NETWORK_LINGER_DELAY_MS;
 
         mNMS = Objects.requireNonNull(netManager, "missing INetworkManagementService");
         mStatsService = Objects.requireNonNull(statsService, "missing INetworkStatsService");
@@ -6953,7 +6958,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // Tear the network down.
             teardownUnneededNetwork(oldNetwork);
         } else {
-            // Put the network in the background.
+            // Put the network in the background if it doesn't satisfy any foreground request.
             updateCapabilitiesForNetwork(oldNetwork);
         }
     }
@@ -7247,6 +7252,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         for (final NetworkAgentInfo nai : lingeredNetworks) {
+            // For nascent networks, if connecting with no foreground request, skip broadcasting
+            // LOSING for backward compatibility. This is typical when mobile data connected while
+            // wifi connected with mobile data always-on enabled.
+            if (nai.isNascent()) continue;
             notifyNetworkLosing(nai, now);
         }
 
@@ -7483,6 +7492,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // disconnection NetworkAgents should stop any signal strength monitoring they have been
             // doing.
             updateSignalStrengthThresholds(networkAgent, "CONNECT", null);
+
+            // Before first rematching networks, put a linger timer without any request, this
+            // allows {@code updateLingerState} to update the states accordingly and prevent
+            // tearing down for any {@code unneeded} evaluation in this period.
+            // Note that the timer will not be rescheduled since the expiry time is
+            // fixed after connected regardless of the network satisfying other requests or not.
+            // And it also will not be removed since the final outcome is decided by
+            // {@code handleLingerComplete}.
+            networkAgent.lingerRequest(NetworkRequest.REQUEST_ID_NONE,
+                    SystemClock.elapsedRealtime(), mNewNetworkLingerDelayMs);
 
             // Consider network even though it is not yet validated.
             rematchAllNetworksAndRequests();

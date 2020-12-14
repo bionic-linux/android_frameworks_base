@@ -108,6 +108,11 @@ import java.util.TreeSet;
 //
 // When ConnectivityService disconnects a network:
 // -----------------------------------------------
+// If a network is just connected, ConnectivityService will think it will be used soon, but might
+// not be used. Thus, a 5s timer will be held to prevent the network being torndown immediately.
+// This is implemented by "lingering" logic below without relating to any request, and is used
+// in some cases where network requests race with network establishment.
+//
 // If a network has no chance of satisfying any requests (even if it were to become validated
 // and enter state #5), ConnectivityService will disconnect the NetworkAgent's AsyncChannel.
 //
@@ -558,7 +563,12 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     /**
      * Sets the specified requestId to linger on this network for the specified time. Called by
-     * ConnectivityService when the request is moved to another network with a higher score.
+     * ConnectivityService when the request is moved to another network with a higher score, or
+     * when a network is newly created.
+     *
+     * @param requestId The requestId of the request that no longer need to be served by this
+     *                  network. Or {@link NetworkRequest.REQUEST_ID_NONE} if this is the
+     *                  {@code LingerTimer} for the newly created network.
      */
     public void lingerRequest(int requestId, long now, long duration) {
         if (mLingerTimerForRequest.get(requestId) != null) {
@@ -633,6 +643,15 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         return mLingering;
     }
 
+    /**
+     * Return whether the network is just connected and about to be torn down because of not
+     * satisfying any request.
+     */
+    public boolean isNascent() {
+        return mLingering && mLingerTimers.size() == 1
+                && mLingerTimers.first().requestId == NetworkRequest.REQUEST_ID_NONE;
+    }
+
     public void clearLingerState() {
         if (mLingerMessage != null) {
             mLingerMessage.cancel();
@@ -679,7 +698,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
                 + "network{" + network + "}  handle{" + network.getNetworkHandle() + "}  ni{"
                 + networkInfo.toShortString() + "} "
                 + "  Score{" + getCurrentScore() + "} "
-                + (isLingering() ? " lingering" : "")
+                + (isNascent() ? " nascent" : (isLingering() ? " lingering" : ""))
                 + (everValidated ? " everValidated" : "")
                 + (lastValidated ? " lastValidated" : "")
                 + (partialConnectivity ? " partialConnectivity" : "")
