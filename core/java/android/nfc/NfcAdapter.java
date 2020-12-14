@@ -2211,4 +2211,39 @@ public final class NfcAdapter {
             return mContext.getApplicationInfo().targetSdkVersion;
         }
     }
+
+    /**
+     * Sets NFCC controller ON feature.
+     * <p>This API is for the NFCC internal state management. It allows to discriminate
+     * the controller function from the NFC function by keeping the NFC Controller on without
+     * any NFC Rf enabled if necessary.
+     * @param status if true the NFCC will be kept ON (with no RF enabled if NFC setting is OFF)
+     *               if false the NFCC will follow completely the Nfc Setting value.
+     * @throws UnsupportedOperationException if FEATURE_NFC is unavailable.
+     * @return void
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.WRITE_SECURE_SETTINGS)
+    public void setNfccControllerOn(boolean status) {
+        if (!sHasNfcFeature) {
+            throw new UnsupportedOperationException();
+        }
+        try {
+            sService.setNfccControllerOn(status);
+        } catch (RemoteException e) {
+            attemptDeadServiceRecovery(e);
+            // Try one more time
+            if (sService == null) {
+                Log.e(TAG, "Failed to recover NFC Service.");
+                return false;
+            }
+            try {
+                sService.setNfccControllerOn(status);
+            } catch (RemoteException ee) {
+                Log.e(TAG, "Failed to recover NFC Service.");
+            }
+        }
+    }
+
 }
