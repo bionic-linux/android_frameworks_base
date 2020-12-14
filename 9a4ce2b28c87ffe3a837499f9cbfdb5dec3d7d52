@@ -157,6 +157,30 @@
       },
       "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0aa751c3_dfa0e4da",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-14T14:07:20Z",
+      "side": 1,
+      "message": "As discussed, I think we already have a manager class (IpConnectivityLog). Starting it from the jar for now SGTM.",
+      "parentUuid": "04e69877_fd35f5f4",
+      "range": {
+        "startLine": 1216,
+        "startChar": 54,
+        "endLine": 1216,
+        "endChar": 83
+      },
+      "revId": "9a4ce2b28c87ffe3a837499f9cbfdb5dec3d7d52",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
