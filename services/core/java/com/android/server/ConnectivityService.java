@@ -289,11 +289,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // connect anyway?" dialog after the user selects a network that doesn't validate.
     private static final int PROMPT_UNVALIDATED_DELAY_MS = 8 * 1000;
 
-    // Default to 30s linger time-out. Modifiable only for testing.
+    // Default to 30s linger time-out, and 5s for new network linger. Modifiable only for testing.
     private static final String LINGER_DELAY_PROPERTY = "persist.netmon.linger";
     private static final int DEFAULT_LINGER_DELAY_MS = 30_000;
+    private static final String LINGER_NEW_NETWORK_DELAY_PROPERTY = "persist.netmon.newnet_linger";
+    private static final int DEFAULT_NEW_NETWORK_LINGER_DELAY_MS = 5_000;
     @VisibleForTesting
     protected int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
+    protected int mNewNetworkLingerDelayMs;
 
     // How long to delay to removal of a pending intent based request.
     // See Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS
@@ -630,7 +633,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private LingerMonitor mLingerMonitor;
 
     // sequence number of NetworkRequests
-    private int mNextNetworkRequestId = 1;
+    private int mNextNetworkRequestId = NetworkRequest.FIRST_REQUEST_ID;
 
     // Sequence number for NetworkProvider IDs.
     private final AtomicInteger mNextNetworkProviderId = new AtomicInteger(
@@ -993,6 +996,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 Settings.Secure.CONNECTIVITY_RELEASE_PENDING_INTENT_DELAY_MS, 5_000);
 
         mLingerDelayMs = mSystemProperties.getInt(LINGER_DELAY_PROPERTY, DEFAULT_LINGER_DELAY_MS);
+        mNewNetworkLingerDelayMs = mSystemProperties.getInt(
+                LINGER_NEW_NETWORK_DELAY_PROPERTY, DEFAULT_NEW_NETWORK_LINGER_DELAY_MS);
 
         mNMS = Objects.requireNonNull(netManager, "missing INetworkManagementService");
         mStatsService = Objects.requireNonNull(statsService, "missing INetworkStatsService");
@@ -6070,6 +6075,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } catch (RemoteException e) {
             e.rethrowAsRuntimeException();
         }
+
         nai.asyncChannel.connect(mContext, mTrackerHandler, nai.messenger);
         NetworkInfo networkInfo = nai.networkInfo;
         updateNetworkInfo(nai, networkInfo);
@@ -7047,11 +7053,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     log("   accepting network in place of " + previousSatisfier.toShortString());
                 }
                 previousSatisfier.removeRequest(nri.request.requestId);
-                previousSatisfier.lingerRequest(nri.request, now, mLingerDelayMs);
+                previousSatisfier.lingerRequest(nri.request.requestId, now, mLingerDelayMs);
             } else {
                 if (VDBG || DDBG) log("   accepting network in place of null");
             }
-            newSatisfier.unlingerRequest(nri.request);
+            newSatisfier.unlingerRequest(nri.request.requestId);
             if (!newSatisfier.addRequest(nri.request)) {
                 Log.wtf(TAG, "BUG: " + newSatisfier.toShortString() + " already has "
                         + nri.request);
@@ -7397,6 +7403,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (!networkAgent.everConnected && state == NetworkInfo.State.CONNECTED) {
             networkAgent.everConnected = true;
+            networkAgent.connectedTimeStamp = SystemClock.elapsedRealtime();
 
             if (networkAgent.linkProperties == null) {
                 Log.wtf(TAG, networkAgent.toShortString() + " connected with null LinkProperties");
