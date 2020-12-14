@@ -7439,6 +7439,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // doing.
             updateSignalStrengthThresholds(networkAgent, "CONNECT", null);
 
+            // Put a linger timer without any request to prevent tearing down any newly
+            // connected networks without request immediately.
+            // Note that this has to be done before rematching networks.
+            networkAgent.lingerRequest(NetworkRequest.REQUEST_ID_NONE,
+                    networkAgent.connectedTimeStamp, mNewNetworkLingerDelayMs);
+
             // Consider network even though it is not yet validated.
             rematchAllNetworksAndRequests();
 
