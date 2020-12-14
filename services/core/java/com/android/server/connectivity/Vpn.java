@@ -1788,9 +1788,6 @@ public class Vpn {
 
     /**
      * Updates underlying network set.
-     *
-     * <p>Note: Does not updates capabilities. Call {@link #updateCapabilities} from
-     * ConnectivityService thread to get updated capabilities.
      */
     public synchronized boolean setUnderlyingNetworks(Network[] networks) {
         if (!isCallerEstablishedOwnerLocked()) {
@@ -1811,13 +1808,6 @@ public class Vpn {
         mNetworkAgent.setUnderlyingNetworks((mConfig.underlyingNetworks != null)
                 ? Arrays.asList(mConfig.underlyingNetworks) : null);
         return true;
-    }
-
-    public synchronized Network[] getUnderlyingNetworks() {
-        if (!isRunningLocked()) {
-            return null;
-        }
-        return mConfig.underlyingNetworks;
     }
 
     /**
