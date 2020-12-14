@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-/** @hide */
+/** Class that holds OEM Network Preference */
 public final class OemNetworkPreferences implements Parcelable {
     /**
      * Use default behavior requesting networks. Equivalent to not setting any preference at all.

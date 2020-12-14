@@ -4817,7 +4817,13 @@ public class ConnectivityManager {
         }
     }
 
-    private void setOemNetworkPreference(@NonNull OemNetworkPreferences preference) {
+    /**
+     * API that allows to set OEM Network Preference
+     *
+     * @hide
+     */
+    @SystemApi
+    public void setOemNetworkPreference(@NonNull OemNetworkPreferences preference) {
         Log.d(TAG, "setOemNetworkPreference called with preference: "
                 + preference.toString());
     }
