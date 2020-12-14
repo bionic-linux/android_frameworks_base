@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006751888",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1477323?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0f082240_c299ac10",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-14T17:31:08Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2221,
+        "startChar": 84,
+        "endLine": 2221,
+        "endChar": 94
+      },
+      "revId": "cb30d7af11c6398aeee55ea4ba3368a68df84b6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
