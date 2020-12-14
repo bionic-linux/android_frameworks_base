@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7b03d3e_a8c68add",
+        "filename": "core/java/android/nfc/INfcAdapter.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-12-14T17:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fdb56e7_899fe1b4",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 1
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e3dccce_0768e54c",
@@ -38,6 +62,30 @@
       "side": 1,
       "message": "\u003e Please remove the trailing whitespace.\n\nPlease fix.",
       "parentUuid": "a7ddf69e_81d63b87",
+      "range": {
+        "startLine": 2075,
+        "startChar": 5,
+        "endLine": 2075,
+        "endChar": 9
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6277e341_00b68e81",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2075,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-12-14T17:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e3dccce_0768e54c",
       "range": {
         "startLine": 2075,
         "startChar": 5,
@@ -72,6 +120,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fc64354_ad225a02",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2076,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-12-14T17:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc3ba447_42124d5c",
+      "range": {
+        "startLine": 2076,
+        "startChar": 0,
+        "endLine": 2076,
+        "endChar": 4
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "084fdf4a_6a9ee966",
@@ -86,6 +158,30 @@
       "side": 1,
       "message": "\u003e Please remove the trailing whitespace.\n\nPlease fix.",
       "parentUuid": "da807af5_ff66c173",
+      "range": {
+        "startLine": 2107,
+        "startChar": 0,
+        "endLine": 2107,
+        "endChar": 4
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ea996e2_87bf3bf1",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2107,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-12-14T17:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "084fdf4a_6a9ee966",
       "range": {
         "startLine": 2107,
         "startChar": 0,
@@ -166,6 +262,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bec3c9fa_31c6fd74",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-12-14T17:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3bb8b68_891d4563",
+      "range": {
+        "startLine": 2115,
+        "startChar": 0,
+        "endLine": 2115,
+        "endChar": 14
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e058ce1f_2027481c",
@@ -179,6 +299,30 @@
       "writtenOn": "2020-12-14T14:21:46Z",
       "side": 1,
       "message": "Please update the patch accordingly.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1495870",
+      "range": {
+        "startLine": 2123,
+        "startChar": 0,
+        "endLine": 2123,
+        "endChar": 42
+      },
+      "revId": "25657e944570261f706638a91a301cb468e5db16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fd53e68_b64d1e94",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2123,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2020-12-14T17:33:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e058ce1f_2027481c",
       "range": {
         "startLine": 2123,
         "startChar": 0,
