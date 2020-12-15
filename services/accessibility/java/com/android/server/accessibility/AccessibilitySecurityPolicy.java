@@ -34,14 +34,13 @@ import android.os.Process;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.util.ArraySet;
+import android.util.EmptyArray;
 import android.util.Slog;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.android.internal.util.ArrayUtils;
 import com.android.server.LocalServices;
 import com.android.server.wm.ActivityTaskManagerInternal;
-
-import libcore.util.EmptyArray;
 
 /**
  * This class provides APIs of accessibility security policies for accessibility manager

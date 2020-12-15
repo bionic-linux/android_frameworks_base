@@ -37,12 +37,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.service.NetworkStatsHistoryBucketProto;
 import android.service.NetworkStatsHistoryProto;
+import android.util.EmptyArray;
 import android.util.MathUtils;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.util.IndentingPrintWriter;
-
-import libcore.util.EmptyArray;
 
 import java.io.CharArrayWriter;
 import java.io.DataInputStream;
