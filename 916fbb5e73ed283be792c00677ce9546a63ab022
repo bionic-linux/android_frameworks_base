@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36635fa7_32db1a9e",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2020-12-15T16:48:33Z",
+      "side": 1,
+      "message": "I guess you could also use isChangeEnabled(changeId, null), that way all paths always go through isChangeEnabled (I know permission is also enforced here, so probably makes no difference). You\u0027re the expert though.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 64
+      },
+      "revId": "916fbb5e73ed283be792c00677ce9546a63ab022",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
