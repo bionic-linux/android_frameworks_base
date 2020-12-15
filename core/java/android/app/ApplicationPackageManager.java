@@ -94,6 +94,7 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.DebugUtils;
+import android.util.EmptyArray;
 import android.util.LauncherIcons;
 import android.util.Log;
 import android.view.Display;
@@ -104,9 +105,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.os.SomeArgs;
 import com.android.internal.util.UserIcons;
 
-import dalvik.system.VMRuntime;
-
-import libcore.util.EmptyArray;
+import dalvik.system.VMRuntime
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
