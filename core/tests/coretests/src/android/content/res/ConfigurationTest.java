@@ -16,6 +16,7 @@
 
 package android.content.res;
 
+<<<<<<< HEAD   (324642 Merge "[automerger skipped] Merge "Use language tags to stor)
 import static android.app.WindowConfiguration.ROTATION_UNDEFINED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
 import static android.app.WindowConfiguration.WINDOW_CONFIG_ROTATION;
@@ -30,26 +31,17 @@ import static android.view.Surface.ROTATION_90;
 
 import android.content.Context;
 import android.os.LocaleList;
+=======
+>>>>>>> BRANCH (73d16b Merge "Revert "Use language tags to store Configuration's lo)
 import android.platform.test.annotations.Presubmit;
-import android.util.AtomicFile;
-import android.util.proto.ProtoInputStream;
-import android.util.proto.ProtoOutputStream;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
-
-import com.android.server.usage.IntervalStatsProto;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.Locale;
 
 /**
  * Build/install/run: bit FrameworksCoreTests:android.content.res.ConfigurationTest
@@ -79,6 +71,7 @@ public class ConfigurationTest extends TestCase {
         config2.updateFrom(config);
         assertEquals(config2.screenLayout, Configuration.SCREENLAYOUT_COMPAT_NEEDED);
     }
+<<<<<<< HEAD   (324642 Merge "[automerger skipped] Merge "Use language tags to stor)
 
     @Test
     public void testReadWriteProto() throws Exception {
@@ -186,4 +179,6 @@ public class ConfigurationTest extends TestCase {
             }
         }
     }
+=======
+>>>>>>> BRANCH (73d16b Merge "Revert "Use language tags to store Configuration's lo)
 }
