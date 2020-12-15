@@ -22,6 +22,30 @@
       },
       "revId": "b3d611fb1a8798da85a5464f23d765b2fd951262",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de53c6ab_0ced02e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-15T12:30:45Z",
+      "side": 1,
+      "message": "Updated the commit message:\n - The module boundary may still change slightly (for example it\u0027s likely VPN will move back out of the module, and some other classes may move in/out), for technical reasons and also ongoing discussions with OEMs. Moving the classes with their history requires freezing the files and manual operation from the build team, so asking the build team to move classes in and out every time does not seem practical. It\u0027s better if we can do it in one operation once we have a stable repo.\n - It\u0027s likely simpler to ask the build team to move a single folder that contains the classes and associated build rules to packages/modules/Connectivity, rather than various individual files and their filegroups / build rules from several Android.bp files.\n\nSee also aosp/1527821, sorry the original commit message didn\u0027t mention that.",
+      "parentUuid": "1a75031b_025d51af",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 13
+      },
+      "revId": "b3d611fb1a8798da85a5464f23d765b2fd951262",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
