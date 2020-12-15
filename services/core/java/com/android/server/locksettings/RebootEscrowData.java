@@ -26,12 +26,14 @@ import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.SecretKey;
 
 /**
  * Holds the data necessary to complete a reboot escrow of the Synthetic Password.
@@ -81,10 +83,10 @@ class RebootEscrowData {
         return mKey;
     }
 
-    static RebootEscrowData fromEncryptedData(RebootEscrowKey key, byte[] blob)
+    static RebootEscrowData fromEncryptedData(RebootEscrowKey ks, byte[] blob)
             throws IOException {
-        Preconditions.checkNotNull(key);
-        Preconditions.checkNotNull(blob);
+        Objects.requireNonNull(ks);
+        Objects.requireNonNull(blob);
 
         DataInputStream dis = new DataInputStream(new ByteArrayInputStream(blob));
         int version = dis.readInt();
@@ -112,7 +114,7 @@ class RebootEscrowData {
         final byte[] syntheticPassword;
         try {
             Cipher c = Cipher.getInstance(CIPHER_ALGO);
-            c.init(Cipher.DECRYPT_MODE, key.getKey(), new IvParameterSpec(iv));
+            c.init(Cipher.DECRYPT_MODE, ks.getKey(), new IvParameterSpec(iv));
             syntheticPassword = c.doFinal(cipherText);
         } catch (NoSuchAlgorithmException | InvalidKeyException | BadPaddingException
                 | IllegalBlockSizeException | NoSuchPaddingException
@@ -120,13 +122,13 @@ class RebootEscrowData {
             throw new IOException("Could not decrypt ciphertext", e);
         }
 
-        return new RebootEscrowData(spVersion, iv, syntheticPassword, blob, key);
+        return new RebootEscrowData(spVersion, iv, syntheticPassword, blob, ks);
     }
 
-    static RebootEscrowData fromSyntheticPassword(RebootEscrowKey key, byte spVersion,
+    static RebootEscrowData fromSyntheticPassword(RebootEscrowKey ks, byte spVersion,
             byte[] syntheticPassword)
             throws IOException {
-        Preconditions.checkNotNull(syntheticPassword);
+        Objects.requireNonNull(syntheticPassword);
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(bos);
@@ -135,7 +137,7 @@ class RebootEscrowData {
         final byte[] iv;
         try {
             Cipher cipher = Cipher.getInstance(CIPHER_ALGO);
-            cipher.init(Cipher.ENCRYPT_MODE, key.getKey());
+            cipher.init(Cipher.ENCRYPT_MODE, ks.getKey());
             cipherText = cipher.doFinal(syntheticPassword);
             iv = cipher.getIV();
         } catch (NoSuchAlgorithmException | BadPaddingException | IllegalBlockSizeException
@@ -151,6 +153,6 @@ class RebootEscrowData {
         dos.write(cipherText);
 
         return new RebootEscrowData(spVersion, iv, syntheticPassword, bos.toByteArray(),
-                key);
+                ks);
     }
 }
