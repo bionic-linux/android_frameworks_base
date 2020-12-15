@@ -25,8 +25,7 @@ import android.security.keymaster.KeymasterArguments;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keymaster.OperationResult;
 import android.security.keystore.KeyStoreCryptoOperationChunkedStreamer.Stream;
-
-import libcore.util.EmptyArray;
+import com.android.internal.util.EmptyArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

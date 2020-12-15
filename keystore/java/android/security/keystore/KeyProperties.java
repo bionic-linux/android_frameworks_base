@@ -24,8 +24,7 @@ import android.annotation.SystemApi;
 import android.os.Process;
 import android.security.KeyStore;
 import android.security.keymaster.KeymasterDefs;
-
-import libcore.util.EmptyArray;
+import com.android.internal.util.EmptyArray;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

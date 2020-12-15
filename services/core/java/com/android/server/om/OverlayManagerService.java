@@ -65,6 +65,7 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.AtomicFile;
+import com.android.internal.util.EmptyArray;
 import android.util.Slog;
 import android.util.SparseArray;
 
@@ -74,8 +75,6 @@ import com.android.server.LocalServices;
 import com.android.server.SystemConfig;
 import com.android.server.SystemService;
 import com.android.server.pm.UserManagerService;
-
-import libcore.util.EmptyArray;
 
 import org.xmlpull.v1.XmlPullParserException;
 

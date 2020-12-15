@@ -104,7 +104,7 @@ import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.XmlUtils;
 import com.android.net.module.util.NetworkCapabilitiesUtils;
 
-import libcore.util.EmptyArray;
+import com.android.internal.util.EmptyArray;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

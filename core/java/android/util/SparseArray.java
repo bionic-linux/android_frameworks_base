@@ -19,9 +19,8 @@ package android.util;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.EmptyArray;
 import com.android.internal.util.GrowingArrayUtils;
-
-import libcore.util.EmptyArray;
 
 /**
  * <code>SparseArray</code> maps integers to Objects and, unlike a normal array of Objects,

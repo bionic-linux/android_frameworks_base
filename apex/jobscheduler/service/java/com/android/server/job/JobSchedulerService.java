@@ -83,6 +83,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.IBatteryStats;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.DumpUtils;
+import com.android.internal.util.EmptyArray;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.AppStateTracker;
@@ -110,8 +111,6 @@ import com.android.server.usage.AppStandbyInternal.AppIdleStateChangeListener;
 import com.android.server.utils.quota.Categorizer;
 import com.android.server.utils.quota.Category;
 import com.android.server.utils.quota.CountQuotaTracker;
-
-import libcore.util.EmptyArray;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

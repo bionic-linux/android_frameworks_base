@@ -16,7 +16,7 @@
 
 package android.security.keystore;
 
-import libcore.util.EmptyArray;
+import com.android.internal.util.EmptyArray;
 
 import java.util.function.Consumer;
 
