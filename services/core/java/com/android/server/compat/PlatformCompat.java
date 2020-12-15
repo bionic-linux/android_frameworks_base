@@ -110,14 +110,18 @@ public class PlatformCompat extends IPlatformCompat.Stub {
      * Internal version of the above method. Does not perform costly permission check.
      */
     public boolean isChangeEnabledInternal(long changeId, ApplicationInfo appInfo) {
-        if (mCompatConfig.isChangeEnabled(changeId, appInfo)) {
+        boolean enabled = mCompatConfig.isChangeEnabled(changeId, appInfo);
+        if (appInfo == null) {
+            return enabled;
+        }
+        if (enabled) {
             reportChange(changeId, appInfo.uid,
                     ChangeReporter.STATE_ENABLED);
-            return true;
-        }
-        reportChange(changeId, appInfo.uid,
+        } else {
+            reportChange(changeId, appInfo.uid,
                 ChangeReporter.STATE_DISABLED);
-        return false;
+        }
+        return enabled;
     }
 
     @Override
@@ -125,9 +129,6 @@ public class PlatformCompat extends IPlatformCompat.Stub {
             @UserIdInt int userId) {
         checkCompatChangeReadAndLogPermission();
         ApplicationInfo appInfo = getApplicationInfo(packageName, userId);
-        if (appInfo == null) {
-            return true;
-        }
         return isChangeEnabled(changeId, appInfo);
     }
 
@@ -136,7 +137,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         checkCompatChangeReadAndLogPermission();
         String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
         if (packages == null || packages.length == 0) {
-            return true;
+            return defaultChangeIdValue(changeId);
         }
         boolean enabled = true;
         for (String packageName : packages) {
