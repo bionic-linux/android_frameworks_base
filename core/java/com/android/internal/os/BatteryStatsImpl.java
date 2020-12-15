@@ -102,7 +102,7 @@ import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.XmlUtils;
 
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

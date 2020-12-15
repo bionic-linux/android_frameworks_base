@@ -18,10 +18,9 @@ package android.content.pm.split;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.content.pm.PackageParser;
+import android.util.EmptyArray;
 import android.util.IntArray;
 import android.util.SparseArray;
-
-import libcore.util.EmptyArray;
 
 import java.util.Arrays;
 import java.util.BitSet;

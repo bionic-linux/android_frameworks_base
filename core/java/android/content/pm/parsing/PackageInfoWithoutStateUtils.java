@@ -51,10 +51,9 @@ import android.content.pm.parsing.component.ParsedProvider;
 import android.content.pm.parsing.component.ParsedService;
 import android.os.Environment;
 import android.os.UserHandle;
+import android.util.EmptyArray;
 
 import com.android.internal.util.ArrayUtils;
-
-import libcore.util.EmptyArray;
 
 import java.io.File;
 import java.util.Collections;

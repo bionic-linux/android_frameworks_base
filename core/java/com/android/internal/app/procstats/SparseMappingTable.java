@@ -18,9 +18,9 @@ package com.android.internal.app.procstats;
 
 import android.os.Build;
 import android.os.Parcel;
+import android.util.EmptyArray;
 import android.util.EventLog;
 import android.util.Slog;
-import libcore.util.EmptyArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -111,7 +111,7 @@ import com.android.server.utils.quota.Categorizer;
 import com.android.server.utils.quota.Category;
 import com.android.server.utils.quota.CountQuotaTracker;
 
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

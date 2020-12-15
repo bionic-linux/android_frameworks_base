@@ -18,11 +18,10 @@ package android.text;
 
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
+import android.util.EmptyArray;
 
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.GrowingArrayUtils;
-
-import libcore.util.EmptyArray;
 
 import java.lang.reflect.Array;
 

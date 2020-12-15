@@ -31,6 +31,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
 import android.text.style.URLSpan;
+import android.util.EmptyArray;
 import android.util.Log;
 import android.util.Patterns;
 import android.webkit.WebView;
@@ -39,8 +40,6 @@ import android.widget.TextView;
 import com.android.i18n.phonenumbers.PhoneNumberMatch;
 import com.android.i18n.phonenumbers.PhoneNumberUtil;
 import com.android.i18n.phonenumbers.PhoneNumberUtil.Leniency;
-
-import libcore.util.EmptyArray;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Retention;

@@ -22,12 +22,11 @@ import android.content.pm.parsing.component.ParsedProcess;
 import android.service.pm.PackageServiceDumpProto;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.EmptyArray;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.util.ArrayUtils;
 import com.android.server.pm.parsing.pkg.AndroidPackage;
-
-import libcore.util.EmptyArray;
 
 import java.util.ArrayList;
 import java.util.List;

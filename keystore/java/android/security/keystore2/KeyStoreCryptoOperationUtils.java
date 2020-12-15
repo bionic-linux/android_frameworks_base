@@ -29,9 +29,8 @@ import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.UserNotAuthenticatedException;
 import android.system.keystore2.Authorization;
 import android.system.keystore2.ResponseCode;
+import android.util.EmptyArray;
 import android.util.Log;
-
-import libcore.util.EmptyArray;
 
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;

@@ -21,13 +21,12 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.graphics.BaseCanvas;
 import android.graphics.Paint;
 import android.os.Build;
+import android.util.EmptyArray;
 import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.GrowingArrayUtils;
-
-import libcore.util.EmptyArray;
 
 import java.lang.reflect.Array;
 import java.util.IdentityHashMap;

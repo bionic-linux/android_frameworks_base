@@ -47,6 +47,7 @@ import android.system.ErrnoException;
 import android.system.Os;
 import android.system.StructStat;
 import android.text.TextUtils;
+import android.util.EmptyArray;
 import android.util.Log;
 import android.util.Slog;
 import android.webkit.MimeTypeMap;
@@ -56,7 +57,6 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.SizedInputStream;
 
 import libcore.io.IoUtils;
-import libcore.util.EmptyArray;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

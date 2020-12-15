@@ -24,8 +24,7 @@ import android.security.KeyStoreException;
 import android.security.keymaster.KeymasterArguments;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keymaster.OperationResult;
-
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import java.nio.ByteBuffer;
 import java.security.InvalidKeyException;

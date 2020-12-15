@@ -22,8 +22,7 @@ import android.annotation.Nullable;
 import android.annotation.StringDef;
 import android.security.KeyStore;
 import android.security.keymaster.KeymasterDefs;
-
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

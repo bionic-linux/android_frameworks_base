@@ -25,12 +25,11 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
+import android.util.EmptyArray;
 import android.util.SparseBooleanArray;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
-
-import libcore.util.EmptyArray;
 
 import java.io.CharArrayWriter;
 import java.io.PrintWriter;

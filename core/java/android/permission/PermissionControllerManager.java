@@ -49,6 +49,7 @@ import android.os.Handler;
 import android.os.Process;
 import android.os.UserHandle;
 import android.util.ArrayMap;
+import android.util.EmptyArray;
 import android.util.Log;
 import android.util.Pair;
 
@@ -57,8 +58,6 @@ import com.android.internal.infra.AndroidFuture;
 import com.android.internal.infra.RemoteStream;
 import com.android.internal.infra.ServiceConnector;
 import com.android.internal.util.CollectionUtils;
-
-import libcore.util.EmptyArray;
 
 import java.io.FileDescriptor;
 import java.lang.annotation.Retention;

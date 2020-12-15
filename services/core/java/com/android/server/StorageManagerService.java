@@ -162,8 +162,8 @@ import com.android.server.storage.StorageSessionController.ExternalStorageServic
 import com.android.server.wm.ActivityTaskManagerInternal;
 import com.android.server.wm.ActivityTaskManagerInternal.ScreenObserver;
 
+import android.util.EmptyArray;
 import libcore.io.IoUtils;
-import libcore.util.EmptyArray;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

@@ -18,10 +18,9 @@ package android.text;
 
 import android.annotation.IntRange;
 import android.annotation.NonNull;
+import android.util.EmptyArray;
 
 import com.android.internal.util.ArrayUtils;
-
-import libcore.util.EmptyArray;
 
 /**
  * Implements a growing array of int primitives.

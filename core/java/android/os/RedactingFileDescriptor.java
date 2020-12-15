@@ -20,12 +20,12 @@ import android.content.Context;
 import android.os.storage.StorageManager;
 import android.system.ErrnoException;
 import android.system.Os;
+import android.util.EmptyArray;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 
 import libcore.io.IoUtils;
-import libcore.util.EmptyArray;
 
 import java.io.File;
 import java.io.FileDescriptor;

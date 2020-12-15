@@ -48,6 +48,7 @@ import android.content.pm.parsing.component.ParsedService;
 import android.os.UserHandle;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.EmptyArray;
 import android.util.Pair;
 import android.util.Slog;
 
@@ -56,8 +57,6 @@ import com.android.server.pm.PackageSetting;
 import com.android.server.pm.parsing.pkg.AndroidPackage;
 import com.android.server.pm.parsing.pkg.AndroidPackageUtils;
 import com.android.server.pm.pkg.PackageStateUnserialized;
-
-import libcore.util.EmptyArray;
 
 import java.util.Collections;
 import java.util.List;

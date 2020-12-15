@@ -126,6 +126,7 @@ import android.provider.Settings;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.AtomicFile;
+import android.util.EmptyArray;
 import android.util.KeyValueListParser;
 import android.util.LongSparseArray;
 import android.util.Pair;
@@ -160,8 +161,6 @@ import com.android.server.SystemServerInitThreadPool;
 import com.android.server.SystemServiceManager;
 import com.android.server.pm.PackageList;
 import com.android.server.pm.parsing.pkg.AndroidPackage;
-
-import libcore.util.EmptyArray;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -24,8 +24,7 @@ import android.security.KeyStoreOperation;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keystore.ArrayUtils;
 import android.security.keystore.KeyStoreCryptoOperation;
-
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import java.nio.ByteBuffer;
 import java.security.InvalidKeyException;

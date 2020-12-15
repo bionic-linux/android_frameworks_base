@@ -21,8 +21,7 @@ import android.security.KeyStore;
 import android.security.KeyStoreException;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keymaster.OperationResult;
-
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 /**
  * Helper for streaming a crypto operation's input and output via {@link KeyStore} service's
