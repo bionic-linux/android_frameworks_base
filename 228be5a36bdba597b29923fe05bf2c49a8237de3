@@ -654,6 +654,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5c381f6_13ef3882",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 7034,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-15T05:02:31Z",
+      "side": 1,
+      "message": "I changed this to use a mock WifiInfo since \"verify(wifiInfo.makeCopy()\" is all we need to test in this unit test.",
+      "parentUuid": "f117f01e_4d49378a",
+      "range": {
+        "startLine": 7028,
+        "startChar": 0,
+        "endLine": 7034,
+        "endChar": 36
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb66db80_715b9a54",
