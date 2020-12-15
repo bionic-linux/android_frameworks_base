@@ -10,6 +10,10 @@ package android.app {
 
 package android.net {
 
+  public class DnsResolverServiceManager {
+    method @NonNull @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public static android.os.IBinder getService(@NonNull android.content.Context);
+  }
+
   public final class TcpRepairWindow {
     ctor public TcpRepairWindow(int, int, int, int, int, int);
     field public final int maxWindow;
