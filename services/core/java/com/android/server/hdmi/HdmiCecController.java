@@ -41,7 +41,7 @@ import com.android.server.hdmi.HdmiAnnotations.IoThreadOnly;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiControlService.DevicePollingCallback;
 
-import libcore.util.EmptyArray;
+import com.android.internal.util.EmptyArray;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

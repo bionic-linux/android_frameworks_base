@@ -16,9 +16,8 @@
 
 package com.android.server.hdmi;
 
+import com.android.internal.util.EmptyArray;
 import android.view.KeyEvent;
-
-import libcore.util.EmptyArray;
 
 import java.util.Arrays;
 

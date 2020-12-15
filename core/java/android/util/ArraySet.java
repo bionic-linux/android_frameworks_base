@@ -20,8 +20,7 @@ import android.annotation.Nullable;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
-import libcore.util.EmptyArray;
-
+import com.android.internal.util.EmptyArray;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
