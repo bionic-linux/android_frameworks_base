@@ -18,8 +18,7 @@ package android.security.keystore;
 
 import android.security.KeyStore;
 import android.security.keymaster.KeymasterDefs;
-
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;

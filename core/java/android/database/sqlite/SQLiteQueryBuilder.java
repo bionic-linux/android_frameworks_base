@@ -28,11 +28,10 @@ import android.os.OperationCanceledException;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+import android.util.EmptyArray;
 import android.util.Log;
 
 import com.android.internal.util.ArrayUtils;
-
-import libcore.util.EmptyArray;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -20,9 +20,8 @@ import android.annotation.SystemApi;
 import android.hardware.hdmi.HdmiRecordSources.RecordSource;
 import android.hardware.hdmi.HdmiTimerRecordSources.TimerRecordSource;
 import android.os.RemoteException;
+import android.util.EmptyArray;
 import android.util.Log;
-
-import libcore.util.EmptyArray;
 
 import java.util.Collections;
 import java.util.List;

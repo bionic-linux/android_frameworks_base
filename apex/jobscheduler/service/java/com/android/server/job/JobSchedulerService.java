@@ -70,6 +70,7 @@ import android.os.WorkSource;
 import android.provider.Settings;
 import android.text.format.DateUtils;
 import android.util.ArrayMap;
+import android.util.EmptyArray;
 import android.util.KeyValueListParser;
 import android.util.Log;
 import android.util.Slog;
@@ -110,8 +111,6 @@ import com.android.server.usage.AppStandbyInternal.AppIdleStateChangeListener;
 import com.android.server.utils.quota.Categorizer;
 import com.android.server.utils.quota.Category;
 import com.android.server.utils.quota.CountQuotaTracker;
-
-import libcore.util.EmptyArray;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

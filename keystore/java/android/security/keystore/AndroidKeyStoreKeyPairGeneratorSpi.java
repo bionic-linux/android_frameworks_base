@@ -18,6 +18,7 @@ package android.security.keystore;
 
 import android.annotation.Nullable;
 import android.os.Build;
+import android.util.EmptyArray;
 import android.security.Credentials;
 import android.security.KeyPairGeneratorSpec;
 import android.security.KeyStore;
@@ -44,8 +45,6 @@ import com.android.org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
 import com.android.org.bouncycastle.jce.X509Principal;
 import com.android.org.bouncycastle.jce.provider.X509CertificateObject;
 import com.android.org.bouncycastle.x509.X509V3CertificateGenerator;
-
-import libcore.util.EmptyArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
