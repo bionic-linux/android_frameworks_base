@@ -16,9 +16,9 @@
 
 package com.android.server.hdmi;
 
-import android.annotation.Nullable;
+import android.util.EmptyArray;
 
-import libcore.util.EmptyArray;
+import android.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Objects;
