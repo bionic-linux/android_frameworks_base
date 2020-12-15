@@ -1795,7 +1795,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private INetworkManagementEventObserver mDataActivityObserver = new BaseNetworkObserver() {
         @Override
-        public void interfaceClassDataActivityChanged(String label, boolean active, long tsNanos) {
+        public void interfaceClassDataActivityChanged(String label, boolean active, long tsNanos,
+                int uid) {
             int deviceType = Integer.parseInt(label);
             sendDataActivityBroadcast(deviceType, active, tsNanos);
         }
