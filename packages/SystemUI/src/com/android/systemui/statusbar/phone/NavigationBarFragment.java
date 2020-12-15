@@ -1487,4 +1487,8 @@ public class NavigationBarFragment extends LifecycleFragment implements Callback
     int getNavigationIconHints() {
         return mNavigationIconHints;
     }
+    public void recomputeDisableFlags(int displayId) {
+        // Respect the latest disabled-flags.
+        mCommandQueue.recomputeDisableFlags(displayId, false);
+    }
 }
