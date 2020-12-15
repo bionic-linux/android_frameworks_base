@@ -121,8 +121,10 @@ public class PlatformCompat extends IPlatformCompat.Stub {
      */
     public boolean isChangeEnabledInternal(long changeId, ApplicationInfo appInfo) {
         boolean value = isChangeEnabledInternalNoLogging(changeId, appInfo);
-        reportChange(changeId, appInfo.uid,
+        if (appInfo != null) {
+            reportChange(changeId, appInfo.uid,
                 value ? ChangeReporter.STATE_ENABLED : ChangeReporter.STATE_DISABLED);
+        }
         return value;
     }
 
@@ -131,9 +133,6 @@ public class PlatformCompat extends IPlatformCompat.Stub {
             @UserIdInt int userId) {
         checkCompatChangeReadAndLogPermission();
         ApplicationInfo appInfo = getApplicationInfo(packageName, userId);
-        if (appInfo == null) {
-            return true;
-        }
         return isChangeEnabled(changeId, appInfo);
     }
 
@@ -142,7 +141,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
         checkCompatChangeReadAndLogPermission();
         String[] packages = mContext.getPackageManager().getPackagesForUid(uid);
         if (packages == null || packages.length == 0) {
-            return true;
+            return mCompatConfig.defaultChangeIdValue(changeId);
         }
         boolean enabled = true;
         for (String packageName : packages) {
