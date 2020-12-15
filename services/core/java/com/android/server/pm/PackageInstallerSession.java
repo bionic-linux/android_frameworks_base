@@ -119,6 +119,7 @@ import android.system.OsConstants;
 import android.system.StructStat;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.EmptyArray;
 import android.util.ExceptionUtils;
 import android.util.MathUtils;
 import android.util.Slog;
@@ -141,7 +142,6 @@ import com.android.server.pm.parsing.pkg.AndroidPackage;
 import com.android.server.security.VerityUtils;
 
 import libcore.io.IoUtils;
-import libcore.util.EmptyArray;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

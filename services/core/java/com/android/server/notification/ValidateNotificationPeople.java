@@ -36,13 +36,12 @@ import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.EmptyArray;
 import android.util.Log;
 import android.util.LruCache;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
-
-import libcore.util.EmptyArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
