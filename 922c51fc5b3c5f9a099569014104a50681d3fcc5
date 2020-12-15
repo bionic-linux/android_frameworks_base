@@ -85,6 +85,24 @@
       "parentUuid": "288d8268_dc781438",
       "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23e8eef8_c430af6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2020-12-15T16:08:48Z",
+      "side": 1,
+      "message": "I understand michael\u0027s point, but we generally do not want to expose these as public APIs. \"normal\" applications should never have any need to check the original location.\n\nAs they are already @SystemApi, I would prefer to keep them as @SystemApi.",
+      "parentUuid": "9cf1fda5_ac632c3f",
+      "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
