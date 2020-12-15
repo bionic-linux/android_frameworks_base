@@ -16,10 +16,10 @@
 
 package android.text;
 
+import android.util.EmptyArray;
+
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.GrowingArrayUtils;
-
-import libcore.util.EmptyArray;
 
 class PackedObjectVector<E>
 {

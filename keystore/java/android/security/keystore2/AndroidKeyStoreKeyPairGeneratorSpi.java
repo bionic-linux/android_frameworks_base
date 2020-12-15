@@ -38,9 +38,9 @@ import android.system.keystore2.IKeystoreSecurityLevel;
 import android.system.keystore2.KeyDescriptor;
 import android.system.keystore2.KeyMetadata;
 import android.system.keystore2.ResponseCode;
+import android.util.EmptyArray;
 import android.util.Log;
 
-import libcore.util.EmptyArray;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

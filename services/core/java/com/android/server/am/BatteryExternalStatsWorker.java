@@ -31,6 +31,7 @@ import android.os.ThreadLocalWorkSource;
 import android.os.connectivity.WifiActivityEnergyInfo;
 import android.telephony.ModemActivityInfo;
 import android.telephony.TelephonyManager;
+import android.util.EmptyArray;
 import android.util.IntArray;
 import android.util.Slog;
 import android.util.TimeUtils;
@@ -39,8 +40,6 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.os.BatteryStatsImpl;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.function.pooled.PooledLambda;
-
-import libcore.util.EmptyArray;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;

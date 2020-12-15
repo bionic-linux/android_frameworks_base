@@ -18,10 +18,10 @@ package com.android.server.hdmi;
 
 import android.annotation.Nullable;
 
-import libcore.util.EmptyArray;
-
 import java.util.Arrays;
 import java.util.Objects;
+
+import android.util.EmptyArray;
 
 /**
  * A class to encapsulate HDMI-CEC message used for the devices connected via

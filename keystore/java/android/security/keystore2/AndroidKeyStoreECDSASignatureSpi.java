@@ -23,8 +23,7 @@ import android.security.KeyStoreOperation;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keystore.KeyProperties;
 import android.system.keystore2.Authorization;
-
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import java.io.ByteArrayOutputStream;
 import java.security.InvalidKeyException;

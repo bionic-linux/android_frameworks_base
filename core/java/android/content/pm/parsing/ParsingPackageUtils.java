@@ -92,6 +92,7 @@ import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.EmptyArray;
 import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -105,7 +106,6 @@ import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.XmlUtils;
 
 import libcore.io.IoUtils;
-import libcore.util.EmptyArray;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

@@ -87,7 +87,7 @@ import com.android.server.hdmi.HdmiCecController.AllocateAddressCallback;
 import com.android.server.hdmi.HdmiCecLocalDevice.ActiveSource;
 import com.android.server.hdmi.HdmiCecLocalDevice.PendingActionClearedCallback;
 
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
