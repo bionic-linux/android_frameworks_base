@@ -114,6 +114,7 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.DebugUtils;
+import android.util.EmptyArray;
 import android.util.EventLog;
 import android.util.IntArray;
 import android.util.Log;
@@ -151,8 +152,6 @@ import com.android.server.pm.permission.PermissionManagerServiceInternal.Permiss
 import com.android.server.pm.permission.PermissionsState.PermissionState;
 import com.android.server.policy.PermissionPolicyInternal;
 import com.android.server.policy.SoftRestrictedPermissionPolicy;
-
-import libcore.util.EmptyArray;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

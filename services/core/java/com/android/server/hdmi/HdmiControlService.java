@@ -73,6 +73,7 @@ import android.provider.Settings.Global;
 import android.sysprop.HdmiProperties;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.EmptyArray;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -86,8 +87,6 @@ import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiCecController.AllocateAddressCallback;
 import com.android.server.hdmi.HdmiCecLocalDevice.ActiveSource;
 import com.android.server.hdmi.HdmiCecLocalDevice.PendingActionClearedCallback;
-
-import libcore.util.EmptyArray;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

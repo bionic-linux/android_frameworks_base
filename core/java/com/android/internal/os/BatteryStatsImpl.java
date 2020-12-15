@@ -71,6 +71,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.AtomicFile;
+import android.util.EmptyArray;
 import android.util.IntArray;
 import android.util.KeyValueListParser;
 import android.util.Log;
@@ -101,8 +102,6 @@ import com.android.internal.util.FastPrintWriter;
 import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.XmlUtils;
-
-import libcore.util.EmptyArray;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

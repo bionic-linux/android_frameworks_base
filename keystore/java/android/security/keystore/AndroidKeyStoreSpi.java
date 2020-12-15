@@ -28,9 +28,8 @@ import android.security.keystore.KeyProperties;
 import android.security.keystore.KeyProtection;
 import android.security.keystore.SecureKeyImportUnavailableException;
 import android.security.keystore.WrappedKeyEntry;
+import android.util.EmptyArray;
 import android.util.Log;
-
-import libcore.util.EmptyArray;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
