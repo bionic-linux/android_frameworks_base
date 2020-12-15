@@ -29,7 +29,7 @@ import java.util.Objects;
  * source and destination address, command (or opcode), and optional parameters.
  */
 public final class HdmiCecMessage {
-    public static final byte[] EMPTY_PARAM = EmptyArray.BYTE;
+    public static final byte[] EMPTY_PARAM = new byte[0];
 
     private final int mSource;
     private final int mDestination;

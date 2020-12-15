@@ -31,9 +31,8 @@ import android.system.keystore2.Domain;
 import android.system.keystore2.IKeystoreSecurityLevel;
 import android.system.keystore2.KeyDescriptor;
 import android.system.keystore2.KeyMetadata;
+import android.util.EmptyArray;
 import android.util.Log;
-
-import libcore.util.EmptyArray;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.ProviderException;
