@@ -23,8 +23,7 @@ import android.security.keymaster.KeymasterArguments;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
-
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.ProviderException;

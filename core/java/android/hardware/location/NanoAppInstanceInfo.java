@@ -20,8 +20,7 @@ import android.annotation.NonNull;
 import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import libcore.util.EmptyArray;
+import android.util.EmptyArray;
 
 /**
  * Describes an instance of a nanoapp, used by the internal state managed by ContextHubService.
