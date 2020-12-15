@@ -418,15 +418,15 @@ public final class NetworkCapabilities implements Parcelable {
      */
     @VisibleForTesting
     /* package */ static final long RESTRICTED_CAPABILITIES =
-            (1 << NET_CAPABILITY_CBS) |
-            (1 << NET_CAPABILITY_DUN) |
-            (1 << NET_CAPABILITY_EIMS) |
-            (1 << NET_CAPABILITY_FOTA) |
-            (1 << NET_CAPABILITY_IA) |
-            (1 << NET_CAPABILITY_IMS) |
-            (1 << NET_CAPABILITY_RCS) |
-            (1 << NET_CAPABILITY_XCAP) |
-            (1 << NET_CAPABILITY_MCX);
+            (1 << NET_CAPABILITY_CBS)
+            | (1 << NET_CAPABILITY_DUN)
+            | (1 << NET_CAPABILITY_EIMS)
+            | (1 << NET_CAPABILITY_FOTA)
+            | (1 << NET_CAPABILITY_IA)
+            | (1 << NET_CAPABILITY_IMS)
+            | (1 << NET_CAPABILITY_RCS)
+            | (1 << NET_CAPABILITY_XCAP)
+            | (1 << NET_CAPABILITY_MCX);
 
     /**
      * Capabilities that force network to be restricted.
@@ -442,10 +442,10 @@ public final class NetworkCapabilities implements Parcelable {
      */
     @VisibleForTesting
     /* package */ static final long UNRESTRICTED_CAPABILITIES =
-            (1 << NET_CAPABILITY_INTERNET) |
-            (1 << NET_CAPABILITY_MMS) |
-            (1 << NET_CAPABILITY_SUPL) |
-            (1 << NET_CAPABILITY_WIFI_P2P);
+            (1 << NET_CAPABILITY_INTERNET)
+            | (1 << NET_CAPABILITY_MMS)
+            | (1 << NET_CAPABILITY_SUPL)
+            | (1 << NET_CAPABILITY_WIFI_P2P);
 
     /**
      * Capabilities that are managed by ConnectivityService.
@@ -914,8 +914,8 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     private boolean satisfiedByTransportTypes(NetworkCapabilities nc) {
-        return ((this.mTransportTypes == 0) ||
-                ((this.mTransportTypes & nc.mTransportTypes) != 0));
+        return ((this.mTransportTypes == 0)
+                || ((this.mTransportTypes & nc.mTransportTypes) != 0));
     }
 
     /** @hide */
@@ -1169,12 +1169,12 @@ public final class NetworkCapabilities implements Parcelable {
                 Math.max(this.mLinkDownBandwidthKbps, nc.mLinkDownBandwidthKbps);
     }
     private boolean satisfiedByLinkBandwidths(NetworkCapabilities nc) {
-        return !(this.mLinkUpBandwidthKbps > nc.mLinkUpBandwidthKbps ||
-                this.mLinkDownBandwidthKbps > nc.mLinkDownBandwidthKbps);
+        return !(this.mLinkUpBandwidthKbps > nc.mLinkUpBandwidthKbps
+                || this.mLinkDownBandwidthKbps > nc.mLinkDownBandwidthKbps);
     }
     private boolean equalsLinkBandwidths(NetworkCapabilities nc) {
-        return (this.mLinkUpBandwidthKbps == nc.mLinkUpBandwidthKbps &&
-                this.mLinkDownBandwidthKbps == nc.mLinkDownBandwidthKbps);
+        return (this.mLinkUpBandwidthKbps == nc.mLinkUpBandwidthKbps
+                && this.mLinkDownBandwidthKbps == nc.mLinkDownBandwidthKbps);
     }
     /** @hide */
     public static int minBandwidth(int a, int b) {
@@ -1689,9 +1689,9 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public boolean equalRequestableCapabilities(@Nullable NetworkCapabilities nc) {
         if (nc == null) return false;
-        return (equalsNetCapabilitiesRequestable(nc) &&
-                equalsTransportTypes(nc) &&
-                equalsSpecifier(nc));
+        return (equalsNetCapabilitiesRequestable(nc)
+                && equalsTransportTypes(nc)
+                && equalsSpecifier(nc));
     }
 
     @Override
