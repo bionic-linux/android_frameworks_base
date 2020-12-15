@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38dfc5dc_37e6bb14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-12-15T18:13:44Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "916fbb5e73ed283be792c00677ce9546a63ab022",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36635fa7_32db1a9e",
@@ -14,6 +31,30 @@
       "writtenOn": "2020-12-15T16:48:33Z",
       "side": 1,
       "message": "I guess you could also use isChangeEnabled(changeId, null), that way all paths always go through isChangeEnabled (I know permission is also enforced here, so probably makes no difference). You\u0027re the expert though.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 64
+      },
+      "revId": "916fbb5e73ed283be792c00677ce9546a63ab022",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a47ae836_29b56609",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-12-15T18:13:44Z",
+      "side": 1,
+      "message": "I\u0027m not an expert, but I think I\u0027ll leave it as is.",
+      "parentUuid": "36635fa7_32db1a9e",
       "range": {
         "startLine": 140,
         "startChar": 0,
