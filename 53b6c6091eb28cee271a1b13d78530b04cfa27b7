@@ -16,6 +16,29 @@
       "message": "I think splitting CS into a separate jar is fine. Moving it into the tethering apex should wait",
       "revId": "53b6c6091eb28cee271a1b13d78530b04cfa27b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f48c3d4a_7d6d1cc0",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-15T13:03:00Z",
+      "side": 1,
+      "message": "These libs are sort of broken in that they include annotations they shouldn\u0027t. Can we please clean that up before adding more deps on them?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 6
+      },
+      "revId": "53b6c6091eb28cee271a1b13d78530b04cfa27b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

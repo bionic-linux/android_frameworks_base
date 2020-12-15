@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47b6b120_91370e3f",
+        "filename": "services/Android.bp",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-15T13:03:00Z",
+      "side": 0,
+      "message": "Can we keep this in static_libs for now?",
+      "revId": "6557000a116008de7abfa2c49cef5192a2894856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
