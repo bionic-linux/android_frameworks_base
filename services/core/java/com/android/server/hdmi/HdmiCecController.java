@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.os.IHwBinder;
 import android.os.Looper;
 import android.os.RemoteException;
+import android.util.EmptyArray;
 import android.util.Slog;
 import android.util.SparseArray;
 
@@ -37,8 +38,6 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.hdmi.HdmiAnnotations.IoThreadOnly;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiControlService.DevicePollingCallback;
-
-import libcore.util.EmptyArray;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

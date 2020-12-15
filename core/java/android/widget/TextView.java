@@ -133,6 +133,7 @@ import android.text.style.UpdateAppearance;
 import android.text.util.Linkify;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.EmptyArray;
 import android.util.IntArray;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -193,8 +194,6 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.FastMath;
 import com.android.internal.util.Preconditions;
 import com.android.internal.widget.EditableInputConnection;
-
-import libcore.util.EmptyArray;
 
 import org.xmlpull.v1.XmlPullParserException;
 
