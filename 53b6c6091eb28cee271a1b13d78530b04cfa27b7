@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0fd29db_a3558330",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-15T10:51:38Z",
+      "side": 1,
+      "message": "I think splitting CS into a separate jar is fine. Moving it into the tethering apex should wait",
+      "revId": "53b6c6091eb28cee271a1b13d78530b04cfa27b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
