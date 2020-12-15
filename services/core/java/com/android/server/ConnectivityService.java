@@ -877,6 +877,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @VisibleForTesting
     public static class Dependencies {
+        public int getCallingUid() {
+            return Binder.getCallingUid();
+        }
+
         /**
          * Get system properties to use in ConnectivityService.
          */
@@ -1409,7 +1413,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public NetworkInfo getActiveNetworkInfo() {
         enforceAccessPermission();
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         final NetworkState state = getUnfilteredActiveNetworkState(uid);
         filterNetworkStateForUid(state, uid, false);
         maybeLogBlockedNetworkInfo(state.networkInfo, uid);
@@ -1419,7 +1423,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public Network getActiveNetwork() {
         enforceAccessPermission();
-        return getActiveNetworkForUidInternal(Binder.getCallingUid(), false);
+        return getActiveNetworkForUidInternal(mDeps.getCallingUid(), false);
     }
 
     @Override
@@ -1459,7 +1463,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // Public because it's used by mLockdownTracker.
     public NetworkInfo getActiveNetworkInfoUnfiltered() {
         enforceAccessPermission();
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         NetworkState state = getUnfilteredActiveNetworkState(uid);
         return state.networkInfo;
     }
@@ -1475,7 +1479,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public NetworkInfo getNetworkInfo(int networkType) {
         enforceAccessPermission();
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         if (getVpnUnderlyingNetworks(uid) != null) {
             // A VPN is active, so we may need to return one of its underlying networks. This
             // information is not available in LegacyTypeTracker, so we have to get it from
@@ -1520,7 +1524,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public Network getNetworkForType(int networkType) {
         enforceAccessPermission();
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         NetworkState state = getFilteredNetworkState(networkType, uid);
         if (!isNetworkWithLinkPropertiesBlocked(state.linkProperties, uid, false)) {
             return state.network;
@@ -1567,7 +1571,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             result.put(
                     nai.network,
                     maybeSanitizeLocationInfoForCaller(
-                            nc, Binder.getCallingUid(), callingPackageName));
+                            nc, mDeps.getCallingUid(), callingPackageName));
         }
 
         synchronized (mVpns) {
@@ -1582,7 +1586,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                                 result.put(
                                         network,
                                         maybeSanitizeLocationInfoForCaller(
-                                                nc, Binder.getCallingUid(), callingPackageName));
+                                                nc, mDeps.getCallingUid(), callingPackageName));
                             }
                         }
                     }
@@ -1612,7 +1616,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public LinkProperties getActiveLinkProperties() {
         enforceAccessPermission();
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         NetworkState state = getUnfilteredActiveNetworkState(uid);
         if (state.linkProperties == null) return null;
         return linkPropertiesRestrictedForCallerPermissions(state.linkProperties,
@@ -1626,7 +1630,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final LinkProperties lp = getLinkProperties(nai);
         if (lp == null) return null;
         return linkPropertiesRestrictedForCallerPermissions(
-                lp, Binder.getCallingPid(), Binder.getCallingUid());
+                lp, Binder.getCallingPid(), mDeps.getCallingUid());
     }
 
     // TODO - this should be ALL networks
@@ -1636,7 +1640,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final LinkProperties lp = getLinkProperties(getNetworkAgentInfoForNetwork(network));
         if (lp == null) return null;
         return linkPropertiesRestrictedForCallerPermissions(
-                lp, Binder.getCallingPid(), Binder.getCallingUid());
+                lp, Binder.getCallingPid(), mDeps.getCallingUid());
     }
 
     @Nullable
@@ -1658,17 +1662,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         synchronized (nai) {
             if (nai.networkCapabilities == null) return null;
             return networkCapabilitiesRestrictedForCallerPermissions(
-                    nai.networkCapabilities, Binder.getCallingPid(), Binder.getCallingUid());
+                    nai.networkCapabilities, Binder.getCallingPid(), mDeps.getCallingUid());
         }
     }
 
     @Override
     public NetworkCapabilities getNetworkCapabilities(Network network, String callingPackageName) {
-        mAppOpsManager.checkPackage(Binder.getCallingUid(), callingPackageName);
+        mAppOpsManager.checkPackage(mDeps.getCallingUid(), callingPackageName);
         enforceAccessPermission();
         return maybeSanitizeLocationInfoForCaller(
                 getNetworkCapabilitiesInternal(network),
-                Binder.getCallingUid(), callingPackageName);
+                mDeps.getCallingUid(), callingPackageName);
     }
 
     @VisibleForTesting
@@ -1756,7 +1760,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void restrictBackgroundRequestForCaller(NetworkCapabilities nc) {
-        if (!mPermissionMonitor.hasUseBackgroundNetworksPermission(Binder.getCallingUid())) {
+        if (!mPermissionMonitor.hasUseBackgroundNetworksPermission(mDeps.getCallingUid())) {
             nc.addCapability(NET_CAPABILITY_FOREGROUND);
         }
     }
@@ -1783,7 +1787,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     @Deprecated
     public NetworkQuotaInfo getActiveNetworkQuotaInfo() {
-        Log.w(TAG, "Shame on UID " + Binder.getCallingUid()
+        Log.w(TAG, "Shame on UID " + mDeps.getCallingUid()
                 + " for calling the hidden API getNetworkQuotaInfo(). Shame!");
         return new NetworkQuotaInfo();
     }
@@ -1817,7 +1821,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // requestRouteToHost. In Q, GnssLocationProvider is changed to not call requestRouteToHost
         // for devices launched with Q and above. However, existing devices upgrading to Q and
         // above must continued to be supported for few more releases.
-        if (isSystem(Binder.getCallingUid()) && SystemProperties.getInt(
+        if (isSystem(mDeps.getCallingUid()) && SystemProperties.getInt(
                 "ro.product.first_api_level", 0) > Build.VERSION_CODES.P) {
             log("This method exists only for app backwards compatibility"
                     + " and must not be called by system services.");
@@ -1883,7 +1887,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return false;
         }
 
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         final long token = Binder.clearCallingIdentity();
         try {
             LinkProperties lp;
@@ -2303,7 +2307,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void systemReady() {
-        if (Binder.getCallingUid() != Process.SYSTEM_UID) {
+        if (mDeps.getCallingUid() != Process.SYSTEM_UID) {
             throw new SecurityException("Calling Uid is not system uid.");
         }
         systemReadyInternal();
@@ -2529,7 +2533,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (context.checkCallingOrSelfPermission(android.Manifest.permission.DUMP)
                 != PackageManager.PERMISSION_GRANTED) {
             pw.println("Permission Denial: can't dump " + tag + " from from pid="
-                    + Binder.getCallingPid() + ", uid=" + Binder.getCallingUid()
+                    + Binder.getCallingPid() + ", uid=" + mDeps.getCallingUid()
                     + " due to missing android.permission.DUMP permission");
             return false;
         } else {
@@ -3909,7 +3913,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             if (request == CaptivePortal.APP_REQUEST_REEVALUATION_REQUIRED) {
                 checkNetworkStackPermission();
-                nm.forceReevaluation(Binder.getCallingUid());
+                nm.forceReevaluation(mDeps.getCallingUid());
             }
         }
 
@@ -4376,7 +4380,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void reportNetworkConnectivity(Network network, boolean hasConnectivity) {
         enforceAccessPermission();
         enforceInternetPermission();
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         final int connectivityInfo = encodeBool(hasConnectivity);
 
         // Handle ConnectivityDiagnostics event before attempting to revalidate the network. This
@@ -4446,13 +4450,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (globalProxy != null) return globalProxy;
         if (network == null) {
             // Get the network associated with the calling UID.
-            final Network activeNetwork = getActiveNetworkForUidInternal(Binder.getCallingUid(),
+            final Network activeNetwork = getActiveNetworkForUidInternal(mDeps.getCallingUid(),
                     true);
             if (activeNetwork == null) {
                 return null;
             }
             return getLinkPropertiesProxyInfo(activeNetwork);
-        } else if (mDeps.queryUserAccess(Binder.getCallingUid(), network.getNetId())) {
+        } else if (mDeps.queryUserAccess(mDeps.getCallingUid(), network.getNetId())) {
             // Don't call getLinkProperties() as it requires ACCESS_NETWORK_STATE permission, which
             // caller may not have.
             return getLinkPropertiesProxyInfo(network);
@@ -4621,7 +4625,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public ParcelFileDescriptor establishVpn(VpnConfig config) {
-        int user = UserHandle.getUserId(Binder.getCallingUid());
+        int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
             return mVpns.get(user).establish(config);
@@ -4642,7 +4646,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public boolean provisionVpnProfile(@NonNull VpnProfile profile, @NonNull String packageName) {
-        final int user = UserHandle.getUserId(Binder.getCallingUid());
+        final int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             return mVpns.get(user).provisionVpnProfile(packageName, profile, mKeyStore);
         }
@@ -4660,7 +4664,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void deleteVpnProfile(@NonNull String packageName) {
-        final int user = UserHandle.getUserId(Binder.getCallingUid());
+        final int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             mVpns.get(user).deleteVpnProfile(packageName, mKeyStore);
         }
@@ -4677,7 +4681,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void startVpnProfile(@NonNull String packageName) {
-        final int user = UserHandle.getUserId(Binder.getCallingUid());
+        final int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
             mVpns.get(user).startVpnProfile(packageName, mKeyStore);
@@ -4694,7 +4698,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void stopVpnProfile(@NonNull String packageName) {
-        final int user = UserHandle.getUserId(Binder.getCallingUid());
+        final int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             mVpns.get(user).stopVpnProfile(packageName);
         }
@@ -4706,7 +4710,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void startLegacyVpn(VpnProfile profile) {
-        int user = UserHandle.getUserId(Binder.getCallingUid());
+        int user = UserHandle.getUserId(mDeps.getCallingUid());
         final LinkProperties egress = getActiveLinkProperties();
         if (egress == null) {
             throw new IllegalStateException("Missing active network connection");
@@ -4855,7 +4859,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public boolean updateLockdownVpn() {
-        if (Binder.getCallingUid() != Process.SYSTEM_UID) {
+        if (mDeps.getCallingUid() != Process.SYSTEM_UID) {
             logw("Lockdown VPN only available to AID_SYSTEM");
             return false;
         }
@@ -4877,7 +4881,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     setLockdownTracker(null);
                     return true;
                 }
-                int user = UserHandle.getUserId(Binder.getCallingUid());
+                int user = UserHandle.getUserId(mDeps.getCallingUid());
                 Vpn vpn = mVpns.get(user);
                 if (vpn == null) {
                     logw("VPN for user " + user + " not ready yet. Skipping lockdown");
@@ -5442,7 +5446,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             messenger = null;
             mBinder = null;
             mPid = getCallingPid();
-            mUid = getCallingUid();
+            mUid = mDeps.getCallingUid();
             enforceRequestCountLimit();
         }
 
@@ -5454,7 +5458,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             ensureAllNetworkRequestsHaveType(mRequests);
             mBinder = binder;
             mPid = getCallingPid();
-            mUid = getCallingUid();
+            mUid = mDeps.getCallingUid();
             mPendingIntent = null;
             enforceRequestCountLimit();
 
@@ -5597,7 +5601,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private boolean checkUnsupportedStartingFrom(int version, String callingPackageName) {
-        final UserHandle user = UserHandle.getUserHandleForUid(Binder.getCallingUid());
+        final UserHandle user = UserHandle.getUserHandleForUid(mDeps.getCallingUid());
         final PackageManager pm =
                 mContext.createContextAsUser(user, 0 /* flags */).getPackageManager();
         try {
@@ -5617,7 +5621,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 throw new SecurityException("Insufficient permissions to specify legacy type");
             }
         }
-        final int callingUid = Binder.getCallingUid();
+        final int callingUid = mDeps.getCallingUid();
         final NetworkRequest.Type type = (networkCapabilities == null)
                 ? NetworkRequest.Type.TRACK_DEFAULT
                 : NetworkRequest.Type.REQUEST;
@@ -5687,7 +5691,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nai != null) {
             nai.asyncChannel.sendMessage(android.net.NetworkAgent.CMD_REQUEST_BANDWIDTH_UPDATE);
             synchronized (mBandwidthRequests) {
-                final int uid = Binder.getCallingUid();
+                final int uid = mDeps.getCallingUid();
                 Integer uidReqs = mBandwidthRequests.get(uid);
                 if (uidReqs == null) {
                     uidReqs = 0;
@@ -5704,7 +5708,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void enforceMeteredApnPolicy(NetworkCapabilities networkCapabilities) {
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         if (isSystem(uid)) {
             // Exemption for system uid.
             return;
@@ -5724,7 +5728,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             PendingIntent operation, @NonNull String callingPackageName,
             @Nullable String callingAttributionTag) {
         Objects.requireNonNull(operation, "PendingIntent cannot be null.");
-        final int callingUid = Binder.getCallingUid();
+        final int callingUid = mDeps.getCallingUid();
         networkCapabilities = new NetworkCapabilities(networkCapabilities);
         enforceNetworkRequestPermissions(networkCapabilities, callingPackageName,
                 callingAttributionTag);
@@ -5783,7 +5787,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public NetworkRequest listenForNetwork(NetworkCapabilities networkCapabilities,
             Messenger messenger, IBinder binder, @NonNull String callingPackageName) {
-        final int callingUid = Binder.getCallingUid();
+        final int callingUid = mDeps.getCallingUid();
         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
             enforceAccessPermission();
         }
@@ -5813,7 +5817,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public void pendingListenForNetwork(NetworkCapabilities networkCapabilities,
             PendingIntent operation, @NonNull String callingPackageName) {
         Objects.requireNonNull(operation, "PendingIntent cannot be null.");
-        final int callingUid = Binder.getCallingUid();
+        final int callingUid = mDeps.getCallingUid();
         if (!hasWifiNetworkListenPermission(networkCapabilities)) {
             enforceAccessPermission();
         }
@@ -5914,7 +5918,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         } else {
             enforceNetworkFactoryPermission();
         }
-        mHandler.post(() -> handleReleaseNetworkRequest(request, Binder.getCallingUid(), true));
+        mHandler.post(() -> handleReleaseNetworkRequest(request, mDeps.getCallingUid(), true));
     }
 
     // NOTE: Accessed on multiple threads, must be synchronized on itself.
@@ -6008,7 +6012,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             enforceNetworkFactoryPermission();
         }
 
-        final int uid = Binder.getCallingUid();
+        final int uid = mDeps.getCallingUid();
         final long token = Binder.clearCallingIdentity();
         try {
             return registerNetworkAgentInternal(messenger, networkInfo, linkProperties,
@@ -7662,7 +7666,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public boolean addVpnAddress(String address, int prefixLength) {
-        int user = UserHandle.getUserId(Binder.getCallingUid());
+        int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
             return mVpns.get(user).addAddress(address, prefixLength);
@@ -7671,7 +7675,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public boolean removeVpnAddress(String address, int prefixLength) {
-        int user = UserHandle.getUserId(Binder.getCallingUid());
+        int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
             return mVpns.get(user).removeAddress(address, prefixLength);
@@ -7680,7 +7684,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public boolean setUnderlyingNetworksForVpn(Network[] networks) {
-        int user = UserHandle.getUserId(Binder.getCallingUid());
+        int user = UserHandle.getUserId(mDeps.getCallingUid());
         final boolean success;
         synchronized (mVpns) {
             throwIfLockdownEnabled();
@@ -7907,7 +7911,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @GuardedBy("mVpns")
     private Vpn getVpnIfOwner() {
-        return getVpnIfOwner(Binder.getCallingUid());
+        return getVpnIfOwner(mDeps.getCallingUid());
     }
 
     @GuardedBy("mVpns")
@@ -8385,7 +8389,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             throw new IllegalArgumentException("ConnectivityManager.TYPE_* are deprecated."
                     + " Please use NetworkCapabilities instead.");
         }
-        final int callingUid = Binder.getCallingUid();
+        final int callingUid = mDeps.getCallingUid();
         mAppOpsManager.checkPackage(callingUid, callingPackageName);
 
         // This NetworkCapabilities is only used for matching to Networks. Clear out its owner uid
@@ -8420,7 +8424,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 mConnectivityDiagnosticsHandler.obtainMessage(
                         ConnectivityDiagnosticsHandler
                                 .EVENT_UNREGISTER_CONNECTIVITY_DIAGNOSTICS_CALLBACK,
-                        Binder.getCallingUid(),
+                        mDeps.getCallingUid(),
                         0,
                         callback));
     }
@@ -8436,7 +8440,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork(network);
-        if (nai == null || nai.creatorUid != Binder.getCallingUid()) {
+        if (nai == null || nai.creatorUid != mDeps.getCallingUid()) {
             throw new SecurityException("Data Stall simulation is only possible for network "
                 + "creators");
         }
