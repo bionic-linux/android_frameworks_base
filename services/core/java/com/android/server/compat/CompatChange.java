@@ -143,13 +143,14 @@ public final class CompatChange extends CompatibilityChangeInfo {
      * @return {@code true} if the change should be enabled for the package.
      */
     boolean isEnabled(ApplicationInfo app) {
-        if (mPackageOverrides != null && mPackageOverrides.containsKey(app.packageName)) {
+        if (mPackageOverrides != null && app != null
+                && mPackageOverrides.containsKey(app.packageName)) {
             return mPackageOverrides.get(app.packageName);
         }
         if (getDisabled()) {
             return false;
         }
-        if (getEnableSinceTargetSdk() != -1) {
+        if (getEnableSinceTargetSdk() != -1 && app != null) {
             return app.targetSdkVersion >= getEnableSinceTargetSdk();
         }
         return true;
