@@ -292,6 +292,7 @@ import android.text.style.SuggestionSpan;
 import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.DebugUtils;
+import com.android.internal.util.EmptyArray;
 import android.util.EventLog;
 import android.util.IntArray;
 import android.util.Log;
@@ -381,8 +382,6 @@ import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowProcessController;
 
 import dalvik.system.VMRuntime;
-
-import libcore.util.EmptyArray;
 
 import java.io.File;
 import java.io.FileDescriptor;

@@ -24,8 +24,6 @@ import android.util.ArraySet;
 
 import dalvik.system.VMRuntime;
 
-import libcore.util.EmptyArray;
-
 import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
