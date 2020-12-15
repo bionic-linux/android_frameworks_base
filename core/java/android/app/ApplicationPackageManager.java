@@ -106,7 +106,7 @@ import com.android.internal.util.UserIcons;
 
 import dalvik.system.VMRuntime;
 
-import libcore.util.EmptyArray;
+import com.android.internal.util.EmptyArray;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

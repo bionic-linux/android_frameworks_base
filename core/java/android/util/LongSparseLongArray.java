@@ -20,10 +20,9 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
 
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.EmptyArray;
 import com.android.internal.util.GrowingArrayUtils;
 import com.android.internal.util.Preconditions;
-
-import libcore.util.EmptyArray;
 
 /**
  * Map of {@code long} to {@code long}. Unlike a normal array of longs, there
