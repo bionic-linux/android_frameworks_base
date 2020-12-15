@@ -118,6 +118,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1f5e137_99f9fc3b",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-15T01:20:28Z",
+      "side": 1,
+      "message": "This moves the IMS call session to ALERTING (meaning 180 dialing request was received from network). Disregard this being called multiple times.",
+      "parentUuid": "775dcd75_9aafeafd",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 59
+      },
+      "revId": "80cbdcf6ab1485f86ca8d7e8934f8e4badffd65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1d7c3af8_6a624c38",
         "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
         "patchSetId": 6
@@ -129,6 +153,30 @@
       "writtenOn": "2020-12-15T01:15:19Z",
       "side": 1,
       "message": "The outgoing IMS call session has been initiated and the call state should move to ALERTING (this is when 180 ringing occurs)",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "80cbdcf6ab1485f86ca8d7e8934f8e4badffd65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d4cd93a_48ae1bd6",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-15T01:20:28Z",
+      "side": 1,
+      "message": "Sorry, i was confused, this is when we move to ACTIVE (disregard 180 comment)",
+      "parentUuid": "1d7c3af8_6a624c38",
       "range": {
         "startLine": 98,
         "startChar": 7,
