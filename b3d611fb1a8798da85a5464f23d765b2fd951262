@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a75031b_025d51af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-15T10:53:40Z",
+      "side": 1,
+      "message": "How come we\u0027re moving them twice? Not sure what the motivation for this packages/Connectivity move is",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 12,
+        "endChar": 13
+      },
+      "revId": "b3d611fb1a8798da85a5464f23d765b2fd951262",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
