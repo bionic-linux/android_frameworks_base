@@ -36,6 +36,7 @@ import android.view.WindowManager;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
+import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.NavigationBarController;
 import com.android.systemui.statusbar.phone.NavigationBarView;
 import com.android.systemui.util.InjectionInflationController;
@@ -56,6 +57,9 @@ public class KeyguardDisplayManager {
 
     private final NavigationBarController mNavBarController =
             Dependency.get(NavigationBarController.class);
+
+    private final CommandQueue mCommandQueue =
+            Dependency.get(CommandQueue.class);
 
     private final DisplayManager.DisplayListener mDisplayListener =
             new DisplayManager.DisplayListener() {
@@ -228,10 +232,12 @@ public class KeyguardDisplayManager {
         if (displayId == DEFAULT_DISPLAY) return;
 
         NavigationBarView navBarView = mNavBarController.getNavigationBarView(displayId);
+
         // We may not have nav bar on a display.
         if (navBarView == null) return;
 
         if (navBarVisible) {
+            mCommandQueue.recomputeDisableFlags(displayId, false);
             navBarView.getRootView().setVisibility(View.VISIBLE);
         } else {
             navBarView.getRootView().setVisibility(View.GONE);

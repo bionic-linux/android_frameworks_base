@@ -47,6 +47,7 @@ import android.util.ArraySet;
 import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
+import android.view.Display;
 import android.view.InsetsState.InternalInsetsType;
 import android.view.WindowInsetsController.Appearance;
 
@@ -758,8 +759,12 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
     public void disableForUser(int what, IBinder token, String pkg, int userId) {
         enforceStatusBar();
 
+        final DisplayManager displayManager =
+                mContext.getSystemService(DisplayManager.class);
         synchronized (mLock) {
-            disableLocked(DEFAULT_DISPLAY, userId, what, token, pkg, 1);
+            for (Display display : displayManager.getDisplays()) {
+                disableLocked(display.getDisplayId(), userId, what, token, pkg, 1);
+            }
         }
     }
 
