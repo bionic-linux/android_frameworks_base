@@ -297,6 +297,7 @@ import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.EmptyArray;
 import android.util.EventLog;
 import android.util.ExceptionUtils;
 import android.util.IntArray;
@@ -381,7 +382,6 @@ import dalvik.system.CloseGuard;
 import dalvik.system.VMRuntime;
 
 import libcore.io.IoUtils;
-import libcore.util.EmptyArray;
 import libcore.util.HexEncoding;
 
 import org.xmlpull.v1.XmlPullParser;
