@@ -23,14 +23,8 @@ import android.security.KeyStoreParameter;
 import android.security.keymaster.KeyCharacteristics;
 import android.security.keymaster.KeymasterArguments;
 import android.security.keymaster.KeymasterDefs;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
-import android.security.keystore.KeyProtection;
-import android.security.keystore.SecureKeyImportUnavailableException;
-import android.security.keystore.WrappedKeyEntry;
+import com.android.internal.util.EmptyArray;
 import android.util.Log;
-
-import libcore.util.EmptyArray;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

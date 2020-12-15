@@ -38,10 +38,9 @@ import android.util.Slog;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.EmptyArray;
 import com.android.server.LocalServices;
 import com.android.server.wm.ActivityTaskManagerInternal;
-
-import libcore.util.EmptyArray;
 
 /**
  * This class provides APIs of accessibility security policies for accessibility manager

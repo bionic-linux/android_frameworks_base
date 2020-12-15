@@ -17,9 +17,8 @@
 package android.util;
 
 import com.android.internal.util.ArrayUtils;
+import com.android.internal.util.EmptyArray;
 import com.android.internal.util.GrowingArrayUtils;
-
-import libcore.util.EmptyArray;
 
 import java.util.NoSuchElementException;
 
