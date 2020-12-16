@@ -103,6 +103,24 @@
       "parentUuid": "9cf1fda5_ac632c3f",
       "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "923478f7_4138d62b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2020-12-16T13:39:42Z",
+      "side": 1,
+      "message": "As we spoke offline, I\u0027d update them to @SystemApi only(they are in-process APIs) for incoming CS mainline module if we don\u0027t want to expose them as public APIs. I have updated the APIs to @SystemApi only, please review it. Thanks.",
+      "parentUuid": "23e8eef8_c430af6e",
+      "revId": "922c51fc5b3c5f9a099569014104a50681d3fcc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
