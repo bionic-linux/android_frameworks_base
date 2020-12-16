@@ -16,6 +16,23 @@
       "message": "the cl is ready for review",
       "revId": "34715f006c62a94aadd5ac9a7e2b33f841b90333",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad66774e_d480958d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-12-16T20:38:35Z",
+      "side": 1,
+      "message": "Conditionally using keystore2 namespaces looks good. It will fail once when upgrading from keystore to keystore2 as discussed.",
+      "revId": "34715f006c62a94aadd5ac9a7e2b33f841b90333",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
