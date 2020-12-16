@@ -16,6 +16,23 @@
       "message": "I\u0027d recommend omakoto@ for OWNERS and API approval in this area.",
       "revId": "e6ddc2fb14c4c1b8e8b98025ba5b61e2eba5c5a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca4bdf89_6d886cd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2020-12-16T16:06:43Z",
+      "side": 1,
+      "message": "LGTM for the ContactsContract update.",
+      "revId": "e6ddc2fb14c4c1b8e8b98025ba5b61e2eba5c5a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
