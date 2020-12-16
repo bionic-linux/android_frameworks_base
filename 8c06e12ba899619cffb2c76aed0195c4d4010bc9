@@ -16,6 +16,29 @@
       "message": "Had to cherry-pick a change from internal to make sure it merges cleanly upstream.",
       "revId": "8c06e12ba899619cffb2c76aed0195c4d4010bc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96c7060b_bff8b117",
+        "filename": "services/core/java/com/android/server/compat/PlatformCompat.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2020-12-16T09:59:50Z",
+      "side": 1,
+      "message": "call this enabled?",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "8c06e12ba899619cffb2c76aed0195c4d4010bc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
