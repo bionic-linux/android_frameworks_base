@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "606898ce_627051fa",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2020-12-16T19:30:42Z",
+      "side": 1,
+      "message": "can we add a little bit more detail here: \" initiated and the call state should move to ACTIVE\"",
+      "range": {
+        "startLine": 103,
+        "startChar": 46,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "a21b6d86776f800ef141cfe90d3bd9b15f64b00e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
