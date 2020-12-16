@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4af852a5_7ba4ae67",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-16T00:54:08Z",
+      "side": 1,
+      "message": "Hahaha, whoops... put the docs on the wrong class apparently.\n\nInstead of repeating docs, I added \"see:\".  I saw this used in the connectivity stack and thought it was helpful to keep things up to date.",
+      "parentUuid": "7dca0094_32cf0ff4",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 32
+      },
+      "revId": "80cbdcf6ab1485f86ca8d7e8934f8e4badffd65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f30d948_bfd97c19",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-15T01:15:19Z",
       "side": 1,
       "message": "can we make this more clear and say that this must be called after ImsCallSessionImplBase#start has been called if the call has been successfully started on the network. If the call setup on the network failed early, {@link callSessionInitiatingFailed} should be called and not callSessionTerminated.\n\nOnce callSessionInitiating has been called, callSessionProgressing should be called to send the framework further updates on the state of the call.",
+      "range": {
+        "startLine": 57,
+        "startChar": 64,
+        "endLine": 59,
+        "endChar": 96
+      },
+      "revId": "80cbdcf6ab1485f86ca8d7e8934f8e4badffd65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfaf7ad8_c3bca76e",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-16T00:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f30d948_bfd97c19",
       "range": {
         "startLine": 57,
         "startChar": 64,
@@ -93,6 +141,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1682b77_4cc63584",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-16T00:54:08Z",
+      "side": 1,
+      "message": "I never updated any of these comments since our last conversation.  I hadn\u0027t fully reviewed it yet which is my bad for not marking wip, you\u0027re too quick at doing the review!!\n\nInstead of repeating everything multiple times, I change some of the comments to reference the system api docs.",
+      "parentUuid": "630bdcbb_26e17740",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "80cbdcf6ab1485f86ca8d7e8934f8e4badffd65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc28183b_00b1b3e6",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-16T00:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbd94f0a_94e6fa71",
+      "range": {
+        "startLine": 63,
+        "startChar": 69,
+        "endLine": 63,
+        "endChar": 76
+      },
+      "revId": "80cbdcf6ab1485f86ca8d7e8934f8e4badffd65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "775dcd75_9aafeafd",
@@ -140,6 +236,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c14d39d_4d5a2d88",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-16T00:54:08Z",
+      "side": 1,
+      "message": "I think I did what you asked here, wasn\u0027t sure which part you were referring to when you said \"disregard.\"",
+      "parentUuid": "f1f5e137_99f9fc3b",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 59
+      },
+      "revId": "80cbdcf6ab1485f86ca8d7e8934f8e4badffd65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d7c3af8_6a624c38",
@@ -177,6 +297,30 @@
       "side": 1,
       "message": "Sorry, i was confused, this is when we move to ACTIVE (disregard 180 comment)",
       "parentUuid": "1d7c3af8_6a624c38",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "80cbdcf6ab1485f86ca8d7e8934f8e4badffd65f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bac300a8_eafe4bf5",
+        "filename": "telephony/java/android/telephony/ims/ImsCallSessionListener.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-16T00:54:08Z",
+      "side": 1,
+      "message": "I don\u0027t \"think\" you wanted to state that the call state should move to ACTIVE.  Let me know if I\u0027m reading what you wrote differently.",
+      "parentUuid": "8d4cd93a_48ae1bd6",
       "range": {
         "startLine": 98,
         "startChar": 7,
