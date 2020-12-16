@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a48779eb_7f80fbbf",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/JobSchedulerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-12-16T10:29:13Z",
+      "side": 1,
+      "message": "As it\u0027s in the apex, is JobSchedulerService updatable in Android R? If yes, this change may break compatibility? Though I remember JobSchedulerService is not updatable yet.",
+      "range": {
+        "startLine": 143,
+        "startChar": 13,
+        "endLine": 143,
+        "endChar": 32
+      },
+      "revId": "27382eca5fca332c5d3de457636cc82b0fa5512f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7311d5d_ee93f11c",
+        "filename": "core/java/android/util/EmptyArray.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-12-16T10:29:13Z",
+      "side": 1,
+      "message": "I am not sure, but from what I can see, Frameworks put hidden class into the package com.android.internal.util.",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "27382eca5fca332c5d3de457636cc82b0fa5512f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "291cd909_c2cb1273",
+        "filename": "core/java/android/util/EmptyArray.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2020-12-16T10:29:13Z",
+      "side": 1,
+      "message": "nit: add some API documentation why using this class instead of creating a new array?",
+      "revId": "27382eca5fca332c5d3de457636cc82b0fa5512f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
