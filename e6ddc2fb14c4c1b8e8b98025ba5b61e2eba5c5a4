@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0f91fb0_9b1089b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2020-12-16T03:28:07Z",
+      "side": 1,
+      "message": "I\u0027d recommend omakoto@ for OWNERS and API approval in this area.",
+      "revId": "e6ddc2fb14c4c1b8e8b98025ba5b61e2eba5c5a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
