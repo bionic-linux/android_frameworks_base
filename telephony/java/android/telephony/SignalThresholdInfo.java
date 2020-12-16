@@ -21,6 +21,8 @@ import android.annotation.NonNull;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.android.internal.util.ArrayUtils;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
@@ -30,12 +32,13 @@ import java.util.Objects;
  * Defines the threshold value of the signal strength.
  * @hide
  */
-public class SignalThresholdInfo implements Parcelable {
+public final class SignalThresholdInfo implements Parcelable {
     /**
      * Received Signal Strength Indication.
      * Range: -113 dBm and -51 dBm
      * Used RAN: GERAN, CDMA2000
      * Reference: 3GPP TS 27.007 section 8.5.
+     * @hide
      */
     public static final int SIGNAL_RSSI = 1;
 
@@ -44,6 +47,7 @@ public class SignalThresholdInfo implements Parcelable {
      * Range: -120 dBm to -25 dBm;
      * Used RAN: UTRAN
      * Reference: 3GPP TS 25.123, section 9.1.1.1
+     * @hide
      */
     public static final int SIGNAL_RSCP = 2;
 
@@ -52,14 +56,16 @@ public class SignalThresholdInfo implements Parcelable {
      * Range: -140 dBm to -44 dBm;
      * Used RAN: EUTRAN
      * Reference: 3GPP TS 36.133 9.1.4
+     * @hide
      */
     public static final int SIGNAL_RSRP = 3;
 
     /**
      * Reference Signal Received Quality
-     * Range: -20 dB to -3 dB;
+     * Range: -34 dB to 3 dB;
      * Used RAN: EUTRAN
      * Reference: 3GPP TS 36.133 9.1.7
+     * @hide
      */
     public static final int SIGNAL_RSRQ = 4;
 
@@ -67,6 +73,7 @@ public class SignalThresholdInfo implements Parcelable {
      * Reference Signal Signal to Noise Ratio
      * Range: -20 dB to 30 dB;
      * Used RAN: EUTRAN
+     * @hide
      */
     public static final int SIGNAL_RSSNR = 5;
 
@@ -75,14 +82,16 @@ public class SignalThresholdInfo implements Parcelable {
      * Range: -140 dBm to -44 dBm.
      * Used RAN: NGRAN
      * Reference: 3GPP TS 38.215.
+     * @hide
      */
     public static final int SIGNAL_SSRSRP = 6;
 
     /**
      * 5G SS reference signal received quality.
-     * Range: -20 dB to -3 dB.
+     * Range: -43 dB to 20 dB.
      * Used RAN: NGRAN
-     * Reference: 3GPP TS 38.215.
+     * Reference: 3GPP TS 38.133 section 10.1.11.1.
+     * @hide
      */
     public static final int SIGNAL_SSRSRQ = 7;
 
@@ -91,38 +100,40 @@ public class SignalThresholdInfo implements Parcelable {
      * Range: -23 dB to 40 dB
      * Used RAN: NGRAN
      * Reference: 3GPP TS 38.215 section 5.1.*, 3GPP TS 38.133 section 10.1.16.1.
+     * @hide
      */
     public static final int SIGNAL_SSSINR = 8;
 
     /** @hide */
-    @IntDef(prefix = { "SIGNAL_" }, value = {
-        SIGNAL_RSSI,
-        SIGNAL_RSCP,
-        SIGNAL_RSRP,
-        SIGNAL_RSRQ,
-        SIGNAL_RSSNR,
-        SIGNAL_SSRSRP,
-        SIGNAL_SSRSRQ,
-        SIGNAL_SSSINR
+    @IntDef(prefix = {"SIGNAL_"}, value = {
+            SIGNAL_RSSI,
+            SIGNAL_RSCP,
+            SIGNAL_RSRP,
+            SIGNAL_RSRQ,
+            SIGNAL_RSSNR,
+            SIGNAL_SSRSRP,
+            SIGNAL_SSRSRQ,
+            SIGNAL_SSSINR
     })
     @Retention(RetentionPolicy.SOURCE)
-    public @interface SignalMeasurementType {}
+    public @interface SignalMeasurementType {
+    }
 
     @SignalMeasurementType
-    private int mSignalMeasurement;
+    private final int mSignalMeasurement;
 
     /**
      * A hysteresis time in milliseconds to prevent flapping.
      * A value of 0 disables hysteresis
      */
-    private int mHysteresisMs;
+    private final int mHysteresisMs;
 
     /**
      * An interval in dB defining the required magnitude change between reports.
      * hysteresisDb must be smaller than the smallest threshold delta.
      * An interval value of 0 disables hysteresis.
      */
-    private int mHysteresisDb;
+    private final int mHysteresisDb;
 
     /**
      * List of threshold values.
@@ -130,60 +141,275 @@ public class SignalThresholdInfo implements Parcelable {
      * The threshold values for which to apply criteria.
      * A vector size of 0 disables the use of thresholds for reporting.
      */
-    private int[] mThresholds = null;
+    private final int[] mThresholds;
 
     /**
      * {@code true} means modem must trigger the report based on the criteria;
      * {@code false} means modem must not trigger the report based on the criteria.
      */
-    private boolean mIsEnabled = true;
+    private final boolean mIsEnabled;
+
+    /**
+     * The radio access network type associated with the signal thresholds.
+     */
+    @AccessNetworkConstants.RadioAccessNetworkType
+    private final int mRan;
 
     /**
      * Indicates the hysteresisMs is disabled.
+     *
+     * @hide
      */
     public static final int HYSTERESIS_MS_DISABLED = 0;
 
     /**
+     * Default value when set by application, indicating the hysteresisMs is not used.
+     *
+     * @hide
+     */
+    public static final int HYSTERESIS_MS_UNUSED = -1;
+
+    /**
      * Indicates the hysteresisDb is disabled.
+     *
+     * @hide
      */
     public static final int HYSTERESIS_DB_DISABLED = 0;
 
     /**
+     * Default value when set by application, indicating the hysteresisDb is not used.
+     *
+     * @hide
+     */
+    public static final int HYSTERESIS_DB_UNUSED = -1;
+
+    /**
+     * Default value when set by application. The default false value indicates the isEnabled is not
+     * used, instead of asking system to disable the thresholds.
+     *
+     * @hide
+     */
+    public static final boolean IS_ENABLED_UNUSED = false;
+
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSSI}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSSI_MIN_VALUE = -113;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSSI}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSSI_MAX_VALUE = -51;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSCP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSCP_MIN_VALUE = -120;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSCP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSCP_MAX_VALUE = -25;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSRP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSRP_MIN_VALUE = -140;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSRP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSRP_MAX_VALUE = -44;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSRQ}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSRQ_MIN_VALUE = -34;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSRQ}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSRQ_MAX_VALUE = 3;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_RSSNR}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSSNR_MIN_VALUE = -20;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_RSSNR}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_RSSNR_MAX_VALUE = 30;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_SSRSRP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSRSRP_MIN_VALUE = -140;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_SSRSRP}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSRSRP_MAX_VALUE = -44;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_SSRSRQ}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSRSRQ_MIN_VALUE = -43;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_SSRSRQ}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSRSRQ_MAX_VALUE = 20;
+
+    /**
+     * Minimum valid value for {@link #SIGNAL_SSSINR}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSSINR_MIN_VALUE = -23;
+
+    /**
+     * Maximum valid value for {@link #SIGNAL_SSSINR}.
+     *
+     * @hide
+     */
+    public static final int SIGNAL_SSSINR_MAX_VALUE = 40;
+
+    /**
      * Constructor
      *
+     * @param ran               Radio Access Network type
      * @param signalMeasurement Signal Measurement Type
-     * @param hysteresisMs hysteresisMs
-     * @param hysteresisDb hysteresisDb
-     * @param thresholds threshold value
-     * @param isEnabled isEnabled
+     * @param hysteresisMs      hysteresisMs
+     * @param hysteresisDb      hysteresisDb
+     * @param thresholds        threshold value
+     * @param isEnabled         isEnabled
+     *
+     * @hide
      */
-    public SignalThresholdInfo(@SignalMeasurementType int signalMeasurement,
-            int hysteresisMs, int hysteresisDb, @NonNull int [] thresholds, boolean isEnabled) {
+    public SignalThresholdInfo(@AccessNetworkConstants.RadioAccessNetworkType int ran,
+            @SignalMeasurementType int signalMeasurement, int hysteresisMs, int hysteresisDb,
+            @NonNull int[] thresholds, boolean isEnabled) {
+        validateRanWithMeasurementType(ran, signalMeasurement);
+        validateThresholdRange(signalMeasurement, thresholds);
+
+        mRan = ran;
         mSignalMeasurement = signalMeasurement;
         mHysteresisMs = hysteresisMs < 0 ? HYSTERESIS_MS_DISABLED : hysteresisMs;
         mHysteresisDb = hysteresisDb < 0 ? HYSTERESIS_DB_DISABLED : hysteresisDb;
-        mThresholds = thresholds == null ? null : thresholds.clone();
+        mThresholds = thresholds == null ? new int[]{} : thresholds.clone();
+        Arrays.sort(mThresholds);
         mIsEnabled = isEnabled;
     }
 
+    /**
+     * Construct SignalThresholdInfo from radio access network type, signal measurement type and
+     * the corresponding thresholds.
+     *
+     * @param ran               radio access network type
+     * @param signalMeasurement signal measurement type defines in SignalMeasurementType
+     * @param thresholds        threshold values of the corresponding signal measurement type. Range
+     *                          and unit must reference specific SignalMeasurementType. Thresholds
+     *                          will sort into ascending numerical order.
+     *
+     * @throws IllegalArgumentException if the signal measurement type is invalid, the thresholds
+     *                                  array is null or empty, any value in the thresholds is out
+     *                                  of range, or the RAN is not allowed to set with the signal
+     *                                  measurement type.
+     * @hide
+     */
+    public SignalThresholdInfo(@AccessNetworkConstants.RadioAccessNetworkType int ran,
+            @SignalMeasurementType int signalMeasurement, @NonNull int[] thresholds) {
+        validateRanWithMeasurementType(ran, signalMeasurement);
+        // Applications are not allowed to set empty thresholds which is used by system to disable
+        // the use of thresholds for reporting.
+        validateThresholdsNotEmpty(thresholds);
+        validateThresholdRange(signalMeasurement, thresholds);
+
+        mRan = ran;
+        mSignalMeasurement = signalMeasurement;
+        mHysteresisMs = HYSTERESIS_MS_UNUSED;
+        mHysteresisDb = HYSTERESIS_DB_UNUSED;
+        mThresholds = thresholds.clone();
+        Arrays.sort(mThresholds);
+        mIsEnabled = IS_ENABLED_UNUSED;
+    }
+
+    /**
+     * Get the radio access network type.
+     *
+     * @return radio access network type.
+     *
+     * @hide
+     */
+    public @AccessNetworkConstants.RadioAccessNetworkType int getRadioAccessNetworkType() {
+        return mRan;
+    }
+
+    /**
+     * Get the signal measurement type.
+     *
+     * @return the SignalMeasurementType value.
+     *
+     * @hide
+     */
     public @SignalMeasurementType int getSignalMeasurement() {
         return mSignalMeasurement;
     }
 
+    /** @hide */
     public int getHysteresisMs() {
         return mHysteresisMs;
     }
 
+    /** @hide */
     public int getHysteresisDb() {
         return mHysteresisDb;
     }
 
+    /** @hide */
     public boolean isEnabled() {
         return mIsEnabled;
     }
 
-    public int[] getThresholds() {
-        return mThresholds == null ? null : mThresholds.clone();
+    /**
+     * Get the signal threshold values.
+     *
+     * @return array of integer of the signal thresholds.
+     *
+     * @hide
+     */
+    public @NonNull int[] getThresholds() {
+        return mThresholds.clone();
     }
 
     @Override
@@ -192,7 +418,8 @@ public class SignalThresholdInfo implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
+    public void writeToParcel(@NonNull Parcel out, int flags) {
+        out.writeInt(mRan);
         out.writeInt(mSignalMeasurement);
         out.writeInt(mHysteresisMs);
         out.writeInt(mHysteresisDb);
@@ -201,10 +428,14 @@ public class SignalThresholdInfo implements Parcelable {
     }
 
     private SignalThresholdInfo(Parcel in) {
+        mRan = in.readInt();
         mSignalMeasurement = in.readInt();
         mHysteresisMs = in.readInt();
         mHysteresisDb = in.readInt();
         mThresholds = in.createIntArray();
+        if (mThresholds != null) {
+            Arrays.sort(mThresholds);
+        }
         mIsEnabled = in.readBoolean();
     }
 
@@ -217,7 +448,8 @@ public class SignalThresholdInfo implements Parcelable {
         }
 
         SignalThresholdInfo other = (SignalThresholdInfo) o;
-        return mSignalMeasurement == other.mSignalMeasurement
+        return mRan == other.mRan
+                && mSignalMeasurement == other.mSignalMeasurement
                 && mHysteresisMs == other.mHysteresisMs
                 && mHysteresisDb == other.mHysteresisDb
                 && Arrays.equals(mThresholds, other.mThresholds)
@@ -227,7 +459,7 @@ public class SignalThresholdInfo implements Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(
-                mSignalMeasurement, mHysteresisMs, mHysteresisDb, mThresholds, mIsEnabled);
+                mRan, mSignalMeasurement, mHysteresisMs, mHysteresisDb, mThresholds, mIsEnabled);
     }
 
     public static final @NonNull Parcelable.Creator<SignalThresholdInfo> CREATOR =
@@ -246,11 +478,89 @@ public class SignalThresholdInfo implements Parcelable {
     @Override
     public String toString() {
         return new StringBuilder("SignalThresholdInfo{")
-            .append("mSignalMeasurement=").append(mSignalMeasurement)
-            .append("mHysteresisMs=").append(mSignalMeasurement)
-            .append("mHysteresisDb=").append(mHysteresisDb)
-            .append("mThresholds=").append(Arrays.toString(mThresholds))
-            .append("mIsEnabled=").append(mIsEnabled)
-            .append("}").toString();
+                .append("mRan=").append(mRan)
+                .append("mSignalMeasurement=").append(mSignalMeasurement)
+                .append("mHysteresisMs=").append(mSignalMeasurement)
+                .append("mHysteresisDb=").append(mHysteresisDb)
+                .append("mThresholds=").append(Arrays.toString(mThresholds))
+                .append("mIsEnabled=").append(mIsEnabled)
+                .append("}").toString();
+    }
+
+    /**
+     * Return true if signal measurement type is valid and the threshold value is in range.
+     */
+    private static boolean isValidThreshold(@SignalMeasurementType int type, int threshold) {
+        switch (type) {
+            case SIGNAL_RSSI:
+                return threshold >= SIGNAL_RSSI_MIN_VALUE && threshold <= SIGNAL_RSSI_MAX_VALUE;
+            case SIGNAL_RSCP:
+                return threshold >= SIGNAL_RSCP_MIN_VALUE && threshold <= SIGNAL_RSCP_MAX_VALUE;
+            case SIGNAL_RSRP:
+                return threshold >= SIGNAL_RSRP_MIN_VALUE && threshold <= SIGNAL_RSRP_MAX_VALUE;
+            case SIGNAL_RSRQ:
+                return threshold >= SIGNAL_RSRQ_MIN_VALUE && threshold <= SIGNAL_RSRQ_MAX_VALUE;
+            case SIGNAL_RSSNR:
+                return threshold >= SIGNAL_RSSNR_MIN_VALUE && threshold <= SIGNAL_RSSNR_MAX_VALUE;
+            case SIGNAL_SSRSRP:
+                return threshold >= SIGNAL_SSRSRP_MIN_VALUE && threshold <= SIGNAL_SSRSRP_MAX_VALUE;
+            case SIGNAL_SSRSRQ:
+                return threshold >= SIGNAL_SSRSRQ_MIN_VALUE && threshold <= SIGNAL_SSRSRQ_MAX_VALUE;
+            case SIGNAL_SSSINR:
+                return threshold >= SIGNAL_SSSINR_MIN_VALUE && threshold <= SIGNAL_SSSINR_MAX_VALUE;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Return true if the radio access type is allowed to set with the measurement type.
+     */
+    private static boolean isValidRanWithMeasurementType(
+            @AccessNetworkConstants.RadioAccessNetworkType int ran,
+            @SignalMeasurementType int type) {
+        switch (type) {
+            case SIGNAL_RSSI:
+                return ran == AccessNetworkConstants.AccessNetworkType.GERAN
+                        || ran == AccessNetworkConstants.AccessNetworkType.CDMA2000;
+            case SIGNAL_RSCP:
+                return ran == AccessNetworkConstants.AccessNetworkType.UTRAN;
+            case SIGNAL_RSRP:
+            case SIGNAL_RSRQ:
+            case SIGNAL_RSSNR:
+                return ran == AccessNetworkConstants.AccessNetworkType.EUTRAN;
+            case SIGNAL_SSRSRP:
+            case SIGNAL_SSRSRQ:
+            case SIGNAL_SSSINR:
+                return ran == AccessNetworkConstants.AccessNetworkType.NGRAN;
+            default:
+                return false;
+        }
+    }
+
+    private void validateRanWithMeasurementType(
+            @AccessNetworkConstants.RadioAccessNetworkType int ran,
+            @SignalMeasurementType int signalMeasurement) {
+        if (!isValidRanWithMeasurementType(ran, signalMeasurement)) {
+            throw new IllegalArgumentException("invalid RAN with signal measurement type");
+        }
+    }
+
+    private void validateThresholdRange(@SignalMeasurementType int signalMeasurement,
+            int[] thresholds) {
+        if (thresholds != null) {
+            for (int threshold : thresholds) {
+                if (!isValidThreshold(signalMeasurement, threshold)) {
+                    throw new IllegalArgumentException(
+                            "invalid signal measurement type or thresholds");
+                }
+            }
+        }
+    }
+
+    private void validateThresholdsNotEmpty(int[] thresholds) {
+        if (ArrayUtils.isEmpty(thresholds)) {
+            throw new IllegalArgumentException("thresholds array is null or empty");
+        }
     }
 }
