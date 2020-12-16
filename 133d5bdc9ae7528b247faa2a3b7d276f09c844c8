@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f70d8558_c112710e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-16T09:56:47Z",
+      "side": 1,
+      "message": "There is a merge conflict in BatteryStatsService.java, you may want to fix it.",
+      "revId": "133d5bdc9ae7528b247faa2a3b7d276f09c844c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e0a6c94_73be49b9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-16T09:56:47Z",
+      "side": 1,
+      "message": "Well, I\u0027m really confused by the comment and the condition.\n- I don\u0027t get this comment. (I know it\u0027s not written by you. 😊)\n  IIUC, we only add idle timer when there is a active network. If so, why should we report network active when mActiveIdleTimers is empty? \n- mNetworkActive will be true when putting something into mActiveIdleTimers. (Refer to line#2451)\n  So this condition looks like the same as \"if (!mActiveIdleTimers.isEmpty() || mActiveIdleTimers.isEmpty())\".\n  If so, this condition is always true and we can remove it, right?\n  Am I right? Or do I misunderstand something?",
+      "range": {
+        "startLine": 1816,
+        "startChar": 16,
+        "endLine": 1818,
+        "endChar": 66
+      },
+      "revId": "133d5bdc9ae7528b247faa2a3b7d276f09c844c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fd9e37e_3802dce8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2387,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-16T09:56:47Z",
+      "side": 1,
+      "message": "If what I said is true at line#1818, then it\u0027s equivalent \"return true\". (i.e. The method is always return true)",
+      "range": {
+        "startLine": 2383,
+        "startChar": 8,
+        "endLine": 2387,
+        "endChar": 9
+      },
+      "revId": "133d5bdc9ae7528b247faa2a3b7d276f09c844c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ee67828_8d5ea020",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6921,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-16T09:56:47Z",
+      "side": 1,
+      "message": "Since wifi is reconnected again, do you want to verify idletimerAddInterface for wifi again?\nAnd idletimerRemoveInterface for mobile.",
+      "range": {
+        "startLine": 6921,
+        "startChar": 8,
+        "endLine": 6921,
+        "endChar": 40
+      },
+      "revId": "133d5bdc9ae7528b247faa2a3b7d276f09c844c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
