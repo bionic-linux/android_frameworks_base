@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2ce95de_afa9116a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1604402
+      },
+      "writtenOn": "2020-12-16T19:50:52Z",
+      "side": 1,
+      "message": "Given scale of the change, consider going through go/android-lsc-process",
+      "revId": "44bf7b205207a8425dafbb4d450c574fcc612f8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
