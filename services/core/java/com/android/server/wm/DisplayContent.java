@@ -1932,6 +1932,13 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
                 ? Configuration.SCREENLAYOUT_ROUND_YES
                 : Configuration.SCREENLAYOUT_ROUND_NO);
 
+<<<<<<< HEAD   (75d475 Merge "[automerger skipped] Merge "Add minOccurs="0"" into a)
+=======
+        config.compatScreenWidthDp = (int)(config.screenWidthDp / mCompatibleScreenScale);
+        config.compatScreenHeightDp = (int)(config.screenHeightDp / mCompatibleScreenScale);
+        config.compatSmallestScreenWidthDp = computeCompatSmallestWidth(rotated, config.uiMode, dw,
+                dh);
+>>>>>>> BRANCH (a13af8 Merge "Apply proper displayCutout rotation in density 480 dp)
         config.densityDpi = displayInfo.logicalDensityDpi;
 
         config.colorMode =
