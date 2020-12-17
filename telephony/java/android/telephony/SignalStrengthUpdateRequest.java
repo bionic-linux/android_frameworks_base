@@ -17,6 +17,8 @@
 package android.telephony;
 
 import android.annotation.NonNull;
+import android.os.Binder;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -71,6 +73,11 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
      */
     private final boolean mIsSystemThresholdReportingRequestedWhileIdle;
 
+    /**
+     * A IBinder object as a token for server side to check if the request client is still living.
+     */
+    private final IBinder mLiveToken;
+
     private SignalStrengthUpdateRequest(
             @NonNull List<SignalThresholdInfo> signalThresholdInfos,
             boolean isReportingRequestedWhileIdle,
@@ -81,6 +88,7 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
         mIsReportingRequestedWhileIdle = isReportingRequestedWhileIdle;
         mIsSystemThresholdReportingRequestedWhileIdle =
                 isSystemThresholdReportingRequestedWhileIdle;
+        mLiveToken = new Binder();
     }
 
     /**
@@ -165,6 +173,7 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
         mSignalThresholdInfos = in.createTypedArrayList(SignalThresholdInfo.CREATOR);
         mIsReportingRequestedWhileIdle = in.readBoolean();
         mIsSystemThresholdReportingRequestedWhileIdle = in.readBoolean();
+        mLiveToken = in.readStrongBinder();
     }
 
     /**
@@ -195,6 +204,15 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
         return mIsSystemThresholdReportingRequestedWhileIdle;
     }
 
+    /*
+     * @return the live token of the request
+     *
+     * @hide
+     */
+    public @NonNull IBinder getLiveToken() {
+        return mLiveToken;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -205,6 +223,7 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
         dest.writeTypedList(mSignalThresholdInfos);
         dest.writeBoolean(mIsReportingRequestedWhileIdle);
         dest.writeBoolean(mIsSystemThresholdReportingRequestedWhileIdle);
+        dest.writeStrongBinder(mLiveToken);
     }
 
     @Override
@@ -216,10 +235,10 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
         }
 
         SignalStrengthUpdateRequest request = (SignalStrengthUpdateRequest) other;
-        return request.mSignalThresholdInfos.equals(mSignalThresholdInfos)
-                && request.mIsReportingRequestedWhileIdle == mIsReportingRequestedWhileIdle
-                && request.mIsSystemThresholdReportingRequestedWhileIdle
-                == mIsSystemThresholdReportingRequestedWhileIdle;
+        return mSignalThresholdInfos.equals(request.mSignalThresholdInfos)
+                && mIsReportingRequestedWhileIdle == request.mIsReportingRequestedWhileIdle
+                && mIsSystemThresholdReportingRequestedWhileIdle
+                    == request.mIsSystemThresholdReportingRequestedWhileIdle;
     }
 
     @Override
@@ -250,6 +269,8 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
                 .append(mIsReportingRequestedWhileIdle)
                 .append(" mIsSystemThresholdReportingRequestedWhileIdle=")
                 .append(mIsSystemThresholdReportingRequestedWhileIdle)
+                .append(" mLiveToken")
+                .append(mLiveToken)
                 .append("}").toString();
     }
 
