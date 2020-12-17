@@ -49,6 +49,7 @@ import android.telephony.RadioAccessFamily;
 import android.telephony.RadioAccessSpecifier;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+import android.telephony.SignalStrengthUpdateRequest;
 import android.telephony.TelephonyHistogram;
 import android.telephony.VisualVoicemailSmsFilterSettings;
 import android.telephony.emergency.EmergencyNumber;
@@ -2367,4 +2368,16 @@ interface ITelephony {
      *  their mobile plan.
      */
     String getMobileProvisioningUrl();
+
+    /**
+     * Add a SignalStrengthUpdateRequest to receive notification when Signal Strength breach the
+     * specified thresholds.
+     */
+    void addSignalStrengthUpdateRequest(IBinder token, int subId,
+            in SignalStrengthUpdateRequest request);
+
+    /**
+     * Remove a SignalStrengthUpdateRequest from system.
+     */
+    void removeSignalStrengthUpdateRequest(IBinder token, int subId);
 }
