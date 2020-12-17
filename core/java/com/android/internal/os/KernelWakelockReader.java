@@ -21,8 +21,8 @@ import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
 import android.os.StrictMode;
 import android.os.SystemClock;
-import android.system.suspend.internal.ISuspendControlServiceInternal;
-import android.system.suspend.internal.WakeLockInfo;
+import android.system.suspend.ISuspendControlService;
+import android.system.suspend.WakeLockInfo;
 import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -66,7 +66,7 @@ public class KernelWakelockReader {
 
     private final String[] mProcWakelocksName = new String[3];
     private final long[] mProcWakelocksData = new long[3];
-    private ISuspendControlServiceInternal mSuspendControlService = null;
+    private ISuspendControlService mSuspendControlService = null;
     private byte[] mKernelWakelockBuffer = new byte[32 * 1024];
 
     /**
@@ -155,12 +155,11 @@ public class KernelWakelockReader {
     /**
      * Attempt to wait for suspend_control service if not immediately available.
      */
-    private ISuspendControlServiceInternal waitForSuspendControlService()
-            throws ServiceNotFoundException {
-        final String name = "suspend_control_internal";
+    private ISuspendControlService waitForSuspendControlService() throws ServiceNotFoundException {
+        final String name = "suspend_control";
         final int numRetries = 5;
         for (int i = 0; i < numRetries; i++) {
-            mSuspendControlService = ISuspendControlServiceInternal.Stub.asInterface(
+            mSuspendControlService = ISuspendControlService.Stub.asInterface(
                                         ServiceManager.getService(name));
             if (mSuspendControlService != null) {
                 return mSuspendControlService;
