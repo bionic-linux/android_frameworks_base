@@ -21,6 +21,8 @@ import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemService;
 import android.content.Context;
+import android.net.LinkProperties;
+import android.net.NetworkCapabilities;
 import android.os.ParcelUuid;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
@@ -62,7 +64,7 @@ import java.util.concurrent.Executor;
  * @hide
  */
 @SystemService(Context.VCN_MANAGEMENT_SERVICE)
-public final class VcnManager {
+public class VcnManager {
     @NonNull private static final String TAG = VcnManager.class.getSimpleName();
 
     @VisibleForTesting
@@ -216,6 +218,33 @@ public final class VcnManager {
 
         try {
             mService.removeVcnUnderlyingNetworkPolicyListener(binder);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get the {@link VcnUnderlyingNetworkPolicy} that matches the specified {@link
+     * NetworkCapabilities} and {@link LinkProperties}.
+     *
+     * @param networkCapabilities the NetworkCapabilities to be used in determining the Network
+     *     policy for this Network.
+     * @param linkProperties the LinkProperties to be used in determining the Network policy for
+     *     this Network.
+     * @throws SecurityException if the caller does not have permission NETWORK_FACTORY
+     * @return the VcnUnderlyingNetworkPolicy to be used for this Network.
+     * @hide
+     */
+    @NonNull
+    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+    public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
+            @NonNull NetworkCapabilities networkCapabilities,
+            @NonNull LinkProperties linkProperties) {
+        requireNonNull(networkCapabilities, "networkCapabilities must not be null");
+        requireNonNull(linkProperties, "linkProperties must not be null");
+
+        try {
+            return mService.getUnderlyingNetworkPolicy(networkCapabilities, linkProperties);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
