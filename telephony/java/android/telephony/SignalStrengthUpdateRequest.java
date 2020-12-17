@@ -17,6 +17,8 @@
 package android.telephony;
 
 import android.annotation.NonNull;
+import android.os.Binder;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -66,6 +68,13 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
      */
     private final boolean mHonorSystemThresholdsWhenScreenOff;
 
+    /**
+     * A IBinder object as a token for server side to check if the request client is still living.
+     * Note that this token should NOT work as uniqueness of the request. In other word, this token
+     * does not count in object equals check.
+     */
+    private IBinder mLiveToken;
+
     /** @hide */
     public SignalStrengthUpdateRequest(
             @NonNull Collection<SignalThresholdInfo> signalThresholdInfos,
@@ -79,6 +88,7 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
         mSignalThresholdInfos.sort(
                 Comparator.comparingInt(SignalThresholdInfo::getRadioAccessNetworkType));
         mHonorSystemThresholdsWhenScreenOff = honorSystemThresholdsWhenScreenOff;
+        mLiveToken = new Binder();
     }
 
     /**
@@ -177,6 +187,16 @@ public final class SignalStrengthUpdateRequest implements Parcelable {
                 .append(mHonorSystemThresholdsWhenScreenOff)
                 .append("}").toString();
     }
+
+    /**
+     * @return the live token of the request.
+     *
+     * @hide
+     */
+    public IBinder getLiveToken() {
+        return mLiveToken;
+    }
+
 
     /**
      * Return false when one of the conditions met:
