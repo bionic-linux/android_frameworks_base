@@ -2258,7 +2258,6 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
         }
     }
 
-
     @Override
     public void dump(FileDescriptor fd, PrintWriter writer, String[] args) {
         final IndentingPrintWriter pw = new IndentingPrintWriter(writer, "  ");
