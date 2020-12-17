@@ -33,6 +33,52 @@
       "message": "Conditionally using keystore2 namespaces looks good. It will fail once when upgrading from keystore to keystore2 as discussed.",
       "revId": "34715f006c62a94aadd5ac9a7e2b33f841b90333",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "227b8f62_7baaa19d",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowKeyStoreManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-12-17T22:19:56Z",
+      "side": 1,
+      "message": "we normally name this getKeyStoreEncryptionKeyLocked",
+      "range": {
+        "startLine": 62,
+        "startChar": 46,
+        "endLine": 62,
+        "endChar": 55
+      },
+      "revId": "34715f006c62a94aadd5ac9a7e2b33f841b90333",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d346faed_b707c8aa",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2020-12-17T22:19:56Z",
+      "side": 1,
+      "message": "Why is the retrieval of K_s depending on the value of k_k? Your javadoc says  rebootEscrowData \u003d E(K_k, E(K_s, SP)), so in my understanding K_s and K_k are completely independent, and you only need both when reconstructing rebootEscrowData",
+      "range": {
+        "startLine": 249,
+        "startChar": 78,
+        "endLine": 249,
+        "endChar": 80
+      },
+      "revId": "34715f006c62a94aadd5ac9a7e2b33f841b90333",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
