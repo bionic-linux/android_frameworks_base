@@ -152,6 +152,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ea128cab_ce50d9a9",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-17T18:08:57Z",
+      "side": 1,
+      "message": "Spoke to Jean... \nAdd comment:\n\"This is a satellite class of ConnectiivtyService.\nNOTE: Never expose NetworkAgent.\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c461f9c_5d76399c",
         "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
         "patchSetId": 38

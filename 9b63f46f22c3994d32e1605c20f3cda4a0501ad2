@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ce7b37e_14613487",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-17T18:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ffc16a2_27531ecc",
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7d57e6d_ae3a7825",
@@ -262,6 +280,30 @@
       "side": 1,
       "message": "I think this is fine. Maybe you can add a // comment immediately above the method and below the javadoc to clarify our reasoning. Suggested wording :\n\n  // This API does not, in itself, require any permission if called with a network\n  // that is not restricted. However, the underlying implementation currently only\n  // supports the IMS network, which is always restricted. That means non-preinstalled\n  // callers can\u0027t possibly find this API useful, because they\u0027d never be called back\n  // on networks that they would have access to.\n\nWith this, I think what you have is fine. Maybe the pod that reviews the API will think it needs to be guarded with USE_RESTRICTED_NETWORKS in S or that it should be public, but if I was in the pod I\u0027d defend the current shape.",
       "parentUuid": "e813df52_f15a84ac",
+      "range": {
+        "startLine": 4848,
+        "startChar": 16,
+        "endLine": 4848,
+        "endChar": 35
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "994ae2bf_3cc49172",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4848,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-17T18:08:57Z",
+      "side": 1,
+      "message": "Jean- I think you hit resolve on this by accident, either way, reopening.",
+      "parentUuid": "91e0b0bf_c73a1241",
       "range": {
         "startLine": 4848,
         "startChar": 16,
