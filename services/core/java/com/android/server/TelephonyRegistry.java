@@ -70,6 +70,7 @@ import android.telephony.PreciseDisconnectCause;
 import android.telephony.Rlog;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+import android.telephony.SignalStrengthUpdateRequest;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyDisplayInfo;
@@ -2256,6 +2257,18 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             }
             handleRemoveListLocked();
         }
+    }
+
+    @Override
+    public void addSignalStrengthUpdateRequest(String pkg, SignalStrengthUpdateRequest request,
+            IBinder token) {
+        // TODO
+    }
+
+    @Override
+    public void removeSignalStrengthUpdateRequest(SignalStrengthUpdateRequest request,
+            IBinder token) {
+        // TODO
     }
 
 

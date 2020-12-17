@@ -19,6 +19,7 @@ package com.android.internal.telephony;
 import android.content.Intent;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
+import android.os.IBinder;
 import android.telephony.BarringInfo;
 import android.telephony.CallQuality;
 import android.telephony.CellIdentity;
@@ -30,6 +31,7 @@ import android.telephony.PhysicalChannelConfig;
 import android.telephony.PreciseDataConnectionState;
 import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
+import android.telephony.SignalStrengthUpdateRequest;
 import android.telephony.emergency.EmergencyNumber;
 import com.android.internal.telephony.IPhoneStateListener;
 import com.android.internal.telephony.IOnSubscriptionsChangedListener;
@@ -99,4 +101,7 @@ interface ITelephonyRegistry {
     void notifyRegistrationFailed(int slotIndex, int subId, in CellIdentity cellIdentity,
             String chosenPlmn, int domain, int causeCode, int additionalCauseCode);
     void notifyBarringInfoChanged(int slotIndex, int subId, in BarringInfo barringInfo);
+    void addSignalStrengthUpdateRequest(String pkg, in SignalStrengthUpdateRequest request,
+            IBinder token);
+    void removeSignalStrengthUpdateRequest(in SignalStrengthUpdateRequest request, IBinder token);
 }

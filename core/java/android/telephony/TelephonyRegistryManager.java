@@ -24,6 +24,7 @@ import android.compat.annotation.EnabledAfter;
 import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
+import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.telephony.Annotation.CallState;
@@ -77,6 +78,8 @@ public class TelephonyRegistryManager {
             IOnSubscriptionsChangedListener> mOpportunisticSubscriptionChangedListenerMap
             = new HashMap<>();
 
+    private final Map<SignalStrengthUpdateRequest, IBinder> mSignalStrengthsRequestMap =
+            new HashMap<>();
 
     /** @hide **/
     public TelephonyRegistryManager(@NonNull Context context) {
@@ -765,4 +768,41 @@ public class TelephonyRegistryManager {
         }
     }
 
+    /**
+     * Add signal strengths update request.
+     *
+     * @param request
+     */
+    public void addSignalStrengthUpdateRequest(SignalStrengthUpdateRequest request) {
+        if (mSignalStrengthsRequestMap.get(request) != null) {
+            return;
+        }
+
+        try {
+            IBinder token = new Binder();
+            sRegistry.addSignalStrengthUpdateRequest(mContext.getOpPackageName(), request, token);
+            mSignalStrengthsRequestMap.put(request, token);
+        } catch (RemoteException ex) {
+            // system server crash
+        }
+    }
+
+    /**
+     * Remove the signal strength update request.
+     *
+     * @param request
+     */
+    public void removeSignalStrengthUpdateRequest(SignalStrengthUpdateRequest request) {
+        IBinder token = mSignalStrengthsRequestMap.get(request);
+        if (token == null) {
+            return;
+        }
+
+        try {
+            sRegistry.removeSignalStrengthUpdateRequest(request, token);
+            mSignalStrengthsRequestMap.remove(request);
+        } catch (RemoteException ex) {
+            // system server crash
+        }
+    }
 }
