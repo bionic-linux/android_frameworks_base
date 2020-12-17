@@ -14454,4 +14454,41 @@ public class TelephonyManager {
             e.execute(() -> callback.onAuthenticationFailure(GBA_FAILURE_REASON_FEATURE_NOT_READY));
         }
     }
+
+    /**
+     * Add a {@link SignalStrengthsUpdateRequest} to be notified through
+     * {@link PhoneStateListener#onSignalStrengthChanged} when signal strengths breach the specified
+     * thresholds.
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
+     * or that the calling app has carrier privileges (see
+     * {@link TelephonyManager#hasCarrierPrivileges}).
+     *
+     * @param request The SignalStrengthsUpdateRequest to be added into the System.
+     */
+    public void addSignalStrengthsUpdateRequest(@NonNull SignalStrengthsUpdateRequest request) {
+        TelephonyRegistryManager telephonyRegistry =
+                (TelephonyRegistryManager)
+                        mContext.getSystemService(Context.TELEPHONY_REGISTRY_SERVICE);
+        if (telephonyRegistry != null) {
+            telephonyRegistry.addSignalStrengthsUpdateRequest(request);
+        }
+    }
+
+    /**
+     * Remove a {@link SignalStrengthsUpdateRequest}.
+     *
+     * <p>If the given request was not added before, this operation is a no-op.
+     *
+     * @param request The SignalStrengthsUpdateRequest to be removed from the System.
+     */
+    public void removeSignalStrengthsUpdateRequest(@NonNull SignalStrengthsUpdateRequest request) {
+        TelephonyRegistryManager telephonyRegistry =
+                (TelephonyRegistryManager)
+                        mContext.getSystemService(Context.TELEPHONY_REGISTRY_SERVICE);
+        if (telephonyRegistry != null) {
+            telephonyRegistry.removeSignalStrengthsUpdateRequest(request);
+        }
+    }
 }
