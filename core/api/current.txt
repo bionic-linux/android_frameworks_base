@@ -35859,6 +35859,14 @@ package android.se.omapi {
     method @NonNull public String getVersion();
     method public boolean isConnected();
     method public void shutdown();
+    field public static final String ACTION_SECURE_ELEMENT_STATE_CHANGED = "android.se.omapi.action.SECURE_ELEMENT_STATE_CHANGED";
+    field public static final String EXTRA_READER_NAME = "android.se.omapi.extra.READER_NAME";
+    field public static final String EXTRA_READER_STATE = "android.se.omapi.extra.READER_STATE";
+    field public static final String EXTRA_READER_STATE_CHANGED_REASON = "android.se.omapi.extra.READER_STATE_CHANGED_REASON";
+    field public static final String STATE_CHANGED_REASON_INITIALIZED = "Initialized";
+    field public static final String STATE_CHANGED_REASON_INITIALIZED_FAILED = "Initialized failed";
+    field public static final String STATE_CHANGED_REASON_RESET = "Reset";
+    field public static final String STATE_CHANGED_REASON_UNKNOWN = "Unknown";
   }
 
   public static interface SEService.OnConnectedListener {
