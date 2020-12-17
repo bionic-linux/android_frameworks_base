@@ -14512,4 +14512,69 @@ public class TelephonyManager {
             e.execute(() -> callback.onAuthenticationFailure(GBA_FAILURE_REASON_FEATURE_NOT_READY));
         }
     }
+
+    /**
+     * Add a {@link SignalStrengthUpdateRequest} to be notified through
+     * {@link PhoneStateListener#onSignalStrengthChanged} when signal strengths breach the specified
+     * thresholds in the request.
+     *
+     * To receive the notification, you still need to call
+     * {@link TelephonyManager#listen(PhoneStateListener, int)} with
+     * {@link PhoneStateListener#LISTEN_SIGNAL_STRENGTHS}.
+     *
+     * To stop receiving the notification with the specified thresholds, pass the same
+     * {@link SignalStrengthUpdateRequest} to
+     * {@link #removeSignalStrengthUpdateRequest(SignalStrengthUpdateRequest)}.
+     *
+     * If this TelephonyManager object has been created with {@link #createForSubscriptionId},
+     * applies to the given subId. Otherwise, applies to
+     * {@link SubscriptionManager#getDefaultSubscriptionId()}. To listen events for multiple subIds,
+     * pass a separate listener object to each TelephonyManager object created with
+     * {@link #createForSubscriptionId}.
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
+     * or that the calling app has carrier privileges (see
+     * {@link TelephonyManager#hasCarrierPrivileges}).
+     *
+     * Note that the thresholds in the request may be adjusted when passing to system. The caller
+     * should not expect to be notified with the original precise thresholds.
+     *
+     * @param request The SignalStrengthUpdateRequest to be added into the System.
+     */
+    public void addSignalStrengthUpdateRequest(@NonNull SignalStrengthUpdateRequest request) {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                service.addSignalStrengthUpdateRequest(getSubId(), mContext.getOpPackageName(),
+                        request);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#addSignalStrengthUpdateRequest", e);
+        }
+    }
+
+    /**
+     * Remove a {@link SignalStrengthUpdateRequest}.
+     *
+     * <p>Requires Permission:
+     * {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
+     * or that the calling app has carrier privileges (see
+     * {@link TelephonyManager#hasCarrierPrivileges}).
+     *
+     * <p>If the given request was not added before, this operation is a no-op.
+     *
+     * @param request The SignalStrengthUpdateRequest to be removed from the System.
+     */
+    public void removeSignalStrengthUpdateRequest(@NonNull SignalStrengthUpdateRequest request) {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                service.removeSignalStrengthUpdateRequest(getSubId(), mContext.getOpPackageName(),
+                        request);
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "Error calling ITelephony#removeSignalStrengthUpdateRequest", e);
+        }
+    }
 }
