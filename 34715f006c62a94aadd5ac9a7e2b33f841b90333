@@ -79,6 +79,30 @@
       },
       "revId": "34715f006c62a94aadd5ac9a7e2b33f841b90333",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcf0cb73_dcd85af5",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2020-12-17T22:31:27Z",
+      "side": 1,
+      "message": "yeah, later we will also have E(K_k, server_blob(expiry_time, K_s)) based on go/server-based-ror; and the encrypted server_blob will save on disk. I plan to do it in the next cl. \n\nI cannot encrypt the K_s in the HAL based solution, because of the 32 bytes hardware limit of the HAL.",
+      "parentUuid": "d346faed_b707c8aa",
+      "range": {
+        "startLine": 249,
+        "startChar": 78,
+        "endLine": 249,
+        "endChar": 80
+      },
+      "revId": "34715f006c62a94aadd5ac9a7e2b33f841b90333",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
