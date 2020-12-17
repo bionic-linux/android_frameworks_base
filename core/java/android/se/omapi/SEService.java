@@ -23,6 +23,7 @@
 package android.se.omapi;
 
 import android.annotation.NonNull;
+import android.annotation.StringDef;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,8 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.concurrent.Executor;
 
@@ -69,6 +72,59 @@ public final class SEService {
          */
         void onConnected();
     }
+
+    /**
+     * Broadcast Action: Intent to notify if the secure element state is changed.
+     */
+    public static final String ACTION_SECURE_ELEMENT_STATE_CHANGED =
+            "android.se.omapi.action.SECURE_ELEMENT_STATE_CHANGED";
+
+    /**
+     * Mandatory extra containing the reader name of the state changed secure element.
+     */
+    public static final String EXTRA_READER_NAME = "android.se.omapi.extra.READER_NAME";
+
+    /**
+     * Mandatory extra containing the connected state of the state changed secure element.
+     */
+    public static final String EXTRA_READER_STATE = "android.se.omapi.extra.READER_STATE";
+
+    /**
+     * Optional extra containing the state changed reason of the secure element.
+     */
+    public static final String EXTRA_READER_STATE_CHANGED_REASON =
+            "android.se.omapi.extra.READER_STATE_CHANGED_REASON";
+
+    /**
+      * @hide
+      */
+    @Retention(RetentionPolicy.SOURCE)
+    @StringDef(value = {
+            STATE_CHANGED_REASON_INITIALIZED,
+            STATE_CHANGED_REASON_INITIALIZED_FAILED,
+            STATE_CHANGED_REASON_RESET,
+            STATE_CHANGED_REASON_UNKNOWN})
+    public @interface StateChangedReason {}
+
+    /**
+      * Indicates that the state change was due to the secure element is initialized successfuly
+      */
+    public static final String STATE_CHANGED_REASON_INITIALIZED = "Initialized";
+
+    /**
+      * Indicates that the state change was due to the secure element is initialized unsuccessfuly.
+      */
+    public static final String STATE_CHANGED_REASON_INITIALIZED_FAILED = "Initialized failed";
+
+    /**
+      * Indicates that the state change was due to the secure element is reset.
+      */
+    public static final String STATE_CHANGED_REASON_RESET = "Reset";
+
+    /**
+      * Indicates that the state change was due to some unknown reason
+      */
+    public static final String STATE_CHANGED_REASON_UNKNOWN = "Unknown";
 
     /**
      * Listener object that allows the notification of the caller if this
