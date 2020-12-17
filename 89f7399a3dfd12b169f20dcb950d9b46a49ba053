@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18a66215_6088b46a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 38
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-17T13:51:13Z",
+      "side": 1,
+      "message": "The improvement since the last patch is incredible. This is really close now.\n\nI wrote most comments on patchset 34 because this is what I started reviewing, but I did look at all the diff with patch 38 and adjusted what needed to be adjusted, so hopefully all comments, including those on patchset 34, are current.\n\nThanks so much for the hard work !",
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffd6d819_bf06bd85",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-17T13:51:13Z",
+      "side": 1,
+      "message": "To me \"stop\" sounds negative ; \"don\u0027t stop receive\" means we will receive. Thus I would favor reversing this and make it mReceivingMessages or something. Or the volatile callback you had in patchset 34 works too.",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3c832f4_e7d5f512",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-17T13:51:13Z",
+      "side": 1,
+      "message": "@param executor, with all the threading implications.\n\nI think you may want to say that callers must pass a single-threaded executor, otherwise order and even consistency of callbacks cannot be guaranteed. See the comment at the bottom of this file.",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 7
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e974e46d_988732d8",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-17T13:51:13Z",
+      "side": 1,
+      "message": "This strongly depends on all calls of this method and canReceiveMessages being called only on the executor, even if it is strictly monothread. But these two methods are public.\n\nIf you can just make the methods private, then document that this must only be called on the executor for correctness. If they are called from outside... then you need synchronization.\n\nAlso... I don\u0027t know if the current doc about the multithread is enough. Using multithread executors with this code will mean visibility problems, which means you may not only see messages after this is called, but you may see an arbitrary set of these messages (because one thread may observe the write and another may not, so you may see *some* messages). Maybe you want to strengthen the language around the executor to say that callers must pass a single-threaded executor if they want any kind of consistency at all.",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 55
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c88dc19_b10ede29",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-17T13:51:13Z",
+      "side": 1,
+      "message": "@hide – this made it to system API in this patch.\n\nAlso... are you sure this is better than mocking ? Usually less changes to production code are better.",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 7
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6a88fca_110f108d",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-17T13:51:13Z",
+      "side": 1,
+      "message": "Nit : maybe you want to read this in a local first to give it a name and clarify, just in case, that it has to be called before readSocketAddress.",
+      "range": {
+        "startLine": 120,
+        "startChar": 52,
+        "endLine": 120,
+        "endChar": 64
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "314441e0_cd6bbecd",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-17T13:51:13Z",
+      "side": 1,
+      "message": "Extra blank line",
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c461f9c_5d76399c",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-17T13:51:13Z",
+      "side": 1,
+      "message": "Maybe \"Counter\" is not the clearest word here because this member assigns IDs and doesn\u0027t really count stuff ; it\u0027s especially confusing in places where it\u0027s used near mNetworkRequestCounter, which uses the word in a completely different sense.\n\nHow about simply mNextAgentCallbackId ?",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
