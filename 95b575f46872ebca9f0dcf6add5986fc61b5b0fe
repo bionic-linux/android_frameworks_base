@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9407db7c_a766aa8d",
+        "filename": "wifi/tests/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-17T01:54:39Z",
+      "side": 1,
+      "message": "Also add the jarjar rule for com.android.net.module.util there (it only has com.android.modules.utils)",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 40
+      },
+      "revId": "95b575f46872ebca9f0dcf6add5986fc61b5b0fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
