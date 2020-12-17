@@ -71,6 +71,22 @@ public final class SEService {
     }
 
     /**
+     * Broadcast Action: Intent to notify if the secure element state is changed.
+     */
+    public static final String ACTION_SECURE_ELEMENT_STATE_CHANGED =
+            "android.se.omapi.action.SECURE_ELEMENT_STATE_CHANGED";
+
+    /**
+     * Mandatory extra containing the reader name of the state changed secure element.
+     */
+    public static final String EXTRA_READER_NAME = "android.se.omapi.extra.READER_NAME";
+
+    /**
+     * Mandatory extra containing the connected state of the state changed secure element.
+     */
+    public static final String EXTRA_READER_STATE = "android.se.omapi.extra.READER_STATE";
+
+    /**
      * Listener object that allows the notification of the caller if this
      * SEService could be bound to the backend.
      */
