@@ -31,13 +31,9 @@
     <string name="keyguard_plugged_in_charging_fast" msgid="4386594091107340426">"<xliff:g id="PERCENTAGE">%s</xliff:g> • Tezkor quvvat olmoqda"</string>
     <string name="keyguard_plugged_in_charging_slowly" msgid="217655355424210">"<xliff:g id="PERCENTAGE">%s</xliff:g> • Sekin quvvat olmoqda"</string>
     <string name="keyguard_plugged_in_charging_limited" msgid="1709413803451065875">"<xliff:g id="PERCENTAGE">%s</xliff:g> • Quvvatlash batareyani himoyalash uchun pauza qilindi"</string>
-    <string name="keyguard_instructions_when_pattern_disabled" msgid="8448804180089936954">"Qulfdan chiqarish uchun Menyu tugmasini bosing."</string>
     <string name="keyguard_network_locked_message" msgid="407096292844868608">"Tarmoq qulflangan"</string>
     <string name="keyguard_missing_sim_message_short" msgid="704159478161444907">"SIM karta solinmagan"</string>
-    <string name="keyguard_missing_sim_instructions" msgid="1162120926141335918">"Telefonga SIM karta soling."</string>
-    <string name="keyguard_missing_sim_instructions_long" msgid="2712623293749378570">"SIM karta solinmagan yoki u yaroqsiz. SIM karta soling."</string>
     <string name="keyguard_permanent_disabled_sim_message_short" msgid="5842745213110966962">"Foydalanib bo‘lmaydigan SIM karta."</string>
-    <string name="keyguard_permanent_disabled_sim_instructions" msgid="2490584154727897806">"SIM kartangiz butunlay bloklab qo‘yilgan.\n Yangi SIM karta olish uchun aloqa operatoringiz bilan bog‘laning."</string>
     <string name="keyguard_sim_locked_message" msgid="4343544458476911044">"SIM karta qulflangan."</string>
     <string name="keyguard_sim_puk_locked_message" msgid="6253830777745450550">"SIM karta PUK kod bilan qulflangan."</string>
     <string name="keyguard_sim_unlock_progress_dialog_message" msgid="2394023844117630429">"SIM karta qulfi ochilmoqda…"</string>
