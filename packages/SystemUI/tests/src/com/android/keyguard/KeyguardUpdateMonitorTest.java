@@ -92,7 +92,6 @@ import com.android.dx.mockito.inline.extended.ExtendedMockito;
 import com.android.internal.jank.InteractionJankMonitor;
 import com.android.internal.logging.InstanceId;
 import com.android.internal.logging.UiEventLogger;
-import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.util.LatencyTracker;
 import com.android.internal.widget.ILockSettings;
 import com.android.internal.widget.LockPatternUtils;
@@ -365,7 +364,7 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
 
     @Test
     public void testIgnoresSimStateCallback_rebroadcast() {
-        Intent intent = new Intent(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+        Intent intent = new Intent(Intent.ACTION_SIM_STATE_CHANGED);
 
         mKeyguardUpdateMonitor.mBroadcastReceiver.onReceive(getContext(), intent);
         mTestableLooper.processAllMessages();
@@ -386,7 +385,7 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
 
     @Test
     public void testTelephonyCapable_SimState_Absent() {
-        Intent intent = new Intent(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+        Intent intent = new Intent(Intent.ACTION_SIM_STATE_CHANGED);
         intent.putExtra(Intent.EXTRA_SIM_STATE,
                 Intent.SIM_STATE_ABSENT);
         mKeyguardUpdateMonitor.mBroadcastReceiver.onReceive(getContext(),
@@ -397,7 +396,7 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
 
     @Test
     public void testTelephonyCapable_SimState_CardIOError() {
-        Intent intent = new Intent(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+        Intent intent = new Intent(Intent.ACTION_SIM_STATE_CHANGED);
         intent.putExtra(Intent.EXTRA_SIM_STATE,
                 Intent.SIM_STATE_CARD_IO_ERROR);
         mKeyguardUpdateMonitor.mBroadcastReceiver.onReceive(getContext(),
@@ -425,8 +424,6 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
         // Simulate AirplaneMode case, SERVICE_STATE - POWER_OFF, check TelephonyCapable False
         // Only receive ServiceState callback IN_SERVICE -> OUT_OF_SERVICE -> POWER_OFF
         Intent intent = new Intent(Intent.ACTION_SERVICE_STATE);
-        intent.putExtra(Intent.EXTRA_SIM_STATE
-                , Intent.SIM_STATE_LOADED);
         Bundle data = new Bundle();
         ServiceState state = new ServiceState();
         state.setState(ServiceState.STATE_POWER_OFF);
@@ -451,7 +448,6 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
         ServiceState state = new ServiceState();
         state.setState(ServiceState.STATE_OUT_OF_SERVICE);
         state.fillInNotifierBundle(data);
-        intent.putExtras(data);
         mKeyguardUpdateMonitor.mBroadcastReceiver.onReceive(getContext()
                 , putPhoneInfo(intent, data, false));
         mTestableLooper.processAllMessages();
@@ -460,30 +456,22 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
 
     @Test
     public void testTelephonyCapable_BootInitState_SimState_NotReady() {
-        Bundle data = new Bundle();
-        ServiceState state = new ServiceState();
-        state.setState(ServiceState.STATE_OUT_OF_SERVICE);
-        state.fillInNotifierBundle(data);
-        Intent intent = new Intent(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+        Intent intent = new Intent(Intent.ACTION_SIM_STATE_CHANGED);
         intent.putExtra(Intent.EXTRA_SIM_STATE
                 , Intent.SIM_STATE_NOT_READY);
         mKeyguardUpdateMonitor.mBroadcastReceiver.onReceive(getContext()
-                , putPhoneInfo(intent, data, false));
+                , putPhoneInfo(intent, null, false));
         mTestableLooper.processAllMessages();
         assertThat(mKeyguardUpdateMonitor.mTelephonyCapable).isFalse();
     }
 
     @Test
     public void testTelephonyCapable_BootInitState_SimState_Ready() {
-        Bundle data = new Bundle();
-        ServiceState state = new ServiceState();
-        state.setState(ServiceState.STATE_OUT_OF_SERVICE);
-        state.fillInNotifierBundle(data);
-        Intent intent = new Intent(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+        Intent intent = new Intent(Intent.ACTION_SIM_STATE_CHANGED);
         intent.putExtra(Intent.EXTRA_SIM_STATE
                 , Intent.SIM_STATE_READY);
         mKeyguardUpdateMonitor.mBroadcastReceiver.onReceive(getContext()
-                , putPhoneInfo(intent, data, false));
+                , putPhoneInfo(intent, null, false));
         mTestableLooper.processAllMessages();
         assertThat(mKeyguardUpdateMonitor.mTelephonyCapable).isFalse();
     }
@@ -516,22 +504,20 @@ public class KeyguardUpdateMonitorTest extends SysuiTestCase {
 
     @Test
     public void testTelephonyCapable_SimValid_SimState_Loaded() {
-        Bundle data = new Bundle();
-        ServiceState state = new ServiceState();
-        state.setState(ServiceState.STATE_IN_SERVICE);
-        state.fillInNotifierBundle(data);
-        Intent intentSimState = new Intent(TelephonyIntents.ACTION_SIM_STATE_CHANGED);
+        Intent intentSimState = new Intent(Intent.ACTION_SIM_STATE_CHANGED);
         intentSimState.putExtra(Intent.EXTRA_SIM_STATE
                 , Intent.SIM_STATE_LOADED);
         mKeyguardUpdateMonitor.mBroadcastReceiver.onReceive(getContext()
-                , putPhoneInfo(intentSimState, data, true));
+                , putPhoneInfo(intentSimState, null, true));
         mTestableLooper.processAllMessages();
         // Even SimState Loaded, still need ACTION_SERVICE_STATE turn on mTelephonyCapable
         assertThat(mKeyguardUpdateMonitor.mTelephonyCapable).isFalse();
 
         Intent intentServiceState = new Intent(Intent.ACTION_SERVICE_STATE);
-        intentSimState.putExtra(Intent.EXTRA_SIM_STATE
-                , Intent.SIM_STATE_LOADED);
+        Bundle data = new Bundle();
+        ServiceState state = new ServiceState();
+        state.setState(ServiceState.STATE_IN_SERVICE);
+        state.fillInNotifierBundle(data);
         mKeyguardUpdateMonitor.mBroadcastReceiver.onReceive(getContext()
                 , putPhoneInfo(intentServiceState, data, true));
         mTestableLooper.processAllMessages();
