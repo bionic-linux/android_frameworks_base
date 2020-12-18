@@ -22,6 +22,30 @@
       },
       "revId": "3625ca03985ded544d46724d857e2414148f7e01",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38ec0677_77a634c5",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreCipherSpiBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2020-12-18T19:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bd2bfff_c17b7708",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 17
+      },
+      "revId": "3625ca03985ded544d46724d857e2414148f7e01",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
