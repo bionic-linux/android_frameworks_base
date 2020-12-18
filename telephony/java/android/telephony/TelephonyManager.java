@@ -9275,6 +9275,27 @@ public class TelephonyManager {
     }
 
     /**
+     * Get the mobile provisioning url.
+     * {@hide}
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    public @Nullable String getMobileProvisioningUrl() {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.getMobileProvisioningUrl();
+            } else {
+                throw new IllegalStateException("telephony service is null.");
+            }
+        } catch (RemoteException ex) {
+            if (!isSystemProcess()) {
+                ex.rethrowAsRuntimeException();
+            }
+        }
+        return null;
+    }
+
+    /**
      * Turns mobile data on or off.
      * If this object has been created with {@link #createForSubscriptionId}, applies to the given
      * subId. Otherwise, applies to {@link SubscriptionManager#getDefaultDataSubscriptionId()}
