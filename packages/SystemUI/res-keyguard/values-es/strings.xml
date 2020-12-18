@@ -31,13 +31,9 @@
     <string name="keyguard_plugged_in_charging_fast" msgid="4386594091107340426">"<xliff:g id="PERCENTAGE">%s</xliff:g> • Cargando rápidamente"</string>
     <string name="keyguard_plugged_in_charging_slowly" msgid="217655355424210">"<xliff:g id="PERCENTAGE">%s</xliff:g> • Cargando lentamente"</string>
     <string name="keyguard_plugged_in_charging_limited" msgid="1709413803451065875">"<xliff:g id="PERCENTAGE">%s</xliff:g> • La carga se pausa para proteger la batería"</string>
-    <string name="keyguard_instructions_when_pattern_disabled" msgid="8448804180089936954">"Pulsa el menú para desbloquear la pantalla."</string>
     <string name="keyguard_network_locked_message" msgid="407096292844868608">"Bloqueada para la red"</string>
     <string name="keyguard_missing_sim_message_short" msgid="704159478161444907">"Falta la tarjeta SIM"</string>
-    <string name="keyguard_missing_sim_instructions" msgid="1162120926141335918">"Inserta una tarjeta SIM."</string>
-    <string name="keyguard_missing_sim_instructions_long" msgid="2712623293749378570">"Falta la tarjeta SIM o no se puede leer. Inserta una tarjeta SIM."</string>
     <string name="keyguard_permanent_disabled_sim_message_short" msgid="5842745213110966962">"La tarjeta SIM se ha inhabilitado."</string>
-    <string name="keyguard_permanent_disabled_sim_instructions" msgid="2490584154727897806">"La tarjeta SIM se ha inhabilitado permanentemente.\n Para obtener otra, ponte en contacto con tu proveedor de servicios de telefonía."</string>
     <string name="keyguard_sim_locked_message" msgid="4343544458476911044">"La tarjeta SIM está bloqueada."</string>
     <string name="keyguard_sim_puk_locked_message" msgid="6253830777745450550">"La tarjeta SIM está bloqueada con el código PUK."</string>
     <string name="keyguard_sim_unlock_progress_dialog_message" msgid="2394023844117630429">"Desbloqueando la tarjeta SIM…"</string>

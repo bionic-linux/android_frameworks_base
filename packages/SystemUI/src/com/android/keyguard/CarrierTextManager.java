@@ -599,36 +599,6 @@ public class CarrierTextManager {
         return list;
     }
 
-    private CharSequence getCarrierHelpTextForSimState(int simState,
-            String plmn, String spn) {
-        int carrierHelpTextId = 0;
-        CarrierTextManager.StatusMode status = getStatusForIccState(simState);
-        switch (status) {
-            case NetworkLocked:
-                carrierHelpTextId = R.string.keyguard_instructions_when_pattern_disabled;
-                break;
-
-            case SimMissing:
-                carrierHelpTextId = R.string.keyguard_missing_sim_instructions_long;
-                break;
-
-            case SimPermDisabled:
-                carrierHelpTextId = R.string.keyguard_permanent_disabled_sim_instructions;
-                break;
-
-            case SimMissingLocked:
-                carrierHelpTextId = R.string.keyguard_missing_sim_instructions;
-                break;
-
-            case Normal:
-            case SimLocked:
-            case SimPukLocked:
-                break;
-        }
-
-        return mContext.getText(carrierHelpTextId);
-    }
-
     /** Injectable Buildeer for {@#link CarrierTextManager}. */
     public static class Builder {
         private final Context mContext;
