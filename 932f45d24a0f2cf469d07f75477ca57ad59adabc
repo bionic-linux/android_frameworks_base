@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f813c91_021ce955",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-12-18T18:15:59Z",
+      "side": 1,
+      "message": "Please check below changes:\nhttps://android.googlesource.com/platform/frameworks/base/+/350f7f9c614e8f10a49d7ef8978347035d99827e%5E%21/\nhttps://android.googlesource.com/platform/frameworks/base/+/75eab471f374f4908588d3f7cb0c5d7ff792664e%5E%21/\n\nThanks",
+      "revId": "932f45d24a0f2cf469d07f75477ca57ad59adabc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
