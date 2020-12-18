@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df8423e3_42426d48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-12-18T18:07:48Z",
+      "side": 1,
+      "message": "Could you please help review this patch?\n\nThanks",
+      "revId": "f3d173ad57175613ec53385ea5ee39eaebeaf981",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
