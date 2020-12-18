@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06c9d503_60d9182d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-18T08:22:15Z",
+      "side": 1,
+      "message": "I know you only moved this comment but I find it confusing. Who is we here ? Please clarify. go/avoidwe",
+      "range": {
+        "startLine": 1816,
+        "startChar": 83,
+        "endLine": 1816,
+        "endChar": 85
+      },
+      "revId": "cd4426407cb62b3b3cc0d86145bcf75237bda47e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

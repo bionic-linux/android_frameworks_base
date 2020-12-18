@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fac40fe_6975fb89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-18T08:22:15Z",
+      "side": 1,
+      "message": "I gave this a honest shot and I found this too difficult to review in one go. I think I\u0027ll need you to break it down further. For example, receiving the notifications, adding the timers and responding to the public APIs could be three different patches to make this a lot more self-contained.\n\nSome general considerations :\n• Even when moving old code I don\u0027t think it\u0027s fine simply keeping old bugs existing out of legacy without so much as a comment. Please don\u0027t just add new code to ConnectivityService that will assume anything that\u0027s not mobile is wifi. Please don\u0027t just add new code that uses ConnectivityManager#TYPE_*. Please fix what is reasonable to fix ; what you don\u0027t have time to fix, please add appropriate comments and TODOs.\n• It is fine to create or change interfaces to address legacy issues – especially when no public API is involved. In this case for example, the first argument to interfaceClassDataActivityChanged being Integer.toString(int) and all callers doing Integer.parseInt then looking them up as a ConnectivityManager#TYPE is a terrible design, but it should not be difficult to make it a little bit better – at the VERY least make it an int and document carefully what it is. If you have time, make it better by making it a transport or something. What you don\u0027t fix, please add comments.\n• When moving this old code, you won\u0027t have time to clean up everything, but you can isolate it much better. Rather than adding identical members and top-level functions to ConnectivityService, you could create a new CS satellite class, say LegacyNetworkActivityTracker, that would host this old logic.\n",
+      "revId": "de4b5e6b06bfc573026279228feb8ce591a0f9e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
