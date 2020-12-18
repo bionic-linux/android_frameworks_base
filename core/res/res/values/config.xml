@@ -4392,4 +4392,7 @@
 
     <!-- Component names of the services which will keep critical code path warm -->
     <string-array name="config_keep_warming_services" translatable="false" />
+
+    <!-- Set to true to allow initial attach with default or ia apn only -->
+    <bool name="config_conditional_intial_attach">false</bool>
 </resources>
