@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "566dd328_d8030c16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1787451
+      },
+      "writtenOn": "2020-12-18T08:00:06Z",
+      "side": 1,
+      "message": "Sorry for my late action. I re-uploaded the source code. Please kindly review it.",
+      "revId": "f56193551f84fcb3db2a2df0d303b92e26bb8b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
