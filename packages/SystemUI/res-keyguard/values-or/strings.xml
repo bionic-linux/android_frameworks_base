@@ -31,13 +31,9 @@
     <string name="keyguard_plugged_in_charging_fast" msgid="4386594091107340426">"<xliff:g id="PERCENTAGE">%s</xliff:g> • ଦ୍ରୁତ ଭାବେ ଚାର୍ଜ ହେଉଛି"</string>
     <string name="keyguard_plugged_in_charging_slowly" msgid="217655355424210">"<xliff:g id="PERCENTAGE">%s</xliff:g> • ଧୀରେ ଚାର୍ଜ ହେଉଛି"</string>
     <string name="keyguard_plugged_in_charging_limited" msgid="1709413803451065875">"<xliff:g id="PERCENTAGE">%s</xliff:g> • ବେଟେରୀକୁ ସୁରକ୍ଷିତ ରଖିବା ପାଇଁ ଚାର୍ଜିଂକୁ ବିରତ କରାଯାଇଛି"</string>
-    <string name="keyguard_instructions_when_pattern_disabled" msgid="8448804180089936954">"ଅନଲକ୍‌ କରିବା ପାଇଁ ମେନୁକୁ ଦବାନ୍ତୁ।"</string>
     <string name="keyguard_network_locked_message" msgid="407096292844868608">"ନେଟୱର୍କକୁ ଲକ୍‌ କରାଯାଇଛି"</string>
     <string name="keyguard_missing_sim_message_short" msgid="704159478161444907">"କୌଣସି SIM କାର୍ଡ ନାହିଁ"</string>
-    <string name="keyguard_missing_sim_instructions" msgid="1162120926141335918">"ଗୋଟିଏ SIM କାର୍ଡ ଭର୍ତ୍ତି କରନ୍ତୁ।"</string>
-    <string name="keyguard_missing_sim_instructions_long" msgid="2712623293749378570">"SIM କାର୍ଡ ନାହିଁ କିମ୍ବା ଖରାପ ଅଛି। SIM କାର୍ଡ ଭର୍ତ୍ତି କରନ୍ତୁ।"</string>
     <string name="keyguard_permanent_disabled_sim_message_short" msgid="5842745213110966962">"SIM କାର୍ଡଟିକୁ ବ୍ୟବହାର କରାଯାଇପାରିବ ନାହିଁ।"</string>
-    <string name="keyguard_permanent_disabled_sim_instructions" msgid="2490584154727897806">"ଆପଣଙ୍କ SIM କାର୍ଡକୁ ସ୍ଥାୟୀ ରୂପେ ଅକ୍ଷମ କରିଦିଆଯାଇଛି।\n ଅନ୍ୟ SIM କାର୍ଡ ପାଇଁ ଆପଣଙ୍କ ୱାୟରଲେସ ସେବା ପ୍ରଦାତାଙ୍କ ସହ କଣ୍ଟାକ୍ଟ କରନ୍ତୁ।"</string>
     <string name="keyguard_sim_locked_message" msgid="4343544458476911044">"SIM କାର୍ଡ ଲକ୍‍ ହୋଇଯାଇଛି।"</string>
     <string name="keyguard_sim_puk_locked_message" msgid="6253830777745450550">"SIM କାର୍ଡଟି PUK ଲକ୍‍ ହୋଇଯାଇଛି।"</string>
     <string name="keyguard_sim_unlock_progress_dialog_message" msgid="2394023844117630429">"SIM କାର୍ଡ ଅନଲକ୍‍ କରାଯାଉଛି…"</string>
