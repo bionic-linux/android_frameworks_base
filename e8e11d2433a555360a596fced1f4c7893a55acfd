@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfa6928d_415bac2f",
+        "filename": "packages/SystemUI/tests/src/com/android/keyguard/KeyguardUpdateMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1722805
+      },
+      "writtenOn": "2020-12-18T09:52:32Z",
+      "side": 1,
+      "message": "Why we need change it from TelephonyIntents to Intent?",
+      "range": {
+        "startLine": 247,
+        "startChar": 35,
+        "endLine": 247,
+        "endChar": 41
+      },
+      "revId": "e8e11d2433a555360a596fced1f4c7893a55acfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
