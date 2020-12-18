@@ -2303,4 +2303,9 @@ interface ITelephony {
      * Return the release time for telephony to unbind GbaService.
      */
     int getGbaReleaseTime(int subId);
+
+    /**
+     *  Return the mobile provisioning url.
+     */
+    String getMobileProvisioningUrl();
 }

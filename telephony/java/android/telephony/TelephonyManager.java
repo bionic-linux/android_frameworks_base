@@ -14454,4 +14454,25 @@ public class TelephonyManager {
             e.execute(() -> callback.onAuthenticationFailure(GBA_FAILURE_REASON_FEATURE_NOT_READY));
         }
     }
+
+    /**
+     * Get the mobile provisioning url.
+     * {@hide}
+     */
+    @RequiresPermission(android.Manifest.permission.NETWORK_SETTINGS)
+    public @Nullable String getMobileProvisioningUrl() {
+        try {
+            ITelephony service = getITelephony();
+            if (service != null) {
+                return service.getMobileProvisioningUrl();
+            } else {
+                throw new IllegalStateException("telephony service is null.");
+            }
+        } catch (RemoteException ex) {
+            if (!isSystemProcess()) {
+                ex.rethrowAsRuntimeException();
+            }
+        }
+        return null;
+    }
 }
