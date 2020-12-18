@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a1d018f_acb1ec82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-12-18T18:22:17Z",
+      "side": 1,
+      "message": "I just updated the commit message, could you please help review this change?\n\nThanks",
+      "revId": "47043de7b8d2f26c52eb06a3b59a62a6d7024021",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
