@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86da7f23_f247e0d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-12-18T10:40:02Z",
+      "side": 1,
+      "message": "Hi Fabian,\n\nI\u0027ve updated new patch set with unit test.\nCould you please help check this patch?\n\nThanks",
+      "revId": "01872fee33aceb000eddff167f300ec412dc2349",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
