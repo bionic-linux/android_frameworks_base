@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006869454",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1532908?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "99eb46a9_48d26851",
+          "description": "Change to \"core/res/res/values/config.xml\"",
+          "replacements": [
+            {
+              "path": "core/res/res/values/config.xml",
+              "range": {
+                "startLine": 4373,
+                "startChar": 35,
+                "endLine": 4373,
+                "endChar": 41
+              },
+              "replacement": "initial"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c841837b_a925a9c5",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4373,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-18T16:06:17Z",
+      "side": 1,
+      "message": "Common typo found: \"intial\" -- should it be \"initial\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 4373,
+        "startChar": 35,
+        "endLine": 4373,
+        "endChar": 41
+      },
+      "revId": "ed8c54c92996754b3e6a5a16d118f859f94af82d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006869454",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1532908?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "256480e5_00143d8a",
+          "description": "Change to \"core/res/res/values/symbols.xml\"",
+          "replacements": [
+            {
+              "path": "core/res/res/values/symbols.xml",
+              "range": {
+                "startLine": 4053,
+                "startChar": 52,
+                "endLine": 4053,
+                "endChar": 58
+              },
+              "replacement": "initial"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "5b9851c8_39974443",
+        "filename": "core/res/res/values/symbols.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4053,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-18T16:06:17Z",
+      "side": 1,
+      "message": "Common typo found: \"intial\" -- should it be \"initial\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 4053,
+        "startChar": 52,
+        "endLine": 4053,
+        "endChar": 58
+      },
+      "revId": "ed8c54c92996754b3e6a5a16d118f859f94af82d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
