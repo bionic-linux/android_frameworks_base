@@ -22,6 +22,30 @@
       },
       "revId": "4fa3001972d91ed8af8d73caeffdd49d46808d99",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f631e0f_5b154b8f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-21T13:14:15Z",
+      "side": 1,
+      "message": "Thanks for finding this.\nAfter checking the dumpsys output, it did changed.\nBut not sure how your suggestion works since it still doesn\u0027t print the content of request, right?\n\nBut anyway, it seems to me match that id with requests that in the same bugreport section doesn\u0027t really take much time. Thus I\u0027ll prefer keep this.\nFeel free to reopen if disagreed.",
+      "parentUuid": "c302abb5_af3c0ac5",
+      "range": {
+        "startLine": 212,
+        "startChar": 19,
+        "endLine": 213,
+        "endChar": 62
+      },
+      "revId": "4fa3001972d91ed8af8d73caeffdd49d46808d99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
