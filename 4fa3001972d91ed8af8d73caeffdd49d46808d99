@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c302abb5_af3c0ac5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-21T07:25:34Z",
+      "side": 1,
+      "message": "To keep printing the same log as previous design, what about inlining this to dumpLingerTimers?\nSomething like:\n---\npublic void dumpLingerTimers(PrintWriter pw) {\n    for (LingerTimer timer : mLingerTimers) {\n        pw.println(String.format(\"%s, expires %dms\",\n                mLingerTimerForRequest.get(timer.requestId),\n                timer.expiryMs - SystemClock.elapsedRealtime()));\n    }\n}\n---\nOtherwise, I don\u0027t think request id can give any useful information. Or maybe developer need to spend some time to search which reqest matches to this request id in bugreport.",
+      "range": {
+        "startLine": 212,
+        "startChar": 19,
+        "endLine": 213,
+        "endChar": 62
+      },
+      "revId": "4fa3001972d91ed8af8d73caeffdd49d46808d99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
