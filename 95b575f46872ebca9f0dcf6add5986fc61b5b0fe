@@ -46,6 +46,30 @@
       },
       "revId": "95b575f46872ebca9f0dcf6add5986fc61b5b0fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27ffa04c_333659f3",
+        "filename": "wifi/tests/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-21T06:08:15Z",
+      "side": 1,
+      "message": "aosp/1531805",
+      "parentUuid": "ee2321b9_0b40d593",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 40
+      },
+      "revId": "95b575f46872ebca9f0dcf6add5986fc61b5b0fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
