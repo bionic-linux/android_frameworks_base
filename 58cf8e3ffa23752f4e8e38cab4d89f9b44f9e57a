@@ -16,6 +16,23 @@
       "message": "OWNERS+1 to unblock refactoring work, but in the future please ensure that your commit descriptions provide more details on the rationale behind a change, along with linking to a relevant bug to help reviewers understand the context of what you\u0027re doing.",
       "revId": "58cf8e3ffa23752f4e8e38cab4d89f9b44f9e57a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88a7f368_aba660fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006166
+      },
+      "writtenOn": "2020-12-21T16:20:20Z",
+      "side": 1,
+      "message": "OWNERS+1 to unblock refactoring work, but in the future please ensure that your commit descriptions provide more details on the rationale behind a change, along with linking to a relevant bug to help reviewers understand the context of what you\u0027re doing.\n\n",
+      "revId": "58cf8e3ffa23752f4e8e38cab4d89f9b44f9e57a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
