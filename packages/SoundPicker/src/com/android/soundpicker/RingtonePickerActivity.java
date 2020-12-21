@@ -292,6 +292,8 @@ public final class RingtonePickerActivity extends AlertActivity implements
                 }
             };
             installTask.execute(data.getData());
+        } else {
+            setupAlert();
         }
     }
 
