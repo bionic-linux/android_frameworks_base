@@ -8525,6 +8525,7 @@ public class ConnectivityServiceTest {
     @Test
     public void testCheckConnectivityDiagnosticsPermissionsActiveVpn() throws Exception {
         final NetworkAgentInfo naiWithoutUid = fakeMobileNai(new NetworkCapabilities());
+        final Network network = new Network(NET_ID);
 
         mMockVpn.establishForMyUid();
         assertUidRangesUpdatedForMyUid(true);

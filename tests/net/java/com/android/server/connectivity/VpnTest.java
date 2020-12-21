@@ -999,7 +999,7 @@ public class VpnTest {
         when(mConnectivityManager.getAllNetworks())
             .thenReturn(new Network[] { new Network(101) });
         when(mConnectivityManager.registerNetworkAgent(any(), any(), any(), any(),
-                anyInt(), any(), anyInt())).thenAnswer(invocation -> {
+                any(), any(), anyInt())).thenAnswer(invocation -> {
                     // The runner has registered an agent and is now ready.
                     legacyRunnerReady.open();
                     return new Network(102);

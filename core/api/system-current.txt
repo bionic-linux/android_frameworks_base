@@ -6191,6 +6191,7 @@ package android.net {
 
   public abstract class NetworkAgent {
     ctor public NetworkAgent(@NonNull android.content.Context, @NonNull android.os.Looper, @NonNull String, @NonNull android.net.NetworkCapabilities, @NonNull android.net.LinkProperties, int, @NonNull android.net.NetworkAgentConfig, @Nullable android.net.NetworkProvider);
+    ctor public NetworkAgent(@NonNull android.content.Context, @NonNull android.os.Looper, @NonNull String, @NonNull android.net.NetworkCapabilities, @NonNull android.net.LinkProperties, @NonNull android.net.NetworkScore, @NonNull android.net.NetworkAgentConfig, @Nullable android.net.NetworkProvider);
     method @Nullable public android.net.Network getNetwork();
     method public void markConnected();
     method public void onAddKeepalivePacketFilter(int, @NonNull android.net.KeepalivePacketData);
@@ -6205,7 +6206,8 @@ package android.net {
     method @NonNull public android.net.Network register();
     method public final void sendLinkProperties(@NonNull android.net.LinkProperties);
     method public final void sendNetworkCapabilities(@NonNull android.net.NetworkCapabilities);
-    method public final void sendNetworkScore(@IntRange(from=0, to=99) int);
+    method public final void sendNetworkScore(@NonNull android.net.NetworkScore);
+    method @Deprecated public final void sendNetworkScore(@IntRange(from=0, to=99) int);
     method public final void sendSocketKeepaliveEvent(int, int);
     method public final void setUnderlyingNetworks(@Nullable java.util.List<android.net.Network>);
     method public void unregister();
@@ -6299,6 +6301,20 @@ package android.net {
 
   public static class NetworkRequest.Builder {
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP) public android.net.NetworkRequest.Builder setSignalStrength(int);
+  }
+
+  public final class NetworkScore implements android.os.Parcelable {
+    method public int describeContents();
+    method public int getLegacyInt();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkScore> CREATOR;
+    field public final int legacyInt;
+  }
+
+  public static final class NetworkScore.Builder {
+    ctor public NetworkScore.Builder();
+    method @NonNull public android.net.NetworkScore build();
+    method @NonNull public android.net.NetworkScore.Builder setLegacyInt(int);
   }
 
   public class NetworkScoreManager {
