@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e008a69_c6f1f2fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-21T18:07:59Z",
+      "side": 1,
+      "message": "I would like you to add something like this on the commit message that makes it clear that we aren\u0027t just passing the buck for Telephony to solve the hidden API issue, but instead, this is reducing the number of hidden API accesses:\n\nTelephony and Settings were both accessing the hidden API ConnectivityManager#getMobileProvisioningUrl.  Moving #getMobileProvisioningUrl method into telephony means that there is one less access to a hidden API within the overall framework since the Connectivity stack never needed this value.",
+      "revId": "848c91cfa67b6f012e22d4b647eaac2787194454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
