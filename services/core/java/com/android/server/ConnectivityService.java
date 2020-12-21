@@ -113,6 +113,7 @@ import android.net.NetworkMonitorManager;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkProvider;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStackClient;
@@ -2815,7 +2816,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
                 case NetworkAgent.EVENT_NETWORK_SCORE_CHANGED: {
-                    updateNetworkScore(nai, msg.arg1);
+                    updateNetworkScore(nai, (NetworkScore) arg.second);
                     break;
                 }
                 case NetworkAgent.EVENT_SET_EXPLICITLY_SELECTED: {
@@ -6090,20 +6091,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return nai == getFallbackNetwork();
     }
 
-    // TODO : remove this method. It's a stopgap measure to help sheperding a number of dependent
-    // changes that would conflict throughout the automerger graph. Having this method temporarily
-    // helps with the process of going through with all these dependent changes across the entire
-    // tree.
-    /**
-     * Register a new agent. {@see #registerNetworkAgent} below.
-     */
-    public Network registerNetworkAgent(INetworkAgent na, NetworkInfo networkInfo,
-            LinkProperties linkProperties, NetworkCapabilities networkCapabilities,
-            int currentScore, NetworkAgentConfig networkAgentConfig) {
-        return registerNetworkAgent(na, networkInfo, linkProperties, networkCapabilities,
-                currentScore, networkAgentConfig, NetworkProvider.ID_NONE);
-    }
-
     /**
      * Register a new agent with ConnectivityService to handle a network.
      *
@@ -6114,7 +6101,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      *         later : see {@link #updateLinkProperties}.
      * @param networkCapabilities the initial capabilites of this network. They can be updated
      *         later : see {@link #updateCapabilities}.
-     * @param currentScore the initial score of the network. See
+     * @param initialScore the initial score of the network. See
      *         {@link NetworkAgentInfo#getCurrentScore}.
      * @param networkAgentConfig metadata about the network. This is never updated.
      * @param providerId the ID of the provider owning this NetworkAgent.
@@ -6122,10 +6109,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     public Network registerNetworkAgent(INetworkAgent na, NetworkInfo networkInfo,
             LinkProperties linkProperties, NetworkCapabilities networkCapabilities,
-            int currentScore, NetworkAgentConfig networkAgentConfig, int providerId) {
+            @NonNull NetworkScore initialScore, NetworkAgentConfig networkAgentConfig,
+            int providerId) {
         Objects.requireNonNull(networkInfo, "networkInfo must not be null");
         Objects.requireNonNull(linkProperties, "linkProperties must not be null");
         Objects.requireNonNull(networkCapabilities, "networkCapabilities must not be null");
+        Objects.requireNonNull(initialScore, "initialScore must not be null");
         Objects.requireNonNull(networkAgentConfig, "networkAgentConfig must not be null");
         if (networkCapabilities.hasTransport(TRANSPORT_TEST)) {
             enforceAnyPermissionOf(Manifest.permission.MANAGE_TEST_NETWORKS);
@@ -6137,7 +6126,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final long token = Binder.clearCallingIdentity();
         try {
             return registerNetworkAgentInternal(na, networkInfo, linkProperties,
-                    networkCapabilities, currentScore, networkAgentConfig, providerId, uid);
+                    networkCapabilities, initialScore, networkAgentConfig, providerId, uid);
         } finally {
             Binder.restoreCallingIdentity(token);
         }
@@ -6145,7 +6134,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private Network registerNetworkAgentInternal(INetworkAgent na, NetworkInfo networkInfo,
             LinkProperties linkProperties, NetworkCapabilities networkCapabilities,
-            int currentScore, NetworkAgentConfig networkAgentConfig, int providerId, int uid) {
+            NetworkScore currentScore, NetworkAgentConfig networkAgentConfig, int providerId,
+            int uid) {
         if (networkCapabilities.hasTransport(TRANSPORT_TEST)) {
             // Strictly, sanitizing here is unnecessary as the capabilities will be sanitized in
             // the call to mixInCapabilities below anyway, but sanitizing here means the NAI never
@@ -7840,7 +7830,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void updateNetworkScore(@NonNull final NetworkAgentInfo nai, final int score) {
+    private void updateNetworkScore(@NonNull final NetworkAgentInfo nai, final NetworkScore score) {
         if (VDBG || DDBG) log("updateNetworkScore for " + nai.toShortString() + " to " + score);
         nai.setScore(score);
         rematchAllNetworksAndRequests();
