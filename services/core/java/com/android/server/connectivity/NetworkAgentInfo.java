@@ -35,6 +35,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkMonitorManager;
 import android.net.NetworkRequest;
+import android.net.NetworkScore;
 import android.net.NetworkState;
 import android.net.QosCallbackException;
 import android.net.QosFilter;
@@ -293,8 +294,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // validated).
     private boolean mLingering;
 
-    // This represents the quality of the network with no clear scale.
-    private int mScore;
+    // This represents the quality of the network.
+    private NetworkScore mScore;
 
     // The list of NetworkRequests being satisfied by this Network.
     private final SparseArray<NetworkRequest> mNetworkRequests = new SparseArray<>();
@@ -329,7 +330,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private final QosCallbackTracker mQosCallbackTracker;
 
     public NetworkAgentInfo(INetworkAgent na, Network net, NetworkInfo info,
-            @NonNull LinkProperties lp, @NonNull NetworkCapabilities nc, int score, Context context,
+            @NonNull LinkProperties lp, @NonNull NetworkCapabilities nc,
+            @NonNull NetworkScore score, Context context,
             Handler handler, NetworkAgentConfig config, ConnectivityService connService, INetd netd,
             IDnsResolver dnsResolver, INetworkManagementService nms, int factorySerialNumber,
             int creatorUid, QosCallbackTracker qosCallbackTracker) {
@@ -594,9 +596,9 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         }
 
         @Override
-        public void sendScore(int score) {
-            mHandler.obtainMessage(NetworkAgent.EVENT_NETWORK_SCORE_CHANGED, score, 0,
-                    new Pair<>(NetworkAgentInfo.this, null)).sendToTarget();
+        public void sendScore(@NonNull final NetworkScore score) {
+            mHandler.obtainMessage(NetworkAgent.EVENT_NETWORK_SCORE_CHANGED,
+                    new Pair<>(NetworkAgentInfo.this, score)).sendToTarget();
         }
 
         @Override
@@ -847,7 +849,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
             return ConnectivityConstants.EXPLICITLY_SELECTED_NETWORK_SCORE;
         }
 
-        int score = mScore;
+        int score = mScore.getLegacyInt();
         if (!lastValidated && !pretendValidated && !ignoreWifiUnvalidationPenalty() && !isVPN()) {
             score -= ConnectivityConstants.UNVALIDATED_SCORE_PENALTY;
         }
@@ -876,7 +878,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         return getCurrentScore(true);
     }
 
-    public void setScore(final int score) {
+    public void setScore(final NetworkScore score) {
         mScore = score;
     }
 
