@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "416e915b_ce776bd1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1012974
+      },
+      "writtenOn": "2020-12-21T20:43:00Z",
+      "side": 1,
+      "message": "hackbod@, PTAL. I think your approval should cover both OWNERS files?",
+      "revId": "ede844252d173cd9d0338b4eef09f33a8c6d35b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
