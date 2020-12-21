@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdaa9f17_aa2bfdb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2020-12-21T19:51:59Z",
+      "side": 1,
+      "message": "Could you please add `Bug: 171809728`? I had that bug open for a while but never got around to it. Thanks for taking care of it!",
+      "revId": "3b5afa8318749bd342c1e883926847ce644388a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
