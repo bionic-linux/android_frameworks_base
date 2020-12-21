@@ -22,6 +22,30 @@
       },
       "revId": "95b575f46872ebca9f0dcf6add5986fc61b5b0fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee2321b9_0b40d593",
+        "filename": "wifi/tests/Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-21T05:26:25Z",
+      "side": 1,
+      "message": "Missed that this is a cherry-pick: let\u0027s merge this to be in line with downstream branches; the rule can be added later (apparently it doesn\u0027t break anything yet)",
+      "parentUuid": "9407db7c_a766aa8d",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 40
+      },
+      "revId": "95b575f46872ebca9f0dcf6add5986fc61b5b0fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
