@@ -3447,8 +3447,8 @@ public class ConnectivityServiceTest {
             networkCapabilities.addTransportType(TRANSPORT_WIFI)
                     .setNetworkSpecifier(new MatchAllNetworkSpecifier());
             mService.requestNetwork(networkCapabilities, NetworkRequest.Type.REQUEST.ordinal(),
-                    null, 0, null, ConnectivityManager.TYPE_WIFI, mContext.getPackageName(),
-                    getAttributionTag());
+                    null, 0, null, ConnectivityManager.TYPE_WIFI, NetworkCallback.FLAG_NONE,
+                    mContext.getPackageName(), getAttributionTag());
         });
 
         class NonParcelableSpecifier extends NetworkSpecifier {
@@ -8259,17 +8259,21 @@ public class ConnectivityServiceTest {
         final NetworkCapabilities netCap = new NetworkCapabilities().setOwnerUid(ownerUid);
 
         return mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                netCap, callerUid, mContext.getPackageName(), getAttributionTag()).getOwnerUid();
+                netCap, false /* includeLocationSensitiveInfoInTransportInfo */, callerUid,
+                mContext.getPackageName(), getAttributionTag())
+                .getOwnerUid();
     }
 
     private void verifyWifiInfoCopyNetCapsForCallerPermission(
-            int callerUid, boolean shouldMakeCopyWithLocationSensitiveFieldsParcelable) {
+            int callerUid, boolean includeLocationSensitiveInfoInTransportInfo,
+            boolean shouldMakeCopyWithLocationSensitiveFieldsParcelable) {
         final WifiInfo wifiInfo = mock(WifiInfo.class);
         when(wifiInfo.hasLocationSensitiveFields()).thenReturn(true);
         final NetworkCapabilities netCap = new NetworkCapabilities().setTransportInfo(wifiInfo);
 
         mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                netCap, callerUid, mContext.getPackageName(), getAttributionTag());
+                netCap, includeLocationSensitiveInfoInTransportInfo, callerUid,
+                mContext.getPackageName(), getAttributionTag());
         verify(wifiInfo).makeCopy(eq(shouldMakeCopyWithLocationSensitiveFieldsParcelable));
     }
 
@@ -8283,7 +8287,14 @@ public class ConnectivityServiceTest {
         assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
 
         verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
+                true /* includeLocationSensitiveInfoInTransportInfo */,
                 true /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
+
+        // Ensure that we remove location info if the request asks us to remove it even if the app
+        // has necessary permissions.
+        verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
+                false /* includeLocationSensitiveInfoInTransportInfo */,
+                false /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
     }
 
     @Test
@@ -8296,7 +8307,14 @@ public class ConnectivityServiceTest {
         assertEquals(myUid, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
 
         verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
+                true /* includeLocationSensitiveInfoInTransportInfo */,
                 true /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
+
+        // Ensure that we remove location info if the request asks us to remove it even if the app
+        // has necessary permissions.
+        verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
+                false /* includeLocationSensitiveInfoInTransportInfo */,
+                false /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
     }
 
     @Test
@@ -8309,7 +8327,8 @@ public class ConnectivityServiceTest {
         assertEquals(Process.INVALID_UID, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
 
         verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
-                false/* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
+                true /* includeLocationSensitiveInfoInTransportInfo */,
+                false /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
     }
 
     @Test
@@ -8320,9 +8339,6 @@ public class ConnectivityServiceTest {
 
         final int myUid = Process.myUid();
         assertEquals(Process.INVALID_UID, getOwnerUidNetCapsForCallerPermission(myUid + 1, myUid));
-
-        verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
-                true /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
     }
 
     @Test
@@ -8337,7 +8353,8 @@ public class ConnectivityServiceTest {
         assertEquals(Process.INVALID_UID, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
 
         verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
-                false/* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
+                false /* includeLocationSensitiveInfoInTransportInfo */,
+                false /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
     }
 
     @Test
@@ -8350,7 +8367,8 @@ public class ConnectivityServiceTest {
         assertEquals(Process.INVALID_UID, getOwnerUidNetCapsForCallerPermission(myUid, myUid));
 
         verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
-                false/* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
+                true /* includeLocationSensitiveInfoInTransportInfo */,
+                false /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
     }
 
     private void setupConnectionOwnerUid(int vpnOwnerUid, @VpnManager.VpnType int vpnType)
@@ -8949,8 +8967,8 @@ public class ConnectivityServiceTest {
             assertThrows("Expect throws for invalid request type " + reqTypeInt,
                     IllegalArgumentException.class,
                     () -> mService.requestNetwork(nc, reqTypeInt, null, 0, null,
-                            ConnectivityManager.TYPE_NONE, mContext.getPackageName(),
-                            getAttributionTag())
+                            ConnectivityManager.TYPE_NONE, NetworkCallback.FLAG_NONE,
+                            mContext.getPackageName(), getAttributionTag())
             );
         }
     }
