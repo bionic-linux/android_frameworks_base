@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "294649aa_c5a78f7b",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2020-12-22T16:21:37Z",
+      "side": 1,
+      "message": "Why is this both rather than just one or the other? (platform). Let\u0027s not add it to Tethering until it\u0027s actually used",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 6
+      },
+      "revId": "aa2bcffce56488bb49760eefb6268f66617cfa81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
