@@ -61,7 +61,6 @@ public class HdmiCecLocalDeviceAudioSystemTest {
     private HdmiControlService mHdmiControlService;
     private HdmiCecController mHdmiCecController;
     private HdmiCecLocalDeviceAudioSystem mHdmiCecLocalDeviceAudioSystem;
-    private HdmiCecLocalDevicePlayback mHdmiCecLocalDevicePlayback;
     private FakeNativeWrapper mNativeWrapper;
     private Looper mMyLooper;
     private TestLooper mTestLooper = new TestLooper();
@@ -170,19 +169,7 @@ public class HdmiCecLocalDeviceAudioSystemTest {
 
         mMyLooper = mTestLooper.getLooper();
         mHdmiCecLocalDeviceAudioSystem = new HdmiCecLocalDeviceAudioSystem(mHdmiControlService);
-        mHdmiCecLocalDevicePlayback = new HdmiCecLocalDevicePlayback(mHdmiControlService) {
-            @Override
-            void setIsActiveSource(boolean on) {
-                mIsActiveSource = on;
-            }
-
-            @Override
-            protected int getPreferredAddress() {
-                return ADDR_PLAYBACK_1;
-            }
-        };
         mHdmiCecLocalDeviceAudioSystem.init();
-        mHdmiCecLocalDevicePlayback.init();
         mHdmiControlService.setIoLooper(mMyLooper);
         mNativeWrapper = new FakeNativeWrapper();
         mNativeWrapper.setPhysicalAddress(SELF_PHYSICAL_ADDRESS);
@@ -192,7 +179,6 @@ public class HdmiCecLocalDeviceAudioSystemTest {
         mHdmiControlService.setHdmiMhlController(HdmiMhlControllerStub.create(mHdmiControlService));
         mHdmiControlService.setMessageValidator(new HdmiCecMessageValidator(mHdmiControlService));
         mLocalDevices.add(mHdmiCecLocalDeviceAudioSystem);
-        mLocalDevices.add(mHdmiCecLocalDevicePlayback);
         mHdmiCecLocalDeviceAudioSystem.setRoutingControlFeatureEnables(true);
         mHdmiPortInfo = new HdmiPortInfo[4];
         mHdmiPortInfo[0] =
