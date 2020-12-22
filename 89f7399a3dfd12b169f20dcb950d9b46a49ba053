@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28a0204c_eade2426",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Moved to the callback volatile model.",
+      "parentUuid": "ffd6d819_bf06bd85",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3c832f4_e7d5f512",
@@ -54,6 +78,30 @@
       "writtenOn": "2020-12-17T13:51:13Z",
       "side": 1,
       "message": "@param executor, with all the threading implications.\n\nI think you may want to say that callers must pass a single-threaded executor, otherwise order and even consistency of callbacks cannot be guaranteed. See the comment at the bottom of this file.",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 7
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "059241d6_22fee463",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3c832f4_e7d5f512",
       "range": {
         "startLine": 52,
         "startChar": 5,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7184eb8e_0a6d83aa",
+        "filename": "core/java/android/net/QosCallbackConnection.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "I removed canReceiveMessages and stated that there are no guarantees on the exact timing in which the callback will stop receive messages.\n\nMost importantly though, I made this class package private and stated that it\u0027s a satellite class of ConnectivityManager.  Which, IMO, means that the language doesn\u0027t need to be so precise.",
+      "parentUuid": "e974e46d_988732d8",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 55
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c88dc19_b10ede29",
@@ -100,6 +172,30 @@
       "writtenOn": "2020-12-17T13:51:13Z",
       "side": 1,
       "message": "@hide – this made it to system API in this patch.\n\nAlso... are you sure this is better than mocking ? Usually less changes to production code are better.",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 7
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e145cecc_d1905af2",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c88dc19_b10ede29",
       "range": {
         "startLine": 104,
         "startChar": 5,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da17a69a_5d7545de",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a88fca_110f108d",
+      "range": {
+        "startLine": 120,
+        "startChar": 52,
+        "endLine": 120,
+        "endChar": 64
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "314441e0_cd6bbecd",
@@ -146,6 +266,24 @@
       "writtenOn": "2020-12-17T13:51:13Z",
       "side": 1,
       "message": "Extra blank line",
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daa02877_50425654",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314441e0_cd6bbecd",
       "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -173,6 +311,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df2c69e3_fb80b774",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea128cab_ce50d9a9",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c461f9c_5d76399c",
@@ -186,6 +348,30 @@
       "writtenOn": "2020-12-17T13:51:13Z",
       "side": 1,
       "message": "Maybe \"Counter\" is not the clearest word here because this member assigns IDs and doesn\u0027t really count stuff ; it\u0027s especially confusing in places where it\u0027s used near mNetworkRequestCounter, which uses the word in a completely different sense.\n\nHow about simply mNextAgentCallbackId ?",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "89f7399a3dfd12b169f20dcb950d9b46a49ba053",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f56f9a0_5c6fb80b",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 38
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Used \"Previous\" instead of \"Next\" because the id is incremented and then assigned.",
+      "parentUuid": "2c461f9c_5d76399c",
       "range": {
         "startLine": 66,
         "startChar": 32,

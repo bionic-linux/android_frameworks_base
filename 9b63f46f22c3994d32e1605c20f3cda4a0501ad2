@@ -314,6 +314,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f496388_a67a3124",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 4848,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "994ae2bf_3cc49172",
+      "range": {
+        "startLine": 4848,
+        "startChar": 16,
+        "endLine": 4848,
+        "endChar": 35
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cec1d3c7_12451d12",
@@ -610,6 +634,30 @@
       "side": 1,
       "message": "Not done here (only in l.376)",
       "parentUuid": "59451395_dc7cb107",
+      "range": {
+        "startLine": 348,
+        "startChar": 14,
+        "endLine": 348,
+        "endChar": 32
+      },
+      "revId": "9b63f46f22c3994d32e1605c20f3cda4a0501ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34bbf693_33a180a4",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-22T22:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "914a6c79_885aa10f",
       "range": {
         "startLine": 348,
         "startChar": 14,
