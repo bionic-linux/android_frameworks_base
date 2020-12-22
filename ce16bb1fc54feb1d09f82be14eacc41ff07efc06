@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006899041",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1386623?revision\u003d39",
+      "fixSuggestions": [
+        {
+          "fixId": "250535a0_cdbbb030",
+          "description": "Change to \"core/java/android/net/NetworkAgent.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/NetworkAgent.java",
+              "range": {
+                "startLine": 1080,
+                "startChar": 41,
+                "endLine": 1080,
+                "endChar": 48
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a0f157aa_ac730dfe",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-22T04:16:23Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1080,
+        "startChar": 41,
+        "endLine": 1080,
+        "endChar": 48
+      },
+      "revId": "ce16bb1fc54feb1d09f82be14eacc41ff07efc06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
