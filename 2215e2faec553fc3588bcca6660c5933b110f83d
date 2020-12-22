@@ -39,6 +39,30 @@
       },
       "revId": "2215e2faec553fc3588bcca6660c5933b110f83d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67355d3d_9ebf049d",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BluetoothControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-12-22T06:43:54Z",
+      "side": 1,
+      "message": "Hi Ugo Yu,\n\nThanks for your comment, I got your point.\nI\u0027ll update new patch set according to your comment.\n\nBTW, to unify the code logic, is that OK I also changed other CachedBluetoothDevice#getAddress()?\nE.g. the CachedBluetoothDevice should never be null at line#321, so keep current code logic \"cachedDevice.getAddress()\" is OK.\nBut if you prefer that we unify the code logic to use \"cachedDevice\" instead of \"cachedDevice.getAddress()\".\nI will also update it.\n\nThanks",
+      "parentUuid": "fcd43e5e_7ac07ffd",
+      "range": {
+        "startLine": 346,
+        "startChar": 58,
+        "endLine": 346,
+        "endChar": 71
+      },
+      "revId": "2215e2faec553fc3588bcca6660c5933b110f83d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
