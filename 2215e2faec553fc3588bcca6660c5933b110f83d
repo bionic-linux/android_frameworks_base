@@ -16,6 +16,29 @@
       "message": "Could you please help review this patch?\n\nThanks",
       "revId": "2215e2faec553fc3588bcca6660c5933b110f83d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcd43e5e_7ac07ffd",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BluetoothControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2020-12-22T05:40:32Z",
+      "side": 1,
+      "message": "CachedBluetoothDevice has a toString() method. We can remove \" getAddress\" and only keep \"cachedDevice\" here then we don\u0027t need to worry about the null situation.",
+      "range": {
+        "startLine": 346,
+        "startChar": 58,
+        "endLine": 346,
+        "endChar": 71
+      },
+      "revId": "2215e2faec553fc3588bcca6660c5933b110f83d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
