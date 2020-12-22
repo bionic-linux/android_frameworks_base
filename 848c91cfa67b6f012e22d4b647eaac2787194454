@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d350c5e4_afb43b57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-22T05:28:13Z",
+      "side": 1,
+      "message": "updated",
+      "parentUuid": "5e008a69_c6f1f2fd",
+      "revId": "848c91cfa67b6f012e22d4b647eaac2787194454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bfdfc25_a1fbaee3",
@@ -43,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a831252_c3ba797b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9280,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-22T05:28:13Z",
+      "side": 1,
+      "message": "Updated. See if it works for you",
+      "parentUuid": "0bfdfc25_a1fbaee3",
+      "range": {
+        "startLine": 9276,
+        "startChar": 0,
+        "endLine": 9280,
+        "endChar": 7
+      },
+      "revId": "848c91cfa67b6f012e22d4b647eaac2787194454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "75b35e04_b1be7b23",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 3
@@ -54,6 +96,30 @@
       "writtenOn": "2020-12-21T22:31:11Z",
       "side": 1,
       "message": "Can you change the permission requirement to READ_PRIVILEGED_PHONE_STATE here and in packages/service/telephony -\u003e src/com/android/phone/PhoneInterfaceManager.java ?",
+      "range": {
+        "startLine": 9281,
+        "startChar": 24,
+        "endLine": 9281,
+        "endChar": 68
+      },
+      "revId": "848c91cfa67b6f012e22d4b647eaac2787194454",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a707ce2_8786fe66",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9281,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-22T05:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75b35e04_b1be7b23",
       "range": {
         "startLine": 9281,
         "startChar": 24,
