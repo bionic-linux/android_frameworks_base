@@ -31,6 +31,7 @@ import static android.net.NetworkTemplate.buildTemplateMobileWithRatType;
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
 import static android.net.NetworkTemplate.getAllCollapsedRatTypes;
 import static android.os.Debug.getIonHeapsSizeKb;
+import static android.os.Process.SYSTEM_UID;
 import static android.os.Process.getUidForPid;
 import static android.os.storage.VolumeInfo.TYPE_PRIVATE;
 import static android.os.storage.VolumeInfo.TYPE_PUBLIC;
@@ -1087,11 +1088,30 @@ public class StatsPullAtomService extends SystemService {
                 case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER:
                     addDataUsageBytesTransferAtoms(diff, pulledData);
                     break;
+                case FrameworkStatsLog.WIFI_BYTES_TRANSFER:
+                case FrameworkStatsLog.WIFI_BYTES_TRANSFER_BY_FG_BG:
+                    addFakeWifiBytesTransferAtoms(atomTag, pulledData);
+                    break;
                 default:
                     addNetworkStats(atomTag, pulledData, diff);
             }
         }
         return StatsManager.PULL_SUCCESS;
+    }
+
+    private void addFakeWifiBytesTransferAtoms(int atomTag, @NonNull List<StatsEvent> ret) {
+        StatsEvent.Builder e = StatsEvent.newBuilder();
+        e.setAtomId(atomTag)
+                .writeInt(SYSTEM_UID)
+                .addBooleanAnnotation(ANNOTATION_ID_IS_UID, true);
+        if (atomTag == FrameworkStatsLog.WIFI_BYTES_TRANSFER_BY_FG_BG) {
+            e.writeInt(NetworkStats.SET_FOREGROUND);
+        }
+        e.writeLong(1000_000_000_000L) // rx bytes
+                .writeLong(100_000_000L) // rx packets
+                .writeLong(500_000_000_000L) // tx bytes
+                .writeLong(500_000_000L); // tx packets
+        ret.add(e.build());
     }
 
     private void addNetworkStats(int atomTag, @NonNull List<StatsEvent> ret,
