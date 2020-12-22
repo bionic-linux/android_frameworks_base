@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b611099_13aa4233",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-22T02:59:26Z",
+      "side": 1,
+      "message": "Rebased to resolve merge conflicts. PTAL, Thanks!",
+      "revId": "f065a5c751baedb281c5fd85d5fa6f2df057f674",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
