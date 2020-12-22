@@ -63,6 +63,30 @@
       },
       "revId": "2215e2faec553fc3588bcca6660c5933b110f83d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f36652c3_044c18d0",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/BluetoothControllerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2020-12-22T19:10:00Z",
+      "side": 1,
+      "message": "I\u0027ve updated new patch set 6 and patch set 8.\n\nThanks",
+      "parentUuid": "67355d3d_9ebf049d",
+      "range": {
+        "startLine": 346,
+        "startChar": 58,
+        "endLine": 346,
+        "endChar": 71
+      },
+      "revId": "2215e2faec553fc3588bcca6660c5933b110f83d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
