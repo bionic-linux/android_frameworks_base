@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d74b72c0_88314a95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-22T14:55:20Z",
+      "side": 1,
+      "message": "Split into 2 CLs: PTAL at this one",
+      "parentUuid": "b0fd29db_a3558330",
+      "revId": "53b6c6091eb28cee271a1b13d78530b04cfa27b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f48c3d4a_7d6d1cc0",
@@ -31,6 +49,30 @@
       "writtenOn": "2020-12-15T13:03:00Z",
       "side": 1,
       "message": "These libs are sort of broken in that they include annotations they shouldn\u0027t. Can we please clean that up before adding more deps on them?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 6
+      },
+      "revId": "53b6c6091eb28cee271a1b13d78530b04cfa27b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4997ffb2_7a0c6171",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-22T14:55:20Z",
+      "side": 1,
+      "message": "Done in aosp/1534979. This is a topic that depends on different teams (telephony and wifi build rules need to be cleaned up too), and will likely need cherry-picks; this change should not probably not be blocked until that cleanup is merged ?",
+      "parentUuid": "f48c3d4a_7d6d1cc0",
       "range": {
         "startLine": 57,
         "startChar": 6,

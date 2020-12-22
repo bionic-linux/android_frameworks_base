@@ -16,6 +16,24 @@
       "message": "Can we keep this in static_libs for now?",
       "revId": "6557000a116008de7abfa2c49cef5192a2894856",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24fb4aa6_bbb822c4",
+        "filename": "services/Android.bp",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-22T14:55:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "47b6b120_91370e3f",
+      "revId": "6557000a116008de7abfa2c49cef5192a2894856",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
