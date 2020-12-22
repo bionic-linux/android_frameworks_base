@@ -318,7 +318,6 @@ filegroup {
         ":framework-wifi-non-updatable-sources",
         ":PacProcessor-aidl-sources",
         ":ProxyHandler-aidl-sources",
-        ":net-utils-framework-common-srcs",
 
         // AIDL from frameworks/base/native/
         ":platform-compat-native-aidl",
@@ -575,6 +574,7 @@ java_library {
         // in favor of an API stubs dependency in java_library "framework" below.
         "mimemap",
         "modules-utils-os",
+        "net-utils-framework-common",
     ],
     // For backwards compatibility.
     stem: "framework",
@@ -1229,7 +1229,9 @@ java_library {
         "core/java/com/android/internal/util/Protocol.java",
         "core/java/com/android/internal/util/Preconditions.java",
         "telephony/java/android/telephony/Annotation.java",
-        ":net-utils-framework-wifi-common-srcs",
+    ],
+    static_libs: [
+        "net-utils-framework-common-wifi",
     ],
     libs: [
         "framework-annotations-lib",

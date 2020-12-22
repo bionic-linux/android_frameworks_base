@@ -29,7 +29,6 @@ java_library {
     srcs: [
         ":framework-services-net-module-wifi-shared-srcs",
         ":net-module-utils-srcs",
-        ":net-utils-services-common-srcs",
         "java/android/net/ip/IpClientCallbacks.java",
         "java/android/net/ip/IpClientManager.java",
         "java/android/net/ip/IpClientUtil.java",
@@ -50,6 +49,7 @@ java_library {
         "netd_aidl_interface-V3-java",
         "netlink-client",
         "networkstack-client",
+        "net-utils-services-common",
     ],
     apex_available: [
         "com.android.wifi",
