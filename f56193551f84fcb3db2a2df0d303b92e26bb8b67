@@ -16,6 +16,23 @@
       "message": "Sorry for my late action. I re-uploaded the source code. Please kindly review it.",
       "revId": "f56193551f84fcb3db2a2df0d303b92e26bb8b67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53a24a12_4eef6ad0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1787451
+      },
+      "writtenOn": "2020-12-22T04:14:58Z",
+      "side": 1,
+      "message": "Hi Reviewers san. Thank you for CodeREview+2. Please proceed next stepl.",
+      "revId": "f56193551f84fcb3db2a2df0d303b92e26bb8b67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
