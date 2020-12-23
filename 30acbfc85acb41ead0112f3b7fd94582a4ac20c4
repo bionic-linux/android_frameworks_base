@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e9e10f02_ce74b9a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T07:45:02Z",
+      "side": 1,
+      "message": "NFC controller",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9e3d4af9_3193bc6a",
         "filename": "core/java/android/nfc/NfcAdapter.java",
         "patchSetId": 3
