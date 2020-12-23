@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8976956_d2610889",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-23T15:12:42Z",
+      "side": 1,
+      "message": "BTW, after splitting a big patch to small patches, they are more easy to review.\nGood job! 👍",
+      "revId": "53a5541d624ff993eaae6653d76b0c2f60290201",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
