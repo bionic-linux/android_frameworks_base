@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "03758acc_57865688",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-12-23T16:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5970760c_8a7a9d4c",
+      "range": {
+        "startLine": 9,
+        "startChar": 59,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "5765ac9ba8e3ace5ce61b1a87b42bc3f5553f0c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ea63a7b0_a26890e1",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -54,6 +78,30 @@
       "writtenOn": "2020-12-23T13:40:12Z",
       "side": 1,
       "message": "I think FORCE_NON_DEBUGGABLE_FINAL_BUILD_FOR_COMPAT would be a better name. I\u0027d also enhance the comment to make sure this only affects the gating and logging framework.",
+      "range": {
+        "startLine": 13261,
+        "startChar": 35,
+        "endLine": 13261,
+        "endChar": 64
+      },
+      "revId": "5765ac9ba8e3ace5ce61b1a87b42bc3f5553f0c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e50d8c62_d1ca2275",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13261,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2020-12-23T16:45:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dafa64ad_743953e1",
       "range": {
         "startLine": 13261,
         "startChar": 35,
