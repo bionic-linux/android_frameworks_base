@@ -72,6 +72,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2af72e76_ef70d7b3",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T08:25:21Z",
+      "side": 1,
+      "message": "if NFC adapter is disabled",
+      "range": {
+        "startLine": 2220,
+        "startChar": 74,
+        "endLine": 2220,
+        "endChar": 95
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a0188a5c_ddc1dbb2",
         "filename": "core/java/android/nfc/NfcAdapter.java",
         "patchSetId": 3
@@ -88,6 +111,29 @@
         "startChar": 70,
         "endLine": 2221,
         "endChar": 77
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60058e07_d80bc4ab",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T08:25:21Z",
+      "side": 1,
+      "message": "adapter state",
+      "range": {
+        "startLine": 2221,
+        "startChar": 70,
+        "endLine": 2221,
+        "endChar": 83
       },
       "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
