@@ -22,6 +22,30 @@
       },
       "revId": "aa2bcffce56488bb49760eefb6268f66617cfa81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "756e8b68_c82e4e54",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2020-12-23T03:25:03Z",
+      "side": 1,
+      "message": "I thought adding it now would make the intent of the library clearer; but removed anyway.",
+      "parentUuid": "294649aa_c5a78f7b",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 6
+      },
+      "revId": "aa2bcffce56488bb49760eefb6268f66617cfa81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
