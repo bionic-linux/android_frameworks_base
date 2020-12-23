@@ -1140,8 +1140,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         userAllContext.registerReceiver(
                 mIntentReceiver, intentFilter, NETWORK_STACK, mHandler);
 
+        mNetworkActivityTracker = new LegacyNetworkActivityTracker(mContext);
         try {
-            mNMS.registerObserver(mDataActivityObserver);
+            mNMS.registerObserver(mNetworkActivityTracker.getDataActivityObserver());
         } catch (RemoteException e) {
             loge("Error registering observer :" + e);
         }
@@ -1801,14 +1802,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private INetworkManagementEventObserver mDataActivityObserver = new BaseNetworkObserver() {
-        @Override
-        public void interfaceClassDataActivityChanged(int transportType, boolean active,
-                long tsNanos, int uid) {
-            sendDataActivityBroadcast(transportType, active, tsNanos);
-        }
-    };
-
     /**
      * Ensures that the system cannot call a particular method.
      */
@@ -2248,20 +2241,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         sendStickyBroadcast(makeGeneralIntent(info, bcastType));
     }
 
-    private void sendDataActivityBroadcast(int deviceType, boolean active, long tsNanos) {
-        Intent intent = new Intent(ConnectivityManager.ACTION_DATA_ACTIVITY_CHANGE);
-        intent.putExtra(ConnectivityManager.EXTRA_DEVICE_TYPE, deviceType);
-        intent.putExtra(ConnectivityManager.EXTRA_IS_ACTIVE, active);
-        intent.putExtra(ConnectivityManager.EXTRA_REALTIME_NS, tsNanos);
-        final long ident = Binder.clearCallingIdentity();
-        try {
-            mContext.sendOrderedBroadcastAsUser(intent, UserHandle.ALL,
-                    RECEIVE_DATA_ACTIVITY_CHANGE, null, null, 0, null, null);
-        } finally {
-            Binder.restoreCallingIdentity(ident);
-        }
-    }
-
     private void sendStickyBroadcast(Intent intent) {
         synchronized (this) {
             if (!mSystemReady
@@ -2365,74 +2344,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return false;
     }
 
-    /**
-     * Setup data activity tracking for the given network.
-     *
-     * Every {@code setupDataActivityTracking} should be paired with a
-     * {@link #removeDataActivityTracking} for cleanup.
-     */
-    private void setupDataActivityTracking(NetworkAgentInfo networkAgent) {
-        final String iface = networkAgent.linkProperties.getInterfaceName();
-
-        final int timeout;
-        final int type;
-
-        if (networkAgent.networkCapabilities.hasTransport(
-                NetworkCapabilities.TRANSPORT_CELLULAR)) {
-            timeout = Settings.Global.getInt(mContext.getContentResolver(),
-                                             Settings.Global.DATA_ACTIVITY_TIMEOUT_MOBILE,
-                                             10);
-            type = NetworkCapabilities.TRANSPORT_CELLULAR;
-        } else if (networkAgent.networkCapabilities.hasTransport(
-                NetworkCapabilities.TRANSPORT_WIFI)) {
-            timeout = Settings.Global.getInt(mContext.getContentResolver(),
-                                             Settings.Global.DATA_ACTIVITY_TIMEOUT_WIFI,
-                                             15);
-            type = NetworkCapabilities.TRANSPORT_WIFI;
-        } else {
-            return; // do not track any other networks
-        }
-
-        if (timeout > 0 && iface != null) {
-            try {
-                mNMS.addIdleTimer(iface, timeout, type);
-            } catch (Exception e) {
-                // You shall not crash!
-                loge("Exception in setupDataActivityTracking " + e);
-            }
-        }
-    }
-
-    /**
-     * Remove data activity tracking when network disconnects.
-     */
-    private void removeDataActivityTracking(NetworkAgentInfo networkAgent) {
-        final String iface = networkAgent.linkProperties.getInterfaceName();
-        final NetworkCapabilities caps = networkAgent.networkCapabilities;
-
-        if (iface != null && (caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                              caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))) {
-            try {
-                // the call fails silently if no idle timer setup for this interface
-                mNMS.removeIdleTimer(iface);
-            } catch (Exception e) {
-                loge("Exception in removeDataActivityTracking " + e);
-            }
-        }
-    }
-
-    /**
-     * Update data activity tracking when network state is updated.
-     */
-    private void updateDataActivityTracking(NetworkAgentInfo newNetwork,
-            NetworkAgentInfo oldNetwork) {
-        if (newNetwork != null) {
-            setupDataActivityTracking(newNetwork);
-        }
-        if (oldNetwork != null) {
-            removeDataActivityTracking(oldNetwork);
-        }
-    }
     /**
      * Reads the network specific MTU size from resources.
      * and set it on it's iface.
@@ -3451,7 +3362,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         propagateUnderlyingNetworkCapabilities(nai.network);
         if (nai.isSatisfyingRequest(mDefaultRequest.requestId)) {
             mDefaultNetworkNai = null;
-            updateDataActivityTracking(null /* newNetwork */, nai);
+            mNetworkActivityTracker.updateDataActivityTracking(null /* newNetwork */, nai);
             notifyLockdownVpn(nai);
             ensureNetworkTransitionWakelock(nai.toShortString());
         }
@@ -7200,7 +7111,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (oldDefaultNetwork != null) {
                 mLingerMonitor.noteLingerDefaultNetwork(oldDefaultNetwork, newDefaultNetwork);
             }
-            updateDataActivityTracking(newDefaultNetwork, oldDefaultNetwork);
+            mNetworkActivityTracker.updateDataActivityTracking(
+                    newDefaultNetwork, oldDefaultNetwork);
             // Notify system services of the new default.
             makeDefault(newDefaultNetwork);
             // Log 0 -> X and Y -> X default network transitions, where X is the new default.
@@ -8526,5 +8438,123 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         notifyDataStallSuspected(p, network.getNetId());
+    }
+
+    private final LegacyNetworkActivityTracker mNetworkActivityTracker;
+
+    /**
+     * Class used for updating network activity tracking with netd and notify network activity
+     * changes.
+     */
+    private class LegacyNetworkActivityTracker {
+        private Context mContext;
+
+        LegacyNetworkActivityTracker(@NonNull Context context) {
+            mContext = context;
+        }
+
+        // TODO: Migrate away the dependency with INetworkManagementEventObserver.
+        private INetworkManagementEventObserver mDataActivityObserver = new BaseNetworkObserver() {
+            @Override
+            public void interfaceClassDataActivityChanged(int transportType, boolean active,
+                    long tsNanos, int uid) {
+                sendDataActivityBroadcast(transportType, active, tsNanos);
+            }
+        };
+
+        public INetworkManagementEventObserver getDataActivityObserver() {
+            return mDataActivityObserver;
+        }
+
+        public void sendDataActivityBroadcast(int deviceType, boolean active, long tsNanos) {
+            final Intent intent = new Intent(ConnectivityManager.ACTION_DATA_ACTIVITY_CHANGE);
+            intent.putExtra(ConnectivityManager.EXTRA_DEVICE_TYPE, deviceType);
+            intent.putExtra(ConnectivityManager.EXTRA_IS_ACTIVE, active);
+            intent.putExtra(ConnectivityManager.EXTRA_REALTIME_NS, tsNanos);
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                mContext.sendOrderedBroadcastAsUser(intent, UserHandle.ALL,
+                        RECEIVE_DATA_ACTIVITY_CHANGE,
+                        null /* resultReceiver */,
+                        null /* scheduler */,
+                        0 /* initialCode */,
+                        null /* initialData */,
+                        null /* initialExtra */);
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
+
+        /**
+         * Setup data activity tracking for the given network.
+         *
+         * Every {@code setupDataActivityTracking} should be paired with a
+         * {@link #removeDataActivityTracking} for cleanup.
+         */
+        private void setupDataActivityTracking(NetworkAgentInfo networkAgent) {
+            final String iface = networkAgent.linkProperties.getInterfaceName();
+
+            final int timeout;
+            final int type;
+
+            if (networkAgent.networkCapabilities.hasTransport(
+                    NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                timeout = Settings.Global.getInt(mContext.getContentResolver(),
+                        Settings.Global.DATA_ACTIVITY_TIMEOUT_MOBILE,
+                        10);
+                type = NetworkCapabilities.TRANSPORT_CELLULAR;
+            } else if (networkAgent.networkCapabilities.hasTransport(
+                    NetworkCapabilities.TRANSPORT_WIFI)) {
+                timeout = Settings.Global.getInt(mContext.getContentResolver(),
+                        Settings.Global.DATA_ACTIVITY_TIMEOUT_WIFI,
+                        15);
+                type = NetworkCapabilities.TRANSPORT_WIFI;
+            } else {
+                return; // do not track any other networks
+            }
+
+            if (timeout > 0 && iface != null) {
+                try {
+                    // TODO: Access INetd directly instead of NMS
+                    mNMS.addIdleTimer(iface, timeout, type);
+                } catch (Exception e) {
+                    // You shall not crash!
+                    loge("Exception in setupDataActivityTracking " + e);
+                }
+            }
+        }
+
+        /**
+         * Remove data activity tracking when network disconnects.
+         */
+        private void removeDataActivityTracking(NetworkAgentInfo networkAgent) {
+            final String iface = networkAgent.linkProperties.getInterfaceName();
+            final NetworkCapabilities caps = networkAgent.networkCapabilities;
+
+            if (iface != null && (caps.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    || caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))) {
+                try {
+                    // the call fails silently if no idle timer setup for this interface
+                    // TODO: Access INetd directly instead of NMS
+                    mNMS.removeIdleTimer(iface);
+                } catch (Exception e) {
+                    // You shall not crash!
+                    loge("Exception in removeDataActivityTracking " + e);
+                }
+            }
+        }
+
+        /**
+         * Update data activity tracking when network state is updated.
+         */
+        public void updateDataActivityTracking(NetworkAgentInfo newNetwork,
+                NetworkAgentInfo oldNetwork) {
+            if (newNetwork != null) {
+                setupDataActivityTracking(newNetwork);
+            }
+            if (oldNetwork != null) {
+                removeDataActivityTracking(oldNetwork);
+            }
+        }
     }
 }
