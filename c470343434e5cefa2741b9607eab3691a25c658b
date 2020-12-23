@@ -16,6 +16,29 @@
       "message": "Thanks! Renamed the global setting to force_non_debuggable_final_build_for_compat and tried to reference the build as \u0027non-debuggable\u0027 instead of userdebug",
       "revId": "c470343434e5cefa2741b9607eab3691a25c658b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d2a63b_3ffb00ff",
+        "filename": "services/core/java/com/android/server/compat/OverrideValidatorImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-12-23T16:49:13Z",
+      "side": 1,
+      "message": "mForceNonDebuggableFinalBuild and forceNonDebuggableFinalBuildForTesting(boolean)",
+      "range": {
+        "startLine": 47,
+        "startChar": 20,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "c470343434e5cefa2741b9607eab3691a25c658b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
