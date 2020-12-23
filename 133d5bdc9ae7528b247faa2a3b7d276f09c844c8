@@ -83,6 +83,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9315398_4addfb01",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-23T15:09:22Z",
+      "side": 1,
+      "message": "I see, let\u0027s have another patch to remove mActiveIdleTimers.isEmpty(). 😊",
+      "parentUuid": "7d1e9ef4_2cafaf9c",
+      "range": {
+        "startLine": 1816,
+        "startChar": 16,
+        "endLine": 1818,
+        "endChar": 66
+      },
+      "revId": "133d5bdc9ae7528b247faa2a3b7d276f09c844c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5fd9e37e_3802dce8",
