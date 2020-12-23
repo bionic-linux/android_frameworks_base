@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efc72fe5_3aab047a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-23T14:45:57Z",
+      "side": 1,
+      "message": "Upper case?",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "cf211298bd41407b48256b3841a364c1e65dbf84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f67c6aeb_35995423",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-23T14:45:57Z",
+      "side": 1,
+      "message": "I think it\u0027s better to provide a sample for reference. 😊",
+      "revId": "cf211298bd41407b48256b3841a364c1e65dbf84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73f26160_83e77565",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8665,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-23T14:45:57Z",
+      "side": 1,
+      "message": "println?",
+      "range": {
+        "startLine": 8665,
+        "startChar": 43,
+        "endLine": 8665,
+        "endChar": 48
+      },
+      "revId": "cf211298bd41407b48256b3841a364c1e65dbf84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
