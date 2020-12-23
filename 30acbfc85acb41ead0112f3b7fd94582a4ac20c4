@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e3d4af9_3193bc6a",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2216,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T07:44:02Z",
+      "side": 1,
+      "message": "NFCC is already a short term for NFC Controller.\nCould you update to \"NFC Controller\"?",
+      "range": {
+        "startLine": 2216,
+        "startChar": 12,
+        "endLine": 2216,
+        "endChar": 27
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40da1819_d0424df9",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T07:44:02Z",
+      "side": 1,
+      "message": "adapter",
+      "range": {
+        "startLine": 2220,
+        "startChar": 81,
+        "endLine": 2220,
+        "endChar": 88
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0188a5c_ddc1dbb2",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T07:44:02Z",
+      "side": 1,
+      "message": "adapter",
+      "range": {
+        "startLine": 2221,
+        "startChar": 70,
+        "endLine": 2221,
+        "endChar": 77
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a936f7f4_303cd3e8",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T07:44:02Z",
+      "side": 1,
+      "message": "setNfcControllerOn",
+      "range": {
+        "startLine": 2228,
+        "startChar": 16,
+        "endLine": 2228,
+        "endChar": 35
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68da9486_b1131b56",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T07:44:02Z",
+      "side": 1,
+      "message": "setNfcControllerOn",
+      "range": {
+        "startLine": 2233,
+        "startChar": 21,
+        "endLine": 2233,
+        "endChar": 40
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf742eb3_5781d69f",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2242,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2020-12-23T07:44:02Z",
+      "side": 1,
+      "message": "setNfcControllerOn",
+      "range": {
+        "startLine": 2242,
+        "startChar": 25,
+        "endLine": 2242,
+        "endChar": 44
+      },
+      "revId": "30acbfc85acb41ead0112f3b7fd94582a4ac20c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
