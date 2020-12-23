@@ -16,6 +16,23 @@
       "message": "BCO to fix OWNERS.",
       "revId": "9f74d0a4088426367519e2543f5dab1f19085d95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f812e295_254f1155",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1706779
+      },
+      "writtenOn": "2020-12-23T20:45:12Z",
+      "side": 1,
+      "message": "Thanks; reported the issue here b/176243912",
+      "revId": "9f74d0a4088426367519e2543f5dab1f19085d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
