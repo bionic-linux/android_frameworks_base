@@ -1803,9 +1803,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private INetworkManagementEventObserver mDataActivityObserver = new BaseNetworkObserver() {
         @Override
-        public void interfaceClassDataActivityChanged(int networkType, boolean active, long tsNanos,
-                int uid) {
-            sendDataActivityBroadcast(networkType, active, tsNanos);
+        public void interfaceClassDataActivityChanged(int transportType, boolean active,
+                long tsNanos, int uid) {
+            sendDataActivityBroadcast(transportType, active, tsNanos);
         }
     };
 
@@ -2382,13 +2382,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             timeout = Settings.Global.getInt(mContext.getContentResolver(),
                                              Settings.Global.DATA_ACTIVITY_TIMEOUT_MOBILE,
                                              10);
-            type = ConnectivityManager.TYPE_MOBILE;
+            type = NetworkCapabilities.TRANSPORT_CELLULAR;
         } else if (networkAgent.networkCapabilities.hasTransport(
                 NetworkCapabilities.TRANSPORT_WIFI)) {
             timeout = Settings.Global.getInt(mContext.getContentResolver(),
                                              Settings.Global.DATA_ACTIVITY_TIMEOUT_WIFI,
                                              15);
-            type = ConnectivityManager.TYPE_WIFI;
+            type = NetworkCapabilities.TRANSPORT_WIFI;
         } else {
             return; // do not track any other networks
         }
