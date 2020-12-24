@@ -739,11 +739,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         private void maybeLogBroadcast(NetworkAgentInfo nai, DetailedState state, int type,
-                boolean isFallbackNetwork) {
+                boolean isDeviceDefaultNetwork) {
             if (DBG) {
                 log("Sending " + state
                         + " broadcast for type " + type + " " + nai.toShortString()
-                        + " isFallbackNetwork=" + isFallbackNetwork);
+                        + " isDeviceDefaultNetwork=" + isDeviceDefaultNetwork);
             }
         }
 
@@ -762,10 +762,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 list.add(nai);
             }
 
-            // Send a broadcast if this is the first network of its type or if it's the fallback.
-            final boolean isFallbackNetwork = mService.isFallbackNetwork(nai);
-            if ((list.size() == 1) || isFallbackNetwork) {
-                maybeLogBroadcast(nai, DetailedState.CONNECTED, type, isFallbackNetwork);
+            // Send a broadcast if this is the first network of its type or it's the device default.
+            final boolean isDeviceDefaultNetwork = mService.isDeviceDefaultNetwork(nai);
+            if ((list.size() == 1) || isDeviceDefaultNetwork) {
+                maybeLogBroadcast(nai, DetailedState.CONNECTED, type, isDeviceDefaultNetwork);
                 mService.sendLegacyNetworkBroadcast(nai, DetailedState.CONNECTED, type);
             }
         }
@@ -794,7 +794,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                               ", sending connected broadcast");
                 final NetworkAgentInfo replacement = list.get(0);
                 maybeLogBroadcast(replacement, DetailedState.CONNECTED, type,
-                        mService.isFallbackNetwork(replacement));
+                        mService.isDeviceDefaultNetwork(replacement));
                 mService.sendLegacyNetworkBroadcast(replacement, DetailedState.CONNECTED, type);
             }
         }
@@ -810,14 +810,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // send out another legacy broadcast - currently only used for suspend/unsuspend
         // toggle
         public void update(NetworkAgentInfo nai) {
-            final boolean isFallback = mService.isFallbackNetwork(nai);
+            final boolean isDeviceDefault = mService.isDeviceDefaultNetwork(nai);
             final DetailedState state = nai.networkInfo.getDetailedState();
             for (int type = 0; type < mTypeLists.length; type++) {
                 final ArrayList<NetworkAgentInfo> list = mTypeLists[type];
                 final boolean contains = (list != null && list.contains(nai));
                 final boolean isFirst = contains && (nai == list.get(0));
-                if (isFirst || contains && isFallback) {
-                    maybeLogBroadcast(nai, state, type, isFallback);
+                if (isFirst || contains && isDeviceDefault) {
+                    maybeLogBroadcast(nai, state, type, isDeviceDefault);
                     mService.sendLegacyNetworkBroadcast(nai, state, type);
                 }
             }
@@ -1022,12 +1022,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mMetricsLog = logger;
         mNetworkRanker = new NetworkRanker();
-        final NetworkRequest fallbackRequest = createDefaultInternetRequestForTransport(
+        final NetworkRequest deviceDefaultRequest = createDefaultInternetRequestForTransport(
                 -1, NetworkRequest.Type.REQUEST);
-        mFallbackRequest = new NetworkRequestInfo(null, fallbackRequest, new Binder());
-        mNetworkRequests.put(fallbackRequest, mFallbackRequest);
-        mDefaultNetworkRequests.add(mFallbackRequest);
-        mNetworkRequestInfoLogs.log("REGISTER " + mFallbackRequest);
+        mDeviceDefaultRequest = new NetworkRequestInfo(null, deviceDefaultRequest, new Binder());
+        mNetworkRequests.put(deviceDefaultRequest, mDeviceDefaultRequest);
+        mDefaultNetworkRequests.add(mDeviceDefaultRequest);
+        mNetworkRequestInfoLogs.log("REGISTER " + mDeviceDefaultRequest);
 
         mDefaultMobileDataRequest = createDefaultInternetRequestForTransport(
                 NetworkCapabilities.TRANSPORT_CELLULAR, NetworkRequest.Type.BACKGROUND_REQUEST);
@@ -1217,6 +1217,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mDnsManager = new DnsManager(mContext, mDnsResolver);
         registerPrivateDnsSettingsCallbacks();
+
+        mNoServiceNetwork =  new NetworkAgentInfo(null,
+                new Network(NO_SERVICE_NET_ID),
+                new NetworkInfo(TYPE_NONE, 0, "", ""),
+                new LinkProperties(), new NetworkCapabilities(), 0, mContext,
+                null, new NetworkAgentConfig(), this, null,
+                null, null, 0, INVALID_UID,
+                mQosCallbackTracker);
     }
 
     private static NetworkCapabilities createDefaultNetworkCapabilitiesForUid(int uid) {
@@ -1366,7 +1374,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private NetworkState getUnfilteredActiveNetworkState(int uid) {
-        NetworkAgentInfo nai = getFallbackNetwork();
+        NetworkAgentInfo nai = getDeviceDefaultNetwork();
 
         final Network[] networks = getVpnUnderlyingNetworks(uid);
         if (networks != null) {
@@ -1499,7 +1507,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        NetworkAgentInfo nai = getFallbackNetwork();
+        NetworkAgentInfo nai = getDeviceDefaultNetwork();
         if (nai == null || isNetworkWithCapabilitiesBlocked(nai.networkCapabilities, uid,
                 ignoreBlocked)) {
             return null;
@@ -1638,7 +1646,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         HashMap<Network, NetworkCapabilities> result = new HashMap<>();
 
-        final NetworkAgentInfo nai = getFallbackNetwork();
+        final NetworkAgentInfo nai = getDeviceDefaultNetwork();
         NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
         if (nc != null) {
             result.put(
@@ -2025,7 +2033,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // TODO: Move the Dns Event to NetworkMonitor. NetdEventListenerService only allow one
             // callback from each caller type. Need to re-factor NetdEventListenerService to allow
             // multiple NetworkMonitor registrants.
-            if (nai != null && nai.satisfies(mFallbackRequest.mRequests.get(0))) {
+            if (nai != null && nai.satisfies(mDeviceDefaultRequest.mRequests.get(0))) {
                 nai.networkMonitor().notifyDnsResponse(returnCode);
             }
         }
@@ -2582,12 +2590,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.println();
         pw.println();
 
-        final NetworkAgentInfo fallbackNai = getFallbackNetwork();
+        final NetworkAgentInfo deviceDefaultNai = getDeviceDefaultNetwork();
         pw.print("Active default network: ");
-        if (fallbackNai == null) {
+        if (deviceDefaultNai == null) {
             pw.println("none");
         } else {
-            pw.println(fallbackNai.network.getNetId());
+            pw.println(deviceDefaultNai.network.getNetId());
         }
         pw.println();
 
@@ -2970,7 +2978,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             final boolean valid = ((testResult & NETWORK_VALIDATION_RESULT_VALID) != 0);
             final boolean wasValidated = nai.lastValidated;
-            final boolean wasFallback = isFallbackNetwork(nai);
+            final boolean wasDeviceDefault = isDeviceDefaultNetwork(nai);
 
             if (DBG) {
                 final String logMsg = !TextUtils.isEmpty(redirectUrl)
@@ -2979,7 +2987,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 log(nai.toShortString() + " validation " + (valid ? "passed" : "failed") + logMsg);
             }
             if (valid != nai.lastValidated) {
-                if (wasFallback) {
+                if (wasDeviceDefault) {
                     mMetricsLog.logDefaultNetworkValidity(valid);
                 }
                 final int oldScore = nai.getCurrentScore();
@@ -3355,13 +3363,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
             loge("Error connecting NetworkAgent");
             mNetworkAgentInfos.remove(nai);
             if (nai != null) {
-                final boolean wasFallback = isFallbackNetwork(nai);
+                final boolean wasDeviceDefault = isDeviceDefaultNetwork(nai);
                 synchronized (mNetworkForNetId) {
                     mNetworkForNetId.remove(nai.network.getNetId());
                 }
                 mNetIdManager.releaseNetId(nai.network.getNetId());
                 // Just in case.
-                mLegacyTypeTracker.remove(nai, wasFallback);
+                mLegacyTypeTracker.remove(nai, wasDeviceDefault);
             }
         }
     }
@@ -3400,12 +3408,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
             nai.networkInfo.setDetailedState(NetworkInfo.DetailedState.DISCONNECTED,
                     null, null);
         }
-        final boolean wasFallback = isFallbackNetwork(nai);
-        if (wasFallback) {
+        final boolean wasDeviceDefault = isDeviceDefaultNetwork(nai);
+        if (wasDeviceDefault) {
             mDefaultInetConditionPublished = 0;
             // Log default network disconnection before required book-keeping.
             // Let rematchAllNetworksAndRequests() below record a new default network event
-            // if there is a fallback. Taken together, the two form a X -> 0, 0 -> Y sequence
+            // if there is a device default. Taken together, the two form a X -> 0, 0 -> Y sequence
             // whose timestamps tell how long it takes to recover a default network.
             long now = SystemClock.elapsedRealtime();
             mMetricsLog.logDefaultNetworkEvent(null, 0, false,
@@ -3436,17 +3444,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
         propagateUnderlyingNetworkCapabilities(nai.network);
         // Remove all previously satisfied requests.
         for (int i = 0; i < nai.numNetworkRequests(); i++) {
-            NetworkRequest request = nai.requestAt(i);
+            final NetworkRequest request = nai.requestAt(i);
             final NetworkRequestInfo nri = mNetworkRequests.get(request);
             final NetworkAgentInfo currentNetwork = nri.getSatisfier();
             if (currentNetwork != null
                     && currentNetwork.network.getNetId() == nai.network.getNetId()) {
+                // uid rules for this network will be removed in destroyNativeNetwork(nai).
                 nri.setSatisfier(null, null);
-                sendUpdatedScoreToFactories(request, null);
+                if (request.isRequest()) {
+                    sendUpdatedScoreToFactories(request, null);
+                }
 
-                if (mFallbackRequest == nri) {
+                if (mDeviceDefaultRequest == nri) {
                     // TODO : make battery stats aware that since 2013 multiple interfaces may be
-                    //  active at the same time. For now keep calling this with the fallback
+                    //  active at the same time. For now keep calling this with the device default
                     //  network, because while incorrect this is the closest to the old (also
                     //  incorrect) behavior.
                     mNetworkActivityTracker.updateDataActivityTracking(
@@ -3458,9 +3469,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         nai.clearLingerState();
         // TODO: mLegacyTypeTracker.remove seems redundant given there's a full rematch right after.
-        //  Currently, deleting it breaks tests that check for the fallback network disconnecting.
+        //  Currently, deleting it breaks tests that check for the default network disconnecting.
         //  Find out why, fix the rematch code, and delete this.
-        mLegacyTypeTracker.remove(nai, wasFallback);
+        mLegacyTypeTracker.remove(nai, wasDeviceDefault);
         rematchAllNetworksAndRequests();
         mLingerMonitor.noteDisconnect(nai);
         if (nai.created) {
@@ -3469,7 +3480,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // This may be slow as it requires a lot of netd shelling out to ip and
             // ip[6]tables to flush routes and remove the incoming packet mark rule, so do it
             // after we've rematched networks with requests which should make a potential
-            // fallback network the default or requested a new network from the
+            // default network the default or requested a new network from the
             // NetworkProviders, so network traffic isn't interrupted for an unnecessarily
             // long time.
             destroyNativeNetwork(nai);
@@ -3700,7 +3711,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (mNetworkRequests.get(nri.mRequests.get(0)) == null) {
             return;
         }
-        if (nri.getSatisfier() != null) {
+        if (nri.getActiveRequest() != null) {
             return;
         }
         if (VDBG || (DBG && nri.mRequests.get(0).isRequest())) {
@@ -4260,7 +4271,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public NetworkRequest getDefaultRequest() {
-        return mFallbackRequest.mRequests.get(0);
+        return mDeviceDefaultRequest.mRequests.get(0);
     }
 
     private class InternalHandler extends Handler {
@@ -4506,7 +4517,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // revalidate the network and generate a ConnectivityDiagnostics ConnectivityReport event.
         final NetworkAgentInfo nai;
         if (network == null) {
-            nai = getFallbackNetwork();
+            nai = getDeviceDefaultNetwork();
         } else {
             nai = getNetworkAgentInfoForNetwork(network);
         }
@@ -4525,7 +4536,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             Network network, int uid, boolean hasConnectivity) {
         final NetworkAgentInfo nai;
         if (network == null) {
-            nai = getFallbackNetwork();
+            nai = getDeviceDefaultNetwork();
         } else {
             nai = getNetworkAgentInfoForNetwork(network);
         }
@@ -4891,7 +4902,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // see VpnService.setUnderlyingNetworks()'s javadoc about how to interpret
         // the underlyingNetworks list.
         if (underlyingNetworks == null) {
-            final NetworkAgentInfo defaultNai = getFallbackNetwork();
+            final NetworkAgentInfo defaultNai = getDeviceDefaultNetwork();
             if (defaultNai != null) {
                 underlyingNetworks = new Network[] { defaultNai.network };
             }
@@ -4942,8 +4953,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    // TODO This needs to be the default network that applies to the NAI.
     private Network[] underlyingNetworksOrDefault(Network[] underlyingNetworks) {
-        final Network defaultNetwork = getNetwork(getFallbackNetwork());
+        final Network defaultNetwork = getNetwork(getDeviceDefaultNetwork());
         if (underlyingNetworks == null && defaultNetwork != null) {
             // null underlying networks means to track the default.
             underlyingNetworks = new Network[] { defaultNetwork };
@@ -5512,9 +5524,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mActiveRequest = activeRequest;
         }
 
-        // The network currently satisfying this request, or null if none. Must only be touched
-        // on the handler thread. This only makes sense for network requests and not for listens,
-        // as defined by NetworkRequest#isRequest(). For listens, this is always null.
+        // The network currently satisfying this NRI. Only one request in an NRI can have a
+        // satisfier. For non-multilayer requests, only REQUEST-type requests can have a satisfier.
         @Nullable
         private NetworkAgentInfo mSatisfier;
         NetworkAgentInfo getSatisfier() {
@@ -5536,6 +5547,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final int mPid;
         final int mUid;
         final Messenger messenger;
+
+        /**
+         * Get the list of UIDs this nri applies to.
+         */
+        @NonNull
+        private Set<UidRange> getUids() {
+            // networkCapabilities.getUids() returns a defensive copy.
+            // multilayer requests will all have the same uids so return the first one.
+            final Set<UidRange> uids = null == mRequests.get(0).networkCapabilities.getUids()
+                    ? new ArraySet<>() : mRequests.get(0).networkCapabilities.getUids();
+            return uids;
+        }
 
         NetworkRequestInfo(NetworkRequest r, PendingIntent pi) {
             mRequests = initializeRequests(r);
@@ -5595,7 +5618,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         @Override
         public String toString() {
-            return "uid/pid:" + mUid + "/" + mPid + " " + mRequests
+            return "uid/pid:" + mUid + "/" + mPid + " active request Id: "
+                    + (mActiveRequest == null ? null : mActiveRequest.requestId)
+                    + " " + mRequests
                     + (mPendingIntent == null ? "" : " to trigger " + mPendingIntent);
         }
     }
@@ -6050,10 +6075,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // The always-on request for an Internet-capable network that apps without a specific default
     // fall back to.
     @NonNull
-    private final NetworkRequestInfo mFallbackRequest;
+    private final NetworkRequestInfo mDeviceDefaultRequest;
     // Collection of NetworkRequestInfo's used for default networks.
     @NonNull
     private final ArraySet<NetworkRequestInfo> mDefaultNetworkRequests = new ArraySet<>();
+
+    private boolean isNonDeviceDefaultRequest(@NonNull final NetworkRequestInfo nri) {
+        return (mDefaultNetworkRequests.contains(nri) && mDeviceDefaultRequest != nri);
+    }
+
+    /**
+     * Determine if an nri is a non-device default request that disallows device default networking.
+     * @param nri the request to evaluate
+     * @return true if device-default networking is disallowed
+     */
+    private boolean isDeviceDefaultBlocked(@NonNull final NetworkRequestInfo nri) {
+        // Check if this nri is a managed default that supports the device default network at its
+        // lowest priority request.
+        final NetworkRequest deviceDefaultNetworkRequest = mDeviceDefaultRequest.mRequests.get(0);
+        final NetworkCapabilities lowestPriorityNetCap =
+                nri.mRequests.get(nri.mRequests.size() - 1).networkCapabilities;
+        return isNonDeviceDefaultRequest(nri)
+                && !(deviceDefaultNetworkRequest.networkCapabilities.equalRequestableCapabilities(
+                        lowestPriorityNetCap));
+    }
 
     // Request used to optionally keep mobile data active even when higher
     // priority networks like Wi-Fi are active.
@@ -6066,10 +6111,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // Request used to optionally keep vehicle internal network always active
     private final NetworkRequest mDefaultVehicleRequest;
 
+    // TODO replace with INetd.DUMMY_NET_ID when available.
+    private static final int NO_SERVICE_NET_ID = 51;
+    // Sentinel NAI used to direct apps with default networks that should have no connectivity to a
+    // network with no service. This NAI should never be matched against, nor should any public API
+    // ever return the associated network. For this reason, this NAI is not in the list of available
+    // NAIs. It is used in computeNetworkReassignment() to be set as the satisfier for non-device
+    // default requests that don't support using the device default network which will ultimately
+    // allow ConnectivityService to use this no-service network when calling makeDefaultForApps().
+    @VisibleForTesting
+    final NetworkAgentInfo mNoServiceNetwork;
+
     // TODO: b/178729499 update this in favor of a method taking in a UID.
-    // The NetworkAgentInfo currently satisfying the fallback request, if any.
-    private NetworkAgentInfo getFallbackNetwork() {
-        return mFallbackRequest.mSatisfier;
+    // The NetworkAgentInfo currently satisfying the device default request, if any.
+    private NetworkAgentInfo getDeviceDefaultNetwork() {
+        return mDeviceDefaultRequest.getSatisfier();
     }
 
     @Nullable
@@ -6086,8 +6142,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @VisibleForTesting
-    protected boolean isFallbackNetwork(NetworkAgentInfo nai) {
-        return nai == getFallbackNetwork();
+    protected boolean isDeviceDefaultNetwork(NetworkAgentInfo nai) {
+        return nai == getDeviceDefaultNetwork();
     }
 
     // TODO : remove this method. It's a stopgap measure to help sheperding a number of dependent
@@ -6156,8 +6212,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         LinkProperties lp = new LinkProperties(linkProperties);
 
-        // TODO: Instead of passing mFallbackRequest, provide an API to determine whether a Network
-        // satisfies mFallbackRequest.
         final NetworkCapabilities nc = new NetworkCapabilities(networkCapabilities);
         final NetworkAgentInfo nai = new NetworkAgentInfo(na,
                 new Network(mNetIdManager.reserveNetId()), new NetworkInfo(networkInfo), lp, nc,
@@ -6234,7 +6288,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 //        for (LinkProperties lp : newLp.getStackedLinks()) {
 //            updateMtu(lp, null);
 //        }
-        if (isFallbackNetwork(networkAgent)) {
+        if (isDeviceDefaultNetwork(networkAgent)) {
             updateTcpBufferSizes(newLp.getTcpBufferSizes());
         }
 
@@ -6246,7 +6300,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // updateDnses will fetch the private DNS configuration from DnsManager.
         mDnsManager.updatePrivateDnsStatus(netId, newLp);
 
-        if (isFallbackNetwork(networkAgent)) {
+        if (isDeviceDefaultNetwork(networkAgent)) {
             handleApplyDefaultProxy(newLp.getHttpProxy());
         } else {
             updateProxy(newLp, oldLp);
@@ -7224,20 +7278,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             log("Switching to new default network for: " + nri + " using " + newDefaultNetwork);
         }
 
-        try {
-            // TODO http://b/176191930 update netd calls in follow-up CL for multinetwork changes.
-            if (mFallbackRequest != nri) {
-                return;
-            }
-
-            if (null != newDefaultNetwork) {
-                mNetd.networkSetDefault(newDefaultNetwork.network.getNetId());
-            } else {
-                mNetd.networkClearDefault();
-            }
-        } catch (RemoteException | ServiceSpecificException e) {
-            loge("Exception setting default network :" + e);
+        // Fix up the NetworkCapabilities of any networks that have this network as underlying.
+        if (newDefaultNetwork != null) {
+            propagateUnderlyingNetworkCapabilities(newDefaultNetwork.network);
         }
+
+        // Set an OEM network preference default and return since further processing only applies to
+        // the device default network.
+        if (mDeviceDefaultRequest != nri) {
+            makeDefaultForApps(nri, oldDefaultNetwork, newDefaultNetwork);
+            return;
+        }
+
+        makeDeviceDefaultNetwork(newDefaultNetwork);
 
         if (oldDefaultNetwork != null) {
             mLingerMonitor.noteLingerDefaultNetwork(oldDefaultNetwork, newDefaultNetwork);
@@ -7249,10 +7302,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateTcpBufferSizes(null != newDefaultNetwork
                 ? newDefaultNetwork.linkProperties.getTcpBufferSizes() : null);
         notifyIfacesChangedForNetworkStats();
-        // Fix up the NetworkCapabilities of any networks that have this network as underlying.
-        if (newDefaultNetwork != null) {
-            propagateUnderlyingNetworkCapabilities(newDefaultNetwork.network);
-        }
 
         // Log 0 -> X and Y -> X default network transitions, where X is the new default.
         final Network network = (newDefaultNetwork != null) ? newDefaultNetwork.network : null;
@@ -7274,6 +7323,49 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mMetricsLog.logDefaultNetworkEvent(network, score, validated, lp, nc,
                 prevNetwork, prevScore, prevLp, prevNc);
+    }
+
+    private void makeDefaultForApps(@NonNull final NetworkRequestInfo nri,
+            @Nullable final NetworkAgentInfo oldDefaultNetwork,
+            @Nullable final NetworkAgentInfo newDefaultNetwork) {
+        try {
+            if (VDBG) {
+                log("Setting default network for " + nri
+                        + " using UIDs " + nri.getUids()
+                        + " with old network " + (oldDefaultNetwork != null
+                        ? oldDefaultNetwork.network().getNetId() : "null")
+                        + " and new network " + (newDefaultNetwork != null
+                        ? newDefaultNetwork.network().getNetId() : "null"));
+            }
+            if (nri.getUids().isEmpty()) {
+                throw new IllegalStateException("makeDefaultForApps called without specifying"
+                        + " any applications to set as the default." + nri);
+            }
+            if (null != newDefaultNetwork) {
+                mNetd.networkAddUidRanges(
+                        newDefaultNetwork.network.getNetId(),
+                        toUidRangeStableParcels(nri.getUids()));
+            }
+            if (null != oldDefaultNetwork) {
+                mNetd.networkRemoveUidRanges(
+                        oldDefaultNetwork.network.getNetId(),
+                        toUidRangeStableParcels(nri.getUids()));
+            }
+        } catch (RemoteException | ServiceSpecificException e) {
+            loge("Exception setting OEM network preference default network :" + e);
+        }
+    }
+
+    private void makeDeviceDefaultNetwork(@Nullable final NetworkAgentInfo newDefaultNetwork) {
+        try {
+            if (null != newDefaultNetwork) {
+                mNetd.networkSetDefault(newDefaultNetwork.network.getNetId());
+            } else {
+                mNetd.networkClearDefault();
+            }
+        } catch (RemoteException | ServiceSpecificException e) {
+            loge("Exception setting default network :" + e);
+        }
     }
 
     private void processListenRequests(@NonNull final NetworkAgentInfo nai) {
@@ -7397,9 +7489,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             @Nullable final NetworkAgentInfo previousSatisfier,
             @Nullable final NetworkAgentInfo newSatisfier,
             final long now) {
-        if (newSatisfier != null) {
+        if (null != newRequest && mNoServiceNetwork != newSatisfier) {
             if (VDBG) log("rematch for " + newSatisfier.toShortString());
-            if (previousSatisfier != null) {
+            if (null != previousSatisfier && mNoServiceNetwork != previousSatisfier) {
                 if (VDBG || DDBG) {
                     log("   accepting network in place of " + previousSatisfier.toShortString());
                 }
@@ -7413,7 +7505,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 Log.wtf(TAG, "BUG: " + newSatisfier.toShortString() + " already has "
                         + newRequest);
             }
-        } else {
+        } else if (null != previousSatisfier) {
             if (DBG) {
                 log("Network " + previousSatisfier.toShortString() + " stopped satisfying"
                         + " request " + previousRequest.requestId);
@@ -7464,7 +7556,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 }
             }
-            if (bestNetwork != nri.mSatisfier) {
+            if (null == bestNetwork && isDeviceDefaultBlocked(nri)) {
+                // Remove device default networking if disallowed for OEM default requests.
+                bestNetwork = mNoServiceNetwork;
+            }
+            if (nri.getSatisfier() != bestNetwork) {
                 // bestNetwork may be null if no network can satisfy this request.
                 changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
                         nri, nri.mActiveRequest, bestRequest, nri.getSatisfier(), bestNetwork));
@@ -7624,34 +7720,34 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void updateLegacyTypeTrackerAndVpnLockdownForRematch(
             @NonNull final NetworkReassignment changes,
             @NonNull final Collection<NetworkAgentInfo> nais) {
-        final NetworkReassignment.RequestReassignment fallbackReassignment =
-                changes.getReassignment(mFallbackRequest);
-        final NetworkAgentInfo oldFallbackNetwork =
-                null != fallbackReassignment ? fallbackReassignment.mOldNetwork : null;
-        final NetworkAgentInfo newFallbackNetwork =
-                null != fallbackReassignment ? fallbackReassignment.mNewNetwork : null;
+        final NetworkReassignment.RequestReassignment deviceDefaultReassignment =
+                changes.getReassignment(mDeviceDefaultRequest);
+        final NetworkAgentInfo oldDefaultNetwork =
+                null != deviceDefaultReassignment ? deviceDefaultReassignment.mOldNetwork : null;
+        final NetworkAgentInfo newDefaultNetwork =
+                null != deviceDefaultReassignment ? deviceDefaultReassignment.mNewNetwork : null;
 
-        if (oldFallbackNetwork != newFallbackNetwork) {
+        if (oldDefaultNetwork != newDefaultNetwork) {
             // Maintain the illusion : since the legacy API only understands one network at a time,
             // if the default network changed, apps should see a disconnected broadcast for the
             // old default network before they see a connected broadcast for the new one.
-            if (oldFallbackNetwork != null) {
-                mLegacyTypeTracker.remove(oldFallbackNetwork.networkInfo.getType(),
-                        oldFallbackNetwork, true);
+            if (oldDefaultNetwork != null) {
+                mLegacyTypeTracker.remove(oldDefaultNetwork.networkInfo.getType(),
+                        oldDefaultNetwork, true);
             }
-            if (newFallbackNetwork != null) {
+            if (newDefaultNetwork != null) {
                 // The new default network can be newly null if and only if the old default
                 // network doesn't satisfy the default request any more because it lost a
                 // capability.
-                mDefaultInetConditionPublished = newFallbackNetwork.lastValidated ? 100 : 0;
+                mDefaultInetConditionPublished = newDefaultNetwork.lastValidated ? 100 : 0;
                 mLegacyTypeTracker.add(
-                        newFallbackNetwork.networkInfo.getType(), newFallbackNetwork);
+                        newDefaultNetwork.networkInfo.getType(), newDefaultNetwork);
                 // If the legacy VPN is connected, notifyLockdownVpn may end up sending a broadcast
                 // to reflect the NetworkInfo of this new network. This broadcast has to be sent
                 // after the disconnect broadcasts above, but before the broadcasts sent by the
                 // legacy type tracker below.
                 // TODO : refactor this, it's too complex
-                notifyLockdownVpn(newFallbackNetwork);
+                notifyLockdownVpn(newDefaultNetwork);
             }
         }
 
@@ -7686,7 +7782,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         // A VPN generally won't get added to the legacy tracker in the "for (nri)" loop above,
-        // because usually there are no NetworkRequests it satisfies (e.g., mFallbackRequest
+        // because usually there are no NetworkRequests it satisfies (e.g., mDeviceDefaultRequest
         // wants the NOT_VPN capability, so it will never be satisfied by a VPN). So, add the
         // newNetwork to the tracker explicitly (it's a no-op if it has already been added).
         if (nai.isVPN()) {
@@ -7697,9 +7793,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void updateInetCondition(NetworkAgentInfo nai) {
         // Don't bother updating until we've graduated to validated at least once.
         if (!nai.everValidated) return;
-        // For now only update icons for the fallback connection.
+        // For now only update icons for the device default connection.
         // TODO: Update WiFi and cellular icons separately. b/17237507
-        if (!isFallbackNetwork(nai)) return;
+        if (!isDeviceDefaultNetwork(nai)) return;
 
         int newInetCondition = nai.lastValidated ? 100 : 0;
         // Don't repeat publish.
@@ -7967,8 +8063,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 intent.putExtra(ConnectivityManager.EXTRA_EXTRA_INFO, info.getExtraInfo());
             }
             NetworkAgentInfo newDefaultAgent = null;
-            if (nai.isSatisfyingRequest(mFallbackRequest.mRequests.get(0).requestId)) {
-                newDefaultAgent = getFallbackNetwork();
+            if (nai.isSatisfyingRequest(mDeviceDefaultRequest.mRequests.get(0).requestId)) {
+                newDefaultAgent = getDeviceDefaultNetwork();
                 if (newDefaultAgent != null) {
                     intent.putExtra(ConnectivityManager.EXTRA_OTHER_NETWORK_INFO,
                             newDefaultAgent.networkInfo);
@@ -8016,9 +8112,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private Network[] getDefaultNetworks() {
         ensureRunningOnConnectivityServiceThread();
         final ArrayList<Network> defaultNetworks = new ArrayList<>();
-        final NetworkAgentInfo fallbackNetwork = getFallbackNetwork();
+        final NetworkAgentInfo defaultNetwork = getDeviceDefaultNetwork();
         for (NetworkAgentInfo nai : mNetworkAgentInfos) {
-            if (nai.everConnected && (nai == fallbackNetwork || nai.isVPN())) {
+            if (nai.everConnected && (nai == defaultNetwork || nai.isVPN())) {
                 defaultNetworks.add(nai.network);
             }
         }
