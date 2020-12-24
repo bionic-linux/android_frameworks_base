@@ -292,6 +292,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // Default to 30s linger time-out. Modifiable only for testing.
     private static final String LINGER_DELAY_PROPERTY = "persist.netmon.linger";
     private static final int DEFAULT_LINGER_DELAY_MS = 30_000;
+    private static final int AID_VPN = 1016;
     @VisibleForTesting
     protected int mLingerDelayMs;  // Can't be final, or test subclass constructors can't change it.
 
@@ -6712,6 +6713,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return stableRanges;
     }
 
+    private void maybeCloseSockets(NetworkAgentInfo nai, UidRangeParcel[] ranges,
+            int[] exemptUids) {
+        if (nai.isVPN() && !nai.networkAgentConfig.allowBypass) {
+            try {
+                mNetd.socketDestroy(ranges, exemptUids);
+            } catch (Exception e) {
+                loge("Exception in socket destroy: ", e);
+            }
+        }
+    }
+
     private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
         Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
@@ -6724,6 +6736,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         newRanges.removeAll(prevRangesCopy);
 
         try {
+            int[] exemptUids = new int[2];
+            exemptUids[0] = AID_VPN;
+            exemptUids[1] = nai.networkCapabilities.getOwnerUid();
             // When updating the VPN uid routing rules, add the new range first then remove the old
             // range. If old range were removed first, there would be a window between the old
             // range being removed and the new range being added, during which UIDs contained
@@ -6731,11 +6746,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // removing old range works because, unlike the filtering rules below, it's possible to
             // add duplicate UID routing rules.
             if (!newRanges.isEmpty()) {
-                mNetd.networkAddUidRanges(nai.network.netId, toUidRangeStableParcels(newRanges));
+                UidRangeParcel[] ranges = toUidRangeStableParcels(newRanges);
+                maybeCloseSockets(nai, ranges, exemptUids);
+                mNetd.networkAddUidRanges(nai.network.netId, ranges);
+                maybeCloseSockets(nai, ranges, exemptUids);
             }
             if (!prevRanges.isEmpty()) {
-                mNetd.networkRemoveUidRanges(
-                        nai.network.netId, toUidRangeStableParcels(prevRanges));
+                UidRangeParcel[] ranges = toUidRangeStableParcels(prevRanges);
+                maybeCloseSockets(nai, ranges, exemptUids);
+                mNetd.networkRemoveUidRanges(nai.network.netId, ranges);
+                maybeCloseSockets(nai, ranges, exemptUids);
             }
             final boolean wasFiltering = requiresVpnIsolation(nai, prevNc, nai.linkProperties);
             final boolean shouldFilter = requiresVpnIsolation(nai, newNc, nai.linkProperties);
