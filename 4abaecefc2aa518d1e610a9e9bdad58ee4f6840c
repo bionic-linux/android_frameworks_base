@@ -16,6 +16,24 @@
       "message": "Did you want to also migrate ProxyInfo.",
       "revId": "4abaecefc2aa518d1e610a9e9bdad58ee4f6840c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b96a570_ca09dca2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1403265
+      },
+      "writtenOn": "2020-12-24T07:35:45Z",
+      "side": 1,
+      "message": "I wanted to migrate completely, but I had issue with toooo many approval requirements. Thus now I am trying to migrate part within frameworks/base and do other packages sometime later.",
+      "parentUuid": "1ff356ff_5a84e442",
+      "revId": "4abaecefc2aa518d1e610a9e9bdad58ee4f6840c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
