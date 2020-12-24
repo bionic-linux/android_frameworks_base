@@ -450,6 +450,22 @@ public class NetworkPolicyManager {
         }
     }
 
+    /**
+     * Check that the given uid is restricted from doing networking on metered networks.
+     *
+     * @param uid The target uid.
+     * @return true if the given uid is restricted from doing networking on metered networks.
+     *
+     * @hide
+     */
+    public boolean isUidRestrictedOnMeteredNetworks(int uid) {
+        try {
+            return mService.isUidRestrictedOnMeteredNetworks(uid);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /** {@hide} */
     @Deprecated
     public static Iterator<Pair<ZonedDateTime, ZonedDateTime>> cycleIterator(NetworkPolicy policy) {
