@@ -17,6 +17,7 @@
 package com.android.server.wm;
 
 import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_CROSSFADE;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_JUMPCUT;
 import static android.view.WindowManager.LayoutParams.ROTATION_ANIMATION_ROTATE;
@@ -331,7 +332,7 @@ public class DisplayRotation {
         final boolean isTv = mContext.getPackageManager().hasSystemFeature(
                 PackageManager.FEATURE_LEANBACK);
         mDefaultFixedToUserRotation =
-                (isCar || isTv || mService.mIsPc || mDisplayContent.forceDesktopMode())
+                (isCar || isTv || mService.mIsPc)
                 // For debug purposes the next line turns this feature off with:
                 // $ adb shell setprop config.override_forced_orient true
                 // $ adb shell wm size reset
@@ -370,7 +371,18 @@ public class DisplayRotation {
                 updateOrientationListenerLw();
             }
         }
-        return updateRotationUnchecked(forceUpdate);
+        final DisplayContent defaultDisplay = mService.mRoot.getDisplayContent(DEFAULT_DISPLAY);
+        final int defaultRotation = (isDefaultDisplay || defaultDisplay == null)
+                   ? -1
+                   : defaultDisplay.getSensorRotation();
+        final int defaultUserRotationMode = (isDefaultDisplay || defaultDisplay == null)
+                   ? WindowManagerPolicy.USER_ROTATION_FREE
+                   : defaultDisplay.getUserRotationMode();
+        final int defaultUserRotation = (isDefaultDisplay || defaultDisplay == null)
+                   ? Surface.ROTATION_0
+                   : defaultDisplay.getUserRotation();
+        return updateRotationUnchecked(forceUpdate, defaultRotation, defaultUserRotationMode,
+            defaultUserRotation);
     }
 
     /**
@@ -379,7 +391,18 @@ public class DisplayRotation {
      * @return {@code true} if the rotation has been changed and the new config is sent.
      */
     boolean updateRotationAndSendNewConfigIfChanged() {
-        final boolean changed = updateRotationUnchecked(false /* forceUpdate */);
+        final DisplayContent defaultDisplay = mService.mRoot.getDisplayContent(DEFAULT_DISPLAY);
+        final int defaultRotation = (isDefaultDisplay || defaultDisplay == null)
+                   ? -1
+                   : defaultDisplay.getSensorRotation();
+        final int defaultUserRotationMode = (isDefaultDisplay || defaultDisplay == null)
+                   ? WindowManagerPolicy.USER_ROTATION_FREE
+                   : defaultDisplay.getUserRotationMode();
+        final int defaultUserRotation = (isDefaultDisplay || defaultDisplay == null)
+                   ? Surface.ROTATION_0
+                   : defaultDisplay.getUserRotation();
+        final boolean changed = updateRotationUnchecked(false /* forceUpdate */, defaultRotation,
+            defaultUserRotationMode, defaultUserRotation);
         if (changed) {
             mDisplayContent.sendNewConfiguration();
         }
@@ -402,6 +425,13 @@ public class DisplayRotation {
      *         THE SCREEN.
      */
     boolean updateRotationUnchecked(boolean forceUpdate) {
+        return updateRotationUnchecked(forceUpdate, -1
+                , WindowManagerPolicy.USER_ROTATION_FREE
+                , Surface.ROTATION_0);
+    }
+
+    boolean updateRotationUnchecked(boolean forceUpdate, int defaultRotation,
+            int userRotationMode, int userRotation) {
         final int displayId = mDisplayContent.getDisplayId();
         if (!forceUpdate) {
             if (mDeferredRotationPauseCount > 0) {
@@ -447,7 +477,10 @@ public class DisplayRotation {
 
         final int oldRotation = mRotation;
         final int lastOrientation = mLastOrientation;
-        final int rotation = rotationForOrientation(lastOrientation, oldRotation);
+        final int rotation = isDefaultDisplay
+                             ? rotationForOrientation(lastOrientation, oldRotation)
+                             : rotationForOrientation(lastOrientation, oldRotation, defaultRotation,
+                                 userRotationMode, userRotation);
         ProtoLog.v(WM_DEBUG_ORIENTATION,
                 "Computed rotation=%s (%d) for display id=%d based on lastOrientation=%s (%d) and "
                         + "oldRotation=%s (%d)",
@@ -1044,6 +1077,13 @@ public class DisplayRotation {
         return oldRotation != rotation;
     }
 
+    int getSensorRotation() {
+        final int sensorRotation = mOrientationListener != null
+                ? mOrientationListener.getProposedRotation() // may be -1
+                : -1;
+        return sensorRotation;
+    }
+
     /**
      * Given an orientation constant, returns the appropriate surface rotation, taking into account
      * sensors, docking mode, rotation lock, and other factors.
@@ -1057,6 +1097,13 @@ public class DisplayRotation {
     @Surface.Rotation
     int rotationForOrientation(@ScreenOrientation int orientation,
             @Surface.Rotation int lastRotation) {
+        return rotationForOrientation(orientation, lastRotation,
+                        -1, mUserRotationMode, mUserRotation);
+    }
+
+    int rotationForOrientation(@ScreenOrientation int orientation,
+            @Surface.Rotation int lastRotation, int defaultRotation, int userRotationMode,
+                int userRotation) {
         ProtoLog.v(WM_DEBUG_ORIENTATION,
                 "rotationForOrientation(orient=%s (%d), last=%s (%d)); user=%s (%d) %s",
                 ActivityInfo.screenOrientationToString(orientation), orientation,
@@ -1072,6 +1119,11 @@ public class DisplayRotation {
         int sensorRotation = mOrientationListener != null
                 ? mOrientationListener.getProposedRotation() // may be -1
                 : -1;
+        if (!isDefaultDisplay) {
+            sensorRotation = defaultRotation;
+            mUserRotationMode = userRotationMode;
+            mUserRotation = userRotation;
+        }
         if (sensorRotation < 0) {
             sensorRotation = lastRotation;
         }
@@ -1085,11 +1137,7 @@ public class DisplayRotation {
                 mDisplayPolicy.isDeskDockEnablesAccelerometer();
 
         final int preferredRotation;
-        if (!isDefaultDisplay) {
-            // For secondary displays we ignore things like displays sensors, docking mode and
-            // rotation lock, and always prefer user rotation.
-            preferredRotation = mUserRotation;
-        } else if (lidState == LID_OPEN && mLidOpenRotation >= 0) {
+        if (lidState == LID_OPEN && mLidOpenRotation >= 0) {
             // Ignore sensor when lid switch is open and rotation is forced.
             preferredRotation = mLidOpenRotation;
         } else if (dockMode == Intent.EXTRA_DOCK_STATE_CAR

@@ -3831,7 +3831,13 @@ public class WindowManagerService extends IWindowManager.Stub
                 for (int i = 0; i < displayCount; ++i) {
                     final DisplayContent displayContent = mRoot.mChildren.get(i);
                     Trace.traceBegin(TRACE_TAG_WINDOW_MANAGER, "updateRotation: display");
-                    final boolean rotationChanged = displayContent.updateRotationUnchecked();
+                    final DisplayContent defaultDisplayContent = getDefaultDisplayContentLocked();
+                    final boolean rotationChanged = displayContent.isDefaultDisplay
+                                            ? displayContent.updateRotationUnchecked()
+                                            : displayContent.updateRotationUnchecked(false
+                                                 , defaultDisplayContent.getSensorRotation()
+                                                 , defaultDisplayContent.getUserRotationMode()
+                                                 , defaultDisplayContent.getUserRotation());
                     Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);
 
                     if (rotationChanged) {
@@ -5716,7 +5722,13 @@ public class WindowManagerService extends IWindowManager.Stub
 
         if (updateRotation && displayContent != null) {
             ProtoLog.d(WM_DEBUG_ORIENTATION, "Performing post-rotate rotation");
-            configChanged |= displayContent.updateRotationUnchecked();
+            final DisplayContent defaultDisplayContent = getDefaultDisplayContentLocked();
+            configChanged |= displayContent.isDefaultDisplay
+                                ? displayContent.updateRotationUnchecked()
+                                : displayContent.updateRotationUnchecked(false
+                                    , defaultDisplayContent.getSensorRotation()
+                                    , defaultDisplayContent.getUserRotationMode()
+                                    , defaultDisplayContent.getUserRotation());
         }
 
         if (configChanged) {
