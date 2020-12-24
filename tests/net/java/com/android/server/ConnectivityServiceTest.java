@@ -8150,4 +8150,50 @@ public class ConnectivityServiceTest {
             assertTrue(isRequestIdInOrder);
         }
     }
+
+    private void assertVpnUidRangesUpdate(ConnectivityService.Action action,
+                                          Set<UidRange> vpnRanges) throws Exception {
+        InOrder inOrder = inOrder(mMockNetd);
+        ArgumentCaptor<int[]> exemptUidCaptor = ArgumentCaptor.forClass(int[].class);
+
+        inOrder.verify(mMockNetd, times(1)).socketDestroy(eq(toUidRangeStableParcels(vpnRanges)),
+                exemptUidCaptor.capture());
+        assertContainsExactly(exemptUidCaptor.getValue(), Process.VPN_UID, VPN_UID);
+
+        if (action == ConnectivityService.Action.ADD) {
+            inOrder.verify(mMockNetd, times(1)).networkAddUidRanges(eq(mMockVpn.getNetId()),
+                    eq(toUidRangeStableParcels(vpnRanges)));
+        } else {
+            inOrder.verify(mMockNetd, times(1)).networkRemoveUidRanges(eq(mMockVpn.getNetId()),
+                    eq(toUidRangeStableParcels(vpnRanges)));
+        }
+
+        inOrder.verify(mMockNetd, times(1)).socketDestroy(eq(toUidRangeStableParcels(vpnRanges)),
+                exemptUidCaptor.capture());
+        assertContainsExactly(exemptUidCaptor.getValue(), Process.VPN_UID, VPN_UID);
+    }
+
+    @Test
+    public void testVpnUidRangesUpdate() throws Exception {
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName("tun0");
+        lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), null));
+        lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null));
+        final UidRange vpnRange = UidRange.createForUser(VPN_USER);
+        Set<UidRange> vpnRanges = Collections.singleton(vpnRange);
+        mMockVpn.establish(lp, VPN_UID, vpnRanges);
+
+        assertVpnUidRangesUpdate(ConnectivityService.Action.ADD, vpnRanges);
+
+        reset(mMockNetd);
+        // Update to new range which is old range minus APP1, i.e. only APP2
+        final Set<UidRange> newRanges = new HashSet<>(Arrays.asList(
+                new UidRange(vpnRange.start, APP1_UID - 1),
+                new UidRange(APP1_UID + 1, vpnRange.stop)));
+        mMockVpn.setUids(newRanges);
+        waitForIdle();
+
+        assertVpnUidRangesUpdate(ConnectivityService.Action.ADD, newRanges);
+        assertVpnUidRangesUpdate(ConnectivityService.Action.REMOVE, vpnRanges);
+    }
 }
