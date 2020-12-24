@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7a421045_fee8f086",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-12-24T03:54:57Z",
+      "side": 1,
+      "message": "Would it be better to use boolean instead of void so we can know if this API call succeed or not?",
+      "range": {
+        "startLine": 2228,
+        "startChar": 11,
+        "endLine": 2228,
+        "endChar": 16
+      },
+      "revId": "1d521924645142536c44ec43b062ae8709916419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c0586301_1281223f",
         "filename": "core/java/android/nfc/NfcAdapter.java",
         "patchSetId": 4
