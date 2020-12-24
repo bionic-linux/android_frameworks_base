@@ -6268,6 +6268,17 @@ package android.net {
     field public final android.net.WifiKey wifiKey;
   }
 
+  public class NetworkPolicyManager {
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public void registerNetworkPolicyCallback(@NonNull java.util.concurrent.Executor, @NonNull android.net.NetworkPolicyManager.NetworkPolicyCallback);
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public void unregisterNetworkPolicyCallback(@NonNull android.net.NetworkPolicyManager.NetworkPolicyCallback);
+  }
+
+  public static class NetworkPolicyManager.NetworkPolicyCallback {
+    ctor public NetworkPolicyManager.NetworkPolicyCallback();
+    method public void onRestrictBackgroundChanged(boolean);
+    method public void onUidRulesChanged(int, int);
+  }
+
   public class NetworkProvider {
     ctor public NetworkProvider(@NonNull android.content.Context, @NonNull android.os.Looper, @NonNull String);
     method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void declareNetworkRequestUnfulfillable(@NonNull android.net.NetworkRequest);

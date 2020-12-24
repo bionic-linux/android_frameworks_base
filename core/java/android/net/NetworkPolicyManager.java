@@ -20,7 +20,9 @@ import static android.content.pm.PackageManager.GET_SIGNATURES;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.app.ActivityManager;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -31,6 +33,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
+import android.os.Binder;
 import android.os.Build;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -48,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
 
 /**
  * Manager for creating and modifying network policy rules.
@@ -55,6 +59,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @hide
  */
 @SystemService(Context.NETWORK_POLICY_SERVICE)
+@SystemApi
 public class NetworkPolicyManager {
 
     /* POLICY_* are masks and can be ORed, although currently they are not.*/
@@ -187,7 +192,9 @@ public class NetworkPolicyManager {
     private INetworkPolicyManager mService;
 
     private final Map<SubscriptionCallback, SubscriptionCallbackProxy>
-            mCallbackMap = new ConcurrentHashMap<>();
+            mSubscriptionCallbackMap = new ConcurrentHashMap<>();
+    private final Map<NetworkPolicyCallback, NetworkPolicyCallbackProxy>
+            mNetworkPolicyCallbackMap = new ConcurrentHashMap<>();
 
     /** @hide */
     public NetworkPolicyManager(Context context, INetworkPolicyManager service) {
@@ -294,6 +301,44 @@ public class NetworkPolicyManager {
         }
     }
 
+    /**
+     * Register network policy callback.
+     *
+     * @param executor The Executor to be used for running the callback method invocations.
+     * @param callback The callback to register
+     */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
+    public void registerNetworkPolicyCallback(
+            @NonNull Executor executor, @NonNull NetworkPolicyCallback callback) {
+        if (callback == null) {
+            throw new NullPointerException("Callback cannot be null.");
+        }
+
+        final NetworkPolicyCallbackProxy callbackProxy =
+                new NetworkPolicyCallbackProxy(callback, executor);
+        if (null != mNetworkPolicyCallbackMap.putIfAbsent(callback, callbackProxy)) {
+            throw new IllegalArgumentException("Callback is already registered.");
+        }
+        registerListener(callbackProxy);
+    }
+
+    /**
+     * Unregister network policy callback.
+     *
+     * @param callback The callback to unregister.
+     */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
+    public void unregisterNetworkPolicyCallback(@NonNull NetworkPolicyCallback callback) {
+        if (callback == null) {
+            throw new NullPointerException("Callback cannot be null.");
+        }
+
+        final NetworkPolicyCallbackProxy callbackProxy = mNetworkPolicyCallbackMap.remove(callback);
+        if (callbackProxy == null) return;
+
+        unregisterListener(callbackProxy);
+    }
+
     /** @hide */
     @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
     public void registerSubscriptionCallback(@NonNull SubscriptionCallback callback) {
@@ -302,7 +347,7 @@ public class NetworkPolicyManager {
         }
 
         final SubscriptionCallbackProxy callbackProxy = new SubscriptionCallbackProxy(callback);
-        if (null != mCallbackMap.putIfAbsent(callback, callbackProxy)) {
+        if (null != mSubscriptionCallbackMap.putIfAbsent(callback, callbackProxy)) {
             throw new IllegalArgumentException("Callback is already registered.");
         }
         registerListener(callbackProxy);
@@ -315,7 +360,7 @@ public class NetworkPolicyManager {
             throw new NullPointerException("Callback cannot be null.");
         }
 
-        final SubscriptionCallbackProxy callbackProxy = mCallbackMap.remove(callback);
+        final SubscriptionCallbackProxy callbackProxy = mSubscriptionCallbackMap.remove(callback);
         if (callbackProxy == null) return;
 
         unregisterListener(callbackProxy);
@@ -434,8 +479,9 @@ public class NetworkPolicyManager {
 
     /**
      * Get multipath preference for the given network.
+     * @hide
      */
-    public int getMultipathPreference(Network network) {
+    public int getMultipathPreference(@Nullable Network network) {
         try {
             return mService.getMultipathPreference(network);
         } catch (RemoteException e) {
@@ -560,6 +606,57 @@ public class NetworkPolicyManager {
     /** @hide */
     public static String resolveNetworkId(String ssid) {
         return WifiInfo.sanitizeSsid(ssid);
+    }
+
+    /**
+     * Base class for Network Policy callbacks. Used for notifications about network policy events.
+     */
+    public static class NetworkPolicyCallback {
+        /**
+         * Notify that the rules has changed for the uid.
+         *
+         * @param uid An uid which has updated rules.
+         * @param uidRules  Specific rules for the uid.
+         */
+        public void onUidRulesChanged(int uid, int uidRules) {}
+
+        /**
+         * Notify that if the background data is restricted.
+         *
+         * @param restrictBackground A boolean value indicates if the background data
+         *     is restricted or not.
+         */
+        public void onRestrictBackgroundChanged(boolean restrictBackground) {}
+    }
+
+    /** @hide */
+    public class NetworkPolicyCallbackProxy extends Listener {
+        private final NetworkPolicyCallback mCallback;
+        private final Executor mExecutor;
+
+        NetworkPolicyCallbackProxy(
+                @NonNull NetworkPolicyCallback callback, @NonNull Executor executor) {
+            mCallback = callback;
+            mExecutor = executor;
+        }
+
+        @Override
+        public void onUidRulesChanged(int uid, int uidRules) {
+            Binder.withCleanCallingIdentity(() -> {
+                mExecutor.execute(() -> {
+                    mCallback.onUidRulesChanged(uid, uidRules);
+                });
+            });
+        }
+
+        @Override
+        public void onRestrictBackgroundChanged(boolean restrictBackground) {
+            Binder.withCleanCallingIdentity(() -> {
+                mExecutor.execute(() -> {
+                    mCallback.onRestrictBackgroundChanged(restrictBackground);
+                });
+            });
+        }
     }
 
     /** @hide */
