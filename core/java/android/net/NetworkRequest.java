@@ -25,8 +25,10 @@ import android.net.NetworkCapabilities.NetCapability;
 import android.net.NetworkCapabilities.Transport;
 import android.os.Build;
 import android.os.Parcel;
+import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.os.Process;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.util.proto.ProtoOutputStream;
 
@@ -366,6 +368,27 @@ public class NetworkRequest implements Parcelable {
         @RequiresPermission(android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP)
         public @NonNull Builder setSignalStrength(int signalStrength) {
             mNetworkCapabilities.setSignalStrength(signalStrength);
+            return this;
+        }
+
+        /**
+         * Sets the optional subscription group id.
+         * <p>
+         * This specify the subscription group id requirement.
+         * Only the networks with the specified subscription group id will satisfy the
+         * request. On the other hand, for requests that don't specify subscription group id,
+         * networks with or without the subscription group id could both satisfy them.
+         *
+         * @param subscriptionGroupId A {@code ParcelUuid} that represents for a subscription group.
+         *                            See {@link SubscriptionManager#createSubscriptionGroup} for
+         *                            more details.
+         *
+         * @hide
+         */
+        @NonNull
+        @SystemApi
+        public Builder setSubscriptionGroupId(@Nullable ParcelUuid subscriptionGroupId) {
+            mNetworkCapabilities.setSubscriptionGroupId(subscriptionGroupId);
             return this;
         }
     }
