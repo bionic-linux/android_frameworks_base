@@ -5240,6 +5240,20 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         return ret;
     }
 
+    @Override
+    public boolean isUidRestrictedOnMeteredNetworks(int uid) {
+        enforceAnyPermissionOf(OBSERVE_NETWORK_POLICY, PERMISSION_MAINLINE_NETWORK_STACK);
+        final int uidRules;
+        final boolean isBackgroundRestricted;
+        synchronized (mUidRulesFirstLock) {
+            uidRules = mUidRules.get(uid, RULE_ALLOW_ALL);
+            isBackgroundRestricted = mRestrictBackground;
+        }
+        return isBackgroundRestricted
+                && !hasRule(uidRules, RULE_ALLOW_METERED)
+                && !hasRule(uidRules, RULE_TEMPORARY_ALLOW_METERED);
+    }
+
     private static boolean isSystem(int uid) {
         return uid < Process.FIRST_APPLICATION_UID;
     }
@@ -5310,22 +5324,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     }
                 }
             }
-        }
-
-        /**
-         * @return true if the given uid is restricted from doing networking on metered networks.
-         */
-        @Override
-        public boolean isUidRestrictedOnMeteredNetworks(int uid) {
-            final int uidRules;
-            final boolean isBackgroundRestricted;
-            synchronized (mUidRulesFirstLock) {
-                uidRules = mUidRules.get(uid, RULE_ALLOW_ALL);
-                isBackgroundRestricted = mRestrictBackground;
-            }
-            return isBackgroundRestricted
-                    && !hasRule(uidRules, RULE_ALLOW_METERED)
-                    && !hasRule(uidRules, RULE_TEMPORARY_ALLOW_METERED);
         }
 
         @Override
