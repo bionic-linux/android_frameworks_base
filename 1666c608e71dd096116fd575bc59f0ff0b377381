@@ -16,6 +16,24 @@
       "message": "There is a merge conflict at BatteryStatsService.java.",
       "revId": "1666c608e71dd096116fd575bc59f0ff0b377381",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0a7b87a_5955b0a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-24T10:41:21Z",
+      "side": 1,
+      "message": "Let\u0027s review here first. If design is ok, I will prepare a internal commit for this to solve it.",
+      "parentUuid": "4fae69d0_842e6c88",
+      "revId": "1666c608e71dd096116fd575bc59f0ff0b377381",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
