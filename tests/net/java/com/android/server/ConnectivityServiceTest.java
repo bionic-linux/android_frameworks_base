@@ -3359,6 +3359,7 @@ public class ConnectivityServiceTest {
         assertEquals(null, mCm.getActiveNetwork());
 
         mMockVpn.establishForMyUid();
+        assertVpnUidRangesUpdate(true);
         defaultNetworkCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         assertEquals(defaultNetworkCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
@@ -5047,6 +5048,7 @@ public class ConnectivityServiceTest {
         lp.setInterfaceName(VPN_IFNAME);
 
         mMockVpn.establishForMyUid(lp);
+        assertVpnUidRangesUpdate(true);
 
         final Network[] cellAndVpn = new Network[] {
                 mCellNetworkAgent.getNetwork(), mMockVpn.getNetwork()};
@@ -5632,6 +5634,7 @@ public class ConnectivityServiceTest {
         // (and doing so is difficult without using reflection) but it's good to test that the code
         // behaves approximately correctly.
         mMockVpn.establishForMyUid(false, true, false);
+        assertVpnUidRangesUpdate(true);
         final Network wifiNetwork = new Network(mNetIdManager.peekNextNetId());
         mService.setUnderlyingNetworksForVpn(new Network[]{wifiNetwork});
         callback.expectAvailableCallbacksUnvalidated(mMockVpn);
@@ -5789,6 +5792,7 @@ public class ConnectivityServiceTest {
 
         mMockVpn.establishForMyUid(true /* validated */, false /* hasInternet */,
                 false /* isStrictMode */);
+        assertVpnUidRangesUpdate(true);
 
         defaultCallback.assertNoCallback();
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
@@ -5814,6 +5818,7 @@ public class ConnectivityServiceTest {
 
         mMockVpn.establishForMyUid(true /* validated */, true /* hasInternet */,
                 false /* isStrictMode */);
+        assertVpnUidRangesUpdate(true);
 
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
@@ -5839,6 +5844,7 @@ public class ConnectivityServiceTest {
         // Bring up a VPN that has the INTERNET capability, initially unvalidated.
         mMockVpn.establishForMyUid(false /* validated */, true /* hasInternet */,
                 false /* isStrictMode */);
+        assertVpnUidRangesUpdate(true);
 
         // Even though the VPN is unvalidated, it becomes the default network for our app.
         callback.expectAvailableCallbacksUnvalidated(mMockVpn);
@@ -5890,6 +5896,7 @@ public class ConnectivityServiceTest {
 
         mMockVpn.establishForMyUid(true /* validated */, false /* hasInternet */,
                 false /* isStrictMode */);
+        assertVpnUidRangesUpdate(true);
 
         vpnNetworkCallback.expectAvailableCallbacks(mMockVpn.getNetwork(),
                 false /* suspended */, false /* validated */, false /* blocked */, TIMEOUT_MS);
@@ -5931,6 +5938,7 @@ public class ConnectivityServiceTest {
 
         mMockVpn.establishForMyUid(true /* validated */, false /* hasInternet */,
                 false /* isStrictMode */);
+        assertVpnUidRangesUpdate(true);
 
         vpnNetworkCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         nc = mCm.getNetworkCapabilities(mMockVpn.getNetwork());
@@ -6098,6 +6106,7 @@ public class ConnectivityServiceTest {
 
         mMockVpn.establishForMyUid(true /* validated */, false /* hasInternet */,
                 false /* isStrictMode */);
+        assertVpnUidRangesUpdate(true);
 
         vpnNetworkCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         nc = mCm.getNetworkCapabilities(mMockVpn.getNetwork());
@@ -6156,6 +6165,7 @@ public class ConnectivityServiceTest {
 
         // Bring up a VPN
         mMockVpn.establishForMyUid();
+        assertVpnUidRangesUpdate(true);
         callback.expectAvailableThenValidatedCallbacks(mMockVpn);
         callback.assertNoCallback();
 
@@ -6258,6 +6268,7 @@ public class ConnectivityServiceTest {
 
         // Connect VPN network. By default it is using current default network (Cell).
         mMockVpn.establishForMyUid();
+        assertVpnUidRangesUpdate(true);
 
         // Ensure VPN is now the active network.
         assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
@@ -6310,6 +6321,7 @@ public class ConnectivityServiceTest {
 
         // Connect VPN network.
         mMockVpn.establishForMyUid();
+        assertVpnUidRangesUpdate(true);
 
         // Ensure VPN is now the active network.
         assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
@@ -6657,6 +6669,7 @@ public class ConnectivityServiceTest {
         assertNetworkInfo(TYPE_WIFI, DetailedState.BLOCKED);
 
         mMockVpn.establishForMyUid();
+        assertVpnUidRangesUpdate(true);
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         vpnUidCallback.assertNoCallback();  // vpnUidCallback has NOT_VPN capability.
         assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
@@ -7314,6 +7327,7 @@ public class ConnectivityServiceTest {
         LinkProperties testLinkProperties = new LinkProperties();
         testLinkProperties.setHttpProxy(testProxyInfo);
         mMockVpn.establishForMyUid(testLinkProperties);
+        assertVpnUidRangesUpdate(true);
 
         // Test that the VPN network returns a proxy, and the WiFi does not.
         assertEquals(testProxyInfo, mService.getProxyForNetwork(mMockVpn.getNetwork()));
@@ -7351,6 +7365,7 @@ public class ConnectivityServiceTest {
         // The uid range needs to cover the test app so the network is visible to it.
         final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
         mMockVpn.establish(lp, VPN_UID, vpnRange);
+        assertVpnUidRangesUpdate(true, VPN_UID, vpnRange);
 
         // A connected VPN should have interface rules set up. There are two expected invocations,
         // one during the VPN initial connection, one during the VPN LinkProperties update.
@@ -7378,6 +7393,7 @@ public class ConnectivityServiceTest {
         // The uid range needs to cover the test app so the network is visible to it.
         final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
         mMockVpn.establish(lp, Process.SYSTEM_UID, vpnRange);
+        assertVpnUidRangesUpdate(true, Process.SYSTEM_UID, vpnRange);
 
         // Legacy VPN should not have interface rules set up
         verify(mMockNetd, never()).firewallAddUidInterfaceRules(any(), any());
@@ -7393,6 +7409,7 @@ public class ConnectivityServiceTest {
         // The uid range needs to cover the test app so the network is visible to it.
         final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
         mMockVpn.establish(lp, Process.SYSTEM_UID, vpnRange);
+        assertVpnUidRangesUpdate(true, Process.SYSTEM_UID, vpnRange);
 
         // IPv6 unreachable route should not be misinterpreted as a default route
         verify(mMockNetd, never()).firewallAddUidInterfaceRules(any(), any());
@@ -7407,6 +7424,7 @@ public class ConnectivityServiceTest {
         // The uid range needs to cover the test app so the network is visible to it.
         final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
         mMockVpn.establish(lp, VPN_UID, vpnRange);
+        assertVpnUidRangesUpdate(true, VPN_UID, vpnRange);
 
         // Connected VPN should have interface rules set up. There are two expected invocations,
         // one during VPN uid update, one during VPN LinkProperties update
@@ -7457,7 +7475,9 @@ public class ConnectivityServiceTest {
         lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null));
         // The uid range needs to cover the test app so the network is visible to it.
         final UidRange vpnRange = UidRange.createForUser(VPN_USER);
-        mMockVpn.establish(lp, VPN_UID, Collections.singleton(vpnRange));
+        final Set<UidRange> vpnRanges = Collections.singleton(vpnRange);
+        mMockVpn.establish(lp, VPN_UID, vpnRanges);
+        assertVpnUidRangesUpdate(true, VPN_UID, vpnRanges);
 
         reset(mMockNetd);
         InOrder inOrder = inOrder(mMockNetd);
@@ -7608,6 +7628,7 @@ public class ConnectivityServiceTest {
             throws Exception {
         final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
         mMockVpn.establish(new LinkProperties(), vpnOwnerUid, vpnRange);
+        assertVpnUidRangesUpdate(true, vpnOwnerUid, vpnRange);
         mMockVpn.setVpnType(vpnType);
 
         final VpnInfo vpnInfo = new VpnInfo();
@@ -7869,6 +7890,7 @@ public class ConnectivityServiceTest {
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
         mMockVpn.establishForMyUid();
+        assertVpnUidRangesUpdate(true);
 
         // Wait for networks to connect and broadcasts to be sent before removing permissions.
         waitForIdle();
@@ -8149,5 +8171,55 @@ public class ConnectivityServiceTest {
                             < nriOutput[i + 1].mRequests.get(0).requestId;
             assertTrue(isRequestIdInOrder);
         }
+    }
+
+    private void assertVpnUidRangesUpdate(boolean add) throws Exception {
+        final int uid = Process.myUid();
+        assertVpnUidRangesUpdate(add, uid, uidRangesForUid(uid));
+    }
+
+    private void assertVpnUidRangesUpdate(boolean add, int uid, Set<UidRange> vpnRanges)
+            throws Exception {
+        InOrder inOrder = inOrder(mMockNetd);
+        ArgumentCaptor<int[]> exemptUidCaptor = ArgumentCaptor.forClass(int[].class);
+
+        inOrder.verify(mMockNetd, times(1)).socketDestroy(eq(toUidRangeStableParcels(vpnRanges)),
+                exemptUidCaptor.capture());
+        assertContainsExactly(exemptUidCaptor.getValue(), Process.VPN_UID, uid);
+
+        if (add) {
+            inOrder.verify(mMockNetd, times(1)).networkAddUidRanges(eq(mMockVpn.getNetId()),
+                    eq(toUidRangeStableParcels(vpnRanges)));
+        } else {
+            inOrder.verify(mMockNetd, times(1)).networkRemoveUidRanges(eq(mMockVpn.getNetId()),
+                    eq(toUidRangeStableParcels(vpnRanges)));
+        }
+
+        inOrder.verify(mMockNetd, times(1)).socketDestroy(eq(toUidRangeStableParcels(vpnRanges)),
+                exemptUidCaptor.capture());
+        assertContainsExactly(exemptUidCaptor.getValue(), Process.VPN_UID, uid);
+    }
+
+    @Test
+    public void testVpnUidRangesUpdate() throws Exception {
+        LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName("tun0");
+        lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), null));
+        lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null));
+        final UidRange vpnRange = UidRange.createForUser(VPN_USER);
+        Set<UidRange> vpnRanges = Collections.singleton(vpnRange);
+        mMockVpn.establish(lp, VPN_UID, vpnRanges);
+        assertVpnUidRangesUpdate(true, VPN_UID, vpnRanges);
+
+        reset(mMockNetd);
+        // Update to new range which is old range minus APP1, i.e. only APP2
+        final Set<UidRange> newRanges = new HashSet<>(Arrays.asList(
+                new UidRange(vpnRange.start, APP1_UID - 1),
+                new UidRange(APP1_UID + 1, vpnRange.stop)));
+        mMockVpn.setUids(newRanges);
+        waitForIdle();
+
+        assertVpnUidRangesUpdate(true, VPN_UID, newRanges);
+        assertVpnUidRangesUpdate(false, VPN_UID, vpnRanges);
     }
 }
