@@ -7174,8 +7174,8 @@ public class ConnectivityServiceTest {
         reset(mNetworkManagementService);
         mCellNetworkAgent.connect(true);
         networkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
-        verify(mNetworkManagementService, times(1)).addIdleTimer(eq(MOBILE_IFNAME), anyInt(),
-                eq(NetworkCapabilities.TRANSPORT_CELLULAR));
+        verify(mMockNetd, times(1)).idletimerAddInterface(eq(MOBILE_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_CELLULAR)));
 
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         final LinkProperties wifiLp = new LinkProperties();
@@ -7183,25 +7183,27 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.sendLinkProperties(wifiLp);
 
         // Network switch
-        reset(mNetworkManagementService);
         mWiFiNetworkAgent.connect(true);
         networkCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         networkCallback.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
         networkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
-        verify(mNetworkManagementService, times(1)).addIdleTimer(eq(WIFI_IFNAME), anyInt(),
-                eq(NetworkCapabilities.TRANSPORT_WIFI));
-        verify(mNetworkManagementService, times(1)).removeIdleTimer(eq(MOBILE_IFNAME));
+        verify(mMockNetd, times(1)).idletimerAddInterface(eq(WIFI_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_WIFI)));
+        verify(mMockNetd, times(1)).idletimerRemoveInterface(eq(MOBILE_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_CELLULAR)));
 
         // Disconnect wifi and switch back to cell
-        reset(mNetworkManagementService);
+        reset(mMockNetd);
         mWiFiNetworkAgent.disconnect();
         networkCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
         assertNoCallbacks(networkCallback);
-        verify(mNetworkManagementService, times(1)).removeIdleTimer(eq(WIFI_IFNAME));
-        verify(mNetworkManagementService, times(1)).addIdleTimer(eq(MOBILE_IFNAME), anyInt(),
-                eq(NetworkCapabilities.TRANSPORT_CELLULAR));
+        verify(mMockNetd, times(1)).idletimerRemoveInterface(eq(WIFI_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_WIFI)));
+        verify(mMockNetd, times(1)).idletimerAddInterface(eq(MOBILE_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_CELLULAR)));
 
         // reconnect wifi
+        reset(mMockNetd);
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         wifiLp.setInterfaceName(WIFI_IFNAME);
         mWiFiNetworkAgent.sendLinkProperties(wifiLp);
@@ -7209,9 +7211,12 @@ public class ConnectivityServiceTest {
         networkCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         networkCallback.expectCallback(CallbackEntry.LOSING, mCellNetworkAgent);
         networkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mWiFiNetworkAgent);
+        verify(mMockNetd, times(1)).idletimerAddInterface(eq(WIFI_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_WIFI)));
+        verify(mMockNetd, times(1)).idletimerRemoveInterface(eq(MOBILE_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_CELLULAR)));
 
         // Disconnect cell
-        reset(mNetworkManagementService);
         reset(mMockNetd);
         mCellNetworkAgent.disconnect();
         networkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
@@ -7219,17 +7224,18 @@ public class ConnectivityServiceTest {
         // sent as network being switched. Ensure rule removal for cell will not be triggered
         // unexpectedly before network being removed.
         waitForIdle();
-        verify(mNetworkManagementService, times(0)).removeIdleTimer(eq(MOBILE_IFNAME));
+        verify(mMockNetd, times(0)).idletimerRemoveInterface(eq(MOBILE_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_CELLULAR)));
         verify(mMockNetd, times(1)).networkDestroy(eq(mCellNetworkAgent.getNetwork().netId));
         verify(mMockDnsResolver, times(1))
                 .destroyNetworkCache(eq(mCellNetworkAgent.getNetwork().netId));
 
         // Disconnect wifi
         ConditionVariable cv = registerConnectivityBroadcast(1);
-        reset(mNetworkManagementService);
         mWiFiNetworkAgent.disconnect();
         waitFor(cv);
-        verify(mNetworkManagementService, times(1)).removeIdleTimer(eq(WIFI_IFNAME));
+        verify(mMockNetd, times(1)).idletimerRemoveInterface(eq(WIFI_IFNAME), anyInt(),
+                eq(Integer.toString(TRANSPORT_WIFI)));
 
         // Clean up
         mCm.unregisterNetworkCallback(networkCallback);
