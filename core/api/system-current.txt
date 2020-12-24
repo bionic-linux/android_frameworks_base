@@ -6208,8 +6208,10 @@ package android.net {
   public final class NetworkCapabilities implements android.os.Parcelable {
     method @NonNull public int[] getAdministratorUids();
     method @Nullable public String getSsid();
+    method @Nullable public android.os.ParcelUuid getSubscriptionGroupId();
     method @NonNull public int[] getTransportTypes();
     method public boolean satisfiedByNetworkCapabilities(@Nullable android.net.NetworkCapabilities);
+    method @NonNull public android.net.NetworkCapabilities setSubscriptionGroupId(@Nullable android.os.ParcelUuid);
     field public static final int NET_CAPABILITY_OEM_PAID = 22; // 0x16
     field public static final int NET_CAPABILITY_OEM_PRIVATE = 26; // 0x1a
     field public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 24; // 0x18
@@ -6232,6 +6234,7 @@ package android.net {
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public android.net.NetworkCapabilities.Builder setRequestorUid(int);
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP) public android.net.NetworkCapabilities.Builder setSignalStrength(int);
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public android.net.NetworkCapabilities.Builder setSsid(@Nullable String);
+    method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public android.net.NetworkCapabilities.Builder setSubscriptionGroupId(@Nullable android.os.ParcelUuid);
     method @NonNull public android.net.NetworkCapabilities.Builder setTransportInfo(@Nullable android.net.TransportInfo);
   }
 
@@ -6268,6 +6271,7 @@ package android.net {
 
   public static class NetworkRequest.Builder {
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP) public android.net.NetworkRequest.Builder setSignalStrength(int);
+    method public android.net.NetworkRequest.Builder setSubscriptionGroupId(@Nullable android.os.ParcelUuid);
   }
 
   public class NetworkScoreManager {
