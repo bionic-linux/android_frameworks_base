@@ -16,6 +16,7 @@
 
 package com.android.server.display;
 
+import static android.provider.Settings.Global.DEVELOPMENT_FORCE_DESKTOP_MODE_ON_EXTERNAL_DISPLAYS;
 import android.app.ActivityThread;
 import android.content.Context;
 import android.content.res.Resources;
@@ -27,6 +28,7 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.provider.Settings;
 import android.util.LongSparseArray;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -233,6 +235,20 @@ final class LocalDisplayAdapter extends DisplayAdapter {
         @Override
         public boolean hasStableUniqueId() {
             return true;
+        }
+
+        private boolean isDeskTopMode() {
+            boolean isDeskTopMode = false;
+            synchronized (getSyncRoot()) {
+                try {
+                    isDeskTopMode = Settings.Global.getInt(getContext().getContentResolver(),
+                                           DEVELOPMENT_FORCE_DESKTOP_MODE_ON_EXTERNAL_DISPLAYS, 0)
+                                           == 1;
+                } catch (Exception e) {
+                    Slog.e(TAG, "isDeskTopMode --> can't get Content Resolver " + e);
+                }
+            }
+            return isDeskTopMode;
         }
 
         /**
@@ -573,7 +589,12 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                 } else {
                     mInfo.type = Display.TYPE_EXTERNAL;
                     mInfo.touch = DisplayDeviceInfo.TOUCH_EXTERNAL;
-                    mInfo.flags |= DisplayDeviceInfo.FLAG_PRESENTATION;
+                    if (isDeskTopMode()) {
+                        mInfo.flags |= DisplayDeviceInfo.FLAG_OWN_CONTENT_ONLY;
+                        mInfo.flags |= DisplayDeviceInfo.FLAG_ROTATES_WITH_CONTENT;
+                    } else {
+                        mInfo.flags |= DisplayDeviceInfo.FLAG_PRESENTATION;
+                    }
                     mInfo.name = getContext().getResources().getString(
                             com.android.internal.R.string.display_manager_hdmi_display_name);
                 }

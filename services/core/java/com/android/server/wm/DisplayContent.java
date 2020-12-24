@@ -1673,7 +1673,15 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
      *         {@link #sendNewConfiguration} TO UNFREEZE THE SCREEN.
      */
     boolean updateRotationUnchecked() {
-        return mDisplayRotation.updateRotationUnchecked(false /* forceUpdate */);
+        return updateRotationUnchecked(false, -1
+                , WindowManagerPolicy.USER_ROTATION_FREE
+                , Surface.ROTATION_0);
+    }
+
+    boolean updateRotationUnchecked(boolean forceUpdate, int defaultRotation,
+        int userRotationMode, int userRotation) {
+        return mDisplayRotation.updateRotationUnchecked(forceUpdate, defaultRotation,
+            userRotationMode, userRotation);
     }
 
     /**
@@ -5882,5 +5890,19 @@ class DisplayContent extends WindowContainer<DisplayContent.DisplayChildWindowCo
             count++;
         }
         return count;
+    }
+
+    int getSensorRotation() {
+        return isDefaultDisplay ? mDisplayRotation.getSensorRotation() : -1;
+    }
+
+    int getUserRotation() {
+        return isDefaultDisplay ? mDisplayRotation.getUserRotation()
+                      : Surface.ROTATION_0;
+    }
+
+    int getUserRotationMode() {
+        return isDefaultDisplay ? mDisplayRotation.getUserRotationMode()
+                      : WindowManagerPolicy.USER_ROTATION_FREE;
     }
 }
