@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000006944134",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1534908?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a7393a72_11f7b511",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 998,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-24T03:33:55Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(NetworkPolicyManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 998,
+        "startChar": 25,
+        "endLine": 998,
+        "endChar": 74
+      },
+      "revId": "d4541190c7517d1a5781b3cc9b6bc4f1cf62b57f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
