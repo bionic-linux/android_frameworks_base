@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc04bb08_72547b06",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-12-24T05:47:12Z",
+      "side": 1,
+      "message": "http://cs/aosp-master/frameworks/base/core/java/android/os/Process.java?l\u003d107\u0026rcl\u003dd31ee388115d17c2fd337f2806b37390c7d29834",
+      "range": {
+        "startLine": 295,
+        "startChar": 39,
+        "endLine": 295,
+        "endChar": 43
+      },
+      "revId": "16baa532fe69841c16469e1b5772b5d23b9da727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce39e064_7ef9e501",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6742,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-12-24T05:47:12Z",
+      "side": 1,
+      "message": "Jean/Lorenzo, is this enough?\n\nEither way add some comments, about no overlap with over vpns in the system...",
+      "range": {
+        "startLine": 6740,
+        "startChar": 1,
+        "endLine": 6742,
+        "endChar": 0
+      },
+      "revId": "16baa532fe69841c16469e1b5772b5d23b9da727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "534bf664_45a838c4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6748,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-12-24T05:47:12Z",
+      "side": 1,
+      "message": "it feels to me, like we should calculate the intersection of add \u0026 remove\n\nie. stuff that is both in new \u0026 prev, and then we should call\n\nmaybeClose(intersection of new \u0026 prev)\nif !new.isempty networkAddUidRanges(new)\nif !prev.isempty networkRemoveUidRanges(prev)\nmaybeClose(intersection of new \u0026 prev)\n\nThis is both an optimization and a correctness fix.",
+      "range": {
+        "startLine": 6748,
+        "startChar": 0,
+        "endLine": 6748,
+        "endChar": 39
+      },
+      "revId": "16baa532fe69841c16469e1b5772b5d23b9da727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b03dede_7f362b3a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6753,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-12-24T05:47:12Z",
+      "side": 1,
+      "message": "let\u0027s imagine that we are trying to remove uid 3 from a set containing 1-5\n\nThat means the kernel routing tables have 1-5 and netd needs to be told to remove 1-5.\nThen netd will need to be told to add 1-2, 4-5.\n\nintersection of the prev and new sets is: [1-5] \u0026 [1-2],[4-5] \u003d\u003d [3]\n\nSo we should do\n\nmaybeclose([3])\nnetd.add([1-2],[4-5])\nnetd.remove([1-5])\nmaybeclose([3])\n\n(This will also reduce the number of binder calls from 6 to just 4)\n\n(maybe a TODO? we really should have a helper function to calculate the intersection of 2 sets of uidranges)",
+      "range": {
+        "startLine": 6753,
+        "startChar": 0,
+        "endLine": 6753,
+        "endChar": 13
+      },
+      "revId": "16baa532fe69841c16469e1b5772b5d23b9da727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
