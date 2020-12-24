@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ff356ff_5a84e442",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-24T07:19:40Z",
+      "side": 1,
+      "message": "Did you want to also migrate ProxyInfo.",
+      "revId": "4abaecefc2aa518d1e610a9e9bdad58ee4f6840c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
