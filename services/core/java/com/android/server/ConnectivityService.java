@@ -3434,13 +3434,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         propagateUnderlyingNetworkCapabilities(nai.network);
         // Remove all previously satisfied requests.
         for (int i = 0; i < nai.numNetworkRequests(); i++) {
-            NetworkRequest request = nai.requestAt(i);
+            final NetworkRequest request = nai.requestAt(i);
             final NetworkRequestInfo nri = mNetworkRequests.get(request);
             final NetworkAgentInfo currentNetwork = nri.getSatisfier();
             if (currentNetwork != null
                     && currentNetwork.network.getNetId() == nai.network.getNetId()) {
+                // uid rules for this network will be removed in destroyNativeNetwork(nai).
                 nri.setSatisfier(null, null);
-                sendUpdatedScoreToFactories(request, null);
+                if (request.isRequest()) {
+                    sendUpdatedScoreToFactories(request, null);
+                }
 
                 if (mFallbackNetworkRequest == nri) {
                     // TODO : make battery stats aware that since 2013 multiple interfaces may be
@@ -5535,6 +5538,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final int mUid;
         final Messenger messenger;
 
+        /**
+         * Get the list of UIDs this nri applies to.
+         */
+        @NonNull
+        private Set<UidRange> getUids() {
+            // networkCapabilities.getUids() returns a defensive copy.
+            // multilayer requests will all have the same uids so return the first one.
+            final Set<UidRange> uids = null == mRequests.get(0).networkCapabilities.getUids()
+                    ? new ArraySet<>() : mRequests.get(0).networkCapabilities.getUids();
+            return uids;
+        }
+
         NetworkRequestInfo(NetworkRequest r, PendingIntent pi) {
             mRequests = initializeRequests(r);
             ensureAllNetworkRequestsHaveType(mRequests);
@@ -5593,7 +5608,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         @Override
         public String toString() {
-            return "uid/pid:" + mUid + "/" + mPid + " " + mRequests
+            return "uid/pid:" + mUid + "/" + mPid + " active request Id: "
+                    + (mActiveRequest == null ? null : mActiveRequest.requestId)
+                    + " " + mRequests
                     + (mPendingIntent == null ? "" : " to trigger " + mPendingIntent);
         }
     }
@@ -7222,20 +7239,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             log("Switching to new default network for: " + nri + " using " + newDefaultNetwork);
         }
 
-        try {
-            // TODO http://b/176191930 update netd calls in follow-up CL for multinetwork changes.
-            if (mFallbackNetworkRequest != nri) {
-                return;
-            }
-
-            if (null != newDefaultNetwork) {
-                mNetd.networkSetDefault(newDefaultNetwork.network.getNetId());
-            } else {
-                mNetd.networkClearDefault();
-            }
-        } catch (RemoteException | ServiceSpecificException e) {
-            loge("Exception setting default network :" + e);
+        // Fix up the NetworkCapabilities of any networks that have this network as underlying.
+        if (newDefaultNetwork != null) {
+            propagateUnderlyingNetworkCapabilities(newDefaultNetwork.network);
         }
+
+        // Set an OEM network preference default and return since further processing only applies to
+        // the fallback network.
+        if (mFallbackNetworkRequest != nri) {
+            makeDefaultForApps(nri, newDefaultNetwork, oldDefaultNetwork);
+            return;
+        }
+
+        makeFallbackNetwork(newDefaultNetwork);
 
         if (oldDefaultNetwork != null) {
             mLingerMonitor.noteLingerDefaultNetwork(oldDefaultNetwork, newDefaultNetwork);
@@ -7247,10 +7263,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateTcpBufferSizes(null != newDefaultNetwork
                 ? newDefaultNetwork.linkProperties.getTcpBufferSizes() : null);
         notifyIfacesChangedForNetworkStats();
-        // Fix up the NetworkCapabilities of any networks that have this network as underlying.
-        if (newDefaultNetwork != null) {
-            propagateUnderlyingNetworkCapabilities(newDefaultNetwork.network);
-        }
 
         // Log 0 -> X and Y -> X default network transitions, where X is the new default.
         final Network network = (newDefaultNetwork != null) ? newDefaultNetwork.network : null;
@@ -7272,6 +7284,49 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mMetricsLog.logDefaultNetworkEvent(network, score, validated, lp, nc,
                 prevNetwork, prevScore, prevLp, prevNc);
+    }
+
+    private void makeDefaultForApps(@NonNull final NetworkRequestInfo nri,
+            @Nullable final NetworkAgentInfo newDefaultNetwork,
+            @Nullable final NetworkAgentInfo oldDefaultNetwork) {
+        try {
+            if (VDBG) {
+                log("Setting OEM default network for " + nri
+                        + " using UIDs " + nri.getUids()
+                        + " with new network " + (newDefaultNetwork != null
+                        ? newDefaultNetwork.network().getNetId() : "null")
+                        + " and old network " + (oldDefaultNetwork != null
+                        ? oldDefaultNetwork.network().getNetId() : "null"));
+            }
+            if (nri.getUids().isEmpty()) {
+                throw new IllegalStateException("makeDefaultForApps called without specifying"
+                        + " any applications to set as the default." + nri);
+            }
+            if (null != newDefaultNetwork) {
+                mNetd.networkAddUidRanges(
+                        newDefaultNetwork.network.getNetId(),
+                        toUidRangeStableParcels(nri.getUids()));
+            }
+            if (null != oldDefaultNetwork) {
+                mNetd.networkRemoveUidRanges(
+                        oldDefaultNetwork.network.getNetId(),
+                        toUidRangeStableParcels(nri.getUids()));
+            }
+        } catch (RemoteException | ServiceSpecificException e) {
+            loge("Exception setting OEM network preference default network :" + e);
+        }
+    }
+
+    private void makeFallbackNetwork(@Nullable final NetworkAgentInfo newDefaultNetwork) {
+        try {
+            if (null != newDefaultNetwork) {
+                mNetd.networkSetDefault(newDefaultNetwork.network.getNetId());
+            } else {
+                mNetd.networkClearDefault();
+            }
+        } catch (RemoteException | ServiceSpecificException e) {
+            loge("Exception setting default network :" + e);
+        }
     }
 
     private void processListenRequests(@NonNull final NetworkAgentInfo nai) {
