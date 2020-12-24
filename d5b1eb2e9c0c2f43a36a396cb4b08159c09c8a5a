@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "75f430eb_841e995e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8485,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-24T10:42:09Z",
+      "side": 1,
+      "message": "I add a TODO in this patch first. Will prepare another commit for updating the behavior.",
+      "parentUuid": "febb3978_99f19ba2",
+      "range": {
+        "startLine": 8485,
+        "startChar": 42,
+        "endLine": 8485,
+        "endChar": 69
+      },
+      "revId": "d5b1eb2e9c0c2f43a36a396cb4b08159c09c8a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ab1ab49_4a59d8d0",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-23T15:07:18Z",
       "side": 1,
       "message": "This one could also be removed, right?",
+      "range": {
+        "startLine": 8639,
+        "startChar": 41,
+        "endLine": 8639,
+        "endChar": 68
+      },
+      "revId": "d5b1eb2e9c0c2f43a36a396cb4b08159c09c8a5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91235063_b9cc7ba3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8639,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-24T10:42:09Z",
+      "side": 1,
+      "message": "As discussed, this may not just be removed. I also add a TODO here to reconsider the behavior. Probably, we should deprecate the API if there is no easy way to provide a correct value.",
+      "parentUuid": "0ab1ab49_4a59d8d0",
       "range": {
         "startLine": 8639,
         "startChar": 41,
