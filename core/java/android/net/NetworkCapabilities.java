@@ -28,8 +28,10 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.os.Build;
 import android.os.Parcel;
+import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.os.Process;
+import android.telephony.SubscriptionManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.proto.ProtoOutputStream;
@@ -105,6 +107,7 @@ public final class NetworkCapabilities implements Parcelable {
         mPrivateDnsBroken = false;
         mRequestorUid = Process.INVALID_UID;
         mRequestorPackageName = null;
+        mSubscriptionGroupId = null;
     }
 
     /**
@@ -127,6 +130,7 @@ public final class NetworkCapabilities implements Parcelable {
         mPrivateDnsBroken = nc.mPrivateDnsBroken;
         mRequestorUid = nc.mRequestorUid;
         mRequestorPackageName = nc.mRequestorPackageName;
+        mSubscriptionGroupId = nc.mSubscriptionGroupId;
     }
 
     /**
@@ -1577,6 +1581,7 @@ public final class NetworkCapabilities implements Parcelable {
         combineSSIDs(nc);
         combineRequestor(nc);
         combineAdministratorUids(nc);
+        combineSubscriptionGroupId(nc);
     }
 
     /**
@@ -1596,8 +1601,9 @@ public final class NetworkCapabilities implements Parcelable {
                 && satisfiedBySpecifier(nc)
                 && (onlyImmutable || satisfiedBySignalStrength(nc))
                 && (onlyImmutable || satisfiedByUids(nc))
-                && (onlyImmutable || satisfiedBySSID(nc)))
-                && (onlyImmutable || satisfiedByRequestor(nc));
+                && (onlyImmutable || satisfiedBySSID(nc))
+                && (onlyImmutable || satisfiedByRequestor(nc))
+                && (onlyImmutable || satisfiedBySubscriptionGroupId(nc)));
     }
 
     /**
@@ -1691,7 +1697,8 @@ public final class NetworkCapabilities implements Parcelable {
                 && equalsOwnerUid(that)
                 && equalsPrivateDnsBroken(that)
                 && equalsRequestor(that)
-                && equalsAdministratorUids(that);
+                && equalsAdministratorUids(that)
+                && equalsSubscriptionGroupId(that);
     }
 
     @Override
@@ -1713,7 +1720,8 @@ public final class NetworkCapabilities implements Parcelable {
                 + Objects.hashCode(mPrivateDnsBroken) * 47
                 + Objects.hashCode(mRequestorUid) * 53
                 + Objects.hashCode(mRequestorPackageName) * 59
-                + Arrays.hashCode(mAdministratorUids) * 61;
+                + Arrays.hashCode(mAdministratorUids) * 61
+                + Objects.hashCode(mSubscriptionGroupId) * 67;
     }
 
     @Override
@@ -1738,6 +1746,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeInt(mOwnerUid);
         dest.writeInt(mRequestorUid);
         dest.writeString(mRequestorPackageName);
+        dest.writeParcelable(mSubscriptionGroupId, flags);
     }
 
     public static final @android.annotation.NonNull Creator<NetworkCapabilities> CREATOR =
@@ -1762,6 +1771,7 @@ public final class NetworkCapabilities implements Parcelable {
                 netCap.mOwnerUid = in.readInt();
                 netCap.mRequestorUid = in.readInt();
                 netCap.mRequestorPackageName = in.readString();
+                netCap.mSubscriptionGroupId = in.readParcelable(ParcelUuid.class.getClassLoader());
                 return netCap;
             }
             @Override
@@ -1831,9 +1841,12 @@ public final class NetworkCapabilities implements Parcelable {
             sb.append(" SSID: ").append(mSSID);
         }
 
-
         if (mPrivateDnsBroken) {
             sb.append(" PrivateDnsBroken");
+        }
+
+        if (null != mSubscriptionGroupId) {
+            sb.append(" SubscriptionGroupId: ").append(mSubscriptionGroupId);
         }
 
         sb.append("]");
@@ -2145,6 +2158,64 @@ public final class NetworkCapabilities implements Parcelable {
     }
 
     /**
+     * Id of the subscription group that identifies the network or request, Null if there is none.
+     */
+    @Nullable
+    private ParcelUuid mSubscriptionGroupId;
+
+    /**
+     * Sets the subscription group id that associated to this network or request. Pass null for
+     * clean up.
+     *
+     * @hide
+     */
+    @NonNull
+    @SystemApi
+    public NetworkCapabilities setSubscriptionGroupId(
+            @Nullable ParcelUuid subscriptionGroupId) {
+        mSubscriptionGroupId = subscriptionGroupId;
+        return this;
+    }
+
+    /**
+     * Gets the subscription group id that associated to this network or request.
+     * @hide
+     */
+    @Nullable
+    @SystemApi
+    public ParcelUuid getSubscriptionGroupId() {
+        return mSubscriptionGroupId;
+    }
+
+    /**
+     * Tests if the subscription group id of this network is the same as that of the passed one.
+     */
+    private boolean equalsSubscriptionGroupId(@NonNull NetworkCapabilities nc) {
+        return Objects.equals(mSubscriptionGroupId, nc.mSubscriptionGroupId);
+    }
+
+    /**
+     * Check if the subscription group id requirements of this object are matched by the passed one.
+     */
+    private boolean satisfiedBySubscriptionGroupId(@NonNull NetworkCapabilities nc) {
+        return mSubscriptionGroupId == null || mSubscriptionGroupId.equals(nc.mSubscriptionGroupId);
+    }
+
+    /**
+     * Combine subscription group ids of the capabilities.
+     *
+     * <p>This is only legal if the subscription group ids are equal.
+     *
+     * <p>If both subscription group ids are not equal, they belong to different subscription
+     * (or no subscription). In this case, it would not make sense to add them together.
+     */
+    private void combineSubscriptionGroupId(@NonNull NetworkCapabilities nc) {
+        if (!Objects.equals(mSubscriptionGroupId, nc.mSubscriptionGroupId)) {
+            throw new IllegalStateException("Can't combine two subscriptionGroupIds");
+        }
+    }
+
+    /**
      * Builder class for NetworkCapabilities.
      *
      * This class is mainly for for {@link NetworkAgent} instances to use. Many fields in
@@ -2435,6 +2506,21 @@ public final class NetworkCapabilities implements Parcelable {
         @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
         public Builder setRequestorPackageName(@Nullable final String packageName) {
             mCaps.setRequestorPackageName(packageName);
+            return this;
+        }
+
+        /**
+         * Set the subscription group id.
+         *
+         * @param subscriptionGroupId a Uuid that represent the subscription group.
+         *                            See {@link SubscriptionManager#createSubscriptionGroup} for
+         *                            more details.
+         * @return this builder
+         */
+        @NonNull
+        @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+        public Builder setSubscriptionGroupId(@Nullable final ParcelUuid subscriptionGroupId) {
+            mCaps.setSubscriptionGroupId(subscriptionGroupId);
             return this;
         }
 
