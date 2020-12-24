@@ -142,7 +142,8 @@ class WindowSurfacePlacer {
         }
 
         // TODO(multi-display):
-        final DisplayContent defaultDisplay = mService.getDefaultDisplayContentLocked();
+        final DisplayContent defaultDisplay =  mService.mForceDesktopModeOnExternalDisplays ?
+                mService.getFrozenDisplayContent() : mService.getDefaultDisplayContentLocked();
         if (defaultDisplay.mWaitingForConfig) {
             // Our configuration has changed (most likely rotation), but we
             // don't yet have the complete configuration to report to
