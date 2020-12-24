@@ -449,6 +449,24 @@ public class NetworkRequest implements Parcelable {
             }
             nc.addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
         }
+
+        /**
+         * Sets the optional subscription Id set.
+         * <p>
+         * This specify the subscription Ids requirement.
+         * Only the networks with one of the specified subscription Id will satisfy the
+         * request. On the other hand, for requests that don't specify subscription Id list,
+         * networks with or without the subscription Id list could both satisfy them.
+         *
+         * @param subIds A {@code Set} that represents for subscription Ids.
+         *
+         * @hide
+         */
+        @NonNull
+        public Builder setSubIds(@NonNull Set<Integer> subIds) {
+            mNetworkCapabilities.setSubIds(subIds);
+            return this;
+        }
     }
 
     // implement the Parcelable interface
