@@ -24,6 +24,29 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7d8edca_614339f5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6718,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2020-12-24T05:48:51Z",
+      "side": 1,
+      "message": "should we have a \u0027nai.isSecureVPN()\u0027 helper?",
+      "range": {
+        "startLine": 6718,
+        "startChar": 0,
+        "endLine": 6718,
+        "endChar": 65
+      },
+      "revId": "16baa532fe69841c16469e1b5772b5d23b9da727",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce39e064_7ef9e501",
