@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f56b96bf_1186f377",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1808,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T01:37:47Z",
+      "side": 1,
+      "message": "sendDataActivityBroadcast will put the numeric type as is in the broadcast. That means this is breaking backward compatibility. Unfortunately we can\u0027t do that.",
+      "range": {
+        "startLine": 1808,
+        "startChar": 12,
+        "endLine": 1808,
+        "endChar": 37
+      },
+      "revId": "727a0c9a69b7534984eb2aa337236606b0992d96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
