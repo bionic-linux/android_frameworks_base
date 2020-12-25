@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d599cbaa_7f52e9cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T02:29:42Z",
+      "side": 1,
+      "message": "separate ?",
+      "range": {
+        "startLine": 13,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 56
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01b82008_8baf22a0",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T02:29:42Z",
+      "side": 1,
+      "message": "This will temporarily add suprious calls, right ? Maybe it\u0027s fine temporarily",
+      "range": {
+        "startLine": 408,
+        "startChar": 2,
+        "endLine": 410,
+        "endChar": 81
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2526b593_6cb7ca10",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T02:29:42Z",
+      "side": 1,
+      "message": "The correctness of this strongly depends on the members always being used on the same thread. As it turns out, they are, because they are only used in the observer which is in fact always called on the system server foreground thread. Please document this on these members. Suggested wording :\n\n  // mLastPowerStateFrom{Radio,Wifi} are MUST only ever be used on the system server \n  // foreground thread. BaseNetworkObserver#interfaceClassDataActivityChanged is always\n  // called there. These members can\u0027t be used correctly anywhere else.",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 40
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de1af537_d35dd0cf",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T02:29:42Z",
+      "side": 1,
+      "message": "Received unexpected transport in interfaceClassDataActivityChanged",
+      "range": {
+        "startLine": 150,
+        "startChar": 41,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e0f3071_fbafb59c",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T02:29:42Z",
+      "side": 1,
+      "message": "This is only used in this function, right ? Then please don\u0027t add a member (especially not a mutable member), just keep the var local.",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 18
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
