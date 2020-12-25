@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1988b718_8368f131",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T06:05:27Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "2bd57038635538145a83e7428b19a58a7bcbb517",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b582803_bc044d68",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T06:05:27Z",
+      "side": 1,
+      "message": "separate",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "2bd57038635538145a83e7428b19a58a7bcbb517",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa7c6de3_a0c49ae1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8540,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T06:05:27Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 8540,
+        "startChar": 12,
+        "endLine": 8540,
+        "endChar": 15
+      },
+      "revId": "2bd57038635538145a83e7428b19a58a7bcbb517",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0654644e_cded5f6f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8577,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-25T06:05:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this is going to work as you expect.\n\nBefore this string of changes, NetworkManagementService would handle both data activity callbacks and idle timers. It would keep the latest state of activity and call note{Mobile,Wifi}RadioPowerState only if it changed since the last call, both events counfounded.\n\nWith this series of patches, both BSS and CS have a view of what is the \"latest\" state and they will send updates only if it doesn\u0027t match *their* latest state. That means you\u0027ll have both false positives (not too bad) and true negatives (disastrous in this case).\n\nExample of a false positive :\n1. BSS receives class activity changed to true, and calls note* with true.\n2. CS sets up tracking, and calls note* with true again.\nThis didn\u0027t use to happen because this would be deduplicated.\n\nExample of a true negative :\n1. BSS receives class activity changed to true, and calls note* with true.\n1. CS removes up tracking and calls note* with false.\n2. BSS receives class activity changed to true again, but deduplicates the call.\nIn this scenario, note* should have been called with true but it wasn\u0027t.",
+      "range": {
+        "startLine": 8577,
+        "startChar": 23,
+        "endLine": 8577,
+        "endChar": 50
+      },
+      "revId": "2bd57038635538145a83e7428b19a58a7bcbb517",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
