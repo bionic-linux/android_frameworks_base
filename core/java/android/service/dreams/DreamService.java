@@ -1164,6 +1164,12 @@ public class DreamService extends Service implements Window.Callback {
         /** @hide */
         void onActivityCreated(DreamActivity a) {
             mActivity = a;
+            if (mFinished && mActivity != null && !mActivity.isFinishing()) {
+                Slog.i(TAG, "onActivityCreated() called after dream already finished.");
+                // In case the activity is not finished yet, do it now.
+                mActivity.finishAndRemoveTask();
+                return;
+            }
             onWindowCreated(a.getWindow());
         }
     }
