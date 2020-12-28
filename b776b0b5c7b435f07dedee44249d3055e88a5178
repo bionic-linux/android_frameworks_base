@@ -16,6 +16,23 @@
       "message": "please help check,thx.",
       "revId": "b776b0b5c7b435f07dedee44249d3055e88a5178",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d64c6eed_ad304178",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1612700
+      },
+      "writtenOn": "2020-12-28T09:05:08Z",
+      "side": 1,
+      "message": "// normal case from launcher to an app set WillCloseOrEnterPip as true on resumeTopActivityInnerLocked\nI/ActivityTaskManager(  983): resumeTopActivityLocked: lastResumed ActivityRecord{1f0276d u0 com.android.launcher3/.uioverrides.QuickstepLauncher t66}\n\nActivityStack.resumeTopActivityInnerLocked\n            if (lastResumed !\u003d null) {\n                lastResumed.setWillCloseOrEnterPip(true);\n            }\n\n// when completePauseLocked set pausing ActivityRecord\u0027s mWillCloseOrEnterPip as false\nI/ActivityTaskManager(  983): completePauseLocked: prev ActivityRecord{1f0276d u0 com.android.launcher3/.uioverrides.QuickstepLauncher t66}\n\nActivityStack.completePauseLocked\n\n    @VisibleForTesting\n    void completePauseLocked(boolean resumeNext, ActivityRecord resuming) {\n        ActivityRecord prev \u003d mPausingActivity;\n        if (DEBUG_PAUSE) Slog.v(TAG_PAUSE, \"Complete pause: \" + prev);\n\n        if (prev !\u003d null) {\n            prev.setWillCloseOrEnterPip(false);\n\n\n// fail case  when luancher paused stack.mPausingActivity is null did not call  completePauseLocked caused mWillCloseOrEnterPip is still true\nI/ActivityTaskManager(  983): resumeTopActivityLocked lastResumed \u003d ActivityRecord{3fc7203 u0 com.android.launcher3/.uioverrides.QuickstepLauncher t73}\n\nI/ActivityTaskManager(  983): Activity paused: stack.mPausingActivity is null\n\nI wm_on_paused_called: [88966317,com.android.launcher3.uioverrides.QuickstepLauncher,performPause]\nI wm_failed_to_pause: [0,88966317,com.android.launcher3/.uioverrides.QuickstepLauncher,(none)]",
+      "revId": "b776b0b5c7b435f07dedee44249d3055e88a5178",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
