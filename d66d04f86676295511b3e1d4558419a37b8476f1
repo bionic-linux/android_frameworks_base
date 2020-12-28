@@ -216,6 +216,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7841ea0d_a0fbb9e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2020-12-28T19:10:10Z",
+      "side": 1,
+      "message": "I just wanted to follow up on this. I spoke to the folks from the web abt team and they were aiming to complete the integration this month. I will proceed with the idea you suggested and worst case, I will just see if I can modify the parsers for transponder / volta. Thank you for your help! :)",
+      "parentUuid": "84f0ad17_c554f733",
+      "revId": "d66d04f86676295511b3e1d4558419a37b8476f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c575ae91_87b25a57",
         "filename": "core/java/com/android/internal/app/IBatteryStats.aidl",
         "patchSetId": 2
