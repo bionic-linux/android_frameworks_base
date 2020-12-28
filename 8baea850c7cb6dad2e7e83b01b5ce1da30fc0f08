@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0eaa803_a215285f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:58:38Z",
+      "side": 1,
+      "message": "Reverting to +1 to fix the binary-incompatible change, but otherwise I think there is very little to improve here",
+      "revId": "8baea850c7cb6dad2e7e83b01b5ce1da30fc0f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
