@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fc0f91d_0b09b588",
+        "filename": "cmds/idmap2/libidmap2/ResourceUtils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-12-28T22:46:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1abf9282_de6bcd26",
+      "range": {
+        "startLine": 124,
+        "startChar": 58,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "f5404cd6b8bbe1c6948858ec46d5a73298819d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4e9c25a_63e45035",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff610283_a2553963",
+        "filename": "cmds/idmap2/tests/data/overlay/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-12-28T22:46:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4e9c25a_63e45035",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "f5404cd6b8bbe1c6948858ec46d5a73298819d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "666df74c_6c679414",
@@ -77,6 +125,30 @@
       "writtenOn": "2020-12-10T13:14:32Z",
       "side": 1,
       "message": "I can\u0027t find this file; I assume it was added in a commit that\u0027s on internal master but not on AOSP.",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "f5404cd6b8bbe1c6948858ec46d5a73298819d0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3610ea43_926e30e0",
+        "filename": "cmds/idmap2/tests/data/overlay/build",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2020-12-28T22:46:14Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "666df74c_6c679414",
       "range": {
         "startLine": 37,
         "startChar": 15,
