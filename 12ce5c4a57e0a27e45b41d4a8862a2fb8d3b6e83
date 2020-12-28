@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31fae7f4_57eec6f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-28T10:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d599cbaa_7f52e9cd",
+      "range": {
+        "startLine": 13,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 56
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01b82008_8baf22a0",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-25T02:29:42Z",
       "side": 1,
       "message": "This will temporarily add suprious calls, right ? Maybe it\u0027s fine temporarily",
+      "range": {
+        "startLine": 408,
+        "startChar": 2,
+        "endLine": 410,
+        "endChar": 81
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebd95094_0ebf69a5",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-28T10:53:31Z",
+      "side": 1,
+      "message": "Yes, it is. It\u0027s temporarily in this commit. I think it should be fine since the states that are triggered from netd will have the same value with states updated from here. BSS will do nothing if the state is no change. It may increase few IPCs temporarily but this event is not frequently triggered,so I think we could have it temporarily.",
+      "parentUuid": "01b82008_8baf22a0",
       "range": {
         "startLine": 408,
         "startChar": 2,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2da4816_cf55394a",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-28T10:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2526b593_6cb7ca10",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 40
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de1af537_d35dd0cf",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "855fd1e5_af53e48c",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-28T10:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1af537_d35dd0cf",
+      "range": {
+        "startLine": 150,
+        "startChar": 41,
+        "endLine": 150,
+        "endChar": 48
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e0f3071_fbafb59c",
@@ -106,6 +202,30 @@
       "writtenOn": "2020-12-25T02:29:42Z",
       "side": 1,
       "message": "This is only used in this function, right ? Then please don\u0027t add a member (especially not a mutable member), just keep the var local.",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 18
+      },
+      "revId": "12ce5c4a57e0a27e45b41d4a8862a2fb8d3b6e83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92c1f465_9763e268",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-28T10:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e0f3071_fbafb59c",
       "range": {
         "startLine": 249,
         "startChar": 8,
