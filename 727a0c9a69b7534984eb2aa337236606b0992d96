@@ -46,6 +46,30 @@
       },
       "revId": "727a0c9a69b7534984eb2aa337236606b0992d96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30cda8cb_0a307db6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1808,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2020-12-28T10:52:13Z",
+      "side": 1,
+      "message": "updated to add a translation function as suggested.",
+      "parentUuid": "94de87e2_e96e065a",
+      "range": {
+        "startLine": 1808,
+        "startChar": 12,
+        "endLine": 1808,
+        "endChar": 37
+      },
+      "revId": "727a0c9a69b7534984eb2aa337236606b0992d96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
