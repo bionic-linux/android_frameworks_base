@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f42332c_a05e7737",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T00:57:07Z",
+      "side": 1,
+      "message": "Move this to frameworks/base/media/ from frameworks/base/",
+      "revId": "de33d3050466802718187d71fc4a688cfddc44fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b50695bf_e2d70265",
+        "filename": "tests/StressTest/copy_media.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T00:57:07Z",
+      "side": 1,
+      "message": "needs to be in sync with AndroidTest.xml path",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 69
+      },
+      "revId": "de33d3050466802718187d71fc4a688cfddc44fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
