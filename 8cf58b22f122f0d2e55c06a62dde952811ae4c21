@@ -50,6 +50,42 @@
       "message": "I see many places referencing ro.product.cpu.abilist*, not ro.vendor.product.cpu.abilist*. We are not sure if there has been an implicit assumption that these Java APIs are from the sysprops.\n\nIf this change is just for consistency, I\u0027d rather not have this.\n\nI think, ideally, the abilist should be synthesized by reading sysprops from multiple partitions (ro.\u003cpart\u003e.product.cpu.abilist). Either vendor or system alone can\u0027t be the sole source of truth for this information.",
       "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c0803fe_169699db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1128729
+      },
+      "writtenOn": "2020-12-28T09:47:47Z",
+      "side": 1,
+      "message": "Thanks Michael for your suggestion.\n\nI took some evaluation about making these properties to be system property API. My opinion is we don\u0027t need to it this time. Because:\n\n1. `Build.SUPPORTED(_32_BIT|_64_BIT|)_ABIS` are already framework API. https://developer.android.com/reference/android/os/Build#SUPPORTED_ABIS\n2. `ro.vendor.product.cpu.abilist*` is not defined by any module. We don\u0027t have a suitable `.sysprop` file for these system properties. If we still want to do it, we may create a new patch for all the properties of building system (like ro.build.*).",
+      "parentUuid": "9466efd0_014f452b",
+      "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fef07826_fc93b253",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1128729
+      },
+      "writtenOn": "2020-12-28T09:47:47Z",
+      "side": 1,
+      "message": "Thanks for your reminder. Your concern is reasonable. \n\nMaybe let\u0027s focus on `Build.SUPPORTED(_32_BIT|_64_BIT|)_ABIS` here. According to the code reference to these variables:\n\nhttps://source.corp.google.com/search?q\u003dpackage:%5Eandroid$%20SUPPORTED(_32_BIT%7C_64_BIT%7C)_ABIS%20case:yes%20file:%5C.java$\n\nWe may understand that the users use `Build.SUPPORTED(_32_BIT|_64_BIT|)_ABIS` to know the CPU capability on the platform. The capability should be defined by vendor. For example, if the system property `ro.zygote` in vendor is `zygote64`, the platform capability should be 64 bits only and Build.SUPPORTED_32_BIT_ABIS should be empty as `ro.vendor.product.cpu.abilist32` defined.\n\nThus, I thought `Build.SUPPORTED(_32_BIT|_64_BIT|)_ABIS` from `ro.vendor.product.cpu.abilist*` is a better choice.",
+      "parentUuid": "5e3680b3_ac36dc48",
+      "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
