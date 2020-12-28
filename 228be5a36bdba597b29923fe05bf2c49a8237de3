@@ -466,6 +466,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5473df88_da4ecb5e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1716,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:53:44Z",
+      "side": 1,
+      "message": "VPN apps can simply see their own UID regardless of whether they hold the location permission or whether the location toggle is on. We need to sanitize the owner UID for other cases, namely wifi suggestions, because if I suggest a network, knowing that my network just connected tells me something about location.\nBut in the VPN case, the UID tells nothing of the location to the VPN app. The VPN is up whenever the app says so, and besides there can be only one for any given user so they know full well it\u0027s theirs just from the TRANSPORT_VPN bit. Your new comment in l.1705 is right on the money.\n\nBut that\u0027s not to say that VPN apps have a right to bypass the normal location rules. They should indeed not see the stuff that\u0027s location sensitive if the location toggle is off or if they don\u0027t hold the appropriate permissions.",
+      "parentUuid": "bd212f77_cbcf9cd5",
+      "range": {
+        "startLine": 1716,
+        "startChar": 7,
+        "endLine": 1716,
+        "endChar": 100
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d3a0b7f_226f52f8",
@@ -856,6 +880,30 @@
       "side": 1,
       "message": "This is necessary for wifi since we are not a mandatory module. There is a whole discussion around this. Wifi (any optional module) can only expose API\u0027s on new desert releases. So, we should guard all new API usage with this to ensure we don\u0027t expose new API\u0027s on older desert releases.",
       "parentUuid": "bcc407ec_c3dcede8",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 9
+      },
+      "revId": "228be5a36bdba597b29923fe05bf2c49a8237de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b77b831_0fbebb8c",
+        "filename": "wifi/java/android/net/wifi/aware/WifiAwareNetworkInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-28T14:53:44Z",
+      "side": 1,
+      "message": "Ah I see, you don\u0027t want fragmentation where apps could call these methods through reflection but only on some devices.",
+      "parentUuid": "1ceea95e_aed95389",
       "range": {
         "startLine": 200,
         "startChar": 0,
