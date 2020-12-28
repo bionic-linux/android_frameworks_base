@@ -776,6 +776,13 @@ filegroup {
 }
 
 filegroup {
+    name: "framework-netutils-device-common-shared-srcs",
+    srcs: [
+        "core/java/com/android/internal/util/HexDump.java",
+    ],
+}
+
+filegroup {
     name: "framework-services-net-module-wifi-shared-srcs",
     srcs: [
         "core/java/android/net/DhcpResults.java",
