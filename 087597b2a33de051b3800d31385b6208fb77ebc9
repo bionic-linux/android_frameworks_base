@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b680db9_d40b0a9b",
+        "filename": "media/tests/StressTest/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T23:17:48Z",
+      "side": 1,
+      "message": "MediaStressTest",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "087597b2a33de051b3800d31385b6208fb77ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65804fc8_2c50def1",
+        "filename": "media/tests/StressTest/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T23:17:48Z",
+      "side": 1,
+      "message": "mediastresstest",
+      "range": {
+        "startLine": 35,
+        "startChar": 43,
+        "endLine": 35,
+        "endChar": 54
+      },
+      "revId": "087597b2a33de051b3800d31385b6208fb77ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4953ba20_ab0fead5",
+        "filename": "media/tests/StressTest/AndroidTest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T23:17:48Z",
+      "side": 1,
+      "message": "MediaStressTest",
+      "range": {
+        "startLine": 18,
+        "startChar": 45,
+        "endLine": 18,
+        "endChar": 55
+      },
+      "revId": "087597b2a33de051b3800d31385b6208fb77ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37f56f2d_046fded2",
+        "filename": "media/tests/StressTest/AndroidTest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T23:17:48Z",
+      "side": 1,
+      "message": "base/media/",
+      "range": {
+        "startLine": 23,
+        "startChar": 73,
+        "endLine": 23,
+        "endChar": 78
+      },
+      "revId": "087597b2a33de051b3800d31385b6208fb77ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5d9e174_36dc2d44",
+        "filename": "media/tests/StressTest/AndroidTest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T23:17:48Z",
+      "side": 1,
+      "message": "MediaStressTest",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "087597b2a33de051b3800d31385b6208fb77ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6cc06a1_91b3415a",
+        "filename": "media/tests/StressTest/AndroidTest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T23:17:48Z",
+      "side": 1,
+      "message": "mediastresstest\n\nhere and everywhere else (package name, class name etc)",
+      "range": {
+        "startLine": 29,
+        "startChar": 50,
+        "endLine": 29,
+        "endChar": 61
+      },
+      "revId": "087597b2a33de051b3800d31385b6208fb77ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "041b5632_4fc3d670",
+        "filename": "media/tests/StressTest/copy_media.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T23:17:48Z",
+      "side": 1,
+      "message": "zip also needs to be moved to media subfolder in frameworks/base/ and the path should be updated here and in the xml",
+      "range": {
+        "startLine": 40,
+        "startChar": 64,
+        "endLine": 40,
+        "endChar": 69
+      },
+      "revId": "087597b2a33de051b3800d31385b6208fb77ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d18c06d2_42c16429",
+        "filename": "media/tests/StressTest/src/com/android/stresstests/CodecDecoderTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1047003
+      },
+      "writtenOn": "2020-12-28T23:17:48Z",
+      "side": 1,
+      "message": "mediastresstest",
+      "range": {
+        "startLine": 17,
+        "startChar": 20,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "087597b2a33de051b3800d31385b6208fb77ebc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
