@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ec79bed_99bb6468",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-28T07:43:54Z",
+      "side": 1,
+      "message": "Some questions inline on the semantics. Perhaps this just needs to be documented more clearly?",
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72527142_095488fa",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2173,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-28T07:43:54Z",
+      "side": 1,
+      "message": "Given that this field is in NetworkCapabilities, presumably it can be set both on networks and in NetworkRequests, such that every Network, and every NetworkRequest, have either zero or one subscription group. But what does this mean, given that a group is just a list of subIds? Isn\u0027t it the case that a network has zero or one subId, just like it has zero or one subscriberId?\n\nThe docs at:\n\nhttps://developer.android.com/reference/android/telephony/SubscriptionManager#createSubscriptionGroup(java.util.List%3Cjava.lang.Integer%3E)\n\nsays that a subscription group is a group of subIds. It says that subIds can be added and removed from a group. But, what if two subscription groups have some or all subIds in common? For example, consider:\n\n1. Subscription group 1 exists with subIds 1, 3, 5\n2. NetworkRequest A is filed for group 1\n3. Network Z exists with subIds 1, 3, 5. A matches.\n4. Subscription group 2 created with subIds 1, 3, 5.\n\nAt that point, what happens? Should network Z change subscriber group from 1 to 2? Even if it does, will NetworkRequest A no longer match network Z? But why should it no longer match network Z, given that the subIds in the group are the same subIds in the network?",
+      "range": {
+        "startLine": 2173,
+        "startChar": 31,
+        "endLine": 2173,
+        "endChar": 53
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9594ecc0_deea805b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2514,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-28T07:43:54Z",
+      "side": 1,
+      "message": "What is a subscription group, and where is it defined? Is it a concept that comes from SubscriptionManager? If so, we should probably have a @link or @see tag here.",
+      "range": {
+        "startLine": 2514,
+        "startChar": 9,
+        "endLine": 2514,
+        "endChar": 83
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36627abd_a74b3274",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-28T07:43:54Z",
+      "side": 1,
+      "message": "I find this confusing. Aren\u0027t NetworkRequest objects always used to register callbacks? Or is there some subtlety here that should be explained in more detail?",
+      "range": {
+        "startLine": 376,
+        "startChar": 11,
+        "endLine": 376,
+        "endChar": 43
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20137455_c7f1180c",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-28T07:43:54Z",
+      "side": 1,
+      "message": "This is true of everything in a NetworkRequest, right? Everything in a NetworkRequest places requirements on Networks?",
+      "range": {
+        "startLine": 376,
+        "startChar": 45,
+        "endLine": 376,
+        "endChar": 85
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
