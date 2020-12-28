@@ -16,6 +16,23 @@
       "message": "Reverting to +1 to fix the binary-incompatible change, but otherwise I think there is very little to improve here",
       "revId": "8baea850c7cb6dad2e7e83b01b5ce1da30fc0f08",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0188a19e_c40192a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-28T17:39:41Z",
+      "side": 1,
+      "message": "Addressed the comments \u0026 removed wifi code from the CL (since that project has moved now)",
+      "revId": "8baea850c7cb6dad2e7e83b01b5ce1da30fc0f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

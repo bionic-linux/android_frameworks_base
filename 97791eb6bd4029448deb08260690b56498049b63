@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebe158a3_09c4c696",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-28T17:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "769ab51b_bdf59009",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 9
+      },
+      "revId": "97791eb6bd4029448deb08260690b56498049b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f044a75f_346a2d26",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-28T14:53:44Z",
       "side": 1,
       "message": "Let\u0027s either remove this tag or use it :)",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "97791eb6bd4029448deb08260690b56498049b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39418c02_a54eeae2",
+        "filename": "core/java/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-28T17:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f044a75f_346a2d26",
       "range": {
         "startLine": 51,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa31e00b_de74bbc8",
+        "filename": "core/java/android/net/TransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-28T17:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007a18df_a4798cf5",
+      "range": {
+        "startLine": 56,
+        "startChar": 40,
+        "endLine": 56,
+        "endChar": 41
+      },
+      "revId": "97791eb6bd4029448deb08260690b56498049b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7a44e85_e2ce6607",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9fdb1c6_64559911",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-28T17:39:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7a44e85_e2ce6607",
+      "range": {
+        "startLine": 1704,
+        "startChar": 46,
+        "endLine": 1704,
+        "endChar": 86
+      },
+      "revId": "97791eb6bd4029448deb08260690b56498049b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8b11434_faac7b62",
@@ -106,6 +202,30 @@
       "writtenOn": "2020-12-28T14:53:44Z",
       "side": 1,
       "message": "I hate to have to tell you this but unfortunately this method isn\u0027t and won\u0027t be exposed to modules so I fear we need to keep the token idiom :(",
+      "range": {
+        "startLine": 1709,
+        "startChar": 36,
+        "endLine": 1709,
+        "endChar": 68
+      },
+      "revId": "97791eb6bd4029448deb08260690b56498049b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1916fe39_da0730e0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-28T17:39:41Z",
+      "side": 1,
+      "message": "Done. Created a util to avoid duplicating the try/catch block.\n\nShould file a bug about adding this to a util library useable by modules. Most mainline modules need this util (which may not be true for external apps).",
+      "parentUuid": "c8b11434_faac7b62",
       "range": {
         "startLine": 1709,
         "startChar": 36,
