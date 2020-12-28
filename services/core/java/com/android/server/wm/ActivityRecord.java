@@ -4971,6 +4971,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                                 ? stack.mPausingActivity.shortComponentName : "(none)");
                 if (isState(PAUSING)) {
                     setState(PAUSED, "activityPausedLocked");
+                    //set mWillCloseOrEnterPip as false when activityPausedLocked.
+                    setWillCloseOrEnterPip(false);
                     if (finishing) {
                         if (DEBUG_PAUSE) Slog.v(TAG,
                                 "Executing finish of failed to pause activity: " + this);
