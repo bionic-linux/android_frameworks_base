@@ -22,6 +22,30 @@
       },
       "revId": "05cee4892504f323da46aaac0910d66d455e334e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bff56ef9_921d6a81",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-28T10:11:09Z",
+      "side": 1,
+      "message": "Thanks for your suggestion, see if the new commit message works for you.",
+      "parentUuid": "d4e937b3_1f27d5a8",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "05cee4892504f323da46aaac0910d66d455e334e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
