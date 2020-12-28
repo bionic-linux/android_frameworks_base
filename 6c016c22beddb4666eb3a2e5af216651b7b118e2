@@ -3,6 +3,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "880d6fb2_7ce7c6cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1612700
+      },
+      "writtenOn": "2020-12-28T09:30:46Z",
+      "side": 1,
+      "message": "\u003e Please remove the trailing whitespace.\n\nPlease fix.",
+      "parentUuid": "330a4ae0_9244c4e6",
+      "range": {
+        "startLine": 13,
+        "startChar": 51,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "6c016c22beddb4666eb3a2e5af216651b7b118e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f8d70af1_a67d8092",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
