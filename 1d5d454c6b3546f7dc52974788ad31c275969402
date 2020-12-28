@@ -134,6 +134,30 @@
       },
       "revId": "1d5d454c6b3546f7dc52974788ad31c275969402",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "491e9b44_8868812b",
+        "filename": "wifi/java/android/net/wifi/WifiInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2020-12-28T19:31:13Z",
+      "side": 1,
+      "message": "jchalard@: Need your input here. \n\nI agree with the principle of avoiding boolean args. But, I think a boolean is preferable here since:\n* This is the pattern used by existing LinkProperties masking. I would retain this for consistency.\n* Makes the calling sites more complicated in this case.\nif (hasLocationPermission) {\n   WifiInfo.copyWithSensitiveFieldsParceled() \n} else {\n   WifiInfo.copyWithoutSensitiveFieldsParceled()\n} \n\nas opposed to\n\nWifiInfo.copy(!hasLocationPermission)",
+      "parentUuid": "3942bcda_04a415ef",
+      "range": {
+        "startLine": 1192,
+        "startChar": 20,
+        "endLine": 1192,
+        "endChar": 28
+      },
+      "revId": "1d5d454c6b3546f7dc52974788ad31c275969402",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
