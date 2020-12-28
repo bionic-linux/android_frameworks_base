@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8d70af1_a67d8092",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1612700
+      },
+      "writtenOn": "2020-12-28T09:26:18Z",
+      "side": 1,
+      "message": "\u003e\u003e\u003e start dream\nI DreamManagerService: Entering dreamland.\nI DreamController: Starting dream: name\u003dComponentInfo{com.android.dreams.basic/com.android.dreams.basic.Colors}, isTest\u003dfalse, canDoze\u003dfalse, userId\u003d0\n\nI wm_create_activity: [0,171695420,1386,com.android.dreams.basic/android.service.dreams.DreamActivity,NULL,NULL,NULL,276824064]\n\n\u003e\u003e\u003e\u003e When you click the Home button, stopDream will be triggered\nPhoneWindowManager.java\n\n    private void handleShortPressOnHome(int displayId) {\n        // Turn on the connected TV and switch HDMI input if we\u0027re a HDMI playback device.\n        final HdmiControl hdmiControl \u003d getHdmiControl();\n        if (hdmiControl !\u003d null) {\n            hdmiControl.turnOnTv();\n        }\n\n        // If there\u0027s a dream running then use home to escape the dream\n        // but don\u0027t actually go home.\n        if (mDreamManagerInternal !\u003d null \u0026\u0026 mDreamManagerInternal.isDreaming()) {\n            mDreamManagerInternal.stopDream(false /*immediate*/);\n            return;\n        }\n\n        // Go home!\n        launchHomeFromHotKey(displayId);\n    }\n\n\u003e\u003e\u003e stop dream  in this case DreamActivity is not created,casused DreamService cannot finish DreamActivity\nI DreamManagerService: Leaving dreamland.\nI DreamManagerService: Performing gentle wake from dream.\nI DreamController: Stopping dream: name\u003dComponentInfo{com.android.dreams.basic/com.android.dreams.basic.Colors}, isTest\u003dfalse, canDoze\u003dfalse, userId\u003d0, reason\u003d\u0027finished self\u0027(from \u0027request awaken\u0027)\n\nDreamService.java\n\n        if (mActivity !\u003d null \u0026\u0026 !mActivity.isFinishing()) {\n            mActivity.finishAndRemoveTask();\n        } else {\n            finish();\n        }\n\nI wm_restart_activity: [0,171695420,1386,com.android.dreams.basic/android.service.dreams.DreamActivity]\n\u003e\u003e\u003e DreamActivity starts at this point\nI wm_on_create_called: [171695420,android.service.dreams.DreamActivity,performCreate]\n        \n// when DreamActivity onCreate will call onActivityCreated, we can fix this issue on onActivityCreated\n    DreamActivity.java \n  \n            @Override\n    public void onCreate(@Nullable Bundle bundle) {\n        super.onCreate(bundle);\n\n        DreamService.DreamServiceWrapper callback \u003d\n                (DreamService.DreamServiceWrapper) getIntent().getIBinderExtra(EXTRA_CALLBACK);\n\n        if (callback !\u003d null) {\n            callback.onActivityCreated(this);\n        }\n    }",
+      "revId": "6c016c22beddb4666eb3a2e5af216651b7b118e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
