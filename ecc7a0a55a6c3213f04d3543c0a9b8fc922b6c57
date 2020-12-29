@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8e6c480_34e876ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568527
+      },
+      "writtenOn": "2020-12-29T09:50:28Z",
+      "side": 1,
+      "message": "Please help review is this change ready to merge? tnks!",
+      "revId": "ecc7a0a55a6c3213f04d3543c0a9b8fc922b6c57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
