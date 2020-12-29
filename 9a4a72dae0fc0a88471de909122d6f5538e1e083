@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4eb85532_e00a2171",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "I don\u0027t think this is architected in a useful way and I think a lot of the cases that are not concretely tested will return wrong values.",
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de28049b_2a5f3c00",
+        "filename": "tests/net/integration/util/com/android/server/ConnectivityServiceTestUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "Didn\u0027t we want to have such a utility usable outside of tests ? If so, let\u0027s use that instead.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c3e6a33_18a94a2b",
+        "filename": "tests/net/integration/util/com/android/server/ConnectivityServiceTestUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "This is very expensive for what it does. In tests it doesn\u0027t matter too much, but let\u0027s not do this in production",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a370217_db5b8b54",
+        "filename": "tests/net/integration/util/com/android/server/ConnectivityServiceTestUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "I think this function is ill-defined at least for its name. If I pass {WIFI, ETHERNET}, it will say it\u0027s TYPE_ETHERNET. A function named transportsToLegacyType should throw.\n\nOr, it\u0027s a function that collapses the transports and deduces a single representative type according to some spec. If that\u0027s the case, it should be named and/or commented according to that spec.\n\nAlso note that the logic below doesn\u0027t match what we have been discussing for the correct way to collapse transports according to what to show to a user.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 55
+      },
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec7a2eb6_28d2d772",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do this.\n\nIt\u0027s fine to create a constructor that takes an array of transports, but then it should match the expectations of the callers. Collapsing that to some legacy way of deducing a deprecated type and using it to deduce something is emphatically not what a modern caller would expect.\n\nI\u0027m not sure exactly what motivated this way of doing it ; if you just want to be able to have a NAWrapper with multiple transports for tests, anything wrong with requiring the caller to pass the score ? Then the legacy stuff could be localized to the constructor above instead.",
+      "range": {
+        "startLine": 81,
+        "startChar": 31,
+        "endLine": 81,
+        "endChar": 47
+      },
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b97a45e2_18b6b456",
+        "filename": "tests/net/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "This is a good example of how the function in CSTestUtils returns the wrong thing for usage. ETHERNET|WIFI should have a score of 60.",
+      "range": {
+        "startLine": 96,
+        "startChar": 21,
+        "endLine": 96,
+        "endChar": 24
+      },
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70f39dec_5626bd42",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "If we keep this style we should make this the first argument as it\u0027s the more fundamental one.\n\nBut VPNs can (and will) change their underlying transports regularly. We should probably instead have a setter on MockVpn and maybe an optional initial value on the constructor. It could be a setter for transports at first, but ultimately we probably want either a list of NetworkCapabilities objects or even a list of Networks or NetworkAgentWrappers, which is more realistic but harder to use.",
+      "range": {
+        "startLine": 1094,
+        "startChar": 16,
+        "endLine": 1094,
+        "endChar": 36
+      },
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "123ef1c5_fcd6b5cc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6428,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "Also needs to have TRANSPORT_CELLULAR",
+      "range": {
+        "startLine": 6428,
+        "startChar": 22,
+        "endLine": 6428,
+        "endChar": 86
+      },
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33dc03dc_0fd7a5c8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6430,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:06:47Z",
+      "side": 1,
+      "message": "Optional : I think it\u0027s clearer to test this by resetting the mock in l.6403 and saying never() here.",
+      "range": {
+        "startLine": 6430,
+        "startChar": 37,
+        "endLine": 6430,
+        "endChar": 42
+      },
+      "revId": "9a4a72dae0fc0a88471de909122d6f5538e1e083",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
