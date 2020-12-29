@@ -72,6 +72,7 @@ import android.net.UidRange;
 import android.net.UidRangeParcel;
 import android.net.VpnManager;
 import android.net.VpnService;
+import android.net.VpnTransportInfo;
 import android.net.ipsec.ike.ChildSessionCallback;
 import android.net.ipsec.ike.ChildSessionConfiguration;
 import android.net.ipsec.ike.ChildSessionParams;
@@ -109,7 +110,6 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
-import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
@@ -1813,12 +1813,13 @@ public class Vpn {
      * This method should only be called by ConnectivityService because it doesn't
      * have enough data to fill VpnInfo.primaryUnderlyingIface field.
      */
-    public synchronized VpnInfo getVpnInfo() {
+    @Nullable
+    public synchronized VpnTransportInfo getVpnTransportInfo() {
         if (!isRunningLocked()) {
             return null;
         }
 
-        VpnInfo info = new VpnInfo();
+        final VpnTransportInfo info = new VpnTransportInfo();
         info.ownerUid = mOwnerUID;
         info.vpnIface = mInterface;
         return info;

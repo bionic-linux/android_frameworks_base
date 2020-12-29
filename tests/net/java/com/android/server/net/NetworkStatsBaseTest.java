@@ -33,8 +33,7 @@ import static android.net.NetworkStats.TAG_NONE;
 import static org.junit.Assert.assertEquals;
 
 import android.net.NetworkStats;
-
-import com.android.internal.net.VpnInfo;
+import android.net.VpnTransportInfo;
 
 /** Superclass with utilities for NetworkStats(Service|Factory)Test */
 abstract class NetworkStatsBaseTest {
@@ -108,12 +107,12 @@ abstract class NetworkStatsBaseTest {
         assertEquals("unexpected operations", operations, entry.operations);
     }
 
-    static VpnInfo createVpnInfo(String[] underlyingIfaces) {
-        return createVpnInfo(TUN_IFACE, underlyingIfaces);
+    static VpnTransportInfo createVpnTransportInfo(String[] underlyingIfaces) {
+        return createVpnTransportInfo(TUN_IFACE, underlyingIfaces);
     }
 
-    static VpnInfo createVpnInfo(String vpnIface, String[] underlyingIfaces) {
-        VpnInfo info = new VpnInfo();
+    static VpnTransportInfo createVpnTransportInfo(String vpnIface, String[] underlyingIfaces) {
+        final VpnTransportInfo info = new VpnTransportInfo();
         info.ownerUid = UID_VPN;
         info.vpnIface = vpnIface;
         info.underlyingIfaces = underlyingIfaces;
