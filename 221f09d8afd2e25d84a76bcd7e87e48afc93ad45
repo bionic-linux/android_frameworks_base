@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad198a77_c708ba9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-29T09:05:48Z",
+      "side": 1,
+      "message": "atest FrameworksNetTests failed with:\nOutput:\nframeworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java:1202: error: getVpnTransportInfo() in ConnectivityServiceTest.MockVpn cannot override getVpnTransportInfo() in Vpn\n        public synchronized VpnTransportInfo getVpnTransportInfo() {\n                                             ^\n  return type com.android.net.module.util.VpnTransportInfo is not compatible with com.android.connectivity.util.VpnTransportInfo\nframeworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java:1201: error: method does not override or implement a method from a supertype\n        @Override\n        ^\nframeworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java:1205: error: incompatible types: com.android.connectivity.util.VpnTransportInfo cannot be converted to com.android.net.module.util.VpnTransportInfo\n            return super.getVpnTransportInfo();\n                                            ^\n3 errors",
+      "revId": "221f09d8afd2e25d84a76bcd7e87e48afc93ad45",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
