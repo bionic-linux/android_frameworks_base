@@ -27,7 +27,7 @@ import android.net.netstats.provider.INetworkStatsProvider;
 import android.net.netstats.provider.INetworkStatsProviderCallback;
 import android.os.IBinder;
 import android.os.Messenger;
-import com.android.internal.net.VpnInfo;
+import com.android.net.module.util.VpnTransportInfo;
 
 /** {@hide} */
 interface INetworkStatsService {
@@ -70,7 +70,7 @@ interface INetworkStatsService {
          in Network[] defaultNetworks,
          in NetworkState[] networkStates,
          in String activeIface,
-         in VpnInfo[] vpnInfos);
+         in VpnTransportInfo[] vpnInfos);
     /** Force update of statistics. */
     @UnsupportedAppUsage
     void forceUpdate();

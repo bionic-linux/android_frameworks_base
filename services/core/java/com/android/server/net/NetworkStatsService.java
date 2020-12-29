@@ -143,11 +143,11 @@ import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.net.module.util.VpnTransportInfo;
 import com.android.server.EventLogTags;
 import com.android.server.LocalServices;
 
@@ -973,7 +973,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             Network[] defaultNetworks,
             NetworkState[] networkStates,
             String activeIface,
-            VpnInfo[] vpnInfos) {
+            VpnTransportInfo[] vpnTransportInfos) {
         checkNetworkStackPermission(mContext);
 
         final long token = Binder.clearCallingIdentity();
@@ -986,7 +986,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         // Update the VPN underlying interfaces only after the poll is made and tun data has been
         // migrated. Otherwise the migration would use the new interfaces instead of the ones that
         // were current when the polled data was transferred.
-        mStatsFactory.updateVpnInfos(vpnInfos);
+        mStatsFactory.updateVpnTransportInfos(vpnTransportInfos);
     }
 
     @Override
