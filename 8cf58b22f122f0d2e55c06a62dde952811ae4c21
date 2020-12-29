@@ -86,6 +86,24 @@
       "parentUuid": "5e3680b3_ac36dc48",
       "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98233d31_a452597b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2020-12-29T07:06:52Z",
+      "side": 1,
+      "message": "You are right in that Build.SUPPORTED_*_APIS should be affected by configs in the vendor partition. But that doesn\u0027t mean that vendor should be the only source of truth about ABI.\n\nAnother point from me is that the properties ro.product.cpu.abilist.* are already unofficial APIs, which is unfortunate though.\n\nFor your purpose, can you make ro.product.cpu.abilist.* to be dynamically fetched from ro.vendor.product.cpu.abilist.* instead of being statically set to TARGET_CPU_ABI_LIST?\n\nWe are doing the same already in https://source.corp.google.com/android/system/core/init/property_service.cpp;rcl\u003ddfed6268d343b414122c7c273568ccf924b7aad4;l\u003d792",
+      "parentUuid": "fef07826_fc93b253",
+      "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
