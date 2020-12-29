@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c37eb836_0457dc23",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T01:14:26Z",
+      "side": 1,
+      "message": "Why is Vpn.java the right place to put this ? I\u0027d have expected somewhere like SystemServer.java.",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 51
+      },
+      "revId": "d8eec041d24626dcab22bc2d66bda482784bdcac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
