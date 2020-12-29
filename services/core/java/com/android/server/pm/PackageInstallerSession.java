@@ -1636,7 +1636,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             try {
                 sealLocked(childSessions);
 
-                if (isApexInstallation()) {
+                if (!isMultiPackage() && isApexInstallation()) {
                     // APEX installations rely on certain fields to be populated after reboot.
                     // E.g. mPackageName.
                     validateApexInstallLocked();
