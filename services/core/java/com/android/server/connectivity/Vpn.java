@@ -108,8 +108,8 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
-import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
+import com.android.net.module.util.VpnTransportInfo;
 import com.android.server.DeviceIdleInternal;
 import com.android.server.LocalServices;
 import com.android.server.net.BaseNetworkObserver;
@@ -1818,13 +1818,15 @@ public class Vpn {
     /**
      * This method should only be called by ConnectivityService because it doesn't
      * have enough data to fill VpnInfo.primaryUnderlyingIface field.
+     * @return
      */
-    public synchronized VpnInfo getVpnInfo() {
+    @Nullable
+    public synchronized VpnTransportInfo getVpnTransportInfo() {
         if (!isRunningLocked()) {
             return null;
         }
 
-        VpnInfo info = new VpnInfo();
+        final VpnTransportInfo info = new VpnTransportInfo();
         info.ownerUid = mOwnerUID;
         info.vpnIface = mInterface;
         return info;

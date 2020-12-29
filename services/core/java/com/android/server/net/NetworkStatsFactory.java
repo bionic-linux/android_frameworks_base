@@ -34,9 +34,9 @@ import android.os.SystemClock;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.internal.net.VpnInfo;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.ProcFileReader;
+import com.android.net.module.util.VpnTransportInfo;
 
 import libcore.io.IoUtils;
 
@@ -81,7 +81,7 @@ public class NetworkStatsFactory {
     private final Object mPersistentDataLock = new Object();
 
     /** Set containing info about active VPNs and their underlying networks. */
-    private volatile VpnInfo[] mVpnInfos = new VpnInfo[0];
+    private volatile VpnTransportInfo[] mVpnTransportInfos = new VpnTransportInfo[0];
 
     // A persistent snapshot of cumulative stats since device start
     @GuardedBy("mPersistentDataLock")
@@ -116,8 +116,8 @@ public class NetworkStatsFactory {
      *
      * @param vpnArray The snapshot of the currently-running VPNs.
      */
-    public void updateVpnInfos(VpnInfo[] vpnArray) {
-        mVpnInfos = vpnArray.clone();
+    public void updateVpnTransportInfos(VpnTransportInfo[] vpnArray) {
+        mVpnTransportInfos = vpnArray.clone();
     }
 
     /**
@@ -319,7 +319,7 @@ public class NetworkStatsFactory {
         // code that will acquire other locks within the system server. See b/134244752.
         synchronized (mPersistentDataLock) {
             // Take a reference. If this gets swapped out, we still have the old reference.
-            final VpnInfo[] vpnArray = mVpnInfos;
+            final VpnTransportInfo[] vpnArray = mVpnTransportInfos;
             // Take a defensive copy. mPersistSnapshot is mutated in some cases below
             final NetworkStats prev = mPersistSnapshot.clone();
 
@@ -370,7 +370,7 @@ public class NetworkStatsFactory {
 
     @GuardedBy("mPersistentDataLock")
     private NetworkStats adjustForTunAnd464Xlat(
-            NetworkStats uidDetailStats, NetworkStats previousStats, VpnInfo[] vpnArray) {
+            NetworkStats uidDetailStats, NetworkStats previousStats, VpnTransportInfo[] vpnArray) {
         // Calculate delta from last snapshot
         final NetworkStats delta = uidDetailStats.subtract(previousStats);
 
@@ -381,7 +381,7 @@ public class NetworkStatsFactory {
         delta.apply464xlatAdjustments(mStackedIfaces);
 
         // Migrate data usage over a VPN to the TUN network.
-        for (VpnInfo info : vpnArray) {
+        for (VpnTransportInfo info : vpnArray) {
             delta.migrateTun(info.ownerUid, info.vpnIface, info.underlyingIfaces);
             // Filter out debug entries as that may lead to over counting.
             delta.filterDebugEntries();
