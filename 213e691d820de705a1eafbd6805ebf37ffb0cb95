@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5de5998c_9679139b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2020-12-29T19:39:54Z",
+      "side": 1,
+      "message": "Added an unit test.",
+      "parentUuid": "d64b65e6_f3c0e8bf",
+      "revId": "213e691d820de705a1eafbd6805ebf37ffb0cb95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3beb579_04bb4f69",
@@ -43,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b87cfa1_cb14c031",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6740,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2020-12-29T19:39:54Z",
+      "side": 1,
+      "message": "Netd has it. \nhttps://osscs.corp.google.com/android/platform/superproject/+/master:system/netd/server/NetworkController.cpp;l\u003d142",
+      "parentUuid": "d3beb579_04bb4f69",
+      "range": {
+        "startLine": 6740,
+        "startChar": 28,
+        "endLine": 6740,
+        "endChar": 35
+      },
+      "revId": "213e691d820de705a1eafbd6805ebf37ffb0cb95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27571172_d9353b64",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
@@ -54,6 +96,30 @@
       "writtenOn": "2020-12-28T05:22:54Z",
       "side": 1,
       "message": "Should there be a helper method for this?",
+      "range": {
+        "startLine": 6759,
+        "startChar": 0,
+        "endLine": 6762,
+        "endChar": 59
+      },
+      "revId": "213e691d820de705a1eafbd6805ebf37ffb0cb95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70a029fc_b4fad8de",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6762,
+      "author": {
+        "id": 1349877
+      },
+      "writtenOn": "2020-12-29T19:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27571172_d9353b64",
       "range": {
         "startLine": 6759,
         "startChar": 0,
