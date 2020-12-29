@@ -30,7 +30,7 @@ import java.util.Objects;
 
 /**
  * Network definition that includes strong identity. Analogous to combining
- * {@link NetworkInfo} and an IMSI.
+ * {@link NetworkCapabilities} and an IMSI.
  *
  * @hide
  */
@@ -182,7 +182,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
      */
     public static NetworkIdentity buildNetworkIdentity(Context context, NetworkState state,
             boolean defaultNetwork, @NetworkType int subType) {
-        final int type = state.networkInfo.getType();
+        final int legacyType = state.legacyNetworkType;
 
         String subscriberId = null;
         String networkId = null;
@@ -193,7 +193,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
 
         subscriberId = state.networkCapabilities.getSubscriberId();
 
-        if (type == TYPE_WIFI) {
+        if (legacyType == TYPE_WIFI) {
             if (state.networkCapabilities.getSsid() != null) {
                 networkId = state.networkCapabilities.getSsid();
                 if (networkId == null) {
@@ -206,7 +206,7 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
             }
         }
 
-        return new NetworkIdentity(type, subType, subscriberId, networkId, roaming, metered,
+        return new NetworkIdentity(legacyType, subType, subscriberId, networkId, roaming, metered,
                 defaultNetwork);
     }
 

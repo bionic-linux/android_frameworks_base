@@ -39,6 +39,7 @@ public class NetworkState implements Parcelable {
     public final Network network;
     public final String subscriberId;
     public final String networkId;
+    public final int legacyNetworkType;
 
     public NetworkState(NetworkInfo networkInfo, LinkProperties linkProperties,
             NetworkCapabilities networkCapabilities, Network network, String subscriberId,
@@ -49,6 +50,8 @@ public class NetworkState implements Parcelable {
         this.network = network;
         this.subscriberId = subscriberId;
         this.networkId = networkId;
+        // TODO: Pass legacyNetworkType directly from parameters and remove NetworkInfo.
+        this.legacyNetworkType = this.networkInfo.getType();
 
         // This object is an atomic view of a network, so the various components
         // should always agree on roaming state.
@@ -69,6 +72,7 @@ public class NetworkState implements Parcelable {
         network = in.readParcelable(null);
         subscriberId = in.readString();
         networkId = in.readString();
+        legacyNetworkType = in.readInt();
     }
 
     @Override
@@ -84,6 +88,7 @@ public class NetworkState implements Parcelable {
         out.writeParcelable(network, flags);
         out.writeString(subscriberId);
         out.writeString(networkId);
+        out.writeInt(legacyNetworkType);
     }
 
     @UnsupportedAppUsage
