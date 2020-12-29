@@ -102,20 +102,21 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     static final int RESULT_ERROR_UNSUPPORTED_FORMAT = 5;
     static final int RESULT_ERROR_EXCEPTION = 6;
 
-    class Progress {
+    static class Progress {
         String mPartitionName;
         long mPartitionSize;
         long mInstalledSize;
-
         int mNumInstalledPartitions;
 
-        Progress(String partitionName, long partitionSize, long installedSize,
-                int numInstalled) {
+        Progress(
+                String partitionName,
+                long partitionSize,
+                long installedSize,
+                int numInstalledPartitions) {
             mPartitionName = partitionName;
             mPartitionSize = partitionSize;
             mInstalledSize = installedSize;
-
-            mNumInstalledPartitions = numInstalled;
+            mNumInstalledPartitions = numInstalledPartitions;
         }
     }
 
@@ -140,6 +141,8 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
 
     private boolean mIsZip;
     private boolean mIsCompleted;
+
+    private int mNumInstalledPartitions;
 
     private InputStream mStream;
     private ZipFile mZipFile;
@@ -313,7 +316,8 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         thread.start();
 
         long installedSize = 0;
-        Progress progress = new Progress("userdata", mUserdataSize, installedSize, 0);
+        Progress progress =
+                new Progress("userdata", mUserdataSize, installedSize, mNumInstalledPartitions++);
 
         while (thread.isAlive()) {
             if (isCancelled()) {
@@ -357,7 +361,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
     private void installStreamingGzUpdate()
             throws IOException, InterruptedException, ImageValidationException {
         Log.d(TAG, "To install a streaming GZ update");
-        installImage("system", mSystemSize, new GZIPInputStream(mStream), 1);
+        installImage("system", mSystemSize, new GZIPInputStream(mStream));
     }
 
     private void installStreamingZipUpdate()
@@ -367,12 +371,8 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         ZipInputStream zis = new ZipInputStream(mStream);
         ZipEntry zipEntry = null;
 
-        int numInstalledPartitions = 1;
-
         while ((zipEntry = zis.getNextEntry()) != null) {
-            if (installImageFromAnEntry(zipEntry, zis, numInstalledPartitions)) {
-                numInstalledPartitions++;
-            }
+            installImageFromAnEntry(zipEntry, zis);
 
             if (isCancelled()) {
                 break;
@@ -385,14 +385,10 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         Log.d(TAG, "To install a local ZIP update");
 
         Enumeration<? extends ZipEntry> entries = mZipFile.entries();
-        int numInstalledPartitions = 1;
 
         while (entries.hasMoreElements()) {
             ZipEntry entry = entries.nextElement();
-            if (installImageFromAnEntry(
-                    entry, mZipFile.getInputStream(entry), numInstalledPartitions)) {
-                numInstalledPartitions++;
-            }
+            installImageFromAnEntry(entry, mZipFile.getInputStream(entry));
 
             if (isCancelled()) {
                 break;
@@ -400,8 +396,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
         }
     }
 
-    private boolean installImageFromAnEntry(
-            ZipEntry entry, InputStream is, int numInstalledPartitions)
+    private boolean installImageFromAnEntry(ZipEntry entry, InputStream is)
             throws IOException, InterruptedException, ImageValidationException {
         String name = entry.getName();
 
@@ -420,13 +415,12 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
 
         long uncompressedSize = entry.getSize();
 
-        installImage(partitionName, uncompressedSize, is, numInstalledPartitions);
+        installImage(partitionName, uncompressedSize, is);
 
         return true;
     }
 
-    private void installImage(
-            String partitionName, long uncompressedSize, InputStream is, int numInstalledPartitions)
+    private void installImage(String partitionName, long uncompressedSize, InputStream is)
             throws IOException, InterruptedException, ImageValidationException {
 
         SparseInputStream sis = new SparseInputStream(new BufferedInputStream(is));
@@ -475,7 +469,7 @@ class InstallationAsyncTask extends AsyncTask<String, InstallationAsyncTask.Prog
 
         long installedSize = 0;
         Progress progress = new Progress(
-                partitionName, partitionSize, installedSize, numInstalledPartitions);
+                partitionName, partitionSize, installedSize, mNumInstalledPartitions++);
 
         byte[] bytes = new byte[READ_BUFFER_SIZE];
         int numBytesRead;
