@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec0c9dd2_672dd523",
+        "filename": "core/java/android/net/QosCallback.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "An obvious case is if a third party app is calling this on some random wifi network. Nothing will ever happen. More realistically, there is the case where the app is requesting some QoS, and the modem forwards that, but the carrier\u0027s infrastructure never responds (because of congestion, permanent failure, etc)",
+      "parentUuid": "d31bd736_20536574",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "784dbcfa_84d91a59",
         "filename": "core/java/android/net/QosCallbackException.java",
         "patchSetId": 34
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "I\u0027ve always disliked the semantics of a switch statement, especially when people don\u0027t use curly braces and declare local variables (which kept happening to me the other day):\ncase 1:\n  int x \u003d 5;\n  log(x);\n\ncase 2:\n  int x \u003d 6;\n  log(x);\n\n\n\nBut, I know it\u0027s standard to use in this scenario, I moved it over \u003d ).",
       "parentUuid": "784dbcfa_84d91a59",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "117dd496_fba82cd4",
+        "filename": "core/java/android/net/QosCallbackException.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "It\u0027s not fun moving from C# to java uh 😄\nYou\u0027ll be in luck about this particular one when Kotlin gains more traction.",
+      "parentUuid": "9955f45f_259d272a",
       "range": {
         "startLine": 80,
         "startChar": 8,
@@ -426,6 +474,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c242d51_1838a1fe",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "The address is numeric (because it\u0027s in a byte[]). Such an address can\u0027t give UnknownHostException because there is no resolution involved. So if this exception is still thrown, it\u0027s really unclear what might have happened.\n\nReally it\u0027s the Java API being not great here, not much you can do.",
+      "parentUuid": "d81c97e3_53dd7c88",
+      "range": {
+        "startLine": 145,
+        "startChar": 44,
+        "endLine": 146,
+        "endChar": 41
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3e3ab75f_dc6010bb",
         "filename": "core/java/android/net/QosSocketInfo.java",
         "patchSetId": 34
@@ -508,6 +580,30 @@
       "side": 1,
       "message": "I made this change and then moved onto your other comments and noticed that the class is pretty specific to network request.  First, the method name you suggested \"increaseNetworkRequestCountOrThrow\" has the word \"NetworkRequest\" in it.  And, most importantly, the error code used within \"enforce\" implies that it\u0027s network requests since it is defined in ConnectivityManager.\n\nI changed the class name per your suggestion regardless because I think it\u0027s fine either way AND I could be totally missing your point and then need to make the change anyways \u003d ).",
       "parentUuid": "7a71ef57_52cbc142",
+      "range": {
+        "startLine": 887,
+        "startChar": 24,
+        "endLine": 887,
+        "endChar": 45
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7228b3d2_0d37c1e8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "I meant it to include the method names :) I think they also should be renamed to incrementCountOrThrow and decrementCount.",
+      "parentUuid": "7be35877_4fb4bfc2",
       "range": {
         "startLine": 887,
         "startChar": 24,
@@ -884,6 +980,30 @@
       "side": 1,
       "message": "I started doing this but then bumped into an issue...\n\nIn order to keep enforceRequestCountLimit within this class, it needs to be called on the same thread as the call to ConnecivityService#registerQosCallback because it throws an exception.  Which means, we couldn\u0027t move that to a function that must be called on the handler thread.\n\nThe next question could be: why can\u0027t we call enforceRequestCountLimit in ConnectivityService#registerQosCallback. \nWe have to keep the decrementRequestCountLimit in the tracker because we need to decrement when there is an error sent back from the network agent.  So, since decrement needs to be here, then, we would be having increment called in a different class then decrement which really bothers me because they very much need to be called together.",
       "parentUuid": "72479e6e_cdd6bdd0",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71862da6_15686d41",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "Fair enough, I didn\u0027t think of that. I agree with your assessment that keeping the increment and decrement in the same file is more important.",
+      "parentUuid": "865220a5_4f58f48f",
       "range": {
         "startLine": 86,
         "startChar": 16,

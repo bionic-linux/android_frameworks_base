@@ -1,6 +1,92 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ace090c4_64324a27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 42
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "Almost there. Remaining from me are only 3 important comments and 3 nits.",
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "129715e1_fb562be9",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "go/avoidwe :)",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0963da58_772507b1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 5579,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to write this, since mNetworkRequestCounter is only available in CS.",
+      "range": {
+        "startLine": 5579,
+        "startChar": 12,
+        "endLine": 5579,
+        "endChar": 37
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b553a8a8_73fa1d18",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "Nit : maybe \"last\" ? No strong opinion.",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 25
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f194e869_28334e23",
@@ -19,6 +105,86 @@
         "startChar": 0,
         "endLine": 131,
         "endChar": 66
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c51f3e2_42ee0eb9",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "Where did all the finals from patchset 38 go ? Please reinstate them.",
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "545aee4b_eb92efb8",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "Was removing testQosCallbackConnectivityServiceCalled() from PS 38 expected ?",
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1813f9df_e4fc7d10",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "Using a ThrowingRunnable here will be helpful in the future (right now this can only be used with runnables that don\u0027t throw any checked exception).\n\n  private static \u003cT\u003e void mustFail(ThrowingRunnable\u003cT\u003e fn) throws Exception {\n  }",
+      "range": {
+        "startLine": 335,
+        "startChar": 25,
+        "endLine": 335,
+        "endChar": 33
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fed7ea0_ce85abd5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 8175,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2020-12-29T04:37:39Z",
+      "side": 1,
+      "message": "You don\u0027t have anything annotated with @Mock in this class. In fact I think the code in PS38 where mFilter was final and initialized to \u003d mock(QosSocketFilter.class) was safer.",
+      "range": {
+        "startLine": 8175,
+        "startChar": 12,
+        "endLine": 8175,
+        "endChar": 47
       },
       "revId": "2476436e3a92e0f11814a6257fd834616246b081",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
