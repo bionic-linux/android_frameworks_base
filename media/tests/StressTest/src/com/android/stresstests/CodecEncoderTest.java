@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 import static org.junit.Assert.assertTrue;
 
@@ -295,5 +296,34 @@ public class CodecEncoderTest extends CodecEncoderTestBase {
                 else throw e;
             }
         } while (true);
+    }
+}
+
+class EncodeParallel implements Callable<Void> {
+    private final long mSeed = 0x12b9b0a1;  // random seed
+    private final Random rand = new Random(mSeed);
+    CodecEncoderTest mCet;
+    private final String mEncoder;
+    CodecEncoderTest.Menu mSelector;
+    byte[] mInputData;
+
+    public EncodeParallel(CodecEncoderTest cet, String encoder, CodecEncoderTest.Menu selector,
+            byte[] inputData) {
+        mCet = cet;
+        mEncoder = encoder;
+        mSelector = selector;
+        mInputData = inputData;
+    }
+
+    @Override
+    public Void call() throws IOException, InterruptedException {
+        final boolean isAsync = ((rand.nextInt() & 1) == 0);
+        final boolean eosType = ((rand.nextInt() & 1) == 0);
+        final int frames = Integer.MAX_VALUE;
+        mCet.mCodec = MediaCodec.createByCodecName(mEncoder);
+        CodecEncoderTest.isEncoderRunPass(mCet, mEncoder, isAsync, eosType, frames,
+                mSelector, mInputData);
+        mCet.mCodec.release();
+        return null;
     }
 }
