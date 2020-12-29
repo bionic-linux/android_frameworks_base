@@ -181,7 +181,6 @@ import com.android.internal.app.IBatteryStats;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.net.LegacyVpnInfo;
 import com.android.internal.net.VpnConfig;
-import com.android.internal.net.VpnInfo;
 import com.android.internal.net.VpnProfile;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.AsyncChannel;
@@ -192,6 +191,7 @@ import com.android.internal.util.XmlUtils;
 import com.android.modules.utils.BasicShellCommandHandler;
 import com.android.net.module.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import com.android.net.module.util.LinkPropertiesUtils.CompareResult;
+import com.android.net.module.util.VpnTransportInfo;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.AutodestructReference;
 import com.android.server.connectivity.DataConnectionStats;
@@ -4782,28 +4782,30 @@ public class ConnectivityService extends IConnectivityManager.Stub
      *
      * <p>Must be called on the handler thread.
      */
-    private VpnInfo[] getAllVpnInfo() {
+    @NonNull
+    private VpnTransportInfo[] getAllVpnTransportInfo() {
         ensureRunningOnConnectivityServiceThread();
         synchronized (mVpns) {
             if (mLockdownEnabled) {
-                return new VpnInfo[0];
+                return new VpnTransportInfo[0];
             }
-            List<VpnInfo> infoList = new ArrayList<>();
+            List<VpnTransportInfo> infoList = new ArrayList<>();
             for (NetworkAgentInfo nai : mNetworkAgentInfos.values()) {
-                VpnInfo info = createVpnInfo(nai);
+                VpnTransportInfo info = createVpnTransportInfo(nai);
                 if (info != null) {
                     infoList.add(info);
                 }
             }
-            return infoList.toArray(new VpnInfo[infoList.size()]);
+            return infoList.toArray(new VpnTransportInfo[infoList.size()]);
         }
     }
 
     /**
-     * @return VPN information for accounting, or null if we can't retrieve all required
+     * @return VPN transport information for accounting, or null if we can't retrieve all required
      *         information, e.g underlying ifaces.
      */
-    private VpnInfo createVpnInfo(NetworkAgentInfo nai) {
+    @Nullable
+    private VpnTransportInfo createVpnTransportInfo(@NonNull NetworkAgentInfo nai) {
         if (!nai.isVPN()) return null;
 
         Network[] underlyingNetworks = nai.declaredUnderlyingNetworks;
@@ -4832,7 +4834,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         if (interfaces.isEmpty()) return null;
 
-        VpnInfo info = new VpnInfo();
+        final VpnTransportInfo info = new VpnTransportInfo();
         info.ownerUid = nai.networkCapabilities.getOwnerUid();
         info.vpnIface = nai.linkProperties.getInterfaceName();
         // Must be non-null or NetworkStatsService will crash.
@@ -7702,10 +7704,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             activeIface = activeLinkProperties.getInterfaceName();
         }
 
-        final VpnInfo[] vpnInfos = getAllVpnInfo();
+        final VpnTransportInfo[] vpnTransportInfos = getAllVpnTransportInfo();
         try {
             mStatsService.forceUpdateIfaces(
-                    getDefaultNetworks(), getAllNetworkState(), activeIface, vpnInfos);
+                    getDefaultNetworks(), getAllNetworkState(), activeIface, vpnTransportInfos);
         } catch (Exception ignored) {
         }
     }
@@ -7971,7 +7973,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (vpn == null) {
             return null;
         } else {
-            final VpnInfo info = vpn.getVpnInfo();
+            final VpnTransportInfo info = vpn.getVpnTransportInfo();
             return (info == null || info.ownerUid != uid) ? null : vpn;
         }
     }
