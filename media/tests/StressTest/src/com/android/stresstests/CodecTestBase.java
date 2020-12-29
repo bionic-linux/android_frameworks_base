@@ -1077,8 +1077,7 @@ class CodecDecoderTestBase extends CodecTestBase {
         if (isAudio) {
             flatBuffer.putInt(info.size);
         }
-        flatBuffer.putInt(info.flags & ~MediaCodec.BUFFER_FLAG_END_OF_STREAM)
-                .putLong(info.presentationTimeUs);
+        flatBuffer.putLong(info.presentationTimeUs);
         flatBuffer.flip();
     }
 
