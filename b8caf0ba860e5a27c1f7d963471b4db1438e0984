@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25fdbf96_7c9710e5",
+        "filename": "core/java/android/net/QosCallback.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-29T21:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec0c9dd2_672dd523",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "784dbcfa_84d91a59",
@@ -496,6 +520,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db13e26b_b251c225",
+        "filename": "core/java/android/net/QosSocketInfo.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-29T21:52:59Z",
+      "side": 1,
+      "message": "Gotcha, makes sense, thanks.  I reworded it now that I fully understand.",
+      "parentUuid": "6c242d51_1838a1fe",
+      "range": {
+        "startLine": 145,
+        "startChar": 44,
+        "endLine": 146,
+        "endChar": 41
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3e3ab75f_dc6010bb",
@@ -604,6 +652,30 @@
       "side": 1,
       "message": "I meant it to include the method names :) I think they also should be renamed to incrementCountOrThrow and decrementCount.",
       "parentUuid": "7be35877_4fb4bfc2",
+      "range": {
+        "startLine": 887,
+        "startChar": 24,
+        "endLine": 887,
+        "endChar": 45
+      },
+      "revId": "b8caf0ba860e5a27c1f7d963471b4db1438e0984",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18d9881e_0d9b7a3b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 34
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-29T21:52:59Z",
+      "side": 1,
+      "message": "Updated the method names.  I\u0027m pretty sure that\u0027s it, marking as resolved.",
+      "parentUuid": "7228b3d2_0d37c1e8",
       "range": {
         "startLine": 887,
         "startChar": 24,

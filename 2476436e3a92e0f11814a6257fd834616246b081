@@ -66,6 +66,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "67850cd0_91db74f1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 5579,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-29T21:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0963da58_772507b1",
+      "range": {
+        "startLine": 5579,
+        "startChar": 12,
+        "endLine": 5579,
+        "endChar": 37
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "b553a8a8_73fa1d18",
         "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
         "patchSetId": 42
@@ -129,6 +153,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "51715d49_10f8801d",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-29T21:52:59Z",
+      "side": 1,
+      "message": "see:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1386623/comment/545aee4b_eb92efb8/\n\nSince I removed the only test that I had here, marking everything as final didn\u0027t make sense.\n\nFYI, I\u0027m just using an option in intellij \\ Android Studio that both catches and fixes missing \"finals\".  Go to Settings-\u003eEditor-\u003eInspections (right panel) Java-\u003eCode Style Issues-\u003e\"Local variable or parameter can be final\"\n\nHere is the post that I found on it:\nhttps://stackoverflow.com/questions/42345926/massively-refactor-how-to-add-final-keyword-to-java-method-argument",
+      "parentUuid": "4c51f3e2_42ee0eb9",
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "545aee4b_eb92efb8",
         "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
         "patchSetId": 42
@@ -140,6 +182,24 @@
       "writtenOn": "2020-12-29T04:37:39Z",
       "side": 1,
       "message": "Was removing testQosCallbackConnectivityServiceCalled() from PS 38 expected ?",
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eadbcfa7_c389c153",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-29T21:52:59Z",
+      "side": 1,
+      "message": "Yes, it was intentional.  I left a small note in the chat room on why I removed it (I should have also had the same note on the PS as well.)\n\nHere is the reasoning:\nI did this test before the cts tests.  After doing the CTS tests, I realized this was redundant but kept this test in for extra coverage.\n\nIn the latest update, I removed the test code from QosSocketInfo which allowed me to initialize the object with a non-bound socket for the purposes of the test.  I was unable though to mock final classes though and so I decided it\u0027s best to keep the test code out of QosSocketInfo since the cases were already covered.\n\nI did spend a few hours trying to add Mockito 2.0 based off of a bug from some other team in buganizer, but could never get it working.  It also looks like the upgrade is not fully backwards compatible which is obviously not appealing.  I do remember you saying that you mocked final classes in several tests, but I\u0027m not sure if you meant within connectivity tests or just generally in Android tests.  I can confidently say that just adding either mock(...) or @Mock does not work with the Qos classes that are marked final.  If you do have a specific example to point me to then I can add this test back.  (I will ask my teammates for help on this today and so this answer may change.)",
+      "parentUuid": "545aee4b_eb92efb8",
       "revId": "2476436e3a92e0f11814a6257fd834616246b081",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -169,6 +229,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d435681_8776040d",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-29T21:52:59Z",
+      "side": 1,
+      "message": "I didn\u0027t add this though?\n\nNot sure if you thought I did add it or you were just letting me know (which, was helpful for the future, so in that case, thanks.)\n\nMarking as resolved assuming that you didn\u0027t want me to change code that I didn\u0027t touch.",
+      "parentUuid": "1813f9df_e4fc7d10",
+      "range": {
+        "startLine": 335,
+        "startChar": 25,
+        "endLine": 335,
+        "endChar": 33
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2fed7ea0_ce85abd5",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 42
@@ -180,6 +264,30 @@
       "writtenOn": "2020-12-29T04:37:39Z",
       "side": 1,
       "message": "You don\u0027t have anything annotated with @Mock in this class. In fact I think the code in PS38 where mFilter was final and initialized to \u003d mock(QosSocketFilter.class) was safer.",
+      "range": {
+        "startLine": 8175,
+        "startChar": 12,
+        "endLine": 8175,
+        "endChar": 47
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71b2cc26_40f5c15f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 8175,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-29T21:52:59Z",
+      "side": 1,
+      "message": "First, see my reply here:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1386623/comment/545aee4b_eb92efb8/\n\n1. Removed init annotations, it was left over from when I was experimenting mocking final classes.\n2. Making QosSocketFilter final + parcelable allowed me to remove the code within NetworkAgent that kept checking the class type before and after the Message was shipped between boundaries.  The trade off was definitely worth it because I was able to remove several lines of codes that I absolutely loathed.",
+      "parentUuid": "2fed7ea0_ce85abd5",
       "range": {
         "startLine": 8175,
         "startChar": 12,
