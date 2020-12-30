@@ -134,6 +134,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00cf6400_353d6cfe",
+        "filename": "telephony/java/android/telephony/data/EpsBearerQosSessionAttributes.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2020-12-30T02:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f194e869_28334e23",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 66
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c51f3e2_42ee0eb9",
