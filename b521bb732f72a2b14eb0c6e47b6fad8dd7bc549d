@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d400a368_59090854",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-30T02:41:42Z",
+      "side": 1,
+      "message": "This is also needed by NetworkIdentity so maybe we should refactor it and put it in a common place.\nI\u0027ve wrote one before discovering this CL. See if it also works for you aosp/1536729",
+      "range": {
+        "startLine": 1813,
+        "startChar": 16,
+        "endLine": 1813,
+        "endChar": 41
+      },
+      "revId": "b521bb732f72a2b14eb0c6e47b6fad8dd7bc549d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
