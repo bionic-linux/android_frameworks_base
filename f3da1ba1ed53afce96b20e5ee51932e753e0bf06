@@ -22,6 +22,30 @@
       },
       "revId": "f3da1ba1ed53afce96b20e5ee51932e753e0bf06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bdeebc1_eff34d7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1092759
+      },
+      "writtenOn": "2020-12-30T08:53:46Z",
+      "side": 1,
+      "message": "It\u0027s a bit trouble, for there is only xml serializer test for sessions read and write now, just reference \"services/tests/servicestests/src/com/android/server/pm/PackageInstallerSessionTest.java\". It\u0027s not support apex now, we need modify a lot to support this test. And this CL just make the logical rollback to Android Q, so I think it\u0027s OK with not having one.",
+      "parentUuid": "aeb7bb9f_f3bc399c",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "f3da1ba1ed53afce96b20e5ee51932e753e0bf06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
