@@ -35,6 +35,18 @@ package android.net {
     field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 
+  public final class NetworkStateSnapshot implements android.os.Parcelable {
+    ctor public NetworkStateSnapshot(int, @Nullable android.net.LinkProperties, @Nullable android.net.NetworkCapabilities, @Nullable android.net.Network, @Nullable String);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStateSnapshot> CREATOR;
+    field public final int legacyNetworkType;
+    field @Nullable public final android.net.LinkProperties linkProperties;
+    field @Nullable public final android.net.Network network;
+    field @Nullable public final android.net.NetworkCapabilities networkCapabilities;
+    field @Nullable public final String subscriberId;
+  }
+
   public final class TcpRepairWindow {
     ctor public TcpRepairWindow(int, int, int, int, int, int);
     field public final int maxWindow;
