@@ -39,6 +39,30 @@
       },
       "revId": "fbd5b9570754836da3306f5bc662e21eb093f0ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0a95688_009527d9",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2020-12-30T11:28:15Z",
+      "side": 1,
+      "message": "Re: Java style...\n\nThis is the style that was suggested by the linter `google-java-style`... :/",
+      "parentUuid": "855de3db_c71266df",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 45
+      },
+      "revId": "fbd5b9570754836da3306f5bc662e21eb093f0ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
