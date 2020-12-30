@@ -16,6 +16,9 @@
 
 package android.net;
 
+import static android.net.ConnectivityManager.TYPE_NONE;
+
+import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -41,17 +44,31 @@ public class NetworkState implements Parcelable {
     public final String networkId;
     public final int legacyNetworkType;
 
+    public NetworkState(int legacyNetworkType, @Nullable LinkProperties linkProperties,
+            @Nullable NetworkCapabilities networkCapabilities, @Nullable Network network,
+            @Nullable String subscriberId, @Nullable String networkId) {
+        this(legacyNetworkType, null, linkProperties, networkCapabilities, network, subscriberId,
+                networkId);
+    }
+
+    // Constructor that used internally in ConnectivityService mainline module.
     public NetworkState(NetworkInfo networkInfo, LinkProperties linkProperties,
             NetworkCapabilities networkCapabilities, Network network, String subscriberId,
             String networkId) {
+        this(networkInfo == null ? TYPE_NONE : networkInfo.getType(), networkInfo, linkProperties,
+                networkCapabilities, network, subscriberId, networkId);
+    }
+
+    private NetworkState(int legacyNetworkType, NetworkInfo networkInfo,
+            LinkProperties linkProperties, NetworkCapabilities networkCapabilities, Network network,
+            String subscriberId, String networkId) {
         this.networkInfo = networkInfo;
         this.linkProperties = linkProperties;
         this.networkCapabilities = networkCapabilities;
         this.network = network;
         this.subscriberId = subscriberId;
         this.networkId = networkId;
-        // TODO: Pass legacyNetworkType directly from parameters and remove NetworkInfo.
-        this.legacyNetworkType = this.networkInfo.getType();
+        this.legacyNetworkType = legacyNetworkType;
 
         // This object is an atomic view of a network, so the various components
         // should always agree on roaming state.
