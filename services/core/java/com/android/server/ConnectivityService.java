@@ -52,12 +52,27 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
+import static android.net.NetworkPolicyManager.RULE_ALLOW_METERED;
 import static android.net.NetworkPolicyManager.RULE_NONE;
+import static android.net.NetworkPolicyManager.RULE_REJECT_ALL;
+import static android.net.NetworkPolicyManager.RULE_REJECT_METERED;
+import static android.net.NetworkPolicyManager.RULE_TEMPORARY_ALLOW_METERED;
 import static android.net.NetworkPolicyManager.uidRulesToString;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
 import static android.os.Process.INVALID_UID;
 import static android.system.OsConstants.IPPROTO_TCP;
 import static android.system.OsConstants.IPPROTO_UDP;
+
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_ALLOWLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_DEFAULT;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_NON_METERED;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_SYSTEM;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_ALLOWED_TMP_ALLOWLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_BG_RESTRICT;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_DENYLIST;
+import static com.android.net.module.util.NetworkPolicyUtils.NTWK_BLOCKED_POWER;
+import static com.android.net.module.util.NetworkPolicyUtils.hasRule;
+import static com.android.net.module.util.NetworkPolicyUtils.isSystem;
 
 import static java.util.Map.Entry;
 
@@ -2016,6 +2031,49 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mRestrictBackground = restrictBackground;
     }
 
+    // Note: This method is copied from NetworkPolicyManagerService except no logger argument
+    // because no logging needs here. And the funtionaily should be identical with the original one.
+    private boolean isUidNetworkingBlocked(int uid, int uidRules,
+            boolean isNetworkMetered, boolean isBackgroundRestricted) {
+        final int reason;
+        if (isSystem(uid)) {
+            reason = NTWK_ALLOWED_SYSTEM;
+        } else if (hasRule(uidRules, RULE_REJECT_ALL)) {
+            reason = NTWK_BLOCKED_POWER;
+        } else if (!isNetworkMetered) {
+            reason = NTWK_ALLOWED_NON_METERED;
+        } else if (hasRule(uidRules, RULE_REJECT_METERED)) {
+            reason = NTWK_BLOCKED_DENYLIST;
+        } else if (hasRule(uidRules, RULE_ALLOW_METERED)) {
+            reason = NTWK_ALLOWED_ALLOWLIST;
+        } else if (hasRule(uidRules, RULE_TEMPORARY_ALLOW_METERED)) {
+            reason = NTWK_ALLOWED_TMP_ALLOWLIST;
+        } else if (isBackgroundRestricted) {
+            reason = NTWK_BLOCKED_BG_RESTRICT;
+        } else {
+            reason = NTWK_ALLOWED_DEFAULT;
+        }
+
+        final boolean blocked;
+        switch(reason) {
+            case NTWK_ALLOWED_DEFAULT:
+            case NTWK_ALLOWED_NON_METERED:
+            case NTWK_ALLOWED_TMP_ALLOWLIST:
+            case NTWK_ALLOWED_ALLOWLIST:
+            case NTWK_ALLOWED_SYSTEM:
+                blocked = false;
+                break;
+            case NTWK_BLOCKED_POWER:
+            case NTWK_BLOCKED_DENYLIST:
+            case NTWK_BLOCKED_BG_RESTRICT:
+                blocked = true;
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+        return blocked;
+    }
+
     private boolean isUidNetworkingWithVpnBlocked(int uid, int uidRules, boolean isNetworkMetered,
             boolean isBackgroundRestricted) {
         synchronized (mVpns) {
@@ -2030,8 +2088,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        return NetworkPolicyManagerInternal.isUidNetworkingBlocked(uid, uidRules,
-                isNetworkMetered, isBackgroundRestricted);
+        return isUidNetworkingBlocked(uid, uidRules, isNetworkMetered, isBackgroundRestricted);
     }
 
     /**
@@ -5747,10 +5804,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return true;
         }
         return false;
-    }
-
-    private boolean isSystem(int uid) {
-        return uid < Process.FIRST_APPLICATION_UID;
     }
 
     private void enforceMeteredApnPolicy(NetworkCapabilities networkCapabilities) {
