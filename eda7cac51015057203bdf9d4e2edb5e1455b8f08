@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e55fd67c_82c3626c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-30T02:01:07Z",
+      "side": 1,
+      "message": "FWIW, I don\u0027t think this a useful enum. I think a boolean would be better and we probably use booleans elsewhere for this sort of add/remove operation.",
+      "range": {
+        "startLine": 671,
+        "startChar": 0,
+        "endLine": 675,
+        "endChar": 5
+      },
+      "revId": "eda7cac51015057203bdf9d4e2edb5e1455b8f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a31b06c_0f86caa4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8154,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-30T02:01:07Z",
+      "side": 1,
+      "message": "Having this helper method is great. Can you add it to some (or even all) of the other VPN tests as well? Basically, any time mMockVpn#establish or mMockVpn#establishForMyUid is called, we probably want one of these.",
+      "range": {
+        "startLine": 8154,
+        "startChar": 17,
+        "endLine": 8154,
+        "endChar": 41
+      },
+      "revId": "eda7cac51015057203bdf9d4e2edb5e1455b8f08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

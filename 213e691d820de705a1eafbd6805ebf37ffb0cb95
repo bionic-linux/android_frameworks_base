@@ -85,6 +85,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02ec044c_6fdac4c5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6740,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2020-12-30T02:01:07Z",
+      "side": 1,
+      "message": "Sorry, incomplete comment. \"... in that case, there should be a VPN network that is currently connected and has the owner UID of VPN_UID\".\n\nPer discussion: netd has it because without it, PPTP VPNs would not work. Presumably this is the problem:\n\n1. PPTP VPN starts. Because of how the protocol works, there is a TCP connection owned by VPN_UID.\n2. When the VPN comes up, sockets are closed and the PPTP TCP socket does not survive.\n3. This was fixed by ag/1041110 . See b/27199751 .\n\nWe can\u0027t fix this in this CL because Vpn sets the UID to SYSTEM_UID for legacy VPN. For this to work it should set it to VPN_UID.\n\nSuggest adding this comment.\n\n    // TODO: Excluding VPN_UID is necessary in order to not to kill the TCP connection used\n    // by PPTP. Fix this by making Vpn sets the owner UID to VPN_UID instead of system when\n    // starting a legacy VPN, and remove VPN_UID here.\n\nAlso, can you file a bug to clean this up? That would involve:\n - Changing the UID to VPN_UID in Vpn.java when the legacy VPN is in use\n - Removing VPN_UID here\n - Changing the netd code to remove the hardcoding of VPN_UID.",
+      "parentUuid": "7b87cfa1_cb14c031",
+      "range": {
+        "startLine": 6740,
+        "startChar": 28,
+        "endLine": 6740,
+        "endChar": 35
+      },
+      "revId": "213e691d820de705a1eafbd6805ebf37ffb0cb95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27571172_d9353b64",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
