@@ -22,6 +22,30 @@
       },
       "revId": "c8f836613f51508afacefdc4c7d875cf4589f559",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e59f709_f3aafc47",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2020-12-30T10:02:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce0d5a4_66a5ad1a",
+      "range": {
+        "startLine": 313,
+        "startChar": 63,
+        "endLine": 313,
+        "endChar": 76
+      },
+      "revId": "c8f836613f51508afacefdc4c7d875cf4589f559",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
