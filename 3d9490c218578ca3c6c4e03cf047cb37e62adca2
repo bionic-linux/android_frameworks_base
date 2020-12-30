@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e69ad40e_a20cb81b",
+        "filename": "media/java/android/media/tv/tuner/Tuner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1101748
+      },
+      "writtenOn": "2020-12-30T23:16:15Z",
+      "side": 1,
+      "message": "Q) Is it possible for a frontend be shared by more than 2 instances?",
+      "range": {
+        "startLine": 382,
+        "startChar": 16,
+        "endLine": 382,
+        "endChar": 33
+      },
+      "revId": "3d9490c218578ca3c6c4e03cf047cb37e62adca2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
