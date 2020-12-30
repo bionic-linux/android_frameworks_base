@@ -35,7 +35,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkMonitorManager;
 import android.net.NetworkRequest;
-import android.net.NetworkState;
+import android.net.NetworkStateSnapshot;
 import android.net.TcpKeepalivePacketData;
 import android.os.Bundle;
 import android.os.Handler;
@@ -826,12 +826,13 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         mScore = score;
     }
 
-    public NetworkState getNetworkState() {
+    /** Grab a snapshot of several types of information of the network. **/
+    public NetworkStateSnapshot getNetworkStateSnapshot() {
         synchronized (this) {
             // Network objects are outwardly immutable so there is no point in duplicating.
             // Duplicating also precludes sharing socket factories and connection pools.
             final String subscriberId = networkCapabilities.getSubscriberId();
-            return new NetworkState(new NetworkInfo(networkInfo),
+            return new NetworkStateSnapshot(new NetworkInfo(networkInfo),
                     new LinkProperties(linkProperties),
                     new NetworkCapabilities(networkCapabilities), network, subscriberId, null);
         }

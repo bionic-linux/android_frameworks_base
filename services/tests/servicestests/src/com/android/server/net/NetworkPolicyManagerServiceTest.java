@@ -106,7 +106,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkPolicy;
 import android.net.NetworkPolicyManager;
-import android.net.NetworkState;
+import android.net.NetworkStateSnapshot;
 import android.net.NetworkStats;
 import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
@@ -1055,7 +1055,7 @@ public class NetworkPolicyManagerServiceTest {
     @FlakyTest
     @Test
     public void testNetworkPolicyAppliedCycleLastMonth() throws Exception {
-        NetworkState[] state = null;
+        NetworkStateSnapshot[] state = null;
         NetworkStats stats = null;
 
         final int CYCLE_DAY = 15;
@@ -1067,7 +1067,7 @@ public class NetworkPolicyManagerServiceTest {
 
         // first, pretend that wifi network comes online. no policy active,
         // which means we shouldn't push limit to interface.
-        state = new NetworkState[] { buildWifi() };
+        state = new NetworkStateSnapshot[] { buildWifi() };
         when(mConnManager.getAllNetworkState()).thenReturn(state);
 
         mPolicyListener.expect().onMeteredIfacesChanged(any());
@@ -1322,7 +1322,7 @@ public class NetworkPolicyManagerServiceTest {
 
     @Test
     public void testMeteredNetworkWithoutLimit() throws Exception {
-        NetworkState[] state = null;
+        NetworkStateSnapshot[] state = null;
         NetworkStats stats = null;
 
         final long TIME_FEB_15 = 1171497600000L;
@@ -1332,7 +1332,7 @@ public class NetworkPolicyManagerServiceTest {
         setCurrentTimeMillis(TIME_MAR_10);
 
         // bring up wifi network with metered policy
-        state = new NetworkState[] { buildWifi() };
+        state = new NetworkStateSnapshot[] { buildWifi() };
         stats = new NetworkStats(getElapsedRealtime(), 1)
                 .insertEntry(TEST_IFACE, 0L, 0L, 0L, 0L);
 
@@ -1460,7 +1460,7 @@ public class NetworkPolicyManagerServiceTest {
     }
 
     private PersistableBundle setupUpdateMobilePolicyCycleTests() throws RemoteException {
-        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkState[0]);
+        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkStateSnapshot[0]);
 
         setupTelephonySubscriptionManagers(FAKE_SUB_ID, FAKE_SUBSCRIBER_ID);
 
@@ -1472,7 +1472,7 @@ public class NetworkPolicyManagerServiceTest {
 
     @Test
     public void testUpdateMobilePolicyCycleWithNullConfig() throws RemoteException {
-        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkState[0]);
+        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkStateSnapshot[0]);
 
         setupTelephonySubscriptionManagers(FAKE_SUB_ID, FAKE_SUBSCRIBER_ID);
 
@@ -1946,13 +1946,13 @@ public class NetworkPolicyManagerServiceTest {
         mService.setNetworkPolicies(policies);
     }
 
-    private static NetworkState buildWifi() {
+    private static NetworkStateSnapshot buildWifi() {
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TEST_IFACE);
         final NetworkCapabilities networkCapabilities = new NetworkCapabilities();
         networkCapabilities.addTransportType(TRANSPORT_WIFI);
         networkCapabilities.setSSID(TEST_SSID);
-        return new NetworkState(prop, networkCapabilities, null, null, TEST_SSID);
+        return new NetworkStateSnapshot(prop, networkCapabilities, null, null, TEST_SSID);
     }
 
     private void expectHasInternetPermission(int uid, boolean hasIt) throws Exception {
@@ -1963,8 +1963,8 @@ public class NetworkPolicyManagerServiceTest {
     private void expectNetworkState(boolean roaming) throws Exception {
         when(mCarrierConfigManager.getConfigForSubId(eq(TEST_SUB_ID)))
                 .thenReturn(mCarrierConfig);
-        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkState[] {
-                new NetworkState(buildLinkProperties(TEST_IFACE),
+        when(mConnManager.getAllNetworkState()).thenReturn(new NetworkStateSnapshot[] {
+                new NetworkStateSnapshot(buildLinkProperties(TEST_IFACE),
                         buildNetworkCapabilities(TEST_SUB_ID, TEST_IMSI, roaming),
                         new Network(TEST_NET_ID), TEST_IMSI, null)
         });
