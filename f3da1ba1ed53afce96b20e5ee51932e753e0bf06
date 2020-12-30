@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeb7bb9f_f3bc399c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166043
+      },
+      "writtenOn": "2020-12-30T04:48:39Z",
+      "side": 1,
+      "message": "Can we please have a test for this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "f3da1ba1ed53afce96b20e5ee51932e753e0bf06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
