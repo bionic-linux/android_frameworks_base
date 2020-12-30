@@ -255,6 +255,8 @@ final class LocalDisplayAdapter extends DisplayAdapter {
             // Build an updated list of all existing modes.
             ArrayList<DisplayModeRecord> records = new ArrayList<>();
             boolean modesAdded = false;
+            boolean hdrChanged = false;
+            boolean dpiChanged = false;
             for (int i = 0; i < configs.length; i++) {
                 SurfaceControl.DisplayConfig config = configs[i];
                 // First, check to see if we've already added a matching mode. Since not all
@@ -322,7 +324,21 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                 }
             }
 
-            boolean recordsChanged = records.size() != mSupportedModes.size() || modesAdded;
+            if (mInfo != null) {
+                //check whether hdr info changed
+                if (!Objects.equals(mInfo.hdrCapabilities,mHdrCapabilities)) {
+                    hdrChanged = true;
+                }
+
+                //check whether dpi changed
+                SurfaceControl.DisplayConfig config = configs[activeConfigId];
+                if (mInfo.xDpi != config.xDpi || mInfo.yDpi != config.yDpi) {
+                    dpiChanged = true;
+                }
+            }
+
+            boolean recordsChanged = records.size() != mSupportedModes.size()
+                                     || modesAdded || hdrChanged || dpiChanged;
             // If the records haven't changed then we're done here.
             if (!recordsChanged) {
                 return false;
