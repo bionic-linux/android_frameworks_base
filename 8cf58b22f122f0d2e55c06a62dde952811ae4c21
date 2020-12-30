@@ -104,6 +104,24 @@
       "parentUuid": "fef07826_fc93b253",
       "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d18ffef8_c714b7e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1128729
+      },
+      "writtenOn": "2020-12-30T07:31:02Z",
+      "side": 1,
+      "message": "\u003e You are right in that Build.SUPPORTED_*_APIS should be affected by configs in the vendor partition. But that doesn\u0027t mean that vendor should be the only source of truth about ABI.\n\u003e \n\u003e Another point from me is that the properties ro.product.cpu.abilist.* are already unofficial APIs, which is unfortunate though.\n\u003e \n\u003e For your purpose, can you make ro.product.cpu.abilist.* to be dynamically fetched from ro.vendor.product.cpu.abilist.* instead of being statically set to TARGET_CPU_ABI_LIST?\n\u003e \n\u003e We are doing the same already in https://source.corp.google.com/android/system/core/init/property_service.cpp;rcl\u003ddfed6268d343b414122c7c273568ccf924b7aad4;l\u003d792\n\nReviewed again on `ro.*.product.cpu.abilist.*`. Except `ro.product.cpu.abilist.*`, there are only `vendor` and `odm`.\n\nhttp://cs/android/build/make/core/main.mk?l\u003d288\u0026rcl\u003df4cde477e42c6c11881392051f1c5edd20502140\nhttp://cs/android/build/make/core/main.mk?l\u003d306\u0026rcl\u003df4cde477e42c6c11881392051f1c5edd20502140\n\nIt makes sense to me to let ro.product.cpu.abilist.* to be fetched dynamically.\n\nI think I can reference the code for `ro.product.*` to do it. Will create a sub bug. However, because we need the patch on Q, I am not sure if it will be easy to back to Q. If the new patch is not easy to back port to Q, I could still cherry-pick the patch to `android10-gsi`. Will check it later.",
+      "parentUuid": "98233d31_a452597b",
+      "revId": "8cf58b22f122f0d2e55c06a62dde952811ae4c21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
