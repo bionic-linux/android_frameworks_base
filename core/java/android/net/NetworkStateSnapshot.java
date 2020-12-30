@@ -16,8 +16,11 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -28,15 +31,31 @@ import java.util.Objects;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 public final class NetworkStateSnapshot implements Parcelable {
+    /** The {@link LinkProperties} of the network associated to this snapshot. */
     @NonNull
     public final LinkProperties linkProperties;
+
+    /** The {@link NetworkCapabilities} of the network associated to this snapshot. */
     @NonNull
     public final NetworkCapabilities networkCapabilities;
+
+    /** The network associated to this snapshot. */
     @NonNull
     public final Network network;
+
+    /**
+     * The Subscriber Id of the network associated to this snapshot. See
+     * {@link android.telephony.TelephonyManager#getSubscriberId()}.
+     */
     @Nullable
     public final String subscriberId;
+
+    /**
+     * The legacy type of the network associated to this snapshot. See
+     * {@code ConnectivityManager#TYPE_*}.
+     */
     public final int legacyType;
 
     public NetworkStateSnapshot(@NonNull LinkProperties linkProperties,
@@ -49,6 +68,7 @@ public final class NetworkStateSnapshot implements Parcelable {
         this.legacyType = legacyType;
     }
 
+    /** @hide */
     public NetworkStateSnapshot(@NonNull Parcel in) {
         linkProperties = in.readParcelable(null);
         networkCapabilities = in.readParcelable(null);
