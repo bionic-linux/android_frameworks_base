@@ -1261,7 +1261,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     }
 
     /**
-     * Inspect all current {@link NetworkStateSnapshot} to derive mapping from {@code iface} to
+     * Inspect all current {@link NetworkStateSnapshot}s to derive mapping from {@code iface} to
      * {@link NetworkStatsHistory}. When multiple networks are active on a single {@code iface},
      * they are combined under a single {@link NetworkIdentitySet}.
      */
