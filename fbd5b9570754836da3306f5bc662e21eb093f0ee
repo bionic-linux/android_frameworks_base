@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "043644c1_7ef0ad5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-12-30T11:14:41Z",
+      "side": 1,
+      "message": "Please add an OWNERS file for DynamicSystemInstallationService so someone in your team can provide OWNERS reviews in the future.",
+      "revId": "fbd5b9570754836da3306f5bc662e21eb093f0ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "855de3db_c71266df",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/InstallationAsyncTask.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-12-30T11:14:41Z",
+      "side": 1,
+      "message": "This is not compliant with the Java style guide, the previous way of writing it was accurate.\n\nAlso, since this is a refactoring change, I think it may be worth cleaning this up a bit further (a) The fields of class Progress can be final and (b) you can drop the \"m\" prefix for public fields (ones that don\u0027t have a getter)",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 45
+      },
+      "revId": "fbd5b9570754836da3306f5bc662e21eb093f0ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
