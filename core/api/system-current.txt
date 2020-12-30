@@ -6340,6 +6340,16 @@ package android.net {
     field public static final String PERMISSION_MAINLINE_NETWORK_STACK = "android.permission.MAINLINE_NETWORK_STACK";
   }
 
+  public final class NetworkStateSnapshot implements android.os.Parcelable {
+    ctor public NetworkStateSnapshot(@Nullable android.net.LinkProperties, @Nullable android.net.NetworkCapabilities, @Nullable android.net.Network);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStateSnapshot> CREATOR;
+    field @Nullable public final android.net.LinkProperties linkProperties;
+    field @Nullable public final android.net.Network network;
+    field @Nullable public final android.net.NetworkCapabilities networkCapabilities;
+  }
+
   public final class NetworkStats implements android.os.Parcelable {
     ctor public NetworkStats(long, int);
     method @NonNull public android.net.NetworkStats add(@NonNull android.net.NetworkStats);

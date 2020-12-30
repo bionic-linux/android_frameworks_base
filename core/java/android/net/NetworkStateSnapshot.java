@@ -18,8 +18,7 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
-import android.compat.annotation.UnsupportedAppUsage;
-import android.os.Build;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Slog;
@@ -29,16 +28,22 @@ import android.util.Slog;
  *
  * @hide
  */
-public class NetworkStateSnapshot implements Parcelable {
+@SystemApi
+public final class NetworkStateSnapshot implements Parcelable {
     private static final boolean VALIDATE_ROAMING_STATE = false;
 
+    /** @hide */
     public static final NetworkStateSnapshot EMPTY = new NetworkStateSnapshot(null, null, null,
             null);
 
+    /** @hide */
+    @Nullable
     public final NetworkInfo networkInfo;
+    @Nullable
     public final LinkProperties linkProperties;
+    @Nullable
     public final NetworkCapabilities networkCapabilities;
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
+    @Nullable
     public final Network network;
 
     public NetworkStateSnapshot(@Nullable LinkProperties linkProperties,
@@ -46,6 +51,7 @@ public class NetworkStateSnapshot implements Parcelable {
         this(null, linkProperties, networkCapabilities, network);
     }
 
+    /** @hide */
     public NetworkStateSnapshot(NetworkInfo networkInfo, LinkProperties linkProperties,
             NetworkCapabilities networkCapabilities, Network network) {
         this.networkInfo = networkInfo;
@@ -64,7 +70,7 @@ public class NetworkStateSnapshot implements Parcelable {
         }
     }
 
-    @UnsupportedAppUsage
+    /** @hide */
     public NetworkStateSnapshot(Parcel in) {
         networkInfo = in.readParcelable(null);
         linkProperties = in.readParcelable(null);
@@ -78,14 +84,13 @@ public class NetworkStateSnapshot implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
+    public void writeToParcel(@NonNull Parcel out, int flags) {
         out.writeParcelable(networkInfo, flags);
         out.writeParcelable(linkProperties, flags);
         out.writeParcelable(networkCapabilities, flags);
         out.writeParcelable(network, flags);
     }
 
-    @UnsupportedAppUsage
     @NonNull
     public static final Creator<NetworkStateSnapshot> CREATOR =
             new Creator<NetworkStateSnapshot>() {
