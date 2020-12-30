@@ -227,7 +227,6 @@ import com.android.server.connectivity.Vpn;
 import com.android.server.net.BaseNetdEventCallback;
 import com.android.server.net.BaseNetworkObserver;
 import com.android.server.net.LockdownVpnTracker;
-import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.utils.PriorityDump;
 
 import com.google.android.collect.Lists;
@@ -351,7 +350,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     protected INetd mNetd;
     private INetworkStatsService mStatsService;
     private NetworkPolicyManager mPolicyManager;
-    private NetworkPolicyManagerInternal mPolicyManagerInternal;
 
     /**
      * TestNetworkService (lazily) created upon first usage. Locked to prevent creation of multiple
@@ -1006,9 +1004,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mNMS = Objects.requireNonNull(netManager, "missing INetworkManagementService");
         mStatsService = Objects.requireNonNull(statsService, "missing INetworkStatsService");
         mPolicyManager = mContext.getSystemService(NetworkPolicyManager.class);
-        mPolicyManagerInternal = Objects.requireNonNull(
-                LocalServices.getService(NetworkPolicyManagerInternal.class),
-                "missing NetworkPolicyManagerInternal");
         mDnsResolver = Objects.requireNonNull(dnsresolver, "missing IDnsResolver");
         mProxyTracker = mDeps.makeProxyTracker(mContext, mHandler);
 
