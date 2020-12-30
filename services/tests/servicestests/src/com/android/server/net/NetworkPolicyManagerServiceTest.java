@@ -17,7 +17,6 @@
 package com.android.server.net;
 
 import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
-import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
@@ -105,8 +104,6 @@ import android.net.INetworkPolicyListener;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
-import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkPolicy;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkState;
@@ -1895,13 +1892,6 @@ public class NetworkPolicyManagerServiceTest {
         return ai;
     }
 
-    private NetworkInfo buildNetworkInfo() {
-        final NetworkInfo ni = new NetworkInfo(ConnectivityManager.TYPE_MOBILE,
-                TelephonyManager.NETWORK_TYPE_LTE, null, null);
-        ni.setDetailedState(NetworkInfo.DetailedState.CONNECTED, null, null);
-        return ni;
-    }
-
     private LinkProperties buildLinkProperties(String iface) {
         final LinkProperties lp = new LinkProperties();
         lp.setInterfaceName(iface);
@@ -1957,14 +1947,12 @@ public class NetworkPolicyManagerServiceTest {
     }
 
     private static NetworkState buildWifi() {
-        final NetworkInfo info = new NetworkInfo(TYPE_WIFI, 0, null, null);
-        info.setDetailedState(DetailedState.CONNECTED, null, null);
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TEST_IFACE);
         final NetworkCapabilities networkCapabilities = new NetworkCapabilities();
         networkCapabilities.addTransportType(TRANSPORT_WIFI);
         networkCapabilities.setSSID(TEST_SSID);
-        return new NetworkState(info, prop, networkCapabilities, null, null, TEST_SSID);
+        return new NetworkState(prop, networkCapabilities, null, null, TEST_SSID);
     }
 
     private void expectHasInternetPermission(int uid, boolean hasIt) throws Exception {
@@ -1976,8 +1964,7 @@ public class NetworkPolicyManagerServiceTest {
         when(mCarrierConfigManager.getConfigForSubId(eq(TEST_SUB_ID)))
                 .thenReturn(mCarrierConfig);
         when(mConnManager.getAllNetworkState()).thenReturn(new NetworkState[] {
-                new NetworkState(buildNetworkInfo(),
-                        buildLinkProperties(TEST_IFACE),
+                new NetworkState(buildLinkProperties(TEST_IFACE),
                         buildNetworkCapabilities(TEST_SUB_ID, TEST_IMSI, roaming),
                         new Network(TEST_NET_ID), TEST_IMSI, null)
         });
