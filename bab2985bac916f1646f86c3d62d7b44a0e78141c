@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71c9aa7d_291a6f53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2020-12-31T13:40:07Z",
+      "side": 1,
+      "message": "I am CPing ag/13134816 to aosp.\nLet me know if this adding this Merged-in tag is not the right way to do this.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "bab2985bac916f1646f86c3d62d7b44a0e78141c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
