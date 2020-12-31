@@ -125,6 +125,29 @@
       },
       "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23ad33d7_9fbfb72c",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T06:31:20Z",
+      "side": 1,
+      "message": "So it seems like even though both of them are having different SubscriptionGroupId but they are still the same NC.\nCan you add a comment to explain why? Because SubscriptionGroupId is an optional item?",
+      "range": {
+        "startLine": 746,
+        "startChar": 12,
+        "endLine": 748,
+        "endChar": 35
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
