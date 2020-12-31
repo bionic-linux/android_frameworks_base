@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b773aab_56053080",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T06:31:13Z",
+      "side": 1,
+      "message": "Add @VisibleForTesting for this var.",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 297,
+        "endChar": 43
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc1d4990_5f5b7f14",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T06:31:13Z",
+      "side": 1,
+      "message": "I think it\u0027s better to have a simple comment for this function, otherwise, people may need to trace the code of CS to know the design.",
+      "range": {
+        "startLine": 646,
+        "startChar": 4,
+        "endLine": 649,
+        "endChar": 5
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82231c63_88bc9a09",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T06:31:13Z",
+      "side": 1,
+      "message": "I think what you need is just a number bigger than mNewNetworkLingerDelayMs?\nBut I don\u0027t know why this need to divide by 4?\nIs there any special reason?",
+      "range": {
+        "startLine": 1656,
+        "startChar": 52,
+        "endLine": 1656,
+        "endChar": 89
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a045ec9_194103b1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T06:31:13Z",
+      "side": 1,
+      "message": "It seems like you can have a fuction for this part, and the function can be used at line#1659-1669 as well.\nUp to you.",
+      "range": {
+        "startLine": 1678,
+        "startChar": 8,
+        "endLine": 1684,
+        "endChar": 25
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "807539ce_93faf4cf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T06:31:13Z",
+      "side": 1,
+      "message": "Why TestableNetworkCallback here?\nI know TestNetworkCallback is extending TestableNetworkCallback, but why do you use TestNetworkCallback at line#1703 and use TestableNetworkCallback here?\nIs there any special reason? Or just a typo?\nDo you want to unify the usage?",
+      "range": {
+        "startLine": 1709,
+        "startChar": 14,
+        "endLine": 1709,
+        "endChar": 37
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
