@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e7d7162_49ee2010",
+        "filename": "services/core/java/com/android/server/gpu/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2020-12-31T13:38:04Z",
+      "side": 1,
+      "message": "is there a compelling reason to do this ? it\u0027s usually discouraged.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "524cb83d1e60c6ab3e532d261306edb6edb31b96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
