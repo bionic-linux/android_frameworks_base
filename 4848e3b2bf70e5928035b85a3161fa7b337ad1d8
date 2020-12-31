@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007010488",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1538723?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9d2c7837_bd8f99ab",
+        "filename": "services/core/java/com/android/server/display/LocalDisplayAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2020-12-31T06:08:33Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 120
+      },
+      "revId": "4848e3b2bf70e5928035b85a3161fa7b337ad1d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
