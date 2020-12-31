@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e5006a6_9824ee76",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2020-12-31T09:32:57Z",
+      "side": 1,
+      "message": "nit: can these be at the same line?\nno strong opinion.",
+      "range": {
+        "startLine": 1593,
+        "startChar": 0,
+        "endLine": 1595,
+        "endChar": 63
+      },
+      "revId": "2173683df724fbfce2360f85a68a490ea8c63576",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
