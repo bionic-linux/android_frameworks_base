@@ -22,6 +22,30 @@
       },
       "revId": "3d9490c218578ca3c6c4e03cf047cb37e62adca2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f9c86e3_f0c1897a",
+        "filename": "media/java/android/media/tv/tuner/Tuner.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2020-12-31T00:31:01Z",
+      "side": 1,
+      "message": "In theory, it\u0027s possible although it\u0027s not a valid use case yet.\nCurrent implementation support it.",
+      "parentUuid": "e69ad40e_a20cb81b",
+      "range": {
+        "startLine": 382,
+        "startChar": 16,
+        "endLine": 382,
+        "endChar": 33
+      },
+      "revId": "3d9490c218578ca3c6c4e03cf047cb37e62adca2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
