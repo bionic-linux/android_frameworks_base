@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59097a43_a7639b65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2020-12-31T10:41:29Z",
+      "side": 1,
+      "message": "You may need to fix the merge conflict at NetworkPolicyManagerServiceTest.java.",
+      "revId": "8bed3d8e06e8d05276c6d3f2ea778ccf641316a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
