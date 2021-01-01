@@ -22,6 +22,30 @@
       },
       "revId": "524cb83d1e60c6ab3e532d261306edb6edb31b96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47bf7c8d_fb034499",
+        "filename": "services/core/java/com/android/server/gpu/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1267775
+      },
+      "writtenOn": "2021-01-01T01:34:23Z",
+      "side": 1,
+      "message": "This component is on the critical path of the graphics stack, we would like to make sure that all changes made to this component has been reviewed by us. Enforced with a rule is more reliable.",
+      "parentUuid": "6e7d7162_49ee2010",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 12
+      },
+      "revId": "524cb83d1e60c6ab3e532d261306edb6edb31b96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
