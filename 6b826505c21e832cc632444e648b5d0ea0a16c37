@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007026322",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1477323?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "11f51ecc_00b9805c",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-04T14:16:28Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 2220,
+        "startChar": 0,
+        "endLine": 2220,
+        "endChar": 101
+      },
+      "revId": "6b826505c21e832cc632444e648b5d0ea0a16c37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
