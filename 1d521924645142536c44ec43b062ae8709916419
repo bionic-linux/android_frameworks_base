@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ed03e90_70495d8a",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2021-01-04T14:13:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a421045_fee8f086",
+      "range": {
+        "startLine": 2228,
+        "startChar": 11,
+        "endLine": 2228,
+        "endChar": 16
+      },
+      "revId": "1d521924645142536c44ec43b062ae8709916419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0586301_1281223f",
@@ -37,6 +61,30 @@
       "writtenOn": "2020-12-23T14:35:32Z",
       "side": 1,
       "message": "void, don\u0027t return false.",
+      "range": {
+        "startLine": 2239,
+        "startChar": 16,
+        "endLine": 2239,
+        "endChar": 29
+      },
+      "revId": "1d521924645142536c44ec43b062ae8709916419",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edf8587f_d4226cfb",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2239,
+      "author": {
+        "id": 1151328
+      },
+      "writtenOn": "2021-01-04T14:13:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0586301_1281223f",
       "range": {
         "startLine": 2239,
         "startChar": 16,
