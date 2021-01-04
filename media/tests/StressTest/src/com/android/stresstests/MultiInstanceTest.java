@@ -16,12 +16,16 @@
 
 package com.android.mediastresstest;
 
+import android.app.Application;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
+import android.os.Debug;
 
 import androidx.test.filters.LargeTest;
 
+import org.junit.After;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -68,6 +72,8 @@ public class MultiInstanceTest {
         private final String mReconfigFile;
         private final float mRmsError;
         private final long mRefCRC;
+        Debug.MemoryInfo mMemInfoStart;
+        Debug.MemoryInfo mMemInfoEnd;
 
         @Parameterized.Parameters(name = "{index}({0})")
         public static Collection<Object[]> input() {
@@ -87,6 +93,17 @@ public class MultiInstanceTest {
             mReconfigFile = reconfigFile;
             mRmsError = rmsError;
             mRefCRC = refCRC;
+        }
+
+        @Before
+        public void initMemoryUses() {
+            mMemInfoStart = CodecTestBase.getMemoryStats(Application.getProcessName());
+        }
+
+        @After
+        public void checkMemoryUses() {
+            mMemInfoEnd = CodecTestBase.getMemoryStats(Application.getProcessName());
+            CodecTestBase.assertNotLeaking(mMemInfoStart, mMemInfoEnd);
         }
 
         @LargeTest
@@ -130,6 +147,8 @@ public class MultiInstanceTest {
         private final int[] mBitrates;
         private final int[] mParamList1;
         private final int[] mParamList2;
+        Debug.MemoryInfo mMemInfoStart;
+        Debug.MemoryInfo mMemInfoEnd;
 
         public EncoderTest(String mime, int[] bitrates, int[] encoderInfo1, int[] encoderInfo2) {
             mMime = mime;
@@ -146,6 +165,17 @@ public class MultiInstanceTest {
             return CodecEncoderTestBase
                     .prepareParamList(CodecEncoderTest.exhaustiveArgsList, isEncoder, needAudio,
                             needVideo, true);
+        }
+
+        @Before
+        public void initMemoryUses() {
+            mMemInfoStart = CodecTestBase.getMemoryStats(Application.getProcessName());
+        }
+
+        @After
+        public void checkMemoryUses() {
+            mMemInfoEnd = CodecTestBase.getMemoryStats(Application.getProcessName());
+            CodecTestBase.assertNotLeaking(mMemInfoStart, mMemInfoEnd);
         }
 
         byte[] setUpSource(String inpPath) throws IOException {

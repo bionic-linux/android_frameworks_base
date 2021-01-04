@@ -16,15 +16,19 @@
 
 package com.android.mediastresstest;
 
+import android.app.Application;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
+import android.os.Debug;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.filters.SmallTest;
 import androidx.test.rule.ActivityTestRule;
 
+import org.junit.After;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +50,8 @@ public class LoopMediaDecoderTest {
     private final String mReconfigFile;
     private final float mRmsError;
     private final long mRefCRC;
+    Debug.MemoryInfo mMemInfoStart;
+    Debug.MemoryInfo mMemInfoEnd;
 
     public LoopMediaDecoderTest(String mime, String testFile, String refFile, String reconfigFile,
             float rmsError, long refCRC) {
@@ -69,6 +75,17 @@ public class LoopMediaDecoderTest {
         return CodecDecoderTestBase
                 .prepareParamList(CodecDecoderTest.exhaustiveArgsList, isEncoder, needAudio,
                         needVideo, true);
+    }
+
+    @Before
+    public void initMemoryUses() {
+        mMemInfoStart = CodecTestBase.getMemoryStats(Application.getProcessName());
+    }
+
+    @After
+    public void checkMemoryUses() {
+        mMemInfoEnd = CodecTestBase.getMemoryStats(Application.getProcessName());
+        CodecTestBase.assertNotLeaking(mMemInfoStart, mMemInfoEnd);
     }
 
     @SmallTest
