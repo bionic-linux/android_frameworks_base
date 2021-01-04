@@ -16,6 +16,9 @@
 
 package com.android.mediastresstest;
 
+import android.app.ActivityManager;
+import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
@@ -26,6 +29,7 @@ import android.media.MediaCodecList;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.os.Build;
+import android.os.Debug;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.util.Pair;
@@ -50,6 +54,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -57,6 +63,7 @@ import java.util.zip.CRC32;
 
 import static android.media.MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface;
 import static android.media.MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Flexible;
+import static androidx.test.InstrumentationRegistry.getContext;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -733,6 +740,55 @@ abstract class CodecTestBase {
             }
         }
         return argsList;
+    }
+
+    static Debug.MemoryInfo getMemoryStats(String processName) {
+        ActivityManager am =
+                (ActivityManager) getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> apps = am.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo proc : apps) {
+            if (!proc.processName.equals(processName)) {
+                continue;
+            }
+            int[] pids = {proc.pid};
+            return am.getProcessMemoryInfo(pids)[0];
+        }
+        return null;
+    }
+
+    static void runGcAndFinalizersSync() {
+        final CountDownLatch fence = new CountDownLatch(1);
+        new Object() {
+            @Override
+            protected void finalize() throws Throwable {
+                try {
+                    fence.countDown();
+                } finally {
+                    super.finalize();
+                }
+            }
+        };
+        try {
+            do {
+                Runtime.getRuntime().gc();
+                Runtime.getRuntime().runFinalization();
+            } while (!fence.await(100, TimeUnit.MILLISECONDS));
+        } catch (InterruptedException ex) {
+            throw new RuntimeException(ex);
+        }
+        Runtime.getRuntime().gc();
+    }
+
+    static void assertNotLeaking(Debug.MemoryInfo start, Debug.MemoryInfo end) {
+        int tolerance = 10; /* kB */
+        if (end.getTotalPss() - start.getTotalPss() > tolerance) {
+            runGcAndFinalizersSync();
+            end = getMemoryStats(Application.getProcessName());
+            if (end.getTotalPss() - start.getTotalPss() > tolerance) {
+                Log.e(LOG_TAG, "Pss Memory difference before and after exceeds tolerance = " +
+                        tolerance + "kB" + "mem: " + start.getTotalPss() + '/' + end.getTotalPss());
+            }
+        }
     }
 
     abstract void enqueueInput(int bufferIndex) throws IOException;
