@@ -28,6 +28,11 @@ import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
 
+import com.android.internal.annotations.GuardedBy;
+
+import java.util.ArrayList;
+import java.util.concurrent.Executor;
+
 /**
  * Base class for network providers such as telephony or Wi-Fi. NetworkProviders connect the device
  * to networks and makes them available to the core network stack by creating
@@ -78,7 +83,9 @@ public class NetworkProvider {
      */
     @SystemApi
     public NetworkProvider(@NonNull Context context, @NonNull Looper looper, @NonNull String name) {
-        Handler handler = new Handler(looper) {
+        // TODO (b/174636568) : this class should be able to cache an instance of
+        // ConnectivityManager so it doesn't have to fetch it again every time.
+        final Handler handler = new Handler(looper) {
             @Override
             public void handleMessage(Message m) {
                 switch (m.what) {
@@ -158,5 +165,70 @@ public class NetworkProvider {
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void declareNetworkRequestUnfulfillable(@NonNull NetworkRequest request) {
         ConnectivityManager.from(mContext).declareNetworkRequestUnfulfillable(request);
+    }
+
+    /** @hide */
+    @SystemApi
+    public interface NetworkOfferCallback {
+        /** Called by the system when this offer is needed to satisfy some networking request. */
+        void onOfferNeeded(@NonNull NetworkRequest request, int factorySerialNumber);
+        /** Called by the system when this offer is no longer needed. */
+        void onOfferUnneeded(@NonNull NetworkRequest request);
+    }
+
+    private class NetworkOfferCallbackProxy extends INetworkOfferCallback.Stub {
+        @NonNull public final NetworkOfferCallback callback;
+        @NonNull private final Executor mExecutor;
+
+        NetworkOfferCallbackProxy(@NonNull final NetworkOfferCallback callback,
+                @NonNull final Executor executor) {
+            this.callback = callback;
+            this.mExecutor = executor;
+        }
+
+        @Override
+        public void onOfferNeeded(final @NonNull NetworkRequest request,
+                final int factorySerialNumber) {
+            mExecutor.execute(() -> callback.onOfferNeeded(request, factorySerialNumber));
+        }
+
+        @Override
+        public void onOfferUnneeded(final @NonNull NetworkRequest request) {
+            mExecutor.execute(() -> callback.onOfferUnneeded(request));
+        }
+    }
+
+    @GuardedBy("mProxies")
+    @NonNull private final ArrayList<NetworkOfferCallbackProxy> mProxies = new ArrayList<>();
+
+    /** @hide */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+    public void offerNetwork(@NonNull final NetworkScore score,
+            @NonNull final NetworkCapabilities caps, @NonNull final Executor executor,
+            @NonNull final NetworkOfferCallback callback) {
+        final NetworkOfferCallbackProxy proxy = new NetworkOfferCallbackProxy(callback, executor);
+        synchronized (mProxies) {
+            mProxies.add(proxy);
+        }
+        mContext.getSystemService(ConnectivityManager.class).offerNetwork(this, score, caps, proxy);
+    }
+
+    /** @hide */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
+    public void unofferNetwork(final @NonNull NetworkOfferCallback callback) {
+        NetworkOfferCallbackProxy proxy = null;
+        synchronized (mProxies) {
+            for (final NetworkOfferCallbackProxy p : mProxies) {
+                if (p.callback == callback) {
+                    proxy = p;
+                    break;
+                }
+            }
+            if (null == proxy) return;
+            mProxies.remove(proxy);
+        }
+        mContext.getSystemService(ConnectivityManager.class).unofferNetwork(proxy);
     }
 }
