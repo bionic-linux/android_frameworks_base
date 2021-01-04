@@ -20,6 +20,7 @@ import android.app.PendingIntent;
 import android.net.ConnectionInfo;
 import android.net.ConnectivityDiagnosticsManager;
 import android.net.IConnectivityDiagnosticsCallback;
+import android.net.INetworkOfferCallback;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkAgentConfig;
@@ -240,4 +241,8 @@ interface IConnectivityManager
     void unregisterNetworkActivityListener(in INetworkActivityListener l);
 
     boolean isDefaultNetworkActive();
+
+    void offerNetwork(in Messenger messenger, in NetworkScore score,
+            in NetworkCapabilities caps, in INetworkOfferCallback callback);
+    void unofferNetwork(in INetworkOfferCallback callback);
 }
