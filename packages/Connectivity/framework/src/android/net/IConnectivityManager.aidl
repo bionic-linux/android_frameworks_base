@@ -22,6 +22,7 @@ import android.net.ConnectivityDiagnosticsManager;
 import android.net.IConnectivityDiagnosticsCallback;
 import android.net.IOnSetOemNetworkPreferenceListener;
 import android.net.INetworkActivityListener;
+import android.net.INetworkOfferCallback;
 import android.net.IQosCallback;
 import android.net.ISocketKeepaliveCallback;
 import android.net.LinkProperties;
@@ -216,4 +217,8 @@ interface IConnectivityManager
 
     void setOemNetworkPreference(in OemNetworkPreferences preference,
             in IOnSetOemNetworkPreferenceListener listener);
+
+    void offerNetwork(in Messenger messenger, in NetworkScore score,
+            in NetworkCapabilities caps, in INetworkOfferCallback callback);
+    void unofferNetwork(in INetworkOfferCallback callback);
 }
