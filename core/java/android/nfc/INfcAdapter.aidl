@@ -72,4 +72,5 @@ interface INfcAdapter
     boolean deviceSupportsNfcSecure();
     boolean setNfcSecure(boolean enable);
 
+    void setNfcControllerOn(boolean status);
 }
