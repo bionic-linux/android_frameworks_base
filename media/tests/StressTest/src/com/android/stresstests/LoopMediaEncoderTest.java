@@ -16,13 +16,17 @@
 
 package com.android.mediastresstest;
 
+import android.app.Application;
 import android.media.MediaCodec;
 import android.media.MediaFormat;
+import android.os.Debug;
 
 import androidx.test.filters.LargeTest;
 import androidx.test.filters.SmallTest;
 
+import org.junit.After;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -45,6 +49,8 @@ public class LoopMediaEncoderTest {
     private final int[] mBitrates;
     private final int[] mParamList1;
     private final int[] mParamList2;
+    Debug.MemoryInfo mMemInfoStart;
+    Debug.MemoryInfo mMemInfoEnd;
 
     public LoopMediaEncoderTest(String mime, int[] bitrates, int[] encoderInfo1,
             int[] encoderInfo2) {
@@ -62,6 +68,17 @@ public class LoopMediaEncoderTest {
         return CodecEncoderTestBase
                 .prepareParamList(CodecEncoderTest.exhaustiveArgsList, isEncoder, needAudio,
                         needVideo, true);
+    }
+
+    @Before
+    public void initMemoryUses() {
+        mMemInfoStart = CodecTestBase.getMemoryStats(Application.getProcessName());
+    }
+
+    @After
+    public void checkMemoryUses() {
+        mMemInfoEnd = CodecTestBase.getMemoryStats(Application.getProcessName());
+        CodecTestBase.assertNotLeaking(mMemInfoStart, mMemInfoEnd);
     }
 
     byte[] setUpSource(String inpPath) throws IOException {
