@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c709245c_fd180963",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-01-05T14:13:07Z",
+      "side": 1,
+      "message": "The only changes since last approval were due to a rebase.",
+      "revId": "46111c8ea0b39e6f0ace60681169cc83c4bc93e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
