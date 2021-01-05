@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "320418b8_dd6f2ce8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-05T16:40:46Z",
+      "side": 1,
+      "message": "I\u0027m probably not the right person to help review this CL; removing myself.",
+      "revId": "848bcdc42a694bdca561d9cdb6b2f8ae8b1618f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
