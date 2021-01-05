@@ -46,6 +46,30 @@
       },
       "revId": "bab2985bac916f1646f86c3d62d7b44a0e78141c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31de86de_f5f38344",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1765766
+      },
+      "writtenOn": "2021-01-05T11:10:45Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ll go with I, less risk :D",
+      "parentUuid": "4f7fd89d_b8ee72cf",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "bab2985bac916f1646f86c3d62d7b44a0e78141c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
