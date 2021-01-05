@@ -22,6 +22,30 @@
       },
       "revId": "bab2985bac916f1646f86c3d62d7b44a0e78141c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f7fd89d_b8ee72cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2021-01-05T11:06:24Z",
+      "side": 1,
+      "message": "sgtm, I think it should be Merged-In (upper case I) (not sure if it\u0027s case insensitive though)",
+      "parentUuid": "71c9aa7d_291a6f53",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "bab2985bac916f1646f86c3d62d7b44a0e78141c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
