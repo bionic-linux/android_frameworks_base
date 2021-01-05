@@ -92,7 +92,6 @@ import android.net.INetd;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
-import android.net.INetworkPolicyListener;
 import android.net.INetworkStatsService;
 import android.net.ISocketKeepaliveCallback;
 import android.net.InetAddresses;
@@ -141,6 +140,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerExecutor;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.INetworkActivityListener;
@@ -234,6 +234,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.StringJoiner;
 import java.util.TreeSet;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -652,6 +653,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     final Map<IBinder, ConnectivityDiagnosticsCallbackInfo> mConnectivityDiagnosticsCallbacks =
             new HashMap<>();
 
+    private final Executor mExecutor;
+
     /**
      * Implements support for the legacy "one network per network type" model.
      *
@@ -962,6 +965,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mHandlerThread = mDeps.makeHandlerThread();
         mHandlerThread.start();
         mHandler = new InternalHandler(mHandlerThread.getLooper());
+        mExecutor = new HandlerExecutor(mHandler);
         mTrackerHandler = new NetworkStateTrackerHandler(mHandlerThread.getLooper());
         mConnectivityDiagnosticsHandler =
                 new ConnectivityDiagnosticsHandler(mHandlerThread.getLooper());
@@ -989,7 +993,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // To ensure uid rules are synchronized with Network Policy, register for
         // NetworkPolicyManagerService events must happen prior to NetworkPolicyManagerService
         // reading existing policy from disk.
-        mPolicyManager.registerListener(mPolicyListener);
+        mExecutor.execute(() -> {
+            mPolicyManager.registerNetworkPolicyCallback(mExecutor, mPolicyCallback);
+        });
 
         final PowerManager powerManager = (PowerManager) context.getSystemService(
                 Context.POWER_SERVICE);
@@ -2016,7 +2022,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private final INetworkPolicyListener mPolicyListener = new NetworkPolicyManager.Listener() {
+    private final NetworkPolicyManager.NetworkPolicyCallback mPolicyCallback =
+            new NetworkPolicyManager.NetworkPolicyCallback() {
         @Override
         public void onUidRulesChanged(int uid, int uidRules) {
             mHandler.sendMessage(mHandler.obtainMessage(EVENT_UID_RULES_CHANGED, uid, uidRules));

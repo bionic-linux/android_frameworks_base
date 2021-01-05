@@ -112,6 +112,7 @@ import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.ArgumentMatchers.startsWith;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyObject;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
@@ -164,7 +165,6 @@ import android.net.IDnsResolver;
 import android.net.INetd;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
-import android.net.INetworkPolicyListener;
 import android.net.INetworkStatsService;
 import android.net.InetAddresses;
 import android.net.InterfaceConfigurationParcel;
@@ -360,7 +360,7 @@ public class ConnectivityServiceTest {
     private TestNetworkAgentWrapper mEthernetNetworkAgent;
     private MockVpn mMockVpn;
     private Context mContext;
-    private INetworkPolicyListener mPolicyListener;
+    private NetworkPolicyManager.NetworkPolicyCallback mPolicyCallback;
     private WrappedMultinetworkPolicyTracker mPolicyTracker;
     private HandlerThread mAlarmManagerThread;
     private TestNetIdManager mNetIdManager;
@@ -1219,11 +1219,11 @@ public class ConnectivityServiceTest {
     }
 
     private void setUidRulesChanged(int uidRules) throws RemoteException {
-        mPolicyListener.onUidRulesChanged(Process.myUid(), uidRules);
+        mPolicyCallback.onUidRulesChanged(Process.myUid(), uidRules);
     }
 
     private void setRestrictBackgroundChanged(boolean restrictBackground) throws RemoteException {
-        mPolicyListener.onRestrictBackgroundChanged(restrictBackground);
+        mPolicyCallback.onRestrictBackgroundChanged(restrictBackground);
     }
 
     private Nat464Xlat getNat464Xlat(NetworkAgentWrapper mna) {
@@ -1324,10 +1324,11 @@ public class ConnectivityServiceTest {
         mService.mLingerDelayMs = TEST_LINGER_DELAY_MS;
         verify(mDeps).makeMultinetworkPolicyTracker(any(), any(), any());
 
-        final ArgumentCaptor<INetworkPolicyListener> policyListenerCaptor =
-                ArgumentCaptor.forClass(INetworkPolicyListener.class);
-        verify(mNetworkPolicyManager).registerListener(policyListenerCaptor.capture());
-        mPolicyListener = policyListenerCaptor.getValue();
+        final ArgumentCaptor<NetworkPolicyManager.NetworkPolicyCallback> policyCallbackCaptor =
+                ArgumentCaptor.forClass(NetworkPolicyManager.NetworkPolicyCallback.class);
+        verify(mNetworkPolicyManager).registerNetworkPolicyCallback(
+                anyObject(), policyCallbackCaptor.capture());
+        mPolicyCallback = policyCallbackCaptor.getValue();
 
         // Create local CM before sending system ready so that we can answer
         // getSystemService() correctly.
