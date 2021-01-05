@@ -26,6 +26,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8164d7f_9228c06c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7436,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "Would be good to have more details here.\n\nDo we need to unlinger this request later on? Or is that handled when the timer fires?\n\nIn the common case where this network immediately satisfies a request, what happens to the linger timer? Does it fire? Is it immediately cancelled? Ideally, for lowest power use, we\u0027d try to ensure that the timer doesn\u0027t fire if the network starts satisfying a request.",
+      "range": {
+        "startLine": 7434,
+        "startChar": 0,
+        "endLine": 7436,
+        "endChar": 79
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e40d1084_76ea8c27",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "is used in some cases where network requests race",
+      "range": {
+        "startLine": 113,
+        "startChar": 87,
+        "endLine": 114,
+        "endChar": 43
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc1d4990_5f5b7f14",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 6
@@ -42,6 +88,75 @@
         "startChar": 4,
         "endLine": 649,
         "endChar": 5
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecb06d22_f8577f55",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "of the",
+      "range": {
+        "startLine": 1645,
+        "startChar": 89,
+        "endLine": 1645,
+        "endChar": 91
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb669a23_79ff177e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "torn down",
+      "range": {
+        "startLine": 1646,
+        "startChar": 73,
+        "endLine": 1646,
+        "endChar": 81
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbf6d2b1_1e3bfd20",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "Why reset this? I don\u0027t it ever being used in this testcase. Also everywhere else in this testcase.",
+      "range": {
+        "startLine": 1652,
+        "startChar": 8,
+        "endLine": 1652,
+        "endChar": 25
       },
       "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
@@ -95,6 +210,63 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "048e2e5c_be8a9b4d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "This test should should ensure that LOSING is never sent in the common case that the network immediately satisfies a request that was already present. I believe this is already checked in lots of other testcases in this class that connect a network and then call one of the TestNetworkCallback#expectAvailable* methods. If that\u0027s true, then add a comment here to say that.",
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4adaf575_d823b725",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "Remove this blank line?",
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b2b9c5a_f025e1f3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "Can you explain why this callback can monitor background mobile networks? Is it because the code calls grantUsingBackgroundNetworksPermissionForUid before registering it?",
+      "range": {
+        "startLine": 1707,
+        "startChar": 29,
+        "endLine": 1707,
+        "endChar": 72
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "807539ce_93faf4cf",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 6
@@ -111,6 +283,75 @@
         "startChar": 14,
         "endLine": 1709,
         "endChar": 37
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4676284_71533207",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1724,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "Is this a change in app-visible behaviour? If so, is there something we can do to avoid making this change?",
+      "range": {
+        "startLine": 1723,
+        "startChar": 0,
+        "endLine": 1724,
+        "endChar": 52
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88cbefd3_a4e113cb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "range": {
+        "startLine": 1738,
+        "startChar": 8,
+        "endLine": 1738,
+        "endChar": 25
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ceba18c_2360c2c5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3762,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T05:21:32Z",
+      "side": 1,
+      "message": "This is an app-visible change in behaviour, right? Is there something we can do to avoid it?",
+      "range": {
+        "startLine": 3760,
+        "startChar": 0,
+        "endLine": 3762,
+        "endChar": 84
       },
       "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
