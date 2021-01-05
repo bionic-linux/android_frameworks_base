@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09f3cc8d_e0a18db6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-05T17:46:11Z",
+      "side": 1,
+      "message": "Ping for review after addressing nits. Thanks!",
+      "revId": "5b7ab264e521c0629a6e130ebd6eac215ebb04c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
