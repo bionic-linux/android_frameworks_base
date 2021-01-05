@@ -439,6 +439,11 @@ public class Vpn {
         mEnableTeardown = enableTeardown;
     }
 
+    @VisibleForTesting
+    public boolean getEnableTeardown() {
+        return mEnableTeardown;
+    }
+
     /**
      * Update current state, dispatching event to listeners.
      */
@@ -2145,6 +2150,11 @@ public class Vpn {
 
         // Start a new LegacyVpnRunner and we are done!
         mVpnRunner = new LegacyVpnRunner(config, racoon, mtpd, profile);
+        startLegacyVpnRunner();
+    }
+
+    @VisibleForTesting
+    protected void startLegacyVpnRunner() {
         mVpnRunner.start();
     }
 
