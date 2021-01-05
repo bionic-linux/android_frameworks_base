@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1550c4e8_835794d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T18:13:38Z",
+      "side": 1,
+      "message": "I\u0027m reall;y",
+      "revId": "da2533ff3d710065ae0e41e7b06b7508fde63e2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a79dde4_75867aab",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T18:13:38Z",
+      "side": 1,
+      "message": "Is it possible to remove this?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "da2533ff3d710065ae0e41e7b06b7508fde63e2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f4e3cdd_52c3e57c",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T18:13:38Z",
+      "side": 1,
+      "message": "I think this should be removed. The annotation was on NetworkState, which is a different class.",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 24
+      },
+      "revId": "da2533ff3d710065ae0e41e7b06b7508fde63e2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1634c4a_47b0c700",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T18:13:38Z",
+      "side": 1,
+      "message": "I wonder - could this be put into TelephonyNetworkSpecifier in addition to the subId?",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "da2533ff3d710065ae0e41e7b06b7508fde63e2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "225357c5_1ba73093",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-05T18:13:38Z",
+      "side": 1,
+      "message": "Why do we need this in NetworkStats? For wifi networks, this contains the SSID, but the SSID is already in NetworkCapabilities. Do we need this for anything else?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "da2533ff3d710065ae0e41e7b06b7508fde63e2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
