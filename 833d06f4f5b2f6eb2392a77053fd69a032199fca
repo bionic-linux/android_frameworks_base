@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66b7c4ea_5f21e648",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2173,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-05T08:05:08Z",
+      "side": 1,
+      "message": "Thanks for pointing out.\nI believe this would be a legit use case when user clear fi user data as https://source.corp.google.com/piper///depot/google3/java/com/google/android/apps/tycho/telephony/common/SubscriptionUtil.java;l\u003d480?q\u003dcreateGroupUsingSubscriptionManager said.\nWhen this happens, NetworkRequest A will no longer match network Z. And IIUC there is nothing we could do in CS, given that the UUID is different, it is not good for CS to query for the group lists of two UUIDs and compare them.\nBut I\u0027m lack of context of how VCN/telephony would handle this case in general.\n\n+Ben to input.",
+      "parentUuid": "72527142_095488fa",
+      "range": {
+        "startLine": 2173,
+        "startChar": 31,
+        "endLine": 2173,
+        "endChar": 53
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9594ecc0_deea805b",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 2
@@ -71,6 +95,30 @@
       "writtenOn": "2020-12-28T07:43:54Z",
       "side": 1,
       "message": "What is a subscription group, and where is it defined? Is it a concept that comes from SubscriptionManager? If so, we should probably have a @link or @see tag here.",
+      "range": {
+        "startLine": 2514,
+        "startChar": 9,
+        "endLine": 2514,
+        "endChar": 83
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dffa9ad_5ebaf52d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2514,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-05T08:05:08Z",
+      "side": 1,
+      "message": "Done.\nLinked to SubscriptionManager#createSubscriptionGroup.\nSee if it works for you.",
+      "parentUuid": "9594ecc0_deea805b",
       "range": {
         "startLine": 2514,
         "startChar": 9,
@@ -127,6 +175,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36c9d6b0_1f5f6036",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-05T08:05:08Z",
+      "side": 1,
+      "message": "Nah, nothing special.\nRevised.\nSee if it is more clear now.",
+      "parentUuid": "36627abd_a74b3274",
+      "range": {
+        "startLine": 376,
+        "startChar": 11,
+        "endLine": 376,
+        "endChar": 43
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a467cd27_4f65c356",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-05T08:05:08Z",
+      "side": 1,
+      "message": "Revised",
+      "parentUuid": "20137455_c7f1180c",
+      "range": {
+        "startLine": 376,
+        "startChar": 45,
+        "endLine": 376,
+        "endChar": 85
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23ad33d7_9fbfb72c",
@@ -140,6 +236,30 @@
       "writtenOn": "2020-12-31T06:31:20Z",
       "side": 1,
       "message": "So it seems like even though both of them are having different SubscriptionGroupId but they are still the same NC.\nCan you add a comment to explain why? Because SubscriptionGroupId is an optional item?",
+      "range": {
+        "startLine": 746,
+        "startChar": 12,
+        "endLine": 748,
+        "endChar": 35
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0a92f00_b6365eba",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-05T08:05:08Z",
+      "side": 1,
+      "message": "Nah, that means the content of nc2 is replaced by nc1. \nSo they are equal.\nI think it is straightforward.\nReopen if you think a comment is still needed.",
+      "parentUuid": "23ad33d7_9fbfb72c",
       "range": {
         "startLine": 746,
         "startChar": 12,
