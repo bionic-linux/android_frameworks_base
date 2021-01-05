@@ -268,6 +268,30 @@
       },
       "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f79ec66_3b06c695",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-05T08:15:56Z",
+      "side": 1,
+      "message": "I guess I didn\u0027t see nc2.set(nc1) last time... 😕",
+      "parentUuid": "d0a92f00_b6365eba",
+      "range": {
+        "startLine": 746,
+        "startChar": 12,
+        "endLine": 748,
+        "endChar": 35
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
