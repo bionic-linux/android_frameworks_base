@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "865f4b30_e7e8e3ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140244
+      },
+      "writtenOn": "2021-01-06T21:17:36Z",
+      "side": 1,
+      "message": "Can we add owners for *launcher* files as well (both tests and client and service side code in framework)? for example for LauncherApps.java and its tests",
+      "revId": "47c9fe66cc6386f4a5e695b4db6e348657a6f104",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4cc04291_1a1005f6",
