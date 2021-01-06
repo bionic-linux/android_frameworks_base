@@ -1322,8 +1322,9 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                                 ident.getSubType(), ident.getSubscriberId(), ident.getNetworkId(),
                                 ident.getRoaming(), true /* metered */,
                                 true /* onDefaultNetwork */);
-                        findOrCreateNetworkIdentitySet(mActiveIfaces, IFACE_VT).add(vtIdent);
-                        findOrCreateNetworkIdentitySet(mActiveUidIfaces, IFACE_VT).add(vtIdent);
+                        final String ifaceName = IFACE_VT + vtIdent.getSubscriberId();
+                        findOrCreateNetworkIdentitySet(mActiveIfaces, ifaceName).add(vtIdent);
+                        findOrCreateNetworkIdentitySet(mActiveUidIfaces, ifaceName).add(vtIdent);
                     }
 
                     if (isMobile) {
