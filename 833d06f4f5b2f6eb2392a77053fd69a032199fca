@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "35be1b5e_a710e981",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2173,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-06T18:23:59Z",
+      "side": 1,
+      "message": "A SubscriptionGroup is a separate object from the subIds, but internally are mapped to a list of subIds (which may change over time). Each subscription group is identified by a ParcelUuid, and we should be able to simply use that to do the matching.\n\nIIRC:\n- A subId can only be in one Subscription Group (needs update of javadoc; no known use case for a single subid to be in multiple subgroup at once.\n- A Network is tied to a single subId (not multiple)\n- Having a requestable SubscriptionGroup is useful, since it allows a requestor to request ANY Network provided by a subId in the group.\n\nSo in the above example, adding 1, 3, and 5 into subGrp2 would remove them from subGrp1 (or fail unless they are first removed from subGrp1), and the NetworkRequest should no longer be satisfied by any of them.",
+      "parentUuid": "72527142_095488fa",
+      "range": {
+        "startLine": 2173,
+        "startChar": 31,
+        "endLine": 2173,
+        "endChar": 53
+      },
+      "revId": "833d06f4f5b2f6eb2392a77053fd69a032199fca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9594ecc0_deea805b",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 2
