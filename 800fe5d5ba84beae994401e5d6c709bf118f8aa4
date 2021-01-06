@@ -22,6 +22,30 @@
       },
       "revId": "800fe5d5ba84beae994401e5d6c709bf118f8aa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3516235d_4064df47",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1138138
+      },
+      "writtenOn": "2021-01-06T23:30:24Z",
+      "side": 1,
+      "message": "It holds extra information explaining why there was a state change \u0026 each SE vendor has been specifying their own strings/reasons. Changing to uniform intdef would require Secure element HAL change as well - not clear if there were any plans to do that. Jack WDYT?\n\nIt would be useful for the secure element app to know the exact reasons for the state change (but we can always just listen for the broadcast, and then attempt to talk to the SE as an extra step to confirm if it\u0027s because the SE is in error state )",
+      "parentUuid": "fd33a25a_0edfecbc",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 64
+      },
+      "revId": "800fe5d5ba84beae994401e5d6c709bf118f8aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
