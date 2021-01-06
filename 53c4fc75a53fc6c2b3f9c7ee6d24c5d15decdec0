@@ -51,6 +51,23 @@
       "parentUuid": "71b789e1_62c65fa0",
       "revId": "53c4fc75a53fc6c2b3f9c7ee6d24c5d15decdec0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a198f9_642d9b18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-06T16:46:38Z",
+      "side": 1,
+      "message": "OWNERS+1, but I\u0027d recommend getting broader OWNERS regex in place for *Connectivity* files.",
+      "revId": "53c4fc75a53fc6c2b3f9c7ee6d24c5d15decdec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
