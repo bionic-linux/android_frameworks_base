@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44c81a50_4e77da43",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:59:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3126fb2d_e18134da",
+      "range": {
+        "startLine": 49,
+        "startChar": 27,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "50afb7d5862249a4289e186d5cf3f8a4193d3407",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f00656c_08c2b974",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "478192db_c34b181a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:59:06Z",
+      "side": 1,
+      "message": "TODO added.\nBut not sure why change it to long would help with this.\nTo me we\u0027ll need something like NetIdManager.",
+      "parentUuid": "5f00656c_08c2b974",
+      "range": {
+        "startLine": 1260,
+        "startChar": 8,
+        "endLine": 1260,
+        "endChar": 39
+      },
+      "revId": "50afb7d5862249a4289e186d5cf3f8a4193d3407",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "790c3be0_dddf77d1",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-01-05T04:36:38Z",
       "side": 1,
       "message": "Generally speaking, do you think this is an improvement?\n\nRight now, this class doesn\u0027t use anything in the request except for its ID, but it could if we wanted it to. After this CL, this class won\u0027t be able to use anything in the request except for the ID. I don\u0027t know whether we will want to do that.\n\nWe obviously need a guard value here to distinguish \"lingering due to a request\" from \"lingering due to being nascent\". But technically speaking that does not require changing \"NetworkRequest request\" to \"int requestId\". We could also have a special guard value, such as a new NetworkRequest.NONE that has ID NO_REQUEST_ID. Or you could even use null.\n\nMaybe this class is simple enough that it will never need anything more than the ID. In which case, this CL is fine.",
+      "range": {
+        "startLine": 191,
+        "startChar": 21,
+        "endLine": 191,
+        "endChar": 34
+      },
+      "revId": "50afb7d5862249a4289e186d5cf3f8a4193d3407",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc60cc39_89517a0a",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:59:06Z",
+      "side": 1,
+      "message": "Yeah I thought about that too.\nHowever using null would introduce many null checks, which is not pretty.\nWhile using a request which is a \"None\" Request also kind of confuses I think.\nSo this approach was chosen.\nBut you are right this has less flexibility if we want to use other fields of NetworkRequest.\nBut maybe it is a YAGNI since we don\u0027t need anything else since 2016.\n\nI don\u0027t have preference on this. NetworkRequest.NONE also works for me.\n+Jean for input to prevent from changing back and forth.",
+      "parentUuid": "790c3be0_dddf77d1",
       "range": {
         "startLine": 191,
         "startChar": 21,
