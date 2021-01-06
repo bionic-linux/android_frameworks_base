@@ -33,6 +33,24 @@
       "message": "Could framework team review ConnectivityServiceInitializer.java change. Thanks.",
       "revId": "53c4fc75a53fc6c2b3f9c7ee6d24c5d15decdec0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "682575a0_eed4acd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-06T10:39:24Z",
+      "side": 1,
+      "message": "I also update the owner file at aosp/1540909.",
+      "parentUuid": "71b789e1_62c65fa0",
+      "revId": "53c4fc75a53fc6c2b3f9c7ee6d24c5d15decdec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
