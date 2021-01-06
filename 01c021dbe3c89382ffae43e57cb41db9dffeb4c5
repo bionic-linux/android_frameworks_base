@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82994ece_00a2c10d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1536014
+      },
+      "writtenOn": "2021-01-06T21:53:05Z",
+      "side": 1,
+      "message": "I\u0027ve created a second CL following this CL which reads from standalone OWNER files. The second CL is blocked on the remote as these standalone OWNERS files needs to be merged in the repository first.",
+      "revId": "01c021dbe3c89382ffae43e57cb41db9dffeb4c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
