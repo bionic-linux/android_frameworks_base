@@ -70,6 +70,30 @@
       },
       "revId": "f3da1ba1ed53afce96b20e5ee51932e753e0bf06",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0800c0a8_0b2c975a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1092759
+      },
+      "writtenOn": "2021-01-06T02:44:47Z",
+      "side": 1,
+      "message": "OK，I add a StagedInstallTest#testInstallMultipleStagedApex with CL\nhttps://android-review.googlesource.com/c/platform/cts/+/1538752\nCould you please have a look?",
+      "parentUuid": "b67d53dd_e33ee098",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "f3da1ba1ed53afce96b20e5ee51932e753e0bf06",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
