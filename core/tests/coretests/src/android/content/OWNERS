@@ -1,1 +1,2 @@
 per-file ContextTest.java = file:/services/core/java/com/android/server/wm/OWNERS
+per-file *Shortcut* = omakoto@google.com, yamasani@google.com, sunnygoyal@google.com, mett@google.com, pinyaoting@google.com
