@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "604201fb_f008712c",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-06T19:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "724044a1_562f48a7",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "aa429b8db7a36bb9d0b8afd3a302965226d6ff55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fe837896_70288437",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-06T17:27:38Z",
       "side": 1,
       "message": "Usually you don\u0027t have links to internal documentation in AOSP.",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 59
+      },
+      "revId": "aa429b8db7a36bb9d0b8afd3a302965226d6ff55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b60e3741_d3d5d573",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-06T19:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe837896_70288437",
       "range": {
         "startLine": 48,
         "startChar": 33,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87dcad61_d25b8002",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-06T19:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c9ae7a2_55f515b8",
+      "range": {
+        "startLine": 212,
+        "startChar": 24,
+        "endLine": 212,
+        "endChar": 25
+      },
+      "revId": "aa429b8db7a36bb9d0b8afd3a302965226d6ff55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5460a32_077e25cc",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-06T17:27:38Z",
       "side": 1,
       "message": "Is this going to be used in a later CL?",
+      "range": {
+        "startLine": 258,
+        "startChar": 12,
+        "endLine": 258,
+        "endChar": 24
+      },
+      "revId": "aa429b8db7a36bb9d0b8afd3a302965226d6ff55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef3a70cd_43e99f6b",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-06T19:11:48Z",
+      "side": 1,
+      "message": "yeah, in http://aosp/1531240, I wrap the RebootEscrowData with kk during encryption; therefore the same key is also used for decryption.",
+      "parentUuid": "c5460a32_077e25cc",
       "range": {
         "startLine": 258,
         "startChar": 12,
