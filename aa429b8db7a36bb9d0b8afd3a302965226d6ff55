@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "724044a1_562f48a7",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2021-01-06T17:27:38Z",
+      "side": 1,
+      "message": "Add (SP) after this to indicate you will refer to \"synthetic password\" as SP. Also capitalize the SP acronym.",
+      "range": {
+        "startLine": 46,
+        "startChar": 35,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "aa429b8db7a36bb9d0b8afd3a302965226d6ff55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe837896_70288437",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2021-01-06T17:27:38Z",
+      "side": 1,
+      "message": "Usually you don\u0027t have links to internal documentation in AOSP.",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 59
+      },
+      "revId": "aa429b8db7a36bb9d0b8afd3a302965226d6ff55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c9ae7a2_55f515b8",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2021-01-06T17:27:38Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 212,
+        "startChar": 24,
+        "endLine": 212,
+        "endChar": 25
+      },
+      "revId": "aa429b8db7a36bb9d0b8afd3a302965226d6ff55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5460a32_077e25cc",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002975
+      },
+      "writtenOn": "2021-01-06T17:27:38Z",
+      "side": 1,
+      "message": "Is this going to be used in a later CL?",
+      "range": {
+        "startLine": 258,
+        "startChar": 12,
+        "endLine": 258,
+        "endChar": 24
+      },
+      "revId": "aa429b8db7a36bb9d0b8afd3a302965226d6ff55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
