@@ -22,6 +22,30 @@
       },
       "revId": "d8eec041d24626dcab22bc2d66bda482784bdcac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88f24f57_c7d056b3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-06T12:03:28Z",
+      "side": 1,
+      "message": "I think it\u0027s fairly common practice to load JNI libraries in the static initializer of the class having native methods (looking at code search); but one can also argue that if some class forgets to load the lib, there will be crashes depending on the order of which classes are used.\n\nI moved the loading to ConnectivityServiceInitializer and IpConnectivityMetrics, which are the \"top level\" services of the module that are started by SystemServer. IpConnectivityMetrics should also go away, so eventually this should just leave ConnectivityServiceInitializer.",
+      "parentUuid": "c37eb836_0457dc23",
+      "range": {
+        "startLine": 172,
+        "startChar": 8,
+        "endLine": 172,
+        "endChar": 51
+      },
+      "revId": "d8eec041d24626dcab22bc2d66bda482784bdcac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
