@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa9c00b8_b1b83e19",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b773aab_56053080",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 297,
+        "endChar": 43
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8164d7f_9228c06c",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-05T05:21:32Z",
       "side": 1,
       "message": "Would be good to have more details here.\n\nDo we need to unlinger this request later on? Or is that handled when the timer fires?\n\nIn the common case where this network immediately satisfies a request, what happens to the linger timer? Does it fire? Is it immediately cancelled? Ideally, for lowest power use, we\u0027d try to ensure that the timer doesn\u0027t fire if the network starts satisfying a request.",
+      "range": {
+        "startLine": 7434,
+        "startChar": 0,
+        "endLine": 7436,
+        "endChar": 79
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ae350ec_f2201ed4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7436,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Revised. See if it works for you.\n\nCurrently to stop the timer from firing.\nThe timer needs to be removed when unlinger.\nBut it would be more complex to remove and restore this particular timer dynamically.\nThus, in the plan the timer fires anyway no matter whether the network satisfied other requests or not.\nThe outcome would be decided by handleLingerComplete.\n\nCurrently we also calls handleLingerComplete when any of the linger request expires, no matter how many requests are currently satisfied by the network.\nThus I think the problem would be minor.",
+      "parentUuid": "c8164d7f_9228c06c",
       "range": {
         "startLine": 7434,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77ef43f2_67bec27d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done.\nI shall continue my english writing lessens 😭",
+      "parentUuid": "e40d1084_76ea8c27",
+      "range": {
+        "startLine": 113,
+        "startChar": 87,
+        "endLine": 114,
+        "endChar": 43
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc1d4990_5f5b7f14",
@@ -83,6 +155,30 @@
       "writtenOn": "2020-12-31T06:31:13Z",
       "side": 1,
       "message": "I think it\u0027s better to have a simple comment for this function, otherwise, people may need to trace the code of CS to know the design.",
+      "range": {
+        "startLine": 646,
+        "startChar": 4,
+        "endLine": 649,
+        "endChar": 5
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85c44b78_9f445d5f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc1d4990_5f5b7f14",
       "range": {
         "startLine": 646,
         "startChar": 4,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e610253b_7d8d8ca5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb06d22_f8577f55",
+      "range": {
+        "startLine": 1645,
+        "startChar": 89,
+        "endLine": 1645,
+        "endChar": 91
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb669a23_79ff177e",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-01-05T05:21:32Z",
       "side": 1,
       "message": "torn down",
+      "range": {
+        "startLine": 1646,
+        "startChar": 73,
+        "endLine": 1646,
+        "endChar": 81
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec943782_403c3b2d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb669a23_79ff177e",
       "range": {
         "startLine": 1646,
         "startChar": 73,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfe0e026_c342ec62",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbf6d2b1_1e3bfd20",
+      "range": {
+        "startLine": 1652,
+        "startChar": 8,
+        "endLine": 1652,
+        "endChar": 25
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82231c63_88bc9a09",
@@ -175,6 +343,30 @@
       "writtenOn": "2020-12-31T06:31:13Z",
       "side": 1,
       "message": "I think what you need is just a number bigger than mNewNetworkLingerDelayMs?\nBut I don\u0027t know why this need to divide by 4?\nIs there any special reason?",
+      "range": {
+        "startLine": 1656,
+        "startChar": 52,
+        "endLine": 1656,
+        "endChar": 89
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28edc14a_6b434c8f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "It is added as a small buffter in case of flaky.\nSee testMultipleLingering\nA small number will do the job but need extra constant definition and modify accordingly if a linger timer is changed.",
+      "parentUuid": "82231c63_88bc9a09",
       "range": {
         "startLine": 1656,
         "startChar": 52,
@@ -208,6 +400,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86d66ab4_1c0b0de9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Yes but it seems not that useful for other cases in this file.\nThus I think it not very worthy to do it.\nReopen if you have any idea.",
+      "parentUuid": "8a045ec9_194103b1",
+      "range": {
+        "startLine": 1678,
+        "startChar": 8,
+        "endLine": 1684,
+        "endChar": 25
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "048e2e5c_be8a9b4d",
@@ -221,6 +437,24 @@
       "writtenOn": "2021-01-05T05:21:32Z",
       "side": 1,
       "message": "This test should should ensure that LOSING is never sent in the common case that the network immediately satisfies a request that was already present. I believe this is already checked in lots of other testcases in this class that connect a network and then call one of the TestNetworkCallback#expectAvailable* methods. If that\u0027s true, then add a comment here to say that.",
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffe15d59_b47e8ade",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done.\nyes it is tested everywhere.",
+      "parentUuid": "048e2e5c_be8a9b4d",
       "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -242,6 +476,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5fc3c0d_5ffbf1fc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4adaf575_d823b725",
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b2b9c5a_f025e1f3",
@@ -255,6 +507,30 @@
       "writtenOn": "2021-01-05T05:21:32Z",
       "side": 1,
       "message": "Can you explain why this callback can monitor background mobile networks? Is it because the code calls grantUsingBackgroundNetworksPermissionForUid before registering it?",
+      "range": {
+        "startLine": 1707,
+        "startChar": 29,
+        "endLine": 1707,
+        "endChar": 72
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45cffbb3_e86eee55",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b2b9c5a_f025e1f3",
       "range": {
         "startLine": 1707,
         "startChar": 29,
@@ -288,6 +564,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "decde40b_8151e154",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "807539ce_93faf4cf",
+      "range": {
+        "startLine": 1709,
+        "startChar": 14,
+        "endLine": 1709,
+        "endChar": 37
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4676284_71533207",
@@ -301,6 +601,30 @@
       "writtenOn": "2021-01-05T05:21:32Z",
       "side": 1,
       "message": "Is this a change in app-visible behaviour? If so, is there something we can do to avoid making this change?",
+      "range": {
+        "startLine": 1723,
+        "startChar": 0,
+        "endLine": 1724,
+        "endChar": 52
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce30a45c_78999180",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1724,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4676284_71533207",
       "range": {
         "startLine": 1723,
         "startChar": 0,
@@ -334,6 +658,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ec7ed87_2e2d7703",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88cbefd3_a4e113cb",
+      "range": {
+        "startLine": 1738,
+        "startChar": 8,
+        "endLine": 1738,
+        "endChar": 25
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ceba18c_2360c2c5",
@@ -347,6 +695,30 @@
       "writtenOn": "2021-01-05T05:21:32Z",
       "side": 1,
       "message": "This is an app-visible change in behaviour, right? Is there something we can do to avoid it?",
+      "range": {
+        "startLine": 3760,
+        "startChar": 0,
+        "endLine": 3762,
+        "endChar": 84
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06df4fd7_6a7b84a7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3762,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-06T09:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ceba18c_2360c2c5",
       "range": {
         "startLine": 3760,
         "startChar": 0,
