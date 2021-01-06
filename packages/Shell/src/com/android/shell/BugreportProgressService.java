@@ -2110,6 +2110,8 @@ public class BugreportProgressService extends Service {
             shareDescription = in.readString();
             shareTitle = in.readString();
             type = in.readInt();
+            addingDetailsToZip = in.readBoolean();
+            addedDetailsToZip = in.readBoolean();
         }
 
         @Override
@@ -2135,6 +2137,8 @@ public class BugreportProgressService extends Service {
             dest.writeString(shareDescription);
             dest.writeString(shareTitle);
             dest.writeInt(type);
+            dest.writeBoolean(addingDetailsToZip);
+            dest.writeBoolean(addedDetailsToZip);
         }
 
         @Override
