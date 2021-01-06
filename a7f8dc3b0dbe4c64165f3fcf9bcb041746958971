@@ -16,6 +16,92 @@
       "message": "Lorenzo?",
       "revId": "a7f8dc3b0dbe4c64165f3fcf9bcb041746958971",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f32d4b2_e3eae9f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-06T02:30:34Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "a7f8dc3b0dbe4c64165f3fcf9bcb041746958971",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee0c4416_6d8356b7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8176,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-06T02:30:34Z",
+      "side": 1,
+      "message": "assertUidRangesUpdatedForMyUid",
+      "range": {
+        "startLine": 8176,
+        "startChar": 17,
+        "endLine": 8176,
+        "endChar": 41
+      },
+      "revId": "a7f8dc3b0dbe4c64165f3fcf9bcb041746958971",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e823e9c8_007451b4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8181,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-06T02:30:34Z",
+      "side": 1,
+      "message": "Can you call this exemptUid? And maybe put it at the end, after vpnRanges?",
+      "range": {
+        "startLine": 8181,
+        "startChar": 55,
+        "endLine": 8181,
+        "endChar": 62
+      },
+      "revId": "a7f8dc3b0dbe4c64165f3fcf9bcb041746958971",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "167965fc_9e03ceca",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8181,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-06T02:30:34Z",
+      "side": 1,
+      "message": "assertVpnUidRangesUpdated",
+      "range": {
+        "startLine": 8181,
+        "startChar": 17,
+        "endLine": 8181,
+        "endChar": 41
+      },
+      "revId": "a7f8dc3b0dbe4c64165f3fcf9bcb041746958971",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
