@@ -209,7 +209,7 @@ public class PendingIntentController {
                         // Different user, skip it.
                         continue;
                     }
-                    if (!pir.key.packageName.equals(packageName)) {
+                    if (!packageName.equals(pir.key.packageName)) {
                         // Different package, skip it.
                         continue;
                     }
