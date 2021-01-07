@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e4164d9_2d3fa254",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-07T05:12:08Z",
+      "side": 1,
+      "message": "LGTM, but can you ensure Jean is aware of this CL as well? It\u0027s OK if he looks at it after it\u0027s merged.",
+      "revId": "26dbdc853b3cb754ca28045989c4f76e35820ba8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
