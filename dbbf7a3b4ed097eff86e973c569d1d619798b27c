@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37ddfdfa_17bd595b",
+        "filename": "packages/Connectivity/service/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-07T05:15:23Z",
+      "side": 1,
+      "message": "Pre-existing, so not for this change, but should this have something like \"jni\" in the name? Generally one associates \"connectivity\" with java code, and also the name is very similar to \"service-connectivity\" below.",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "dbbf7a3b4ed097eff86e973c569d1d619798b27c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
