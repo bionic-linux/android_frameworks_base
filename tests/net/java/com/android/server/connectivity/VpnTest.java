@@ -70,7 +70,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo.DetailedState;
 import android.net.RouteInfo;
-import android.net.UidRange;
 import android.net.UidRangeParcel;
 import android.net.VpnManager;
 import android.net.VpnService;
@@ -89,6 +88,7 @@ import android.security.Credentials;
 import android.security.KeyStore;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.Range;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -174,7 +174,7 @@ public class VpnTest {
             mPackages.put(PKGS[i], PKG_UIDS[i]);
         }
     }
-    private static final UidRange PRI_USER_RANGE = UidRange.createForUser(primaryUser.id);
+    private static final Range<Integer> PRI_USER_RANGE = Vpn.createForUser(primaryUser.id);
 
     @Mock(answer = Answers.RETURNS_DEEP_STUBS) private Context mContext;
     @Mock private UserManager mUserManager;
@@ -255,12 +255,10 @@ public class VpnTest {
         setMockedUsers(primaryUser, secondaryUser, restrictedProfileA, restrictedProfileB);
 
         final Vpn vpn = createVpn(primaryUser.id);
-        final Set<UidRange> ranges = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
+        final Set<Range<Integer>> ranges = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
                 null, null);
 
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-                PRI_USER_RANGE, UidRange.createForUser(restrictedProfileA.id)
-        })), ranges);
+        assertEquals(newRange(PRI_USER_RANGE, Vpn.createForUser(restrictedProfileA.id)), ranges);
     }
 
     @Test
@@ -268,10 +266,10 @@ public class VpnTest {
         setMockedUsers(primaryUser, managedProfileA);
 
         final Vpn vpn = createVpn(primaryUser.id);
-        final Set<UidRange> ranges = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
+        final Set<Range<Integer>> ranges = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
                 null, null);
 
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] { PRI_USER_RANGE })), ranges);
+        assertEquals(newRange(PRI_USER_RANGE), ranges);
     }
 
     @Test
@@ -279,35 +277,46 @@ public class VpnTest {
         setMockedUsers(primaryUser, restrictedProfileA, managedProfileA);
 
         final Vpn vpn = createVpn(primaryUser.id);
-        final Set<UidRange> ranges = new ArraySet<>();
+        final Set<Range<Integer>> ranges = new ArraySet<>();
         vpn.addUserToRanges(ranges, primaryUser.id, null, null);
 
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] { PRI_USER_RANGE })), ranges);
+        assertEquals(newRange(PRI_USER_RANGE), ranges);
+    }
+
+    private Set<Range<Integer>> newRange(Range<Integer> ... ranges) {
+        final Set<Range<Integer>> range = new ArraySet<>();
+        for (Range<Integer> r : ranges) range.add(r);
+
+        return range;
     }
 
     @Test
     public void testUidAllowAndDenylist() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
-        final UidRange user = PRI_USER_RANGE;
+        final Range<Integer> user = PRI_USER_RANGE;
         final String[] packages = {PKGS[0], PKGS[1], PKGS[2]};
 
         // Allowed list
-        final Set<UidRange> allow = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
-                Arrays.asList(packages), null);
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-            new UidRange(user.start + PKG_UIDS[0], user.start + PKG_UIDS[0]),
-            new UidRange(user.start + PKG_UIDS[1], user.start + PKG_UIDS[2])
-        })), allow);
+        final Set<Range<Integer>> allow = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
+                Arrays.asList(packages), null /* disallowedApplications */);
+        assertEquals(newRange(
+                uidRange(user.getLower() + PKG_UIDS[0], user.getLower() + PKG_UIDS[0]),
+                uidRange(user.getLower() + PKG_UIDS[1], user.getLower() + PKG_UIDS[2])),
+                allow);
 
         // Denied list
-        final Set<UidRange> disallow = vpn.createUserAndRestrictedProfilesRanges(primaryUser.id,
-                null, Arrays.asList(packages));
-        assertEquals(new ArraySet<>(Arrays.asList(new UidRange[] {
-            new UidRange(user.start, user.start + PKG_UIDS[0] - 1),
-            new UidRange(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
-            /* Empty range between UIDS[1] and UIDS[2], should be excluded, */
-            new UidRange(user.start + PKG_UIDS[2] + 1, user.stop)
-        })), disallow);
+        final Set<Range<Integer>> disallow = vpn.createUserAndRestrictedProfilesRanges(
+                primaryUser.id, null /* allowedApplications */, Arrays.asList(packages));
+        assertEquals(newRange(
+                uidRange(user.getLower(), user.getLower() + PKG_UIDS[0] - 1),
+                uidRange(user.getLower() + PKG_UIDS[0] + 1, user.getLower() + PKG_UIDS[1] - 1),
+                /* Empty range between UIDS[1] and UIDS[2], should be excluded, */
+                uidRange(user.getLower() + PKG_UIDS[2] + 1, user.getUpper())),
+                disallow);
+    }
+
+    private Range<Integer> uidRange(int start, int stop) {
+        return new Range<Integer>(start, stop);
     }
 
     @Test
@@ -337,110 +346,115 @@ public class VpnTest {
     @Test
     public void testLockdownChangingPackage() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
-        final UidRange user = PRI_USER_RANGE;
+        final Range<Integer> user = PRI_USER_RANGE;
 
         // Default state.
-        assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1],
-                user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[0], user.getUpper() + PKG_UIDS[1],
+                user.getLower() + PKG_UIDS[2], user.getLower() + PKG_UIDS[3]);
 
         // Set always-on without lockdown.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[1], false, null, mKeyStore));
-        assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1],
-                user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[0], user.getLower() + PKG_UIDS[1],
+                user.getLower() + PKG_UIDS[2], user.getLower() + PKG_UIDS[3]);
 
         // Set always-on with lockdown.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[1], true, null, mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start, user.start + PKG_UIDS[1] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.stop)
+                new UidRangeParcel(user.getLower(), user.getLower() + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[1] + 1, user.getUpper())
         }));
 
-        assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[2],
-                user.start + PKG_UIDS[3]);
-        assertUnblocked(vpn, user.start + PKG_UIDS[1]);
+        assertBlocked(vpn, user.getLower() + PKG_UIDS[0], user.getLower() + PKG_UIDS[2],
+                user.getLower() + PKG_UIDS[3]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[1]);
 
         // Switch to another app.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null, mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(false), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start, user.start + PKG_UIDS[1] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.stop)
+                new UidRangeParcel(user.getLower(), user.getLower() + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[1] + 1, user.getUpper())
         }));
 
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start, user.start + PKG_UIDS[3] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[3] + 1, user.stop)
+                new UidRangeParcel(user.getLower(), user.getLower() + PKG_UIDS[3] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[3] + 1, user.getUpper())
         }));
-        assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1],
-                user.start + PKG_UIDS[2]);
-        assertUnblocked(vpn, user.start + PKG_UIDS[3]);
+        assertBlocked(vpn, user.getLower() + PKG_UIDS[0], user.getLower() + PKG_UIDS[1],
+                user.getLower() + PKG_UIDS[2]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[3]);
     }
 
     @Test
     public void testLockdownAllowlist() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
-        final UidRange user = PRI_USER_RANGE;
+        final Range<Integer> user = PRI_USER_RANGE;
 
         // Set always-on with lockdown and allow app PKGS[2] from lockdown.
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[1], true, Collections.singletonList(PKGS[2]), mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start, user.start + PKG_UIDS[1] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[2] + 1, user.stop)
+                new UidRangeParcel(user.getLower(), user.getLower() + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[2] + 1, user.getUpper())
         }));
-        assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[3]);
-        assertUnblocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[2]);
+        assertBlocked(vpn, user.getLower() + PKG_UIDS[0], user.getLower() + PKG_UIDS[3]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[1], user.getLower() + PKG_UIDS[2]);
         // Change allowed app list to PKGS[3].
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[1], true, Collections.singletonList(PKGS[3]), mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(false), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start + PKG_UIDS[2] + 1, user.stop)
+                new UidRangeParcel(user.getLower() + PKG_UIDS[2] + 1, user.getUpper())
         }));
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.start + PKG_UIDS[3] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[3] + 1, user.stop)
+                new UidRangeParcel(user.getLower() + PKG_UIDS[1] + 1,
+                        user.getLower() + PKG_UIDS[3] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[3] + 1, user.getUpper())
         }));
-        assertBlocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[2]);
-        assertUnblocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[3]);
+        assertBlocked(vpn, user.getLower() + PKG_UIDS[0], user.getLower() + PKG_UIDS[2]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[1], user.getLower() + PKG_UIDS[3]);
 
         // Change the VPN app.
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Collections.singletonList(PKGS[3]), mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(false), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start, user.start + PKG_UIDS[1] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.start + PKG_UIDS[3] - 1)
+                new UidRangeParcel(user.getLower(), user.getLower() + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[1] + 1,
+                        user.getLower() + PKG_UIDS[3] - 1)
         }));
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start, user.start + PKG_UIDS[0] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[3] - 1)
+                new UidRangeParcel(user.getLower(), user.getLower() + PKG_UIDS[0] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[0] + 1,
+                        user.getLower() + PKG_UIDS[3] - 1)
         }));
-        assertBlocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[2]);
-        assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[3]);
+        assertBlocked(vpn, user.getLower() + PKG_UIDS[1], user.getLower() + PKG_UIDS[2]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[0], user.getLower() + PKG_UIDS[3]);
 
         // Remove the list of allowed packages.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[0], true, null, mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(false), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[3] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[3] + 1, user.stop)
+                new UidRangeParcel(user.getLower() + PKG_UIDS[0] + 1,
+                        user.getLower() + PKG_UIDS[3] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[3] + 1, user.getUpper())
         }));
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.stop),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[0] + 1, user.getUpper()),
         }));
-        assertBlocked(vpn, user.start + PKG_UIDS[1], user.start + PKG_UIDS[2],
-                user.start + PKG_UIDS[3]);
-        assertUnblocked(vpn, user.start + PKG_UIDS[0]);
+        assertBlocked(vpn, user.getLower() + PKG_UIDS[1], user.getLower() + PKG_UIDS[2],
+                user.getLower() + PKG_UIDS[3]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[0]);
 
         // Add the list of allowed packages.
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Collections.singletonList(PKGS[1]), mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(false), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.stop)
+                new UidRangeParcel(user.getLower() + PKG_UIDS[0] + 1, user.getUpper())
         }));
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.stop)
+                new UidRangeParcel(user.getLower() + PKG_UIDS[0] + 1,
+                        user.getLower() + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[1] + 1, user.getUpper())
         }));
-        assertBlocked(vpn, user.start + PKG_UIDS[2], user.start + PKG_UIDS[3]);
-        assertUnblocked(vpn, user.start + PKG_UIDS[0], user.start + PKG_UIDS[1]);
+        assertBlocked(vpn, user.getLower() + PKG_UIDS[2], user.getLower() + PKG_UIDS[3]);
+        assertUnblocked(vpn, user.getLower() + PKG_UIDS[0], user.getLower() + PKG_UIDS[1]);
 
         // Try allowing a package with a comma, should be rejected.
         assertFalse(vpn.setAlwaysOnPackage(
@@ -451,12 +465,14 @@ public class VpnTest {
         assertTrue(vpn.setAlwaysOnPackage(
                 PKGS[0], true, Arrays.asList("com.foo.app", PKGS[2], "com.bar.app"), mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(false), aryEq(new UidRangeParcel[]{
-                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[1] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[1] + 1, user.stop)
+                new UidRangeParcel(user.getLower() + PKG_UIDS[0] + 1,
+                        user.getLower() + PKG_UIDS[1] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[1] + 1, user.getUpper())
         }));
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[]{
-                new UidRangeParcel(user.start + PKG_UIDS[0] + 1, user.start + PKG_UIDS[2] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[2] + 1, user.stop)
+                new UidRangeParcel(user.getLower() + PKG_UIDS[0] + 1,
+                        user.getLower() + PKG_UIDS[2] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[2] + 1, user.getUpper())
         }));
     }
 
@@ -470,32 +486,32 @@ public class VpnTest {
                 restrictedProfileA.flags);
         tempProfile.restrictedProfileParentId = primaryUser.id;
 
-        final UidRange user = PRI_USER_RANGE;
-        final UidRange profile = UidRange.createForUser(tempProfile.id);
+        final Range<Integer> user = PRI_USER_RANGE;
+        final Range<Integer> profile = Vpn.createForUser(tempProfile.id);
 
         // Set lockdown.
         assertTrue(vpn.setAlwaysOnPackage(PKGS[3], true, null, mKeyStore));
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(user.start, user.start + PKG_UIDS[3] - 1),
-                new UidRangeParcel(user.start + PKG_UIDS[3] + 1, user.stop)
+                new UidRangeParcel(user.getLower(), user.getLower() + PKG_UIDS[3] - 1),
+                new UidRangeParcel(user.getLower() + PKG_UIDS[3] + 1, user.getUpper())
         }));
         // Verify restricted user isn't affected at first.
-        assertUnblocked(vpn, profile.start + PKG_UIDS[0]);
+        assertUnblocked(vpn, profile.getLower() + PKG_UIDS[0]);
 
         // Add the restricted user.
         setMockedUsers(primaryUser, tempProfile);
         vpn.onUserAdded(tempProfile.id);
         verify(mNetd).networkRejectNonSecureVpn(eq(true), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(profile.start, profile.start + PKG_UIDS[3] - 1),
-                new UidRangeParcel(profile.start + PKG_UIDS[3] + 1, profile.stop)
+                new UidRangeParcel(profile.getLower(), profile.getLower() + PKG_UIDS[3] - 1),
+                new UidRangeParcel(profile.getLower() + PKG_UIDS[3] + 1, profile.getUpper())
         }));
 
         // Remove the restricted user.
         tempProfile.partial = true;
         vpn.onUserRemoved(tempProfile.id);
         verify(mNetd).networkRejectNonSecureVpn(eq(false), aryEq(new UidRangeParcel[] {
-                new UidRangeParcel(profile.start, profile.start + PKG_UIDS[3] - 1),
-                new UidRangeParcel(profile.start + PKG_UIDS[3] + 1, profile.stop)
+                new UidRangeParcel(profile.getLower(), profile.getLower() + PKG_UIDS[3] - 1),
+                new UidRangeParcel(profile.getLower() + PKG_UIDS[3] + 1, profile.getUpper())
         }));
     }
 
@@ -503,7 +519,7 @@ public class VpnTest {
     public void testLockdownRuleRepeatability() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRangeParcel[] primaryUserRangeParcel = new UidRangeParcel[] {
-                new UidRangeParcel(PRI_USER_RANGE.start, PRI_USER_RANGE.stop)};
+                new UidRangeParcel(PRI_USER_RANGE.getLower(), PRI_USER_RANGE.getUpper())};
         // Given legacy lockdown is already enabled,
         vpn.setLockdown(true);
 
@@ -528,7 +544,7 @@ public class VpnTest {
     public void testLockdownRuleReversibility() throws Exception {
         final Vpn vpn = createVpn(primaryUser.id);
         final UidRangeParcel[] entireUser = {
-            new UidRangeParcel(PRI_USER_RANGE.start, PRI_USER_RANGE.stop)
+            new UidRangeParcel(PRI_USER_RANGE.getLower(), PRI_USER_RANGE.getUpper())
         };
         final UidRangeParcel[] exceptPkg0 = {
             new UidRangeParcel(entireUser[0].start, entireUser[0].start + PKG_UIDS[0] - 1),

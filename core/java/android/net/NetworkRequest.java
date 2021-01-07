@@ -28,6 +28,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Process;
 import android.text.TextUtils;
+import android.util.ArraySet;
+import android.util.Range;
 import android.util.proto.ProtoOutputStream;
 
 import java.util.Objects;
@@ -219,7 +221,11 @@ public class NetworkRequest implements Parcelable {
          * @hide
          */
         public Builder setUids(Set<UidRange> uids) {
-            mNetworkCapabilities.setUids(uids);
+            if (uids != null) {
+                final Set<Range<Integer>> ncUids = new ArraySet<>(uids.size());
+                uids.forEach(uid -> ncUids.add(new Range<Integer>(uid.start, uid.stop)));
+                mNetworkCapabilities.setUids(ncUids);
+            }
             return this;
         }
 
