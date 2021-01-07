@@ -22,6 +22,30 @@
       },
       "revId": "7c70f8cc3619c5fea7b68616405966ad2face348",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73d897cc_dcd657b3",
+        "filename": "services/core/java/com/android/server/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-07T09:54:53Z",
+      "side": 1,
+      "message": "I just notice that we have defined owner for ConnectivityService.java in the top of the OWNER file, so I remove the duplicate and replace the name list with file:/services/core/java/com/android/server/net/OWNERS\n\nFor connectivity/*, there\u0027s already a OWNERS file under that directory.",
+      "parentUuid": "990a5c52_a85954ce",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "7c70f8cc3619c5fea7b68616405966ad2face348",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
