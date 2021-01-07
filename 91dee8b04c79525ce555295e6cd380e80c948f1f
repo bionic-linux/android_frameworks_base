@@ -34,6 +34,24 @@
       "parentUuid": "1f5d6273_88192285",
       "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25c235e3_52032632",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-01-07T14:26:24Z",
+      "side": 1,
+      "message": "That would break quiescent boot.\n\nFor quiescent boot, initializeCec() is only called once, in onStart(). onWakeUp() is not called. The proposed change would mean not initializing CEC on quiescent boot.",
+      "parentUuid": "56c2557c_766faa8b",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
