@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2788f09b_f3cb6723",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-07T06:47:01Z",
+      "side": 1,
+      "message": "HandleExecutor is also hidden. You can add a local executor class like ChiaChang added in DataConnectionStats.java(aosp/1466222)",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 34
+      },
+      "revId": "7d521ec3f3d376cadac5c80234dc2fed768e1313",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
