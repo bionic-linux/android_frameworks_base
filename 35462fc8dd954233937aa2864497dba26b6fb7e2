@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3279e4e8_d2147720",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-07T11:21:28Z",
+      "side": 1,
+      "message": "The correctness of this change based on whether judge meteredness from Capabilities instead of meteredIfaces list is ok or not.\nAs I know there are 3 possible considerations:\n 1. Wifi Meteredness Override: User can override meteredness from UI, through NPMS,\n    to WifiManager. And finally update the NC of Wifi. So this should be fine.\n 2. Races: It is possible that NC is updated but not yet propagated to NPMS.\n    Thus, the meteredIfaces will be out of sync in a short time. Where you\n    might get a different result when change NC and immediately query\n    isUidNetworkingBlocked(uid, iface). It looks fine to me since we get\n    the first hand information from NC.\n 3. NET_CAPABILITY_TEMPORARILY_NOT_METERED: not sure why, but NPMS doesn\u0027t look at\n    this capability. So AFAIK the behavior is sync between NC and meteredIfaces\n    for this.\n\nFrom 1~3 I think this is fine.\nBut not sure if Jean have other idea.",
+      "revId": "35462fc8dd954233937aa2864497dba26b6fb7e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6afa0b6_978863df",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-07T11:21:28Z",
+      "side": 1,
+      "message": "1. nit: @Nullable?\n2. Maybe isNetworkWithCapabilitiesBlocked ?",
+      "range": {
+        "startLine": 1326,
+        "startChar": 60,
+        "endLine": 1326,
+        "endChar": 79
+      },
+      "revId": "35462fc8dd954233937aa2864497dba26b6fb7e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
