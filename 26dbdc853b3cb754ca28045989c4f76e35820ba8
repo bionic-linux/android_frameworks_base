@@ -16,6 +16,23 @@
       "message": "LGTM, but can you ensure Jean is aware of this CL as well? It\u0027s OK if he looks at it after it\u0027s merged.",
       "revId": "26dbdc853b3cb754ca28045989c4f76e35820ba8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f377fa3_70dff4fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T10:27:17Z",
+      "side": 1,
+      "message": "No objection from me immediately, but you may want to be aware of upcoming changes on this : aosp/1513130 and aosp/1513131. On the latter notice that at the time of this writing I API-1\u0027d it, and the comments there may be relevant to anyone interested in where this is going. But maybe you don\u0027t need to be.",
+      "revId": "26dbdc853b3cb754ca28045989c4f76e35820ba8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
