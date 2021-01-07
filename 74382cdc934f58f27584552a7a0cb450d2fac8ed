@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05028d2b_bd2b51cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2021-01-07T08:59:02Z",
+      "side": 1,
+      "message": "LGTM. See inline comment for a typo in a comment.",
+      "revId": "74382cdc934f58f27584552a7a0cb450d2fac8ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91a6599d_903acbca",
+        "filename": "cmds/idmap2/libidmap2/ResourceUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2021-01-07T08:59:02Z",
+      "side": 1,
+      "message": "s/a// :)",
+      "range": {
+        "startLine": 124,
+        "startChar": 58,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "74382cdc934f58f27584552a7a0cb450d2fac8ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
