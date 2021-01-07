@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b637adf_8d0bd5a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2021-01-07T13:38:22Z",
+      "side": 1,
+      "message": "Is there a bug with more information?\nSpecifically, I want to know what valid cases exist where the \u0027key\u0027 of the PendingIntentRecord does not have a packageName?",
+      "revId": "3fa370d99f5e9d0edb6107c65472e2ba3d444c11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
