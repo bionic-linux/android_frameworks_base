@@ -67,6 +67,7 @@ public abstract class KeyProperties {
             PURPOSE_SIGN,
             PURPOSE_VERIFY,
             PURPOSE_WRAP_KEY,
+            PURPOSE_AGREEMENT,
     })
     public @interface PurposeEnum {}
 
@@ -96,6 +97,11 @@ public abstract class KeyProperties {
     public static final int PURPOSE_WRAP_KEY = 1 << 5;
 
     /**
+     * Purpose of key: creating a shared ECDH secret through key agreement.
+     */
+    public static final int PURPOSE_AGREEMENT = 1 << 6;
+
+    /**
      * @hide
      */
     public static abstract class Purpose {
@@ -113,6 +119,8 @@ public abstract class KeyProperties {
                     return KeymasterDefs.KM_PURPOSE_VERIFY;
                 case PURPOSE_WRAP_KEY:
                     return KeymasterDefs.KM_PURPOSE_WRAP;
+                case PURPOSE_AGREEMENT:
+                    return KeymasterDefs.KM_PURPOSE_AGREEMENT;
                 default:
                     throw new IllegalArgumentException("Unknown purpose: " + purpose);
             }
@@ -130,6 +138,8 @@ public abstract class KeyProperties {
                     return PURPOSE_VERIFY;
                 case KeymasterDefs.KM_PURPOSE_WRAP:
                     return PURPOSE_WRAP_KEY;
+                case KeymasterDefs.KM_PURPOSE_AGREEMENT:
+                    return PURPOSE_AGREEMENT;
                 default:
                     throw new IllegalArgumentException("Unknown purpose: " + purpose);
             }
