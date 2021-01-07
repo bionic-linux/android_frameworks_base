@@ -16,6 +16,24 @@
       "message": "The proposed change causes HdmiControlService to be in POWER_STATUS_STANDBY after a regular boot, even though the device is awake. That is not desired.",
       "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56c2557c_766faa8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-01-07T09:09:46Z",
+      "side": 1,
+      "message": "We agree with this point.\nThe root cause of this issue is that initializeCec() being called twice when first boot up, in onStart() and onWakeup() respectively.\nSince calling onWakeup() is necessary for both boot up and DC resume.\nIs it okay that we simply remove calling initializeCec() in onStart()?",
+      "parentUuid": "1f5d6273_88192285",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
