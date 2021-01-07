@@ -22,6 +22,30 @@
       },
       "revId": "eaf714054655171bb0bbe8b75bee01c3faa21521",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "273e53bb_da48f5ba",
+        "filename": "packages/Shell/src/com/android/shell/BugreportProgressService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 1371409
+      },
+      "writtenOn": "2021-01-07T06:21:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abde2dcf_1e556277",
+      "range": {
+        "startLine": 2113,
+        "startChar": 0,
+        "endLine": 2114,
+        "endChar": 49
+      },
+      "revId": "eaf714054655171bb0bbe8b75bee01c3faa21521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
