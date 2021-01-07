@@ -68,6 +68,42 @@
       "message": "OWNERS+1, but I\u0027d recommend getting broader OWNERS regex in place for *Connectivity* files.",
       "revId": "53c4fc75a53fc6c2b3f9c7ee6d24c5d15decdec0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10a6796c_4205f826",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-07T06:39:05Z",
+      "side": 1,
+      "message": "ACK. We have a commit aosp/1540909 to add the owner, could you please review that commit as well. Thanks.",
+      "parentUuid": "64a198f9_642d9b18",
+      "revId": "53c4fc75a53fc6c2b3f9c7ee6d24c5d15decdec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ce483cc_de54adc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-07T06:39:05Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "682575a0_eed4acd0",
+      "revId": "53c4fc75a53fc6c2b3f9c7ee6d24c5d15decdec0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
