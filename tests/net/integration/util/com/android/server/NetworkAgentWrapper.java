@@ -41,11 +41,11 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkProvider;
 import android.net.NetworkSpecifier;
 import android.net.SocketKeepalive;
-import android.net.UidRange;
 import android.os.ConditionVariable;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
+import android.util.Range;
 
 import com.android.server.connectivity.ConnectivityConstants;
 import com.android.testutils.HandlerUtils;
@@ -195,7 +195,7 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
         mNetworkAgent.sendNetworkCapabilities(mNetworkCapabilities);
     }
 
-    public void setUids(Set<UidRange> uids) {
+    public void setUids(Set<Range<Integer>> uids) {
         mNetworkCapabilities.setUids(uids);
         mNetworkAgent.sendNetworkCapabilities(mNetworkCapabilities);
     }

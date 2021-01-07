@@ -32,6 +32,7 @@ import android.os.Parcelable;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.Range;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -1360,15 +1361,15 @@ public final class NetworkCapabilities implements Parcelable {
      *
      * @hide
      */
-    private ArraySet<UidRange> mUids = null;
+    private ArraySet<Range<Integer>> mUids = null;
 
     /**
      * Convenience method to set the UIDs this network applies to to a single UID.
      * @hide
      */
     public @NonNull NetworkCapabilities setSingleUid(int uid) {
-        final ArraySet<UidRange> identity = new ArraySet<>(1);
-        identity.add(new UidRange(uid, uid));
+        final ArraySet<Range<Integer>> identity = new ArraySet<>(1);
+        identity.add(new Range<Integer>(uid, uid));
         setUids(identity);
         return this;
     }
@@ -1378,7 +1379,7 @@ public final class NetworkCapabilities implements Parcelable {
      * This makes a copy of the set so that callers can't modify it after the call.
      * @hide
      */
-    public @NonNull NetworkCapabilities setUids(Set<UidRange> uids) {
+    public @NonNull NetworkCapabilities setUids(Set<Range<Integer>> uids) {
         if (null == uids) {
             mUids = null;
         } else {
@@ -1392,7 +1393,7 @@ public final class NetworkCapabilities implements Parcelable {
      * This returns a copy of the set so that callers can't modify the original object.
      * @hide
      */
-    public @Nullable Set<UidRange> getUids() {
+    public @Nullable Set<Range<Integer>> getUids() {
         return null == mUids ? null : new ArraySet<>(mUids);
     }
 
@@ -1402,7 +1403,7 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public boolean appliesToUid(int uid) {
         if (null == mUids) return true;
-        for (UidRange range : mUids) {
+        for (Range<Integer> range : mUids) {
             if (range.contains(uid)) {
                 return true;
             }
@@ -1426,13 +1427,13 @@ public final class NetworkCapabilities implements Parcelable {
      */
     @VisibleForTesting
     public boolean equalsUids(@NonNull NetworkCapabilities nc) {
-        Set<UidRange> comparedUids = nc.mUids;
+        Set<Range<Integer>> comparedUids = nc.mUids;
         if (null == comparedUids) return null == mUids;
         if (null == mUids) return false;
         // Make a copy so it can be mutated to check that all ranges in mUids
         // also are in uids.
-        final Set<UidRange> uids = new ArraySet<>(mUids);
-        for (UidRange range : comparedUids) {
+        final Set<Range<Integer>> uids = new ArraySet<>(mUids);
+        for (Range<Integer> range : comparedUids) {
             if (!uids.contains(range)) {
                 return false;
             }
@@ -1460,7 +1461,7 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public boolean satisfiedByUids(@NonNull NetworkCapabilities nc) {
         if (null == nc.mUids || null == mUids) return true; // The network satisfies everything.
-        for (UidRange requiredRange : mUids) {
+        for (Range<Integer> requiredRange : mUids) {
             if (requiredRange.contains(nc.mOwnerUid)) return true;
             if (!nc.appliesToUidRange(requiredRange)) {
                 return false;
@@ -1478,10 +1479,10 @@ public final class NetworkCapabilities implements Parcelable {
      * @hide
      */
     @VisibleForTesting
-    public boolean appliesToUidRange(@Nullable UidRange requiredRange) {
+    public boolean appliesToUidRange(@Nullable Range<Integer> requiredRange) {
         if (null == mUids) return true;
-        for (UidRange uidRange : mUids) {
-            if (uidRange.containsRange(requiredRange)) {
+        for (Range<Integer> uidRange : mUids) {
+            if (uidRange.contains(requiredRange)) {
                 return true;
             }
         }
@@ -1716,6 +1717,22 @@ public final class NetworkCapabilities implements Parcelable {
                 + Arrays.hashCode(mAdministratorUids) * 61;
     }
 
+    private static ArraySet<UidRange> rangeToParcelable(Set<Range<Integer>> uids) {
+        if (uids == null) return null;
+
+        final ArraySet<UidRange> ranges = new ArraySet<>(uids.size());
+        uids.forEach(uid -> ranges.add(new UidRange(uid.getLower(), uid.getUpper())));
+        return ranges;
+    }
+
+    private static ArraySet<Range<Integer>> parcelableToRange(Set<UidRange> uids) {
+        if (uids == null) return null;
+
+        final ArraySet<Range<Integer>> ranges = new ArraySet<>(uids.size());
+        uids.forEach(uid -> ranges.add(new Range<Integer>(uid.start, uid.stop)));
+        return ranges;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -1731,7 +1748,7 @@ public final class NetworkCapabilities implements Parcelable {
         dest.writeParcelable((Parcelable) mNetworkSpecifier, flags);
         dest.writeParcelable((Parcelable) mTransportInfo, flags);
         dest.writeInt(mSignalStrength);
-        dest.writeArraySet(mUids);
+        dest.writeArraySet(rangeToParcelable(mUids));
         dest.writeString(mSSID);
         dest.writeBoolean(mPrivateDnsBroken);
         dest.writeIntArray(getAdministratorUids());
@@ -1754,8 +1771,8 @@ public final class NetworkCapabilities implements Parcelable {
                 netCap.mNetworkSpecifier = in.readParcelable(null);
                 netCap.mTransportInfo = in.readParcelable(null);
                 netCap.mSignalStrength = in.readInt();
-                netCap.mUids = (ArraySet<UidRange>) in.readArraySet(
-                        null /* ClassLoader, null for default */);
+                netCap.mUids = parcelableToRange((ArraySet<UidRange>) in.readArraySet(
+                        null /* ClassLoader, null for default */));
                 netCap.mSSID = in.readString();
                 netCap.mPrivateDnsBroken = in.readBoolean();
                 netCap.setAdministratorUids(in.createIntArray());
@@ -1805,8 +1822,10 @@ public final class NetworkCapabilities implements Parcelable {
         }
 
         if (null != mUids) {
-            if ((1 == mUids.size()) && (mUids.valueAt(0).count() == 1)) {
-                sb.append(" Uid: ").append(mUids.valueAt(0).start);
+            final int count =
+                    mUids.valueAt(0).getUpper() - mUids.valueAt(0).getUpper() + 1;
+            if ((1 == mUids.size()) && (count == 1)) {
+                sb.append(" Uid: ").append(mUids.valueAt(0).getLower());
             } else {
                 sb.append(" Uids: <").append(mUids).append(">");
             }
