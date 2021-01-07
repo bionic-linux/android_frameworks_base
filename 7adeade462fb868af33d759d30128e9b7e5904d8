@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00203847_e0acbf00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-07T07:40:23Z",
+      "side": 1,
+      "message": "IIUC, IConnectivityManager, ConnectivityDiagnosticsManager and VpnManager would be inculded in framework-connectivity. IConnectivityManager is an aidl file so we need to use ConnectivityManager here instead.",
+      "parentUuid": "b11fd973_97a2a73e",
+      "revId": "7adeade462fb868af33d759d30128e9b7e5904d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93dda2ce_9e53784c",
