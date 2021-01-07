@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "116b9f87_69189aab",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T21:46:19Z",
+      "side": 1,
+      "message": "have you tried marking this explicitly @hide to try and get the linter to go away?",
+      "range": {
+        "startLine": 838,
+        "startChar": 27,
+        "endLine": 838,
+        "endChar": 36
+      },
+      "revId": "759e504093f86e4c1eeaf98c97ba68571325cc72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cb40910_28a7b04d",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-07T21:46:19Z",
+      "side": 1,
+      "message": "Tunnel could not be created due to a lower-layer error?\n\nTunnel could not be created due to a kernel-level error?\n\nThe text from \"apply\" is: \"indicating that the transform could not be applied due to a lower layer failure.\"",
+      "range": {
+        "startLine": 877,
+        "startChar": 47,
+        "endLine": 877,
+        "endChar": 82
+      },
+      "revId": "759e504093f86e4c1eeaf98c97ba68571325cc72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
