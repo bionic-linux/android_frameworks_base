@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fa9804d_c12b6524",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-07T14:53:04Z",
+      "side": 1,
+      "message": "Thanks for writing this CL, but please see notes inline about changes that need to be made before this can be submitted.",
+      "revId": "d8772cfe30785af3b74336b82ffac834f90a0af0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2c38de9_64422157",
+        "filename": "core/java/android/os/UserHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-07T14:53:04Z",
+      "side": 1,
+      "message": "Since this API is generally useful to all developers, please make it a public API.",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 14
+      },
+      "revId": "d8772cfe30785af3b74336b82ffac834f90a0af0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e9bfc9d_b3224246",
+        "filename": "core/java/android/os/UserHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-07T14:53:04Z",
+      "side": 1,
+      "message": "This should not be made an API, as @UserIdInt values are internal implementation details of the OS.  Any Mainline modules should be using strongly-typed UserHandle arguments instead of @UserIdInt typed values.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 14
+      },
+      "revId": "d8772cfe30785af3b74336b82ffac834f90a0af0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3f76631_392b7822",
+        "filename": "core/java/android/os/UserHandle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-07T14:53:04Z",
+      "side": 1,
+      "message": "Similar to feedback above, this should not be made an API, since @UserIdInt is an implementation detail of the OS.  If you need an API to construct the UID, it should accept a UserHandle argument.",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 288,
+        "endChar": 14
+      },
+      "revId": "d8772cfe30785af3b74336b82ffac834f90a0af0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
