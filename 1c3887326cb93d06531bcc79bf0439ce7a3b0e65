@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d144613_a41ae5d2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-07T03:47:19Z",
+      "side": 1,
+      "message": "IIUC this runs on a different thread other than CS handler thread.\nWhich might not be good for long-term perspective.\nIs it feasible to put on CS handler thread?",
+      "range": {
+        "startLine": 662,
+        "startChar": 56,
+        "endLine": 662,
+        "endChar": 79
+      },
+      "revId": "1c3887326cb93d06531bcc79bf0439ce7a3b0e65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
