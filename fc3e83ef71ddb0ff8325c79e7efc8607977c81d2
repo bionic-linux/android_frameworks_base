@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ae6c277_b53ac374",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-07T06:38:36Z",
+      "side": 1,
+      "message": "Nit: the module",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "fc3e83ef71ddb0ff8325c79e7efc8607977c81d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9527e211_e77c7ce5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-07T06:38:36Z",
+      "side": 1,
+      "message": "Nit: \"the logic to get mobile provisioning is moved to the telephony...\" maybe ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 25,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "fc3e83ef71ddb0ff8325c79e7efc8607977c81d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
