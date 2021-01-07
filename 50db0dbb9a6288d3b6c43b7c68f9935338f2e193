@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "215aedcd_7705db53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 45
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Implementation is fine. Now taking a higher-level look at the API. It\u0027s mostly fine already.",
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d704842_9a5d10d5",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6378,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "This will make this exception a checked exception. Considering this is only thrown when the callback is already registered, most apps would need to catch it and do nothing, or declare it thrown all the way up.\n\nI think it should extend RuntimeException instead, to make it an unchecked exception.",
+      "range": {
+        "startLine": 6378,
+        "startChar": 85,
+        "endLine": 6378,
+        "endChar": 94
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "007542df_234750f8",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6379,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Is there any use for clients to create an instance of this outside of tests ? If not, should this constructor be only @TestApi and not @SystemApi ?",
+      "range": {
+        "startLine": 6379,
+        "startChar": 28,
+        "endLine": 6379,
+        "endChar": 60
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40b3f43a_02554459",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6382,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Sorry to only notice now but I don\u0027t think the current scheme where clients have to look at the cause to figure out what happened is a great API. Would things just be simpler with separate exceptions all inheriting from a common QosCallbackException (have the clients call instanceOf), or maybe even simply exposing the current int ? I personally favor the different exception classes, but I know opinions inside the API council vary",
+      "range": {
+        "startLine": 6382,
+        "startChar": 21,
+        "endLine": 6382,
+        "endChar": 41
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac79094a_41295af5",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6387,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "For the same reason it\u0027s a bit strange that this is an *inner class* of QosCallbackException",
+      "range": {
+        "startLine": 6387,
+        "startChar": 43,
+        "endLine": 6387,
+        "endChar": 67
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7abbea8c_d259a27b",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6418,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 6418,
+        "startChar": 36,
+        "endLine": 6418,
+        "endChar": 70
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c04defc_89b241a1",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6422,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 6422,
+        "startChar": 36,
+        "endLine": 6422,
+        "endChar": 59
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04d1582c_d02efb78",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 10704,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Is the constructor useful for apps outside of tests ? If not can it be @TestApi ?",
+      "range": {
+        "startLine": 10704,
+        "startChar": 16,
+        "endLine": 10704,
+        "endChar": 45
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "603301c3_cb2ba92e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 8167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "This can now go back to being final.",
+      "range": {
+        "startLine": 8167,
+        "startChar": 17,
+        "endLine": 8167,
+        "endChar": 23
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

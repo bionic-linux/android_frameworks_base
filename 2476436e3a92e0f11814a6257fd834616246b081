@@ -193,6 +193,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c649aec_0b492a47",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Ah sorry, I was just looking at the diff from the previous patchset. Makes sense.",
+      "parentUuid": "51715d49_10f8801d",
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "545aee4b_eb92efb8",
@@ -224,6 +242,24 @@
       "side": 1,
       "message": "Yes, it was intentional.  I left a small note in the chat room on why I removed it (I should have also had the same note on the PS as well.)\n\nHere is the reasoning:\nI did this test before the cts tests.  After doing the CTS tests, I realized this was redundant but kept this test in for extra coverage.\n\nIn the latest update, I removed the test code from QosSocketInfo which allowed me to initialize the object with a non-bound socket for the purposes of the test.  I was unable though to mock final classes though and so I decided it\u0027s best to keep the test code out of QosSocketInfo since the cases were already covered.\n\nI did spend a few hours trying to add Mockito 2.0 based off of a bug from some other team in buganizer, but could never get it working.  It also looks like the upgrade is not fully backwards compatible which is obviously not appealing.  I do remember you saying that you mocked final classes in several tests, but I\u0027m not sure if you meant within connectivity tests or just generally in Android tests.  I can confidently say that just adding either mock(...) or @Mock does not work with the Qos classes that are marked final.  If you do have a specific example to point me to then I can add this test back.  (I will ask my teammates for help on this today and so this answer may change.)",
       "parentUuid": "545aee4b_eb92efb8",
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db3f78a0_488e4773",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eadbcfa7_c389c153",
       "revId": "2476436e3a92e0f11814a6257fd834616246b081",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -265,6 +301,30 @@
       "side": 1,
       "message": "I didn\u0027t add this though?\n\nNot sure if you thought I did add it or you were just letting me know (which, was helpful for the future, so in that case, thanks.)\n\nMarking as resolved assuming that you didn\u0027t want me to change code that I didn\u0027t touch.",
       "parentUuid": "1813f9df_e4fc7d10",
+      "range": {
+        "startLine": 335,
+        "startChar": 25,
+        "endLine": 335,
+        "endChar": 33
+      },
+      "revId": "2476436e3a92e0f11814a6257fd834616246b081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "741b5240_ddfb2f48",
+        "filename": "tests/net/java/android/net/ConnectivityManagerTest.java",
+        "patchSetId": 42
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T08:25:24Z",
+      "side": 1,
+      "message": "Somehow Gerrit was marking this as something you had changed. Thanks.",
+      "parentUuid": "4d435681_8776040d",
       "range": {
         "startLine": 335,
         "startChar": 25,
