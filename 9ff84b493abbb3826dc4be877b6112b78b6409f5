@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51872279_f4297620",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1923,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T10:37:30Z",
+      "side": 1,
+      "message": "supernit : double space",
+      "range": {
+        "startLine": 1923,
+        "startChar": 32,
+        "endLine": 1923,
+        "endChar": 34
+      },
+      "revId": "9ff84b493abbb3826dc4be877b6112b78b6409f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
