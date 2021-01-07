@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35edf912_22134ccb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6147,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-07T10:09:15Z",
+      "side": 1,
+      "message": "nit: Is it better if add short description for readers to quickly know what is mainly tested in test?\nCurrently the only way for readers know is to guess from the name or look through the code.\nNo strong opinion.",
+      "range": {
+        "startLine": 6147,
+        "startChar": 5,
+        "endLine": 6147,
+        "endChar": 9
+      },
+      "revId": "92f40c526cea5b33f69920c219a098ec59e68349",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02bea4fa_e298ee01",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6229,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-07T10:09:15Z",
+      "side": 1,
+      "message": "nit: The test is already a bit long I think. Is it feasible to put these in a separate test?",
+      "revId": "92f40c526cea5b33f69920c219a098ec59e68349",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
