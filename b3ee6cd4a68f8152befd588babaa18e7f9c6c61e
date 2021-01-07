@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "648d4cbc_a38c11db",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-07T13:31:17Z",
+      "side": 1,
+      "message": "Because NetworkPolicyUtils can not access all RULE_* attributes, they are not public or system api. I think this method can put in NetworkPolicyUtils but we need to expose the RULE_* attributes first.",
+      "parentUuid": "ae247019_01ef944f",
+      "range": {
+        "startLine": 2036,
+        "startChar": 20,
+        "endLine": 2036,
+        "endChar": 42
+      },
+      "revId": "b3ee6cd4a68f8152befd588babaa18e7f9c6c61e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b85384b0_15e46792",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2

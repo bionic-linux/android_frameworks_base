@@ -22,6 +22,30 @@
       },
       "revId": "c3f7a44ef8232f981f44e519b3fb0aa632fdbbee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf2c01de_93aba389",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-07T13:31:17Z",
+      "side": 1,
+      "message": "As I reply to Chiachang\u0027s question, we need to expose the attributes fist then the method can move into NetworkPolicyUtil. Maybe I should make that change first.",
+      "parentUuid": "12270547_3ff58579",
+      "range": {
+        "startLine": 2036,
+        "startChar": 12,
+        "endLine": 2036,
+        "endChar": 19
+      },
+      "revId": "c3f7a44ef8232f981f44e519b3fb0aa632fdbbee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
