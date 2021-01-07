@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "990a5c52_a85954ce",
+        "filename": "services/core/java/com/android/server/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-07T04:39:54Z",
+      "side": 1,
+      "message": "This includes files like GnssNetworkConnectivityHandler, for which this is not the right owners file.\n\nMaybe we can do Connectivity* and connectivity/* ?",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "7c70f8cc3619c5fea7b68616405966ad2face348",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
