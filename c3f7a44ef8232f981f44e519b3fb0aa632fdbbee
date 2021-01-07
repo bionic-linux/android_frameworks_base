@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12270547_3ff58579",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-07T10:26:24Z",
+      "side": 1,
+      "message": "1. static?\n2. Is there any way except copying it?\n e.g.\n   a. Make isUidNetworkingBlockedInternal static.\n   b. move and rename isUidNetworkingBlockedInternal to NetworkPolicyUtil or NetworkPolicyManager\n   c. refer it from both CS and NPMS, where CS doesn\u0027t provide logger while NPMS does.\n3. If 2 is true, IIUC we don\u0027t need expose constants of NTWK*.",
+      "range": {
+        "startLine": 2036,
+        "startChar": 12,
+        "endLine": 2036,
+        "endChar": 19
+      },
+      "revId": "c3f7a44ef8232f981f44e519b3fb0aa632fdbbee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
