@@ -16,6 +16,23 @@
       "message": "Added some more missing files.",
       "revId": "cec5c62f30973afa4c4830e68f4097abd1ca6fa5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0518d98e_444a15ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1062848
+      },
+      "writtenOn": "2021-01-08T09:45:39Z",
+      "side": 1,
+      "message": "Adrian, can you take an owner review?\nOur team (android-text@) are maintaining the system font management module in the framework.\n\nThank you.",
+      "revId": "cec5c62f30973afa4c4830e68f4097abd1ca6fa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
