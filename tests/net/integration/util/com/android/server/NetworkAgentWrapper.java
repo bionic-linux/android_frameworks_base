@@ -119,7 +119,8 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
     protected InstrumentedNetworkAgent makeNetworkAgent(LinkProperties linkProperties,
             final int type, final String typeName)
             throws Exception {
-        return new InstrumentedNetworkAgent(this, linkProperties, type, typeName);
+        return new InstrumentedNetworkAgent(
+                this, linkProperties, type, typeName, null /*subscriberId*/);
     }
 
     public static class InstrumentedNetworkAgent extends NetworkAgent {
@@ -127,11 +128,12 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
         private static final String PROVIDER_NAME = "InstrumentedNetworkAgentProvider";
 
         public InstrumentedNetworkAgent(NetworkAgentWrapper wrapper, LinkProperties lp,
-                final int type, final String typeName) {
+                final int type, final String typeName, final String subscriberId) {
             super(wrapper.mContext, wrapper.mHandlerThread.getLooper(), wrapper.mLogTag,
                     wrapper.mNetworkCapabilities, lp, wrapper.mScore,
                     new NetworkAgentConfig.Builder()
-                            .setLegacyType(type).setLegacyTypeName(typeName).build(),
+                            .setLegacyType(type).setLegacyTypeName(typeName)
+                            .setSubscriberId(subscriberId).build(),
                     new NetworkProvider(wrapper.mContext, wrapper.mHandlerThread.getLooper(),
                             PROVIDER_NAME));
             mWrapper = wrapper;
