@@ -30,7 +30,6 @@ import java.util.Objects;
 
 /**
  * Defines the threshold value of the signal strength.
- * @hide
  */
 public final class SignalThresholdInfo implements Parcelable {
     /**
@@ -38,7 +37,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -113 dBm and -51 dBm
      * Used RAN: GERAN, CDMA2000
      * Reference: 3GPP TS 27.007 section 8.5.
-     * @hide
      */
     public static final int SIGNAL_RSSI = 1;
 
@@ -47,7 +45,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -120 dBm to -25 dBm;
      * Used RAN: UTRAN
      * Reference: 3GPP TS 25.123, section 9.1.1.1
-     * @hide
      */
     public static final int SIGNAL_RSCP = 2;
 
@@ -56,7 +53,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -140 dBm to -44 dBm;
      * Used RAN: EUTRAN
      * Reference: 3GPP TS 36.133 9.1.4
-     * @hide
      */
     public static final int SIGNAL_RSRP = 3;
 
@@ -65,7 +61,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -34 dB to 3 dB;
      * Used RAN: EUTRAN
      * Reference: 3GPP TS 36.133 9.1.7
-     * @hide
      */
     public static final int SIGNAL_RSRQ = 4;
 
@@ -73,7 +68,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Reference Signal Signal to Noise Ratio
      * Range: -20 dB to 30 dB;
      * Used RAN: EUTRAN
-     * @hide
      */
     public static final int SIGNAL_RSSNR = 5;
 
@@ -82,7 +76,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -140 dBm to -44 dBm.
      * Used RAN: NGRAN
      * Reference: 3GPP TS 38.215.
-     * @hide
      */
     public static final int SIGNAL_SSRSRP = 6;
 
@@ -91,7 +84,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -43 dB to 20 dB.
      * Used RAN: NGRAN
      * Reference: 3GPP TS 38.133 section 10.1.11.1.
-     * @hide
      */
     public static final int SIGNAL_SSRSRQ = 7;
 
@@ -100,7 +92,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -23 dB to 40 dB
      * Used RAN: NGRAN
      * Reference: 3GPP TS 38.215 section 5.1.*, 3GPP TS 38.133 section 10.1.16.1.
-     * @hide
      */
     public static final int SIGNAL_SSSINR = 8;
 
@@ -120,7 +111,7 @@ public final class SignalThresholdInfo implements Parcelable {
     }
 
     @SignalMeasurementType
-    private final int mSignalMeasurement;
+    private final int mSignalMeasurementType;
 
     /**
      * A hysteresis time in milliseconds to prevent flapping.
@@ -308,7 +299,7 @@ public final class SignalThresholdInfo implements Parcelable {
      * Constructor
      *
      * @param ran               Radio Access Network type
-     * @param signalMeasurement Signal Measurement Type
+     * @param signalMeasurementType Signal Measurement Type
      * @param hysteresisMs      hysteresisMs
      * @param hysteresisDb      hysteresisDb
      * @param thresholds        threshold value
@@ -317,13 +308,13 @@ public final class SignalThresholdInfo implements Parcelable {
      * @hide
      */
     public SignalThresholdInfo(@AccessNetworkConstants.RadioAccessNetworkType int ran,
-            @SignalMeasurementType int signalMeasurement, int hysteresisMs, int hysteresisDb,
+            @SignalMeasurementType int signalMeasurementType, int hysteresisMs, int hysteresisDb,
             @NonNull int[] thresholds, boolean isEnabled) {
-        validateRanWithMeasurementType(ran, signalMeasurement);
-        validateThresholdRange(signalMeasurement, thresholds);
+        validateRanWithMeasurementType(ran, signalMeasurementType);
+        validateThresholdRange(signalMeasurementType, thresholds);
 
         mRan = ran;
-        mSignalMeasurement = signalMeasurement;
+        mSignalMeasurementType = signalMeasurementType;
         mHysteresisMs = hysteresisMs < 0 ? HYSTERESIS_MS_DISABLED : hysteresisMs;
         mHysteresisDb = hysteresisDb < 0 ? HYSTERESIS_DB_DISABLED : hysteresisDb;
         mThresholds = thresholds == null ? new int[]{} : thresholds.clone();
@@ -336,7 +327,7 @@ public final class SignalThresholdInfo implements Parcelable {
      * the corresponding thresholds.
      *
      * @param ran               radio access network type
-     * @param signalMeasurement signal measurement type defines in SignalMeasurementType
+     * @param signalMeasurementType signal measurement type defines in SignalMeasurementType
      * @param thresholds        threshold values of the corresponding signal measurement type. Range
      *                          and unit must reference specific SignalMeasurementType. Thresholds
      *                          will sort into ascending numerical order.
@@ -345,18 +336,17 @@ public final class SignalThresholdInfo implements Parcelable {
      *                                  array is null or empty, any value in the thresholds is out
      *                                  of range, or the RAN is not allowed to set with the signal
      *                                  measurement type.
-     * @hide
      */
     public SignalThresholdInfo(@AccessNetworkConstants.RadioAccessNetworkType int ran,
-            @SignalMeasurementType int signalMeasurement, @NonNull int[] thresholds) {
-        validateRanWithMeasurementType(ran, signalMeasurement);
+            @SignalMeasurementType int signalMeasurementType, @NonNull int[] thresholds) {
+        validateRanWithMeasurementType(ran, signalMeasurementType);
         // Applications are not allowed to set empty thresholds which is used by system to disable
         // the use of thresholds for reporting.
         validateThresholdsNotEmpty(thresholds);
-        validateThresholdRange(signalMeasurement, thresholds);
+        validateThresholdRange(signalMeasurementType, thresholds);
 
         mRan = ran;
-        mSignalMeasurement = signalMeasurement;
+        mSignalMeasurementType = signalMeasurementType;
         mHysteresisMs = HYSTERESIS_MS_UNUSED;
         mHysteresisDb = HYSTERESIS_DB_UNUSED;
         mThresholds = thresholds.clone();
@@ -368,8 +358,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Get the radio access network type.
      *
      * @return radio access network type.
-     *
-     * @hide
      */
     public @AccessNetworkConstants.RadioAccessNetworkType int getRadioAccessNetworkType() {
         return mRan;
@@ -379,11 +367,9 @@ public final class SignalThresholdInfo implements Parcelable {
      * Get the signal measurement type.
      *
      * @return the SignalMeasurementType value.
-     *
-     * @hide
      */
-    public @SignalMeasurementType int getSignalMeasurement() {
-        return mSignalMeasurement;
+    public @SignalMeasurementType int getSignalMeasurementType() {
+        return mSignalMeasurementType;
     }
 
     /** @hide */
@@ -405,8 +391,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Get the signal threshold values.
      *
      * @return array of integer of the signal thresholds.
-     *
-     * @hide
      */
     public @NonNull int[] getThresholds() {
         return mThresholds.clone();
@@ -420,7 +404,7 @@ public final class SignalThresholdInfo implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel out, int flags) {
         out.writeInt(mRan);
-        out.writeInt(mSignalMeasurement);
+        out.writeInt(mSignalMeasurementType);
         out.writeInt(mHysteresisMs);
         out.writeInt(mHysteresisDb);
         out.writeIntArray(mThresholds);
@@ -429,7 +413,7 @@ public final class SignalThresholdInfo implements Parcelable {
 
     private SignalThresholdInfo(Parcel in) {
         mRan = in.readInt();
-        mSignalMeasurement = in.readInt();
+        mSignalMeasurementType = in.readInt();
         mHysteresisMs = in.readInt();
         mHysteresisDb = in.readInt();
         mThresholds = in.createIntArray();
@@ -449,7 +433,7 @@ public final class SignalThresholdInfo implements Parcelable {
 
         SignalThresholdInfo other = (SignalThresholdInfo) o;
         return mRan == other.mRan
-                && mSignalMeasurement == other.mSignalMeasurement
+                && mSignalMeasurementType == other.mSignalMeasurementType
                 && mHysteresisMs == other.mHysteresisMs
                 && mHysteresisDb == other.mHysteresisDb
                 && Arrays.equals(mThresholds, other.mThresholds)
@@ -458,8 +442,8 @@ public final class SignalThresholdInfo implements Parcelable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                mRan, mSignalMeasurement, mHysteresisMs, mHysteresisDb, mThresholds, mIsEnabled);
+        return Objects.hash(mRan, mSignalMeasurementType, mHysteresisMs, mHysteresisDb, mThresholds,
+                mIsEnabled);
     }
 
     public static final @NonNull Parcelable.Creator<SignalThresholdInfo> CREATOR =
@@ -479,8 +463,8 @@ public final class SignalThresholdInfo implements Parcelable {
     public String toString() {
         return new StringBuilder("SignalThresholdInfo{")
                 .append("mRan=").append(mRan)
-                .append("mSignalMeasurement=").append(mSignalMeasurement)
-                .append("mHysteresisMs=").append(mSignalMeasurement)
+                .append("mSignalMeasurement=").append(mSignalMeasurementType)
+                .append("mHysteresisMs=").append(mSignalMeasurementType)
                 .append("mHysteresisDb=").append(mHysteresisDb)
                 .append("mThresholds=").append(Arrays.toString(mThresholds))
                 .append("mIsEnabled=").append(mIsEnabled)
