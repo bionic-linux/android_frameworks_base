@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "961d2595_a8157b3b",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyAgreementSpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-01-08T17:22:55Z",
+      "side": 1,
+      "message": "I am not sure we should use the chunked streamer. Since keys are not unstructured data it would make the protocol easier if we could assume that one update or final call provided exactly one key. Right now we assume that there is only one public key passed in, but KeyAgreement could be between more than two parties. So I would suggest the following.\n\ndoPhase caches the given key. If a key is already in the cache it sends this key to keystore using operation.update() and cache the new key. On engineGenerateSecret, you pass the cached key to keymaster using operation.final() without using the streamer.",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 153,
+        "endChar": 80
+      },
+      "revId": "e8698a2d4056f22f2e8a7a9eb8c7e8dbe2473f57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
