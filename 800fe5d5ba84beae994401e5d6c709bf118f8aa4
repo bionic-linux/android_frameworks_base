@@ -207,6 +207,30 @@
       },
       "revId": "800fe5d5ba84beae994401e5d6c709bf118f8aa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef238d47_e8170ab8",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-08T23:33:49Z",
+      "side": 1,
+      "message": "let\u0027s go ahead and exclude the reason string for now, thanks!",
+      "parentUuid": "1f2f46e8_ca0eb282",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 64
+      },
+      "revId": "800fe5d5ba84beae994401e5d6c709bf118f8aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

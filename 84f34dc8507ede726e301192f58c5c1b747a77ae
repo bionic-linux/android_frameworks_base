@@ -1,0 +1,52 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "242e67d6_19bc8765",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-08T23:33:49Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"successfuly\" -- should it be \"successfully\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "8ae26c4a_97a031c3",
+      "range": {
+        "startLine": 110,
+        "startChar": 85,
+        "endLine": 110,
+        "endChar": 96
+      },
+      "revId": "84f34dc8507ede726e301192f58c5c1b747a77ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7c0ca9b_a047cec0",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-08T23:33:49Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"unsuccessfuly\" -- should it be \"unsuccessfully\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "b35eea67_6d200b6d",
+      "range": {
+        "startLine": 115,
+        "startChar": 85,
+        "endLine": 115,
+        "endChar": 98
+      },
+      "revId": "84f34dc8507ede726e301192f58c5c1b747a77ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
