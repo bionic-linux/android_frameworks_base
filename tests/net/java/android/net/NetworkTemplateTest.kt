@@ -66,7 +66,7 @@ class NetworkTemplateTest {
             setSubscriberId(TEST_IMSI1)
             setSSID(ssid)
         }
-        return NetworkState(type, lp, caps, mock(Network::class.java), subscriberId, ssid)
+        return NetworkState(type, lp, caps, mock(Network::class.java))
     }
 
     private fun NetworkTemplate.assertMatches(ident: NetworkIdentity) =
