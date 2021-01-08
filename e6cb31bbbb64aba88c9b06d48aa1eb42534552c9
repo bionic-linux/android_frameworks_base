@@ -57,6 +57,30 @@
       },
       "revId": "e6cb31bbbb64aba88c9b06d48aa1eb42534552c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ddf2ccc_03ae9430",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4412,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-01-08T22:14:46Z",
+      "side": 1,
+      "message": "I haven\u0027t looked at the usage of the flag, or the initdone/modem cache sequence, but I agree with that reasoning in principle. A new feature like this that is not backward compatible should be false by default.",
+      "parentUuid": "5e49b69f_7d109299",
+      "range": {
+        "startLine": 4412,
+        "startChar": 47,
+        "endLine": 4412,
+        "endChar": 51
+      },
+      "revId": "e6cb31bbbb64aba88c9b06d48aa1eb42534552c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
