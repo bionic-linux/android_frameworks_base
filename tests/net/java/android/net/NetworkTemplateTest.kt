@@ -71,7 +71,7 @@ class NetworkTemplateTest {
             setSSID(ssid)
             addTransportType(displayTransportType)
         }
-        return NetworkStateSnapshot(info, lp, caps, mock(Network::class.java), subscriberId, ssid)
+        return NetworkStateSnapshot(info, lp, caps, mock(Network::class.java))
     }
 
     private fun NetworkTemplate.assertMatches(ident: NetworkIdentity) =
