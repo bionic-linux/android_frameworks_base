@@ -1749,7 +1749,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             newNc.setNetworkSpecifier(newNc.getNetworkSpecifier().redact());
         }
         newNc.setAdministratorUids(new int[0]);
-
         return newNc;
     }
 
@@ -6554,6 +6553,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     + nai.networkCapabilities.getOwnerUid() + " to " + nc.getOwnerUid());
             nc.setOwnerUid(nai.networkCapabilities.getOwnerUid());
         }
+
+        // The Subscriber ID is not allowed to change once it has been set in the
+        // NetworkAgentConfig to prevent any possible races. Copy it into NetworkCapabilities
+        // for later use in NetworkStatsService.
+        nc.setSubscriberId(nai.networkAgentConfig.subscriberId);
+
         nai.declaredCapabilities = new NetworkCapabilities(nc);
     }
 
