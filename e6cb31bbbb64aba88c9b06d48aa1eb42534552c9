@@ -16,6 +16,47 @@
       "message": "+ Michele, I believe you reviewed these changes last year. Can you please take another look and +1?",
       "revId": "e6cb31bbbb64aba88c9b06d48aa1eb42534552c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3dc31ea_9b6e9d46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2021-01-08T21:51:39Z",
+      "side": 1,
+      "message": "Sure. I left a question for you. Can you please look at it?",
+      "parentUuid": "bd3adad0_35c70e2c",
+      "revId": "e6cb31bbbb64aba88c9b06d48aa1eb42534552c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e49b69f_7d109299",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4412,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2021-01-08T21:51:39Z",
+      "side": 1,
+      "message": "@Amit, my understanding is that this is the base configuration and this can be overlaid with device-specific values.\n\nI\u0027m wondering if it might be preferable to set this to false as default. Here\u0027s my thinking. \n\nThe main problem is that the feature is not backward compatible without this flag: if InitDone indication is not received, Android will never know if it has to continue waiting for modem cache or not.\n\nMany devices will not support this feature:\n - during upgrade from R to S, modem might not be updated\n - not all baseband vendor might implement it, given the fact that it\u0027s optional and improves performances, but without adding new features.\n\nSo, there might be issues if the flag is not overlaid correctly in all these devices. It seems a safer approach to set this to false and have it set to true in the overlay for devices that support the feature.\n\n@Amit, can you review it?",
+      "range": {
+        "startLine": 4412,
+        "startChar": 47,
+        "endLine": 4412,
+        "endChar": 51
+      },
+      "revId": "e6cb31bbbb64aba88c9b06d48aa1eb42534552c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
