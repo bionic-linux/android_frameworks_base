@@ -63,6 +63,7 @@ class NetworkTemplateTest {
         val caps = NetworkCapabilities().apply {
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, false)
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true)
+            setSubscriberId(TEST_IMSI1)
             setSSID(ssid)
         }
         return NetworkState(type, lp, caps, mock(Network::class.java), subscriberId, ssid)
@@ -84,13 +85,13 @@ class NetworkTemplateTest {
         val stateMobile = buildMobileNetworkState(TEST_IMSI1)
         // Build UMTS template that matches mobile identities with RAT in the same
         // group with any IMSI. See {@link NetworkTemplate#getCollapsedRatType}.
-        val templateUmts = buildTemplateMobileWithRatType(null, TelephonyManager.NETWORK_TYPE_UMTS)
+        val templateUmts = buildTemplateMobileWithRatType(TEST_IMSI1, TelephonyManager.NETWORK_TYPE_UMTS)
         // Build normal template that matches mobile identities with any RAT and IMSI.
-        val templateAll = buildTemplateMobileWithRatType(null, NETWORK_TYPE_ALL)
+        val templateAll = buildTemplateMobileWithRatType(TEST_IMSI1, NETWORK_TYPE_ALL)
         // Build template with UNKNOWN RAT that matches mobile identities with RAT that
         // cannot be determined.
         val templateUnknown =
-                buildTemplateMobileWithRatType(null, TelephonyManager.NETWORK_TYPE_UNKNOWN)
+                buildTemplateMobileWithRatType(TEST_IMSI1, TelephonyManager.NETWORK_TYPE_UNKNOWN)
 
         val identUmts = buildNetworkIdentity(
                 mockContext, stateMobile, false, TelephonyManager.NETWORK_TYPE_UMTS)
