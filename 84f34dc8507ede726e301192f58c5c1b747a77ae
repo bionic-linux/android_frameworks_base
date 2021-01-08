@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007143583",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1531801?revision\u003d8",
+      "fixSuggestions": [
+        {
+          "fixId": "85e8796d_37f45590",
+          "description": "Change to \"core/java/android/se/omapi/SEService.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/se/omapi/SEService.java",
+              "range": {
+                "startLine": 110,
+                "startChar": 85,
+                "endLine": 110,
+                "endChar": 96
+              },
+              "replacement": "successfully"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8ae26c4a_97a031c3",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-08T16:22:39Z",
+      "side": 1,
+      "message": "Common typo found: \"successfuly\" -- should it be \"successfully\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 110,
+        "startChar": 85,
+        "endLine": 110,
+        "endChar": 96
+      },
+      "revId": "84f34dc8507ede726e301192f58c5c1b747a77ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007143583",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1531801?revision\u003d8",
+      "fixSuggestions": [
+        {
+          "fixId": "ea644a9d_dcfd4654",
+          "description": "Change to \"core/java/android/se/omapi/SEService.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/se/omapi/SEService.java",
+              "range": {
+                "startLine": 115,
+                "startChar": 85,
+                "endLine": 115,
+                "endChar": 98
+              },
+              "replacement": "unsuccessfully"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b35eea67_6d200b6d",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-08T16:22:39Z",
+      "side": 1,
+      "message": "Common typo found: \"unsuccessfuly\" -- should it be \"unsuccessfully\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 115,
+        "startChar": 85,
+        "endLine": 115,
+        "endChar": 98
+      },
+      "revId": "84f34dc8507ede726e301192f58c5c1b747a77ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
