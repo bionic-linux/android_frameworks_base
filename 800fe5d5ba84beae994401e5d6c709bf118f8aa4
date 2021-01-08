@@ -183,6 +183,30 @@
       },
       "revId": "800fe5d5ba84beae994401e5d6c709bf118f8aa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f2f46e8_ca0eb282",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-08T13:09:12Z",
+      "side": 1,
+      "message": "Zack, thank you for the suggestion.\nI tried another way to filter the reason string which is reported from the SE hal in the SecureElement package.\nIf the string does not match the definition, we set it to unknown.\nAnd we could ask vendor to follow the string definition starting from Android S.\nBut the reason string would all be unknown when using the vendor partition before S.\nComparing this with another option to exclude the reason string, which one do you suggest us to use?",
+      "parentUuid": "648a8979_6cb8e538",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 64
+      },
+      "revId": "800fe5d5ba84beae994401e5d6c709bf118f8aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
