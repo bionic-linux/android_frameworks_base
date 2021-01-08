@@ -137,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0531c4cb_4a3fb21f",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6382,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-08T23:19:39Z",
+      "side": 1,
+      "message": "I totally agree with you and was never crazy about using \"cause\".  But then, I saw this:\n\n            case EX_TYPE_FILTER_NOT_SUPPORTED:\n                return new QosCallbackException(new UnsupportedOperationException(\n                        \"This device does not support the specified filter\"));\n\nAnd realized that cause makes a lot of sense since (spelling out the obvious for posterity) UnsupportedOperationException can\u0027t extend from QosCallbackException.\n\nWhat about just keeping it as-is and then seeing what the API council thinks?  In general, having prescriptive guidance for this laid out in the how-to API guide would be great.\n\n\nOh, and I don\u0027t like having just ints for causes, it just seems limiting.  eg. We may want extra properties on the exceptions in the future.",
+      "parentUuid": "40b3f43a_02554459",
+      "range": {
+        "startLine": 6382,
+        "startChar": 21,
+        "endLine": 6382,
+        "endChar": 41
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac79094a_41295af5",
         "filename": "core/api/system-current.txt",
         "patchSetId": 45
@@ -182,6 +206,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e6bd7d6_a80a09d0",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6387,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-08T23:19:39Z",
+      "side": 1,
+      "message": "After looking more closely, the exceptions seem pretty generic, move to the top level.",
+      "parentUuid": "926d1509_984d3694",
+      "range": {
+        "startLine": 6387,
+        "startChar": 43,
+        "endLine": 6387,
+        "endChar": 67
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7abbea8c_d259a27b",
@@ -205,6 +253,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ced6bd22_bfabfb70",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6418,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-08T23:19:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7abbea8c_d259a27b",
+      "range": {
+        "startLine": 6418,
+        "startChar": 36,
+        "endLine": 6418,
+        "endChar": 70
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c04defc_89b241a1",
@@ -218,6 +290,30 @@
       "writtenOn": "2021-01-07T08:25:24Z",
       "side": 1,
       "message": "Likewise",
+      "range": {
+        "startLine": 6422,
+        "startChar": 36,
+        "endLine": 6422,
+        "endChar": 59
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a634e58a_7bea47b2",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6422,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-08T23:19:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c04defc_89b241a1",
       "range": {
         "startLine": 6422,
         "startChar": 36,
