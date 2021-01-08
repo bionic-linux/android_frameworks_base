@@ -61,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "716a9e7e_4ca21f3b",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-08T10:20:53Z",
+      "side": 1,
+      "message": "As I know, current new plan is to move NetworkState to framework-connectivity and expose it for NetworkStatsService and NetworkPolicyManagerService.\n\nIf I make this @SysteApi then I\u0027ll need to expose NetworkState in this CL. Junyu is working on NetworkState so we can address this CL after Junyu\u0027s work done.",
+      "parentUuid": "93dda2ce_9e53784c",
+      "range": {
+        "startLine": 2115,
+        "startChar": 26,
+        "endLine": 2115,
+        "endChar": 44
+      },
+      "revId": "7adeade462fb868af33d759d30128e9b7e5904d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5f19c5a6_32c2305f",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 2
@@ -72,6 +96,30 @@
       "writtenOn": "2020-12-02T08:13:58Z",
       "side": 1,
       "message": "Can you also remove the import ?",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 40
+      },
+      "revId": "7adeade462fb868af33d759d30128e9b7e5904d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddd9f847_1031f636",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-08T10:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f19c5a6_32c2305f",
       "range": {
         "startLine": 148,
         "startChar": 0,
@@ -95,6 +143,30 @@
       "writtenOn": "2020-12-02T08:13:58Z",
       "side": 1,
       "message": "Also remove reference here",
+      "range": {
+        "startLine": 1504,
+        "startChar": 40,
+        "endLine": 1504,
+        "endChar": 60
+      },
+      "revId": "7adeade462fb868af33d759d30128e9b7e5904d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a98aa42e_1b60a06c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-08T10:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea954a2_fc740682",
       "range": {
         "startLine": 1504,
         "startChar": 40,
