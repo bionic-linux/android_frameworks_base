@@ -1444,7 +1444,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true);
         capabilities.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
         capabilities.setSSID(TEST_SSID);
-        return new NetworkState(TYPE_WIFI, prop, capabilities, WIFI_NETWORK, null, TEST_SSID);
+        return new NetworkState(TYPE_WIFI, prop, capabilities, WIFI_NETWORK);
     }
 
     private static NetworkState buildMobile3gState(String subscriberId) {
@@ -1459,8 +1459,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, !isRoaming);
         capabilities.addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
         capabilities.setSubscriberId(subscriberId);
-        return new NetworkState(
-                TYPE_MOBILE, prop, capabilities, MOBILE_NETWORK, subscriberId, null);
+        return new NetworkState(TYPE_MOBILE, prop, capabilities, MOBILE_NETWORK);
     }
 
     private NetworkStats buildEmptyStats() {
@@ -1470,7 +1469,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
     private static NetworkState buildVpnState() {
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TUN_IFACE);
-        return new NetworkState(TYPE_VPN, prop, new NetworkCapabilities(), VPN_NETWORK, null, null);
+        return new NetworkState(TYPE_VPN, prop, new NetworkCapabilities(), VPN_NETWORK);
     }
 
     private long getElapsedRealtime() {
