@@ -41,7 +41,6 @@ public class NetworkState implements Parcelable {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public final Network network;
     public final String subscriberId;
-    public final String networkId;
     public final int legacyNetworkType;
 
     private NetworkState() {
@@ -50,34 +49,32 @@ public class NetworkState implements Parcelable {
         networkCapabilities = null;
         network = null;
         subscriberId = null;
-        networkId = null;
     }
 
     public NetworkState(int legacyNetworkType, @NonNull LinkProperties linkProperties,
             @NonNull NetworkCapabilities networkCapabilities, @NonNull Network network,
-            @Nullable String subscriberId, @Nullable String networkId) {
+            @Nullable String subscriberId) {
         this(legacyNetworkType, new NetworkInfo(legacyNetworkType, 0, null, null), linkProperties,
-                networkCapabilities, network, subscriberId, networkId);
+                networkCapabilities, network, subscriberId);
     }
 
     // Constructor that used internally in ConnectivityService mainline module.
     public NetworkState(@NonNull NetworkInfo networkInfo, @NonNull LinkProperties linkProperties,
             @NonNull NetworkCapabilities networkCapabilities, @NonNull Network network,
-            String subscriberId, String networkId) {
+            String subscriberId) {
         this(networkInfo.getType(), networkInfo, linkProperties,
-                networkCapabilities, network, subscriberId, networkId);
+                networkCapabilities, network, subscriberId);
     }
 
     public NetworkState(int legacyNetworkType, @NonNull NetworkInfo networkInfo,
             @NonNull LinkProperties linkProperties,
             @NonNull NetworkCapabilities networkCapabilities, @NonNull Network network,
-            String subscriberId, String networkId) {
+            String subscriberId) {
         this.networkInfo = networkInfo;
         this.linkProperties = linkProperties;
         this.networkCapabilities = networkCapabilities;
         this.network = network;
         this.subscriberId = subscriberId;
-        this.networkId = networkId;
         this.legacyNetworkType = legacyNetworkType;
 
         // This object is an atomic view of a network, so the various components
@@ -98,7 +95,6 @@ public class NetworkState implements Parcelable {
         networkCapabilities = in.readParcelable(null);
         network = in.readParcelable(null);
         subscriberId = in.readString();
-        networkId = in.readString();
         legacyNetworkType = in.readInt();
     }
 
@@ -114,7 +110,6 @@ public class NetworkState implements Parcelable {
         out.writeParcelable(networkCapabilities, flags);
         out.writeParcelable(network, flags);
         out.writeString(subscriberId);
-        out.writeString(networkId);
         out.writeInt(legacyNetworkType);
     }
 
