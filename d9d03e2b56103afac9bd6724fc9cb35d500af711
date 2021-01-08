@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0eabf4fe_d43c37f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T23:00:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb9a96e_50b41da2",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "d9d03e2b56103afac9bd6724fc9cb35d500af711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9456b51c_19ddfb61",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74c32e21_5a46bcf3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T23:00:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9456b51c_19ddfb61",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "d9d03e2b56103afac9bd6724fc9cb35d500af711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aeb4a2ac_96458e00",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-08T22:39:20Z",
       "side": 1,
       "message": "I believe this needs to be getSignalMeasurementType()",
+      "range": {
+        "startLine": 371,
+        "startChar": 38,
+        "endLine": 371,
+        "endChar": 58
+      },
+      "revId": "d9d03e2b56103afac9bd6724fc9cb35d500af711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7385055_d3135b51",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-08T23:00:58Z",
+      "side": 1,
+      "message": "Agree. Make it more intuitive.",
+      "parentUuid": "aeb4a2ac_96458e00",
       "range": {
         "startLine": 371,
         "startChar": 38,
