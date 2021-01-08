@@ -1458,6 +1458,7 @@ public class NetworkStatsServiceTest extends NetworkStatsBaseTest {
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, false);
         capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, !isRoaming);
         capabilities.addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR);
+        capabilities.setSubscriberId(subscriberId);
         return new NetworkState(
                 TYPE_MOBILE, prop, capabilities, MOBILE_NETWORK, subscriberId, null);
     }
