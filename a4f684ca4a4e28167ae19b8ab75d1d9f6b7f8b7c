@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f865b528_d618c136",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-08T16:37:14Z",
+      "side": 1,
+      "message": "torn down",
+      "range": {
+        "startLine": 1636,
+        "startChar": 66,
+        "endLine": 1636,
+        "endChar": 74
+      },
+      "revId": "a4f684ca4a4e28167ae19b8ab75d1d9f6b7f8b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e32bb26_817a5913",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-08T16:37:14Z",
+      "side": 1,
+      "message": "\"flakiness\"? (flaky is an adjective so I don\u0027t think you can say can\u0027t say \"in case of flaky\")",
+      "range": {
+        "startLine": 1653,
+        "startChar": 31,
+        "endLine": 1653,
+        "endChar": 36
+      },
+      "revId": "a4f684ca4a4e28167ae19b8ab75d1d9f6b7f8b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e78da7e7_4ef4de12",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-08T16:37:14Z",
+      "side": 1,
+      "message": "Hmm. Does this mean that anytime an always-on network connects, the network is in the foreground for 5 seconds? Are unprivileged apps allowed to use the network? Is this a change in behaviour? If so, we should try to avoid it.",
+      "range": {
+        "startLine": 1722,
+        "startChar": 0,
+        "endLine": 1723,
+        "endChar": 59
+      },
+      "revId": "a4f684ca4a4e28167ae19b8ab75d1d9f6b7f8b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d513d545_4dbe488c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-08T16:37:14Z",
+      "side": 1,
+      "message": "This test looks really similar to the one just above.\n\nIn fact, it looks like the events that happen are actually identical: connect wifi, enable always-on, connect cell, linger cell. The only difference is what callbacks are registered. If so, then you should probably merge the two tests into one test which files all the callbacks. Since the sequence of events that happens is the same, having two tests will not add any new coverage.",
+      "range": {
+        "startLine": 1740,
+        "startChar": 16,
+        "endLine": 1740,
+        "endChar": 59
+      },
+      "revId": "a4f684ca4a4e28167ae19b8ab75d1d9f6b7f8b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8c9c50c_6aeb0af7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7436,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-08T16:37:14Z",
+      "side": 1,
+      "message": "I think the main issue here is that the linger timer is a WakeupMessage, i.e., it will wake up the CPU from sleep.\n\nIf a network comes up and immediately satisfies a request (common case), it would be good to avoid waking up the CPU 5 seconds later for no reason.\n\nThat said - IIRC our metrics say there are about 20 network switches per day. If this code causes 20 wakeups per day perhaps the impact on battery will not be substantial. And it\u0027s true that we do this for the linger timer already.\n\nThat said - what if we simply said that a network stops being nascent as soon as it satisifies its first request? That seems simple to implement.",
+      "parentUuid": "3ae350ec_f2201ed4",
+      "range": {
+        "startLine": 7434,
+        "startChar": 0,
+        "endLine": 7436,
+        "endChar": 79
+      },
+      "revId": "5bbc3c6d525f50a3987e7eaadefb05d0b1512861",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e40d1084_76ea8c27",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 6
