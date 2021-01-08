@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92c4f654_057b804e",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6378,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-08T00:34:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d704842_9a5d10d5",
+      "range": {
+        "startLine": 6378,
+        "startChar": 85,
+        "endLine": 6378,
+        "endChar": 94
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "007542df_234750f8",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-07T08:25:24Z",
       "side": 1,
       "message": "Is there any use for clients to create an instance of this outside of tests ? If not, should this constructor be only @TestApi and not @SystemApi ?",
+      "range": {
+        "startLine": 6379,
+        "startChar": 28,
+        "endLine": 6379,
+        "endChar": 60
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca6602fc_000370c2",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6379,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-08T00:34:07Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "007542df_234750f8",
       "range": {
         "startLine": 6379,
         "startChar": 28,
@@ -100,6 +148,30 @@
       "writtenOn": "2021-01-07T08:25:24Z",
       "side": 1,
       "message": "For the same reason it\u0027s a bit strange that this is an *inner class* of QosCallbackException",
+      "range": {
+        "startLine": 6387,
+        "startChar": 43,
+        "endLine": 6387,
+        "endChar": 67
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "926d1509_984d3694",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6387,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-08T00:34:07Z",
+      "side": 1,
+      "message": "Are you sure you want me to make these non-inner classes.  It\u0027s going to add a lot of top level files to your overall package.  \n\nIt\u0027s super quick for me to do, I just want to make sure you realize that it might be really off putting later on.",
+      "parentUuid": "ac79094a_41295af5",
       "range": {
         "startLine": 6387,
         "startChar": 43,
