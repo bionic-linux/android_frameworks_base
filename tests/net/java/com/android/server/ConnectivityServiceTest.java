@@ -353,6 +353,7 @@ public class ConnectivityServiceTest {
     private static final String TEST_VENUE_URL_CAPPORT = "https://android.com/capport/";
     private static final String TEST_FRIENDLY_NAME = "Network friendly name";
     private static final String TEST_REDIRECT_URL = "http://example.com/firstPath";
+    private static final String TEST_IMSI = "TEST_IMSI";
 
     private MockContext mServiceContext;
     private HandlerThread mCsHandlerThread;
@@ -681,7 +682,7 @@ public class ConnectivityServiceTest {
                     nmCbCaptor.capture());
 
             final InstrumentedNetworkAgent na = new InstrumentedNetworkAgent(this, linkProperties,
-                    type, typeName) {
+                    type, typeName, TEST_IMSI) {
                 @Override
                 public void networkStatus(int status, String redirectUrl) {
                     mRedirectUrl = redirectUrl;
@@ -8890,7 +8891,7 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testInvalidRequestTypes() {
-        final int[] invalidReqTypeInts = new int[] {-1, NetworkRequest.Type.NONE.ordinal(),
+        final int[] invalidReqTypeInts = new int[]{-1, NetworkRequest.Type.NONE.ordinal(),
                 NetworkRequest.Type.LISTEN.ordinal(), NetworkRequest.Type.values().length};
         final NetworkCapabilities nc = new NetworkCapabilities().addTransportType(TRANSPORT_WIFI);
 
@@ -8902,5 +8903,21 @@ public class ConnectivityServiceTest {
                             getAttributionTag())
             );
         }
+    }
+
+    @Test
+    public void testRedactSubscriberId() throws Exception {
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        mCm.requestNetwork(new NetworkRequest.Builder().build(), callback);
+
+        // Connect a cellular network. The network will bring up with TEST_IMSI as subscriber Id
+        // inside NetworkAgentConfig by default.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        callback.expectAvailableCallbacks(mCellNetworkAgent,
+                false /* suspended */, false /* validated */, false /* blocked */, TIMEOUT_MS);
+        callback.expectCapabilitiesThat(mCellNetworkAgent,
+                (it) -> it.hasCapability(NET_CAPABILITY_VALIDATED) && it.getSubscriberId() == null);
+        assertNull(mCm.getNetworkCapabilities(mCellNetworkAgent.getNetwork()).getSubscriberId());
     }
 }

@@ -1668,6 +1668,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!checkSettingsPermission(callerPid, callerUid)) {
             newNc.setUids(null);
             newNc.setSSID(null);
+            newNc.setSubscriberId(null);
         }
         if (newNc.getNetworkSpecifier() != null) {
             newNc.setNetworkSpecifier(newNc.getNetworkSpecifier().redact());
