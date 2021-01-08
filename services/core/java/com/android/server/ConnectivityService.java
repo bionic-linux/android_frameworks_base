@@ -1267,8 +1267,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 final NetworkCapabilities capabilities = new NetworkCapabilities();
                 capabilities.setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING,
                         !info.isRoaming());
-                state = new NetworkState(info, new LinkProperties(), capabilities,
-                        null, null, null);
+                state = new NetworkState(info, new LinkProperties(), capabilities, null);
             }
             filterNetworkStateForUid(state, uid, false);
             return state;
