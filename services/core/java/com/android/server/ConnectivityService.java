@@ -106,6 +106,7 @@ import android.net.NetworkAgent;
 import android.net.NetworkAgentConfig;
 import android.net.NetworkCapabilities;
 import android.net.NetworkConfig;
+import android.net.NetworkIdentity;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkMonitorManager;
@@ -1673,7 +1674,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             newNc.setNetworkSpecifier(newNc.getNetworkSpecifier().redact());
         }
         newNc.setAdministratorUids(new int[0]);
-
         return newNc;
     }
 
@@ -6415,6 +6415,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
             Log.e(TAG, nai.toShortString() + ": ignoring attempt to change owner from "
                     + nai.networkCapabilities.getOwnerUid() + " to " + nc.getOwnerUid());
             nc.setOwnerUid(nai.networkCapabilities.getOwnerUid());
+        }
+
+        // Change the Subscriber ID is not allowed once it has been set. The subscriber Id could
+        // be updated to null or other values for use cases like removing SIM or rare modem feature
+        // that changes IMSI dynamically. Reject updating to make it acts like immutable and prevent
+        // any possible races.
+        if (!TextUtils.isEmpty(nai.networkCapabilities.getSubscriberId())
+                && !TextUtils.equals(nai.networkCapabilities.getSubscriberId(),
+                nc.getSubscriberId())) {
+            Log.e(TAG, nai.toShortString() + ": ignoring attempt to change subscriber Id from"
+                    + NetworkIdentity.scrubSubscriberId(nai.networkCapabilities.getSubscriberId())
+                    + " to " + NetworkIdentity.scrubSubscriberId(nc.getSubscriberId()));
+            nc.setSubscriberId(nai.networkCapabilities.getSubscriberId());
         }
         nai.declaredCapabilities = new NetworkCapabilities(nc);
     }
