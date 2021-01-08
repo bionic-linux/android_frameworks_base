@@ -194,8 +194,8 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         subscriberId = state.networkCapabilities.getSubscriberId();
 
         if (type == TYPE_WIFI) {
-            if (state.networkId != null) {
-                networkId = state.networkId;
+            if (state.networkCapabilities.getSsid() != null) {
+                networkId = state.networkCapabilities.getSsid();
             } else {
                 final WifiManager wifi = (WifiManager) context.getSystemService(
                         Context.WIFI_SERVICE);
