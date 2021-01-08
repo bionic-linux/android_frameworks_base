@@ -2053,6 +2053,7 @@ public class NetworkPolicyManagerServiceTest {
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TEST_IFACE);
         final NetworkCapabilities networkCapabilities = new NetworkCapabilities();
+        networkCapabilities.setSSID(TEST_SSID);
         return new NetworkState(info, prop, networkCapabilities, null, null, TEST_SSID);
     }
 
