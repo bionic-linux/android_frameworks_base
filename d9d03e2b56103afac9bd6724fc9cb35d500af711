@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eb9a96e_50b41da2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-08T22:39:20Z",
+      "side": 1,
+      "message": "nit",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "d9d03e2b56103afac9bd6724fc9cb35d500af711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9456b51c_19ddfb61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-08T22:39:20Z",
+      "side": 1,
+      "message": "nit delete.... I think we\u0027re going to fully expose what applications need, right?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "d9d03e2b56103afac9bd6724fc9cb35d500af711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeb4a2ac_96458e00",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-08T22:39:20Z",
+      "side": 1,
+      "message": "I believe this needs to be getSignalMeasurementType()",
+      "range": {
+        "startLine": 371,
+        "startChar": 38,
+        "endLine": 371,
+        "endChar": 58
+      },
+      "revId": "d9d03e2b56103afac9bd6724fc9cb35d500af711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
