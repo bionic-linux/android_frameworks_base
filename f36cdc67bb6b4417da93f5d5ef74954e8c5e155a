@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c8769f_2ea46d67",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2250,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-08T01:24:26Z",
+      "side": 1,
+      "message": "nit: value",
+      "range": {
+        "startLine": 2250,
+        "startChar": 52,
+        "endLine": 2250,
+        "endChar": 58
+      },
+      "revId": "f36cdc67bb6b4417da93f5d5ef74954e8c5e155a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4891eac6_47252565",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2250,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-08T01:24:26Z",
+      "side": 1,
+      "message": "since we\u0027re in NfcAdapter, let\u0027s change this to setAlwaysOn",
+      "range": {
+        "startLine": 2250,
+        "startChar": 19,
+        "endLine": 2250,
+        "endChar": 43
+      },
+      "revId": "f36cdc67bb6b4417da93f5d5ef74954e8c5e155a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fef3121b_2dfad052",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2282,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-08T01:24:26Z",
+      "side": 1,
+      "message": "this should match the setter in name, so name this to isAlwaysOn",
+      "range": {
+        "startLine": 2282,
+        "startChar": 19,
+        "endLine": 2282,
+        "endChar": 49
+      },
+      "revId": "f36cdc67bb6b4417da93f5d5ef74954e8c5e155a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65d44861_d09e03ef",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2311,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-01-08T01:24:26Z",
+      "side": 1,
+      "message": "nit: isAlwaysOnSupported",
+      "range": {
+        "startLine": 2311,
+        "startChar": 19,
+        "endLine": 2311,
+        "endChar": 51
+      },
+      "revId": "f36cdc67bb6b4417da93f5d5ef74954e8c5e155a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
