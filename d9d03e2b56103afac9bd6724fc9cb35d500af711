@@ -140,6 +140,30 @@
       },
       "revId": "d9d03e2b56103afac9bd6724fc9cb35d500af711",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "798703da_22e74743",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-09T02:04:05Z",
+      "side": 1,
+      "message": "Rename the method in parent CL with all usage. Make this CL purely for API review.",
+      "parentUuid": "c7385055_d3135b51",
+      "range": {
+        "startLine": 371,
+        "startChar": 38,
+        "endLine": 371,
+        "endChar": 58
+      },
+      "revId": "d9d03e2b56103afac9bd6724fc9cb35d500af711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
