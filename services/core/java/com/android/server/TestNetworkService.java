@@ -48,6 +48,7 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.net.module.util.NetdUtils;
 
 import java.io.UncheckedIOException;
 import java.net.Inet4Address;
@@ -319,7 +320,7 @@ class TestNetworkService extends ITestNetworkManager.Stub {
             // This requires NETWORK_STACK privileges.
             final long token = Binder.clearCallingIdentity();
             try {
-                mNMS.setInterfaceUp(iface);
+                NetdUtils.setInterfaceUp(mNetd, iface);
             } finally {
                 Binder.restoreCallingIdentity(token);
             }
