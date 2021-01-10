@@ -4849,15 +4849,6 @@ public class ConnectivityManager {
         }
     }
 
-    private void setOemNetworkPreference(@NonNull final OemNetworkPreferences preference) {
-        try {
-            mService.setOemNetworkPreference(preference);
-        } catch (RemoteException e) {
-            Log.e(TAG, "setOemNetworkPreference() failed for preference: " + preference.toString());
-            throw e.rethrowFromSystemServer();
-        }
-    }
-
     @NonNull
     private final List<QosCallbackConnection> mQosCallbackConnections = new ArrayList<>();
 
@@ -5058,5 +5049,51 @@ public class ConnectivityManager {
         final NetworkCapabilities nc = request.networkCapabilities;
         sendRequestForNetwork(nc, networkCallback, 0, BACKGROUND_REQUEST,
                 TYPE_NONE, handler == null ? getDefaultHandler() : new CallbackHandler(handler));
+    }
+
+    /**
+     * Listener for {@link #setOemNetworkPreference(Executor, OnSetOemNetworkPreferenceListener,
+     * OemNetworkPreferences)}.
+     */
+    private interface OnSetOemNetworkPreferenceListener {
+        /**
+         * Called when setOemNetworkPreference() completes.
+         * @param isSuccessful is true if setOemNetworkPreference() completes successfully, false
+         *                     otherwise.
+         * @param response message with additional details if applicable.
+         */
+        void onComplete(@NonNull boolean isSuccessful, @NonNull String response);
+    }
+
+    /**
+     * Sets the OEM network preferences.
+     *
+     * Calling this will overwrite the existing preference.
+     *
+     * @param executor the executor on which listener will be invoked.
+     * @param listener {@link OnSetOemNetworkPreferenceListener} Listener used to communicate
+     *                  completion of setOemNetworkPreference();
+     * @param preference {@link OemNetworkPreferences} The application network preference to be set.
+     */
+    private void setOemNetworkPreference(@NonNull final Executor executor,
+            @NonNull final OnSetOemNetworkPreferenceListener listener,
+            @NonNull final OemNetworkPreferences preference) {
+        Objects.requireNonNull(executor, "Executor must be non-null");
+        Objects.requireNonNull(listener, "Listener must be non-null");
+        Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
+        final IOnSetOemNetworkPreferenceListener listenerInternal =
+                new IOnSetOemNetworkPreferenceListener.Stub() {
+                    @Override
+                    public void onComplete(boolean isSuccessful, String response) {
+                        executor.execute(() -> listener.onComplete(isSuccessful, response));
+                    }
+        };
+
+        try {
+            mService.setOemNetworkPreference(preference, listenerInternal);
+        } catch (RemoteException e) {
+            Log.e(TAG, "setOemNetworkPreference() failed for preference: " + preference.toString());
+            throw e.rethrowFromSystemServer();
+        }
     }
 }
