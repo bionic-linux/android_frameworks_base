@@ -206,11 +206,11 @@ public class Nat464XlatTest {
         // Start clat.
         nat.start();
 
-        verify(mNms).registerObserver(eq(nat));
+        verify(mNetd).registerUnsolicitedEventListener(eq(nat));
         verify(mNetd).clatdStart(eq(BASE_IFACE), eq(NAT64_PREFIX));
 
         // Stacked interface up notification arrives.
-        nat.interfaceLinkStateChanged(STACKED_IFACE, true);
+        nat.onInterfaceLinkStateChanged(STACKED_IFACE, true);
         mLooper.dispatchNext();
 
         verify(mNetd).interfaceGetCfg(eq(STACKED_IFACE));
@@ -225,14 +225,13 @@ public class Nat464XlatTest {
 
         verify(mNetd).clatdStop(eq(BASE_IFACE));
         verify(mConnectivity, times(2)).handleUpdateLinkProperties(eq(mNai), c.capture());
-        verify(mNms).unregisterObserver(eq(nat));
         assertTrue(c.getValue().getStackedLinks().isEmpty());
         assertFalse(c.getValue().getAllInterfaceNames().contains(STACKED_IFACE));
         verify(mDnsResolver).stopPrefix64Discovery(eq(NETID));
         assertIdle(nat);
 
         // Stacked interface removed notification arrives and is ignored.
-        nat.interfaceRemoved(STACKED_IFACE);
+        nat.onInterfaceRemoved(STACKED_IFACE);
         mLooper.dispatchNext();
 
         verifyNoMoreInteractions(mNetd, mNms, mConnectivity);
@@ -262,7 +261,7 @@ public class Nat464XlatTest {
         inOrder.verify(mNetd).clatdStart(eq(BASE_IFACE), eq(NAT64_PREFIX));
 
         // Stacked interface up notification arrives.
-        nat.interfaceLinkStateChanged(STACKED_IFACE, true);
+        nat.onInterfaceLinkStateChanged(STACKED_IFACE, true);
         mLooper.dispatchNext();
 
         inOrder.verify(mConnectivity).handleUpdateLinkProperties(eq(mNai), c.capture());
@@ -282,9 +281,9 @@ public class Nat464XlatTest {
 
         if (interfaceRemovedFirst) {
             // Stacked interface removed notification arrives and is ignored.
-            nat.interfaceRemoved(STACKED_IFACE);
+            nat.onInterfaceRemoved(STACKED_IFACE);
             mLooper.dispatchNext();
-            nat.interfaceLinkStateChanged(STACKED_IFACE, false);
+            nat.onInterfaceLinkStateChanged(STACKED_IFACE, false);
             mLooper.dispatchNext();
         }
 
@@ -299,14 +298,14 @@ public class Nat464XlatTest {
 
         if (!interfaceRemovedFirst) {
             // Stacked interface removed notification arrives and is ignored.
-            nat.interfaceRemoved(STACKED_IFACE);
+            nat.onInterfaceRemoved(STACKED_IFACE);
             mLooper.dispatchNext();
-            nat.interfaceLinkStateChanged(STACKED_IFACE, false);
+            nat.onInterfaceLinkStateChanged(STACKED_IFACE, false);
             mLooper.dispatchNext();
         }
 
         // Stacked interface up notification arrives.
-        nat.interfaceLinkStateChanged(STACKED_IFACE, true);
+        nat.onInterfaceLinkStateChanged(STACKED_IFACE, true);
         mLooper.dispatchNext();
 
         inOrder.verify(mConnectivity).handleUpdateLinkProperties(eq(mNai), c.capture());
@@ -346,11 +345,11 @@ public class Nat464XlatTest {
 
         nat.start();
 
-        verify(mNms).registerObserver(eq(nat));
+        verify(mNetd).registerUnsolicitedEventListener(eq(nat));
         verify(mNetd).clatdStart(eq(BASE_IFACE), eq(NAT64_PREFIX));
 
         // Stacked interface up notification arrives.
-        nat.interfaceLinkStateChanged(STACKED_IFACE, true);
+        nat.onInterfaceLinkStateChanged(STACKED_IFACE, true);
         mLooper.dispatchNext();
 
         verify(mNetd).interfaceGetCfg(eq(STACKED_IFACE));
@@ -360,12 +359,11 @@ public class Nat464XlatTest {
         assertRunning(nat);
 
         // Stacked interface removed notification arrives (clatd crashed, ...).
-        nat.interfaceRemoved(STACKED_IFACE);
+        nat.onInterfaceRemoved(STACKED_IFACE);
         mLooper.dispatchNext();
 
         verify(mNetd).clatdStop(eq(BASE_IFACE));
         verify(mConnectivity, times(2)).handleUpdateLinkProperties(eq(mNai), c.capture());
-        verify(mNms).unregisterObserver(eq(nat));
         verify(mDnsResolver).stopPrefix64Discovery(eq(NETID));
         assertTrue(c.getValue().getStackedLinks().isEmpty());
         assertFalse(c.getValue().getAllInterfaceNames().contains(STACKED_IFACE));
@@ -386,7 +384,7 @@ public class Nat464XlatTest {
 
         nat.start();
 
-        verify(mNms).registerObserver(eq(nat));
+        verify(mNetd).registerUnsolicitedEventListener(eq(nat));
         verify(mNetd).clatdStart(eq(BASE_IFACE), eq(NAT64_PREFIX));
 
         // ConnectivityService immediately stops clat (Network disconnects, IPv4 addr appears, ...)
@@ -394,16 +392,15 @@ public class Nat464XlatTest {
         nat.stop();
 
         verify(mNetd).clatdStop(eq(BASE_IFACE));
-        verify(mNms).unregisterObserver(eq(nat));
         verify(mDnsResolver).stopPrefix64Discovery(eq(NETID));
         assertIdle(nat);
 
         // In-flight interface up notification arrives: no-op
-        nat.interfaceLinkStateChanged(STACKED_IFACE, true);
+        nat.onInterfaceLinkStateChanged(STACKED_IFACE, true);
         mLooper.dispatchNext();
 
         // Interface removed notification arrives after stopClatd() takes effect: no-op.
-        nat.interfaceRemoved(STACKED_IFACE);
+        nat.onInterfaceRemoved(STACKED_IFACE);
         mLooper.dispatchNext();
 
         assertIdle(nat);
@@ -430,7 +427,7 @@ public class Nat464XlatTest {
 
         nat.start();
 
-        verify(mNms).registerObserver(eq(nat));
+        verify(mNetd).registerUnsolicitedEventListener(eq(nat));
         verify(mNetd).clatdStart(eq(BASE_IFACE), eq(NAT64_PREFIX));
 
         // ConnectivityService immediately stops clat (Network disconnects, IPv4 addr appears, ...)
@@ -438,7 +435,6 @@ public class Nat464XlatTest {
         nat.stop();
 
         verify(mNetd).clatdStop(eq(BASE_IFACE));
-        verify(mNms).unregisterObserver(eq(nat));
         verify(mDnsResolver).stopPrefix64Discovery(eq(NETID));
         assertIdle(nat);
 
