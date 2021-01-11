@@ -231,6 +231,30 @@
       },
       "revId": "800fe5d5ba84beae994401e5d6c709bf118f8aa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8048d674_a45a4095",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-11T03:17:33Z",
+      "side": 1,
+      "message": "Ok, exclude the reason string in the latest patch,",
+      "parentUuid": "ef238d47_e8170ab8",
+      "range": {
+        "startLine": 92,
+        "startChar": 31,
+        "endLine": 92,
+        "endChar": 64
+      },
+      "revId": "800fe5d5ba84beae994401e5d6c709bf118f8aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
