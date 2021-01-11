@@ -22,6 +22,30 @@
       },
       "revId": "5f0ac4dae5733240435810f64a319bb010d89a79",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "286be7b0_377efa68",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-11T14:54:11Z",
+      "side": 1,
+      "message": "- If we call mNetd.interfaceSetCfg directly, we still need to do something what aosp/1535641 does, right? It will make the code of TestNetworkService to be more complex and those code are only useful for TestNetworkService.\n- Having a NetdUtils can help other users to get rid of using method inside NetworkManagementService and to prevent reimplementing similar code in different files.",
+      "parentUuid": "2c388481_afbd8806",
+      "range": {
+        "startLine": 323,
+        "startChar": 16,
+        "endLine": 323,
+        "endChar": 25
+      },
+      "revId": "5f0ac4dae5733240435810f64a319bb010d89a79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
