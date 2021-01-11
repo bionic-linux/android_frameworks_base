@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c388481_afbd8806",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-01-11T12:39:35Z",
+      "side": 1,
+      "message": "why do you not call INetd directly? just call mNetd.interfaceSetCfg?",
+      "range": {
+        "startLine": 323,
+        "startChar": 16,
+        "endLine": 323,
+        "endChar": 25
+      },
+      "revId": "5f0ac4dae5733240435810f64a319bb010d89a79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
