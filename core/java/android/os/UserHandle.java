@@ -193,10 +193,7 @@ public final class UserHandle implements Parcelable {
     /**
      * Whether a UID belongs to a regular app. *Note* "Not a regular app" does not mean
      * "it's system", because of isolated UIDs. Use {@link #isCore} for that.
-     * @hide
      */
-    @UnsupportedAppUsage
-    @TestApi
     public static boolean isApp(int uid) {
         if (uid > 0) {
             final int appId = getAppId(uid);
