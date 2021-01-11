@@ -34,6 +34,23 @@
       "parentUuid": "0495975e_09e4ef2a",
       "revId": "531e8b0ae0fb37adde7f18d6418796c9857c8e65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "784f160c_2b208230",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-01-11T23:32:09Z",
+      "side": 1,
+      "message": "Hi Lorenzo, are you able to give code-owners review for this? Or know someone who can? This is a small fix from Sony eng hiroaki.kuriyama@sony.com.",
+      "revId": "531e8b0ae0fb37adde7f18d6418796c9857c8e65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
