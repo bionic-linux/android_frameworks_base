@@ -16,6 +16,24 @@
       "message": "why does this need to be directly merged to aosp?",
       "revId": "bbb00e78ef87e45ffb25b9347c648a04fac00b6e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf851e61_1b4c67a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-01-11T14:38:56Z",
+      "side": 1,
+      "message": "During our conversations with partners, they\u0027ve have asked if there could be a proof of concept available in aosp. So merging it now is one way, but if you\u0027d rather wait (eg to avoid potential conflicts), we can point them to the CL.",
+      "parentUuid": "3965f48e_68fcfb67",
+      "revId": "bbb00e78ef87e45ffb25b9347c648a04fac00b6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
