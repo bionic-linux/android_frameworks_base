@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33993a44_48ebbdad",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1325,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-11T02:47:38Z",
+      "side": 1,
+      "message": "1. Is it feasible to use subId?\n\n2. Is it printed into dumpsys netstats?\nIf yes then it might not be very good.",
+      "range": {
+        "startLine": 1325,
+        "startChar": 68,
+        "endLine": 1325,
+        "endChar": 83
+      },
+      "revId": "abb4f6b7e6ffc7d462134a289e757897aa338de8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
