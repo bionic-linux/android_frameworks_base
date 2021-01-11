@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cdd631c6_3d1b7d0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-11T02:55:09Z",
+      "side": 1,
+      "message": "Could you kindly help to verify with new unit test in NetworkStatsServiceTest?\nWhere you might need to:\n  a. Create a new test in NetworkStatsServiceTest\n  b. Extends a TestableNetworkStatsProvider\n  c. mock some traffic of vt on different subs\n  d. verify you can query the stats correctly\n\nYou might refer to NetworkStatsServiceTest#testTethering as an example.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "abb4f6b7e6ffc7d462134a289e757897aa338de8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33993a44_48ebbdad",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 1
