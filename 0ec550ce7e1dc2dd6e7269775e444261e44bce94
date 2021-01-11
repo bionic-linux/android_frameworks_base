@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adb3d91c_63bde282",
+        "filename": "core/api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 40687,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-11T23:29:47Z",
+      "side": 1,
+      "message": "I don\u0027t know if these should be (sadly more verbose) SIGNAL_MEASUREMENT_TYPE or SIGNAL_TYPE. I\u0027m going to +1, but perhaps tgunn@ will have guidance here.",
+      "range": {
+        "startLine": 40687,
+        "startChar": 34,
+        "endLine": 40687,
+        "endChar": 45
+      },
+      "revId": "0ec550ce7e1dc2dd6e7269775e444261e44bce94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
