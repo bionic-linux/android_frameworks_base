@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3965f48e_68fcfb67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-01-11T14:25:20Z",
+      "side": 1,
+      "message": "why does this need to be directly merged to aosp?",
+      "revId": "bbb00e78ef87e45ffb25b9347c648a04fac00b6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
