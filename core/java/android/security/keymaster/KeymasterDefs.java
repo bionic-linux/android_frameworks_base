@@ -94,8 +94,6 @@ public final class KeymasterDefs {
     public static final int KM_TAG_UNLOCKED_DEVICE_REQUIRED =
             Tag.UNLOCKED_DEVICE_REQUIRED; // KM_BOOL | 509;
 
-    public static final int KM_TAG_APPLICATION_ID = Tag.APPLICATION_ID; // KM_BYTES | 601;
-
     public static final int KM_TAG_CREATION_DATETIME = Tag.CREATION_DATETIME; // KM_DATE | 701;
     public static final int KM_TAG_ORIGIN = Tag.ORIGIN; // KM_ENUM | 702;
     public static final int KM_TAG_ROLLBACK_RESISTANT = Tag.ROLLBACK_RESISTANCE; // KM_BOOL | 703;
