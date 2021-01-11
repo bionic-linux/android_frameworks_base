@@ -56,6 +56,7 @@ import static android.net.NetworkPolicyManager.RULE_NONE;
 import static android.net.NetworkPolicyManager.uidRulesToString;
 import static android.net.shared.NetworkMonitorUtils.isPrivateDnsValidationRequired;
 import static android.os.Process.INVALID_UID;
+import static android.os.UserHandle.getUserHandleForUid;
 import static android.system.OsConstants.IPPROTO_TCP;
 import static android.system.OsConstants.IPPROTO_UDP;
 
@@ -1420,10 +1421,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private Network getActiveNetworkForUidInternal(final int uid, boolean ignoreBlocked) {
-        final int user = UserHandle.getUserId(uid);
         int vpnNetId = NETID_UNSET;
         synchronized (mVpns) {
-            final Vpn vpn = mVpns.get(user);
+            final Vpn vpn = getVpnFromUid(uid);
             // TODO : now that capabilities contain the UID, the appliesToUid test should
             // be removed as the satisfying test below should be enough.
             if (vpn != null && vpn.appliesToUid(uid)) vpnNetId = vpn.getNetId();
@@ -4620,7 +4620,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn != null) {
                 return vpn.prepare(oldPackage, newPackage, VpnManager.TYPE_VPN_SERVICE);
             } else {
@@ -4650,7 +4650,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceCrossUserPermission(userId);
 
         synchronized (mVpns) {
-            Vpn vpn = mVpns.get(userId);
+            Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn != null) {
                 vpn.setPackageAuthorization(packageName, vpnType);
             }
@@ -4666,10 +4666,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public ParcelFileDescriptor establishVpn(VpnConfig config) {
-        int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            return mVpns.get(user).establish(config);
+            final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
+            final Vpn vpn = getVpnFromUserHandle(user);
+            if (vpn == null) {
+                logw("No vpn available for user " + user);
+                return null;
+            }
+            return vpn.establish(config);
+        }
+    }
+
+    private Vpn getVpnFromUid(int uid) {
+        return getVpnFromUserHandle(getUserHandleForUid(uid));
+    }
+
+    private Vpn getVpnFromUserHandle(UserHandle user) {
+        synchronized (mVpns) {
+            return mVpns.get(user.getIdentifier());
         }
     }
 
@@ -4687,9 +4702,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public boolean provisionVpnProfile(@NonNull VpnProfile profile, @NonNull String packageName) {
-        final int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
-            return mVpns.get(user).provisionVpnProfile(packageName, profile, mKeyStore);
+            final Vpn vpn = getVpnFromUid(mDeps.getCallingUid());
+            if (vpn == null) {
+                logw("No vpn available for this user");
+                return false;
+            }
+            return vpn.provisionVpnProfile(packageName, profile, mKeyStore);
         }
     }
 
@@ -4705,9 +4724,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void deleteVpnProfile(@NonNull String packageName) {
-        final int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
-            mVpns.get(user).deleteVpnProfile(packageName, mKeyStore);
+            final Vpn vpn = getVpnFromUid(mDeps.getCallingUid());
+            if (vpn == null) {
+                logw("No vpn available for this user");
+                return;
+            }
+            vpn.deleteVpnProfile(packageName, mKeyStore);
         }
     }
 
@@ -4722,10 +4745,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void startVpnProfile(@NonNull String packageName) {
-        final int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            mVpns.get(user).startVpnProfile(packageName, mKeyStore);
+            final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
+            final Vpn vpn = getVpnFromUserHandle(user);
+            if (vpn == null) {
+                logw("No vpn available for user " + user);
+                return;
+            }
+            vpn.startVpnProfile(packageName, mKeyStore);
         }
     }
 
@@ -4739,9 +4767,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void stopVpnProfile(@NonNull String packageName) {
-        final int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
-            mVpns.get(user).stopVpnProfile(packageName);
+            final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
+            final Vpn vpn = getVpnFromUserHandle(user);
+            if (vpn == null) {
+                logw("No vpn available for user " + user);
+                return;
+            }
+            vpn.stopVpnProfile(packageName);
         }
     }
 
@@ -4751,14 +4784,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void startLegacyVpn(VpnProfile profile) {
-        int user = UserHandle.getUserId(mDeps.getCallingUid());
         final LinkProperties egress = getActiveLinkProperties();
         if (egress == null) {
             throw new IllegalStateException("Missing active network connection");
         }
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            mVpns.get(user).startLegacyVpn(profile, mKeyStore, egress);
+            final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
+            final Vpn vpn = getVpnFromUserHandle(user);
+            if (vpn == null) {
+                logw("No vpn available for user " + user);
+                return;
+            }
+            vpn.startLegacyVpn(profile, mKeyStore, egress);
         }
     }
 
@@ -4772,7 +4810,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceCrossUserPermission(userId);
 
         synchronized (mVpns) {
-            return mVpns.get(userId).getLegacyVpnInfo();
+            final UserHandle user = UserHandle.of(userId);
+            final Vpn vpn = getVpnFromUserHandle(user);
+            if (vpn == null) {
+                logw("No vpn available for user " + user);
+                return null;
+            }
+            return vpn.getLegacyVpnInfo();
         }
     }
 
@@ -4855,7 +4899,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     public VpnConfig getVpnConfig(int userId) {
         enforceCrossUserPermission(userId);
         synchronized (mVpns) {
-            Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn != null) {
                 return vpn.getVpnConfig();
             } else {
@@ -4972,8 +5016,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     setLockdownTracker(null);
                     return true;
                 }
-                int user = UserHandle.getUserId(mDeps.getCallingUid());
-                Vpn vpn = mVpns.get(user);
+                final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
+                final Vpn vpn = getVpnFromUserHandle(user);
                 if (vpn == null) {
                     logw("VPN for user " + user + " not ready yet. Skipping lockdown");
                     return false;
@@ -5031,7 +5075,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     private boolean startAlwaysOnVpn(int userId) {
         synchronized (mVpns) {
-            Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn == null) {
                 // Shouldn't happen as all code paths that point here should have checked the Vpn
                 // exists already.
@@ -5049,7 +5093,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceCrossUserPermission(userId);
 
         synchronized (mVpns) {
-            Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn == null) {
                 logw("User " + userId + " has no Vpn configuration");
                 return false;
@@ -5070,7 +5114,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 return false;
             }
 
-            Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn == null) {
                 logw("User " + userId + " has no Vpn configuration");
                 return false;
@@ -5092,7 +5136,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceCrossUserPermission(userId);
 
         synchronized (mVpns) {
-            Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn == null) {
                 logw("User " + userId + " has no Vpn configuration");
                 return null;
@@ -5107,7 +5151,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceCrossUserPermission(userId);
 
         synchronized (mVpns) {
-            Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn == null) {
                 logw("User " + userId + " has no Vpn configuration");
                 return false;
@@ -5122,7 +5166,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceCrossUserPermission(userId);
 
         synchronized (mVpns) {
-            Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (vpn == null) {
                 logw("User " + userId + " has no Vpn configuration");
                 return null;
@@ -5165,13 +5209,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void onUserStarted(int userId) {
         synchronized (mVpns) {
-            Vpn userVpn = mVpns.get(userId);
+            Vpn userVpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (userVpn != null) {
                 loge("Starting user already has a VPN");
                 return;
             }
             userVpn = new Vpn(mHandler.getLooper(), mContext, mNMS, mNetd, userId, mKeyStore);
-            mVpns.put(userId, userVpn);
+            mVpns.put(UserHandle.of(userId).getIdentifier(), userVpn);
             if (mUserManager.getUserInfo(userId).isPrimary() && LockdownVpnTracker.isEnabled()) {
                 updateLockdownVpn();
             }
@@ -5180,13 +5224,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void onUserStopped(int userId) {
         synchronized (mVpns) {
-            Vpn userVpn = mVpns.get(userId);
+            final Vpn userVpn = getVpnFromUserHandle(UserHandle.of(userId));
             if (userVpn == null) {
                 loge("Stopped user has no VPN");
                 return;
             }
             userVpn.onUserStopped();
-            mVpns.delete(userId);
+            mVpns.delete(UserHandle.of(userId).getIdentifier());
         }
     }
 
@@ -5206,7 +5250,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         synchronized (mVpns) {
             final int vpnsSize = mVpns.size();
             for (int i = 0; i < vpnsSize; i++) {
-                Vpn vpn = mVpns.valueAt(i);
+                final Vpn vpn = mVpns.valueAt(i);
                 vpn.onUserRemoved(userId);
             }
         }
@@ -5217,16 +5261,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
             Log.wtf(TAG, "Invalid package in onPackageReplaced: " + packageName + " | " + uid);
             return;
         }
-        final int userId = UserHandle.getUserId(uid);
+
         synchronized (mVpns) {
-            final Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUid(uid);
             if (vpn == null) {
                 return;
             }
             // Legacy always-on VPN won't be affected since the package name is not set.
             if (TextUtils.equals(vpn.getAlwaysOnPackage(), packageName)) {
                 log("Restarting always-on VPN package " + packageName + " for user "
-                        + userId);
+                        + getUserHandleForUid(uid));
                 vpn.startAlwaysOnVpn(mKeyStore);
             }
         }
@@ -5238,16 +5282,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
 
-        final int userId = UserHandle.getUserId(uid);
         synchronized (mVpns) {
-            final Vpn vpn = mVpns.get(userId);
+            final Vpn vpn = getVpnFromUid(uid);
             if (vpn == null) {
                 return;
             }
             // Legacy always-on VPN won't be affected since the package name is not set.
             if (TextUtils.equals(vpn.getAlwaysOnPackage(), packageName) && !isReplacing) {
                 log("Removing always-on VPN package " + packageName + " for user "
-                        + userId);
+                        + getUserHandleForUid(uid));
                 vpn.setAlwaysOnPackage(null, false, null, mKeyStore);
             }
         }
@@ -5600,7 +5643,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private boolean checkUnsupportedStartingFrom(int version, String callingPackageName) {
-        final UserHandle user = UserHandle.getUserHandleForUid(mDeps.getCallingUid());
+        final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
         final PackageManager pm =
                 mContext.createContextAsUser(user, 0 /* flags */).getPackageManager();
         try {
@@ -7681,29 +7724,45 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public boolean addVpnAddress(String address, int prefixLength) {
-        int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            return mVpns.get(user).addAddress(address, prefixLength);
+            final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
+            final Vpn vpn = getVpnFromUserHandle(user);
+            if (vpn == null) {
+                loge("User " + user + " has no Vpn configuration");
+                return false;
+            }
+
+            return vpn.addAddress(address, prefixLength);
         }
     }
 
     @Override
     public boolean removeVpnAddress(String address, int prefixLength) {
-        int user = UserHandle.getUserId(mDeps.getCallingUid());
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            return mVpns.get(user).removeAddress(address, prefixLength);
+            final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
+            final Vpn vpn = getVpnFromUserHandle(user);
+            if (vpn == null) {
+                loge("User " + user + " has no Vpn configuration");
+                return false;
+            }
+            return vpn.removeAddress(address, prefixLength);
         }
     }
 
     @Override
     public boolean setUnderlyingNetworksForVpn(Network[] networks) {
-        int user = UserHandle.getUserId(mDeps.getCallingUid());
         final boolean success;
         synchronized (mVpns) {
             throwIfLockdownEnabled();
-            success = mVpns.get(user).setUnderlyingNetworks(networks);
+            final UserHandle user = getUserHandleForUid(mDeps.getCallingUid());
+            final Vpn vpn = getVpnFromUserHandle(user);
+            if (vpn == null) {
+                loge("User " + user + " has no Vpn configuration");
+                return false;
+            }
+            success = vpn.setUnderlyingNetworks(networks);
         }
         return success;
     }
@@ -7934,9 +7993,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @GuardedBy("mVpns")
     private Vpn getVpnIfOwner(int uid) {
-        final int user = UserHandle.getUserId(uid);
-
-        final Vpn vpn = mVpns.get(user);
+        final Vpn vpn = getVpnFromUid(uid);
         if (vpn == null) {
             return null;
         } else {
