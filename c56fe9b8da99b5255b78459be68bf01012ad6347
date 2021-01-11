@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77a904f3_19eedf05",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14597,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-11T20:28:16Z",
+      "side": 1,
+      "message": "Oh,YES. PhoneStateListener#onSignalStrengthChanged is the deprecated one which should never get used again.\nThank!",
+      "parentUuid": "0a8af990_f6268415",
+      "range": {
+        "startLine": 14597,
+        "startChar": 48,
+        "endLine": 14597,
+        "endChar": 49
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8184d53_82530d7f",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-11T18:36:52Z",
       "side": 1,
       "message": "Nit: ...to the system to optimize power consumption and reduce contention with thresholds from other sources.",
+      "range": {
+        "startLine": 14614,
+        "startChar": 85,
+        "endLine": 14614,
+        "endChar": 86
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46aa26e4_bbefb8a2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14614,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-11T20:28:16Z",
+      "side": 1,
+      "message": "Very nice. A short but precise explanation why we have to align the thresholds, removing the possible confusion from clients. Thanks!",
+      "parentUuid": "b8184d53_82530d7f",
       "range": {
         "startLine": 14614,
         "startChar": 85,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eaa1f84_fcc12a70",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14621,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-11T20:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a6b32a9_9a355d0c",
+      "range": {
+        "startLine": 14621,
+        "startChar": 4,
+        "endLine": 14621,
+        "endChar": 10
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6882e0f9_f8374a25",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-11T18:36:52Z",
       "side": 1,
       "message": "Apps can pretty easily drop a TelephonyManager instance once they finish with the add(SSUR) call, at which point the map here would get garbage collected and the token would be lost when they go to remove() it with a different TelephonyManager instance way later.\n\nThis token should be stored in the SignalStrengthUpdateRequest class itself rather than remaining the map in a TelephonyManager instance, similar to how PSL secretly holds an IPhoneStateListener object. The field in SSUR can just be a generic IBinder or Binder instance like you\u0027re already instantiating here.",
+      "range": {
+        "startLine": 14630,
+        "startChar": 16,
+        "endLine": 14631,
+        "endChar": 68
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3be691bd_4e6bc52a",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14631,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-11T20:28:16Z",
+      "side": 1,
+      "message": "Hunter. thanks for catching this.Now the token is moved to SignalStrengthUpdateRequest.",
+      "parentUuid": "6882e0f9_f8374a25",
       "range": {
         "startLine": 14630,
         "startChar": 16,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fda70843_51181763",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14653,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-11T20:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49556a81_1dfc8407",
+      "range": {
+        "startLine": 14653,
+        "startChar": 4,
+        "endLine": 14653,
+        "endChar": 10
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1316b26_799dbacb",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-01-11T18:36:52Z",
       "side": 1,
       "message": "Nit: suggest making subId the first param for both methods",
+      "range": {
+        "startLine": 2376,
+        "startChar": 55,
+        "endLine": 2376,
+        "endChar": 64
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dd6ecdd_3f8d35ba",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 2376,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-11T20:28:16Z",
+      "side": 1,
+      "message": "Done. Double checked that most other APIs do put subId in first param. Thanks",
+      "parentUuid": "d1316b26_799dbacb",
       "range": {
         "startLine": 2376,
         "startChar": 55,
