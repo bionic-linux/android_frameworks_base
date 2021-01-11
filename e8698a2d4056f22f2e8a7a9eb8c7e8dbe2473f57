@@ -22,6 +22,30 @@
       },
       "revId": "e8698a2d4056f22f2e8a7a9eb8c7e8dbe2473f57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca38e4b9_167d79f0",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKeyAgreementSpi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2021-01-11T13:31:04Z",
+      "side": 1,
+      "message": "That makes sense. I\u0027ll do away with the chunked streamer and call operation.final() directly.\n\nWhile ECDH does indeed support key agreement between multiple parties, this is not supported by Keymint at this point. That\u0027s why we also require exactly one call to doPhase(), with the lastPhase flag set to true (and throw an IllegalStateException otherwise).",
+      "parentUuid": "961d2595_a8157b3b",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 153,
+        "endChar": 80
+      },
+      "revId": "e8698a2d4056f22f2e8a7a9eb8c7e8dbe2473f57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
