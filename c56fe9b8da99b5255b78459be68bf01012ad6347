@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a8af990_f6268415",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14597,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-11T18:36:52Z",
+      "side": 1,
+      "message": "onSignalStrength*s*Changed, right?",
+      "range": {
+        "startLine": 14597,
+        "startChar": 48,
+        "endLine": 14597,
+        "endChar": 49
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8184d53_82530d7f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14614,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-11T18:36:52Z",
+      "side": 1,
+      "message": "Nit: ...to the system to optimize power consumption and reduce contention with thresholds from other sources.",
+      "range": {
+        "startLine": 14614,
+        "startChar": 85,
+        "endLine": 14614,
+        "endChar": 86
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a6b32a9_9a355d0c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14621,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-11T18:36:52Z",
+      "side": 1,
+      "message": "Nit: @RequiresPermission(MODIFY_PHONE_STATE) + @SuppressAutoDoc",
+      "range": {
+        "startLine": 14621,
+        "startChar": 4,
+        "endLine": 14621,
+        "endChar": 10
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6882e0f9_f8374a25",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14631,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-11T18:36:52Z",
+      "side": 1,
+      "message": "Apps can pretty easily drop a TelephonyManager instance once they finish with the add(SSUR) call, at which point the map here would get garbage collected and the token would be lost when they go to remove() it with a different TelephonyManager instance way later.\n\nThis token should be stored in the SignalStrengthUpdateRequest class itself rather than remaining the map in a TelephonyManager instance, similar to how PSL secretly holds an IPhoneStateListener object. The field in SSUR can just be a generic IBinder or Binder instance like you\u0027re already instantiating here.",
+      "range": {
+        "startLine": 14630,
+        "startChar": 16,
+        "endLine": 14631,
+        "endChar": 68
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49556a81_1dfc8407",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 14653,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-11T18:36:52Z",
+      "side": 1,
+      "message": "@RequiresPermission + @SuppressAutoDoc",
+      "range": {
+        "startLine": 14653,
+        "startChar": 4,
+        "endLine": 14653,
+        "endChar": 10
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1316b26_799dbacb",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephony.aidl",
+        "patchSetId": 8
+      },
+      "lineNbr": 2376,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-11T18:36:52Z",
+      "side": 1,
+      "message": "Nit: suggest making subId the first param for both methods",
+      "range": {
+        "startLine": 2376,
+        "startChar": 55,
+        "endLine": 2376,
+        "endChar": 64
+      },
+      "revId": "c56fe9b8da99b5255b78459be68bf01012ad6347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
