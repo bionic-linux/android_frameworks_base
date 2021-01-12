@@ -52,6 +52,24 @@
       "parentUuid": "56c2557c_766faa8b",
       "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52fd956c_ce5d4f89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-01-12T06:05:44Z",
+      "side": 1,
+      "message": "In current flow, initializeCec() is called twice with normal boot.\n1. onStart() -\u003e initializeCec()\n2. onBootPhase() -\u003e bootCompleted() -\u003e onWakeup()) -\u003e initializeCec()\n\nIn the case of quiescent boot, is onBootPhase() triggered? \nIf so, it should be okay to skip initializeCec in onStart() (1. above).\nIf not, could we use a flag to prevent initializeCec() from being called twice?",
+      "parentUuid": "25c235e3_52032632",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
