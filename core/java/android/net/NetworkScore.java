@@ -18,6 +18,7 @@ package android.net;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -34,7 +35,7 @@ import java.util.StringJoiner;
  * network is considered for a particular use.
  * @hide
  */
-// TODO : @SystemApi when the implementation is complete
+@SystemApi
 public final class NetworkScore implements Parcelable {
     // This will be removed soon. Do *NOT* depend on it for any new code that is not part of
     // a migration.

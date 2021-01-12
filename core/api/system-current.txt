@@ -6323,9 +6323,16 @@ package android.net {
     ctor public NetworkProvider(@NonNull android.content.Context, @NonNull android.os.Looper, @NonNull String);
     method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void declareNetworkRequestUnfulfillable(@NonNull android.net.NetworkRequest);
     method public int getProviderId();
+    method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void offerNetwork(@NonNull android.net.NetworkScore, @Nullable android.net.NetworkCapabilities, @NonNull java.util.concurrent.Executor, @NonNull android.net.NetworkProvider.NetworkOfferCallback);
     method public void onNetworkRequestWithdrawn(@NonNull android.net.NetworkRequest);
     method public void onNetworkRequested(@NonNull android.net.NetworkRequest, @IntRange(from=0, to=99) int, int);
+    method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void unofferNetwork(@NonNull android.net.NetworkProvider.NetworkOfferCallback);
     field public static final int ID_NONE = -1; // 0xffffffff
+  }
+
+  public static interface NetworkProvider.NetworkOfferCallback {
+    method public void onOfferNeeded(@NonNull android.net.NetworkRequest, int);
+    method public void onOfferUnneeded(@NonNull android.net.NetworkRequest);
   }
 
   public abstract class NetworkRecommendationProvider {
@@ -6344,6 +6351,19 @@ package android.net {
 
   public static class NetworkRequest.Builder {
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP) public android.net.NetworkRequest.Builder setSignalStrength(int);
+  }
+
+  public final class NetworkScore implements android.os.Parcelable {
+    method public int describeContents();
+    method public int getLegacyInt();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkScore> CREATOR;
+  }
+
+  public static final class NetworkScore.Builder {
+    ctor public NetworkScore.Builder();
+    method @NonNull public android.net.NetworkScore build();
+    method @NonNull public android.net.NetworkScore.Builder setLegacyInt(int);
   }
 
   public class NetworkScoreManager {

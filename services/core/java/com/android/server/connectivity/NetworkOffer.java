@@ -26,7 +26,6 @@ import android.os.Messenger;
 
 import java.util.Objects;
 
-
 /**
  * Represents an offer made by a NetworkProvider to create a network if a need arises.
  *

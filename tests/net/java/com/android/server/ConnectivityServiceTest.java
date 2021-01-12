@@ -909,8 +909,6 @@ public class ConnectivityServiceTest {
      * operations have been processed and test for them.
      */
     private static class MockNetworkFactory extends NetworkFactory {
-        private final ConditionVariable mNetworkStartedCV = new ConditionVariable();
-        private final ConditionVariable mNetworkStoppedCV = new ConditionVariable();
         private final AtomicBoolean mNetworkStarted = new AtomicBoolean(false);
 
         static class RequestEntry {
@@ -935,6 +933,11 @@ public class ConnectivityServiceTest {
                     super(request);
                 }
             }
+
+            @Override
+            public String toString() {
+                return "RequestEntry [ " + getClass().getName() + " : " + request + " ]";
+            }
         }
 
         // History of received requests adds and removes.
@@ -946,6 +949,12 @@ public class ConnectivityServiceTest {
             return obj;
         }
 
+        public void expectNoRequest() {
+            // Don't wait too long as this timeout will be incurred on every call of this
+            // method on successful runs.
+            final RequestEntry found = mRequestHistory.poll(TEST_REQUEST_TIMEOUT_MS, it -> true);
+            if (null != found) fail("Expected no request but found " + found);
+        }
 
         public RequestEntry.Add expectRequestAdd() {
             return failIfNull((RequestEntry.Add) mRequestHistory.poll(TIMEOUT_MS,
@@ -983,39 +992,30 @@ public class ConnectivityServiceTest {
         }
 
         protected void startNetwork() {
+            log("START NETWORK");
             mNetworkStarted.set(true);
-            mNetworkStartedCV.open();
         }
 
         protected void stopNetwork() {
+            log("STOP NETWORK");
             mNetworkStarted.set(false);
-            mNetworkStoppedCV.open();
         }
 
         public boolean getMyStartRequested() {
             return mNetworkStarted.get();
         }
 
-        public ConditionVariable getNetworkStartedCV() {
-            mNetworkStartedCV.close();
-            return mNetworkStartedCV;
-        }
-
-        public ConditionVariable getNetworkStoppedCV() {
-            mNetworkStoppedCV.close();
-            return mNetworkStoppedCV;
-        }
-
         @Override
-        protected void handleAddRequest(NetworkRequest request, int score,
-                int factorySerialNumber) {
+        protected void handleAddRequest(NetworkRequest request, int factorySerialNumber) {
+            log("ADD REQUEST " + request);
             mNetworkRequests.put(request.requestId, request);
-            super.handleAddRequest(request, score, factorySerialNumber);
+            super.handleAddRequest(request, factorySerialNumber);
             mRequestHistory.add(new RequestEntry.Add(request, factorySerialNumber));
         }
 
         @Override
         protected void handleRemoveRequest(NetworkRequest request) {
+            log("REMOVE REQUEST " + request);
             mNetworkRequests.remove(request.requestId);
             super.handleRemoveRequest(request);
             mRequestHistory.add(new RequestEntry.Remove(request));
@@ -2561,6 +2561,12 @@ public class ConnectivityServiceTest {
         callback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
     }
 
+    private boolean satisfiesDefaultRequest(@NonNull final NetworkCapabilities nc) {
+        final NetworkCapabilities defaultCaps = new NetworkCapabilities();
+        defaultCaps.addCapability(NET_CAPABILITY_INTERNET);
+        return nc.satisfiedByNetworkCapabilities(defaultCaps);
+    }
+
     private void tryNetworkFactoryRequests(int capability) throws Exception {
         // Verify NOT_RESTRICTED is set appropriately
         final NetworkCapabilities nc = new NetworkRequest.Builder().addCapability(capability)
@@ -2581,24 +2587,22 @@ public class ConnectivityServiceTest {
         final MockNetworkFactory testFactory = new MockNetworkFactory(handlerThread.getLooper(),
                 mServiceContext, "testFactory", filter);
         testFactory.setScoreFilter(40);
-        ConditionVariable cv = testFactory.getNetworkStartedCV();
         testFactory.register();
-        testFactory.expectRequestAdd();
-        testFactory.assertRequestCountEquals(1);
-        int expectedRequestCount = 1;
-        NetworkCallback networkCallback = null;
-        // For non-INTERNET capabilities we cannot rely on the default request being present, so
-        // add one.
-        if (capability != NET_CAPABILITY_INTERNET) {
+
+        final NetworkCallback networkCallback;
+        if (!satisfiesDefaultRequest(nc)) {
+            // If the capability passed in argument is part of the default request, then the
+            // factory will see the default request. Otherwise the filter will prevent the
+            // factory to see it. In that case, add a request so it can be tested.
             assertFalse(testFactory.getMyStartRequested());
             NetworkRequest request = new NetworkRequest.Builder().addCapability(capability).build();
             networkCallback = new NetworkCallback();
             mCm.requestNetwork(request, networkCallback);
-            expectedRequestCount++;
-            testFactory.expectRequestAdd();
+        } else {
+            networkCallback = null;
         }
-        waitFor(cv);
-        testFactory.assertRequestCountEquals(expectedRequestCount);
+        testFactory.expectRequestAdd();
+        testFactory.assertRequestCountEquals(1);
         assertTrue(testFactory.getMyStartRequested());
 
         // Now bring in a higher scored network.
@@ -2607,20 +2611,38 @@ public class ConnectivityServiceTest {
         // own NetworkRequest during startup, just bump up the score to cancel out the
         // unvalidated penalty.
         testAgent.adjustScore(40);
-        cv = testFactory.getNetworkStoppedCV();
 
-        // When testAgent connects, ConnectivityService will re-send us all current requests with
-        // the new score. There are expectedRequestCount such requests, and we must wait for all of
-        // them.
+        // When testAgent connects, because of its 50 (50 for cell + 40 adjustment score
+        // - 40 penalty for not being validated), it will beat the testFactory's offer, so
+        // the request will be removed.
         testAgent.connect(false);
         testAgent.addCapability(capability);
-        waitFor(cv);
-        testFactory.expectRequestAdds(expectedRequestCount);
-        testFactory.assertRequestCountEquals(expectedRequestCount);
+        testFactory.expectRequestRemove();
+        testFactory.assertRequestCountEquals(0);
         assertFalse(testFactory.getMyStartRequested());
 
+        // Add a request and make sure it's not sent to the factory, because the agent
+        // is satisfying it better.
+        final NetworkCallback cb = new ConnectivityManager.NetworkCallback();
+        mCm.requestNetwork(new NetworkRequest.Builder().addCapability(capability).build(), cb);
+        testFactory.expectNoRequest();
+        testFactory.assertRequestCountEquals(0);
+        assertFalse(testFactory.getMyStartRequested());
+
+        // Make the test agent weak enough to see the two requests (the one that was just sent,
+        // and either the default one or the one sent at the top of this test if the default
+        // won't be seen).
+        testAgent.adjustScore(-50);
+        testFactory.expectRequestAdds(2);
+        testFactory.assertRequestCountEquals(2);
+        assertTrue(testFactory.getMyStartRequested());
+
+        // Now unregister and make sure the request is removed.
+        mCm.unregisterNetworkCallback(cb);
+        testFactory.expectRequestRemove();
+
         // Bring in a bunch of requests.
-        assertEquals(expectedRequestCount, testFactory.getMyRequestCount());
+        assertEquals(0, testFactory.getMyRequestCount());
         ConnectivityManager.NetworkCallback[] networkCallbacks =
                 new ConnectivityManager.NetworkCallback[10];
         for (int i = 0; i< networkCallbacks.length; i++) {
@@ -2630,7 +2652,7 @@ public class ConnectivityServiceTest {
             mCm.requestNetwork(builder.build(), networkCallbacks[i]);
         }
         testFactory.expectRequestAdds(10);
-        testFactory.assertRequestCountEquals(10 + expectedRequestCount);
+        testFactory.assertRequestCountEquals(11); // +1 for the default/test specific request
         assertFalse(testFactory.getMyStartRequested());
 
         // Remove the requests.
@@ -2638,16 +2660,20 @@ public class ConnectivityServiceTest {
             mCm.unregisterNetworkCallback(networkCallbacks[i]);
         }
         testFactory.expectRequestRemoves(10);
-        testFactory.assertRequestCountEquals(expectedRequestCount);
+        testFactory.assertRequestCountEquals(1);
+        assertFalse(testFactory.getMyStartRequested());
+
+        // Adjust the agent score up again. Expect the request to be withdrawn.
+        testAgent.adjustScore(50);
+        testFactory.expectRequestRemove();
+        testFactory.assertRequestCountEquals(0);
         assertFalse(testFactory.getMyStartRequested());
 
         // Drop the higher scored network.
-        cv = testFactory.getNetworkStartedCV();
         testAgent.disconnect();
-        waitFor(cv);
-        testFactory.expectRequestAdds(expectedRequestCount);
-        testFactory.assertRequestCountEquals(expectedRequestCount);
-        assertEquals(expectedRequestCount, testFactory.getMyRequestCount());
+        testFactory.expectRequestAdd();
+        testFactory.assertRequestCountEquals(1);
+        assertEquals(1, testFactory.getMyRequestCount());
         assertTrue(testFactory.getMyStartRequested());
 
         testFactory.terminate();
@@ -2677,8 +2703,9 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testNetworkFactoryUnregister() throws Exception {
+        // Make sure the factory sees the default network
         final NetworkCapabilities filter = new NetworkCapabilities();
-        filter.clearAll();
+        filter.addCapability(NET_CAPABILITY_INTERNET);
 
         final HandlerThread handlerThread = new HandlerThread("testNetworkFactoryRequests");
         handlerThread.start();
@@ -2688,6 +2715,7 @@ public class ConnectivityServiceTest {
         for (int i = 0; i < 100; i++) {
             final MockNetworkFactory testFactory = new MockNetworkFactory(handlerThread.getLooper(),
                     mServiceContext, "testFactory", filter);
+
             // Register the factory and don't be surprised when the default request arrives.
             testFactory.register();
             testFactory.expectRequestAdd();
@@ -3836,6 +3864,7 @@ public class ConnectivityServiceTest {
         testFactory.register();
 
         try {
+            // Expect the factory to receive the default network request.
             testFactory.expectRequestAdd();
             testFactory.assertRequestCountEquals(1);
             assertTrue(testFactory.getMyStartRequested());
@@ -3844,25 +3873,43 @@ public class ConnectivityServiceTest {
             mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
             // Score 60 - 40 penalty for not validated yet, then 60 when it validates
             mWiFiNetworkAgent.connect(true);
-            // Default request and mobile always on request
-            testFactory.expectRequestAdds(2);
+            // The network connects with a low score, so the offer can still beat it and
+            // nothing happens. Then the network validates, and the offer with its filter score
+            // of 40 can no longer beat it and the request is removed.
+            testFactory.expectRequestRemove();
+
             assertFalse(testFactory.getMyStartRequested());
 
-            // Turn on mobile data always on. The factory starts looking again.
+            // Turn on mobile data always on. This request will not match the wifi request, so
+            // it will be sent to the test factory whose filters allow to see it.
             setAlwaysOnNetworks(true);
             testFactory.expectRequestAdd();
-            testFactory.assertRequestCountEquals(2);
+            testFactory.assertRequestCountEquals(1);
 
             assertTrue(testFactory.getMyStartRequested());
 
             // Bring up cell data and check that the factory stops looking.
             assertLength(1, mCm.getAllNetworks());
             mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
-            mCellNetworkAgent.connect(true);
-            cellNetworkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
-            testFactory.expectRequestAdds(2); // Unvalidated and validated
-            testFactory.assertRequestCountEquals(2);
-            // The cell network outscores the factory filter, so start is not requested.
+            mCellNetworkAgent.connect(false);
+            cellNetworkCallback.expectAvailableCallbacks(mCellNetworkAgent, false, false, false,
+                    TEST_CALLBACK_TIMEOUT_MS);
+            // When cell connects, it will satisfy the "mobile always on request" right away
+            // by virtue of being the only network that can satisfy the request. However, its
+            // score is low (50 - 40 = 10) so the test factory can still hope to beat it.
+            testFactory.expectNoRequest();
+
+            // Next, cell validates. This gives it a score of 50 and the test factory can't
+            // hope to beat that according to its filters. It will see the message that its
+            // offer is now unnecessary.
+            mCellNetworkAgent.setNetworkValid(true);
+            // Need a trigger point to let NetworkMonitor tell ConnectivityService that network is
+            // validated – see testPartialConnectivity.
+            mCm.reportNetworkConnectivity(mCellNetworkAgent.getNetwork(), true);
+            cellNetworkCallback.expectCapabilitiesWith(NET_CAPABILITY_VALIDATED, mCellNetworkAgent);
+            testFactory.expectRequestRemove();
+            testFactory.assertRequestCountEquals(0);
+            // Accordingly, the factory shouldn't be started.
             assertFalse(testFactory.getMyStartRequested());
 
             // Check that cell data stays up.
@@ -3870,18 +3917,37 @@ public class ConnectivityServiceTest {
             verifyActiveNetwork(TRANSPORT_WIFI);
             assertLength(2, mCm.getAllNetworks());
 
-            // Turn off mobile data always on and expect the request to disappear...
-            setAlwaysOnNetworks(false);
-            testFactory.expectRequestRemove();
+            // Cell disconnects. There is still the "mobile data always on" request outstanding,
+            // and the test factory should see it now that it isn't hopelessly outscored.
+            mCellNetworkAgent.disconnect();
+            cellNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+            assertLength(1, mCm.getAllNetworks());
+            testFactory.expectRequestAdd();
+            testFactory.assertRequestCountEquals(1);
 
-            // ...  and cell data to be torn down.
+            // Reconnect cell validated, see the request disappear again. Then withdraw the
+            // mobile always on request. This will tear down cell, and there shouldn't be a
+            // blip where the test factory briefly sees the request or anything.
+            mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+            mCellNetworkAgent.connect(true);
+            cellNetworkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+            assertLength(2, mCm.getAllNetworks());
+            testFactory.expectRequestRemove();
+            testFactory.assertRequestCountEquals(0);
+            setAlwaysOnNetworks(false);
+            testFactory.expectNoRequest();
+            testFactory.assertRequestCountEquals(0);
+            assertFalse(testFactory.getMyStartRequested());
+
+            // Make sure that cell data is indeed torn down.
+            mCellNetworkAgent.disconnect();
             cellNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
             assertLength(1, mCm.getAllNetworks());
         } finally {
-            testFactory.terminate();
             mCm.unregisterNetworkCallback(cellNetworkCallback);
             handlerThread.quit();
         }
+        testFactory.terminate();
     }
 
     @Test
@@ -4190,6 +4256,10 @@ public class ConnectivityServiceTest {
         if (preUnregister) {
             mCm.unregisterNetworkCallback(networkCallback);
 
+            // The request has been released : the factory should see it removed
+            // immediately.
+            testFactory.expectRequestRemove();
+
             // Simulate the factory releasing the request as unfulfillable: no-op since
             // the callback has already been unregistered (but a test that no exceptions are
             // thrown).
@@ -4200,12 +4270,16 @@ public class ConnectivityServiceTest {
 
             networkCallback.expectCallback(CallbackEntry.UNAVAILABLE, (Network) null);
 
+            // Declaring a request unfulfillable releases it automatically.
+            testFactory.expectRequestRemove();
+
             // unregister network callback - a no-op (since already freed by the
             // on-unavailable), but should not fail or throw exceptions.
             mCm.unregisterNetworkCallback(networkCallback);
-        }
 
-        testFactory.expectRequestRemove();
+            // The factory should not see any further removal, as this request has
+            // already been removed.
+        }
 
         testFactory.terminate();
         handlerThread.quit();
