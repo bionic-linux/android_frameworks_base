@@ -31,6 +31,7 @@ import android.util.Log;
 import com.android.internal.annotations.GuardedBy;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 
 /**
@@ -168,7 +169,7 @@ public class NetworkProvider {
     }
 
     /** @hide */
-    // TODO : make @SystemApi when the impl is complete
+    @SystemApi
     public interface NetworkOfferCallback {
         /** Called by the system when this offer is needed to satisfy some networking request. */
         void onOfferNeeded(@NonNull NetworkRequest request, int factorySerialNumber);
@@ -202,20 +203,29 @@ public class NetworkProvider {
     @NonNull private final ArrayList<NetworkOfferCallbackProxy> mProxies = new ArrayList<>();
 
     /** @hide */
-    // TODO : make @SystemApi when the impl is complete
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void offerNetwork(@NonNull final NetworkScore score,
             @NonNull final NetworkCapabilities caps, @NonNull final Executor executor,
             @NonNull final NetworkOfferCallback callback) {
-        final NetworkOfferCallbackProxy proxy = new NetworkOfferCallbackProxy(callback, executor);
+        NetworkOfferCallbackProxy proxy = null;
         synchronized (mProxies) {
-            mProxies.add(proxy);
+            for (final NetworkOfferCallbackProxy existingProxy : mProxies) {
+                if (existingProxy.callback == callback) {
+                    proxy = existingProxy;
+                    break;
+                }
+            }
+            if (null == proxy) {
+                proxy = new NetworkOfferCallbackProxy(callback, executor);
+                mProxies.add(proxy);
+            }
         }
         mContext.getSystemService(ConnectivityManager.class).offerNetwork(this, score, caps, proxy);
     }
 
     /** @hide */
-    // TODO : make @SystemApi when the impl is complete
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void unofferNetwork(final @NonNull NetworkOfferCallback callback) {
         NetworkOfferCallbackProxy proxy = null;
