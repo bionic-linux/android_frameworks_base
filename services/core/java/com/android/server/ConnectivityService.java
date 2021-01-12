@@ -190,6 +190,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.modules.utils.BasicShellCommandHandler;
 import com.android.net.module.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import com.android.net.module.util.LinkPropertiesUtils.CompareResult;
+import com.android.net.module.util.NetworkPolicyUtils;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.AutodestructReference;
 import com.android.server.connectivity.DataConnectionStats;
@@ -2032,8 +2033,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private boolean isUidBlockedByRules(int uid, int uidRules, boolean isNetworkMetered,
             boolean isBackgroundRestricted) {
-        return NetworkPolicyManagerInternal.isUidNetworkingBlocked(uid, uidRules,
-                isNetworkMetered, isBackgroundRestricted);
+        return NetworkPolicyUtils.isUidNetworkingBlocked(uid, uidRules, isNetworkMetered,
+                isBackgroundRestricted);
     }
 
     /**
