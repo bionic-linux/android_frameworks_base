@@ -70,6 +70,24 @@
       "parentUuid": "25c235e3_52032632",
       "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a7b09fc_82b22df1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-01-12T08:45:38Z",
+      "side": 1,
+      "message": "onBootPhase() and bootCompleted() are triggered on quiescent boot but don\u0027t result in onWakeUp() and initializeCec(). Therefore skipping initializeCec in 1. won\u0027t work.\nUsing a flag can work but is not trivial:\n- in 2., initializeCec is used to move from POWER_STATUS_TRANSIENT_TO_ON to POWER_STATUS_ON. If the flag suppresses initializeCec, we would need to perform that power state change somewhere else. \n- Alternatively, initializeCec can still be invoked but the flag suppresses the messages and HdmiCecFeatureActions on the 2nd stage of boot.",
+      "parentUuid": "52fd956c_ce5d4f89",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
