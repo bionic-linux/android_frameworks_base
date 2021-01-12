@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6eb7f8cf_fc4e50d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2021-01-12T16:42:47Z",
+      "side": 1,
+      "message": "This is good fix, ple",
+      "revId": "dd6405fba8583e41acbdacb945283037ec784e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "088ada50_6ea22a20",
+        "filename": "services/core/java/com/android/server/tv/TvInputManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2900,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2021-01-12T16:42:47Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 2900,
+        "startChar": 81,
+        "endLine": 2900,
+        "endChar": 82
+      },
+      "revId": "dd6405fba8583e41acbdacb945283037ec784e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f83fc2b9_7ec3b1b2",
+        "filename": "services/core/java/com/android/server/tv/TvInputManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2919,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2021-01-12T16:42:47Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 2919,
+        "startChar": 79,
+        "endLine": 2919,
+        "endChar": 80
+      },
+      "revId": "dd6405fba8583e41acbdacb945283037ec784e3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
