@@ -304,9 +304,16 @@ package android.net {
     ctor public NetworkProvider(@NonNull android.content.Context, @NonNull android.os.Looper, @NonNull String);
     method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void declareNetworkRequestUnfulfillable(@NonNull android.net.NetworkRequest);
     method public int getProviderId();
+    method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void offerNetwork(@NonNull android.net.NetworkScore, @Nullable android.net.NetworkCapabilities, @NonNull java.util.concurrent.Executor, @NonNull android.net.NetworkProvider.NetworkOfferCallback);
     method public void onNetworkRequestWithdrawn(@NonNull android.net.NetworkRequest);
     method public void onNetworkRequested(@NonNull android.net.NetworkRequest, @IntRange(from=0, to=99) int, int);
+    method @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY) public void unofferNetwork(@NonNull android.net.NetworkProvider.NetworkOfferCallback);
     field public static final int ID_NONE = -1; // 0xffffffff
+  }
+
+  public static interface NetworkProvider.NetworkOfferCallback {
+    method public void onOfferNeeded(@NonNull android.net.NetworkRequest, int);
+    method public void onOfferUnneeded(@NonNull android.net.NetworkRequest);
   }
 
   public class NetworkReleasedException extends java.lang.Exception {
