@@ -33,6 +33,24 @@
       "message": "I thought we were passing the visible flag from vold so the existing code should already work?",
       "revId": "333a733c5ead6f3d27c4d0473507b9233824ff1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c90f1447_417a41aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1256579
+      },
+      "writtenOn": "2021-01-12T14:59:20Z",
+      "side": 1,
+      "message": "The problem that we are having is, we have a special Stub Volume called \"MyFiles\", which is just a directory in the ChromeOS side that is exposed to the Android container through FUSE. Note that this MyFiles directory always exists in ChromeOS side, and mounted to Android container very early during boot time (just after the connection between ChromeOS and Android is established) - so this StubVolume is always created during a CTS run.\n\nThe product requirement for MyFiles volume inside the Android container is that:\n1. It needs to be \"as visible as possible\" - both for CTS, and for apps like Photos who wants to access it through API like getStorageVolume(File).\n2. But the directory named \"Android\" that is created automatically in visible volumes should not be created in this MyFiles volume.\n\nThe requirement 1 can be easily satisfied by the visible flag, as you pointed out. However, the second requirement is not - due to the automatic creation of Android directory in visible-write volumes (which is why this CL targets only the visible-read).\n\nA purely non-visible volume (just indexable volume) does not give enough visibility to MyFiles and hence it will not satisfy requirement 1, because otherwise, apps like Photos will get an NPE when triggering the getStorageVolume(File) since it is not listed in the internal system API getVolumesList. Other than that, as pointed out in the beginning of this comment, MyFiles is mounted very early during the boot phase so it always appears in CTS. The CTS failure caused by MyFiles not being visible enough is very well documented by youkichihosoi@ in this document: go/arc-r-media-indexing under the section \"New CTS requirements in ARC R\" and \"Requirements for passing CTS\" (that also contains all the links for the API that I mentioned above :)\n\nThat\u0027s why we were thinking to compromise MyFiles to be just a read-visible volume, which gives us sufficient visibility without the Android directory creation.\n\nAs for other StubVolumes, like removable media, we are always happy to make it more visible as long as the Android directory is not created.\n\nThis is also probably a good time for us to bring another alternative: Can we have an option to create a write-visible (stub)volume without the Android directory created in it?",
+      "parentUuid": "bcf34743_40d0bdda",
+      "revId": "333a733c5ead6f3d27c4d0473507b9233824ff1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
