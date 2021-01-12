@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6a019b8_8928a329",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 6234,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T06:21:19Z",
+      "side": 1,
+      "message": "Is this necessary, or can you do with NETWORK_SETTINGS and TEST_NETWORKS ? This would be another place to fix when we remove CONTROL_VPN (hopefully in T)",
+      "range": {
+        "startLine": 6233,
+        "startChar": 0,
+        "endLine": 6234,
+        "endChar": 69
+      },
+      "revId": "2d3e8c7a10bc350381f7e30427a662164ef5680a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "183d9602_fed9c3e8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 6251,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-12T06:21:19Z",
+      "side": 1,
+      "message": "Isn\u0027t this in fact a bit overspecified ? I don\u0027t think the API has an opinion about what should be returned for the active network for a UID that doesn\u0027t exist. If it had an opinion, I think null may make more sense in fact.\n\nI suggest we either remove this line, or add a comment saying that today CS returns the default network for UIDs that don\u0027t exist but that it doesn\u0027t really matter what it does",
+      "range": {
+        "startLine": 6251,
+        "startChar": 8,
+        "endLine": 6251,
+        "endChar": 65
+      },
+      "revId": "2d3e8c7a10bc350381f7e30427a662164ef5680a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
