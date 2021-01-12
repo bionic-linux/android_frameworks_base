@@ -50,6 +50,23 @@
       "message": "LGTM, I\u0027d like somebody from telephony to give the final approval.",
       "revId": "47043de7b8d2f26c52eb06a3b59a62a6d7024021",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4479629_aa440dd1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-01-12T20:40:44Z",
+      "side": 1,
+      "message": "LGTM from telephony perspective.",
+      "revId": "47043de7b8d2f26c52eb06a3b59a62a6d7024021",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
