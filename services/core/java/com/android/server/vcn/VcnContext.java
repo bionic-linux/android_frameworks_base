@@ -55,4 +55,10 @@ public class VcnContext {
     public VcnNetworkProvider getVcnNetworkProvider() {
         return mVcnNetworkProvider;
     }
+
+    public void ensureRunningOnLooperThread() {
+        if (getLooper().getThread() != Thread.currentThread()) {
+            throw new IllegalStateException("Not running on VcnMgmtSvc thread");
+        }
+    }
 }
