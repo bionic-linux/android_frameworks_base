@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The Android Open Source Project
+ * Copyright (C) 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,10 +11,10 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License
+ * limitations under the License.
  */
 
-package com.android.internal.net;
+package android.net;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -22,19 +22,19 @@ import android.os.Parcelable;
 import java.util.Arrays;
 
 /**
- * A lightweight container used to carry information of the ongoing VPN.
+ * A lightweight container used to carry information of the ongoing VPN transport.
  * Internal use only..
  *
  * @hide
  */
-public class VpnInfo implements Parcelable {
+public class VpnTransportInfo implements Parcelable {
     public int ownerUid;
     public String vpnIface;
     public String[] underlyingIfaces;
 
     @Override
     public String toString() {
-        return "VpnInfo{"
+        return "VpnTransportInfo{"
                 + "ownerUid=" + ownerUid
                 + ", vpnIface='" + vpnIface + '\''
                 + ", underlyingIfaces='" + Arrays.toString(underlyingIfaces) + '\''
@@ -53,19 +53,20 @@ public class VpnInfo implements Parcelable {
         dest.writeStringArray(underlyingIfaces);
     }
 
-    public static final Parcelable.Creator<VpnInfo> CREATOR = new Parcelable.Creator<VpnInfo>() {
-        @Override
-        public VpnInfo createFromParcel(Parcel source) {
-            VpnInfo info = new VpnInfo();
-            info.ownerUid = source.readInt();
-            info.vpnIface = source.readString();
-            info.underlyingIfaces = source.readStringArray();
-            return info;
-        }
+    public static final Parcelable.Creator<VpnTransportInfo> CREATOR =
+            new Parcelable.Creator<VpnTransportInfo>() {
+                @Override
+                public VpnTransportInfo createFromParcel(Parcel source) {
+                    VpnTransportInfo info = new VpnTransportInfo();
+                    info.ownerUid = source.readInt();
+                    info.vpnIface = source.readString();
+                    info.underlyingIfaces = source.readStringArray();
+                    return info;
+                }
 
-        @Override
-        public VpnInfo[] newArray(int size) {
-            return new VpnInfo[size];
-        }
-    };
+                @Override
+                public VpnTransportInfo[] newArray(int size) {
+                    return new VpnTransportInfo[size];
+                }
+            };
 }
