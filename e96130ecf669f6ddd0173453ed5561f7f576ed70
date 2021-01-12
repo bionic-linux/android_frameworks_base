@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a03fcb21_b3b8ff01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-12T02:47:07Z",
+      "side": 1,
+      "message": "By offline discussion with Remi, created a service-connectivity-pre-jarjar library, that\u0027s the same as service-connectivity but without the jarjar rules and is included by the test, then have service-connectivity just include the lib and apply jarjar to it.\n\nCode:\nhttps://paste.googleplex.com/6476351331631104?raw\n\n\nAfter that, problem is runtime crash like below:\n\nLog:\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: FATAL EXCEPTION: TestConnectivityService\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: Process: com.android.frameworks.tests.net, PID: 3774\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: java.lang.NoSuchMethodError: No interface method forceUpdateIfaces([Landroid/net/Network;[Landroid/net/NetworkState;Ljava/lang/String;[Landroid/net/frameworktests/util/VpnTransportInfo;)V in class Landroid/net/INetworkStatsService; or its super classes (declaration of \u0027android.net.INetworkStatsService\u0027 appears in /system/framework/framework.jar!classes2.dex)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat com.android.server.ConnectivityService.notifyIfacesChangedForNetworkStats(ConnectivityService.java:7678)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat com.android.server.ConnectivityService.updateLinkProperties(ConnectivityService.java:6154)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat com.android.server.ConnectivityService.updateNetworkInfo(ConnectivityService.java:7430)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat com.android.server.ConnectivityService.access$2000(ConnectivityService.java:244)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat com.android.server.ConnectivityService$NetworkStateTrackerHandler.maybeHandleNetworkAgentMessage(ConnectivityService.java:2804)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat com.android.server.ConnectivityService$NetworkStateTrackerHandler.handleMessage(ConnectivityService.java:3064)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat android.os.Handler.dispatchMessage(Handler.java:106)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat android.os.Looper.loop(Looper.java:223)\n01-12 00:39:59.952  3774  4207 E AndroidRuntime: \tat android.os.HandlerThread.run(HandlerThread.java:67)\n",
+      "revId": "e96130ecf669f6ddd0173453ed5561f7f576ed70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
