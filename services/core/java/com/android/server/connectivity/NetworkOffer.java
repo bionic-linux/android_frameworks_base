@@ -60,4 +60,9 @@ public class NetworkOffer {
     public final boolean canSatisfy(@NonNull final NetworkRequest request) {
         return request.networkCapabilities.satisfiedByNetworkCapabilities(caps);
     }
+
+    @Override
+    public String toString() {
+        return "NetworkOffer [ Score " + score + " ]";
+    }
 }
