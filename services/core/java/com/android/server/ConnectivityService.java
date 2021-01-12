@@ -2923,8 +2923,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 nai.lastValidated = valid;
                 nai.everValidated |= valid;
                 updateCapabilities(oldScore, nai, nai.networkCapabilities);
-                // If score has changed, rebroadcast to NetworkProviders. b/17726566
-                if (oldScore != nai.getCurrentScore()) sendUpdatedScoreToFactories(nai);
                 if (valid) {
                     handleFreshlyValidatedNetwork(nai);
                     // Clear NO_INTERNET, PRIVATE_DNS_BROKEN, PARTIAL_CONNECTIVITY and
@@ -3272,7 +3270,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // Finish setting up the full connection
                 NetworkProviderInfo npi = mNetworkProviderInfos.get(msg.replyTo);
                 npi.completeConnection();
-                sendAllRequestsToProvider(npi);
             } else {
                 loge("Error connecting NetworkFactory");
                 mNetworkProviderInfos.remove(msg.obj);
@@ -3377,7 +3374,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (currentNetwork != null
                     && currentNetwork.network.getNetId() == nai.network.getNetId()) {
                 nri.mSatisfier = null;
-                sendUpdatedScoreToFactories(request, null);
             }
         }
         nai.clearLingerState();
@@ -3481,7 +3477,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         rematchAllNetworksAndRequests();
         if (nri.request.isRequest() && nri.mSatisfier == null) {
-            sendUpdatedScoreToFactories(nri.request, null);
+            // If no satisfier has been found, this request hasn't been reassigned so the
+            // requests haven't been sent to the offers that could satisfy it.
+            for (final NetworkOffer offer : mNetworkOffers) {
+                if (mNetworkRanker.mightBeat(nri.request, null, offer)) {
+                    try {
+                        offer.callback.onOfferNeeded(nri.request, NetworkProvider.ID_NONE);
+                    } catch (RemoteException e) {
+                        // Provider died. It will be removed by the death recipient.
+                    }
+                }
+            }
         }
     }
 
@@ -3682,8 +3688,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
 
-            for (NetworkProviderInfo npi : mNetworkProviderInfos.values()) {
-                npi.cancelRequest(nri.request);
+            for (final NetworkOffer offer : mNetworkOffers) {
+                try {
+                    offer.callback.onOfferUnneeded(nri.request);
+                } catch (RemoteException e) {
+                    // Provider died, it will be removed by the death recipient
+                }
             }
         } else {
             // listens don't have a singular affectedNetwork.  Check all networks to see
@@ -3758,7 +3768,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             nai.networkAgentConfig.acceptPartialConnectivity = accept;
             nai.updateScoreForNetworkAgentConfigUpdate();
             rematchAllNetworksAndRequests();
-            sendUpdatedScoreToFactories(nai);
         }
 
         if (always) {
@@ -3826,7 +3835,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!nai.avoidUnvalidated) {
             nai.avoidUnvalidated = true;
             rematchAllNetworksAndRequests();
-            sendUpdatedScoreToFactories(nai);
         }
     }
 
@@ -3938,14 +3946,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return avoidBadWifi();
     }
 
-
+    // TODO : this function is now useless.
     private void rematchForAvoidBadWifiUpdate() {
         rematchAllNetworksAndRequests();
-        for (NetworkAgentInfo nai: mNetworkAgentInfos) {
-            if (nai.networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                sendUpdatedScoreToFactories(nai);
-            }
-        }
     }
 
     // TODO: Evaluate whether this is of interest to other consumers of
@@ -5321,33 +5324,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return mAsyncChannel != null;
         }
 
-        void sendMessageToNetworkProvider(int what, int arg1, int arg2, Object obj) {
-            try {
-                messenger.send(Message.obtain(null /* handler */, what, arg1, arg2, obj));
-            } catch (RemoteException e) {
-                // Remote process died. Ignore; the death recipient will remove this
-                // NetworkProviderInfo from mNetworkProviderInfos.
-            }
-        }
-
-        void requestNetwork(NetworkRequest request, int score, int servingProviderId) {
-            if (isLegacyNetworkFactory()) {
-                mAsyncChannel.sendMessage(android.net.NetworkFactory.CMD_REQUEST_NETWORK, score,
-                        servingProviderId, request);
-            } else {
-                sendMessageToNetworkProvider(NetworkProvider.CMD_REQUEST_NETWORK, score,
-                            servingProviderId, request);
-            }
-        }
-
-        void cancelRequest(NetworkRequest request) {
-            if (isLegacyNetworkFactory()) {
-                mAsyncChannel.sendMessage(android.net.NetworkFactory.CMD_CANCEL_REQUEST, request);
-            } else {
-                sendMessageToNetworkProvider(NetworkProvider.CMD_CANCEL_REQUEST, 0, 0, request);
-            }
-        }
-
         void connect(Context context, Handler handler) {
             if (isLegacyNetworkFactory()) {
                 mAsyncChannel.connect(context, handler, messenger);
@@ -5850,10 +5826,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (DBG) log("Got NetworkProvider Messenger for " + npi.name);
         mNetworkProviderInfos.put(npi.messenger, npi);
         npi.connect(mContext, mTrackerHandler);
-        if (!npi.isLegacyNetworkFactory()) {
-            // Legacy NetworkFactories get their requests when their AsyncChannel connects.
-            sendAllRequestsToProvider(npi);
-        }
     }
 
     @Override
@@ -5897,10 +5869,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
         // Unregister all the offers from this provider
+        final ArrayList<NetworkOffer> toRemove = new ArrayList<>();
         for (final NetworkOffer offer : mNetworkOffers) {
             if (offer.provider == messenger) {
-                handleUnregisterNetworkOffer(offer);
+                // Can't call handleUnregister here because iteration is in progress
+                toRemove.add(offer);
             }
+        }
+        for (NetworkOffer offer : toRemove) {
+            handleUnregisterNetworkOffer(offer);
         }
         if (DBG) log("unregisterNetworkProvider for " + npi.name);
     }
@@ -6080,8 +6057,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateUids(nai, null, nai.networkCapabilities);
     }
 
-    private void handleRegisterNetworkOffer(@NonNull final NetworkOffer offer) {
-        mNetworkOffers.add(offer);
+    private void handleRegisterNetworkOffer(@NonNull final NetworkOffer newOffer) {
+        NetworkOffer existingOffer = null;
+        for (final NetworkOffer offer : mNetworkOffers) {
+            if (offer.callback.equals(newOffer.callback)) {
+                existingOffer = offer;
+                break;
+            }
+        }
+        if (null == existingOffer) mNetworkOffers.remove(existingOffer);
+        mNetworkOffers.add(newOffer);
+        sendAllRequestsToOffer(newOffer);
     }
 
     private void handleUnregisterNetworkOffer(@NonNull final NetworkOffer offer) {
@@ -6089,6 +6075,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private NetworkOffer findNetworkOfferByCallback(@NonNull final INetworkOfferCallback callback) {
+        ensureRunningOnConnectivityServiceThread();
         for (final NetworkOffer offer : mNetworkOffers) {
             if (offer.callback.equals(callback)) {
                 return offer;
@@ -6838,50 +6825,20 @@ public class ConnectivityService extends IConnectivityManager.Stub
         updateLinkProperties(nai, newLp, new LinkProperties(nai.linkProperties));
     }
 
-    private void sendUpdatedScoreToFactories(NetworkAgentInfo nai) {
-        for (int i = 0; i < nai.numNetworkRequests(); i++) {
-            NetworkRequest nr = nai.requestAt(i);
-            // Don't send listening requests to factories. b/17393458
-            if (nr.isListen()) continue;
-            sendUpdatedScoreToFactories(nr, nai);
-        }
-    }
-
-    private void sendUpdatedScoreToFactories(@NonNull NetworkRequest networkRequest,
-            @Nullable NetworkAgentInfo nai) {
-        final int score;
-        final int serial;
-        if (nai != null) {
-            score = nai.getCurrentScore();
-            serial = nai.factorySerialNumber;
-        } else {
-            score = 0;
-            serial = 0;
-        }
-        if (VDBG || DDBG){
-            log("sending new Min Network Score(" + score + "): " + networkRequest.toString());
-        }
-        for (NetworkProviderInfo npi : mNetworkProviderInfos.values()) {
-            npi.requestNetwork(networkRequest, score, serial);
-        }
-    }
-
-    /** Sends all current NetworkRequests to the specified factory. */
-    private void sendAllRequestsToProvider(NetworkProviderInfo npi) {
+    /** Sends all current NetworkRequests to the specified offer if it can beat them. */
+    private void sendAllRequestsToOffer(NetworkOffer offer) {
         ensureRunningOnConnectivityServiceThread();
         for (NetworkRequestInfo nri : mNetworkRequests.values()) {
             if (nri.request.isListen()) continue;
             NetworkAgentInfo nai = nri.mSatisfier;
-            final int score;
-            final int serial;
-            if (nai != null) {
-                score = nai.getCurrentScore();
-                serial = nai.factorySerialNumber;
-            } else {
-                score = 0;
-                serial = NetworkProvider.ID_NONE;
+            if (null == nai || mNetworkRanker.mightBeat(nri.request, nai.getScore(), offer)) {
+                final int serial = nai == null ? NetworkProvider.ID_NONE : nai.factorySerialNumber;
+                try {
+                    offer.callback.onOfferNeeded(nri.request, serial);
+                } catch (RemoteException e) {
+                    // Provider died : TODO : remove it
+                }
             }
-            npi.requestNetwork(nri.request, score, serial);
         }
     }
 
@@ -7228,6 +7185,79 @@ public class ConnectivityService extends IConnectivityManager.Stub
         return changes;
     }
 
+    private void updateOffer(final boolean canNowBeat,
+            @NonNull final NetworkRequest request, @NonNull final NetworkOffer offer,
+            @Nullable final NetworkAgentInfo oldNetwork,
+            @Nullable final NetworkAgentInfo newNetwork) {
+        try {
+            if (canNowBeat) {
+                // The offer can beat the new network, but it could not beat the old
+                // one. Tell the network provider this network is needed.
+                final int satisfyingSerial = null == newNetwork
+                        ? NetworkProvider.ID_NONE : newNetwork.factorySerialNumber;
+                if (DBG) {
+                    log("Offer " + offer + " could not beat old satisfier [ "
+                            + (oldNetwork == null ? "null" : oldNetwork.toShortString())
+                            + " ] but it might be able to beat the new satisfier [ "
+                            + (newNetwork == null ? "null" : newNetwork.toShortString())
+                            + " ]. Needed");
+                }
+                offer.callback.onOfferNeeded(request, satisfyingSerial);
+            } else {
+                // The offer used to be able to beat the new network, but it has no
+                // chance to beat the new one. Tell the network provider this offer
+                // isn't needed any more.
+                if (DBG) {
+                    log("Offer " + offer + " could have beaten old satisfier [ "
+                            + (oldNetwork == null ? "null" : oldNetwork.toShortString())
+                            + " ] but it won't be able to beat the new satisfier [ "
+                            + (newNetwork == null ? "null" : newNetwork.toShortString())
+                            + " ]. Unneeded.");
+                }
+                offer.callback.onOfferUnneeded(request);
+            }
+        } catch (final RemoteException e) {
+            // Provider is dead. It will be removed by the death recipient.
+        }
+    }
+
+    private void issueNewNetworkNeeds(@NonNull final NetworkReassignment changes) {
+        for (final NetworkReassignment.RequestReassignment change :
+                changes.getRequestReassignments()) {
+            log("FOR REQUEST " + change.mRequest.request);
+            for (final NetworkOffer offer : mNetworkOffers) {
+                log("CONSIDERING " + offer);
+                log("OLD " + change.mOldNetwork);
+                log("NEW " + change.mNewNetwork);
+                if (!offer.canSatisfy(change.mRequest.request)) continue;
+                final boolean couldBeatOld = change.mOldNetwork == null
+                        || mNetworkRanker.mightBeat(change.mRequest.request,
+                        change.mOldNetwork.getLastScore(), offer);
+                final boolean mightBeatNew = change.mNewNetwork == null
+                        || mNetworkRanker.mightBeat(change.mRequest.request,
+                        change.mNewNetwork.getScore(), offer);
+                log("BEFORE " + couldBeatOld + " AFTER " + mightBeatNew);
+                if (couldBeatOld != mightBeatNew) {
+                    updateOffer(mightBeatNew, change.mRequest.request, offer,
+                            change.mOldNetwork, change.mNewNetwork);
+                }
+            }
+        }
+        for (final NetworkReassignment.RequestRescore rescore : changes.getRequestRescores()) {
+            for (final NetworkOffer offer : mNetworkOffers) {
+                if (!offer.canSatisfy(rescore.mRequest.request)) continue;
+                final boolean couldBeatOld = mNetworkRanker.mightBeat(
+                        rescore.mRequest.request, rescore.mSatisfier.getLastScore(), offer);
+                final boolean mightBeatNew = mNetworkRanker.mightBeat(
+                        rescore.mRequest.request, rescore.mSatisfier.getScore(), offer);
+                if (couldBeatOld != mightBeatNew) {
+                    updateOffer(mightBeatNew, rescore.mRequest.request, offer,
+                            rescore.mSatisfier, rescore.mSatisfier);
+                }
+            }
+        }
+    }
+
     /**
      * Attempt to rematch all Networks with NetworkRequests.  This may result in Networks
      * being disconnected.
@@ -7236,6 +7266,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // TODO: This may be slow, and should be optimized.
         final long now = SystemClock.elapsedRealtime();
         final NetworkReassignment changes = computeNetworkReassignment();
+        issueNewNetworkNeeds(changes);
         if (VDBG || DDBG) {
             log(changes.debugString());
         } else if (DBG) {
@@ -7309,11 +7340,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // before LegacyTypeTracker sends legacy broadcasts
         for (final NetworkReassignment.RequestReassignment event :
                 changes.getRequestReassignments()) {
-            // Tell NetworkProviders about the new score, so they can stop
-            // trying to connect if they know they cannot match it.
-            // TODO - this could get expensive if there are a lot of outstanding requests for this
-            // network. Think of a way to reduce this. Push netid->request mapping to each factory?
-            sendUpdatedScoreToFactories(event.mRequest.request, event.mNewNetwork);
 
             if (null != event.mNewNetwork) {
                 notifyNetworkAvailable(event.mNewNetwork, event.mRequest);
@@ -7622,7 +7648,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (VDBG || DDBG) log("updateNetworkScore for " + nai.toShortString() + " to " + score);
         nai.setScore(score);
         rematchAllNetworksAndRequests();
-        sendUpdatedScoreToFactories(nai);
     }
 
     // Notify only this one new request of the current state. Transfer all the

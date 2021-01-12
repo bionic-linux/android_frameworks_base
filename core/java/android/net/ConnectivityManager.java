@@ -3303,7 +3303,7 @@ public class ConnectivityManager {
     }
 
     /**
-     * Register a network offer with ConnectivityService.
+     * Register or update a network offer with ConnectivityService.
      *
      * ConnectivityService keeps track of offers made by the various providers and matches
      * them to networking requests made by apps or the system. The provider supplies a score
@@ -3320,7 +3320,7 @@ public class ConnectivityManager {
      * @param score The prospective score of the network.
      * @param caps The prospective capabilities of the network.
      * @param callback The callback to call when this offer is needed or unneeded.
-     * @hide
+     * @hide exposed via the NetworkProvider class.
      */
     @RequiresPermission(anyOf = {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
@@ -3340,7 +3340,7 @@ public class ConnectivityManager {
      *
      * @param callback The callback passed at registration time. This must be the same object
      *                 that was passed to {@link #offerNetwork}
-     * @hide
+     * @hide exposed via the NetworkProvider class.
      */
     public void unofferNetwork(@NonNull final INetworkOfferCallback callback) {
         try {
