@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80fed887_7f79f3f0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6147,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-12T04:06:34Z",
+      "side": 1,
+      "message": "Done in https://aosp/1547494 .",
+      "parentUuid": "35edf912_22134ccb",
+      "range": {
+        "startLine": 6147,
+        "startChar": 5,
+        "endLine": 6147,
+        "endChar": 9
+      },
+      "revId": "92f40c526cea5b33f69920c219a098ec59e68349",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02bea4fa_e298ee01",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-01-07T10:09:15Z",
       "side": 1,
       "message": "nit: The test is already a bit long I think. Is it feasible to put these in a separate test?",
+      "revId": "92f40c526cea5b33f69920c219a098ec59e68349",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9de300ef_47334d95",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6229,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-12T04:06:34Z",
+      "side": 1,
+      "message": "Done in https://aosp/1547494 .",
+      "parentUuid": "02bea4fa_e298ee01",
       "revId": "92f40c526cea5b33f69920c219a098ec59e68349",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
