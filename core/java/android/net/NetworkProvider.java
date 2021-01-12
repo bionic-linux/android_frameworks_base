@@ -207,9 +207,18 @@ public class NetworkProvider {
     public void offerNetwork(@NonNull final NetworkScore score,
             @NonNull final NetworkCapabilities caps, @NonNull final Executor executor,
             @NonNull final NetworkOfferCallback callback) {
-        final NetworkOfferCallbackProxy proxy = new NetworkOfferCallbackProxy(callback, executor);
+        NetworkOfferCallbackProxy proxy = null;
         synchronized (mProxies) {
-            mProxies.add(proxy);
+            for (final NetworkOfferCallbackProxy existingProxy : mProxies) {
+                if (existingProxy.callback == callback) {
+                    proxy = existingProxy;
+                    break;
+                }
+            }
+            if (null == proxy) {
+                proxy = new NetworkOfferCallbackProxy(callback, executor);
+                mProxies.add(proxy);
+            }
         }
         mContext.getSystemService(ConnectivityManager.class).offerNetwork(this, score, caps, proxy);
     }
