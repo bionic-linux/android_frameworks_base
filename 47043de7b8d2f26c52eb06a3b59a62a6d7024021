@@ -33,6 +33,23 @@
       "message": "Could you please review this patch at your earliest convenience?\n\nThanks",
       "revId": "47043de7b8d2f26c52eb06a3b59a62a6d7024021",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13dae7fb_60dac4fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1387508
+      },
+      "writtenOn": "2021-01-12T14:13:40Z",
+      "side": 1,
+      "message": "LGTM, I\u0027d like somebody from telephony to give the final approval.",
+      "revId": "47043de7b8d2f26c52eb06a3b59a62a6d7024021",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
