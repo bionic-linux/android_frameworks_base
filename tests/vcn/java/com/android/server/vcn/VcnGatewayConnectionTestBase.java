@@ -88,7 +88,7 @@ public class VcnGatewayConnectionTestBase {
 
         doReturn(mUnderlyingNetworkTracker)
                 .when(mDeps)
-                .newUnderlyingNetworkTracker(any(), any(), any());
+                .newUnderlyingNetworkTracker(any(), any(), any(), any());
     }
 
     @Before
