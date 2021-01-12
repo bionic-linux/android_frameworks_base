@@ -145,16 +145,11 @@ public class VcnManagementServiceTest {
     private final IBinder mMockIBinder = mock(IBinder.class);
 
     public VcnManagementServiceTest() throws Exception {
+        setupSystemService(mConnMgr, Context.CONNECTIVITY_SERVICE, ConnectivityManager.class);
+        setupSystemService(mTelMgr, Context.TELEPHONY_SERVICE, TelephonyManager.class);
         setupSystemService(
-                mMockContext, mConnMgr, Context.CONNECTIVITY_SERVICE, ConnectivityManager.class);
-        setupSystemService(
-                mMockContext, mTelMgr, Context.TELEPHONY_SERVICE, TelephonyManager.class);
-        setupSystemService(
-                mMockContext,
-                mSubMgr,
-                Context.TELEPHONY_SUBSCRIPTION_SERVICE,
-                SubscriptionManager.class);
-        setupSystemService(mMockContext, mAppOpsMgr, Context.APP_OPS_SERVICE, AppOpsManager.class);
+                mSubMgr, Context.TELEPHONY_SUBSCRIPTION_SERVICE, SubscriptionManager.class);
+        setupSystemService(mAppOpsMgr, Context.APP_OPS_SERVICE, AppOpsManager.class);
 
         doReturn(TEST_PACKAGE_NAME).when(mMockContext).getOpPackageName();
 

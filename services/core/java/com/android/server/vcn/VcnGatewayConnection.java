@@ -69,6 +69,7 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -485,7 +486,10 @@ public class VcnGatewayConnection extends StateMachine {
 
         mUnderlyingNetworkTracker =
                 mDeps.newUnderlyingNetworkTracker(
-                        mVcnContext, subscriptionGroup, mUnderlyingNetworkTrackerCallback);
+                        mVcnContext,
+                        subscriptionGroup,
+                        mConnectionConfig.getAllUnderlyingCapabilities(),
+                        mUnderlyingNetworkTrackerCallback);
         mIpSecManager = mVcnContext.getContext().getSystemService(IpSecManager.class);
 
         IpSecTunnelInterface iface;
@@ -971,8 +975,10 @@ public class VcnGatewayConnection extends StateMachine {
         public UnderlyingNetworkTracker newUnderlyingNetworkTracker(
                 VcnContext vcnContext,
                 ParcelUuid subscriptionGroup,
+                Set<Integer> requiredUnderlyingNetworkCapabilities,
                 UnderlyingNetworkTrackerCallback callback) {
-            return new UnderlyingNetworkTracker(vcnContext, subscriptionGroup, callback);
+            return new UnderlyingNetworkTracker(
+                    vcnContext, subscriptionGroup, requiredUnderlyingNetworkCapabilities, callback);
         }
 
         /** Builds a new IkeSession. */
