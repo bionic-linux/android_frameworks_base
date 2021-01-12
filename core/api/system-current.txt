@@ -5998,6 +5998,7 @@ package android.net {
     method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public void requestNetwork(@NonNull android.net.NetworkRequest, int, int, @NonNull android.os.Handler, @NonNull android.net.ConnectivityManager.NetworkCallback);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_AIRPLANE_MODE, android.Manifest.permission.NETWORK_SETTINGS, android.Manifest.permission.NETWORK_SETUP_WIZARD, android.Manifest.permission.NETWORK_STACK}) public void setAirplaneMode(boolean);
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK}) public boolean shouldAvoidBadWifi();
+    method @RequiresPermission(anyOf={"android.permission.MANAGE_TEST_NETWORKS", android.Manifest.permission.NETWORK_STACK}) public void simulateDataStall(int, long, @NonNull android.net.Network, @NonNull android.os.PersistableBundle);
     method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public void startCaptivePortalApp(@NonNull android.net.Network, @NonNull android.os.Bundle);
     method @Deprecated @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback);
     method @Deprecated @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback, android.os.Handler);
@@ -6236,6 +6237,7 @@ package android.net {
 
   public final class NetworkCapabilities implements android.os.Parcelable {
     method @NonNull public int[] getAdministratorUids();
+    method @NonNull public int[] getCapabilities();
     method @Nullable public String getSsid();
     method @NonNull public int[] getTransportTypes();
     method public boolean satisfiedByNetworkCapabilities(@Nullable android.net.NetworkCapabilities);
@@ -6243,6 +6245,7 @@ package android.net {
     field public static final int NET_CAPABILITY_OEM_PRIVATE = 26; // 0x1a
     field public static final int NET_CAPABILITY_PARTIAL_CONNECTIVITY = 24; // 0x18
     field public static final int NET_CAPABILITY_VEHICLE_INTERNAL = 27; // 0x1b
+    field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 
   public static final class NetworkCapabilities.Builder {
