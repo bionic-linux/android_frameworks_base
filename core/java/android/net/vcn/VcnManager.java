@@ -68,6 +68,11 @@ public class VcnManager {
     @NonNull private static final String TAG = VcnManager.class.getSimpleName();
 
     /** @hide */
+    // TODO(b/178519381): remove this value and use
+    // NetworkCapabilities#NET_CAPABILITY_NOT_VCN_MANAGED directly
+    public static final int NET_CAPABILITY_NOT_VCN_MANAGED =
+            NetworkCapabilities.NET_CAPABILITY_TRUSTED;
+
     @VisibleForTesting
     public static final Map<
                     VcnUnderlyingNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
