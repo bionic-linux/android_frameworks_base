@@ -22,9 +22,11 @@ import android.net.INetworkOfferCallback;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Messenger;
+import android.os.RemoteException;
 
+import java.util.HashSet;
 import java.util.Objects;
-
+import java.util.Set;
 
 /**
  * Represents an offer made by a NetworkProvider to create a network if a need arises.
@@ -45,6 +47,16 @@ public class NetworkOffer {
     @NonNull public final NetworkCapabilities caps;
     @NonNull public final INetworkOfferCallback callback;
     @NonNull public final Messenger provider;
+    // While this could, in principle, be deduced from the old values of the satisfying networks,
+    // doing so would add a lot of complexity and performance penalties. For each request, the
+    // ranker would have to run again to figure out if this offer used to be able to beat the
+    // previous satisfier to know if there is a change in whether this offer is now needed ;
+    // besides, there would be a need to handle an edge case when a new request comes online,
+    // where it's not satisfied before the first rematch, where starting to satisfy a request
+    // should not result in sending unneeded to this offer. This boolean, while requiring that
+    // the offers are only ever manipulated on the CS thread, is by far a simpler and
+    // economical solution.
+    private Set<NetworkRequest> mCurrentlyNeeded = new HashSet<>();
 
     private static NetworkCapabilities emptyCaps() {
         final NetworkCapabilities nc = new NetworkCapabilities();
@@ -64,6 +76,45 @@ public class NetworkOffer {
     }
 
     /**
+     * Tell the provider for this offer that the offer is needed for a request.
+     * @param request the request for which the offer is needed
+     * @param satisfierId the ID of the provider currently satisfying this request
+     */
+    public void onOfferNeeded(@NonNull final NetworkRequest request, final int satisfierId) {
+        mCurrentlyNeeded.add(request);
+        try {
+            callback.onOfferNeeded(request, satisfierId);
+        } catch (final RemoteException e) {
+            // The provider is dead. It will be removed by the death recipient.
+        }
+    }
+
+    /**
+     * Tell the provider for this offer that the offer is no longer needed for this request.
+     *
+     * onOfferNeeded will have been called with the same request before.
+     *
+     * @param request the request
+     */
+    public void onOfferUnneeded(@NonNull final NetworkRequest request) {
+        mCurrentlyNeeded.remove(request);
+        try {
+            callback.onOfferUnneeded(request);
+        } catch (final RemoteException e) {
+            // The provider is dead. It will be removed by the death recipient.
+        }
+    }
+
+    /**
+     * Returns whether this offer is currently needed for this request.
+     * @param request the request
+     * @return whether the offer is currently considered needed
+     */
+    public boolean neededFor(@NonNull final NetworkRequest request) {
+        return mCurrentlyNeeded.contains(request);
+    }
+
+    /**
      * Migrate from, and take over, a previous offer.
      *
      * When an updated offer is sent from a provider, call this method on the new offer, passing
@@ -76,6 +127,8 @@ public class NetworkOffer {
             throw new IllegalArgumentException("Can only migrate from a previous version of"
                     + " the same offer");
         }
+        mCurrentlyNeeded.clear();
+        mCurrentlyNeeded.addAll(previousOffer.mCurrentlyNeeded);
     }
 
     /**

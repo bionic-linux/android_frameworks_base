@@ -6070,6 +6070,20 @@ package android.net {
     method public abstract void onRequestScores(android.net.NetworkKey[]);
   }
 
+  public final class NetworkScore implements android.os.Parcelable {
+    method public int describeContents();
+    method public int getLegacyInt();
+    method public boolean hasPolicy(int);
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkScore> CREATOR;
+  }
+
+  public static final class NetworkScore.Builder {
+    ctor public NetworkScore.Builder();
+    method @NonNull public android.net.NetworkScore build();
+    method @NonNull public android.net.NetworkScore.Builder setLegacyInt(int);
+  }
+
   public class NetworkScoreManager {
     method @RequiresPermission(anyOf={android.Manifest.permission.SCORE_NETWORKS, android.Manifest.permission.REQUEST_NETWORK_SCORES}) public boolean clearScores() throws java.lang.SecurityException;
     method @RequiresPermission(anyOf={android.Manifest.permission.SCORE_NETWORKS, android.Manifest.permission.REQUEST_NETWORK_SCORES}) public void disableScoring() throws java.lang.SecurityException;
