@@ -20,7 +20,9 @@ import static android.content.pm.PackageManager.GET_SIGNATURES;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.app.ActivityManager;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -54,6 +56,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @hide
  */
+@SystemApi
 @SystemService(Context.NETWORK_POLICY_SERVICE)
 public class NetworkPolicyManager {
 
@@ -95,32 +98,38 @@ public class NetworkPolicyManager {
      * No specific rule was set
      * @hide
      */
+    @SystemApi
     public static final int RULE_NONE = 0;
     /**
      * Allow traffic on metered networks.
      * @hide
      */
+    @SystemApi
     public static final int RULE_ALLOW_METERED = 1 << 0;
     /**
      * Temporarily allow traffic on metered networks because app is on foreground.
      * @hide
      */
+    @SystemApi
     public static final int RULE_TEMPORARY_ALLOW_METERED = 1 << 1;
     /**
      * Reject traffic on metered networks.
      * @hide
      */
+    @SystemApi
     public static final int RULE_REJECT_METERED = 1 << 2;
     /**
      * Network traffic should be allowed on all networks (metered or non-metered), although
      * metered-network restrictions could still apply.
      * @hide
      */
+    @SystemApi
     public static final int RULE_ALLOW_ALL = 1 << 5;
     /**
      * Reject traffic on all networks.
      * @hide
      */
+    @SystemApi
     public static final int RULE_REJECT_ALL = 1 << 6;
 
     /**
@@ -442,6 +451,7 @@ public class NetworkPolicyManager {
      *
      * @hide
      */
+    @SystemApi
     public boolean isUidNetworkingBlocked(int uid, boolean meteredNetwork) {
         try {
             return mService.isUidNetworkingBlocked(uid, meteredNetwork);
@@ -458,6 +468,7 @@ public class NetworkPolicyManager {
      *
      * @hide
      */
+    @SystemApi
     public boolean isUidRestrictedOnMeteredNetworks(int uid) {
         try {
             return mService.isUidRestrictedOnMeteredNetworks(uid);
@@ -468,8 +479,10 @@ public class NetworkPolicyManager {
 
     /**
      * Get multipath preference for the given network.
+     *
+     * @hide
      */
-    public int getMultipathPreference(Network network) {
+    public int getMultipathPreference(@Nullable Network network) {
         try {
             return mService.getMultipathPreference(network);
         } catch (RemoteException e) {
