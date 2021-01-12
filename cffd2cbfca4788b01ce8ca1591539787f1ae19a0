@@ -16,6 +16,29 @@
       "message": "Hunter, thanks for the suggestion. Patch updated according the comments.",
       "revId": "cffd2cbfca4788b01ce8ca1591539787f1ae19a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22e69306_e7d2af1b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 14611,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-12T00:14:39Z",
+      "side": 1,
+      "message": "Nit: to *the* system",
+      "range": {
+        "startLine": 14611,
+        "startChar": 76,
+        "endLine": 14611,
+        "endChar": 85
+      },
+      "revId": "cffd2cbfca4788b01ce8ca1591539787f1ae19a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
