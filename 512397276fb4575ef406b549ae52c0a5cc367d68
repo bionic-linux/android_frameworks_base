@@ -16,6 +16,24 @@
       "message": "You could probably add Alex as well, if he wants",
       "revId": "512397276fb4575ef406b549ae52c0a5cc367d68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a31d5bd4_891c95a4",
+        "filename": "services/core/java/com/android/server/pm/MULTIUSER_AND_ENTERPRISE_OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2021-01-12T01:00:25Z",
+      "side": 1,
+      "message": "Sure. Once we\u0027ve submitted this, it\u0027ll be easy to add more names if needed. But let\u0027s leave that for future cl.",
+      "parentUuid": "5d63221d_b5358391",
+      "revId": "512397276fb4575ef406b549ae52c0a5cc367d68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
