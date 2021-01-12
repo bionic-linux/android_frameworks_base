@@ -17,6 +17,7 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,7 +28,7 @@ import android.os.Parcelable;
  * network is considered for a particular use.
  * @hide
  */
-// TODO : @SystemApi when the implementation is complete
+@SystemApi
 public final class NetworkScore implements Parcelable {
     // This will be removed soon. Do *NOT* depend on it for any new code that is not part of
     // a migration.

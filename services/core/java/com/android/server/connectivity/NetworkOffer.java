@@ -17,11 +17,14 @@
 package com.android.server.connectivity;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.net.INetworkOfferCallback;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.NetworkScore;
 import android.os.Messenger;
+
+import java.util.Objects;
 
 /**
  * Represents an offer made by a NetworkProvider to create a network if a need arises.
@@ -43,12 +46,20 @@ public class NetworkOffer {
     @NonNull public final INetworkOfferCallback callback;
     @NonNull public final Messenger provider;
 
-    public NetworkOffer(@NonNull final NetworkScore score, @NonNull final NetworkCapabilities caps,
+    private static NetworkCapabilities emptyCaps() {
+        final NetworkCapabilities nc = new NetworkCapabilities();
+        nc.clearAll();
+        return nc;
+    }
+
+    // Ideally the filter argument would be non-null, but null has historically meant no filter
+    // and telephony passes null. Keep backward compatibility.
+    public NetworkOffer(@NonNull final NetworkScore score, @Nullable final NetworkCapabilities caps,
             @NonNull final INetworkOfferCallback callback, @NonNull final Messenger provider) {
-        this.score = score;
-        this.caps = caps;
-        this.callback = callback;
-        this.provider = provider;
+        this.score = Objects.requireNonNull(score);
+        this.caps = null != caps ? caps : emptyCaps();
+        this.callback = Objects.requireNonNull(callback);
+        this.provider = Objects.requireNonNull(provider);
     }
 
     /**
@@ -59,5 +70,10 @@ public class NetworkOffer {
     // Can this network satisfy this request ?
     public final boolean canSatisfy(@NonNull final NetworkRequest request) {
         return request.networkCapabilities.satisfiedByNetworkCapabilities(caps);
+    }
+
+    @Override
+    public String toString() {
+        return "NetworkOffer [ Score " + score + " ]";
     }
 }

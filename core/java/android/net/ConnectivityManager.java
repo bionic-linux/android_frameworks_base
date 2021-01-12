@@ -3303,7 +3303,7 @@ public class ConnectivityManager {
     }
 
     /**
-     * Register a network offer with ConnectivityService.
+     * Register or update a network offer with ConnectivityService.
      *
      * ConnectivityService keeps track of offers made by the various providers and matches
      * them to networking requests made by apps or the system. The provider supplies a score
@@ -3320,7 +3320,7 @@ public class ConnectivityManager {
      * @param score The prospective score of the network.
      * @param caps The prospective capabilities of the network.
      * @param callback The callback to call when this offer is needed or unneeded.
-     * @hide
+     * @hide exposed via the NetworkProvider class.
      */
     @RequiresPermission(anyOf = {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
@@ -3329,7 +3329,11 @@ public class ConnectivityManager {
             @NonNull final NetworkScore score, @NonNull final NetworkCapabilities caps,
             @NonNull final INetworkOfferCallback callback) {
         try {
-            mService.offerNetwork(provider.getMessenger(), score, caps, callback);
+            android.util.Log.e(">>>>", "provider " + provider + " ; messenger " + provider.getMessenger() + " ; score " + score + " ; caps " + caps + " ; callback " + callback);
+            mService.offerNetwork(Objects.requireNonNull(provider.getMessenger(), "null messenger"),
+                    Objects.requireNonNull(score, "null score"),
+                    Objects.requireNonNull(caps, "null caps"),
+                    Objects.requireNonNull(callback, "null callback"));
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
@@ -3340,11 +3344,11 @@ public class ConnectivityManager {
      *
      * @param callback The callback passed at registration time. This must be the same object
      *                 that was passed to {@link #offerNetwork}
-     * @hide
+     * @hide exposed via the NetworkProvider class.
      */
     public void unofferNetwork(@NonNull final INetworkOfferCallback callback) {
         try {
-            mService.unofferNetwork(callback);
+            mService.unofferNetwork(Objects.requireNonNull(callback));
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
