@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "37f6ce8f_cfbc749f",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowKeyStoreManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-01-12T23:50:50Z",
+      "side": 1,
+      "message": "We normally use Locked as the suffix instead of Unlocked.",
+      "parentUuid": "9933900b_589d9285",
+      "range": {
+        "startLine": 62,
+        "startChar": 46,
+        "endLine": 62,
+        "endChar": 55
+      },
+      "revId": "34715f006c62a94aadd5ac9a7e2b33f841b90333",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d346faed_b707c8aa",
         "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
         "patchSetId": 9
