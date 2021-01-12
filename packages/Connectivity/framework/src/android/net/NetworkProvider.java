@@ -168,7 +168,7 @@ public class NetworkProvider {
     }
 
     /** @hide */
-    // TODO : make @SystemApi when the impl is complete
+    @SystemApi
     public interface NetworkOfferCallback {
         /** Called by the system when this offer is needed to satisfy some networking request. */
         void onOfferNeeded(@NonNull NetworkRequest request, int providerId);
@@ -267,10 +267,13 @@ public class NetworkProvider {
      *
      * @hide
      */
-    // TODO : make @SystemApi when the impl is complete
+    // Ideally the capabilities should be non-null, unfortunately there is no way for factories
+    // running in mainline modules to set no filter because that would require clearing all
+    // capabilities which is a hidden method. Instead, accept null here to mean no filter.
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void offerNetwork(@NonNull final NetworkScore score,
-            @NonNull final NetworkCapabilities caps, @NonNull final Executor executor,
+            @Nullable final NetworkCapabilities caps, @NonNull final Executor executor,
             @NonNull final NetworkOfferCallback callback) {
         NetworkOfferCallbackProxy proxy = null;
         synchronized (mProxies) {
@@ -285,7 +288,14 @@ public class NetworkProvider {
                 mProxies.add(proxy);
             }
         }
-        mContext.getSystemService(ConnectivityManager.class).offerNetwork(this, score, caps, proxy);
+        final NetworkCapabilities nc;
+        if (null != caps) {
+            nc = caps;
+        } else {
+            nc = new NetworkCapabilities();
+            nc.clearAll();
+        }
+        mContext.getSystemService(ConnectivityManager.class).offerNetwork(this, score, nc, proxy);
     }
 
     /**
@@ -302,7 +312,7 @@ public class NetworkProvider {
      *
      * @hide
      */
-    // TODO : make @SystemApi when the impl is complete
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public void unofferNetwork(final @NonNull NetworkOfferCallback callback) {
         final NetworkOfferCallbackProxy proxy = findProxyForCallback(callback);
