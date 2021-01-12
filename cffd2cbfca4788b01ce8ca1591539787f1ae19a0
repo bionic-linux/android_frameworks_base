@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aef5f392_8498fb52",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-12T19:27:16Z",
+      "side": 1,
+      "message": "I think this needs to be an ITelephony.asBinder().\n\nPTAL at TelephonyScanManager:\nhttps://source.corp.google.com/android/frameworks/base/telephony/java/android/telephony/TelephonyScanManager.java;l\u003d266?q\u003dTelephonyScanManager.java\u0026sq\u003dpackage:%5Eandroid$\n\nHowever, may I suggest not bothering with the crash case until we\u0027re post-IC. Crash recovery really is an edge case, and the problem here is only app-side, not system side so it\u0027s not some kind of fatal situation.",
+      "range": {
+        "startLine": 91,
+        "startChar": 25,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "cffd2cbfca4788b01ce8ca1591539787f1ae19a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22e69306_e7d2af1b",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 9
