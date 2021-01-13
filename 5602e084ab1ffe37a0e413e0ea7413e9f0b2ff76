@@ -22,6 +22,30 @@
       },
       "revId": "5602e084ab1ffe37a0e413e0ea7413e9f0b2ff76",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d556efe_d6b6ca5d",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-01-13T06:33:48Z",
+      "side": 1,
+      "message": "Thanks for pointing out the issue. Theose systemApis are still needed(actually they\u0027re just opened for support this). I revise the design to put those two variable into mStat lock to ensure the thread safety, so the comment should not be needed now. Could you take another looks see if it works to you? Thanks.",
+      "parentUuid": "2e1f10dd_f7415bb7",
+      "range": {
+        "startLine": 117,
+        "startChar": 26,
+        "endLine": 118,
+        "endChar": 73
+      },
+      "revId": "5602e084ab1ffe37a0e413e0ea7413e9f0b2ff76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
