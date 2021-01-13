@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007256460",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1517502?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "24c0e066_1488f0c3",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-01-13T11:36:33Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 771,
+        "startChar": 67,
+        "endLine": 771,
+        "endChar": 68
+      },
+      "revId": "f2359150bd468d1b87ccede7abeff358ead591df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
