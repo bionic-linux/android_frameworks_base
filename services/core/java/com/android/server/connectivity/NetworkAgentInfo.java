@@ -137,9 +137,11 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // enclosed socket factory and connection pool.  Avoid creating other Network objects.
     // This Network object is always valid.
     public final Network network;
+    @NonNull
     public LinkProperties linkProperties;
     // This should only be modified by ConnectivityService, via setNetworkCapabilities().
     // TODO: make this private with a getter.
+    @NonNull
     public NetworkCapabilities networkCapabilities;
     public final NetworkAgentConfig networkAgentConfig;
 
