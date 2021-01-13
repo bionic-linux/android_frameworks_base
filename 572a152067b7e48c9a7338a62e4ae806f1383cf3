@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "459fc9a7_9dc0a662",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-01-13T10:08:24Z",
+      "side": 1,
+      "message": "UUID",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "572a152067b7e48c9a7338a62e4ae806f1383cf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e69ccf49_8b51274d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-01-13T10:08:24Z",
+      "side": 1,
+      "message": "no need for tag in frameworks/base",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "572a152067b7e48c9a7338a62e4ae806f1383cf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33db66dc_41edf3d0",
+        "filename": "core/java/android/bluetooth/BluetoothUuid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-01-13T10:08:24Z",
+      "side": 1,
+      "message": "/** @hide */",
+      "revId": "572a152067b7e48c9a7338a62e4ae806f1383cf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
