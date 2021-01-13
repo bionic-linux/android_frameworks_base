@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
@@ -30,6 +31,8 @@ import android.os.Process;
 import android.text.TextUtils;
 import android.util.proto.ProtoOutputStream;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 import java.util.Set;
 
@@ -156,7 +159,28 @@ public class NetworkRequest implements Parcelable {
      * needed in terms of {@link NetworkCapabilities} features
      */
     public static class Builder {
+        /** @hide */
+        public static final int SET_NOT_VCN_MANAGED_FALSE = 0;
+        /** @hide */
+        public static final int SET_NOT_VCN_MANAGED_AUTO = 1;
+        /** @hide */
+        public static final int SET_NOT_VCN_MANAGED_TRUE = 2;
+
+        /** @hide */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef(prefix = { "SET_NOT_VCN_MANAGED_" }, value = {
+                SET_NOT_VCN_MANAGED_FALSE,
+                SET_NOT_VCN_MANAGED_AUTO,
+                SET_NOT_VCN_MANAGED_TRUE,
+        })
+        public @interface SetNotVcnManaged {
+        }
+
         private final NetworkCapabilities mNetworkCapabilities;
+
+        // A tri-state that represents the user intention of modifying NOT_VCN_MANAGED capability.
+        @SetNotVcnManaged
+        private int mSetNotVcnManaged = SET_NOT_VCN_MANAGED_AUTO;
 
         /**
          * Default constructor for Builder.
@@ -179,6 +203,7 @@ public class NetworkRequest implements Parcelable {
             // maybeMarkCapabilitiesRestricted() doesn't add back.
             final NetworkCapabilities nc = new NetworkCapabilities(mNetworkCapabilities);
             nc.maybeMarkCapabilitiesRestricted();
+            nc.deduceNotVcnManagedCapability(mSetNotVcnManaged);
             return new NetworkRequest(nc, ConnectivityManager.TYPE_NONE,
                     ConnectivityManager.REQUEST_ID_UNSET, Type.NONE);
         }
@@ -195,6 +220,9 @@ public class NetworkRequest implements Parcelable {
          */
         public Builder addCapability(@NetworkCapabilities.NetCapability int capability) {
             mNetworkCapabilities.addCapability(capability);
+            if (capability == NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED) {
+                mSetNotVcnManaged = SET_NOT_VCN_MANAGED_TRUE;
+            }
             return this;
         }
 
@@ -206,6 +234,9 @@ public class NetworkRequest implements Parcelable {
          */
         public Builder removeCapability(@NetworkCapabilities.NetCapability int capability) {
             mNetworkCapabilities.removeCapability(capability);
+            if (capability == NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED) {
+                mSetNotVcnManaged = SET_NOT_VCN_MANAGED_FALSE;
+            }
             return this;
         }
 
@@ -263,6 +294,9 @@ public class NetworkRequest implements Parcelable {
         @NonNull
         public Builder clearCapabilities() {
             mNetworkCapabilities.clearAll();
+            // If the caller explicitly clear all capabilities, the NOT_VCN_MANAGED capabilities
+            // should not be add back later.
+            mSetNotVcnManaged = SET_NOT_VCN_MANAGED_FALSE;
             return this;
         }
 

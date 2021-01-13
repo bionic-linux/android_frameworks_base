@@ -515,6 +515,12 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_NOT_VCN_MANAGED);
 
     /**
+     * Capabilities that are currently compatible with VCN networks.
+     */
+    private static final long VCN_SUPPORTED_CAPABILITIES =
+            (1 << NET_CAPABILITY_INTERNET) | (1 << NET_CAPABILITY_DUN);
+
+    /**
      * Adds the given capability to this {@code NetworkCapability} instance.
      * Note that when searching for a network to satisfy a request, all capabilities
      * requested must be satisfied.
@@ -773,6 +779,41 @@ public final class NetworkCapabilities implements Parcelable {
             setAdministratorUids(new int[] {creatorUid});
         }
         // There is no need to clear the UIDs, they have already been cleared by clearAll() above.
+    }
+
+    /**
+     * For backward compatibility, add the NET_CAPABILITY_NOT_VCN_MANAGED capability if
+     * the request:
+     *   1. does explicitly add {@link #NET_CAPABILITY_NOT_VCN_MANAGED}.
+     *   2. does not explicitly remove {@link #NET_CAPABILITY_NOT_VCN_MANAGED}.
+     *   3. does contain any of {@link #VCN_SUPPORTED_CAPABILITIES}.
+     *   4. has nothing besides default and VCN supported capabilities.
+
+     * This allows callers that request any of VCN-unsupported capabilities can
+     * use VCN-underlying network without any modification.
+     *
+     * @hide
+     * @param setNotVcnManaged
+     */
+    public void deduceNotVcnManagedCapability(
+            @NetworkRequest.Builder.SetNotVcnManaged int setNotVcnManaged) {
+        switch (setNotVcnManaged) {
+            case NetworkRequest.Builder.SET_NOT_VCN_MANAGED_FALSE:
+                // do nothing.
+                break;
+            case NetworkRequest.Builder.SET_NOT_VCN_MANAGED_TRUE:
+                addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
+                break;
+            case NetworkRequest.Builder.SET_NOT_VCN_MANAGED_AUTO:
+                if ((mNetworkCapabilities & VCN_SUPPORTED_CAPABILITIES) != 0) {
+                    addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
+                } else if (0 == (mNetworkCapabilities & ~DEFAULT_CAPABILITIES)) {
+                    addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported value: " + setNotVcnManaged);
+        }
     }
 
     /**
