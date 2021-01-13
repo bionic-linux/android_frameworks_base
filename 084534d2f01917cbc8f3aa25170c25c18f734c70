@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d9a67c7_49fd4521",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-13T23:11:43Z",
+      "side": 1,
+      "message": "\nHi Tyler,\n\nThis CL is deliberately created as a minimum change for API review. Would you please help to review it?\n\nThanks",
+      "revId": "084534d2f01917cbc8f3aa25170c25c18f734c70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
