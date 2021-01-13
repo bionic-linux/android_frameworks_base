@@ -158,6 +158,9 @@ public class NetworkRequest implements Parcelable {
     public static class Builder {
         private final NetworkCapabilities mNetworkCapabilities;
 
+        // A boolean that represents the user modified NOT_VCN_MANAGED capability.
+        private boolean mModifiedNotVcnManaged = false;
+
         /**
          * Default constructor for Builder.
          */
@@ -179,6 +182,7 @@ public class NetworkRequest implements Parcelable {
             // maybeMarkCapabilitiesRestricted() doesn't add back.
             final NetworkCapabilities nc = new NetworkCapabilities(mNetworkCapabilities);
             nc.maybeMarkCapabilitiesRestricted();
+            nc.deduceNotVcnManagedCapability(mModifiedNotVcnManaged);
             return new NetworkRequest(nc, ConnectivityManager.TYPE_NONE,
                     ConnectivityManager.REQUEST_ID_UNSET, Type.NONE);
         }
@@ -195,6 +199,9 @@ public class NetworkRequest implements Parcelable {
          */
         public Builder addCapability(@NetworkCapabilities.NetCapability int capability) {
             mNetworkCapabilities.addCapability(capability);
+            if (capability == NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED) {
+                mModifiedNotVcnManaged = true;
+            }
             return this;
         }
 
@@ -206,6 +213,9 @@ public class NetworkRequest implements Parcelable {
          */
         public Builder removeCapability(@NetworkCapabilities.NetCapability int capability) {
             mNetworkCapabilities.removeCapability(capability);
+            if (capability == NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED) {
+                mModifiedNotVcnManaged = true;
+            }
             return this;
         }
 
@@ -263,6 +273,9 @@ public class NetworkRequest implements Parcelable {
         @NonNull
         public Builder clearCapabilities() {
             mNetworkCapabilities.clearAll();
+            // If the caller explicitly clear all capabilities, the NOT_VCN_MANAGED capabilities
+            // should not be add back later.
+            mModifiedNotVcnManaged = true;
             return this;
         }
 
