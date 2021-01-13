@@ -33,6 +33,24 @@
       "message": "These tentatively seem reasonable, since they\u0027ve been defined on UserHandle for many years already (and used by some apps via reflection as noted by the annotations).\n\nHowever, upon further reflection, it looks like the \"official\" place for these type of APIs are over in Process.java:\n\n  Process.isCoreUid()\n  Process.isApplicationUid()\n\nSorry I didn\u0027t notice this earlier.  😞\n\nCould you update your CL so that there are no API changes to UserHandle, and adjust the Connectivity stack to use Process.isApplicationUid() instead?\n\nIn addition, instead of adding the new \"Process.isCoreUid()\" API, could you infer that a UID is \"core\" by virtue of it not being an application?  If you\u0027re able to do that, then technically no API changes are needed.",
       "revId": "fd077a155b424d2462ebe3072a2a813db0f66b20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "131741a5_00cf3bb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-01-13T02:21:13Z",
+      "side": 1,
+      "message": "Thanks for review. I can try to replace the usage to use Process.isApplicationUid() instead. The doc in UserHandle says that \"Not a regular app\" does not mean \"it\u0027s system\", because of isolated UIDs. Use {@link #isCore} for that. I am not sure if I can just infer it by virtue of Process.isApplicationUid()? If it\u0027s ok, it will be better that we do not need to have API changes.",
+      "parentUuid": "fb3b8bf6_7baa1bb4",
+      "revId": "fd077a155b424d2462ebe3072a2a813db0f66b20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
