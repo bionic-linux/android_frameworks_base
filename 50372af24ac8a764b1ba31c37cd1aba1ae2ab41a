@@ -16,6 +16,29 @@
       "message": "Is it possible yet to remove completely NetworkManagementService#setInterfaceUp ? If not, please update it to call NetdUtils#setInterfaceUp(this, iface).",
       "revId": "50372af24ac8a764b1ba31c37cd1aba1ae2ab41a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbadc429_2f5410b5",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-13T09:55:01Z",
+      "side": 1,
+      "message": "NetdUtils no longer enforces NETWORK_STACK privileges. Please replace the comment in l.320 with NetworkStack.checkNetworkStackPermission(mContext);",
+      "range": {
+        "startLine": 323,
+        "startChar": 26,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "50372af24ac8a764b1ba31c37cd1aba1ae2ab41a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
