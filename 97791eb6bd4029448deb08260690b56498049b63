@@ -234,6 +234,30 @@
       },
       "revId": "97791eb6bd4029448deb08260690b56498049b63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8b3d687_e0de9433",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-13T00:51:44Z",
+      "side": 1,
+      "message": "Good thinking. Filed b/177369996.",
+      "parentUuid": "1916fe39_da0730e0",
+      "range": {
+        "startLine": 1709,
+        "startChar": 36,
+        "endLine": 1709,
+        "endChar": 68
+      },
+      "revId": "97791eb6bd4029448deb08260690b56498049b63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
