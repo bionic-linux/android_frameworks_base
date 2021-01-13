@@ -2097,6 +2097,8 @@ public class ConnectivityServiceTest {
         mWiFiNetworkAgent.setNetworkCapabilities(agentCapabilities, true);
         waitForIdle();
 
+        denyAllPrivilegedPermissions();
+
         // Check that the capability change has been applied but the owner UID is not modified.
         NetworkCapabilities nc = mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork());
         assertEquals(originalOwnerUid, nc.getOwnerUid());
@@ -7781,6 +7783,18 @@ public class ConnectivityServiceTest {
         naExtraInfo.unregister();
     }
 
+    // To avoid granting location permission bypass.
+    private void denyAllPrivilegedPermissions() {
+        mServiceContext.setPermission(NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+                PERMISSION_DENIED);
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETTINGS,
+                PERMISSION_DENIED);
+        mServiceContext.setPermission(Manifest.permission.NETWORK_STACK,
+                PERMISSION_DENIED);
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETUP_WIZARD,
+                PERMISSION_DENIED);
+    }
+
     private void setupLocationPermissions(
             int targetSdk, boolean locationToggle, String op, String perm) throws Exception {
         final ApplicationInfo applicationInfo = new ApplicationInfo();
@@ -7821,6 +7835,7 @@ public class ConnectivityServiceTest {
     @Test
     public void testCreateForCallerWithLocationInfoSanitizedWithFineLocationAfterQ()
             throws Exception {
+        denyAllPrivilegedPermissions();
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
@@ -7834,6 +7849,7 @@ public class ConnectivityServiceTest {
     @Test
     public void testCreateForCallerWithLocationInfoSanitizedWithCoarseLocationPreQ()
             throws Exception {
+        denyAllPrivilegedPermissions();
         setupLocationPermissions(Build.VERSION_CODES.P, true, AppOpsManager.OPSTR_COARSE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
 
@@ -7846,6 +7862,7 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testCreateForCallerWithLocationInfoSanitizedLocationOff() throws Exception {
+        denyAllPrivilegedPermissions();
         // Test that even with fine location permission, and UIDs matching, the UID is sanitized.
         setupLocationPermissions(Build.VERSION_CODES.Q, false, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -7859,6 +7876,7 @@ public class ConnectivityServiceTest {
 
     @Test
     public void testCreateForCallerWithLocationInfoSanitizedWrongUid() throws Exception {
+        denyAllPrivilegedPermissions();
         // Test that even with fine location permission, not being the owner leads to sanitization.
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -7873,6 +7891,7 @@ public class ConnectivityServiceTest {
     @Test
     public void testCreateForCallerWithLocationInfoSanitizedWithCoarseLocationAfterQ()
             throws Exception {
+        denyAllPrivilegedPermissions();
         // Test that not having fine location permission leads to sanitization.
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_COARSE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -7888,6 +7907,7 @@ public class ConnectivityServiceTest {
     @Test
     public void testCreateForCallerWithLocationInfoSanitizedWithoutLocationPermission()
             throws Exception {
+        denyAllPrivilegedPermissions();
         setupLocationPermissions(Build.VERSION_CODES.Q, true, null /* op */, null /* perm */);
 
         // Test that without the location permission, the owner field is sanitized.
@@ -8164,7 +8184,7 @@ public class ConnectivityServiceTest {
 
         // Wait for networks to connect and broadcasts to be sent before removing permissions.
         waitForIdle();
-        mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
+        denyAllPrivilegedPermissions();
 
         assertTrue(mService.setUnderlyingNetworksForVpn(new Network[] {network}));
         waitForIdle();
@@ -8191,6 +8211,7 @@ public class ConnectivityServiceTest {
                 new NetworkAgentInfo(null, null, null, null, nc, 0, mServiceContext, null, null,
                         mService, null, null, null, 0, INVALID_UID);
 
+        denyAllPrivilegedPermissions();
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
@@ -8210,6 +8231,7 @@ public class ConnectivityServiceTest {
                 new NetworkAgentInfo(null, null, null, null, nc, 0, mServiceContext, null, null,
                         mService, null, null, null, 0, INVALID_UID);
 
+        denyAllPrivilegedPermissions();
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
