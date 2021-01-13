@@ -32,7 +32,10 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * An event recorded by NetworkMonitor when sending a probe for finding captive portals.
  * {@hide}
+ * @deprecated This API is deprecated. The event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public final class ValidationProbeEvent implements IpConnectivityLog.Event {
 
