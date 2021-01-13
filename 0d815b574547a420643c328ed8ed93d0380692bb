@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c451306_206c46e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2021-01-13T22:19:55Z",
+      "side": 1,
+      "message": "Shouldn\u0027t requestsSortedById be atomic? In this case waitForIdle smells like hiding a race condition.",
+      "revId": "0d815b574547a420643c328ed8ed93d0380692bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
