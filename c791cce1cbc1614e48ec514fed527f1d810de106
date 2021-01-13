@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a70e931_1e104a9f",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-01-13T18:36:58Z",
+      "side": 1,
+      "message": "Add {@link} and for the rest below.",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "c791cce1cbc1614e48ec514fed527f1d810de106",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "830e1d5c_76b30865",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-01-13T18:36:58Z",
+      "side": 1,
+      "message": "SignalThresholdInfo.SIGNAL_RSSI does not look like a measure type. API council probably will ask you to add the prefix/suffix SIGNAL_MEASUREMENT_TYPE to each of them.",
+      "range": {
+        "startLine": 39,
+        "startChar": 28,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "c791cce1cbc1614e48ec514fed527f1d810de106",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
