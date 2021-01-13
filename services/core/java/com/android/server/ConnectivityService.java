@@ -59,6 +59,8 @@ import static android.os.Process.VPN_UID;
 import static android.system.OsConstants.IPPROTO_TCP;
 import static android.system.OsConstants.IPPROTO_UDP;
 
+import static com.android.net.module.util.NetworkPolicyUtils.isSystem;
+
 import static java.util.Map.Entry;
 
 import android.Manifest;
@@ -189,6 +191,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.modules.utils.BasicShellCommandHandler;
 import com.android.net.module.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import com.android.net.module.util.LinkPropertiesUtils.CompareResult;
+import com.android.net.module.util.NetworkPolicyUtils;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.AutodestructReference;
 import com.android.server.connectivity.DataConnectionStats;
@@ -2070,8 +2073,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private boolean isUidBlockedByRules(int uid, int uidRules, boolean isNetworkMetered,
             boolean isBackgroundRestricted) {
-        return NetworkPolicyManagerInternal.isUidNetworkingBlocked(uid, uidRules,
+        final int reason = NetworkPolicyUtils.getUidBlockedReasonForRules(uid, uidRules,
                 isNetworkMetered, isBackgroundRestricted);
+        return NetworkPolicyUtils.isNetworkingBlockedByReason(reason);
     }
 
     /**
@@ -5754,10 +5758,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return true;
         }
         return false;
-    }
-
-    private boolean isSystem(int uid) {
-        return uid < Process.FIRST_APPLICATION_UID;
     }
 
     private void enforceMeteredApnPolicy(NetworkCapabilities networkCapabilities) {
