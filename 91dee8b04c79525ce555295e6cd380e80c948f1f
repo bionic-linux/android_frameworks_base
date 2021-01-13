@@ -88,6 +88,24 @@
       "parentUuid": "52fd956c_ce5d4f89",
       "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c99a9f4_30d7d22b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-01-13T11:44:33Z",
+      "side": 1,
+      "message": "Thanks for the explanation.\nWe revisit the flow of normal boot and quiescent boot, and we think that it should be fine to simply modify the power status to POWER_STATUS_ON in bootCompleted().\nWith this modification, local device is initiated only once on normal boot.\n\nHowever, for quiescent boot, initializeCec() would still be called twice.\nWe have to suppress HdmiCecFeatureActions as well.\n\nNote that we also add logic to bypass \u003cDevice Vendor ID\u003e and \u003cReport Power Status\u003e when HdmiControlService is in standby mode, for processing DeviceDiscoveryAction on quiescent boot.",
+      "parentUuid": "6a7b09fc_82b22df1",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
