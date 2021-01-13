@@ -30,8 +30,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
+ * This API is deprecated after Android 12.
  * {@hide}
+ * @deprecated This API is deprecated. In order to easily maintain the
+ * connectivity service. Refactor the connectivity service by removing
+ * legacy metric codes & APIs. Therefore, the event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public final class NetworkEvent implements IpConnectivityLog.Event {
 

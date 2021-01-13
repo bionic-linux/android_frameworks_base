@@ -33,7 +33,12 @@ import java.lang.annotation.RetentionPolicy;
  * An event recorded by IpClient when IP provisioning completes for a network or
  * when a network disconnects.
  * {@hide}
+ * @deprecated This API is deprecated. In order to easily maintain the
+ * connectivity service. Refactor the connectivity service by removing
+ * legacy metric codes & APIs. Therefore, the event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public final class IpManagerEvent implements IpConnectivityLog.Event {
 
