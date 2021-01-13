@@ -29,7 +29,10 @@ import com.android.internal.util.MessageUtils;
  * An event recorded when IpReachabilityMonitor sends a neighbor probe or receives
  * a neighbor probe result.
  * {@hide}
+ * @deprecated This API is deprecated. The event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public final class IpReachabilityEvent implements IpConnectivityLog.Event {
 

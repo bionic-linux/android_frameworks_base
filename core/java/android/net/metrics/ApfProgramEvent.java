@@ -39,7 +39,10 @@ import java.util.List;
  * An event logged when there is a change or event that requires updating the
  * the APF program in place with a new APF program.
  * {@hide}
+ * @deprecated This API is deprecated. The event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public final class ApfProgramEvent implements IpConnectivityLog.Event {
 

@@ -28,7 +28,10 @@ import android.text.TextUtils;
 /**
  * An event recorded when a DhcpClient state machine transitions to a new state.
  * {@hide}
+ * @deprecated This API is deprecated. The event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public final class DhcpClientEvent implements IpConnectivityLog.Event {
 
