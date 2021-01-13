@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b0f472e_57a4b747",
+        "filename": "apex/blobstore/service/java/com/android/server/blob/BlobMetadata.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2021-01-13T17:01:42Z",
+      "side": 0,
+      "message": "does this need to be updated?",
+      "range": {
+        "startLine": 480,
+        "startChar": 71,
+        "endLine": 480,
+        "endChar": 82
+      },
+      "revId": "35fe926d2bfc690a93943c822239e7e0569d0ea2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
