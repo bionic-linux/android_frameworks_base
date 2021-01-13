@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebed9361_6dd6475b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-13T09:53:17Z",
+      "side": 1,
+      "message": "Is it possible yet to remove completely NetworkManagementService#setInterfaceUp ? If not, please update it to call NetdUtils#setInterfaceUp(this, iface).",
+      "revId": "50372af24ac8a764b1ba31c37cd1aba1ae2ab41a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
