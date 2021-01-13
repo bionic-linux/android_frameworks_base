@@ -25,7 +25,12 @@ import android.os.Parcelable;
 /**
  * An event logged when the APF packet socket receives an RA packet.
  * {@hide}
+ * @deprecated This API is deprecated. In order to easily maintain the
+ * connectivity service. Refactor the connectivity service by removing
+ * legacy metric codes & APIs. Therefore, the event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public final class RaEvent implements IpConnectivityLog.Event {
 
