@@ -16,6 +16,24 @@
       "message": "Shouldn\u0027t requestsSortedById be atomic? In this case waitForIdle smells like hiding a race condition.",
       "revId": "0d815b574547a420643c328ed8ed93d0380692bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77f2630f_bbd3dab1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-13T22:50:12Z",
+      "side": 1,
+      "message": "Not necessarily. The reason I put that in place was so that we wouldn\u0027t fail on this line which is causing the flakiness:\n\n    assertTrue(nriOutput.length \u003e 1);\n\nnriOutput length is equal to zero unless I give the callbacks time to propagate which in turn causes the test to pass/fail sometimes. \n\nLooking at the test file, it looks like wherever registerNetworkCallback() is used, some blocking mechanism is then used to let those changes propagate. I missed that when I initially created the test which is now addressed in this CL.",
+      "parentUuid": "3c451306_206c46e7",
+      "revId": "0d815b574547a420643c328ed8ed93d0380692bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
