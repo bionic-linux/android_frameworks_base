@@ -28,13 +28,11 @@ import java.util.Objects;
 
 /**
  * Defines the threshold value of the signal strength.
- * @hide
  */
 public final class SignalThresholdInfo implements Parcelable {
 
     /**
      * Unknown signal measurement type.
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_UNKNOWN = 0;
 
@@ -44,7 +42,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Used RAN: {@link AccessNetworkConstants.AccessNetworkType#GERAN},
      *           {@link AccessNetworkConstants.AccessNetworkType#CDMA2000}
      * Reference: 3GPP TS 27.007 section 8.5.
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_RSSI = 1;
 
@@ -53,7 +50,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -120 dBm to -25 dBm;
      * Used RAN: {@link AccessNetworkConstants.AccessNetworkType#UTRAN}
      * Reference: 3GPP TS 25.123, section 9.1.1.1
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_RSCP = 2;
 
@@ -62,7 +58,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -140 dBm to -44 dBm;
      * Used RAN: {@link AccessNetworkConstants.AccessNetworkType#EUTRAN}
      * Reference: 3GPP TS 36.133 9.1.4
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_RSRP = 3;
 
@@ -71,7 +66,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -34 dB to 3 dB;
      * Used RAN: {@link AccessNetworkConstants.AccessNetworkType#EUTRAN}
      * Reference: 3GPP TS 36.133 9.1.7
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_RSRQ = 4;
 
@@ -79,7 +73,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Reference Signal Signal to Noise Ratio
      * Range: -20 dB to 30 dB;
      * Used RAN: {@link AccessNetworkConstants.AccessNetworkType#EUTRAN}
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_RSSNR = 5;
 
@@ -88,7 +81,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -140 dBm to -44 dBm.
      * Used RAN: {@link AccessNetworkConstants.AccessNetworkType#NGRAN}
      * Reference: 3GPP TS 38.215.
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_SSRSRP = 6;
 
@@ -97,7 +89,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -43 dB to 20 dB.
      * Used RAN: {@link AccessNetworkConstants.AccessNetworkType#NGRAN}
      * Reference: 3GPP TS 38.133 section 10.1.11.1.
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_SSRSRQ = 7;
 
@@ -106,7 +97,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Range: -23 dB to 40 dB
      * Used RAN: {@link AccessNetworkConstants.AccessNetworkType#NGRAN}
      * Reference: 3GPP TS 38.215 section 5.1.*, 3GPP TS 38.133 section 10.1.16.1.
-     * @hide
      */
     public static final int SIGNAL_MEASUREMENT_TYPE_SSSINR = 8;
 
@@ -316,8 +306,6 @@ public final class SignalThresholdInfo implements Parcelable {
 
     /**
      * Builder class to create {@link SignalThresholdInfo} objects.
-     *
-     * @hide
      */
     public static final class Builder {
         private int mRan = AccessNetworkConstants.AccessNetworkType.UNKNOWN;
@@ -423,8 +411,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Get the radio access network type.
      *
      * @return radio access network type
-     *
-     * @hide
      */
     public @AccessNetworkConstants.RadioAccessNetworkType int getRadioAccessNetworkType() {
         return mRan;
@@ -434,8 +420,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Get the signal measurement type.
      *
      * @return the SignalMeasurementType value
-     *
-     * @hide
      */
     public @SignalMeasurementType int getSignalMeasurementType() {
         return mSignalMeasurementType;
@@ -460,8 +444,6 @@ public final class SignalThresholdInfo implements Parcelable {
      * Get the signal threshold values.
      *
      * @return array of integer of the signal thresholds
-     *
-     * @hide
      */
     public @NonNull int[] getThresholds() {
         return mThresholds.clone();
