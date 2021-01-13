@@ -126,7 +126,7 @@ public class DnsManagerTest {
         assertEquals(actual.tlsConnectTimeoutMs, expected.tlsConnectTimeoutMs);
         assertResolverOptionsEquals(actual.resolverOptions, expected.resolverOptions);
         assertContainsExactly(actual.transportTypes, expected.transportTypes);
-        assertFieldCountEquals(16, ResolverParamsParcel.class);
+        assertFieldCountEquals(17, ResolverParamsParcel.class);
     }
 
     @Before
@@ -354,6 +354,7 @@ public class DnsManagerTest {
         expectedParams.tlsServers = new String[]{"3.3.3.3", "4.4.4.4"};
         expectedParams.transportTypes = TEST_TRANSPORT_TYPES;
         expectedParams.resolverOptions = new ResolverOptionsParcel();
+        expectedParams.privateDnsUrl = "";
         assertResolverParamsEquals(actualParams, expectedParams);
     }
 

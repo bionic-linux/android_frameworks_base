@@ -374,6 +374,7 @@ public class DnsManager {
                 : new String[0];            // Off
         paramsParcel.resolverOptions = new ResolverOptionsParcel();
         paramsParcel.transportTypes = transportTypes;
+        paramsParcel.privateDnsUrl = privateDnsCfg.url;
         // Prepare to track the validation status of the DNS servers in the
         // resolver config when private DNS is in opportunistic or strict mode.
         if (useTls) {
