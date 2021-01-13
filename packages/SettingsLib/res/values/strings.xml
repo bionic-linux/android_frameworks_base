@@ -705,8 +705,8 @@
     <string name="select_private_dns_configuration_dialog_title">Select Private DNS Mode</string>
     <string name="private_dns_mode_off">Off</string>
     <string name="private_dns_mode_opportunistic">Automatic</string>
-    <string name="private_dns_mode_provider">Private DNS provider hostname</string>
-    <string name="private_dns_mode_provider_hostname_hint">Enter hostname of DNS provider</string>
+    <string name="private_dns_mode_provider">Customize private DNS with a URL or a hostname</string>
+    <string name="private_dns_mode_provider_hostname_hint">Enter a URL or a hostname</string>
     <string name="private_dns_mode_provider_failure">Couldn\'t connect</string>
 
     <!-- setting Checkbox summary whether to show options for wireless display certification  -->
