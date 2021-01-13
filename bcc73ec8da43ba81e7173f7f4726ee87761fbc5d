@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8905fc11_aca900e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1626367
+      },
+      "writtenOn": "2021-01-13T07:45:58Z",
+      "side": 1,
+      "message": "Hi, this is new feature for foldable phone to\nsend fold status to audio hal\nthanks for review.",
+      "revId": "bcc73ec8da43ba81e7173f7f4726ee87761fbc5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
