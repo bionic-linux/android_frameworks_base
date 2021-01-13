@@ -51,6 +51,24 @@
       "parentUuid": "fb3b8bf6_7baa1bb4",
       "revId": "fd077a155b424d2462ebe3072a2a813db0f66b20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23bbb801_7842387b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-13T02:24:39Z",
+      "side": 1,
+      "message": "Ah excellent point about isolated UIDs, thanks for pointing that out.  That sounds like a very good reason to add Process.isCoreUid() to the public API.\n\nCould you update this CL to unhide Process.isCoreUid()?  Thanks!  😊",
+      "parentUuid": "131741a5_00cf3bb3",
+      "revId": "fd077a155b424d2462ebe3072a2a813db0f66b20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
