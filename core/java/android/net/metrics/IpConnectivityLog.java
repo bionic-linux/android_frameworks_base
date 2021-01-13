@@ -32,7 +32,10 @@ import com.android.internal.util.BitUtils;
 /**
  * Class for logging IpConnectvity events with IpConnectivityMetrics
  * {@hide}
+ * @deprecated This API is deprecated. The event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public class IpConnectivityLog {
     private static final String TAG = IpConnectivityLog.class.getSimpleName();
