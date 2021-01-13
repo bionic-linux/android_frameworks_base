@@ -45,6 +45,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VPN;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
@@ -5668,6 +5669,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // changes network state. http://b/29964605
             enforceMeteredApnPolicy(networkCapabilities);
         }
+        enforceBypassingVcnForNonInternet(networkCapabilities);
         ensureRequestableCapabilities(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
                 Binder.getCallingPid(), callingUid, callingPackageName);
@@ -5751,6 +5753,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
+    /**
+     * Checks whether the request is for app accessible cellular services instead of internet.
+     * If so, the {@link NetworkCapabilities#NET_CAPABILITY_NOT_VCN_MANAGED} will be removed
+     * from the request. Thus, the app can request VCN-underlying networks without any modification.
+     */
+    private void enforceBypassingVcnForNonInternet(
+            @NonNull NetworkCapabilities networkCapabilities) {
+        if (!networkCapabilities.hasCapability(NET_CAPABILITY_INTERNET)
+                && networkCapabilities.hasAppAccessibleCellularServiceCapability()) {
+            networkCapabilities.removeCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
+        }
+    }
+
     @Override
     public NetworkRequest pendingRequestForNetwork(NetworkCapabilities networkCapabilities,
             PendingIntent operation, @NonNull String callingPackageName,
@@ -5761,6 +5776,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         enforceNetworkRequestPermissions(networkCapabilities, callingPackageName,
                 callingAttributionTag);
         enforceMeteredApnPolicy(networkCapabilities);
+        enforceBypassingVcnForNonInternet(networkCapabilities);
         ensureRequestableCapabilities(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
                 Binder.getCallingPid(), callingUid, callingPackageName);
@@ -5830,6 +5846,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // There is no need to do this for requests because an app without CHANGE_NETWORK_STATE
         // can't request networks.
         restrictBackgroundRequestForCaller(nc);
+        enforceBypassingVcnForNonInternet(nc);
         ensureValid(nc);
 
         NetworkRequest networkRequest = new NetworkRequest(nc, TYPE_NONE, nextNetworkRequestId(),
