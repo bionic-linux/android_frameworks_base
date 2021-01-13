@@ -34,8 +34,11 @@ import com.android.internal.util.BitUtils;
 
 /**
  * Class for logging IpConnectvity events with IpConnectivityMetrics
+ * This API is deprecated after Android 12.
  * {@hide}
+ * @deprecated Unsupported operation.
  */
+@Deprecated
 @SystemApi
 public class IpConnectivityLog {
     private static final String TAG = IpConnectivityLog.class.getSimpleName();
