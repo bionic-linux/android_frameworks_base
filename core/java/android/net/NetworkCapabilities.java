@@ -483,6 +483,22 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_NOT_VCN_MANAGED);
 
     /**
+     * Capabilities that represents for the capabilities which are accessible despite
+     * Virtual Carrier Network (VCN). Some of these capabilities may still be
+     * subject to other permission requirements. This is used by ConnectivityService to
+     * determine when to remove {@link #NET_CAPABILITY_NOT_VCN_MANAGED}.
+     */
+    private static final long CAPABILITIES_ACCESSIBLE_DESPITE_VCN =
+            (1 << NET_CAPABILITY_NOT_METERED)
+            | (1 << NET_CAPABILITY_MMS)
+            | (1 << NET_CAPABILITY_SUPL)
+            | (1 << NET_CAPABILITY_IMS)
+            | (1 << NET_CAPABILITY_CBS)
+            | (1 << NET_CAPABILITY_RCS)
+            | (1 << NET_CAPABILITY_EIMS)
+            | (1 << NET_CAPABILITY_FOTA);
+
+    /**
      * Adds the given capability to this {@code NetworkCapability} instance.
      * Note that when searching for a network to satisfy a request, all capabilities
      * requested must be satisfied.
@@ -741,6 +757,24 @@ public final class NetworkCapabilities implements Parcelable {
             setAdministratorUids(new int[] {creatorUid});
         }
         // There is no need to clear the UIDs, they have already been cleared by clearAll() above.
+    }
+
+    /**
+     * For backward compatibility, removes the NET_CAPABILITY_NOT_VCN_MANAGED capability if
+     * the request:
+     *   1. is non-internet
+     *   2. contains any of {@link #CAPABILITIES_ACCESSIBLE_DESPITE_VCN}
+     *   3. does not explicitly add {@link #NET_CAPABILITY_NOT_VCN_MANAGED}.
+     * This allows callers that request any of {@link #CAPABILITIES_ACCESSIBLE_DESPITE_VCN}
+     * capability can use VCN-underlying network without any modification.
+     *
+     * @hide
+     */
+    public void maybeBypassingVcnForNonInternetRequest(boolean explicitlyAddNotVcnManaged) {
+        if (explicitlyAddNotVcnManaged || hasCapability(NET_CAPABILITY_INTERNET)) return;
+        if ((mNetworkCapabilities & CAPABILITIES_ACCESSIBLE_DESPITE_VCN) != 0) {
+            removeCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
+        }
     }
 
     /**

@@ -157,6 +157,7 @@ public class NetworkRequest implements Parcelable {
      */
     public static class Builder {
         private final NetworkCapabilities mNetworkCapabilities;
+        private boolean mExplicitlyAddNotVcnManaged = false;
 
         /**
          * Default constructor for Builder.
@@ -179,6 +180,7 @@ public class NetworkRequest implements Parcelable {
             // maybeMarkCapabilitiesRestricted() doesn't add back.
             final NetworkCapabilities nc = new NetworkCapabilities(mNetworkCapabilities);
             nc.maybeMarkCapabilitiesRestricted();
+            nc.maybeBypassingVcnForNonInternetRequest(mExplicitlyAddNotVcnManaged);
             return new NetworkRequest(nc, ConnectivityManager.TYPE_NONE,
                     ConnectivityManager.REQUEST_ID_UNSET, Type.NONE);
         }
@@ -195,6 +197,9 @@ public class NetworkRequest implements Parcelable {
          */
         public Builder addCapability(@NetworkCapabilities.NetCapability int capability) {
             mNetworkCapabilities.addCapability(capability);
+            if (capability == NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED) {
+                mExplicitlyAddNotVcnManaged = true;
+            }
             return this;
         }
 
