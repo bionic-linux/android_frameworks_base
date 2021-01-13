@@ -8382,7 +8382,7 @@ public class ConnectivityServiceTest {
     }
 
     @Test
-    public void testRequestsSortedByIdSortsCorrectly() {
+    public void testRequestsSortedByIdSortsCorrectly() throws Exception {
         final TestNetworkCallback genericNetworkCallback = new TestNetworkCallback();
         final TestNetworkCallback wifiNetworkCallback = new TestNetworkCallback();
         final TestNetworkCallback cellNetworkCallback = new TestNetworkCallback();
@@ -8395,6 +8395,7 @@ public class ConnectivityServiceTest {
         mCm.registerNetworkCallback(genericRequest, genericNetworkCallback);
         mCm.registerNetworkCallback(wifiRequest, wifiNetworkCallback);
         mCm.registerNetworkCallback(cellRequest, cellNetworkCallback);
+        waitForIdle();
 
         final ConnectivityService.NetworkRequestInfo[] nriOutput = mService.requestsSortedById();
 
