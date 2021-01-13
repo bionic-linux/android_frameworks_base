@@ -26,8 +26,11 @@ import com.android.internal.util.MessageUtils;
 
 /**
  * Event class used to record error events when parsing DHCP response packets.
+ * This API is deprecated after Android 12.
  * {@hide}
+ * @deprecated Unsupported operation.
  */
+@Deprecated
 @SystemApi
 public final class DhcpErrorEvent implements IpConnectivityLog.Event {
     public static final int L2_ERROR   = 1;
