@@ -521,6 +521,12 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_NOT_VCN_MANAGED);
 
     /**
+     * Capabilities that are currently compatible with VCN networks.
+     */
+    private static final long VCN_SUPPORTED_CAPABILITIES =
+            (1L << NET_CAPABILITY_INTERNET) | (1L << NET_CAPABILITY_DUN);
+
+    /**
      * Adds the given capability to this {@code NetworkCapability} instance.
      * Note that when searching for a network to satisfy a request, all capabilities
      * requested must be satisfied.
@@ -778,6 +784,30 @@ public final class NetworkCapabilities implements Parcelable {
             setAdministratorUids(new int[] {creatorUid});
         }
         // There is no need to clear the UIDs, they have already been cleared by clearAll() above.
+    }
+
+    /**
+     * Deduce the NET_CAPABILITY_NOT_VCN_MANAGED capability from other capabilities
+     * and user intention, which includes:
+     *   1. For requests that with {@link #VCN_SUPPORTED_CAPABILITIES} or didn't
+     *      specify any additional capability, add the NET_CAPABILITY_NOT_VCN_MANAGED
+     *      to allow the callers automatically utilize VCN networks if available.
+     *   2. For the requests don't have {@link #VCN_SUPPORTED_CAPABILITIES}, do not
+     *      add NET_CAPABILITY_NOT_VCN_MANAGED. This allows callers that request any of
+     *      VCN-unsupported capabilities can use VCN-underlying network without any
+     *      modification.
+     *   3. For the requests that explicitly add or remove NET_CAPABILITY_NOT_VCN_MANAGED,
+     *      do not alter them to allow user fire request that suits their need.
+     *
+     * @hide
+     */
+    public void deduceNotVcnManagedCapability(boolean modifiedNotVcnManaged) {
+        if (modifiedNotVcnManaged) return;
+        if ((mNetworkCapabilities & VCN_SUPPORTED_CAPABILITIES) != 0) {
+            addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
+        } else if (0 == (mNetworkCapabilities & ~DEFAULT_CAPABILITIES)) {
+            addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
+        }
     }
 
     /**
