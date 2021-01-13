@@ -46,6 +46,30 @@
       },
       "revId": "c3f7a44ef8232f981f44e519b3fb0aa632fdbbee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e788a091_7ca99af4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-13T03:17:22Z",
+      "side": 1,
+      "message": "Already move the method to NetworkPolicyUtils.",
+      "parentUuid": "cf2c01de_93aba389",
+      "range": {
+        "startLine": 2036,
+        "startChar": 12,
+        "endLine": 2036,
+        "endChar": 19
+      },
+      "revId": "c3f7a44ef8232f981f44e519b3fb0aa632fdbbee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
