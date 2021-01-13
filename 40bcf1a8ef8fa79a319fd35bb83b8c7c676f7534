@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7ab9633_d65e2eb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-13T00:57:31Z",
+      "side": 1,
+      "message": "Please either update this patch to match the 2 trivial differences with the internal patch, or update the internal patch to match this one.",
+      "revId": "40bcf1a8ef8fa79a319fd35bb83b8c7c676f7534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2033f8a8_8e7623a8",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-13T00:57:31Z",
+      "side": 1,
+      "message": "Can we please use the same style in the aosp and master changes ? This will cause conflicts to further changes.\n(also, \"paarcel\" here)",
+      "range": {
+        "startLine": 822,
+        "startChar": 8,
+        "endLine": 823,
+        "endChar": 59
+      },
+      "revId": "40bcf1a8ef8fa79a319fd35bb83b8c7c676f7534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12e709df_029e0bb8",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-13T00:57:31Z",
+      "side": 1,
+      "message": "Likewise : please have the code in the same order in both aosp and internal to avoid further conflicts",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 47
+      },
+      "revId": "40bcf1a8ef8fa79a319fd35bb83b8c7c676f7534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
