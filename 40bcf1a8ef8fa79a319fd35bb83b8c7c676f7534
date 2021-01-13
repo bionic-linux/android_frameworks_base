@@ -18,6 +18,41 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "328710d7_9f8df870",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-13T01:04:49Z",
+      "side": 1,
+      "message": "Addressed the comments. Thanks!",
+      "revId": "40bcf1a8ef8fa79a319fd35bb83b8c7c676f7534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "deb501c1_d9a5f087",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-13T01:04:49Z",
+      "side": 1,
+      "message": "Thanks for catching that!",
+      "parentUuid": "e7ab9633_d65e2eb7",
+      "revId": "40bcf1a8ef8fa79a319fd35bb83b8c7c676f7534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2033f8a8_8e7623a8",
@@ -41,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "633b0943_0fc77a02",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-13T01:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2033f8a8_8e7623a8",
+      "range": {
+        "startLine": 822,
+        "startChar": 8,
+        "endLine": 823,
+        "endChar": 59
+      },
+      "revId": "40bcf1a8ef8fa79a319fd35bb83b8c7c676f7534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12e709df_029e0bb8",
@@ -54,6 +113,30 @@
       "writtenOn": "2021-01-13T00:57:31Z",
       "side": 1,
       "message": "Likewise : please have the code in the same order in both aosp and internal to avoid further conflicts",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 47
+      },
+      "revId": "40bcf1a8ef8fa79a319fd35bb83b8c7c676f7534",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "143f6d51_43179fbe",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-13T01:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12e709df_029e0bb8",
       "range": {
         "startLine": 88,
         "startChar": 0,
