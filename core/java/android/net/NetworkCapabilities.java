@@ -483,6 +483,22 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_NOT_VCN_MANAGED);
 
     /**
+     * Capabilities that represents for the capabilities which are accessible despite
+     * Virtual Carrier Network (VCN). Some of these capabilities may still be
+     * subject to other permission requirements. This is used by ConnectivityService to
+     * determine when to remove {@link #NET_CAPABILITY_NOT_VCN_MANAGED}.
+     */
+    private static final long CAPABILITIES_ACCESSIBLE_DESPITE_VCN =
+            (1 << NET_CAPABILITY_NOT_METERED)
+            | (1 << NET_CAPABILITY_MMS)
+            | (1 << NET_CAPABILITY_SUPL)
+            | (1 << NET_CAPABILITY_IMS)
+            | (1 << NET_CAPABILITY_CBS)
+            | (1 << NET_CAPABILITY_RCS)
+            | (1 << NET_CAPABILITY_EIMS)
+            | (1 << NET_CAPABILITY_FOTA);
+
+    /**
      * Adds the given capability to this {@code NetworkCapability} instance.
      * Note that when searching for a network to satisfy a request, all capabilities
      * requested must be satisfied.
@@ -620,6 +636,14 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public boolean hasConnectivityManagedCapability() {
         return ((mNetworkCapabilities & CONNECTIVITY_MANAGED_CAPABILITIES) != 0);
+    }
+
+    /**
+     * Check if this NetworkCapabilities has capabilities which are accessible despite VCN.
+     * @hide
+     */
+    public boolean hasCapabilitiesAccessibleDespiteVcn() {
+        return ((mNetworkCapabilities & CAPABILITIES_ACCESSIBLE_DESPITE_VCN) != 0);
     }
 
     /** Note this method may result in having the same capability in wanted and unwanted lists. */
