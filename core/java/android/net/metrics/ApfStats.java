@@ -27,7 +27,10 @@ import android.os.Parcelable;
 /**
  * An event logged for an interface with APF capabilities when its IpClient state machine exits.
  * {@hide}
+ * @deprecated This API is deprecated. The event may not be sent in
+ * Android S and above.
  */
+@Deprecated
 @SystemApi
 public final class ApfStats implements IpConnectivityLog.Event {
 
