@@ -6961,6 +6961,40 @@ public class ConnectivityServiceTest {
         }
     }
 
+    @Test
+    public final void testBypassingVcnForNonInternet() throws Exception {
+        // Make two cellular service requests, use MMS as example, one with additional
+        // internet capability while the other doesn't.
+        final TestNetworkCallback mmsCallback = new TestNetworkCallback();
+        final TestNetworkCallback mmsWithInternetCallback = new TestNetworkCallback();
+        mCm.requestNetwork(new NetworkRequest.Builder().addCapability(NET_CAPABILITY_MMS).build(),
+                mmsCallback);
+        mCm.requestNetwork(new NetworkRequest.Builder().addCapability(NET_CAPABILITY_INTERNET)
+                .addCapability(NET_CAPABILITY_MMS).build(), mmsWithInternetCallback);
+
+        // Make a MMS connection that is not a VCN-underlying network, verify the requests can be
+        // satisfied normally.
+        final NetworkCapabilities mmsNetworkNc = new NetworkCapabilities.Builder()
+                .addTransportType(TRANSPORT_CELLULAR)
+                .addCapability(NET_CAPABILITY_MMS).build();
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR, new LinkProperties(),
+                mmsNetworkNc);
+        mCellNetworkAgent.connect(true);
+        mmsCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        mmsWithInternetCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+
+        // Change the capability so the network is VCN-underlying network now, verify the
+        // network can only satisfy the request without internet.
+        mmsNetworkNc.removeCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
+        mCellNetworkAgent.setNetworkCapabilities(mmsNetworkNc, true /*sendToConnectivityService*/);
+        mmsCallback.expectCapabilitiesWithout(NET_CAPABILITY_NOT_VCN_MANAGED, mCellNetworkAgent);
+        mmsWithInternetCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+
+        mCellNetworkAgent.disconnect();
+        mmsCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        mmsWithInternetCallback.assertNoCallback();
+    }
+
     @Ignore // 40%+ flakiness : figure out why and re-enable.
     @Test
     public final void testBatteryStatsNetworkType() throws Exception {
