@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "24ff1886_2e2f9a55",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-14T00:27:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d30e5df_965f735f",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "62a11c4fd97e4c305c2e1d40c8e4030082f211ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e1d38c6_98edbed1",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-14T00:00:24Z",
       "side": 1,
       "message": "Do other token-bearing PODs check equality of the token? This is now checking identity, not necessarily just equality.",
+      "range": {
+        "startLine": 183,
+        "startChar": 19,
+        "endLine": 183,
+        "endChar": 56
+      },
+      "revId": "62a11c4fd97e4c305c2e1d40c8e4030082f211ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56ea3827_d873d2d2",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-14T00:27:30Z",
+      "side": 1,
+      "message": "Some do, for example: https://cs.android.com/android/platform/superproject/+/master:frameworks/base/telephony/java/com/android/ims/ImsFeatureContainer.java\n\nThat\u0027s really depend on if we would like take the token as part of the identity.\n\nWhen the token is firstly introduced (see patch9), I treated it as only a secret liveness check point. It is not parceled/unparceled, and not count in equals. \n\nBut later I changed mind. In javadoc of addSignalSRRequest, we ask caller to pass the \"same\" request object if they want to stop receiving notification. This actually require identity check.\n\nI will think harder to find for more cases. Keep this open for more discuss.\nThanks",
+      "parentUuid": "1e1d38c6_98edbed1",
       "range": {
         "startLine": 183,
         "startChar": 19,
