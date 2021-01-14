@@ -22,6 +22,30 @@
       },
       "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8684d6b4_5c73c540",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-14T21:31:33Z",
+      "side": 1,
+      "message": "It\u0027s dB for some and dBM for others. :-D",
+      "parentUuid": "9cd0bb7e_fc36d905",
+      "range": {
+        "startLine": 443,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 7
+      },
+      "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
