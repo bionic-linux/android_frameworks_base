@@ -47,6 +47,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "544956ca_cba133c9",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2250,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-14T12:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51c8769f_2ea46d67",
+      "range": {
+        "startLine": 2250,
+        "startChar": 52,
+        "endLine": 2250,
+        "endChar": 58
+      },
+      "revId": "f36cdc67bb6b4417da93f5d5ef74954e8c5e155a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d39ae88_38ee4470",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2250,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-14T12:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4891eac6_47252565",
+      "range": {
+        "startLine": 2250,
+        "startChar": 19,
+        "endLine": 2250,
+        "endChar": 43
+      },
+      "revId": "f36cdc67bb6b4417da93f5d5ef74954e8c5e155a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fef3121b_2dfad052",
@@ -83,6 +131,30 @@
       "writtenOn": "2021-01-08T01:24:26Z",
       "side": 1,
       "message": "nit: isAlwaysOnSupported",
+      "range": {
+        "startLine": 2311,
+        "startChar": 19,
+        "endLine": 2311,
+        "endChar": 51
+      },
+      "revId": "f36cdc67bb6b4417da93f5d5ef74954e8c5e155a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "650cfe63_3a522008",
+        "filename": "core/java/android/nfc/NfcAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2311,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-14T12:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65d44861_d09e03ef",
       "range": {
         "startLine": 2311,
         "startChar": 19,
