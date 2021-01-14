@@ -70,6 +70,30 @@
       },
       "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8927aea4_a0679d6a",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-14T23:10:02Z",
+      "side": 1,
+      "message": "Of course it isn\u0027t consistent. :)\nWhat I\u0027m more curious about is how many values are in the int array?  It is just 2?\nLet me see if I understand it correctly:\nIf the signal measurement type specified in the builder\u0027s setSignalMeasurementType method is SIGNAL_MEASUREMENT_TYPE_RSCP, then this method returns an array with 2 elements which are: -120,-25\n\nIf that is the case then two suggestions:\n1. There should be a getSignalMeasurementType on SignalThresholdInfo, otherwise it\u0027s not clear what type of thresholds are being referred to.\n2. Instead of an int[] array this should be represented as an android.util.Range\u003cInteger\u003e since that class cleanly represents the concept of a range.",
+      "parentUuid": "2d734d26_32f7488c",
+      "range": {
+        "startLine": 443,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 7
+      },
+      "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

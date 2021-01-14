@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7890d419_197e5ead",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-14T23:10:02Z",
+      "side": 1,
+      "message": "You can\u0027t @see SignalMeasurementType since it\u0027s an @hide intdef (and no, don\u0027t make it public).  you could @link the valid values here though.",
+      "range": {
+        "startLine": 452,
+        "startChar": 12,
+        "endLine": 452,
+        "endChar": 33
+      },
+      "revId": "c913a77444ea2559933fb2384777932a17e65976",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
