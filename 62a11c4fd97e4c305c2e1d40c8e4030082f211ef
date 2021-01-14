@@ -93,6 +93,52 @@
       },
       "revId": "62a11c4fd97e4c305c2e1d40c8e4030082f211ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45c314de_135111e9",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 14588,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-14T01:53:50Z",
+      "side": 1,
+      "message": "quality measurements.",
+      "range": {
+        "startLine": 14588,
+        "startChar": 85,
+        "endLine": 14588,
+        "endChar": 94
+      },
+      "revId": "62a11c4fd97e4c305c2e1d40c8e4030082f211ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cdfd2ae_b51c03a6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 14611,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-14T01:53:50Z",
+      "side": 1,
+      "message": "will be used on a best-effort basis; the system may... modify requests to multiplex various request sources or to optimize power consumption.",
+      "range": {
+        "startLine": 14611,
+        "startChar": 47,
+        "endLine": 14611,
+        "endChar": 92
+      },
+      "revId": "62a11c4fd97e4c305c2e1d40c8e4030082f211ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
