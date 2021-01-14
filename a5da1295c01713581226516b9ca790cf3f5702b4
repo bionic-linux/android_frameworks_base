@@ -33,6 +33,24 @@
       "message": "Generally speaking I think it would be better to avoid the capability to mock static and final methods. A better way is to ensure that our tests perform proper dependency injection.\n\nDo we have some tests that we\u0027d like to write that are not possible or difficult to write without this library?\n\nPresumably all current tests do not need this, since otherwise they would fail?",
       "revId": "a5da1295c01713581226516b9ca790cf3f5702b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9df1e96b_5ba9bfc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-14T08:14:53Z",
+      "side": 1,
+      "message": "\u003e Do we have some tests that we\u0027d like to write that are not possible or difficult to write without this library?\naosp/1545848 add PemermisionManger to PermissionMonitor and ConnectivityServiceTest need to mock PemermisionManger now which is a final class. However, I think I found a way to have a testable PemermisionManger w/o mocking it. But I\u0027m not sure if Aaron still needs this change, will discuss with him.\n\n\u003e Presumably all current tests do not need this, since otherwise they would fail?\nYes",
+      "parentUuid": "12ce38f0_3cdc9173",
+      "revId": "a5da1295c01713581226516b9ca790cf3f5702b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
