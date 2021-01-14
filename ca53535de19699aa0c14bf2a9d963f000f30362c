@@ -22,6 +22,30 @@
       },
       "revId": "ca53535de19699aa0c14bf2a9d963f000f30362c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ae6bb0f_b28e747f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6920,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-14T12:10:56Z",
+      "side": 1,
+      "message": "Note that this also conflicts with your next patch, where you send all requests to all factories as they get registered (which is expected).",
+      "parentUuid": "33328875_aa86ef54",
+      "range": {
+        "startLine": 6920,
+        "startChar": 49,
+        "endLine": 6920,
+        "endChar": 63
+      },
+      "revId": "ca53535de19699aa0c14bf2a9d963f000f30362c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
