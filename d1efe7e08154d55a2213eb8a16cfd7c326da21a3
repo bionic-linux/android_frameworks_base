@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97fe7d8e_70984b0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-14T08:15:08Z",
+      "side": 1,
+      "message": "Nit: avoid using \"we\" in code (go/avoidwe) and in commit messages: it\u0027s not clear who \"we\" is for someone that reads the git log.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 2
+      },
+      "revId": "d1efe7e08154d55a2213eb8a16cfd7c326da21a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffadc2b4_d53a0bc8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-14T08:15:08Z",
+      "side": 1,
+      "message": "Nit: in general don\u0027t mention personal plans in the commit message, as who does the changes does not matter much when reading the git log.\nYou can just say \"the legacy metrics code will be removed in a separate commit\".",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "d1efe7e08154d55a2213eb8a16cfd7c326da21a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b141a37_497b543c",
+        "filename": "core/java/android/net/metrics/ApfProgramEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-14T08:15:08Z",
+      "side": 1,
+      "message": "We still don\u0027t know what the next version will be called, it may not be \"12\".\nGenerally I think you can just say \"this API is deprecated\", but you need to explain why: specifically, the event may not be sent in Android S and above.",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 42
+      },
+      "revId": "d1efe7e08154d55a2213eb8a16cfd7c326da21a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
