@@ -34,6 +34,24 @@
       "parentUuid": "3c451306_206c46e7",
       "revId": "0d815b574547a420643c328ed8ed93d0380692bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55888f0e_d08217d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2021-01-14T03:24:03Z",
+      "side": 1,
+      "message": "I didn\u0027t notice this assertion, thought that the latter one (about requests order) fails.",
+      "parentUuid": "77f2630f_bbd3dab1",
+      "revId": "0d815b574547a420643c328ed8ed93d0380692bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
