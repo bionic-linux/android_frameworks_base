@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6f06282_8feeae92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-14T09:47:59Z",
+      "side": 1,
+      "message": "Nit: legacy",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "4a6ccd4d7ad5ed4f0fbab9fec0b6f944eac44809",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d499b903_3ec60afe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-14T09:47:59Z",
+      "side": 1,
+      "message": "Generally LGTM but Jean or Lorenzo need to API+1",
+      "revId": "4a6ccd4d7ad5ed4f0fbab9fec0b6f944eac44809",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "585c763d_751787f8",
+        "filename": "core/java/android/net/metrics/ApfProgramEvent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-14T09:47:59Z",
+      "side": 1,
+      "message": "This is obsolete once the code is merged: \"refactor\" and \"removing\" can\u0027t be understood because the old code is not there anymore.\nI think you can just say that the event may not be sent in S+.",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "4a6ccd4d7ad5ed4f0fbab9fec0b6f944eac44809",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
