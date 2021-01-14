@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33328875_aa86ef54",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6920,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-14T11:58:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t match our agreement, which was to always send all REQUESTs to factories for simplicity. To be clear, what you wrote makes sense and is better in some respects.\n\nThe real difference is that with what you wrote, when an unmetered network is connected, the OEM_PAID network will be disconnected because factories will no longer see the requests. This will save some small amount of battery power. The flip side of that coin is that when the unmetered network disconnects, the system will take some time re-establishing the OEM_PAID network.\n\nIf you agree with this I think this patch is simply unnecessary. The old version already does what we need.",
+      "range": {
+        "startLine": 6920,
+        "startChar": 49,
+        "endLine": 6920,
+        "endChar": 63
+      },
+      "revId": "ca53535de19699aa0c14bf2a9d963f000f30362c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
