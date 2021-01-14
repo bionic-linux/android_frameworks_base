@@ -62,6 +62,30 @@
       },
       "revId": "790c77f7e5f77ab21c73fbe54df38d4a9221251d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea5d5ecb_43bcb4c7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5858,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-14T12:21:43Z",
+      "side": 1,
+      "message": "This sounds hacky.\nBut you are right callers who explicitly added NET_CAPABILITY_NOT_VCN_MANAGED should be respected.\nHowever:\n 1. Users need to be aware of that even if NOT_VCN_MANAGED is added by DEFAULT, some callers still need to added it manually if they want to explicitly request NOT_VCN_MANAGED network. I think this might confuse people.\n 2. If we expose any NetworkRequest constructor that could take NetworkCapabilities then it won\u0027t work.\nThat being said, I don\u0027t have better idea now.",
+      "parentUuid": "8dcbdd04_4016ac84",
+      "range": {
+        "startLine": 5858,
+        "startChar": 8,
+        "endLine": 5858,
+        "endChar": 41
+      },
+      "revId": "790c77f7e5f77ab21c73fbe54df38d4a9221251d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
