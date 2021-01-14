@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4a2f9f47_95ea19b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-01-14T11:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f06282_8feeae92",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "4a6ccd4d7ad5ed4f0fbab9fec0b6f944eac44809",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d499b903_3ec60afe",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 7
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-14T09:47:59Z",
       "side": 1,
       "message": "This is obsolete once the code is merged: \"refactor\" and \"removing\" can\u0027t be understood because the old code is not there anymore.\nI think you can just say that the event may not be sent in S+.",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "4a6ccd4d7ad5ed4f0fbab9fec0b6f944eac44809",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bb1e6e7_9ece923a",
+        "filename": "core/java/android/net/metrics/ApfProgramEvent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-01-14T11:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "585c763d_751787f8",
       "range": {
         "startLine": 42,
         "startChar": 38,
