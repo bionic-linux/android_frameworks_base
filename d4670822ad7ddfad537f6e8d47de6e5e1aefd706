@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af9d881e_a9bbe56d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7453,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-14T03:38:08Z",
+      "side": 1,
+      "message": "I think referring to an aidl here makes sense except I haven\u0027t seen that in a lot of places.",
+      "range": {
+        "startLine": 7453,
+        "startChar": 11,
+        "endLine": 7453,
+        "endChar": 75
+      },
+      "revId": "d4670822ad7ddfad537f6e8d47de6e5e1aefd706",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "000146e5_4641e628",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7455,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-14T03:38:08Z",
+      "side": 1,
+      "message": "I can\u0027t linkify this because it\u0027s a system api and this method is a public api.",
+      "range": {
+        "startLine": 7455,
+        "startChar": 7,
+        "endLine": 7455,
+        "endChar": 53
+      },
+      "revId": "d4670822ad7ddfad537f6e8d47de6e5e1aefd706",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
