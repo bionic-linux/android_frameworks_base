@@ -16,6 +16,23 @@
       "message": "Fix conflict again...",
       "revId": "a5da1295c01713581226516b9ca790cf3f5702b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12ce38f0_3cdc9173",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T05:31:29Z",
+      "side": 1,
+      "message": "Generally speaking I think it would be better to avoid the capability to mock static and final methods. A better way is to ensure that our tests perform proper dependency injection.\n\nDo we have some tests that we\u0027d like to write that are not possible or difficult to write without this library?\n\nPresumably all current tests do not need this, since otherwise they would fail?",
+      "revId": "a5da1295c01713581226516b9ca790cf3f5702b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
