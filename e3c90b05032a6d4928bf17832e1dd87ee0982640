@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "295fe790_8072b162",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T13:50:02Z",
+      "side": 1,
+      "message": "I don\u0027t think adding a new dependency on frameworks/base is the right way to do this. But I\u0027d defer to Remi.",
+      "revId": "e3c90b05032a6d4928bf17832e1dd87ee0982640",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
