@@ -24,6 +24,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f75d8d1_531eb06e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-14T10:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc04e575_9011c3b7",
+      "range": {
+        "startLine": 486,
+        "startChar": 92,
+        "endLine": 486,
+        "endChar": 93
+      },
+      "revId": "accff4dd0041f926098697a7119894e18e098d96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7df28fc_8de9b86e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-14T10:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc04e575_9011c3b7",
+      "range": {
+        "startLine": 486,
+        "startChar": 92,
+        "endLine": 486,
+        "endChar": 93
+      },
+      "revId": "accff4dd0041f926098697a7119894e18e098d96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "53240b5c_11161656",
@@ -37,6 +85,30 @@
       "writtenOn": "2021-01-14T07:02:41Z",
       "side": 1,
       "message": "CAPABILITIES_ACCESSIBLE_DESPITE_VCN ?",
+      "range": {
+        "startLine": 490,
+        "startChar": 30,
+        "endLine": 490,
+        "endChar": 70
+      },
+      "revId": "accff4dd0041f926098697a7119894e18e098d96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a67c19f_344e1a76",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-14T10:16:06Z",
+      "side": 1,
+      "message": "Done.\nI think that doesn\u0027t say these capabilities are subject to cellular services.\nThus removed cellular service related description.",
+      "parentUuid": "53240b5c_11161656",
       "range": {
         "startLine": 490,
         "startChar": 30,
