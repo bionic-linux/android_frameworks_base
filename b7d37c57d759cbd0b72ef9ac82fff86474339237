@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c22541ec_b6ff2690",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T14:28:18Z",
+      "side": 1,
+      "message": "Does this really need to be set by default? I think the code would be simpler if we did *not* add it by default, and only add it if necessary when a NetworkRequest is built. See comment below about double negatives.",
+      "range": {
+        "startLine": 422,
+        "startChar": 12,
+        "endLine": 422,
+        "endChar": 52
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abdfc416_fa61efbf",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T14:28:18Z",
+      "side": 1,
+      "message": "\"Capabilities that are accessible\"\n\nThat said, I wouldn\u0027t use the word \"accessible\" here, because this is not a security property, it only affects what is visible by default in NetworkCallbacks.\n\nFor the same reason, I think \"despite\" is not the right word either. As best I can understand, this should be:\n\n/**\n * Capabilities that are currently incompatible with VCN networks and thus require that the\n * NOT_VCN_MANAGED not be present in NetworkRequests.\n */\nprivate static final long VCN_UNSUPPORTED_CAPABILITIES \u003d \n        ...;\n\nEven if we do that rename, though, I don\u0027t think this is a good approach. Explicitly enumerating the capabilities here is brittle and is likely to break as soon as telephony adds a new network capability, which happens every now and again. I think we\u0027re better off enumerating the capabilities that the VCN *is* capable of, and having the opposite list.\n\nBy doing an intersection between this list and the list of capabilities, I think that basically just boils down to two: INTERNET and DUN.\n\nTherefore, I would suggest: why can\u0027t we live with something much simpler, i.e.:\n\n- If a request doesn\u0027t request INTERNET or DUN: no need to do anything.\n- If a request requests INTERNET or DUN, add the NOT_VCN_MANAGED bit.",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "942beaef_2ea8b8f5",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T14:28:18Z",
+      "side": 1,
+      "message": "not any more",
+      "range": {
+        "startLine": 488,
+        "startChar": 54,
+        "endLine": 488,
+        "endChar": 84
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87a4b151_92ee0f1b",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T14:28:18Z",
+      "side": 1,
+      "message": "Nit: would shorten to \"maybeRemoveNotVcnManaged\", since it\u0027s shorter and simpler but still accurately describes what this method is supposed to do. Also, given the double negative (\"remove\" + \"not\"), I think it would be simpler if we removed NOT_VCN_MANAGED by default and only added NOT_VCN_MANAGED, if necessary, in NetworkRequest.Builder#build. See comments above.",
+      "range": {
+        "startLine": 773,
+        "startChar": 16,
+        "endLine": 773,
+        "endChar": 54
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
