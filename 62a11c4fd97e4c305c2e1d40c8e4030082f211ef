@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d30e5df_965f735f",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-14T00:00:24Z",
+      "side": 1,
+      "message": "final",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "62a11c4fd97e4c305c2e1d40c8e4030082f211ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e1d38c6_98edbed1",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-14T00:00:24Z",
+      "side": 1,
+      "message": "Do other token-bearing PODs check equality of the token? This is now checking identity, not necessarily just equality.",
+      "range": {
+        "startLine": 183,
+        "startChar": 19,
+        "endLine": 183,
+        "endChar": 56
+      },
+      "revId": "62a11c4fd97e4c305c2e1d40c8e4030082f211ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
