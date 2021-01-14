@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90fc57d3_d28228fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T11:38:41Z",
+      "side": 1,
+      "message": "Generally LGTM but can we do this in NetworkRequest.Builder instead of in the service? That allows us to remove the capability only if the app did not add it explicitly.\n\nThere are no security implications here because NET_CAPABILITY_NOT_VCN_MANAGED is not about security, it\u0027s about whether apps see certain networks by default. Apps are always free to remove the capability.",
+      "revId": "790c77f7e5f77ab21c73fbe54df38d4a9221251d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7098fef4_ae617087",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5770,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T11:38:41Z",
+      "side": 1,
+      "message": "I think \"enforce\" is not the right word here because \"enforce\" is usually associated with imposing restrictions or constraints on behaviour desired by another party. How about \"allowBypassingVcnForNonInternetRequest\"?",
+      "range": {
+        "startLine": 5770,
+        "startChar": 17,
+        "endLine": 5770,
+        "endChar": 24
+      },
+      "revId": "790c77f7e5f77ab21c73fbe54df38d4a9221251d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dcbdd04_4016ac84",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5858,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-14T11:38:41Z",
+      "side": 1,
+      "message": "If we do this here in the service, then the NET_CAPABILITY_NOT_VCN_MANAGED capability will be removed even if the app explicitly added it to their request.\n\nI think it\u0027s better to do this in NetworkRequest.Builder. In that class, we can keep track of whether the app added NET_CAPABILITY_NOT_VCN_MANAGED or not. Then:\n- If the app called addCapability(NET_CAPABILITY_NOT_VCN_MANAGED), then we always add NET_CAPABILITY_NOT_VCN_MANAGED when build() is called.\n- If the app did not call addCapability(NET_CAPABILITY_NOT_VCN_MANAGED) but added any of the capabilities in CAPABILITIES_ACCESSIBLE_DESPITE_VCN, we would remove NET_CAPABILITY_NOT_VCN_MANAGED when build() is called.\n- Otherwise, we would add NET_CAPABILITY_NOT_VCN_MANAGED when build is called.",
+      "range": {
+        "startLine": 5858,
+        "startChar": 8,
+        "endLine": 5858,
+        "endChar": 41
+      },
+      "revId": "790c77f7e5f77ab21c73fbe54df38d4a9221251d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
