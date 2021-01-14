@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e75cdf80_c9a9a2fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-01-14T09:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97fe7d8e_70984b0f",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 2
+      },
+      "revId": "d1efe7e08154d55a2213eb8a16cfd7c326da21a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffadc2b4_d53a0bc8",
@@ -47,6 +71,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfd93de7_c8f10104",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-01-14T09:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffadc2b4_d53a0bc8",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "d1efe7e08154d55a2213eb8a16cfd7c326da21a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0589e02_53789c8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-01-14T09:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffadc2b4_d53a0bc8",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "d1efe7e08154d55a2213eb8a16cfd7c326da21a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b141a37_497b543c",
@@ -60,6 +132,30 @@
       "writtenOn": "2021-01-14T08:15:08Z",
       "side": 1,
       "message": "We still don\u0027t know what the next version will be called, it may not be \"12\".\nGenerally I think you can just say \"this API is deprecated\", but you need to explain why: specifically, the event may not be sent in Android S and above.",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 42
+      },
+      "revId": "d1efe7e08154d55a2213eb8a16cfd7c326da21a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ebca68f_260aef3d",
+        "filename": "core/java/android/net/metrics/ApfProgramEvent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-01-14T09:29:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b141a37_497b543c",
       "range": {
         "startLine": 41,
         "startChar": 26,
