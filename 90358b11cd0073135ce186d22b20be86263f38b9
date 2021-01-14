@@ -22,6 +22,30 @@
       },
       "revId": "90358b11cd0073135ce186d22b20be86263f38b9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42900cbf_b26af785",
+        "filename": "telephony/java/android/telephony/SignalStrengthUpdateRequest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-14T23:51:17Z",
+      "side": 1,
+      "message": "The IBinder token is removed from #equals and #hash (keep in #toString for debugging).",
+      "parentUuid": "61acbb1b_1b092c2b",
+      "range": {
+        "startLine": 183,
+        "startChar": 30,
+        "endLine": 183,
+        "endChar": 36
+      },
+      "revId": "90358b11cd0073135ce186d22b20be86263f38b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
