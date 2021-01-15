@@ -39,20 +39,18 @@ class CaptivePortalDataTest {
     @Rule @JvmField
     val ignoreRule = DevSdkIgnoreRule()
 
-    private val data = CaptivePortalData.Builder()
-            .setRefreshTime(123L)
-            .setUserPortalUrl(Uri.parse("https://portal.example.com/test"))
-            .setVenueInfoUrl(Uri.parse("https://venue.example.com/test"))
-            .setSessionExtendable(true)
-            .setBytesRemaining(456L)
-            .setExpiryTime(789L)
-            .setCaptive(true)
-            .apply {
-                if (SdkLevel.isAtLeastS()) {
-                    setVenueFriendlyName("venue friendly name")
-                }
-            }
-            .build()
+    private val data = CaptivePortalData.Builder().apply {
+        setRefreshTime(123L)
+        setUserPortalUrl(Uri.parse("https://portal.example.com/test"))
+        setVenueInfoUrl(Uri.parse("https://venue.example.com/test"))
+        setSessionExtendable(true)
+        setBytesRemaining(456L)
+        setExpiryTime(789L)
+        setCaptive(true)
+        if (SdkLevel.isAtLeastS()) {
+            setVenueFriendlyName("venue friendly name")
+        }
+    }.build()
 
     private fun makeBuilder() = CaptivePortalData.Builder(data)
 
