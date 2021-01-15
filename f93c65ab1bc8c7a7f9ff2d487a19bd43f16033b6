@@ -142,6 +142,30 @@
       },
       "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a360091_75855769",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-15T00:57:22Z",
+      "side": 1,
+      "message": "Tyler, thanks for the suggestions.\n\nThe thresholds definition/usage and link to details android document are added into the javadoc of the API. This should give enough context for now.\n\nIf API council is not satisfied, I can still update the javadoc after FC(deadline Jan 20).\nThanks again for the help.",
+      "parentUuid": "1972d324_753abbdd",
+      "range": {
+        "startLine": 443,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 7
+      },
+      "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
