@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bfcc844_0c5a8db2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14598,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-15T17:48:39Z",
+      "side": 1,
+      "message": "What kind of lifecycle guarantees does this API provide for the passed SignalStrengthUpdateRequest?  If the app which provides a SignalStrengthUpdateRequest crashes, for example, will the SignalStrengthUpdateRequest remain in Telephony?  Does it persist after reboot in this case?  I can see this being a potential source of insidious bugs.\n\nI think it\u0027s important for the API to provide a guarantee that the request is cleaned up if the calling app crashes.  Otherwise with the API surface as it stands, the calling app has no way to know that it previously made a request which could potentially conflict with a new request it is making after the app starts back up.",
+      "range": {
+        "startLine": 14596,
+        "startChar": 6,
+        "endLine": 14598,
+        "endChar": 79
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd087491_4f11ab76",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14612,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-15T17:48:39Z",
+      "side": 1,
+      "message": "What is the expected behavior if a single app calls this API multiple times? \n\nIf the behavior is that the app\u0027s existing request is replaced, I\u0027d recommend the name:\nsetSignalStrengthUpdateThresholds\nThis would make it more clear to the caller that the request is not additive.",
+      "range": {
+        "startLine": 14612,
+        "startChar": 24,
+        "endLine": 14612,
+        "endChar": 60
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cffc9ad2_d3c76d76",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14642,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-15T17:48:39Z",
+      "side": 1,
+      "message": "This is a red flag to me; the APIs proposed here are not expressive enough that the caller can know what requests have been issued in the past.  \n\nI\u0027d strongly recommend that you move to a model where one app can issue a single request via an API like setSignalStrengthUpdateThresholds, and change this to something like clearSignalStrengthUpdateThresholds.  Further there should be a method something like isSignalStrengthUpdateThresholdsSet to allow the caller to know if they have requested something.  Finally, there needs to be a guarantee that if the requester crashes that their previously requested thresholds are removed.",
+      "range": {
+        "startLine": 14642,
+        "startChar": 7,
+        "endLine": 14642,
+        "endChar": 79
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
