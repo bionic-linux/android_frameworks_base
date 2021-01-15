@@ -18,6 +18,41 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9b0ebdd_c409ad20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-15T05:31:01Z",
+      "side": 1,
+      "message": "Addressed the comments. PTAL, Thanks!",
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f3c88e8_545508d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-15T05:31:01Z",
+      "side": 1,
+      "message": "Yes, this exception has been reviewed by PWG when it was allowed in the wifi stack a few releases back. When a fresh device boots up, location is disabled. If we disallow SUW from accessing wifi state which are location sensitive like the scan results, connection details, etc then the user cannot connect to a network which is the first screen on SUW.\n\nReference for the existing exemption in the wifi stack: https://source.corp.google.com/android/packages/modules/Wifi/service/java/com/android/server/wifi/util/WifiPermissionsUtil.java;rcl\u003d02f5e1eaea74835fa3d85b3fe28a7870cc8f5cb2;l\u003d233",
+      "parentUuid": "2927718e_e7ae0aa3",
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "867290fa_05c99659",
@@ -31,6 +66,30 @@
       "writtenOn": "2021-01-15T04:37:35Z",
       "side": 1,
       "message": "Please use NetworkStack.checkNetworkStackPermission",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 96
+      },
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "788a2410_ad90c0d9",
+        "filename": "core/java/com/android/internal/util/LocationPermissionChecker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-15T05:31:01Z",
+      "side": 1,
+      "message": "That call does not work when the invocation is not from the context of a binder IPC (it uses mContext.checkCallingOrSelfPermission). This particular call can be used from the connectivity service when it wants to send a callback to a client for example.",
+      "parentUuid": "867290fa_05c99659",
       "range": {
         "startLine": 154,
         "startChar": 19,
@@ -60,6 +119,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cabec312_6d0f7b89",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-15T05:31:01Z",
+      "side": 1,
+      "message": "I tried that, but it causes the device to crash. There are a bunch of API calls being invoked from unit tests which has a enforceNetworkStack() permission. So denying it in setup ends up crashing the device when running unit tests calling those methods.",
+      "parentUuid": "dfd6eec2_7ef57d76",
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a5a2544c_f32e84e4",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 3
@@ -71,6 +148,30 @@
       "writtenOn": "2021-01-15T04:37:35Z",
       "side": 1,
       "message": "Maybe have \"location\" in the name somewhere then. e.g. denyAllLocationPrivilegedPermissions or so ?",
+      "range": {
+        "startLine": 7787,
+        "startChar": 17,
+        "endLine": 7787,
+        "endChar": 45
+      },
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1a80ebf_e1e9d637",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7787,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-15T05:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5a2544c_f32e84e4",
       "range": {
         "startLine": 7787,
         "startChar": 17,
@@ -94,6 +195,30 @@
       "writtenOn": "2021-01-15T04:37:35Z",
       "side": 1,
       "message": "I think denyAllPrivilegedPermissions() should be called by setupLocationPermissions. The latest patchset has it everywhere before that call, and it would make sense that a function called \"setupLocationPermission\" would leave the process with exactly the permissions declared there.\n\nIt would also reduce the amount of copy-pasting, which is always problematic in tests.",
+      "range": {
+        "startLine": 8214,
+        "startChar": 8,
+        "endLine": 8215,
+        "endChar": 33
+      },
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0464c92_449c3e32",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8215,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-15T05:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4475258_46f9e79a",
       "range": {
         "startLine": 8214,
         "startChar": 8,
