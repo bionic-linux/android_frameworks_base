@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56065b6b_24386514",
+        "filename": "tests/net/common/java/android/net/CaptivePortalDataTest.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-15T05:26:12Z",
+      "side": 1,
+      "message": "Style : the entire point of apply is to use it the other way around.\n\n private val data \u003d CaptivePortalData.Builder().apply {\n            setRefreshTime(123L)\n            setUserPortalUrl(Uri.parse(\"https://portal.example.com/test\"))\n            setVenueInfoUrl(Uri.parse(\"https://venue.example.com/test\"))\n            setSessionExtendable(true)\n            setBytesRemaining(456L)\n            setExpiryTime(789L)\n            setCaptive(true)\n            if (SdkLevel.isAtLeastS()) {\n              setVenueFriendlyName(\"venue friendly name\")\n            }\n          }.build()\n\n...which reads much nicer.",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "4cea9169f8582f748a2889669ab623fa2b48ae9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
