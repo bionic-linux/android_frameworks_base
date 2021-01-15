@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "190eaf7b_1e093df8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-15T15:53:03Z",
+      "side": 1,
+      "message": "Hmm, all new APIs need to have CTS tests, and it looks like none are included in this topic.  😞\n\nAlso see some notes inline about docs and broadcast behaviors.",
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3ce9659_60af627f",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-15T15:53:03Z",
+      "side": 1,
+      "message": "Hmm, we\u0027ve recently been trying to discourage new wake-up broadcasts; will this broadcast wake up apps (via manifest receivers), or will it only be sent to registered dynamic ones?\n\nIf you glance at @BroadcastBehavior it might help you consider the various broadcast option decisions you\u0027ll want to make.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9001b6d_e9287808",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-15T15:53:03Z",
+      "side": 1,
+      "message": "Could you help developers understand the intended use of this string?  Specifically, is this suitable for rendering directly into a UI element?\n\nIf there are multiple SE on the device which have identical names, how does a developer distinguish between state changes between each of them?  If these APIs are intended to reflect Reader.getName() and Reader.isSecureElementPresent() please reference with @see annotations.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 86
+      },
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80fa0c68_63aee4a6",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-15T15:53:03Z",
+      "side": 1,
+      "message": "What is the type of this data?  (Boolean, int, etc?)  If it\u0027s an int, can you help guide towards the @IntDef which describes the possible values?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 90
+      },
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
