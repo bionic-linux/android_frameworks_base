@@ -46,6 +46,30 @@
       },
       "revId": "ca53535de19699aa0c14bf2a9d963f000f30362c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a65de8b_3cd427d8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6920,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-15T04:29:26Z",
+      "side": 1,
+      "message": "I actually had a rationale for this but of course, it could be flawed so it\u0027ll be good to get your input.\n\nsendAllRequestsToProvider triggers when a new NetworkProviderInfo comes online. Now, AFAIK, that shouldn\u0027t happen very often and if it did, if the highest priority request available was already being satisfied than we could stop right there and do no further evaluation with the tradeoff of taking more time to bring up a network if needed. I am \u0027ok\u0027 with this tradeoff now that I better understand the complexity since it seems pretty manageable (unless I am missing something) with the pro of being consistent with existing behavior of how networks are kept up.\n\nRegarding the follow-up patch, in the handleRegisterNetworkRequest flow, all the providers are already up. If we evaluate all of the NRI\u0027s requests and still don\u0027t have an active request, we should then send all REQUEST type requests to the providers to see if one can satisfy since we won\u0027t know unless we send them all.\n\nI\u0027d need to change the code though in that patch https://r.android.com/c/1527006/14 from this:\n\n        rematchAllNetworksAndRequests();\n        for (final NetworkRequest req : nri.mRequests) {\n            if (req.isRequest() \u0026\u0026 nri.mSatisfier \u003d\u003d null) {\n                sendUpdatedScoreToFactories(req, null);\n            }\n        }\n\nto this:\n\n        rematchAllNetworksAndRequests();\n        if (null \u003d\u003d nri.getActiveRequest()) {\n            for (final NetworkRequest req : nri.mRequests) {\n                if (req.isRequest()) {\n                    sendUpdatedScoreToFactories(req, null);\n                }\n            }\n        }\n\nThat was more or less my thought process on this. In one case, we are bringing up a new NetworkProviderInfo in which case, we can just evaluate the highest priority request if needed. In the other, we are registering a network request and if after rematch it doesn\u0027t have an active request, then we should send all REQUEST types to the providers to see if one sticks.\n\nLet me know if this sounds good and I can update the follow-up patch. Also, if there is something I missing or if you are more comfortable just sending all the requests in sendAllRequestsToProvider, I can update this CL to go that route as well. I see the pros/cons in both cases. Thanks!",
+      "parentUuid": "4ae6bb0f_b28e747f",
+      "range": {
+        "startLine": 6920,
+        "startChar": 49,
+        "endLine": 6920,
+        "endChar": 63
+      },
+      "revId": "ca53535de19699aa0c14bf2a9d963f000f30362c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
