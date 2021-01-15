@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2927718e_e7ae0aa3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-15T04:37:35Z",
+      "side": 1,
+      "message": "Only nits on the implementation, but do you have documentation that PWG is happy with this ? In particular, that means setup wizard can tell where the device is – and they don\u0027t even have a chance to deny that because that UI is disabled during the wizard ! – and I\u0027m not convinced users expect hat.",
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "867290fa_05c99659",
+        "filename": "core/java/com/android/internal/util/LocationPermissionChecker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-15T04:37:35Z",
+      "side": 1,
+      "message": "Please use NetworkStack.checkNetworkStackPermission",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 96
+      },
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfd6eec2_7ef57d76",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-15T04:37:35Z",
+      "side": 1,
+      "message": "Question : is it realistic to set up so that by default the privileges are denied (in effect, call denyAllPrivilegedPermissions() in setUp()) ? Or would we need to update many tests ?",
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5a2544c_f32e84e4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7787,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-15T04:37:35Z",
+      "side": 1,
+      "message": "Maybe have \"location\" in the name somewhere then. e.g. denyAllLocationPrivilegedPermissions or so ?",
+      "range": {
+        "startLine": 7787,
+        "startChar": 17,
+        "endLine": 7787,
+        "endChar": 45
+      },
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4475258_46f9e79a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8215,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-15T04:37:35Z",
+      "side": 1,
+      "message": "I think denyAllPrivilegedPermissions() should be called by setupLocationPermissions. The latest patchset has it everywhere before that call, and it would make sense that a function called \"setupLocationPermission\" would leave the process with exactly the permissions declared there.\n\nIt would also reduce the amount of copy-pasting, which is always problematic in tests.",
+      "range": {
+        "startLine": 8214,
+        "startChar": 8,
+        "endLine": 8215,
+        "endChar": 33
+      },
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
