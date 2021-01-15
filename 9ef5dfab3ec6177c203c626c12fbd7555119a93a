@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1348f5f_b30c363d",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-01-15T12:10:15Z",
+      "side": 1,
+      "message": "Does this mean that there will be devices running Android S, that are not going to support multi-user RoR?",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 519,
+        "endChar": 89
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd4f1b86_a3a128b7",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-01-15T12:10:15Z",
+      "side": 1,
+      "message": "nit: got",
+      "range": {
+        "startLine": 530,
+        "startChar": 85,
+        "endLine": 530,
+        "endChar": 88
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e98c231_1b8358a9",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-01-15T12:10:15Z",
+      "side": 1,
+      "message": "nit: Slog has an override that accept throwable: Slog.w(TAG, \"Failed to query the active slots\", e);",
+      "range": {
+        "startLine": 535,
+        "startChar": 59,
+        "endLine": 535,
+        "endChar": 63
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b69d9ec2_11746ed7",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-01-15T12:10:15Z",
+      "side": 1,
+      "message": "nit: expected",
+      "range": {
+        "startLine": 544,
+        "startChar": 85,
+        "endLine": 544,
+        "endChar": 91
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a04da454_5603bdb2",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-01-15T12:10:15Z",
+      "side": 1,
+      "message": "nit: got",
+      "range": {
+        "startLine": 545,
+        "startChar": 48,
+        "endLine": 545,
+        "endChar": 51
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
