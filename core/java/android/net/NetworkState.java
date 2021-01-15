@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.annotation.NonNull;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -40,9 +41,9 @@ public class NetworkState implements Parcelable {
     public final String subscriberId;
     public final String networkId;
 
-    public NetworkState(NetworkInfo networkInfo, LinkProperties linkProperties,
-            NetworkCapabilities networkCapabilities, Network network, String subscriberId,
-            String networkId) {
+    public NetworkState(@NonNull NetworkInfo networkInfo, @NonNull LinkProperties linkProperties,
+            @NonNull NetworkCapabilities networkCapabilities, @NonNull Network network,
+            String subscriberId, String networkId) {
         this.networkInfo = networkInfo;
         this.linkProperties = linkProperties;
         this.networkCapabilities = networkCapabilities;
