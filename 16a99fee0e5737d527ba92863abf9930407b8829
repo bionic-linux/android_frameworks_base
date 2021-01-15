@@ -56,6 +56,30 @@
       },
       "revId": "16a99fee0e5737d527ba92863abf9930407b8829",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de22b0ab_f2e6343e",
+        "filename": "core/java/android/view/textclassifier/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1060841
+      },
+      "writtenOn": "2021-01-15T15:54:53Z",
+      "side": 1,
+      "message": "Joanne who is one of the existing owners approved that.\n\nHowever, we need you/Svet for approving the coretests one, i.e. core/tests/coretests/src/android/view/textclassifier/OWNERS.\n\nThanks.",
+      "parentUuid": "de3d0033_9318816f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "16a99fee0e5737d527ba92863abf9930407b8829",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
