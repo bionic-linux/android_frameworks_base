@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a87b4a8_074c8da6",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-15T03:36:06Z",
+      "side": 1,
+      "message": "I think no matter what solution we choose, if the user explicitly want or doesn\u0027t want the capability, they\u0027ll still need a way to do that. \nAnd for people who is too lazy to add INTERNET or DUN, we still need to add for them. Thus:\n\n1. new NetworkRequest.Builder()\n  .addTransport(CELLULAR).build().\n-\u003e should have NOT_VCN_MANAGED\n\n2. new NetworkRequest.Builder()\n  .addTransport(CELLULAR).removeCapability(NOT_VCN_MANAGED).build(). \n-\u003e shouldn\u0027t have NOT_VCN_MANAGED\n\n3. new NetworkRequest.Builder()\n  .addTransport(CELLULAR).addCapability(NOT_ROAMING).build()\n-\u003e should have NOT_VCN_MANAGED\n\n4. new NetworkRequest.Builder()\n  .addCapability(INTERNET).removeCapability(NOT_VCN_MANAGED).build()\n-\u003e shouldn\u0027t have NOT_VCN_MANAGED\n\n5. new NetworkRequest.Builder()\n  .addCapability(MMS).addCapability(NOT_VCN_MANAGED).build()\n-\u003e should have NOT_VCN_MANAGED\n\nFrom the test case above the way you suggest will fail 1 \u0026 4.",
+      "parentUuid": "abdfc416_fa61efbf",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "942beaef_2ea8b8f5",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 8
