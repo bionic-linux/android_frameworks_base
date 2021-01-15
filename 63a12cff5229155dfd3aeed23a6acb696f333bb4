@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61e198ea_503be2c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-15T14:52:02Z",
+      "side": 1,
+      "message": "Addressed the comment. PTAL, Thanks!",
+      "revId": "63a12cff5229155dfd3aeed23a6acb696f333bb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92ba447b_a3719791",
@@ -14,6 +31,30 @@
       "writtenOn": "2021-01-15T07:46:27Z",
       "side": 1,
       "message": "Won\u0027t this overwrite what may have been set in l.7811, if perm was one of the 4 relevant ones ? I think it should be the first lin in the function, or at least before the if() in l.7810.",
+      "range": {
+        "startLine": 7813,
+        "startChar": 0,
+        "endLine": 7813,
+        "endChar": 47
+      },
+      "revId": "63a12cff5229155dfd3aeed23a6acb696f333bb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3303e20_847ded26",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7813,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-15T14:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ba447b_a3719791",
       "range": {
         "startLine": 7813,
         "startChar": 0,
