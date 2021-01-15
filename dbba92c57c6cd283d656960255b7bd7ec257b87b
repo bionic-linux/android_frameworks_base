@@ -208,6 +208,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "665195b9_59919e71",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-15T14:18:16Z",
+      "side": 1,
+      "message": "Not done for 1 \u0026 2?\nIIUC The Log.wtf and Illegal argument serve different purpose.\nFor invalid transport I think we should throw illegal argument exception to inform developer this is a misuse.\nBut For invalid NetworkSpecifier we might just want to print log if it is in production.",
+      "parentUuid": "944c247f_9864ace0",
+      "range": {
+        "startLine": 1387,
+        "startChar": 16,
+        "endLine": 1387,
+        "endChar": 26
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ec93e57_b0587d7d",
         "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
         "patchSetId": 2
@@ -384,6 +408,30 @@
       "side": 1,
       "message": "It\u0027s necessary, IMS iface and internet iface is different. Seems capability IMS and internet can\u0027t Exist together. So I think create IMS iface need an independent function.",
       "parentUuid": "3873f674_d0dc72d5",
+      "range": {
+        "startLine": 1577,
+        "startChar": 32,
+        "endLine": 1577,
+        "endChar": 47
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdeaa1cc_884839ab",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-15T14:18:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9a7726c_f1c868b9",
       "range": {
         "startLine": 1577,
         "startChar": 32,

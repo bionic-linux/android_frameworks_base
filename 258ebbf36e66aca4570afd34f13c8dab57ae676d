@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09169ea8_2869b6db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-15T14:18:16Z",
+      "side": 1,
+      "message": "nit: you can omit the package name since this class name is unique.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "258ebbf36e66aca4570afd34f13c8dab57ae676d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74313839_a3b3f69d",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-15T14:18:16Z",
+      "side": 1,
+      "message": "For this case I think this is more readible if simplified to \nif (!state.networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {\n   throw ...\n}\n\nif (!spec instanceof TelephonyNetworkSpecifier) {\n  \n}\n\nreturn ...",
+      "range": {
+        "startLine": 1388,
+        "startChar": 8,
+        "endLine": 1389,
+        "endChar": 90
+      },
+      "revId": "258ebbf36e66aca4570afd34f13c8dab57ae676d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
