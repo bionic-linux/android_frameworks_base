@@ -70,6 +70,78 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84369fad_50e32f0f",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "515e0dd1_e500c0b3",
+      "range": {
+        "startLine": 141,
+        "startChar": 47,
+        "endLine": 141,
+        "endChar": 51
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d57411ee_49de5eb6",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61893fb5_96b8199e",
+      "range": {
+        "startLine": 141,
+        "startChar": 40,
+        "endLine": 141,
+        "endChar": 45
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae76d7a5_8c2b4a05",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63227e6d_b879df35",
+      "range": {
+        "startLine": 141,
+        "startChar": 70,
+        "endLine": 141,
+        "endChar": 74
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f512fecd_d207d10d",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-14T03:58:37Z",
       "side": 1,
       "message": "Could this be extracted to a private method with a parameter and reused ?",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 9
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89990308_ade2be61",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f512fecd_d207d10d",
       "range": {
         "startLine": 138,
         "startChar": 0,
@@ -162,6 +258,78 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "875b399b_41c38431",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5e5f6c_babfc1c8",
+      "range": {
+        "startLine": 171,
+        "startChar": 71,
+        "endLine": 171,
+        "endChar": 75
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93f8a811_0b0847cd",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34155b4d_dd55c694",
+      "range": {
+        "startLine": 171,
+        "startChar": 47,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce038802_c8408878",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f86ed9f_caee2cc4",
+      "range": {
+        "startLine": 171,
+        "startChar": 40,
+        "endLine": 171,
+        "endChar": 45
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f77d3a68_537097ae",
@@ -175,6 +343,30 @@
       "writtenOn": "2021-01-14T03:58:37Z",
       "side": 1,
       "message": "We should be able to reuse the extracted method from above.",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 174,
+        "endChar": 9
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe97bcb9_ff72fe1f",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77d3a68_537097ae",
       "range": {
         "startLine": 168,
         "startChar": 7,
@@ -208,6 +400,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "380499e7_ea42c3f3",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Discussed offline that it probably won\u0027t be needed for this method, but went ahead and added tracing to a few other locations",
+      "parentUuid": "2d06984b_83bd9fbd",
+      "range": {
+        "startLine": 219,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 52
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60eb7612_8954c150",
@@ -221,6 +437,30 @@
       "writtenOn": "2021-01-14T03:58:37Z",
       "side": 1,
       "message": "Consider adding javadoc.",
+      "range": {
+        "startLine": 278,
+        "startChar": 4,
+        "endLine": 278,
+        "endChar": 82
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d84da69c_20f78f0f",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60eb7612_8954c150",
       "range": {
         "startLine": 278,
         "startChar": 4,
@@ -254,6 +494,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8fc1a87_c79934cf",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9965c4b3_6ce474ad",
+      "range": {
+        "startLine": 281,
+        "startChar": 11,
+        "endLine": 281,
+        "endChar": 53
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27e592d9_15171a21",
@@ -267,6 +531,30 @@
       "writtenOn": "2021-01-14T03:58:37Z",
       "side": 1,
       "message": "Would it be a good idea to add a log statement here ?",
+      "range": {
+        "startLine": 284,
+        "startChar": 16,
+        "endLine": 284,
+        "endChar": 23
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7027c0c1_d7b8a6ff",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e592d9_15171a21",
       "range": {
         "startLine": 284,
         "startChar": 16,
@@ -300,6 +588,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf97d99b_02b8ab7e",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "On further thought, the scheme check on the intent filter should guarantee that the data and package name are filled, so these checks are unnecessary. As an additional check, I code searched other receivers for these broadcasts and found instances where the data and package are used without checks. Going ahead and removing these.",
+      "parentUuid": "9f131dbb_e4eb7b58",
+      "range": {
+        "startLine": 296,
+        "startChar": 20,
+        "endLine": 296,
+        "endChar": 27
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a63f1f0_f2cc6c81",
@@ -323,6 +635,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7309d9b4_ca10a3cb",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "See above comment",
+      "parentUuid": "4a63f1f0_f2cc6c81",
+      "range": {
+        "startLine": 300,
+        "startChar": 20,
+        "endLine": 300,
+        "endChar": 27
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0addb425_f610d8a0",
@@ -336,6 +672,30 @@
       "writtenOn": "2021-01-14T03:58:37Z",
       "side": 1,
       "message": "Could this be final class ?",
+      "range": {
+        "startLine": 331,
+        "startChar": 4,
+        "endLine": 331,
+        "endChar": 43
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5e98e73_bebada76",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0addb425_f610d8a0",
       "range": {
         "startLine": 331,
         "startChar": 4,
@@ -371,6 +731,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c3f8e0d_f471fceb",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "The checkstyle hook complains otherwise i.e. \"Non-public, non-static field names start with m and are camel-cased.\"\n\nFrom an API perspective, any caller that has access to the UserPackageState should be able to freely access \"hibernated\" since this is a simple container class. So it seems reasonable to me to leave it as public (in this case, it doesn\u0027t functionally matter since the class itself is private).",
+      "parentUuid": "39c40847_bd428f73",
+      "range": {
+        "startLine": 332,
+        "startChar": 8,
+        "endLine": 332,
+        "endChar": 15
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ff247ec_dfba906e",
         "filename": "services/tests/servicestests/src/com/android/server/apphibernation/AppHibernationServiceTest.java",
         "patchSetId": 4
@@ -382,6 +766,30 @@
       "writtenOn": "2021-01-14T03:58:37Z",
       "side": 1,
       "message": "Might be able to replace this with an annotated field \n\n@Captor ArgumentCaptor\u003cBroadcastReceiver\u003e receiverCaptor;",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 65
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f6c6cbf_43dfd9e0",
+        "filename": "services/tests/servicestests/src/com/android/server/apphibernation/AppHibernationServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ff247ec_dfba906e",
       "range": {
         "startLine": 85,
         "startChar": 8,
@@ -405,6 +813,30 @@
       "writtenOn": "2021-01-14T03:58:37Z",
       "side": 1,
       "message": "A test\u0027s name should summarize the behavior it is testing. A good name describes both the actions that are being taken on a system and the expected outcome. See http://go/unit-test-practices#naming\n\nSimilar comment for the rest of this file.",
+      "range": {
+        "startLine": 107,
+        "startChar": 3,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "188950347f2bf3d918302a158a5d7cc122e2471b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45e0d7ba_27ecf944",
+        "filename": "services/tests/servicestests/src/com/android/server/apphibernation/AppHibernationServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-01-15T00:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cbbcea5_68d3e906",
       "range": {
         "startLine": 107,
         "startChar": 3,
