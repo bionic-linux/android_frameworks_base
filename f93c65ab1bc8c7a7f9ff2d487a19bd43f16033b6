@@ -118,6 +118,30 @@
       },
       "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1972d324_753abbdd",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-15T00:16:11Z",
+      "side": 1,
+      "message": "Okay that makes sense; the Javadoc should make it clear then.  You should be able to link to the carrier config or other things in the existing API surface that is going to put this in context.  The next person reviewing this will be someone in API council and they\u0027re going to have ZERO context.  So the API docs need to be very explicit as to what this is, where the length comes from, what it is used for, etc.",
+      "parentUuid": "5cd8ad0e_3b43f597",
+      "range": {
+        "startLine": 443,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 7
+      },
+      "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
