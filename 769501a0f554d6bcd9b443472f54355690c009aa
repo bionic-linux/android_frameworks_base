@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84d38440_145033dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-15T21:40:58Z",
+      "side": 1,
+      "message": "Tyler, thanks for the suggestion. Hunter and I have a discuss and here is the update from last patch:\n1. Rename methods name from add/removeXXX set/clearXXX.\nAs we do want to limit one request per phone (subId) per caller, the set/clear naming provide better description.\n\n2. Explicitly javadoc that system will clean up the request if caller doesn\u0027t survive.\n\n3. Explicitly javadoc the request will be replaced for multiple request from the same caller, with same subId.\n\n4. With the fact that caller will have to hold the same request object to remove it later, we did not find a must-have case to introduce isSignalStrengthUpdateThresholdsSet.\n\nWould you please help to check the patch again?\n",
+      "revId": "769501a0f554d6bcd9b443472f54355690c009aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
