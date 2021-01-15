@@ -33,6 +33,29 @@
       "message": "ptal, thanks :)",
       "revId": "16a99fee0e5737d527ba92863abf9930407b8829",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de3d0033_9318816f",
+        "filename": "core/java/android/view/textclassifier/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-15T15:45:47Z",
+      "side": 1,
+      "message": "Could you help ask the existing owners in this area to approve these additions?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "16a99fee0e5737d527ba92863abf9930407b8829",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
