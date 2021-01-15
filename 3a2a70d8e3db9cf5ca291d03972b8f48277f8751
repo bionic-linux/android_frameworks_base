@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2092f24d_61f5f2c7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14598,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-15T20:05:48Z",
+      "side": 1,
+      "message": "Yes, lifecycle is managed in case of calling app death (request gets removed). Requests don\u0027t survive reboots, either.\n\nIn this way the API is more or less the same as PhoneStateListener, which doesn\u0027t document any of those behaviors. Do you want us to document it here?",
+      "parentUuid": "2bfcc844_0c5a8db2",
+      "range": {
+        "startLine": 14596,
+        "startChar": 6,
+        "endLine": 14598,
+        "endChar": 79
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dd087491_4f11ab76",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 16
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b563cbd_ebd4445d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14612,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-15T20:05:48Z",
+      "side": 1,
+      "message": "\"Multiple times\" meaning what? In a DSDS device where an app has privileges on both SIMs, there would be two different calls to addSSUR (one per subId). Similar for carriers with multiple profiles like Fi.\n\nI think it\u0027d be reasonable to enforce that there\u0027s at most one request per app per subId (and then tweak method names). In that case, we could either throw IllegalStateException if an app tries to register a second request on the same subId, or we could replace the older request with the newer one (which feels a bit iffy given that the app may still be holding onto the old SSUR to keep the IBinder token alive).",
+      "parentUuid": "dd087491_4f11ab76",
+      "range": {
+        "startLine": 14612,
+        "startChar": 24,
+        "endLine": 14612,
+        "endChar": 60
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cffc9ad2_d3c76d76",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 16
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-15T17:48:39Z",
       "side": 1,
       "message": "This is a red flag to me; the APIs proposed here are not expressive enough that the caller can know what requests have been issued in the past.  \n\nI\u0027d strongly recommend that you move to a model where one app can issue a single request via an API like setSignalStrengthUpdateThresholds, and change this to something like clearSignalStrengthUpdateThresholds.  Further there should be a method something like isSignalStrengthUpdateThresholdsSet to allow the caller to know if they have requested something.  Finally, there needs to be a guarantee that if the requester crashes that their previously requested thresholds are removed.",
+      "range": {
+        "startLine": 14642,
+        "startChar": 7,
+        "endLine": 14642,
+        "endChar": 79
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d57855dc_7199fa14",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14642,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-01-15T20:05:48Z",
+      "side": 1,
+      "message": "This is the same behavior as PSL with LISTEN_NONE. If you try to unregister a brand new PSL, it\u0027s also a no-op (though it\u0027s not documented anywhere).\n\nApps will need to hold onto the SSUR for the lifetime of the request (it contains an IBinder token), so they already have an object to look at and ensure that it\u0027s been stuck around - I don\u0027t think we\u0027d need a separate is*Set query method in this case. Apps can just check `if (mRequest !\u003d null) { mTelMan.removeSSUR(mRequest); }`.",
+      "parentUuid": "cffc9ad2_d3c76d76",
       "range": {
         "startLine": 14642,
         "startChar": 7,
