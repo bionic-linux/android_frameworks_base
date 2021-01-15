@@ -94,6 +94,30 @@
       },
       "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cd8ad0e_3b43f597",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-15T00:06:20Z",
+      "side": 1,
+      "message": "Tyler, \nSignalThresholdInfo does have a method called #getSignalMeasurementType (which is public in this CL :-)\n\nThere is a small misunderstanding here. The thresholds is NOT used to mark the range, but used to specify a list of thresholds used together with a RAN/SignalMeasurementType (of cause the value for each threshold should within the range of the corresponding SignalMeasurementType)\n\nBefore this feature, SignalThresholdInfo is only used by system (eg. for signal bar displaying), the length of the array is fixed (4, loading from Carrier Config items) but it allow an empty array which was used to disable the reporting for that SignalMeasurementType (but later the isEnabled field replace this usage, but we have to keep the behavior for compatibility).\n\nNow SignalThresholdInfo is exposed for privileged application to set the SignalStrengthUpdateRequest (NEXT CL aosp/1532958). And we do restrict the length of threshold there for app caller (1 \u003c\u003d length \u003c\u003d 4) but there should be no such restriction for system caller.\n\nAnd since system caller and apps caller has different behavior (ability), the validation check is located in PhoneInterfaceManager (aosp/1545044).\n\nPlease advice if this make sense.\nThanks",
+      "parentUuid": "8927aea4_a0679d6a",
+      "range": {
+        "startLine": 443,
+        "startChar": 4,
+        "endLine": 447,
+        "endChar": 7
+      },
+      "revId": "f93c65ab1bc8c7a7f9ff2d487a19bd43f16033b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
