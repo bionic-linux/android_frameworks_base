@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d07d0318_a7486335",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002609
+      },
+      "writtenOn": "2021-01-15T19:27:31Z",
+      "side": 1,
+      "message": "This needs to also be added to other places, for example ConnectivityServiceTest.java\n\nTry searching for one of the other recent Net_cap* fields like NET_CAPABILITY_RCS.\n\nThese should probably be added to the list of restricted types (you don\u0027t want random 3p apps using these)\nIt should be added to metrics in networkcapabilities.proto.\nEtc.\n\nEven if AOSP isn\u0027t actively using this type, you can\u0027t just define the type.  That\u0027s adding technical debt to AOSP.",
+      "revId": "37ca188b07d88276ea52d7128b917724ac7b2477",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
