@@ -761,7 +761,6 @@ filegroup {
     srcs: [
         // TODO: remove these annotations as soon as we can use andoid.support.annotations.*
         ":framework-annotations",
-        "core/java/android/net/DhcpResults.java",
         "core/java/android/util/LocalLog.java",
         "core/java/com/android/internal/util/HexDump.java",
         "core/java/com/android/internal/util/IndentingPrintWriter.java",
@@ -780,7 +779,6 @@ filegroup {
 filegroup {
     name: "framework-services-net-module-wifi-shared-srcs",
     srcs: [
-        "core/java/android/net/DhcpResults.java",
         "core/java/android/util/LocalLog.java",
     ],
 }
