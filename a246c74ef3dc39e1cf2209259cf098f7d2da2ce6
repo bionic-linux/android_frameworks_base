@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1359cb7e_9600d568",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T08:40:17Z",
+      "side": 1,
+      "message": "Oh, one more change as a result of functionality changes since the internal one was built",
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a83048f6_a8d71589",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T08:40:17Z",
+      "side": 1,
+      "message": "Hmm, sorry, didn\u0027t remember this had changed; this is no longer accurate anymore. You\u0027ll probably need to take (in the constructor) and iterate through VcnGatewayConnectionConfig#getAllUnderlyingCapabilities(), and add those here.\n\nThat, or take in a list of the integer capabilities.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 75
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3c8f0ba_3caf14db",
