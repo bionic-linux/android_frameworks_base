@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3c8f0ba_3caf14db",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T08:35:25Z",
+      "side": 1,
+      "message": "Can we have a STOPSHIP comment to make sure we plumb the snapshots though properly? Just so we have a consistent place to look for telephony bugs :P",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c546dc0_5fbb0e56",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T08:35:25Z",
+      "side": 1,
+      "message": "Hmm, not sure how this works with regards to ConnectivityService moving to Mainline Modules. I think this works because the API is still in frameworks/base, but let\u0027s keep an eye on that, and maybe run it by Jean next week.",
+      "range": {
+        "startLine": 187,
+        "startChar": 20,
+        "endLine": 187,
+        "endChar": 31
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7beeff3_a9a74f8a",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T08:35:25Z",
+      "side": 1,
+      "message": "Hmm, given that we\u0027re chaining to updateRecordAndNotifyCallback, we probably should make this method an overload of updateRecordAndNotifyCallback.",
+      "range": {
+        "startLine": 250,
+        "startChar": 21,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d69eff1_687558c4",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T08:35:25Z",
+      "side": 1,
+      "message": "Can these few methods be moved out? and then we can hopefully have the RouteSelectionCallback not twiddle bits in the superclass directly?\n\nThoughts? Is there any other better way you can think of writing this RouteSelectionCallback?",
+      "range": {
+        "startLine": 236,
+        "startChar": 1,
+        "endLine": 250,
+        "endChar": 34
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc563813_769ab508",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-15T08:35:25Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t like this code that I wrote anymore xD. Is there some way we can do something where we have overloads for changing caps, props and isBlocked separately?",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 95
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
