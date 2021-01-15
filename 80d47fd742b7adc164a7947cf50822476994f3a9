@@ -100,6 +100,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ade27ed_d3611900",
+        "filename": "core/java/com/android/internal/util/LocationPermissionChecker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-15T07:46:27Z",
+      "side": 1,
+      "message": "Ah indeed, you need to pass the UID. Sorry I had missed that.",
+      "parentUuid": "788a2410_ad90c0d9",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 96
+      },
+      "revId": "80d47fd742b7adc164a7947cf50822476994f3a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfd6eec2_7ef57d76",
