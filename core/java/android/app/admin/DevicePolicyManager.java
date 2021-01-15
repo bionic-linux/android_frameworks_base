@@ -4545,8 +4545,9 @@ public class DevicePolicyManager {
                         }
                         exclSpec = listBuilder.toString();
                     }
-                    if (android.net.Proxy.validate(hostName, Integer.toString(port), exclSpec)
-                            != android.net.Proxy.PROXY_VALID)
+                    final ProxyInfo info = ProxyInfo.buildDirectProxy(hostName, port,
+                            exclusionList == null ? Collections.emptyList() : exclusionList);
+                    if (!info.isValid())
                         throw new IllegalArgumentException();
                 }
                 return mService.setGlobalProxy(admin, hostSpec, exclSpec);
