@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97fe72af_bb535e39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-15T15:51:00Z",
+      "side": 1,
+      "message": "Due to patch conflict, I can only submit this one to AOSP.\nThe SysteUI part only submit to internal branch.\nWe would need to submit this one first before systemUI patch.\nag/13273630",
+      "revId": "a97e5b2f023b2ad5cad18cecd27085c21dd6e771",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
