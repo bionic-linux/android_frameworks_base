@@ -104,6 +104,30 @@
       },
       "revId": "16a99fee0e5737d527ba92863abf9930407b8829",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9017cf3b_e8fe6611",
+        "filename": "core/java/android/view/textclassifier/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1060841
+      },
+      "writtenOn": "2021-01-15T16:04:25Z",
+      "side": 1,
+      "message": "Thanks a lot!",
+      "parentUuid": "4dd98df5_d8a020c8",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "16a99fee0e5737d527ba92863abf9930407b8829",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
