@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8f9f802_960df13b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-01-15T08:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "311aa01c_49e102c5",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a951d601_a3528771",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-13T13:40:02Z",
       "side": 1,
       "message": "Maybe specify the classes if that is not many.\nAlso please add your NetworkStatsServiceTest#\u003ctest name\u003e here.\nYou can use multiple Test: lines if needed.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1a88834_14770b34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-01-15T08:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a951d601_a3528771",
       "range": {
         "startLine": 17,
         "startChar": 6,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76db25cd_12fb6f6e",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-01-15T08:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b06cfe15_96a0d55b",
+      "range": {
+        "startLine": 1329,
+        "startChar": 37,
+        "endLine": 1329,
+        "endChar": 44
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18fbdcb4_59c3a925",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-01-13T13:40:02Z",
       "side": 1,
       "message": "IIUC this is subject to mobile NetworkState and cannot be used for wifi.\nIf so, maybe:\n 1. name it getSubIdForMobile(Network)State?\n 2. check transport and fail with Illegal argument exception or something.\n 3. make it static if possible.",
+      "range": {
+        "startLine": 1387,
+        "startChar": 16,
+        "endLine": 1387,
+        "endChar": 26
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "944c247f_9864ace0",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-01-15T08:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18fbdcb4_59c3a925",
       "range": {
         "startLine": 1387,
         "startChar": 16,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57e226d0_33809a78",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-01-15T08:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ec93e57_b0587d7d",
+      "range": {
+        "startLine": 1389,
+        "startChar": 11,
+        "endLine": 1389,
+        "endChar": 25
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "232a35ef_8191cc79",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-01-13T13:40:02Z",
       "side": 1,
       "message": "nit: final?",
+      "range": {
+        "startLine": 1391,
+        "startChar": 12,
+        "endLine": 1391,
+        "endChar": 28
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19f60a32_9cd3ee95",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-01-15T08:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "232a35ef_8191cc79",
       "range": {
         "startLine": 1391,
         "startChar": 12,
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a247fe1_3cc66653",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-01-15T08:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66a1d63c_9bb05353",
+      "range": {
+        "startLine": 1393,
+        "startChar": 16,
+        "endLine": 1393,
+        "endChar": 23
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3873f674_d0dc72d5",
@@ -192,6 +360,30 @@
       "writtenOn": "2021-01-13T13:40:02Z",
       "side": 1,
       "message": "Is this necessary? I don\u0027t see anything is related to Vilte?\nMaybe just refactor buildMobile3gState(String subscriberId, boolean isRoaming) to\nsomething like \nbuildMobileState(String subscriberId, int subId, String ifaceName, isRoaming, ratType).",
+      "range": {
+        "startLine": 1577,
+        "startChar": 32,
+        "endLine": 1577,
+        "endChar": 47
+      },
+      "revId": "dbba92c57c6cd283d656960255b7bd7ec257b87b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9a7726c_f1c868b9",
+        "filename": "tests/net/java/com/android/server/net/NetworkStatsServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1355299
+      },
+      "writtenOn": "2021-01-15T08:57:40Z",
+      "side": 1,
+      "message": "It\u0027s necessary, IMS iface and internet iface is different. Seems capability IMS and internet can\u0027t Exist together. So I think create IMS iface need an independent function.",
+      "parentUuid": "3873f674_d0dc72d5",
       "range": {
         "startLine": 1577,
         "startChar": 32,
