@@ -12135,6 +12135,7 @@ package android.content.pm {
     field public static final String FEATURE_IRIS = "android.hardware.biometrics.iris";
     field public static final String FEATURE_LEANBACK = "android.software.leanback";
     field public static final String FEATURE_LEANBACK_ONLY = "android.software.leanback_only";
+    field public static final String FEATURE_LIMITED_USE_KEY = "android.hardware.keymint.limited_use_key";
     field public static final String FEATURE_LIVE_TV = "android.software.live_tv";
     field public static final String FEATURE_LIVE_WALLPAPER = "android.software.live_wallpaper";
     field public static final String FEATURE_LOCATION = "android.hardware.location";
@@ -12176,6 +12177,7 @@ package android.content.pm {
     field public static final String FEATURE_SE_OMAPI_ESE = "android.hardware.se.omapi.ese";
     field public static final String FEATURE_SE_OMAPI_SD = "android.hardware.se.omapi.sd";
     field public static final String FEATURE_SE_OMAPI_UICC = "android.hardware.se.omapi.uicc";
+    field public static final String FEATURE_SINGLE_USE_KEY = "android.hardware.keymint.single_use_key";
     field public static final String FEATURE_SIP = "android.software.sip";
     field public static final String FEATURE_SIP_VOIP = "android.software.sip.voip";
     field public static final String FEATURE_STRONGBOX_KEYSTORE = "android.hardware.strongbox_keystore";
