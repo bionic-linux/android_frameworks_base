@@ -3192,6 +3192,25 @@ public abstract class PackageManager {
     @SdkConstant(SdkConstantType.FEATURE)
     public static final String FEATURE_APP_ENUMERATION = "android.software.app_enumeration";
 
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device has
+     * a KeyMint implementation that can only enforce limited use key in hardware with count equals
+     * to 1.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_LIMITEDUSEKEY_SIGNLECOUNT =
+            "android.hardware.limitedusekey.signlecount";
+
+    /**
+     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device has
+     * a KeyMint implementation that can enforce limited use key in hardware with any number of the
+     * count (including count equals to 1).
+     * to 1.
+     */
+    @SdkConstant(SdkConstantType.FEATURE)
+    public static final String FEATURE_LIMITEDUSEKEY_MULTIPLECOUNT =
+            "android.hardware.limitedusekey.multiplecount";
+
     /** @hide */
     public static final boolean APP_ENUMERATION_ENABLED_BY_DEFAULT = true;
 

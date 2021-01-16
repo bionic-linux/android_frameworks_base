@@ -12130,6 +12130,8 @@ package android.content.pm {
     field public static final String FEATURE_IRIS = "android.hardware.biometrics.iris";
     field public static final String FEATURE_LEANBACK = "android.software.leanback";
     field public static final String FEATURE_LEANBACK_ONLY = "android.software.leanback_only";
+    field public static final String FEATURE_LIMITEDUSEKEY_MULTIPLECOUNT = "android.hardware.limitedusekey.multiplecount";
+    field public static final String FEATURE_LIMITEDUSEKEY_SIGNLECOUNT = "android.hardware.limitedusekey.signlecount";
     field public static final String FEATURE_LIVE_TV = "android.software.live_tv";
     field public static final String FEATURE_LIVE_WALLPAPER = "android.software.live_wallpaper";
     field public static final String FEATURE_LOCATION = "android.hardware.location";
