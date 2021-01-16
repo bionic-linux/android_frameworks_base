@@ -33,6 +33,24 @@
       "message": "Happy to help with OWNERS here, but could you ask the BT/NFC team for a CR+2 first?",
       "revId": "a97e5b2f023b2ad5cad18cecd27085c21dd6e771",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0023290b_299b9266",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-01-16T04:32:17Z",
+      "side": 1,
+      "message": "CR+2 ready, please check it again, thanks!\nIt\u0027s used to go with this internal patch ag/13273630.",
+      "parentUuid": "3c531612_0565b4f8",
+      "revId": "a97e5b2f023b2ad5cad18cecd27085c21dd6e771",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
