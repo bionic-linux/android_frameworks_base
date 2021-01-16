@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59aa4622_8b83437b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14598,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-16T00:45:30Z",
+      "side": 1,
+      "message": "Javadoc updated to explicitly call out the clean up behavior. Thanks!",
+      "parentUuid": "cc8ad467_c6a4326b",
+      "range": {
+        "startLine": 14596,
+        "startChar": 6,
+        "endLine": 14598,
+        "endChar": 79
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd087491_4f11ab76",
@@ -143,6 +167,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "578cfb7b_72b2a8ef",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14612,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-16T00:45:30Z",
+      "side": 1,
+      "message": "Javadoc updated to throw IllegalStateException when new request is set with same subId from the same caller.",
+      "parentUuid": "438d1953_eaf535dd",
+      "range": {
+        "startLine": 14612,
+        "startChar": 24,
+        "endLine": 14612,
+        "endChar": 60
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cffc9ad2_d3c76d76",
@@ -204,6 +252,30 @@
       "side": 1,
       "message": "Okay, given there is a guarantee that it\u0027ll get cleaned up when the app closes I\u0027m not so worried about losing track of the SSUR.  Having to pass in the SSUR to be cleaned up is reasonable in this case.",
       "parentUuid": "d57855dc_7199fa14",
+      "range": {
+        "startLine": 14642,
+        "startChar": 7,
+        "endLine": 14642,
+        "endChar": 79
+      },
+      "revId": "3a2a70d8e3db9cf5ca291d03972b8f48277f8751",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45862b06_bd93d2f5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 14642,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-16T00:45:30Z",
+      "side": 1,
+      "message": "Great.Mark this resolved. Thanks!",
+      "parentUuid": "a437188c_64e9f57a",
       "range": {
         "startLine": 14642,
         "startChar": 7,

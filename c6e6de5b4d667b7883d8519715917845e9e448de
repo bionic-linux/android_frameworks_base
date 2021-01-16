@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e82b46bc_4c1fcd6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-01-16T00:45:30Z",
+      "side": 1,
+      "message": "Tyler, thanks a lot for the suggestion and comments. Patch updated.  ",
+      "revId": "c6e6de5b4d667b7883d8519715917845e9e448de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
