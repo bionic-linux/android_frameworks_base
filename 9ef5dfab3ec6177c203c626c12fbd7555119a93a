@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7757348b_19759284",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-17T05:10:49Z",
+      "side": 1,
+      "message": "per offline discussion, we can support multi-user ror without slot check. And we consider enforcing the HAL support on new launched devices.",
+      "parentUuid": "c1348f5f_b30c363d",
+      "range": {
+        "startLine": 519,
+        "startChar": 8,
+        "endLine": 519,
+        "endChar": 89
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cd4f1b86_a3a128b7",
         "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-15T12:10:15Z",
       "side": 1,
       "message": "nit: got",
+      "range": {
+        "startLine": 530,
+        "startChar": 85,
+        "endLine": 530,
+        "endChar": 88
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c04acf9b_027e7eb1",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-17T05:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd4f1b86_a3a128b7",
       "range": {
         "startLine": 530,
         "startChar": 85,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efa4135d_5b2f6e98",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-17T05:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e98c231_1b8358a9",
+      "range": {
+        "startLine": 535,
+        "startChar": 59,
+        "endLine": 535,
+        "endChar": 63
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b69d9ec2_11746ed7",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dea3b8b5_0210fd51",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-17T05:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69d9ec2_11746ed7",
+      "range": {
+        "startLine": 544,
+        "startChar": 85,
+        "endLine": 544,
+        "endChar": 91
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a04da454_5603bdb2",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-01-15T12:10:15Z",
       "side": 1,
       "message": "nit: got",
+      "range": {
+        "startLine": 545,
+        "startChar": 48,
+        "endLine": 545,
+        "endChar": 51
+      },
+      "revId": "9ef5dfab3ec6177c203c626c12fbd7555119a93a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b78998f5_54f467d3",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-17T05:10:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a04da454_5603bdb2",
       "range": {
         "startLine": 545,
         "startChar": 48,
