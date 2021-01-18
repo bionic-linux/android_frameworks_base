@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69ff156e_8bfbc347",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-18T02:21:46Z",
+      "side": 1,
+      "message": "LGTM with nits",
+      "revId": "0ea563f4af29e50bbdf2cb3d731dba574bd21796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4de67d78_ddffc89a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-18T02:21:46Z",
+      "side": 1,
+      "message": "If it is @NonNull, can we remove this?",
+      "range": {
+        "startLine": 1654,
+        "startChar": 12,
+        "endLine": 1654,
+        "endChar": 61
+      },
+      "revId": "0ea563f4af29e50bbdf2cb3d731dba574bd21796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a758b0f0_4498485a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2764,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-18T02:21:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2764,
+        "startChar": 7,
+        "endLine": 2764,
+        "endChar": 46
+      },
+      "revId": "0ea563f4af29e50bbdf2cb3d731dba574bd21796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5db761b5_5f3212b8",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7570,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-18T02:21:46Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 7570,
+        "startChar": 16,
+        "endLine": 7570,
+        "endChar": 51
+      },
+      "revId": "0ea563f4af29e50bbdf2cb3d731dba574bd21796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
