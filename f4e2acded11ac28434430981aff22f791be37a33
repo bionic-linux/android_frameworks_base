@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11fd48aa_0e672725",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-18T13:20:18Z",
+      "side": 1,
+      "message": "The existing API to force the secure element state change happened is to call Reader.reset(). But it\u0027s a system API and requires a specific permission. We are not able to use it in CTS, so no CTS test was added for this secure element state change event.\n\nConsider this event is only useful to a se recovery app with system privilege.\nIt seems not necessary to add as public APIs.",
+      "parentUuid": "190eaf7b_1e093df8",
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3ce9659_60af627f",
