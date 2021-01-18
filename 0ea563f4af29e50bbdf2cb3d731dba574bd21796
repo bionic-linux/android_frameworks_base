@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c89f27c_8bdb079f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-01-18T03:04:49Z",
+      "side": 1,
+      "message": "Nit: The code in our current tests does not really align this statement. ConnectivityServiceTest and LingerMonitorTest create test nai with one or more null of them. Our test does not well reflect it. We may also update it. \n\nThe problem may appear if the nullability check is removed from the code.\n\nE.g.\nhttps://source.corp.google.com/aosp-master/frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java;l\u003d8154?q\u003d%22new%20NetworkAgentInfo%22%20package:aosp-master\u0026sq\u003dpackage:aosp*",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "0ea563f4af29e50bbdf2cb3d731dba574bd21796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "69ff156e_8bfbc347",
@@ -31,6 +54,30 @@
       "writtenOn": "2021-01-18T02:21:46Z",
       "side": 1,
       "message": "If it is @NonNull, can we remove this?",
+      "range": {
+        "startLine": 1654,
+        "startChar": 12,
+        "endLine": 1654,
+        "endChar": 61
+      },
+      "revId": "0ea563f4af29e50bbdf2cb3d731dba574bd21796",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ddb5ada_6f4be19c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-01-18T03:04:49Z",
+      "side": 1,
+      "message": "It may not be the scope of this commit but we have this kind of cases in Nat464Xlat as well if we want to remove this check.\n\nE.g.\nhttps://source.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/connectivity/Nat464Xlat.java;l\u003d126?q\u003d%22nai.%22%20package:aosp-master%20file:java\u0026start\u003d1",
+      "parentUuid": "4de67d78_ddffc89a",
       "range": {
         "startLine": 1654,
         "startChar": 12,
