@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8580dfd4_fc3a1ba5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T06:39:33Z",
+      "side": 1,
+      "message": "While you\u0027re at it, can you @remove this as well? It\u0027s ugly and error-prone, and it\u0027s been deprecated since API level 15. Nobody should be using integers to store IP addresses.",
+      "revId": "99325d8d3fa69829df91eb7a0409e22542dde300",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
