@@ -847,6 +847,14 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         return isWifi && !avoidBadWifi && everValidated;
     }
 
+    public InternalScore getLastScore() {
+        return mLastScore;
+    }
+
+    public InternalScore getScore() {
+        return mScore;
+    }
+
     // Get the current score for this Network.  This may be modified from what the
     // NetworkAgent sent, as it has modifiers applied to it.
     public int getCurrentScore() {
