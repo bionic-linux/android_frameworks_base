@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c48aa15_3c58a0e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-18T06:46:01Z",
+      "side": 1,
+      "message": "I think we can, let me try to remove all usages of NetworkManagementService#setInterfaceUp in the following commit.",
+      "parentUuid": "ebed9361_6dd6475b",
+      "revId": "50372af24ac8a764b1ba31c37cd1aba1ae2ab41a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbadc429_2f5410b5",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-01-13T09:55:01Z",
       "side": 1,
       "message": "NetdUtils no longer enforces NETWORK_STACK privileges. Please replace the comment in l.320 with NetworkStack.checkNetworkStackPermission(mContext);",
+      "range": {
+        "startLine": 323,
+        "startChar": 26,
+        "endLine": 323,
+        "endChar": 40
+      },
+      "revId": "50372af24ac8a764b1ba31c37cd1aba1ae2ab41a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1ba9a03_1edf0337",
+        "filename": "services/core/java/com/android/server/TestNetworkService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-01-18T06:46:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbadc429_2f5410b5",
       "range": {
         "startLine": 323,
         "startChar": 26,
