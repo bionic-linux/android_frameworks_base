@@ -16,6 +16,23 @@
       "message": "lorenzo@: Need an owner\u0027s +1 on this CL.",
       "revId": "7692fba5c1246f69bd78eb4b41ef2dc7bd442f0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "610eb196_459a9c22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-18T01:25:29Z",
+      "side": 1,
+      "message": "Chatted with Roshan about this CL. He tells me:\n\n- For this CL, moltmann@ deferred to the networking team because this file is used only by ConnectivityService.\n- This change is equivalent to what we already have in production code in wifi. Specifically, WifiPermissionsUtil#enforceCanAccessScanResults is used for any check that wifi makes to decide whether to give scan results. Therefore, any UID with one of these permissions already has access to location data coming from wifi.\n- While this change could theoretically allow access to location data that does not come from wifi, there is currently no code that does this. This code is only used to redact location-sensitive info coming from network transports.\n- This check does not guard access to location data, but only to networking data from transports that could be used to derive location.\n\nISTM that any future use cases for networking data coming from network transports (e.g., cell info) are likely to be equivalent to wifi. Given that, LGTM.",
+      "revId": "7692fba5c1246f69bd78eb4b41ef2dc7bd442f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
