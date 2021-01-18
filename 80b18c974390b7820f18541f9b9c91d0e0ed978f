@@ -16,6 +16,144 @@
       "message": "Please send to M. Chalard.",
       "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb157a26_ba79900c",
+        "filename": "core/api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 25083,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-18T12:44:58Z",
+      "side": 1,
+      "message": "Is this function absolutely necessary ? In Android we avoid exposing interface names as much as possible, because it\u0027s not a scalable (nor future-proof) abstraction. Are there absolutely no alternatives for clients ?",
+      "range": {
+        "startLine": 25083,
+        "startChar": 34,
+        "endLine": 25083,
+        "endChar": 50
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c72cea4c_a2547f9a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-18T12:44:58Z",
+      "side": 1,
+      "message": "Maybe clarify this",
+      "range": {
+        "startLine": 873,
+        "startChar": 26,
+        "endLine": 873,
+        "endChar": 35
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb5ef615_03b6f4e5",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-18T12:44:58Z",
+      "side": 1,
+      "message": "Give more context, possibly as an @link or @see reference",
+      "range": {
+        "startLine": 873,
+        "startChar": 37,
+        "endLine": 873,
+        "endChar": 75
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2de0d537_4756db06",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-18T12:44:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this means or what the rationale might be. Maybe replace this sentence with something more concrete, like the reason for this.",
+      "range": {
+        "startLine": 875,
+        "startChar": 93,
+        "endLine": 876,
+        "endChar": 88
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18ae2cdf_848610b2",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-18T12:44:58Z",
+      "side": 1,
+      "message": "the lower-layer error will be set as the cause, right ? (no need to specify that in the doc unless you really want to)",
+      "range": {
+        "startLine": 878,
+        "startChar": 75,
+        "endLine": 879,
+        "endChar": 16
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "323ba12b_ffda8224",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-18T12:44:58Z",
+      "side": 1,
+      "message": "How can I know how many is too many ? @see ?",
+      "range": {
+        "startLine": 880,
+        "startChar": 60,
+        "endLine": 880,
+        "endChar": 69
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
