@@ -16,6 +16,24 @@
       "message": "While you\u0027re at it, can you @remove this as well? It\u0027s ugly and error-prone, and it\u0027s been deprecated since API level 15. Nobody should be using integers to store IP addresses.",
       "revId": "99325d8d3fa69829df91eb7a0409e22542dde300",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fbf60f3_ae2a2e9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-18T08:04:41Z",
+      "side": 1,
+      "message": "Done in aosp/1553465, although I couldn\u0027t yet figure out how to make update-api pass with the removed method (I think I need to update incompatibilities.txt but couldn\u0027t make it work).\nAlso updated to use intToInet4AddressHTL instead of intToInet4AddressHTH, as this API does 0x01020304 -\u003e \"4.3.2.1\"...",
+      "parentUuid": "8580dfd4_fc3a1ba5",
+      "revId": "99325d8d3fa69829df91eb7a0409e22542dde300",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
