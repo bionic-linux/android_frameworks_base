@@ -7361,6 +7361,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 }
             }
         }
+
+        commitNetworkAgentInfoScores();
+    }
+
+    private void commitNetworkAgentInfoScores() {
+        for (NetworkAgentInfo nai : mNetworkAgentInfos) {
+            nai.commitScoreAfterRematch();
+        }
     }
 
     /**
