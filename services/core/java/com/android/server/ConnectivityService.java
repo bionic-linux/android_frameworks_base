@@ -4995,6 +4995,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public boolean updateLockdownVpn() {
+        // Allow the system UID for the system server and for Settings.
+        // Also, for unit tests, allow the process that ConnectivityService is running in.
         if (mDeps.getCallingUid() != Process.SYSTEM_UID
                 && Binder.getCallingPid() != Process.myPid()) {
             logw("Lockdown VPN only available to system process or AID_SYSTEM");
