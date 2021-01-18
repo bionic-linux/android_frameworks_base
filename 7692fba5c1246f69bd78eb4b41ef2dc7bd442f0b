@@ -33,6 +33,41 @@
       "message": "Chatted with Roshan about this CL. He tells me:\n\n- For this CL, moltmann@ deferred to the networking team because this file is used only by ConnectivityService.\n- This change is equivalent to what we already have in production code in wifi. Specifically, WifiPermissionsUtil#enforceCanAccessScanResults is used for any check that wifi makes to decide whether to give scan results. Therefore, any UID with one of these permissions already has access to location data coming from wifi.\n- While this change could theoretically allow access to location data that does not come from wifi, there is currently no code that does this. This code is only used to redact location-sensitive info coming from network transports.\n- This check does not guard access to location data, but only to networking data from transports that could be used to derive location.\n\nISTM that any future use cases for networking data coming from network transports (e.g., cell info) are likely to be equivalent to wifi. Given that, LGTM.",
       "revId": "7692fba5c1246f69bd78eb4b41ef2dc7bd442f0b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd625aa8_6c8a998c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-18T01:33:23Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "7692fba5c1246f69bd78eb4b41ef2dc7bd442f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00b2ff1c_2582a36c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-01-18T01:33:23Z",
+      "side": 1,
+      "message": "Ack.\n\nI was able to finally dig up the original bug from Android P that was used to add the location permission bypass for setting in the wifi stack. Here it is for reference: https://b.corp.google.com/issues/110264588#comment17. CL was primarily fixing a bug in the wifi stack which was not enforcing the location toggle, but while fixing it we realized that the bypass for system UI components was needed, otherwise everything will be broken in connectivity setting when the user toggles location off. PWG, location team, etc are on that bug \u0026 had approved the CL at that time.",
+      "parentUuid": "610eb196_459a9c22",
+      "revId": "7692fba5c1246f69bd78eb4b41ef2dc7bd442f0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
