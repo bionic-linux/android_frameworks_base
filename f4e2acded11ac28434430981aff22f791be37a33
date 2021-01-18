@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "037eefe2_64f48e3e",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-18T08:40:24Z",
+      "side": 1,
+      "message": "Add the @BroadcastBehavior and @SdkConstant annotations.\nIt will only be sent to registered dynamic ones.",
+      "parentUuid": "e3ce9659_60af627f",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9001b6d_e9287808",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a49d0e85_659be4b8",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-18T08:40:24Z",
+      "side": 1,
+      "message": "Yes, this is intend to reflect Reader.getName().\nAdd @see annotation as suggested.",
+      "parentUuid": "e9001b6d_e9287808",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 86
+      },
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80fa0c68_63aee4a6",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-01-15T15:53:03Z",
       "side": 1,
       "message": "What is the type of this data?  (Boolean, int, etc?)  If it\u0027s an int, can you help guide towards the @IntDef which describes the possible values?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 90
+      },
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e13662b_4903ea36",
+        "filename": "core/java/android/se/omapi/SEService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-18T08:40:24Z",
+      "side": 1,
+      "message": "This is boolean type.\nAdd more description here.",
+      "parentUuid": "80fa0c68_63aee4a6",
       "range": {
         "startLine": 85,
         "startChar": 0,
