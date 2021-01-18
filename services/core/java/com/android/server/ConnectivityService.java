@@ -7448,11 +7448,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         + " → " + (null != mNewNetwork ? mNewNetwork.network.getNetId() : "null");
             }
         }
+        static class RequestRescore {
+            @NonNull public final NetworkRequestInfo mRequest;
+            @NonNull public final NetworkAgentInfo mSatisfier;
+            RequestRescore(@NonNull final NetworkRequestInfo request,
+                    @NonNull final NetworkAgentInfo satisfier) {
+                mRequest = request;
+                mSatisfier = satisfier;
+            }
+        }
 
         @NonNull private final ArrayList<RequestReassignment> mReassignments = new ArrayList<>();
+        @NonNull private final ArrayList<RequestRescore> mRescores = new ArrayList<>();
 
         @NonNull Iterable<RequestReassignment> getRequestReassignments() {
             return mReassignments;
+        }
+
+        @NonNull Iterable<RequestRescore> getRequestRescores() {
+            return mRescores;
         }
 
         void addRequestReassignment(@NonNull final RequestReassignment reassignment) {
@@ -7579,6 +7593,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 // bestNetwork may be null if no network can satisfy this request.
                 changes.addRequestReassignment(new NetworkReassignment.RequestReassignment(
                         nri, nri.mActiveRequest, bestRequest, nri.getSatisfier(), bestNetwork));
+            } else if (null != bestNetwork
+                    && (!Objects.equals(bestNetwork.getLastScore(), bestNetwork.getScore()))) {
+                changes.mRescores.add(new NetworkReassignment.RequestRescore(nri, bestNetwork));
             }
         }
         return changes;

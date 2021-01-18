@@ -177,6 +177,26 @@ public final class NetworkScore implements Parcelable {
     }
 
     @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final NetworkScore that = (NetworkScore) o;
+
+        if (mLegacyInt != that.mLegacyInt) return false;
+        return mPolicy == that.mPolicy;
+    }
+
+    @Override
+    public int hashCode() {
+        // Policy bits are at the top and the bottom, so by multiplying the legacy int by
+        // 256 this is a perfect hash until policy bits get up to bit 8 or down to
+        // bit 32 - 6 = 24 (6 because legacyInt max value is 101 which fits in 6 bits).
+        // By the time there are this many policy bits, the legacy int will be gone.
+        return 256 * mLegacyInt + (int) (mPolicy ^ (mPolicy >>> 32));
+    }
+
+    @Override
     public void writeToParcel(@NonNull final Parcel dest, final int flags) {
         dest.writeInt(mLegacyInt);
         dest.writeLong(mPolicy);
