@@ -297,6 +297,9 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // validated).
     private boolean mLingering;
 
+    // This represents the previous score of the network, before the last update or rematch.
+    // TODO : ideally there should only be one score, and the NAI should be immutable
+    @Nullable private NetworkScore mLastScore;
     // This represents the quality of the network.
     private NetworkScore mScore;
 
@@ -856,6 +859,22 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // what the NetworkAgent sent, as it has modifiers applied to it.
     public int getCurrentScoreAsValidated() {
         return mScore.getLegacyIntAsValidated();
+    }
+
+    /**
+     * Tell this NAI that the rematch is complete, and it can remember the last score
+     * so it can be retrieved on the next rematch.
+     * This is used to update network providers about whether their NetworkOffers are still
+     * relevant. For example, a provider may have an outstanding offer for a medium quality
+     * network, but there is a high-quality network connected. When the user walks away from
+     * the access point, the quality of the network drops ; even if the network disconnects,
+     * its quality may drop sufficiently that it may now be advantageous to prefer the
+     * medium quality network. In this case the provider has to be notified that its
+     * NetworkOffer is now needed, and to know that the system has to remember what was the
+     * last score when the last rematch ended.
+     */
+    public void commitScoreAfterRematch() {
+        mLastScore = mScore;
     }
 
     /**
