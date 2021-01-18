@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da0d4426_5d49c876",
+        "filename": "core/java/android/os/storage/DiskInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2021-01-18T11:35:40Z",
+      "side": 1,
+      "message": "nit: add comment at top of this section for the source of truth of these flags",
+      "range": {
+        "startLine": 53,
+        "startChar": 28,
+        "endLine": 53,
+        "endChar": 45
+      },
+      "revId": "5dc4fd96a952c1defa5672649e014352080f4089",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
