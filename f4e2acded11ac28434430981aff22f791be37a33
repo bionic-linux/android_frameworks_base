@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "39cb1400_c2d0549f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-19T15:49:28Z",
+      "side": 1,
+      "message": "Hm, it should be possible to exercise system APIs from CTS using the `adoptShellPermissionIdentity()` API; there are quite a few examples in the tree.  Possibly grepping for `sdk_version: \"system_current\"` might help find some relevant ideas.\n\nWithout a CTS test in place, no developers can trust this API to behave correctly.  😞\n\nSeparately, can you confirm if the \"SE recovery app\" is a bundled part of the OS, or does it need to build unbundled against the system API surface?",
+      "parentUuid": "11fd48aa_0e672725",
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e3ce9659_60af627f",
         "filename": "core/java/android/se/omapi/SEService.java",
         "patchSetId": 9
