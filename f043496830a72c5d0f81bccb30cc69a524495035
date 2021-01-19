@@ -16,6 +16,23 @@
       "message": "Thank you for the patch Sergii.",
       "revId": "f043496830a72c5d0f81bccb30cc69a524495035",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78babf04_e540a7fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-01-19T07:32:54Z",
+      "side": 1,
+      "message": "Hello @Todd, could you set Presubmit-Ready to relaunch verification?",
+      "revId": "f043496830a72c5d0f81bccb30cc69a524495035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
