@@ -51,6 +51,24 @@
       "parentUuid": "bcf34743_40d0bdda",
       "revId": "333a733c5ead6f3d27c4d0473507b9233824ff1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "331bb271_dcfcebce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1346941
+      },
+      "writtenOn": "2021-01-19T10:04:10Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation. It\u0027s still not very clear to me what you are trying to achieve. I\u0027m happy to chat offline/VC about this.\n\nHowever if this is blocking anything urgent I can approve it while we discuss so I understand better",
+      "parentUuid": "c90f1447_417a41aa",
+      "revId": "333a733c5ead6f3d27c4d0473507b9233824ff1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
