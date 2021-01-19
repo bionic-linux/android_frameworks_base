@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d582ad47_ec1a5155",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T21:52:48Z",
+      "side": 1,
+      "message": "Updated to take in a Set\u003cNetCapability\u003e in UnderlyingNetworkTracker constructor\n\nDone.",
+      "parentUuid": "a83048f6_a8d71589",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 75
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3c8f0ba_3caf14db",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5371a4c_ef10c7d4",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T21:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3c8f0ba_3caf14db",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c546dc0_5fbb0e56",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-01-15T08:35:25Z",
       "side": 1,
       "message": "Hmm, not sure how this works with regards to ConnectivityService moving to Mainline Modules. I think this works because the API is still in frameworks/base, but let\u0027s keep an eye on that, and maybe run it by Jean next week.",
+      "range": {
+        "startLine": 187,
+        "startChar": 20,
+        "endLine": 187,
+        "endChar": 31
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe3879fc_79ead2f7",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T21:52:48Z",
+      "side": 1,
+      "message": "Ack. Per our offline discussion, let\u0027s discuss in a future meeting. Ideally, this can stay as-is to avoid splitting the definition + broadcast of the initial UnderlyingNetworkRecord\n\nLeaving unresolved for the time being",
+      "parentUuid": "0c546dc0_5fbb0e56",
       "range": {
         "startLine": 187,
         "startChar": 20,
@@ -133,6 +205,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af8f10fb_5de9c97f",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T21:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7beeff3_a9a74f8a",
+      "range": {
+        "startLine": 250,
+        "startChar": 21,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a57dd0d_f7c5adc3",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T21:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d69eff1_687558c4",
+      "range": {
+        "startLine": 236,
+        "startChar": 1,
+        "endLine": 250,
+        "endChar": 34
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dc563813_769ab508",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-01-15T08:35:25Z",
       "side": 1,
       "message": "Hmm, I don\u0027t like this code that I wrote anymore xD. Is there some way we can do something where we have overloads for changing caps, props and isBlocked separately?",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 95
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05a9b4f0_695c93b9",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-19T21:52:48Z",
+      "side": 1,
+      "message": "Considered this but wanted to avoid the redundant overloads (whoops)\n\nDone.",
+      "parentUuid": "dc563813_769ab508",
       "range": {
         "startLine": 266,
         "startChar": 0,
