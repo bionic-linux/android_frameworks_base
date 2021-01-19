@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ca60871_b498aa6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-19T15:51:20Z",
+      "side": 1,
+      "message": "OWNERS+1, and also setting CR+2 to carry over previous CR+2 that was lost from a relevant area owner.",
+      "revId": "994b5753c195345f334fd2addde7722896446408",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
