@@ -229,10 +229,6 @@ public abstract class ConditionProviderService extends Service {
         return mProvider;
     }
 
-    /**
-     * @hide
-     */
-    @TestApi
     public boolean isBound() {
         if (!mIsConnected) {
             Log.w(TAG, "Condition provider service not yet bound.");
