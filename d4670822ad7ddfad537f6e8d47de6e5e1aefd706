@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "329d20d0_d07eb7d8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7453,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-19T18:25:45Z",
+      "side": 1,
+      "message": "Should this be a base class?  (Even so, it\u0027s probably a SystemApi base class so no linkify, but might be better in general.)",
+      "parentUuid": "af9d881e_a9bbe56d",
+      "range": {
+        "startLine": 7453,
+        "startChar": 11,
+        "endLine": 7453,
+        "endChar": 75
+      },
+      "revId": "d4670822ad7ddfad537f6e8d47de6e5e1aefd706",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "000146e5_4641e628",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
