@@ -53,8 +53,6 @@ import java.io.IOException;
  * tasks. In Safe Mode, the system will allow underlying cellular networks to be used as default.
  * Additionally, during Safe Mode, the VCN will continue to retry the connections, and will
  * automatically exit Safe Mode if all active tunnels connect successfully.
- *
- * @hide
  */
 @SystemService(Context.VCN_MANAGEMENT_SERVICE)
 public final class VcnManager {
@@ -76,7 +74,6 @@ public final class VcnManager {
         mService = requireNonNull(service, "missing service");
     }
 
-    // TODO: Make setVcnConfig(), clearVcnConfig() Public API
     /**
      * Sets the VCN configuration for a given subscription group.
      *
@@ -92,7 +89,6 @@ public final class VcnManager {
      *     as the primary user
      * @throws IOException if the configuration failed to be persisted. A caller encountering this
      *     exception should attempt to retry (possibly after a delay).
-     * @hide
      */
     @RequiresPermission("carrier privileges") // TODO (b/72967236): Define a system-wide constant
     public void setVcnConfig(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config)
@@ -109,7 +105,6 @@ public final class VcnManager {
         }
     }
 
-    // TODO: Make setVcnConfig(), clearVcnConfig() Public API
     /**
      * Clears the VCN configuration for a given subscription group.
      *
@@ -122,7 +117,6 @@ public final class VcnManager {
      *     as the primary user
      * @throws IOException if the configuration failed to be cleared. A caller encountering this
      *     exception should attempt to retry (possibly after a delay).
-     * @hide
      */
     @RequiresPermission("carrier privileges") // TODO (b/72967236): Define a system-wide constant
     public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup) throws IOException {
