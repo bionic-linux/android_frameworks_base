@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e388e68_c47ae2d6",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T08:49:39Z",
+      "side": 1,
+      "message": "Yeah almost.\n1. I think VcnService is supposed to do that and you don\u0027t have to do it. Please check with Ben.\n2. Add this in NetworkRequest.Builder rather than NetworkRequest. Make it an IntDef because the framework team doesn\u0027t want Enum classes in the framework.\n3. Yes\n4. Not sure what you mean by this, is this a new function to deduce the NOT_VCN_MANAGED capability ? If so call it deduceNotVcnManagedCapability. It should be called in build().\n5. a. if TRUE, add\n   b. if AUTO, then\n      if (0 !\u003d (nc.capabilities \u0026 ~(DEFAULT_CAPABILITIES | VCN_SUPPORTED))) add\n\nAutomatic mode means we add it if the NC has any capability besides the default ones, INTERNET and DUN.",
+      "parentUuid": "71ccb5b5_a88d0ff6",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "942beaef_2ea8b8f5",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 8
