@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "494b4b44_f0382b24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328430
+      },
+      "writtenOn": "2021-01-20T11:10:37Z",
+      "side": 1,
+      "message": "It requires a secure element permission to use Reader.reset() and there is concern to add the permission to shell. So cts is not added.\n\nYes, I confirmed with the owner of the \"SE recovery app\" that it\u0027s not necessary to be public API.",
+      "parentUuid": "39cb1400_c2d0549f",
+      "revId": "f4e2acded11ac28434430981aff22f791be37a33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3ce9659_60af627f",
