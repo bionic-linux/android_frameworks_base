@@ -75,8 +75,6 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>The meteredness and roaming of the VCN {@link Network} will be determined by that of the
  * underlying Network(s).
- *
- * @hide
  */
 public final class VcnGatewayConnectionConfig {
     // TODO: Use MIN_MTU_V6 once it is public, @hide
@@ -250,7 +248,6 @@ public final class VcnGatewayConnectionConfig {
      *
      * @see Builder#addExposedCapability(int)
      * @see Builder#clearExposedCapability(int)
-     * @hide
      */
     @NonNull
     public int[] getExposedCapabilities() {
@@ -279,7 +276,6 @@ public final class VcnGatewayConnectionConfig {
      *
      * @see Builder#addRequiredUnderlyingCapability(int)
      * @see Builder#clearRequiredUnderlyingCapability(int)
-     * @hide
      */
     @NonNull
     public int[] getRequiredUnderlyingCapabilities() {
@@ -305,7 +301,6 @@ public final class VcnGatewayConnectionConfig {
      * Retrieves the configured retry intervals.
      *
      * @see Builder#setRetryInterval(long[])
-     * @hide
      */
     @NonNull
     public long[] getRetryInterval() {
@@ -329,8 +324,7 @@ public final class VcnGatewayConnectionConfig {
     /**
      * Retrieves the maximum MTU allowed for this Gateway Connection.
      *
-     * @see Builder.setMaxMtu(int)
-     * @hide
+     * @see Builder#setMaxMtu(int)
      */
     @IntRange(from = MIN_MTU_V6)
     public int getMaxMtu() {
@@ -388,8 +382,6 @@ public final class VcnGatewayConnectionConfig {
 
     /**
      * This class is used to incrementally build {@link VcnGatewayConnectionConfig} objects.
-     *
-     * @hide
      */
     public static final class Builder {
         @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
@@ -409,7 +401,6 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be exposed by a Gateway
          *     Connection
-         * @hide
          */
         @NonNull
         public Builder addExposedCapability(@VcnSupportedCapability int exposedCapability) {
@@ -427,7 +418,6 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be exposed by a Gateway
          *     Connection
-         * @hide
          */
         @NonNull
         public Builder clearExposedCapability(@VcnSupportedCapability int exposedCapability) {
@@ -445,7 +435,6 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be required of underlying
          *     networks
-         * @hide
          */
         @NonNull
         public Builder addRequiredUnderlyingCapability(
@@ -468,7 +457,6 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be required of underlying
          *     networks
-         * @hide
          */
         @NonNull
         public Builder clearRequiredUnderlyingCapability(
@@ -501,7 +489,6 @@ public final class VcnGatewayConnectionConfig {
          *     15m]}
          * @return this {@link Builder} instance, for chaining
          * @see VcnManager for additional discussion on fail-safe mode
-         * @hide
          */
         @NonNull
         public Builder setRetryInterval(@NonNull long[] retryIntervalsMs) {
@@ -523,7 +510,6 @@ public final class VcnGatewayConnectionConfig {
          * @param maxMtu the maximum MTU allowed for this Gateway Connection. Must be greater than
          *     the IPv6 minimum MTU of 1280. Defaults to 1500.
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
         public Builder setMaxMtu(@IntRange(from = MIN_MTU_V6) int maxMtu) {
@@ -538,7 +524,6 @@ public final class VcnGatewayConnectionConfig {
          * Builds and validates the VcnGatewayConnectionConfig.
          *
          * @return an immutable VcnGatewayConnectionConfig instance
-         * @hide
          */
         @NonNull
         public VcnGatewayConnectionConfig build() {
