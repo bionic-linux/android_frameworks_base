@@ -105,6 +105,30 @@
       },
       "revId": "e6cb31bbbb64aba88c9b06d48aa1eb42534552c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fc65d8e_da6f53c7",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4412,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-01-20T18:14:53Z",
+      "side": 1,
+      "message": "There are unresolved multiple unresolved comments on the CLs under the topic. Once they are resolved we should be able to submit these CLs.",
+      "parentUuid": "2c0a064c_865a2f99",
+      "range": {
+        "startLine": 4412,
+        "startChar": 47,
+        "endLine": 4412,
+        "endChar": 51
+      },
+      "revId": "e6cb31bbbb64aba88c9b06d48aa1eb42534552c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
