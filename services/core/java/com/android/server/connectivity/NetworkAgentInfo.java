@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.transportNamesOf;
 
 import android.annotation.NonNull;
@@ -296,7 +297,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     private boolean mLingering;
 
     // This represents the quality of the network.
-    private NetworkScore mScore;
+    private InternalScore mScore;
 
     // The list of NetworkRequests being satisfied by this Network.
     private final SparseArray<NetworkRequest> mNetworkRequests = new SparseArray<>();
@@ -348,7 +349,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         networkInfo = info;
         linkProperties = lp;
         networkCapabilities = nc;
-        mScore = score;
+        mScore = mixInScore(score, nc);
         clatd = new Nat464Xlat(this, netd, dnsResolver, nms);
         mConnService = connService;
         mContext = context;
@@ -880,7 +881,12 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     }
 
     public void setScore(final NetworkScore score) {
-        mScore = score;
+        mScore = mixInScore(score, networkCapabilities);
+    }
+
+    private static InternalScore mixInScore(@NonNull final NetworkScore score,
+            @NonNull final NetworkCapabilities caps) {
+        return InternalScore.withPolicy(score, caps.hasCapability(NET_CAPABILITY_VALIDATED));
     }
 
     public NetworkState getNetworkState() {
