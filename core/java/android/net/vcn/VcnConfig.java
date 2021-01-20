@@ -41,7 +41,6 @@ import java.util.Set;
  * brought up on demand based on active {@link NetworkRequest}(s).
  *
  * @see VcnManager for more information on the Virtual Carrier Network feature
- * @hide
  */
 public final class VcnConfig implements Parcelable {
     @NonNull private static final String TAG = VcnConfig.class.getSimpleName();
@@ -146,7 +145,7 @@ public final class VcnConfig implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel out, int flags) {
+    public void writeToParcel(@NonNull Parcel out, int flags) {
         out.writeParcelable(toPersistableBundle(), flags);
     }
 
@@ -165,7 +164,7 @@ public final class VcnConfig implements Parcelable {
             };
 
     /** This class is used to incrementally build {@link VcnConfig} objects. */
-    public static class Builder {
+    public static final class Builder {
         @NonNull private final String mPackageName;
 
         @NonNull

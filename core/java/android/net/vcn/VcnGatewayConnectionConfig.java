@@ -71,10 +71,8 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>The meteredness and roaming of the VCN {@link Network} will be determined by that of the
  * underlying Network(s).
- *
- * @hide
  */
-public final class VcnGatewayConnectionConfig {
+public class VcnGatewayConnectionConfig {
     // TODO: Use MIN_MTU_V6 once it is public, @hide
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final int MIN_MTU_V6 = 1280;
@@ -143,8 +141,7 @@ public final class VcnGatewayConnectionConfig {
     private static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
     @NonNull private final long[] mRetryIntervalsMs;
 
-    @VisibleForTesting(visibility = Visibility.PRIVATE)
-    public VcnGatewayConnectionConfig(
+    private VcnGatewayConnectionConfig(
             @NonNull Set<Integer> exposedCapabilities,
             @NonNull Set<Integer> underlyingCapabilities,
             @NonNull long[] retryIntervalsMs,
@@ -321,7 +318,11 @@ public final class VcnGatewayConnectionConfig {
                 && mMaxMtu == rhs.mMaxMtu;
     }
 
-    /** This class is used to incrementally build {@link VcnGatewayConnectionConfig} objects. */
+    /**
+     * This class is used to incrementally build {@link VcnGatewayConnectionConfig} objects.
+     *
+     * @hide
+     */
     public static class Builder {
         @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
         @NonNull private final Set<Integer> mUnderlyingCapabilities = new ArraySet();
