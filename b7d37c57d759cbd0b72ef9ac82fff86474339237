@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "71ccb5b5_a88d0ff6",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-20T08:35:46Z",
+      "side": 1,
+      "message": "Per discussion, here is the plan, correct me if anything wrong:\n\n 1. Remove NOT_VCN_MANAGED from DEFAULT_CAPABILITIES, and for every NetworkAgent implementation, add NOT_VCN_MANAGED manually.\n 2. Add a tri-state in NetworkRequest, probably an Enum named mSetNotVcnManaged, with 3 possible values: TRUE, FALSE, AUTO\n 3. if user calls addCapability(NOT_VCN_MANAGED) set to true, FALSE if removeCapability(NOT_VCN_MANAGED)\n 4. pass it to nc.maybeBypassingVcnForNonInternetRequest\n 5. a. if TRUE, add NOT_VCN_MANAGED,\n    b. if AUTO, then\n      if(nc \u0026 NON_REQUETABLE_CAPABILITIES) \u003d\u003d0\n        \u0026\u0026 (nc \u0026 VCN_SUPPORTED_CAPABILITIES) !\u003d0)\n            add NOT_VCN_MANAGED;\n\nThus, the test case 3 in previous comment breaks, but it is what we expected.",
+      "parentUuid": "2a87b4a8_074c8da6",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "942beaef_2ea8b8f5",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 8
