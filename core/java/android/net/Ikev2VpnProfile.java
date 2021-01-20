@@ -24,10 +24,8 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresFeature;
 import android.content.pm.PackageManager;
-import android.os.Process;
 import android.security.Credentials;
 import android.security.KeyStore;
-import android.security.keystore.AndroidKeyStoreProvider;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.net.VpnProfile;
@@ -35,6 +33,7 @@ import com.android.internal.net.VpnProfile;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -443,6 +442,22 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         return fromVpnProfile(profile, null);
     }
 
+    private static PrivateKey getPrivateKeyFromAndroidKeystore(String alias) {
+        try {
+            final java.security.KeyStore keystore =
+                    java.security.KeyStore.getInstance("AndroidKeyStore");
+            keystore.load(null);
+            final Key key = keystore.getKey(alias, null);
+            if (!(key instanceof PrivateKey)) {
+                throw new IllegalStateException(
+                        "Unexpected key type returned from android keystore.");
+            }
+            return (PrivateKey) key;
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to load key from android keystore.", e);
+        }
+    }
+
     /**
      * Builds the Ikev2VpnProfile from the given profile.
      *
@@ -483,8 +498,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
 
                     final String alias =
                             profile.ipsecSecret.substring(PREFIX_KEYSTORE_ALIAS.length());
-                    key = AndroidKeyStoreProvider.loadAndroidKeyStorePrivateKeyFromKeystore(
-                            keyStore, alias, Process.myUid());
+                    key = getPrivateKeyFromAndroidKeystore(alias);
                 } else if (profile.ipsecSecret.startsWith(PREFIX_INLINE)) {
                     key = getPrivateKey(profile.ipsecSecret.substring(PREFIX_INLINE.length()));
                 } else {
