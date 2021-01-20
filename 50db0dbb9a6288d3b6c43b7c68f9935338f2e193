@@ -347,6 +347,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99336686_c1254c47",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 10704,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-20T23:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04d1582c_d02efb78",
+      "range": {
+        "startLine": 10704,
+        "startChar": 16,
+        "endLine": 10704,
+        "endChar": 45
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "603301c3_cb2ba92e",
@@ -360,6 +384,30 @@
       "writtenOn": "2021-01-07T08:25:24Z",
       "side": 1,
       "message": "This can now go back to being final.",
+      "range": {
+        "startLine": 8167,
+        "startChar": 17,
+        "endLine": 8167,
+        "endChar": 23
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "811d8b48_9d3a5daa",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 45
+      },
+      "lineNbr": 8167,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-20T23:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "603301c3_cb2ba92e",
       "range": {
         "startLine": 8167,
         "startChar": 17,
