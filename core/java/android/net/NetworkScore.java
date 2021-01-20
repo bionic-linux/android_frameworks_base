@@ -16,9 +16,16 @@
 
 package android.net;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.android.internal.annotations.VisibleForTesting;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.StringJoiner;
 
 /**
  * Object representing the quality of a network as perceived by the user.
@@ -33,12 +40,52 @@ public final class NetworkScore implements Parcelable {
     // a migration.
     private final int mLegacyInt;
 
-    // Agent-managed policies
-    // TODO : add them here, starting from 1
-    // CS-managed policies
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = { "POLICY_" }, value = {
+            POLICY_IS_VALIDATED,
+            POLICY_IS_VPN,
+            POLICY_ONCE_CHOSEN_BY_USER,
+            POLICY_ACCEPT_UNVALIDATED
+    })
+    public @interface Policy {}
+
+    // Agent-managed policies, counting from 1 upward
+    // TODO : add them here
+    // CS-managed policies, counting from 63 downward
     // This network is validated. CS-managed because the source of truth is in NetworkCapabilities.
     /** @hide */
     public static final int POLICY_IS_VALIDATED = 63;
+
+    // This is a VPN and behaves as one for scoring purposes.
+    /** @hide */
+    public static final int POLICY_IS_VPN = 62;
+
+    // This network has been selected by the user manually from settings or a 3rd party app
+    // at least once. {@see NetworkAgentConfig#explicitlySelected}.
+    /** @hide */
+    public static final int POLICY_ONCE_CHOSEN_BY_USER = 61;
+
+    // The user has indicated in UI that this network should be used even if it doesn't
+    // validate. {@see NetworkAgentConfig#acceptUnvalidated}.
+    /** @hide */
+    public static final int POLICY_ACCEPT_UNVALIDATED = 60;
+
+    // To help iterate when printing
+    private static final int MIN_AGENT_MANAGED_POLICY = 0;
+    private static final int MAX_AGENT_MANAGED_POLICY = -1;
+    private static final int MIN_CS_MANAGED_POLICY = POLICY_ACCEPT_UNVALIDATED;
+    private static final int MAX_CS_MANAGED_POLICY = POLICY_IS_VALIDATED;
+
+    private static @NonNull String policyNameOf(final int policy) {
+        switch (policy) {
+            case POLICY_IS_VALIDATED: return "IS_VALIDATED";
+            case POLICY_IS_VPN: return "IS_VPN";
+            case POLICY_ONCE_CHOSEN_BY_USER: return "ONCE_CHOSEN_BY_USER";
+            case POLICY_ACCEPT_UNVALIDATED: return "ACCEPT_UNVALIDATED";
+        }
+        throw new IllegalArgumentException("Unknown policy : " + policy);
+    }
 
     // Bitmask of all the policies applied to this score.
     private final long mPolicy;
@@ -56,17 +103,77 @@ public final class NetworkScore implements Parcelable {
 
     // Helper methods for connectivity service to mix in bits
     /** @hide */
-    public NetworkScore withPolicyBits(final boolean isValidated) {
-        return new NetworkScore(mLegacyInt, isValidated ? 1L << POLICY_IS_VALIDATED : 0L);
+    public NetworkScore withPolicyBits(
+            final boolean isValidated,
+            final boolean isVpn,
+            final boolean onceChosenByUser,
+            final boolean acceptUnvalidated) {
+        return new NetworkScore(mLegacyInt,
+                (isValidated         ? 1L << POLICY_IS_VALIDATED : 0)
+                | (isVpn             ? 1L << POLICY_IS_VPN : 0)
+                | (onceChosenByUser  ? 1L << POLICY_ONCE_CHOSEN_BY_USER : 0)
+                | (acceptUnvalidated ? 1L << POLICY_ACCEPT_UNVALIDATED : 0));
     }
 
     public int getLegacyInt() {
-        return mLegacyInt;
+        return getLegacyInt(false);
+    }
+
+    /** @hide */
+    public int getLegacyIntAsValidated() {
+        return getLegacyInt(true);
+    }
+
+    // TODO : remove these two constants
+    // Penalty applied to scores of Networks that have not been validated.
+    private static final int UNVALIDATED_SCORE_PENALTY = 40;
+
+    // Score for a network that can be used unvalidated
+    private static final int ACCEPT_UNVALIDATED_NETWORK_SCORE = 100;
+
+    private int getLegacyInt(boolean pretendValidated) {
+        // If the user has chosen this network at least once, give it the maximum score when
+        // checking to pretend it's validated, or if it doesn't need to validate because the
+        // user said to use it even if it doesn't validate.
+        // This ensures that networks that have been selected in UI are not torn down before the
+        // user gets a chance to prefer it when a higher-scoring network (e.g., Ethernet) is
+        // available.
+        if (hasPolicy(POLICY_ONCE_CHOSEN_BY_USER)
+                && (hasPolicy(POLICY_ACCEPT_UNVALIDATED) || pretendValidated)) {
+            return ACCEPT_UNVALIDATED_NETWORK_SCORE;
+        }
+
+        int score = mLegacyInt;
+        // Except for VPNs, networks are subject to a penalty for not being validated.
+        // Apply the penalty unless the network is a VPN, or it's validated or pretending to be.
+        if (!hasPolicy(POLICY_IS_VALIDATED) && !pretendValidated && !hasPolicy(POLICY_IS_VPN)) {
+            score -= UNVALIDATED_SCORE_PENALTY;
+        }
+        if (score < 0) score = 0;
+        return score;
+    }
+
+    /**
+     * @return whether this score has a particular policy.
+     */
+    @VisibleForTesting
+    public boolean hasPolicy(final int policy) {
+        return 0 != (mPolicy & (1L << policy));
     }
 
     @Override
     public String toString() {
-        return "Score(" + mLegacyInt + ")";
+        final StringJoiner sj = new StringJoiner(
+                "&", // delimiter
+                "Score(" + mLegacyInt + "; Policies : ", // prefix
+                ")"); // suffix
+        for (int i = MIN_AGENT_MANAGED_POLICY; i <= MAX_AGENT_MANAGED_POLICY; ++i) {
+            if (hasPolicy(i)) sj.add(policyNameOf(i));
+        }
+        for (int i = MIN_CS_MANAGED_POLICY; i <= MAX_CS_MANAGED_POLICY; ++i) {
+            if (hasPolicy(i)) sj.add(policyNameOf(i));
+        }
+        return sj.toString();
     }
 
     @Override
