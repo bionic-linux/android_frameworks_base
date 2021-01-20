@@ -99,6 +99,13 @@ import android.os.UserManager;
 import android.provider.Settings;
 import android.security.Credentials;
 import android.security.KeyStore;
+import android.security.KeyStore2;
+import android.security.KeyStoreException;
+import android.security.keystore.AndroidKeyStoreProvider;
+import android.security.keystore.KeyProperties;
+import android.system.keystore2.Domain;
+import android.system.keystore2.KeyDescriptor;
+import android.system.keystore2.KeyPermission;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
@@ -127,6 +134,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -1995,6 +2003,35 @@ public class Vpn {
         }
     }
 
+
+
+    private String makeKeystoreEngineGrantString(String alias) {
+        if (alias == null) {
+            return null;
+        }
+        // If Keystore 2.0 is not enabled, we don't touch the alias.
+        if (!AndroidKeyStoreProvider.isKeystore2Enabled()) {
+            return alias;
+        }
+        KeyStore2 keystore2 = KeyStore2.getInstance();
+        KeyDescriptor key = new KeyDescriptor();
+        key.domain = Domain.APP;
+        key.nspace = KeyProperties.NAMESPACE_APPLICATION;
+        key.alias = alias;
+        key.blob = null;
+        int grantAccessVector = KeyPermission.USE | KeyPermission.GET_INFO;
+        try {
+            key = keystore2.grant(key, android.os.Process.VPN_UID, grantAccessVector);
+        } catch (KeyStoreException e) {
+            Log.e(TAG, "Failed to get grant for keystore key.", e);
+            throw new IllegalStateException("Failed to get grant for keystore key.", e);
+        }
+
+        // Turn the grant identifier into a string as understood by the keystore boringssl engine
+        // in system/security/keystore-engine.
+        return KeyStore2.makeKeystoreEngineGrantString(key.nspace);
+    }
+
     /**
      * Like {@link #startLegacyVpn(VpnProfile, KeyStore, LinkProperties)}, but does not check
      * permissions under the assumption that the caller is the system.
@@ -2019,18 +2056,33 @@ public class Vpn {
         String userCert = "";
         String caCert = "";
         String serverCert = "";
-        if (!profile.ipsecUserCert.isEmpty()) {
-            privateKey = Credentials.USER_PRIVATE_KEY + profile.ipsecUserCert;
-            byte[] value = keyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecUserCert);
-            userCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
-        }
-        if (!profile.ipsecCaCert.isEmpty()) {
-            byte[] value = keyStore.get(Credentials.CA_CERTIFICATE + profile.ipsecCaCert);
-            caCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
-        }
-        if (!profile.ipsecServerCert.isEmpty()) {
-            byte[] value = keyStore.get(Credentials.USER_CERTIFICATE + profile.ipsecServerCert);
-            serverCert = (value == null) ? null : new String(value, StandardCharsets.UTF_8);
+
+        try {
+            java.security.KeyStore keystore = java.security.KeyStore.getInstance("AndroidKeyStore");
+            keystore.load(null);
+            if (!profile.ipsecUserCert.isEmpty()) {
+                if (AndroidKeyStoreProvider.isKeystore2Enabled()) {
+                    privateKey = profile.ipsecUserCert;
+                } else {
+                    privateKey = Credentials.USER_PRIVATE_KEY + profile.ipsecUserCert;
+                }
+                Certificate cert =  keystore.getCertificate(profile.ipsecUserCert);
+                userCert = (cert == null) ? null
+                         : new String(Credentials.convertToPem(cert), StandardCharsets.UTF_8);
+            }
+            if (!profile.ipsecCaCert.isEmpty()) {
+                Certificate cert = keystore.getCertificate(profile.ipsecCaCert);
+                caCert = (cert == null) ? null
+                        : new String(Credentials.convertToPem(cert), StandardCharsets.UTF_8);
+            }
+            if (!profile.ipsecServerCert.isEmpty()) {
+                Certificate cert = keystore.getCertificate(profile.ipsecServerCert);
+                serverCert = (cert == null) ? null
+                        : new String(Credentials.convertToPem(cert), StandardCharsets.UTF_8);
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to load credentials from AndroidKeyStore",
+                    e);
         }
         if (userCert == null || caCert == null || serverCert == null) {
             throw new IllegalStateException("Cannot load credentials");
@@ -2070,8 +2122,8 @@ public class Vpn {
                 break;
             case VpnProfile.TYPE_L2TP_IPSEC_RSA:
                 racoon = new String[] {
-                    iface, profile.server, "udprsa", privateKey, userCert,
-                    caCert, serverCert, "1701",
+                    iface, profile.server, "udprsa", makeKeystoreEngineGrantString(privateKey),
+                    userCert, caCert, serverCert, "1701",
                 };
                 break;
             case VpnProfile.TYPE_IPSEC_XAUTH_PSK:
@@ -2082,8 +2134,8 @@ public class Vpn {
                 break;
             case VpnProfile.TYPE_IPSEC_XAUTH_RSA:
                 racoon = new String[] {
-                    iface, profile.server, "xauthrsa", privateKey, userCert,
-                    caCert, serverCert, profile.username, profile.password, "", gateway,
+                    iface, profile.server, "xauthrsa", makeKeystoreEngineGrantString(privateKey),
+                    userCert, caCert, serverCert, profile.username, profile.password, "", gateway,
                 };
                 break;
             case VpnProfile.TYPE_IPSEC_HYBRID_RSA:
