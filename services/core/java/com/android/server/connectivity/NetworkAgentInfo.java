@@ -17,6 +17,7 @@
 package com.android.server.connectivity;
 
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.transportNamesOf;
 
 import android.annotation.NonNull;
@@ -348,7 +349,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         networkInfo = info;
         linkProperties = lp;
         networkCapabilities = nc;
-        mScore = score;
+        mScore = mixInScore(score, nc);
         clatd = new Nat464Xlat(this, netd, dnsResolver, nms);
         mConnService = connService;
         mContext = context;
@@ -880,7 +881,12 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     }
 
     public void setScore(final NetworkScore score) {
-        mScore = score;
+        mScore = mixInScore(score, networkCapabilities);
+    }
+
+    private static NetworkScore mixInScore(@NonNull final NetworkScore score,
+            @NonNull final NetworkCapabilities caps) {
+        return score.withPolicyBits(caps.hasCapability(NET_CAPABILITY_VALIDATED));
     }
 
     public NetworkState getNetworkState() {
