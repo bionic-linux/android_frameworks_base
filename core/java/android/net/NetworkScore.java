@@ -34,13 +34,30 @@ public final class NetworkScore implements Parcelable {
     // a migration.
     public final int legacyInt;
 
+    // Agent-managed policies
+    // TODO : add them here, starting from 1
+    // CS-managed policies
+    // This network is validated. CS-managed because the source of truth is in NetworkCapabilities.
     /** @hide */
-    NetworkScore(final int legacyInt) {
+    public static final int POLICY_IS_VALIDATED = 63;
+
+    private final long mPolicy;
+
+    /** @hide */
+    NetworkScore(final int legacyInt, final long policy) {
         this.legacyInt = legacyInt;
+        mPolicy = policy;
     }
 
     private NetworkScore(@NonNull final Parcel in) {
         legacyInt = in.readInt();
+        mPolicy = in.readLong();
+    }
+
+    // Helper methods for connectivity service to mix in bits
+    /** @hide */
+    public NetworkScore withPolicyBits(final boolean isValidated) {
+        return new NetworkScore(legacyInt, isValidated ? 1L << POLICY_IS_VALIDATED : 0L);
     }
 
     public int getLegacyInt() {
@@ -103,7 +120,7 @@ public final class NetworkScore implements Parcelable {
          */
         @NonNull
         public NetworkScore build() {
-            return new NetworkScore(mLegacyInt);
+            return new NetworkScore(mLegacyInt, 0L /* policy */);
         }
     }
 }
