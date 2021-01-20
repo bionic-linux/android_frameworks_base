@@ -60,7 +60,6 @@ import javax.net.SocketFactory;
  * {@link ConnectivityManager#bindProcessToNetwork}.
  */
 public class Network implements Parcelable {
-
     /**
      * The unique id of the network.
      * @hide
