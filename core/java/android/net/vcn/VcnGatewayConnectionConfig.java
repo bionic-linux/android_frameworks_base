@@ -21,6 +21,7 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.net.NetworkCapabilities;
 import android.os.PersistableBundle;
 import android.util.ArraySet;
@@ -55,8 +56,8 @@ import java.util.concurrent.TimeUnit;
  * subscription group under which this configuration is registered (see {@link
  * VcnManager#setVcnConfig}).
  *
- * <p>Services that can be provided by a VCN network, or required for underlying networks are
- * limited to services provided by cellular networks:
+ * <p>As an abstraction of a cellular network, services that can be provided by a VCN network, or
+ * required for underlying networks are limited to services provided by cellular networks:
  *
  * <ul>
  *   <li>{@link android.net.NetworkCapabilities.NET_CAPABILITY_MMS}
@@ -72,11 +73,6 @@ import java.util.concurrent.TimeUnit;
  *   <li>{@link android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET}
  *   <li>{@link android.net.NetworkCapabilities.NET_CAPABILITY_MCX}
  * </ul>
- *
- * <p>The meteredness and roaming of the VCN {@link Network} will be determined by that of the
- * underlying Network(s).
- *
- * @hide
  */
 public final class VcnGatewayConnectionConfig {
     // TODO: Use MIN_MTU_V6 once it is public, @hide
@@ -249,8 +245,7 @@ public final class VcnGatewayConnectionConfig {
      * ascending numerical order.
      *
      * @see Builder#addExposedCapability(int)
-     * @see Builder#clearExposedCapability(int)
-     * @hide
+     * @see Builder#removeExposedCapability(int)
      */
     @NonNull
     public int[] getExposedCapabilities() {
@@ -278,8 +273,7 @@ public final class VcnGatewayConnectionConfig {
      * <p>The returned integer-value capabilities will be sorted in ascending numerical order.
      *
      * @see Builder#addRequiredUnderlyingCapability(int)
-     * @see Builder#clearRequiredUnderlyingCapability(int)
-     * @hide
+     * @see Builder#removeRequiredUnderlyingCapability(int)
      */
     @NonNull
     public int[] getRequiredUnderlyingCapabilities() {
@@ -305,7 +299,6 @@ public final class VcnGatewayConnectionConfig {
      * Retrieves the configured retry intervals.
      *
      * @see Builder#setRetryInterval(long[])
-     * @hide
      */
     @NonNull
     public long[] getRetryInterval() {
@@ -317,7 +310,7 @@ public final class VcnGatewayConnectionConfig {
      *
      * <p>Left to prevent the need to make major changes while changes are actively in flight.
      *
-     * @deprecated use getRequiredUnderlyingCapabilities() instead
+     * @deprecated use getRetryInterval() instead
      * @hide
      */
     @Deprecated
@@ -329,8 +322,7 @@ public final class VcnGatewayConnectionConfig {
     /**
      * Retrieves the maximum MTU allowed for this Gateway Connection.
      *
-     * @see Builder.setMaxMtu(int)
-     * @hide
+     * @see Builder#setMaxMtu(int)
      */
     @IntRange(from = MIN_MTU_V6)
     public int getMaxMtu() {
@@ -388,8 +380,6 @@ public final class VcnGatewayConnectionConfig {
 
     /**
      * This class is used to incrementally build {@link VcnGatewayConnectionConfig} objects.
-     *
-     * @hide
      */
     public static final class Builder {
         @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
@@ -409,7 +399,6 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be exposed by a Gateway
          *     Connection
-         * @hide
          */
         @NonNull
         public Builder addExposedCapability(@VcnSupportedCapability int exposedCapability) {
@@ -427,10 +416,10 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be exposed by a Gateway
          *     Connection
-         * @hide
          */
         @NonNull
-        public Builder clearExposedCapability(@VcnSupportedCapability int exposedCapability) {
+        @SuppressLint("BuilderSetStyle") // For consistency with NetCaps.Builder add/removeCap
+        public Builder removeExposedCapability(@VcnSupportedCapability int exposedCapability) {
             checkValidCapability(exposedCapability);
 
             mExposedCapabilities.remove(exposedCapability);
@@ -445,7 +434,6 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be required of underlying
          *     networks
-         * @hide
          */
         @NonNull
         public Builder addRequiredUnderlyingCapability(
@@ -468,10 +456,10 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be required of underlying
          *     networks
-         * @hide
          */
         @NonNull
-        public Builder clearRequiredUnderlyingCapability(
+        @SuppressLint("BuilderSetStyle") // For consistency with NetCaps.Builder add/removeCap
+        public Builder removeRequiredUnderlyingCapability(
                 @VcnSupportedCapability int underlyingCapability) {
             checkValidCapability(underlyingCapability);
 
@@ -501,7 +489,6 @@ public final class VcnGatewayConnectionConfig {
          *     15m]}
          * @return this {@link Builder} instance, for chaining
          * @see VcnManager for additional discussion on fail-safe mode
-         * @hide
          */
         @NonNull
         public Builder setRetryInterval(@NonNull long[] retryIntervalsMs) {
@@ -523,7 +510,6 @@ public final class VcnGatewayConnectionConfig {
          * @param maxMtu the maximum MTU allowed for this Gateway Connection. Must be greater than
          *     the IPv6 minimum MTU of 1280. Defaults to 1500.
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
         public Builder setMaxMtu(@IntRange(from = MIN_MTU_V6) int maxMtu) {
@@ -538,7 +524,6 @@ public final class VcnGatewayConnectionConfig {
          * Builds and validates the VcnGatewayConnectionConfig.
          *
          * @return an immutable VcnGatewayConnectionConfig instance
-         * @hide
          */
         @NonNull
         public VcnGatewayConnectionConfig build() {
