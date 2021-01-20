@@ -145,6 +145,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0c9a4152_b7f74b11",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-20T14:00:37Z",
+      "side": 1,
+      "message": "Done except 1.\nWe\u0027ll need to wait for Ben\u0027s comment.",
+      "parentUuid": "d58d179d_405f504d",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "942beaef_2ea8b8f5",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 8
