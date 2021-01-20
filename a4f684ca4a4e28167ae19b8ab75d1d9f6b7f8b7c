@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f2f86ab_b8795475",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-20T03:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f865b528_d618c136",
+      "range": {
+        "startLine": 1636,
+        "startChar": 66,
+        "endLine": 1636,
+        "endChar": 74
+      },
+      "revId": "a4f684ca4a4e28167ae19b8ab75d1d9f6b7f8b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e32bb26_817a5913",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-08T16:37:14Z",
       "side": 1,
       "message": "\"flakiness\"? (flaky is an adjective so I don\u0027t think you can say can\u0027t say \"in case of flaky\")",
+      "range": {
+        "startLine": 1653,
+        "startChar": 31,
+        "endLine": 1653,
+        "endChar": 36
+      },
+      "revId": "a4f684ca4a4e28167ae19b8ab75d1d9f6b7f8b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02ae3cbf_7008f7a7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1653,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-20T03:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e32bb26_817a5913",
       "range": {
         "startLine": 1653,
         "startChar": 31,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0abcf709_a812990d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-20T03:02:03Z",
+      "side": 1,
+      "message": "Done.\nNow nascent doesn\u0027t change isBackgroundNetwork, I think it is more reasonable.",
+      "parentUuid": "e78da7e7_4ef4de12",
+      "range": {
+        "startLine": 1722,
+        "startChar": 0,
+        "endLine": 1723,
+        "endChar": 59
+      },
+      "revId": "a4f684ca4a4e28167ae19b8ab75d1d9f6b7f8b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d513d545_4dbe488c",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-08T16:37:14Z",
       "side": 1,
       "message": "This test looks really similar to the one just above.\n\nIn fact, it looks like the events that happen are actually identical: connect wifi, enable always-on, connect cell, linger cell. The only difference is what callbacks are registered. If so, then you should probably merge the two tests into one test which files all the callbacks. Since the sequence of events that happens is the same, having two tests will not add any new coverage.",
+      "range": {
+        "startLine": 1740,
+        "startChar": 16,
+        "endLine": 1740,
+        "endChar": 59
+      },
+      "revId": "a4f684ca4a4e28167ae19b8ab75d1d9f6b7f8b7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "426b8c5e_514f76b5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-20T03:02:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d513d545_4dbe488c",
       "range": {
         "startLine": 1740,
         "startChar": 16,
