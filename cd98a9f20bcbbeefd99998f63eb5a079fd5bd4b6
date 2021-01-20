@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0380c72_fcceb034",
+        "filename": "core/java/android/net/metrics/ValidationProbeEvent.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-01-20T01:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133cd352_49a46c10",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "cd98a9f20bcbbeefd99998f63eb5a079fd5bd4b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01a62810_910bfecb",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-19T14:53:36Z",
       "side": 1,
       "message": "migrating",
+      "range": {
+        "startLine": 37,
+        "startChar": 44,
+        "endLine": 37,
+        "endChar": 52
+      },
+      "revId": "cd98a9f20bcbbeefd99998f63eb5a079fd5bd4b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01dfa4c0_0d0ff573",
+        "filename": "core/java/android/net/metrics/ValidationProbeEvent.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-01-20T01:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a62810_910bfecb",
       "range": {
         "startLine": 37,
         "startChar": 44,
