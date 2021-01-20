@@ -4256,6 +4256,7 @@ public class ConnectivityServiceTest {
         assertTrue(mPolicyTracker.shouldNotifyWifiUnvalidated());
     }
 
+    @Ignore("Refactoring in progress b/178071397")
     @Test
     public void testAvoidBadWifi() throws Exception {
         final ContentResolver cr = mServiceContext.getContentResolver();
