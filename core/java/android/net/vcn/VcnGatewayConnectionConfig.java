@@ -74,7 +74,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @hide
  */
-public final class VcnGatewayConnectionConfig {
+public class VcnGatewayConnectionConfig {
     // TODO: Use MIN_MTU_V6 once it is public, @hide
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final int MIN_MTU_V6 = 1280;
@@ -143,8 +143,14 @@ public final class VcnGatewayConnectionConfig {
     private static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
     @NonNull private final long[] mRetryIntervalsMs;
 
-    @VisibleForTesting(visibility = Visibility.PRIVATE)
-    public VcnGatewayConnectionConfig(
+    /**
+     * Builds a VcnGatewayConnectionConfig with the specified parameters.
+     *
+     * <p>For use by subclasses.
+     *
+     * @hide
+     */
+    protected VcnGatewayConnectionConfig(
             @NonNull Set<Integer> exposedCapabilities,
             @NonNull Set<Integer> underlyingCapabilities,
             @NonNull long[] retryIntervalsMs,
@@ -159,7 +165,7 @@ public final class VcnGatewayConnectionConfig {
 
     /** @hide */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
-    public VcnGatewayConnectionConfig(@NonNull PersistableBundle in) {
+    VcnGatewayConnectionConfig(@NonNull PersistableBundle in) {
         final PersistableBundle exposedCapsBundle =
                 in.getPersistableBundle(EXPOSED_CAPABILITIES_KEY);
         final PersistableBundle underlyingCapsBundle =
@@ -232,6 +238,7 @@ public final class VcnGatewayConnectionConfig {
      * Checks if this config is configured to support/expose a specific capability.
      *
      * @param capability the capability to check for
+     * @hide
      */
     public boolean hasExposedCapability(@NetCapability int capability) {
         checkValidCapability(capability);
@@ -253,6 +260,7 @@ public final class VcnGatewayConnectionConfig {
      * Checks if this config requires an underlying network to have the specified capability.
      *
      * @param capability the capability to check for
+     * @hide
      */
     public boolean requiresUnderlyingCapability(@NetCapability int capability) {
         checkValidCapability(capability);
@@ -260,13 +268,21 @@ public final class VcnGatewayConnectionConfig {
         return mUnderlyingCapabilities.contains(capability);
     }
 
-    /** Retrieves the configured retry intervals. */
+    /**
+     * Retrieves the configured retry intervals.
+     *
+     * @hide
+     */
     @NonNull
     public long[] getRetryIntervalsMs() {
         return Arrays.copyOf(mRetryIntervalsMs, mRetryIntervalsMs.length);
     }
 
-    /** Retrieves the maximum MTU allowed for this Gateway Connection. */
+    /**
+     * Retrieves the maximum MTU allowed for this Gateway Connection.
+     *
+     * @hide
+     */
     @IntRange(from = MIN_MTU_V6)
     public int getMaxMtu() {
         return mMaxMtu;
@@ -321,7 +337,11 @@ public final class VcnGatewayConnectionConfig {
                 && mMaxMtu == rhs.mMaxMtu;
     }
 
-    /** This class is used to incrementally build {@link VcnGatewayConnectionConfig} objects. */
+    /**
+     * This class is used to incrementally build {@link VcnGatewayConnectionConfig} objects.
+     *
+     * @hide
+     */
     public static class Builder {
         @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
         @NonNull private final Set<Integer> mUnderlyingCapabilities = new ArraySet();
