@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea9417f2_ad2fc3b4",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7454,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-20T01:35:12Z",
+      "side": 1,
+      "message": "AIDL is not public - can you instead @link to ImsRegistrationImplBase#onRegistered?",
+      "range": {
+        "startLine": 7453,
+        "startChar": 7,
+        "endLine": 7454,
+        "endChar": 81
+      },
+      "revId": "4350445c7c8b908e92778c29070c0779b72538de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
