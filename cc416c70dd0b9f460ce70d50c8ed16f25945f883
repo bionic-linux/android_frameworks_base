@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25f4748f_79fe62f7",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3197,
+      "author": {
+        "id": 1798566
+      },
+      "writtenOn": "2021-01-20T07:53:53Z",
+      "side": 1,
+      "message": "count -\u003e max usage count?",
+      "range": {
+        "startLine": 3197,
+        "startChar": 87,
+        "endLine": 3197,
+        "endChar": 92
+      },
+      "revId": "cc416c70dd0b9f460ce70d50c8ed16f25945f883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23a2b98e_3471a421",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3206,
+      "author": {
+        "id": 1798566
+      },
+      "writtenOn": "2021-01-20T07:53:53Z",
+      "side": 1,
+      "message": "any number of the count -\u003e any max usage count?",
+      "range": {
+        "startLine": 3205,
+        "startChar": 82,
+        "endLine": 3206,
+        "endChar": 12
+      },
+      "revId": "cc416c70dd0b9f460ce70d50c8ed16f25945f883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "018c7912_afc7f546",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3207,
+      "author": {
+        "id": 1798566
+      },
+      "writtenOn": "2021-01-20T07:53:53Z",
+      "side": 1,
+      "message": "Remove this?",
+      "range": {
+        "startLine": 3207,
+        "startChar": 6,
+        "endLine": 3207,
+        "endChar": 12
+      },
+      "revId": "cc416c70dd0b9f460ce70d50c8ed16f25945f883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
