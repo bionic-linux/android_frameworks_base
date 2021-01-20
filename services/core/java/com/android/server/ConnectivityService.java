@@ -2691,6 +2691,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.increaseIndent();
         mPermissionMonitor.dump(pw);
         pw.decreaseIndent();
+
+        pw.println();
+        pw.println("Legacy network activity:");
+        pw.increaseIndent();
+        mNetworkActivityTracker.dump(pw);
+        pw.decreaseIndent();
     }
 
     private void dumpNetworks(IndentingPrintWriter pw) {
@@ -9095,6 +9101,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         public void unregisterNetworkActivityListener(@NonNull INetworkActivityListener l) {
             mNetworkActivityListeners.unregister(l);
+        }
+
+        public void dump(IndentingPrintWriter pw) {
+            synchronized (mActiveIdleTimers) {
+                pw.print("mNetworkActive="); pw.println(mNetworkActive);
+                pw.println("Idle timers:");
+                for (HashMap.Entry<String, IdleTimerParams> ent : mActiveIdleTimers.entrySet()) {
+                    pw.print("  "); pw.print(ent.getKey()); pw.println(":");
+                    final IdleTimerParams params = ent.getValue();
+                    pw.print("    timeout="); pw.print(params.timeout);
+                    pw.print(" type="); pw.println(params.transportType);
+                }
+            }
         }
     }
     /**
