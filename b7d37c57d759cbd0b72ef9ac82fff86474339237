@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d58d179d_405f504d",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T09:56:50Z",
+      "side": 1,
+      "message": "Okay I meant `0 \u003d\u003d` instead of `0 !\u003d`",
+      "parentUuid": "7e388e68_c47ae2d6",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "942beaef_2ea8b8f5",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 8
