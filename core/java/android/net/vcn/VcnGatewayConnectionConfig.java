@@ -22,6 +22,8 @@ import static com.android.internal.annotations.VisibleForTesting.Visibility;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
+import android.annotation.SystemApi.Client;
 import android.net.NetworkCapabilities;
 import android.os.PersistableBundle;
 import android.util.ArraySet;
@@ -71,8 +73,6 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>The meteredness and roaming of the VCN {@link Network} will be determined by that of the
  * underlying Network(s).
- *
- * @hide
  */
 public class VcnGatewayConnectionConfig {
     // TODO: Use MIN_MTU_V6 once it is public, @hide
@@ -150,6 +150,7 @@ public class VcnGatewayConnectionConfig {
      *
      * @hide
      */
+    @SystemApi(client = Client.MODULE_LIBRARIES)
     protected VcnGatewayConnectionConfig(
             @NonNull Set<Integer> exposedCapabilities,
             @NonNull Set<Integer> underlyingCapabilities,
@@ -238,7 +239,6 @@ public class VcnGatewayConnectionConfig {
      * Checks if this config is configured to support/expose a specific capability.
      *
      * @param capability the capability to check for
-     * @hide
      */
     public boolean hasExposedCapability(@NetCapability int capability) {
         checkValidCapability(capability);
@@ -260,7 +260,6 @@ public class VcnGatewayConnectionConfig {
      * Checks if this config requires an underlying network to have the specified capability.
      *
      * @param capability the capability to check for
-     * @hide
      */
     public boolean requiresUnderlyingCapability(@NetCapability int capability) {
         checkValidCapability(capability);
@@ -268,21 +267,13 @@ public class VcnGatewayConnectionConfig {
         return mUnderlyingCapabilities.contains(capability);
     }
 
-    /**
-     * Retrieves the configured retry intervals.
-     *
-     * @hide
-     */
+    /** Retrieves the configured retry intervals. */
     @NonNull
     public long[] getRetryIntervalsMs() {
         return Arrays.copyOf(mRetryIntervalsMs, mRetryIntervalsMs.length);
     }
 
-    /**
-     * Retrieves the maximum MTU allowed for this Gateway Connection.
-     *
-     * @hide
-     */
+    /** Retrieves the maximum MTU allowed for this Gateway Connection. */
     @IntRange(from = MIN_MTU_V6)
     public int getMaxMtu() {
         return mMaxMtu;

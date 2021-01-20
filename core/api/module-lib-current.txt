@@ -22,6 +22,14 @@ package android.net {
 
 }
 
+package android.net.vcn {
+
+  public class VcnGatewayConnectionConfig {
+    ctor protected VcnGatewayConnectionConfig(@NonNull java.util.Set<java.lang.Integer>, @NonNull java.util.Set<java.lang.Integer>, @NonNull long[], @IntRange(from=android.net.vcn.VcnGatewayConnectionConfig.MIN_MTU_V6) int);
+  }
+
+}
+
 package android.os {
 
   public class Binder implements android.os.IBinder {
