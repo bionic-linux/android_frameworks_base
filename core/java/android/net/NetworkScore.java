@@ -20,6 +20,8 @@ import android.annotation.NonNull;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.android.internal.annotations.VisibleForTesting;
+
 /**
  * Object representing the quality of a network as perceived by the user.
  *
@@ -52,6 +54,14 @@ public final class NetworkScore implements Parcelable {
 
     public int getLegacyInt() {
         return mLegacyInt;
+    }
+
+    /**
+     * @return whether this score has a particular policy.
+     */
+    @VisibleForTesting
+    public boolean hasPolicy(final int policy) {
+        return 0 != (mPolicy & (1L << policy));
     }
 
     @Override
