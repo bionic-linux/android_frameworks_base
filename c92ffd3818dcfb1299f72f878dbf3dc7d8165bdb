@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ab4b067_eaa2ae3b",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 6096,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T07:15:26Z",
+      "side": 1,
+      "message": "Making this SystemApi instead of truly public doesn\u0027t address these :\n\nIs this function absolutely necessary ? In Android we avoid exposing interface names as much as possible, because it\u0027s not a scalable (nor future-proof) abstraction. Are there absolutely no alternatives for clients ?",
+      "range": {
+        "startLine": 6096,
+        "startChar": 34,
+        "endLine": 6096,
+        "endChar": 50
+      },
+      "revId": "c92ffd3818dcfb1299f72f878dbf3dc7d8165bdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

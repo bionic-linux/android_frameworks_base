@@ -231,6 +231,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ec1ecd1_4766e142",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T07:15:26Z",
+      "side": 1,
+      "message": "Did you have an answer to this ?",
+      "parentUuid": "18ae2cdf_848610b2",
+      "range": {
+        "startLine": 878,
+        "startChar": 75,
+        "endLine": 879,
+        "endChar": 16
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "323ba12b_ffda8224",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 6
@@ -266,6 +290,30 @@
       "side": 1,
       "message": "We don\u0027t want to expose the resource limit because:\n- OEM may want to customize it\n- We may want to relax the limit. (We relaxed the limit in R)\n\nAlso similar doc has been approved for #allocateSecurityParameterIndex (https://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/IpSecManager.java;l\u003d267)",
       "parentUuid": "323ba12b_ffda8224",
+      "range": {
+        "startLine": 880,
+        "startChar": 60,
+        "endLine": 880,
+        "endChar": 69
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "319537ea_84acb6a2",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-20T07:15:26Z",
+      "side": 1,
+      "message": "Can you please still add some documentation ? You don\u0027t have to state a limit, just say that the resource has limited slots for tunnels or something.\n\nAlso, didn\u0027t we have some public call to get the max number somewhere ?",
+      "parentUuid": "1abb95fc_26a9b6ca",
       "range": {
         "startLine": 880,
         "startChar": 60,
