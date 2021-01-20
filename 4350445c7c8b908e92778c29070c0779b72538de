@@ -22,6 +22,30 @@
       },
       "revId": "4350445c7c8b908e92778c29070c0779b72538de",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "406b66a0_6a04e9f1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7454,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-20T21:46:30Z",
+      "side": 1,
+      "message": "My bad, should have done that in the first place.  Having the name \"stub\" in the package name threw me off initially.",
+      "parentUuid": "ea9417f2_ad2fc3b4",
+      "range": {
+        "startLine": 7453,
+        "startChar": 7,
+        "endLine": 7454,
+        "endChar": 81
+      },
+      "revId": "4350445c7c8b908e92778c29070c0779b72538de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
