@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf3a392c_c6f34dce",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3197,
+      "author": {
+        "id": 1801328
+      },
+      "writtenOn": "2021-01-20T14:08:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25f4748f_79fe62f7",
+      "range": {
+        "startLine": 3197,
+        "startChar": 87,
+        "endLine": 3197,
+        "endChar": 92
+      },
+      "revId": "cc416c70dd0b9f460ce70d50c8ed16f25945f883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23a2b98e_3471a421",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61d1edec_395daace",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3206,
+      "author": {
+        "id": 1801328
+      },
+      "writtenOn": "2021-01-20T14:08:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23a2b98e_3471a421",
+      "range": {
+        "startLine": 3205,
+        "startChar": 82,
+        "endLine": 3206,
+        "endChar": 12
+      },
+      "revId": "cc416c70dd0b9f460ce70d50c8ed16f25945f883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "018c7912_afc7f546",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-20T07:53:53Z",
       "side": 1,
       "message": "Remove this?",
+      "range": {
+        "startLine": 3207,
+        "startChar": 6,
+        "endLine": 3207,
+        "endChar": 12
+      },
+      "revId": "cc416c70dd0b9f460ce70d50c8ed16f25945f883",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe9138bc_088b71fa",
+        "filename": "core/java/android/content/pm/PackageManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3207,
+      "author": {
+        "id": 1801328
+      },
+      "writtenOn": "2021-01-20T14:08:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "018c7912_afc7f546",
       "range": {
         "startLine": 3207,
         "startChar": 6,
