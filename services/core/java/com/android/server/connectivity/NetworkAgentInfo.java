@@ -18,6 +18,7 @@ package com.android.server.connectivity;
 
 import static android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
+import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.transportNamesOf;
 
 import android.annotation.NonNull;
@@ -349,7 +350,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         networkInfo = info;
         linkProperties = lp;
         networkCapabilities = nc;
-        mScore = mixInScore(score, nc);
+        mScore = mixInScore(score, nc, config);
         clatd = new Nat464Xlat(this, netd, dnsResolver, nms);
         mConnService = connService;
         mContext = context;
@@ -660,6 +661,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
             @NonNull final NetworkCapabilities nc) {
         final NetworkCapabilities oldNc = networkCapabilities;
         networkCapabilities = nc;
+        setScore(mScore);
         final NetworkMonitorManager nm = mNetworkMonitor;
         if (nm != null) {
             nm.notifyNetworkCapabilitiesChanged(nc);
@@ -835,30 +837,6 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         return isVPN();
     }
 
-    private int getCurrentScore(boolean pretendValidated) {
-        // TODO: We may want to refactor this into a NetworkScore class that takes a base score from
-        // the NetworkAgent and signals from the NetworkAgent and uses those signals to modify the
-        // score.  The NetworkScore class would provide a nice place to centralize score constants
-        // so they are not scattered about the transports.
-
-        // If this network is explicitly selected and the user has decided to use it even if it's
-        // unvalidated, give it the maximum score. Also give it the maximum score if it's explicitly
-        // selected and we're trying to see what its score could be. This ensures that we don't tear
-        // down an explicitly selected network before the user gets a chance to prefer it when
-        // a higher-scoring network (e.g., Ethernet) is available.
-        if (networkAgentConfig.explicitlySelected
-                && (networkAgentConfig.acceptUnvalidated || pretendValidated)) {
-            return ConnectivityConstants.EXPLICITLY_SELECTED_NETWORK_SCORE;
-        }
-
-        int score = mScore.getLegacyInt();
-        if (!lastValidated && !pretendValidated && !ignoreWifiUnvalidationPenalty() && !isVPN()) {
-            score -= ConnectivityConstants.UNVALIDATED_SCORE_PENALTY;
-        }
-        if (score < 0) score = 0;
-        return score;
-    }
-
     // Return true on devices configured to ignore score penalty for wifi networks
     // that become unvalidated (b/31075769).
     private boolean ignoreWifiUnvalidationPenalty() {
@@ -871,22 +849,52 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
     // Get the current score for this Network.  This may be modified from what the
     // NetworkAgent sent, as it has modifiers applied to it.
     public int getCurrentScore() {
-        return getCurrentScore(false);
+        return mScore.getLegacyInt();
     }
 
     // Get the current score for this Network as if it was validated.  This may be modified from
     // what the NetworkAgent sent, as it has modifiers applied to it.
     public int getCurrentScoreAsValidated() {
-        return getCurrentScore(true);
+        return mScore.getLegacyIntAsValidated();
     }
 
+    /**
+     * Mix-in the ConnectivityService-managed bits in the score.
+     */
     public void setScore(final NetworkScore score) {
-        mScore = mixInScore(score, networkCapabilities);
+        mScore = mixInScore(score, networkCapabilities, networkAgentConfig);
     }
 
+    /**
+     * Update the ConnectivityService-managed bits in the score.
+     *
+     * Call this after updating the network agent config.
+     */
+    public void updateScoreForNetworkAgentConfigUpdate() {
+        setScore(mScore);
+    }
+
+    /**
+     * Given a score supplied by the NetworkAgent and CS-managed objects, produce a full score.
+     *
+     * For backward-compatibility reasons NetworkScore contains both properties under the
+     * network agent control and properties under CS control. This is because the CS-controlled
+     * properties were already sent by the agents through other channels, and imposing to all
+     * agents to send the same information in multiple places is not very realistic. With time
+     * the CS-managed capabilities may be migrated to being agent-managed if necessary.
+     *
+     * @param score the score supplied by the agent
+     * @param caps the NetworkCapabilities of the network
+     * @param config the NetworkAgentConfig of the network
+     * @return a score that contains all properties (CS-managed as well as agent-managed), and
+     *         is therefore appropriate to use for ranking.
+     */
     private static NetworkScore mixInScore(@NonNull final NetworkScore score,
-            @NonNull final NetworkCapabilities caps) {
-        return score.withPolicyBits(caps.hasCapability(NET_CAPABILITY_VALIDATED));
+            @NonNull final NetworkCapabilities caps, @NonNull final NetworkAgentConfig config) {
+        return score.withPolicyBits(caps.hasCapability(NET_CAPABILITY_VALIDATED),
+                caps.hasTransport(TRANSPORT_VPN),
+                config.explicitlySelected,
+                config.acceptUnvalidated);
     }
 
     public NetworkState getNetworkState() {
