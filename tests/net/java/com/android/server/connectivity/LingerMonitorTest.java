@@ -359,9 +359,9 @@ public class LingerMonitorTest {
         caps.addTransportType(transport);
         NetworkAgentInfo nai = new NetworkAgentInfo(null, new Network(netId), info,
                 new LinkProperties(), caps, new NetworkScore.Builder().setLegacyInt(50).build(),
-                mCtx, null, new NetworkAgentConfig() /* config */,
-                mConnService, mNetd, mDnsResolver, mNMS, NetworkProvider.ID_NONE,
-                Binder.getCallingUid(), mQosCallbackTracker);
+                mCtx, null, new NetworkAgentConfig.Builder().build(), mConnService, mNetd,
+                mDnsResolver, mNMS, NetworkProvider.ID_NONE, Binder.getCallingUid(),
+                mQosCallbackTracker);
         nai.everValidated = true;
         return nai;
     }
