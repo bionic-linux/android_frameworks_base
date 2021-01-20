@@ -160,6 +160,7 @@ import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.os.PowerManager;
 import android.os.Process;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.os.SystemClock;
@@ -171,6 +172,7 @@ import android.security.Credentials;
 import android.security.KeyStore;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
@@ -564,6 +566,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * obj  = Array of UidRange objects.
      */
     private static final int EVENT_SET_REQUIRE_VPN_FOR_UIDS = 47;
+
+    /**
+     * Used to indicate the system default network becomes active.
+     */
+    private static final int EVENT_REPORT_NETWORK_ACTIVITY = 48;
 
     /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
@@ -1192,7 +1199,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mUserAllContext.registerReceiver(
                 mIntentReceiver, intentFilter, NETWORK_STACK, mHandler);
 
-        mNetworkActivityTracker = new LegacyNetworkActivityTracker(mContext, mNMS);
+        mNetworkActivityTracker = new LegacyNetworkActivityTracker(mContext, mHandler, mNMS, mNetd);
 
         mSettingsObserver = new SettingsObserver(mContext, mHandler);
         registerSettingsCallbacks();
@@ -2407,7 +2414,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void registerNetworkActivityListener(@NonNull INetworkActivityListener l) {
-        // TODO: Replace network activity listener registry in ConnectivityManager from NMS to here
+        mNetworkActivityTracker.registerNetworkActivityListener(l);
     }
 
     /**
@@ -2415,7 +2422,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public void unregisterNetworkActivityListener(@NonNull INetworkActivityListener l) {
-        // TODO: Replace network activity listener registry in ConnectivityManager from NMS to here
+        mNetworkActivityTracker.unregisterNetworkActivityListener(l);
     }
 
     /**
@@ -2423,8 +2430,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @Override
     public boolean isDefaultNetworkActive() {
-        // TODO: Replace isNetworkActive() in NMS.
-        return false;
+        return mNetworkActivityTracker.isDefaultNetworkActive();
     }
 
     /**
@@ -4369,6 +4375,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     break;
                 case EVENT_SET_REQUIRE_VPN_FOR_UIDS:
                     handleSetRequireVpnForUids(toBool(msg.arg1), (UidRange[]) msg.obj);
+                    break;
+                case EVENT_REPORT_NETWORK_ACTIVITY:
+                    mNetworkActivityTracker.handleReportNetworkActivity();
                     break;
             }
         }
@@ -8836,12 +8845,33 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final class LegacyNetworkActivityTracker {
         private static final int NO_UID = -1;
         private final Context mContext;
+        private final INetd mNetd;
         private final INetworkManagementService mNMS;
+        private final RemoteCallbackList<INetworkActivityListener> mNetworkActivityListeners =
+                new RemoteCallbackList<>();
+        // Indicate the current system default network activity is active or not.
+        @GuardedBy("mActiveIdleTimers")
+        private boolean mNetworkActive;
+        @GuardedBy("mActiveIdleTimers")
+        private ArrayMap<String, IdleTimerParams> mActiveIdleTimers = new ArrayMap();
+        private Handler mHandler;
 
-        LegacyNetworkActivityTracker(@NonNull Context context,
-                @NonNull INetworkManagementService nms) {
+        private class IdleTimerParams {
+            public final int timeout;
+            public final int transportType;
+
+            IdleTimerParams(int timeout, int transport) {
+                this.timeout = timeout;
+                this.transportType = transport;
+            }
+        }
+
+        LegacyNetworkActivityTracker(@NonNull Context context, @NonNull Handler handler,
+                @NonNull INetworkManagementService nms, @NonNull INetd netd) {
             mContext = context;
             mNMS = nms;
+            mNetd = netd;
+            mHandler = handler;
             try {
                 mNMS.registerObserver(mDataActivityObserver);
             } catch (RemoteException e) {
@@ -8857,8 +8887,49 @@ public class ConnectivityService extends IConnectivityManager.Stub
                             long tsNanos, int uid) {
                         sendDataActivityBroadcast(transportTypeToLegacyType(transportType), active,
                                 tsNanos);
+                        synchronized (mActiveIdleTimers) {
+                            mNetworkActive = active;
+                            // If there are no idle timers, it means that system is not monitoring
+                            // activity, so the system default network for those default network
+                            // unspecified apps is always considered active.
+                            //
+                            // TODO: If the mActiveIdleTimers is empty, netd will actually not send
+                            // any network activity change event. Whenever this event is received,
+                            // the mActiveIdleTimers should be always not empty. The legacy behavior
+                            // is no-op. Remove to refer to mNetworkActive only.
+                            if (mNetworkActive || mActiveIdleTimers.isEmpty()) {
+                                mHandler.sendMessage(
+                                        mHandler.obtainMessage(EVENT_REPORT_NETWORK_ACTIVITY));
+                            }
+                        }
                     }
                 };
+
+        // The network activity should only be updated from ConnectivityService handler thread
+        // when mActiveIdleTimers lock is held.
+        @GuardedBy("mActiveIdleTimers")
+        private void reportNetworkActive() {
+            final int length = mNetworkActivityListeners.beginBroadcast();
+            if (DDBG) log("reportNetworkActive, notify " + length + " listeners");
+            try {
+                for (int i = 0; i < length; i++) {
+                    try {
+                        mNetworkActivityListeners.getBroadcastItem(i).onNetworkActive();
+                    } catch (RemoteException | RuntimeException e) {
+                        loge("Fail to send network activie to listener " + e);
+                    }
+                }
+            } finally {
+                mNetworkActivityListeners.finishBroadcast();
+            }
+        }
+
+        @GuardedBy("mActiveIdleTimers")
+        public void handleReportNetworkActivity() {
+            synchronized (mActiveIdleTimers) {
+                reportNetworkActive();
+            }
+        }
 
         // This is deprecated and only to support legacy use cases.
         private int transportTypeToLegacyType(int type) {
@@ -8928,8 +8999,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             if (timeout > 0 && iface != null) {
                 try {
-                    // TODO: Access INetd directly instead of NMS
-                    mNMS.addIdleTimer(iface, timeout, type);
+                    synchronized (mActiveIdleTimers) {
+                        // Networks start up.
+                        mNetworkActive = true;
+                        mActiveIdleTimers.put(iface, new IdleTimerParams(timeout, type));
+                        mNetd.idletimerAddInterface(iface, timeout, Integer.toString(type));
+                        reportNetworkActive();
+                    }
                 } catch (Exception e) {
                     // You shall not crash!
                     loge("Exception in setupDataActivityTracking " + e);
@@ -8957,9 +9033,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
             try {
                 updateRadioPowerState(false /* isActive */, type);
-                // The call fails silently if no idle timer setup for this interface.
-                // TODO: Access INetd directly instead of NMS
-                mNMS.removeIdleTimer(iface);
+                synchronized (mActiveIdleTimers) {
+                    final IdleTimerParams params = mActiveIdleTimers.remove(iface);
+                    // The call fails silently if no idle timer setup for this interface
+                    mNetd.idletimerRemoveInterface(iface, params.timeout,
+                            Integer.toString(params.transportType));
+                }
             } catch (Exception e) {
                 // You shall not crash!
                 loge("Exception in removeDataActivityTracking " + e);
@@ -8991,6 +9070,29 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 default:
                     logw("Untracked transport type:" + transportType);
             }
+        }
+
+        public boolean isDefaultNetworkActive() {
+            synchronized (mActiveIdleTimers) {
+                // If there are no idle timers, it means that system is not monitoring activity,
+                // so the default network is always considered active.
+                //
+                // TODO: Consider if mActiveIdleTimers is empty due to zero or negative idle timer
+                // values configured. If the mActiveIdleTimers is empty due to zero or negative idle
+                // timer values configured, CS will not be able to get the genuine network activity
+                // status. System could either choose to always report network active or always
+                // report inactive. However, if the mActiveIdleTimers is empty due to no system
+                // default network, this should not report network as active.
+                return mNetworkActive || mActiveIdleTimers.isEmpty();
+            }
+        }
+
+        public void registerNetworkActivityListener(@NonNull INetworkActivityListener l) {
+            mNetworkActivityListeners.register(l);
+        }
+
+        public void unregisterNetworkActivityListener(@NonNull INetworkActivityListener l) {
+            mNetworkActivityListeners.unregister(l);
         }
     }
     /**
