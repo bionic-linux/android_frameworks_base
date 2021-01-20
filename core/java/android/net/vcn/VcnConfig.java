@@ -41,7 +41,6 @@ import java.util.Set;
  * brought up on demand based on active {@link NetworkRequest}(s).
  *
  * @see VcnManager for more information on the Virtual Carrier Network feature
- * @hide
  */
 public final class VcnConfig implements Parcelable {
     @NonNull private static final String TAG = VcnConfig.class.getSimpleName();
@@ -56,7 +55,8 @@ public final class VcnConfig implements Parcelable {
             @NonNull String packageName,
             @NonNull Set<VcnGatewayConnectionConfig> gatewayConnectionConfigs) {
         mPackageName = packageName;
-        mGatewayConnectionConfigs = Collections.unmodifiableSet(gatewayConnectionConfigs);
+        mGatewayConnectionConfigs =
+                Collections.unmodifiableSet(new ArraySet<>(gatewayConnectionConfigs));
 
         validate();
     }
@@ -96,11 +96,7 @@ public final class VcnConfig implements Parcelable {
         return mPackageName;
     }
 
-    /**
-     * Retrieves the set of configured tunnels.
-     *
-     * @hide
-     */
+    /** Retrieves the set of configured gateway connections. */
     @NonNull
     public Set<VcnGatewayConnectionConfig> getGatewayConnectionConfigs() {
         return Collections.unmodifiableSet(mGatewayConnectionConfigs);
@@ -168,11 +164,7 @@ public final class VcnConfig implements Parcelable {
                 }
             };
 
-    /**
-     * This class is used to incrementally build {@link VcnConfig} objects.
-     *
-     * @hide
-     */
+    /** This class is used to incrementally build {@link VcnConfig} objects. */
     public static final class Builder {
         @NonNull private final String mPackageName;
 
@@ -190,7 +182,6 @@ public final class VcnConfig implements Parcelable {
          *
          * @param gatewayConnectionConfig the configuration for an individual gateway connection
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
         public Builder addGatewayConnectionConfig(
@@ -205,7 +196,6 @@ public final class VcnConfig implements Parcelable {
          * Builds and validates the VcnConfig.
          *
          * @return an immutable VcnConfig instance
-         * @hide
          */
         @NonNull
         public VcnConfig build() {
