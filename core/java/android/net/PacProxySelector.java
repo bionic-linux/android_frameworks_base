@@ -16,6 +16,7 @@
 
 package android.net;
 
+import android.annotation.SystemApi;
 import android.os.ServiceManager;
 import android.util.Log;
 
@@ -37,8 +38,10 @@ import java.util.List;
 /**
  * @hide
  */
+@SystemApi
 public class PacProxySelector extends ProxySelector {
     private static final String TAG = "PacProxySelector";
+    /** @hide */
     public static final String PROXY_SERVICE = "com.android.net.IProxyService";
     private static final String SOCKS = "SOCKS ";
     private static final String PROXY = "PROXY ";
@@ -56,6 +59,7 @@ public class PacProxySelector extends ProxySelector {
         mDefaultList = Lists.newArrayList(java.net.Proxy.NO_PROXY);
     }
 
+    /** @hide */
     @Override
     public List<Proxy> select(URI uri) {
         if (mProxyService == null) {
@@ -130,6 +134,7 @@ public class PacProxySelector extends ProxySelector {
         }
     }
 
+    /** @hide */
     @Override
     public void connectFailed(URI uri, SocketAddress address, IOException failure) {
 
