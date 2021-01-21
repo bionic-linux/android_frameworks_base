@@ -5136,4 +5136,6 @@
 
   <java-symbol type="drawable" name="focus_event_pressed_key_background" />
   <java-symbol type="string" name="lockscreen_too_many_failed_attempts_countdown" />
+
+  <java-symbol type="dimen" name="config_bottom_stack_min_visible_height" />
 </resources>
