@@ -94,6 +94,30 @@
       },
       "revId": "ca53535de19699aa0c14bf2a9d963f000f30362c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8bf723a_6e5057d2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 6920,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-21T01:55:07Z",
+      "side": 1,
+      "message": "Ok, let\u0027s go with the better user experience at the cost of a fraction of battery life since makes more sense for our use-case. Thanks for pointing this one out.",
+      "parentUuid": "87b64a03_f5794ed7",
+      "range": {
+        "startLine": 6920,
+        "startChar": 49,
+        "endLine": 6920,
+        "endChar": 63
+      },
+      "revId": "ca53535de19699aa0c14bf2a9d963f000f30362c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
