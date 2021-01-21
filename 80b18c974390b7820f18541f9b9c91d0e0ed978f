@@ -301,6 +301,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "417f1207_7b264455",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-01-21T18:53:55Z",
+      "side": 1,
+      "message": "I see. Thanks for the explanation",
+      "parentUuid": "e7ff0ab9_0ad2afdb",
+      "range": {
+        "startLine": 878,
+        "startChar": 75,
+        "endLine": 879,
+        "endChar": 16
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "323ba12b_ffda8224",
@@ -410,6 +434,30 @@
       "side": 1,
       "message": "I fail to see the new added documentation between PS6 and PS9. Did you mean something different by \"done\" ?",
       "parentUuid": "a18a2d3d_0b4aab7a",
+      "range": {
+        "startLine": 880,
+        "startChar": 60,
+        "endLine": 880,
+        "endChar": 69
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36f17722_89077a42",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-01-21T18:53:55Z",
+      "side": 1,
+      "message": "It\u0027s on PS10 I changed it to \"indicating that the number of opening tunnels has reached the limit.\"",
+      "parentUuid": "547efcdc_37cad18c",
       "range": {
         "startLine": 880,
         "startChar": 60,
