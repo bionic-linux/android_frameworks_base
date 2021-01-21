@@ -169,6 +169,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d335afbc_8681e096",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-21T08:33:09Z",
+      "side": 1,
+      "message": "1 will be done ONLY for NetworkAgents that produce VCN-managable networks. i.e., Cell\u0027s DataConnection and Wifi\u0027s ClientModeImpl. I suspect we\u0027ll need a generic way to ensure Bluetooth tethering, WifiAware, USB tethering, etc all get this new capability.\n\nPotentially we could in the NetworkAgent update the capabilities upon instantiation/registration, such that if AUTO, upgrade to TRUE, and the VCN will make sure to set it to FALSE. (or was the thought that this was only for the NetworkRequest flow?)",
+      "parentUuid": "0c9a4152_b7f74b11",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "942beaef_2ea8b8f5",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 8
