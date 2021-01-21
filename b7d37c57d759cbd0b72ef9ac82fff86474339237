@@ -193,6 +193,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4b68c882_e74906ff",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-21T08:45:19Z",
+      "side": 1,
+      "message": "Re (1), I think having a more generic solution would be advantageous, so we don\u0027t have to play whack-a-mole with all the various NetworkAgents.\n\nI\u0027d like to have a correct-by-default/functional-by-default implementation for each of the network agents, in an attempt to minimize the things a NetworkProvider that can\u0027t support VCNs to have to twiddle in order to get the networking correct. As such, I\u0027d like for the Providers/Factories to not have to rely on the VcnManagementService to add a bit to make things functional (the entire set of all networks, minus the subset of VCN-managed networks), but rather expect VcnManagementService to remove the bits ONLY if it owns the network (which is a MUCH smaller subset).",
+      "parentUuid": "d335afbc_8681e096",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "942beaef_2ea8b8f5",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 8
