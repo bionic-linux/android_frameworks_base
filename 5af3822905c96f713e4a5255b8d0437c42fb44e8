@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f62b821_f3656bbf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1206463
+      },
+      "writtenOn": "2021-01-21T08:42:04Z",
+      "side": 1,
+      "message": "Hi Rahul,\n\nWe also need this CL on GSI branch to pass cts-on-gsi, could you help review?\n\nThanks!",
+      "revId": "5af3822905c96f713e4a5255b8d0437c42fb44e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
