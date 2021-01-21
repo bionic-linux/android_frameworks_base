@@ -89,7 +89,6 @@ import android.net.IConnectivityDiagnosticsCallback;
 import android.net.IConnectivityManager;
 import android.net.IDnsResolver;
 import android.net.INetd;
-import android.net.INetworkManagementEventObserver;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
@@ -189,6 +188,7 @@ import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.LocationPermissionChecker;
 import com.android.internal.util.MessageUtils;
 import com.android.modules.utils.BasicShellCommandHandler;
+import com.android.net.module.util.BaseNetdUnsolicitedEventListener;
 import com.android.net.module.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import com.android.net.module.util.LinkPropertiesUtils.CompareResult;
 import com.android.server.am.BatteryStatsService;
@@ -207,7 +207,6 @@ import com.android.server.connectivity.NetworkRanker;
 import com.android.server.connectivity.PermissionMonitor;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.Vpn;
-import com.android.server.net.BaseNetworkObserver;
 import com.android.server.net.LockdownVpnTracker;
 import com.android.server.net.NetworkPolicyManagerInternal;
 import com.android.server.utils.PriorityDump;
@@ -328,6 +327,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private INetworkStatsService mStatsService;
     private NetworkPolicyManager mPolicyManager;
     private NetworkPolicyManagerInternal mPolicyManagerInternal;
+    private final NetdCallback mNetdCallback;
 
     /**
      * TestNetworkService (lazily) created upon first usage. Locked to prevent creation of multiple
@@ -995,6 +995,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         mAppOpsManager = (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
         mLocationPermissionChecker = new LocationPermissionChecker(mContext);
+
+        mNetdCallback = new NetdCallback();
+        try {
+            mNetd.registerUnsolicitedEventListener(mNetdCallback);
+        } catch (RemoteException | ServiceSpecificException e) {
+            loge("Error registering event listener :" + e);
+        }
 
         // To ensure uid rules are synchronized with Network Policy, register for
         // NetworkPolicyManagerService events must happen prior to NetworkPolicyManagerService
@@ -8568,6 +8575,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         notifyDataStallSuspected(p, network.getNetId());
     }
 
+    private class NetdCallback extends BaseNetdUnsolicitedEventListener {
+        @Override
+        public void onInterfaceClassActivityChanged(boolean isActive, int timerLabel,
+                long timestampNs, int uid) {
+            mNetworkActivityTracker.setAndReportNetworkActive(isActive, timerLabel, timestampNs);
+        }
+    }
+
     private final LegacyNetworkActivityTracker mNetworkActivityTracker;
 
     /**
@@ -8578,7 +8593,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         private static final int NO_UID = -1;
         private final Context mContext;
         private final INetd mNetd;
-        private final INetworkManagementService mNMS;
         private final RemoteCallbackList<INetworkActivityListener> mNetworkActivityListeners =
                 new RemoteCallbackList<>();
         @GuardedBy("mActiveIdleTimers")
@@ -8599,37 +8613,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
         LegacyNetworkActivityTracker(@NonNull Context context,
                 @NonNull INetworkManagementService nms, @NonNull INetd netd) {
             mContext = context;
-            mNMS = nms;
             mNetd = netd;
-            try {
-                mNMS.registerObserver(mDataActivityObserver);
-            } catch (RemoteException e) {
-                loge("Error registering observer :" + e);
-            }
         }
 
-        // TODO: Migrate away the dependency with INetworkManagementEventObserver.
-        private final INetworkManagementEventObserver mDataActivityObserver =
-                new BaseNetworkObserver() {
-                    @Override
-                    public void interfaceClassDataActivityChanged(int transportType, boolean active,
-                            long tsNanos, int uid) {
-                        sendDataActivityBroadcast(transportTypeToLegacyType(transportType), active,
-                                tsNanos);
-                        synchronized (mActiveIdleTimers) {
-                            mNetworkActive = active;
-                            // If there are no idle timers, it means that system is not monitoring
-                            // activity, so the default network is always considered active.
-                            //
-                            // TODO: If the mActiveIdleTimers is empty, there is actually no network
-                            // activity sent from netd. The legacy behavior does not make too much
-                            // sense. Remove to refer to mNetworkActive only.
-                            if (mNetworkActive || mActiveIdleTimers.isEmpty()) {
-                                reportNetworkActive();
-                            }
-                        }
-                    }
-        };
+        public void setAndReportNetworkActive(boolean active, int transportType, long tsNanos) {
+            sendDataActivityBroadcast(transportTypeToLegacyType(transportType), active, tsNanos);
+            synchronized (mActiveIdleTimers) {
+                mNetworkActive = active;
+                // If there are no idle timers, it means that system is not monitoring
+                // activity, so the default network is always considered active.
+                //
+                // TODO: If the mActiveIdleTimers is empty, there is actually no network
+                // activity sent from netd. The legacy behavior does not make too much
+                // sense. Remove to refer to mNetworkActive only.
+                if (mNetworkActive || mActiveIdleTimers.isEmpty()) {
+                    reportNetworkActive();
+                }
+            }
+        }
 
         private void reportNetworkActive() {
             final int length = mNetworkActivityListeners.beginBroadcast();
