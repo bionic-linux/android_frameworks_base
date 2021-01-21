@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "add8e9d6_a5c9edd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 53
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T12:22:19Z",
+      "side": 1,
+      "message": "Remaining possible points :\n• Consider moving the exceptions to a different .net.qos package (maybe, not sure – the API council may have an opinion\n• The TestConnectivityService file looks like an unintentional addition\n\nEven if you\u0027re going to address the two bullet points above I suggest you submit as is and address them in a followup.",
+      "revId": "31802fa7322b619c9a0b299d5558a3fc4b4e981e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a345385b_3d80a421",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 53
+      },
+      "lineNbr": 6383,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T12:22:19Z",
+      "side": 1,
+      "message": "I know I\u0027m the one who asked you to remove the constructor but I was actually wrong, even privileged callers can\u0027t access @TestApi, and I now think we should add it back.\n\nIt\u0027s fine to do this in a followup ; describe that adding the constructor is meant to help apps  test their implementations.",
+      "range": {
+        "startLine": 6383,
+        "startChar": 34,
+        "endLine": 6383,
+        "endChar": 66
+      },
+      "revId": "31802fa7322b619c9a0b299d5558a3fc4b4e981e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23a5bfc9_30df28d7",
+        "filename": "core/java/android/net/NetworkAgent.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T12:22:19Z",
+      "side": 1,
+      "message": "Supernit : return-early usually means you move the corner cases out of the way first. In this case it would read\n\n  if (qosFilterParcelable.getQosFilter() \u003d\u003d null) {\n     Log.wtf();\n     return;\n  }\n  ...\n\n\n(don\u0027t bother addressing this, it doesn\u0027t matter)",
+      "range": {
+        "startLine": 684,
+        "startChar": 11,
+        "endLine": 684,
+        "endChar": 61
+      },
+      "revId": "31802fa7322b619c9a0b299d5558a3fc4b4e981e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1808777_4d2166b7",
+        "filename": "core/java/android/net/QosSession.aidl",
+        "patchSetId": 53
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T12:22:19Z",
+      "side": 1,
+      "message": "lol good catch",
+      "range": {
+        "startLine": 3,
+        "startChar": 19,
+        "endLine": 3,
+        "endChar": 20
+      },
+      "revId": "31802fa7322b619c9a0b299d5558a3fc4b4e981e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44188335_d5dbf5f7",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T12:22:19Z",
+      "side": 1,
+      "message": "While this is fine, idiomatic Java usually simply uses Consumer\u003cQosCallbackAgentConnection\u003e.\nDon\u0027t bother respinning for this.",
+      "range": {
+        "startLine": 241,
+        "startChar": 22,
+        "endLine": 241,
+        "endChar": 43
+      },
+      "revId": "31802fa7322b619c9a0b299d5558a3fc4b4e981e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6034cc93_8b97e843",
+        "filename": "tests/net/integration/src/android/net/TestConnectivityService.java",
+        "patchSetId": 53
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T12:22:19Z",
+      "side": 1,
+      "message": "Was this file added intentionally ?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "31802fa7322b619c9a0b299d5558a3fc4b4e981e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

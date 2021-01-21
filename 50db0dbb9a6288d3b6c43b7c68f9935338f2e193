@@ -159,6 +159,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e07806da_e7e43558",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 45
+      },
+      "lineNbr": 6382,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T12:22:19Z",
+      "side": 1,
+      "message": "I mean, generally speaking the cause is a great help in debugging. What I don\u0027t think is a great API here is that clients will need to look at the cause to know *what* happened. That\u0027s not how causes normally work ; the exception tells you what happened, and if applicable the cause can tell you more about why this happened.\n\nNormal client code :\n\n  try {\n    codeThatMayThrow();\n  } catch (PossibleException1 e) {\n    Log(\"Terrible thing 1 happened !\", e);\n    /* handle if possible */\n  } catch (PossibleException2 e) {\n    Log(\"Terrible thing 2 happened !\", e);\n    /* handle if possible */\n  }\n\nCode with what you have :\n\n  try {\n    codeThatMayThrow();\n  } catch (QosCallbackException e) {\n    Exception whatReallyHappened \u003d e.getCause();\n    if (whatReallyHappened instanceOf PossibleCause1) {\n      Log(\"Terrible thing 1 happened !\");\n      /* handle if possible */\n    } else if (whatReallyHappened instanceOf PossibleCause2) {\n      Log(\"Terrible thing 2 happened !\");\n      /* handle if possible */\n    }\n  }\n\nI think the normal client code is better. The key point here is that QosCallbackException doesn\u0027t tell you *what* happened : it\u0027s a category of things that may go wrong, and you happen to use the cause member to store what. I don\u0027t think that\u0027s what it\u0027s meant for.",
+      "parentUuid": "0531c4cb_4a3fb21f",
+      "range": {
+        "startLine": 6382,
+        "startChar": 21,
+        "endLine": 6382,
+        "endChar": 41
+      },
+      "revId": "50db0dbb9a6288d3b6c43b7c68f9935338f2e193",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac79094a_41295af5",
