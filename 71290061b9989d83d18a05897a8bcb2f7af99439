@@ -213,6 +213,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70d24cb5_e780b7db",
+        "filename": "api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 4730,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-21T19:45:22Z",
+      "side": 1,
+      "message": "I\u0027m guessing you\u0027re ok to close this.",
+      "parentUuid": "78ae5c38_b41e1941",
+      "range": {
+        "startLine": 4730,
+        "startChar": 32,
+        "endLine": 4730,
+        "endChar": 56
+      },
+      "revId": "71290061b9989d83d18a05897a8bcb2f7af99439",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6798c5d7_b7bb4096",
