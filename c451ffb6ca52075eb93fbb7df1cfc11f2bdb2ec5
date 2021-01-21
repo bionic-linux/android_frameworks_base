@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce0e071a_88ffc135",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-21T19:32:49Z",
+      "side": 1,
+      "message": "+Colin for the android.bp change...",
+      "revId": "c451ffb6ca52075eb93fbb7df1cfc11f2bdb2ec5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
