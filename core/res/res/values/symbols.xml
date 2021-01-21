@@ -4913,4 +4913,5 @@
 
   <java-symbol type="dimen" name="status_bar_height_default" />
   <java-symbol type="string" name="default_card_name"/>
+  <java-symbol type="dimen" name="config_bottom_stack_min_visible_height" />
 </resources>

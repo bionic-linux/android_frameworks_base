@@ -6024,4 +6024,7 @@
     <!-- List of certificate to be used for font fs-verity integrity verification -->
     <string-array translatable="false" name="config_fontManagerServiceCerts">
     </string-array>
+
+    <!-- Minimum visible height of bottom stack when ime is showing in split screen. -->
+    <dimen name="config_bottom_stack_min_visible_height">0dp</dimen>
 </resources>
