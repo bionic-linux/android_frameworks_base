@@ -223,6 +223,7 @@ public class ScreenMediaRecorder {
         values.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
         values.put(MediaStore.Video.Media.DATE_ADDED, System.currentTimeMillis());
         values.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.MediaColumns.IS_PENDING, 1);
 
         ContentResolver resolver = mContext.getContentResolver();
         Uri collectionUri = MediaStore.Video.Media.getContentUri(
@@ -252,6 +253,9 @@ public class ScreenMediaRecorder {
         OutputStream os = resolver.openOutputStream(itemUri, "w");
         Files.copy(mTempVideoFile.toPath(), os);
         os.close();
+        values.clear();
+        values.put(MediaStore.MediaColumns.IS_PENDING, 0);
+        resolver.update(itemUri, values, null, null);
         if (mTempAudioFile != null) mTempAudioFile.delete();
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         Size size = new Size(metrics.widthPixels, metrics.heightPixels);
