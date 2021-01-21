@@ -255,6 +255,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d0d32c8_fda38c43",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-01-21T01:28:36Z",
+      "side": 1,
+      "message": "Sorry for not answering your question. Yes the lower-layer error will be set as the cause.\nFor the documentation, do you suggest that we don\u0027t need to include \"due to a lower-layer error\" , or don\u0027t need to specify that the error is set as the cause?",
+      "parentUuid": "4ec1ecd1_4766e142",
+      "range": {
+        "startLine": 878,
+        "startChar": 75,
+        "endLine": 879,
+        "endChar": 16
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "323ba12b_ffda8224",
         "filename": "core/java/android/net/IpSecManager.java",
         "patchSetId": 6
@@ -314,6 +338,30 @@
       "side": 1,
       "message": "Can you please still add some documentation ? You don\u0027t have to state a limit, just say that the resource has limited slots for tunnels or something.\n\nAlso, didn\u0027t we have some public call to get the max number somewhere ?",
       "parentUuid": "1abb95fc_26a9b6ca",
+      "range": {
+        "startLine": 880,
+        "startChar": 60,
+        "endLine": 880,
+        "endChar": 69
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a18a2d3d_0b4aab7a",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-01-21T01:28:36Z",
+      "side": 1,
+      "message": "Done.\nYes we don\u0027t have that API.",
+      "parentUuid": "319537ea_84acb6a2",
       "range": {
         "startLine": 880,
         "startChar": 60,

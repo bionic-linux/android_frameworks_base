@@ -22,6 +22,30 @@
       },
       "revId": "c92ffd3818dcfb1299f72f878dbf3dc7d8165bdb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8a043d4_e86ce1de",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 6096,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-01-21T01:28:36Z",
+      "side": 1,
+      "message": "Since this API was already @SystemApi since 3 years ago, I suggest we have a separate discussion (probably on enigma-networking sync) about if we need to deprecate it. I think IWLAN (packages/services/Iwlan/) may need to use it. We can explore more if there is an alternative.",
+      "parentUuid": "3ab4b067_eaa2ae3b",
+      "range": {
+        "startLine": 6096,
+        "startChar": 34,
+        "endLine": 6096,
+        "endChar": 50
+      },
+      "revId": "c92ffd3818dcfb1299f72f878dbf3dc7d8165bdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
