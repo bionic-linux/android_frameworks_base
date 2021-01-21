@@ -277,6 +277,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7ff0ab9_0ad2afdb",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T10:57:06Z",
+      "side": 1,
+      "message": "Let me rephrase. Here is what I meant :\n\nIn the current implementation, when throwing an exception, will the lower-layer exception be set as the cause of the thrown exception in the |cause| argument to the exception constructor ? \n→ If so, then you can just reply yes and you need no changes at all.\n→ If not so, then I think you should make it so.\nEither way I don\u0027t think you need to update the documentation.\n\nSince now, you did reply yes, I request no further changes. I think what you have is good.",
+      "parentUuid": "2d0d32c8_fda38c43",
+      "range": {
+        "startLine": 878,
+        "startChar": 75,
+        "endLine": 879,
+        "endChar": 16
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "323ba12b_ffda8224",
@@ -362,6 +386,30 @@
       "side": 1,
       "message": "Done.\nYes we don\u0027t have that API.",
       "parentUuid": "319537ea_84acb6a2",
+      "range": {
+        "startLine": 880,
+        "startChar": 60,
+        "endLine": 880,
+        "endChar": 69
+      },
+      "revId": "80b18c974390b7820f18541f9b9c91d0e0ed978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "547efcdc_37cad18c",
+        "filename": "core/java/android/net/IpSecManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T10:57:06Z",
+      "side": 1,
+      "message": "I fail to see the new added documentation between PS6 and PS9. Did you mean something different by \"done\" ?",
+      "parentUuid": "a18a2d3d_0b4aab7a",
       "range": {
         "startLine": 880,
         "startChar": 60,

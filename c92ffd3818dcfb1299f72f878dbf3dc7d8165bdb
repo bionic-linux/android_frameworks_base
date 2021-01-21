@@ -46,6 +46,30 @@
       },
       "revId": "c92ffd3818dcfb1299f72f878dbf3dc7d8165bdb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41c1a333_5d2830a5",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 6096,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-21T10:57:06Z",
+      "side": 1,
+      "message": "Ah sorry, I was looking at the diff from the last patchset and it looked to me like you had just adding this API in this patch. Please ignore this comment.",
+      "parentUuid": "f8a043d4_e86ce1de",
+      "range": {
+        "startLine": 6096,
+        "startChar": 34,
+        "endLine": 6096,
+        "endChar": 50
+      },
+      "revId": "c92ffd3818dcfb1299f72f878dbf3dc7d8165bdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
