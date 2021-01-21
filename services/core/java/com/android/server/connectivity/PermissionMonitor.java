@@ -40,6 +40,7 @@ import android.net.UidRange;
 import android.os.Build;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.system.OsConstants;
@@ -111,7 +112,7 @@ public class PermissionMonitor implements PackageManagerInternal.PackageListObse
          * Get device first sdk version.
          */
         public int getDeviceFirstSdkInt() {
-            return Build.VERSION.FIRST_SDK_INT;
+            return SystemProperties.getInt("ro.product.first_api_level", 0);
         }
     }
 
