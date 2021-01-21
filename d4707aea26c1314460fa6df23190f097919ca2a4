@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26339129_be3a1407",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-01-21T09:58:19Z",
+      "side": 1,
+      "message": "Defer to Jean, but looks weird that you are exposing just the constructor and nothing else.",
+      "revId": "d4707aea26c1314460fa6df23190f097919ca2a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
