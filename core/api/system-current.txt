@@ -6399,6 +6399,10 @@ package android.net {
     ctor public NetworkStats.Entry(@Nullable String, int, int, int, int, int, int, long, long, long, long, long);
   }
 
+  public class PacProxySelector extends java.net.ProxySelector {
+    ctor public PacProxySelector();
+  }
+
   public abstract class QosCallback {
     ctor public QosCallback();
     method public void onError(@NonNull android.net.QosCallbackException);
