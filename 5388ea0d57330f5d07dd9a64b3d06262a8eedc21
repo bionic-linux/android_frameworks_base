@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "922f7ddc_c4dc61cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-21T09:55:36Z",
+      "side": 1,
+      "message": "Hi Pavel/Robin, the constructor is used by connectivity module so it needs to be visible to the module. do you have any concerns in making this a maintained System API?",
+      "revId": "5388ea0d57330f5d07dd9a64b3d06262a8eedc21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
