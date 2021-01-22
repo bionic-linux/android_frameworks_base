@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fce6ab05_05d27471",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T16:34:39Z",
+      "side": 1,
+      "message": "For integrete of aosp/1536313 I think this CL should be merged into that one.",
+      "revId": "98df9f61b9c52da56f963ffc01f51ae5ca8cfd09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
