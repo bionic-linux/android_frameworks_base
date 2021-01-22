@@ -49,23 +49,23 @@ private const val TEST_SSID1 = "ssid1"
 class NetworkTemplateTest {
     private val mockContext = mock(Context::class.java)
 
-    private fun buildMobileNetworkState(subscriberId: String): NetworkState =
+    private fun buildMobileNetworkState(subscriberId: String): NetworkStateSnapshot =
             buildNetworkState(TYPE_MOBILE, subscriberId = subscriberId)
-    private fun buildWifiNetworkState(ssid: String): NetworkState =
+    private fun buildWifiNetworkState(ssid: String): NetworkStateSnapshot =
             buildNetworkState(TYPE_WIFI, ssid = ssid)
 
     private fun buildNetworkState(
         type: Int,
         subscriberId: String? = null,
         ssid: String? = null
-    ): NetworkState {
+    ): NetworkStateSnapshot {
         val lp = LinkProperties()
         val caps = NetworkCapabilities().apply {
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, false)
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING, true)
             setSSID(ssid)
         }
-        return NetworkState(type, lp, caps, mock(Network::class.java), subscriberId)
+        return NetworkStateSnapshot(type, lp, caps, mock(Network::class.java), subscriberId)
     }
 
     private fun NetworkTemplate.assertMatches(ident: NetworkIdentity) =
