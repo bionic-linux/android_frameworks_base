@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f074e09c_3198363f",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Maybe describe the number assignment rules?",
+      "range": {
+        "startLine": 41,
+        "startChar": 50,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7120887a_fc47d726",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Question: if the user select this network, and then select another, is this bit still true? Will NetworkAgentConfig#explicitlySelected still be true?",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d218e55_b99cd7b6",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Any reason that we don\u0027t want to use EXPLICITLY_SELECTED or similar name?\nPeople might not be able to follow if they don\u0027t trace the code to know they are actually the same thing.",
+      "range": {
+        "startLine": 50,
+        "startChar": 35,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a0d8b38_ae31c433",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "I think we should hide the bits as our implementation detail in case we no longer use bits.\nFor example we might change to Set or SparseArray if bitmask is not enough.",
+      "range": {
+        "startLine": 72,
+        "startChar": 34,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1dcba44_696aa1cb",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Wait a minute, this implies if we have 63 bits we will have 63 parameters, right?\nI\u0027m not sure it is a good idea once you have a function call like below it could be error-prone.\n  withPolicyBits(true, false, false, true, true, false, true,false);",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01e3d0f5_91f1fd1a",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Can we use BitUtils.packBits?",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 75
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b023cc5_5a06442c",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Do we want to implement getPolicies so we can test if the set bits are expected?",
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4306b5f9_81286cbb",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "IIUC this need test?",
+      "range": {
+        "startLine": 100,
+        "startChar": 16,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7fc4dcf_556662c7",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Not for this CL.\nBut it is strange to me that even if POLICY_ACCEPT_UNVALIDATED is true, if POLICY_ONCE_CHOSEN_BY_USER is false, we still cannot get ACCEPT_UNVALIDATED_NETWORK_SCORE.",
+      "range": {
+        "startLine": 108,
+        "startChar": 30,
+        "endLine": 108,
+        "endChar": 55
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "161e536f_7aa4de8a",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "I believe this deserves some comment?",
+      "range": {
+        "startLine": 113,
+        "startChar": 68,
+        "endLine": 113,
+        "endChar": 93
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b53841e2_22d548aa",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Print the bitmask is not too friendly I think, but I think we can improve it later.\nIIUC the best example for this is NetworkCapabilities",
+      "range": {
+        "startLine": 126,
+        "startChar": 46,
+        "endLine": 126,
+        "endChar": 53
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46a20f00_9d5793f1",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3745,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "1. IIUC we cannot actually update networkAgentConfig.\nThus I feel the naming is slightly inaccurate.\nIf this is the only case, maybe name it more specifically, e.g. nai.updateScoreForSetAcceptUnvalidated?\n\n2. Not sure if it is better if we follow the design pattern of below.\nupdateCapabilities vs updateUids\nupdateLinkProperties vs updateInterfaces\nThe benefit is that you can remove the limitation of \"must be called after update the config.\"",
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebf603d7_4ecb99ae",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "It is more like the javadoc for mixInScore.",
+      "range": {
+        "startLine": 814,
+        "startChar": 7,
+        "endLine": 814,
+        "endChar": 70
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d71e6947_b6bd0377",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T13:42:31Z",
+      "side": 1,
+      "message": "Maybe describe what is expected to be done in this function?",
+      "range": {
+        "startLine": 822,
+        "startChar": 32,
+        "endLine": 822,
+        "endChar": 42
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
