@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d44c8782_da84d7d1",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T12:55:49Z",
+      "side": 1,
+      "message": "People who is not very familiar with previous network score might not know what is legacyInt,\nsince the Int represents nothing but the data type of this memeber, which gives them no information.\nI\u0027ll prefer legacyScore but not feel strongly.",
+      "range": {
+        "startLine": 34,
+        "startChar": 27,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "96eafe614b5475b6c2f42596ef00ec13d2fe4117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
