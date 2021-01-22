@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b95c053e_99bbdecf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3446,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T09:14:09Z",
+      "side": 1,
+      "message": "This needs to move to l.3440, or you\u0027ll accept it on the first call and only reject it on the second.",
+      "range": {
+        "startLine": 3446,
+        "startChar": 12,
+        "endLine": 3446,
+        "endChar": 86
+      },
+      "revId": "c020d3de57ee51856db22b89d7d4bb9df573d081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d557de0_70a41b69",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T09:14:09Z",
+      "side": 1,
+      "message": "I think this is exactly as correct as the previous code, that is : not at all.\nHowever, the old code would update this score later and fix things up. That\u0027s no longer true.\n\n• If this request is the top REQUEST of a multilayer NRI this is correct\n• If this request has been satisfied, then for sure it\u0027s been sent\n• If this request hasn\u0027t been satisfied, then we sent 0 already\n\nThe only problematic case is where a multilayer NRI consists of RA and RB and RA is satisfied immediately, this will send a request for RB which might lead a factory to marshall a network to satisfy it, and if RA continues to be satisfied it will be torn down immediately.\n\nSo here again, let\u0027s stop as soon as we find a network with a satisfier, and hopefully my upcoming rework of sending requests to factories will remove all this code.\n\nWhat\u0027s your reading of :\n\n  for (final NetworkRequest req : nri.mRequests) {\n    sendUpdatedScoreToFactories(nri.request, null);\n      if (!req.isRequest()) continue;\n      final NetworkAgentInfo satisfier \u003d nri.getSatisfier();\n      sendUpdatedScoresToFactories(req, satisfier);\n      if (null !\u003d satisfier) break;\n    }\n  }\n\nThat will send updated scores for satisfied requests which the old code didn\u0027t do, but sendUpdatedScoresToFactories is idempotent so this should not be a problem (and may, in fact, fix bugs).",
+      "range": {
+        "startLine": 3473,
+        "startChar": 12,
+        "endLine": 3475,
+        "endChar": 13
+      },
+      "revId": "c020d3de57ee51856db22b89d7d4bb9df573d081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8858fb8c_c3bd7226",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3484,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T09:14:09Z",
+      "side": 1,
+      "message": "ensureNotMultilayerRequest throws IAE – but no argument is incorrect here. IllegalStateException is probably a better exception to throw here.",
+      "range": {
+        "startLine": 3484,
+        "startChar": 0,
+        "endLine": 3484,
+        "endChar": 85
+      },
+      "revId": "c020d3de57ee51856db22b89d7d4bb9df573d081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57303584_4d4b93bf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 5937,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T09:14:09Z",
+      "side": 1,
+      "message": "That\u0027s an interesting consideration – in fact, I think maybe it could ? But the result of that is that it should probably result in amending the NRI to suppress the unfulfillable request. Implementation-wise this is a can of worms that we don\u0027t want to open and we certainly don\u0027t have a use case for this, so let\u0027s go with what you have.\n\nI\u0027ll be interested in discussing this with the clients of this API. I\u0027m sure they\u0027d be very interested in the multilayer request functionality.",
+      "range": {
+        "startLine": 5937,
+        "startChar": 12,
+        "endLine": 5937,
+        "endChar": 93
+      },
+      "revId": "c020d3de57ee51856db22b89d7d4bb9df573d081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

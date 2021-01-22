@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e98c869c_9ab4ab62",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 5391,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T09:14:09Z",
+      "side": 0,
+      "message": "Ideally that\u0027d be a separate change on top of this one (in particular, it would be useful in case we have to revert something). But please don\u0027t bother changing this now.",
+      "range": {
+        "startLine": 5391,
+        "startChar": 0,
+        "endLine": 5391,
+        "endChar": 37
+      },
+      "revId": "54f9c1b511a637408f197ed50c63df915eb9ad80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
