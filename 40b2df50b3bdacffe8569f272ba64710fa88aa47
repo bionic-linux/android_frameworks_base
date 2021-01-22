@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16f3be98_e50b3b79",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-22T08:10:04Z",
+      "side": 1,
+      "message": "Since this is only reused in sendStickyBroadcast, where creating a context should not be a performance problem (esp. in the system_server, as it looks like this just instanciates an object without RPC), I\u0027m not sure it\u0027s worth maintaining an additional member at the class level. How about creating the context for each call in sendStickyBroadcast instead ?",
+      "range": {
+        "startLine": 318,
+        "startChar": 26,
+        "endLine": 318,
+        "endChar": 41
+      },
+      "revId": "40b2df50b3bdacffe8569f272ba64710fa88aa47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
