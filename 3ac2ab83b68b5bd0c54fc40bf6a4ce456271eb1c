@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46722cc3_45a273bb",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T03:55:45Z",
+      "side": 1,
+      "message": "IIUC this is a bitmask?\nIf so maybe add some comment.",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "3ac2ab83b68b5bd0c54fc40bf6a4ce456271eb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccb1ac7f_7b864be9",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T03:55:45Z",
+      "side": 1,
+      "message": "It looks to me you should take a int array of different policy bits or change the function name to make it specific for IS_VALIDATED bit?\n\nIf it takes int array, you might want to test it.",
+      "range": {
+        "startLine": 58,
+        "startChar": 39,
+        "endLine": 58,
+        "endChar": 64
+      },
+      "revId": "3ac2ab83b68b5bd0c54fc40bf6a4ce456271eb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
