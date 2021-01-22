@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daa5c423_dbf9d3c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T04:39:22Z",
+      "side": 1,
+      "message": "This patch exists to simplify approvals for the patch on top of it ; the bp file is the only one needing framework approval, but the followup patch is difficult to get in considering conflicts so this avoids having to ping owners again and again.",
+      "revId": "289920808b88609228437022ad1c755f06819d48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
