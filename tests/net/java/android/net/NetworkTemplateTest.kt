@@ -49,16 +49,16 @@ private const val TEST_SSID1 = "ssid1"
 class NetworkTemplateTest {
     private val mockContext = mock(Context::class.java)
 
-    private fun buildMobileNetworkState(subscriberId: String): NetworkState =
+    private fun buildMobileNetworkState(subscriberId: String): NetworkStateSnapshot =
             buildNetworkState(TYPE_MOBILE, subscriberId = subscriberId)
-    private fun buildWifiNetworkState(ssid: String): NetworkState =
+    private fun buildWifiNetworkState(ssid: String): NetworkStateSnapshot =
             buildNetworkState(TYPE_WIFI, ssid = ssid)
 
     private fun buildNetworkState(
         type: Int,
         subscriberId: String? = null,
         ssid: String? = null
-    ): NetworkState {
+    ): NetworkStateSnapshot {
         val lp = LinkProperties()
         val caps = NetworkCapabilities().apply {
             setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, false)
@@ -66,7 +66,7 @@ class NetworkTemplateTest {
             setSubscriberId(TEST_IMSI1)
             setSSID(ssid)
         }
-        return NetworkState(type, lp, caps, mock(Network::class.java))
+        return NetworkStateSnapshot(type, lp, caps, mock(Network::class.java))
     }
 
     private fun NetworkTemplate.assertMatches(ident: NetworkIdentity) =
@@ -85,7 +85,8 @@ class NetworkTemplateTest {
         val stateMobile = buildMobileNetworkState(TEST_IMSI1)
         // Build UMTS template that matches mobile identities with RAT in the same
         // group with any IMSI. See {@link NetworkTemplate#getCollapsedRatType}.
-        val templateUmts = buildTemplateMobileWithRatType(TEST_IMSI1, TelephonyManager.NETWORK_TYPE_UMTS)
+        val templateUmts =
+                buildTemplateMobileWithRatType(TEST_IMSI1, TelephonyManager.NETWORK_TYPE_UMTS)
         // Build normal template that matches mobile identities with any RAT and IMSI.
         val templateAll = buildTemplateMobileWithRatType(TEST_IMSI1, NETWORK_TYPE_ALL)
         // Build template with UNKNOWN RAT that matches mobile identities with RAT that
