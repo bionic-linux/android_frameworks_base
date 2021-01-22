@@ -1,0 +1,69 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dddc6dc0_2cb9e901",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 57
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T04:15:40Z",
+      "side": 1,
+      "message": "Thanks for all your efforts. This was a beast of a patch and ",
+      "revId": "db2f43af799e336d99b993647518dabb6fec69fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5e55918_6822b03b",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 57
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T04:15:40Z",
+      "side": 1,
+      "message": "\u003e This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.\n\nPlease fix.",
+      "parentUuid": "4f67ade4_06cdbd1b",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 7
+      },
+      "revId": "db2f43af799e336d99b993647518dabb6fec69fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c7ec661_2e25e631",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackTracker.java",
+        "patchSetId": 57
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T04:15:40Z",
+      "side": 1,
+      "message": "\u003e This file contains a set of conflict markers.If this is a false alarm, add IGNORE_MERGE_CONFLICT_CHECK\u003d\u003d\u003creason\u003e to your commit message.\n\nPlease fix.",
+      "parentUuid": "24efd42e_487e0920",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 7
+      },
+      "revId": "db2f43af799e336d99b993647518dabb6fec69fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
