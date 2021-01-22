@@ -117,6 +117,7 @@ import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStackClient;
 import android.net.NetworkState;
+import android.net.NetworkStateSnapshot;
 import android.net.NetworkTestResultParcelable;
 import android.net.NetworkUtils;
 import android.net.NetworkWatchlistManager;
@@ -7995,8 +7996,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         final VpnInfo[] vpnInfos = getAllVpnInfo();
         try {
-            mStatsService.forceUpdateIfaces(
-                    getDefaultNetworks(), getAllNetworkState(), activeIface, vpnInfos);
+            final ArrayList<NetworkStateSnapshot> snapshots = new ArrayList<>();
+            for (final NetworkState state : getAllNetworkState()) {
+                snapshots.add(new NetworkStateSnapshot(state));
+            }
+            mStatsService.forceUpdateIfaces(getDefaultNetworks(),
+                    snapshots.toArray(new NetworkStateSnapshot[0]), activeIface, vpnInfos);
         } catch (Exception ignored) {
         }
     }
