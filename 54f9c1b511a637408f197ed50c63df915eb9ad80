@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db741b33_e57b16dd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 6871,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-22T08:51:01Z",
+      "side": 1,
+      "message": "In the wake of our idea to send only the requests that are not outscored by another REQUEST-type request, I think before closing this brace we should say if (null !\u003d nai) break;\n\n...so we don\u0027t send to a newly registering provider a request that is below one that is satisfied.",
+      "range": {
+        "startLine": 6871,
+        "startChar": 12,
+        "endLine": 6871,
+        "endChar": 13
+      },
+      "revId": "54f9c1b511a637408f197ed50c63df915eb9ad80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
