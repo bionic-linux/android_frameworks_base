@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3572950c_88965fb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T11:01:38Z",
+      "side": 1,
+      "message": "LGTM with nits",
+      "revId": "f0b4cd7fed121e07f0ae734cb98b428f256c65a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2c03577_4e67a07a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 5388,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-22T11:01:38Z",
+      "side": 1,
+      "message": "not done?\nhttps://source.android.com/setup/contribute/code-style#use-todo-comments",
+      "range": {
+        "startLine": 5388,
+        "startChar": 8,
+        "endLine": 5388,
+        "endChar": 11
+      },
+      "revId": "f0b4cd7fed121e07f0ae734cb98b428f256c65a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
