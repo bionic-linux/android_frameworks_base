@@ -26,6 +26,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.clearInvocations;
@@ -107,7 +108,8 @@ public class RebootEscrowManagerTests {
     public interface MockableRebootEscrowInjected {
         int getBootCount();
 
-        void reportMetric(boolean success);
+        void reportMetric(boolean success, int errorCode, int serviceType, int attemptCount,
+                int escrowDurationInSeconds, int vbmetaDigestStatus);
     }
 
     static class MockInjector extends RebootEscrowManager.Injector {
@@ -117,6 +119,7 @@ public class RebootEscrowManagerTests {
         private final UserManager mUserManager;
         private final MockableRebootEscrowInjected mInjected;
         private final RebootEscrowKeyStoreManager mKeyStoreManager;
+        private final boolean mServerBased;
 
         MockInjector(Context context, UserManager userManager,
                 IRebootEscrow rebootEscrow,
@@ -126,6 +129,7 @@ public class RebootEscrowManagerTests {
             super(context, storage);
             mRebootEscrow = rebootEscrow;
             mServiceConnection = null;
+            mServerBased = false;
             RebootEscrowProviderHalImpl.Injector halInjector =
                     new RebootEscrowProviderHalImpl.Injector() {
                         @Override
@@ -147,6 +151,7 @@ public class RebootEscrowManagerTests {
             super(context, storage);
             mServiceConnection = serviceConnection;
             mRebootEscrow = null;
+            mServerBased = true;
             RebootEscrowProviderServerBasedImpl.Injector injector =
                     new RebootEscrowProviderServerBasedImpl.Injector(serviceConnection);
             mRebootEscrowProvider = new RebootEscrowProviderServerBasedImpl(storage, injector);
@@ -166,6 +171,11 @@ public class RebootEscrowManagerTests {
         }
 
         @Override
+        public boolean serverBasedResumeOnReboot() {
+            return mServerBased;
+        }
+
+        @Override
         public RebootEscrowProviderInterface getRebootEscrowProvider() {
             return mRebootEscrowProvider;
         }
@@ -181,8 +191,10 @@ public class RebootEscrowManagerTests {
         }
 
         @Override
-        public void reportMetric(boolean success) {
-            mInjected.reportMetric(success);
+        public void reportMetric(boolean success, int errorCode, int serviceType, int attemptCount,
+                int escrowDurationInSeconds, int vbmetaDigestStatus) {
+            mInjected.reportMetric(success, errorCode, serviceType, attemptCount,
+                    escrowDurationInSeconds, vbmetaDigestStatus);
         }
     }
 
@@ -404,7 +416,9 @@ public class RebootEscrowManagerTests {
 
         when(mInjected.getBootCount()).thenReturn(1);
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
-        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
+        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(),
+                eq(0) /* error code */, eq(1) /* HAL based */, eq(1) /* attempt count */,
+                anyInt(), anyInt());
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> keyByteCaptor.getValue());
 
         mService.loadRebootEscrowDataIfAvailable(null);
@@ -437,7 +451,9 @@ public class RebootEscrowManagerTests {
         // pretend reboot happens here
         when(mInjected.getBootCount()).thenReturn(1);
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
-        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
+        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(),
+                eq(0) /* error code */, eq(2) /* Server based */, eq(1) /* attempt count */,
+                anyInt(), anyInt());
 
         when(mServiceConnection.unwrap(any(), anyLong()))
                 .thenAnswer(invocation -> invocation.getArgument(0));
@@ -474,7 +490,8 @@ public class RebootEscrowManagerTests {
 
         mService.loadRebootEscrowDataIfAvailable(null);
         verify(mRebootEscrow).retrieveKey();
-        verify(mInjected, never()).reportMetric(anyBoolean());
+        verify(mInjected, never()).reportMetric(anyBoolean(), anyInt(), anyInt(), anyInt(),
+                anyInt(), anyInt());
     }
 
     @Test
@@ -500,7 +517,8 @@ public class RebootEscrowManagerTests {
         when(mRebootEscrow.retrieveKey()).thenReturn(new byte[32]);
 
         mService.loadRebootEscrowDataIfAvailable(null);
-        verify(mInjected, never()).reportMetric(anyBoolean());
+        verify(mInjected, never()).reportMetric(anyBoolean(), anyInt(), anyInt(), anyInt(),
+                anyInt(), anyInt());
     }
 
     @Test
@@ -534,7 +552,8 @@ public class RebootEscrowManagerTests {
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> keyByteCaptor.getValue());
 
         mService.loadRebootEscrowDataIfAvailable(null);
-        verify(mInjected).reportMetric(eq(true));
+        verify(mInjected).reportMetric(eq(true), eq(0) /* error code */, eq(1) /* HAL based */,
+                eq(1) /* attempt count */, anyInt(), anyInt());
     }
 
     @Test
@@ -561,7 +580,9 @@ public class RebootEscrowManagerTests {
 
         when(mInjected.getBootCount()).thenReturn(1);
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
-        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
+        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(),
+                anyInt() /* error code */, eq(1) /* HAL based */, eq(1) /* attempt count */,
+                anyInt(), anyInt());
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> new byte[32]);
         mService.loadRebootEscrowDataIfAvailable(null);
         verify(mRebootEscrow).retrieveKey();
