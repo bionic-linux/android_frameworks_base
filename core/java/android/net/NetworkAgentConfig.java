@@ -16,8 +16,11 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -275,6 +278,8 @@ public final class NetworkAgentConfig implements Parcelable {
          * @hide
          */
         @NonNull
+        @SuppressLint("MissingGetterMatchingBuilder")
+        @SystemApi(client = MODULE_LIBRARIES)
         public Builder setSubscriberId(@Nullable String subscriberId) {
             mConfig.subscriberId = subscriberId;
             return this;
