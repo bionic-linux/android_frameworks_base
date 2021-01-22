@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9487d772_e152a365",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-01-22T15:56:29Z",
+      "side": 1,
+      "message": "Actually, have you validated that this works without sepolicy changes? I had thought we locked this down more.\n\nThe sysprop should use the new sysprop infra as well since it\u0027s an interface between vendor and platform. See https://source.android.com/devices/architecture/sysprops-apis?hl\u003den for docs.",
+      "revId": "0e841fece6d0edcdc16071edcb8f26907cb5fcc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
