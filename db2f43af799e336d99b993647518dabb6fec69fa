@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "496ae4e3_53beffc1",
+        "filename": "services/core/java/com/android/server/connectivity/QosCallbackAgentConnection.java",
+        "patchSetId": 57
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-01-22T04:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e55918_6822b03b",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 7
+      },
+      "revId": "db2f43af799e336d99b993647518dabb6fec69fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c7ec661_2e25e631",
