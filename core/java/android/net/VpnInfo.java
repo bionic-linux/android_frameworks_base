@@ -18,6 +18,7 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -29,7 +30,8 @@ import java.util.Arrays;
  *
  * @hide
  */
-public class VpnInfo implements Parcelable {
+@SystemApi
+public final class VpnInfo implements Parcelable {
     public final int ownerUid;
     @Nullable
     public final String vpnIface;
