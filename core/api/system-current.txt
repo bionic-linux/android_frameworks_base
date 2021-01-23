@@ -1361,6 +1361,7 @@ package android.app.usage {
   }
 
   public class NetworkStatsManager {
+    method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public void notifyNetworkStatusChanged(@NonNull java.util.List<android.net.Network>, @NonNull java.util.List<android.net.NetworkStateSnapshot>, @Nullable String, @NonNull java.util.List<android.net.VpnInfo>);
     method @NonNull @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STATS_PROVIDER, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void registerNetworkStatsProvider(@NonNull String, @NonNull android.net.netstats.provider.NetworkStatsProvider);
     method @NonNull @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STATS_PROVIDER, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void unregisterNetworkStatsProvider(@NonNull android.net.netstats.provider.NetworkStatsProvider);
   }
