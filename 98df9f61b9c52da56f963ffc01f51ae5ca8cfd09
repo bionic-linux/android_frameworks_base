@@ -16,6 +16,24 @@
       "message": "For integrete of aosp/1536313 I think this CL should be merged into that one.",
       "revId": "98df9f61b9c52da56f963ffc01f51ae5ca8cfd09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "014f991c_e6313684",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-23T12:58:41Z",
+      "side": 1,
+      "message": "No, I don\u0027t think so. This commit is to remove the unused NPMI and parent commit is to replace the NPMI#isUidNetworkingBlocked. They are doing totally different things.",
+      "parentUuid": "fce6ab05_05d27471",
+      "revId": "98df9f61b9c52da56f963ffc01f51ae5ca8cfd09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
