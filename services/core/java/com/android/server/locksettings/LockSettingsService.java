@@ -228,7 +228,7 @@ public class LockSettingsService extends ILockSettings.Stub {
     private final RecoverableKeyStoreManager mRecoverableKeyStoreManager;
     private ManagedProfilePasswordCache mManagedProfilePasswordCache;
 
-    private final RebootEscrowManager mRebootEscrowManager;
+    private RebootEscrowManager mRebootEscrowManager;
 
     private boolean mFirstCallToVold;
 
@@ -2380,6 +2380,8 @@ public class LockSettingsService extends ILockSettings.Stub {
             String[] args, ShellCallback callback, ResultReceiver resultReceiver) {
         enforceShell();
         final long origId = Binder.clearCallingIdentity();
+        mRebootEscrowManager = mInjector.getRebootEscrowManager(new RebootEscrowCallbacks(),
+                mStorage);
         try {
             (new LockSettingsShellCommand(new LockPatternUtils(mContext))).exec(
                     this, in, out, err, args, callback, resultReceiver);
