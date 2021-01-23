@@ -35,6 +35,8 @@ import static org.junit.Assert.assertEquals;
 import android.net.NetworkStats;
 import android.net.VpnInfo;
 
+import java.util.Arrays;
+
 /** Superclass with utilities for NetworkStats(Service|Factory)Test */
 abstract class NetworkStatsBaseTest {
     static final String TEST_IFACE = "test0";
@@ -112,6 +114,6 @@ abstract class NetworkStatsBaseTest {
     }
 
     static VpnInfo createVpnInfo(String vpnIface, String[] underlyingIfaces) {
-        return new VpnInfo(UID_VPN, vpnIface, underlyingIfaces);
+        return new VpnInfo(UID_VPN, vpnIface, Arrays.asList(underlyingIfaces));
     }
 }

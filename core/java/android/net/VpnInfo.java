@@ -18,10 +18,12 @@ package android.net;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A lightweight container used to carry information of the ongoing VPN.
@@ -29,14 +31,16 @@ import java.util.Arrays;
  *
  * @hide
  */
-public class VpnInfo implements Parcelable {
+@SystemApi
+public final class VpnInfo implements Parcelable {
     public final int ownerUid;
     @Nullable
     public final String vpnIface;
     @Nullable
-    public final String[] underlyingIfaces;
+    public final List<String> underlyingIfaces;
 
-    public VpnInfo(int ownerUid, @Nullable String vpnIface, @Nullable String[] underlyingIfaces) {
+    public VpnInfo(int ownerUid, @Nullable String vpnIface,
+            @Nullable List<String> underlyingIfaces) {
         this.ownerUid = ownerUid;
         this.vpnIface = vpnIface;
         this.underlyingIfaces = underlyingIfaces;
@@ -45,7 +49,8 @@ public class VpnInfo implements Parcelable {
     private VpnInfo(@NonNull Parcel in) {
         this.ownerUid = in.readInt();
         this.vpnIface = in.readString();
-        this.underlyingIfaces = in.createStringArray();
+        this.underlyingIfaces = new ArrayList<>();
+        in.readList(this.underlyingIfaces, null /*classLoader*/);
     }
 
     @Override
@@ -53,7 +58,7 @@ public class VpnInfo implements Parcelable {
         return "VpnInfo{"
                 + "ownerUid=" + ownerUid
                 + ", vpnIface='" + vpnIface + '\''
-                + ", underlyingIfaces='" + Arrays.toString(underlyingIfaces) + '\''
+                + ", underlyingIfaces='" + underlyingIfaces.toString() + '\''
                 + '}';
     }
 
@@ -66,7 +71,7 @@ public class VpnInfo implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(ownerUid);
         dest.writeString(vpnIface);
-        dest.writeStringArray(underlyingIfaces);
+        dest.writeList(underlyingIfaces);
     }
 
     @NonNull

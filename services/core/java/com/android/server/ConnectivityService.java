@@ -4910,8 +4910,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nai.linkProperties.getInterfaceName() == null) return null;
 
         return new VpnInfo(nai.networkCapabilities.getOwnerUid(),
-                nai.linkProperties.getInterfaceName(),
-                interfaces.toArray(new String[0]));
+                nai.linkProperties.getInterfaceName(), interfaces);
     }
 
     /**

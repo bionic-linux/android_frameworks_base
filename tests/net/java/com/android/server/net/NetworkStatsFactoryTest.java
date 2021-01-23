@@ -134,7 +134,8 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
 
     @Test
     public void testVpnWithClat() throws Exception {
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {CLAT_PREFIX + TEST_IFACE})};
+        final VpnInfo[] vpnInfos =
+                new VpnInfo[] {createVpnInfo(new String[] {CLAT_PREFIX + TEST_IFACE})};
         mFactory.updateVpnInfos(vpnInfos);
         mFactory.noteStackedIface(CLAT_PREFIX + TEST_IFACE, TEST_IFACE);
 
@@ -167,7 +168,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
 
     @Test
     public void testVpnWithOneUnderlyingIface() throws Exception {
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
+        final VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
         mFactory.updateVpnInfos(vpnInfos);
 
         // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
@@ -191,7 +192,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
     @Test
     public void testVpnWithOneUnderlyingIfaceAndOwnTraffic() throws Exception {
         // WiFi network is connected and VPN is using WiFi (which has TEST_IFACE).
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
+        final VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
         mFactory.updateVpnInfos(vpnInfos);
 
         // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
@@ -219,7 +220,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
     @Test
     public void testVpnWithOneUnderlyingIface_withCompression() throws Exception {
         // WiFi network is connected and VPN is using WiFi (which has TEST_IFACE).
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
+        final VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
         mFactory.updateVpnInfos(vpnInfos);
 
         // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
@@ -242,7 +243,8 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
         // WiFi and Cell networks are connected and VPN is using WiFi (which has TEST_IFACE) and
         // Cell (which has TEST_IFACE2) and has declared both of them in its underlying network set.
         // Additionally, VPN is duplicating traffic across both WiFi and Cell.
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
+        final VpnInfo[] vpnInfos =
+                new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
         mFactory.updateVpnInfos(vpnInfos);
 
         // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
@@ -308,7 +310,8 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
         // WiFi and Cell networks are connected and VPN is using WiFi (which has TEST_IFACE) and
         // Cell (which has TEST_IFACE2) and has declared both of them in its underlying network set.
         // Additionally, VPN is arbitrarily splitting traffic across WiFi and Cell.
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
+        final VpnInfo[] vpnInfos =
+                new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
         mFactory.updateVpnInfos(vpnInfos);
 
         // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption
@@ -335,7 +338,8 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
         // WiFi and Cell networks are connected and VPN is using WiFi (which has TEST_IFACE) and
         // Cell (which has TEST_IFACE2) and has declared both of them in its underlying network set.
         // Additionally, VPN is arbitrarily splitting compressed traffic across WiFi and Cell.
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
+        final VpnInfo[] vpnInfos =
+                new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE, TEST_IFACE2})};
         mFactory.updateVpnInfos(vpnInfos);
 
         // create some traffic (assume 10 bytes of MTU for VPN interface:
@@ -357,7 +361,7 @@ public class NetworkStatsFactoryTest extends NetworkStatsBaseTest {
     public void testVpnWithIncorrectUnderlyingIface() throws Exception {
         // WiFi and Cell networks are connected and VPN is using Cell (which has TEST_IFACE2),
         // but has declared only WiFi (TEST_IFACE) in its underlying network set.
-        VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
+        final VpnInfo[] vpnInfos = new VpnInfo[] {createVpnInfo(new String[] {TEST_IFACE})};
         mFactory.updateVpnInfos(vpnInfos);
 
         // create some traffic (assume 10 bytes of MTU for VPN interface and 1 byte encryption

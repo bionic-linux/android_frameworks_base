@@ -5207,7 +5207,8 @@ public class ConnectivityServiceTest {
             VpnInfo info = infos[0];
             assertEquals("Unexpected VPN owner:", (int) vpnUid, info.ownerUid);
             assertEquals("Unexpected VPN interface:", vpnIfname, info.vpnIface);
-            assertSameElementsNoDuplicates(underlyingIfaces, info.underlyingIfaces);
+            assertSameElementsNoDuplicates(underlyingIfaces,
+                    info.underlyingIfaces.toArray(new String[0]));
         } else {
             assertEquals(0, infos.length);
             return;
@@ -5351,8 +5352,8 @@ public class ConnectivityServiceTest {
         // network for the VPN...
         verify(mStatsService, never()).forceUpdateIfaces(any(Network[].class),
                 any(NetworkState[].class), any() /* anyString() doesn't match null */,
-                argThat(infos -> infos[0].underlyingIfaces.length == 1
-                        && WIFI_IFNAME.equals(infos[0].underlyingIfaces[0])));
+                argThat(infos -> infos[0].underlyingIfaces.size() == 1
+                        && WIFI_IFNAME.equals(infos[0].underlyingIfaces.get(0))));
         verifyNoMoreInteractions(mStatsService);
         reset(mStatsService);
 
@@ -5365,8 +5366,8 @@ public class ConnectivityServiceTest {
         waitForIdle();
         verify(mStatsService).forceUpdateIfaces(any(Network[].class),
                 any(NetworkState[].class), any() /* anyString() doesn't match null */,
-                argThat(vpnInfos -> vpnInfos[0].underlyingIfaces.length == 1
-                        && WIFI_IFNAME.equals(vpnInfos[0].underlyingIfaces[0])));
+                argThat(vpnInfos -> vpnInfos[0].underlyingIfaces.size() == 1
+                        && WIFI_IFNAME.equals(vpnInfos[0].underlyingIfaces.get(0))));
         mEthernetNetworkAgent.disconnect();
         waitForIdle();
         reset(mStatsService);
