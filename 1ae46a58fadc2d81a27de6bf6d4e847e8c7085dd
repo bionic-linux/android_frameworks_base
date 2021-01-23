@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7361d5b6_ac6d105d",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:44:07Z",
+      "side": 1,
+      "message": "Oh, we\u0027ll probably also want to remove NOT_RESTRICTED and NOT_TRUSTED. Since we\u0027re providing the extra layer",
+      "range": {
+        "startLine": 129,
+        "startChar": 64,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "60e10b67_f495a3b1",
         "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
         "patchSetId": 6
