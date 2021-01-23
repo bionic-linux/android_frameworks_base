@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ccafaac5_2250a064",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-23T12:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af6d542_053c14ee",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "1b7f107a7621d674a51f0da54f2165c6b07ada8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d9e67a64_0e055c55",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 8
@@ -37,6 +61,24 @@
       "writtenOn": "2021-01-22T16:38:01Z",
       "side": 1,
       "message": "LGTM except this should be merged with next patch and bind to the same topic that add the Util.",
+      "revId": "1b7f107a7621d674a51f0da54f2165c6b07ada8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae4a1fb0_c20fb0f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-01-23T12:53:34Z",
+      "side": 1,
+      "message": "No, I don\u0027t think so. The parent commit of this change is already bound with same topic with adding NetworkPolicyUtils. It\u0027s too complicated to bind more commits. Besides, the next pacth is doing the different thing from this commit, it\u0027s unnecessary to merge them.",
+      "parentUuid": "d9e67a64_0e055c55",
       "revId": "1b7f107a7621d674a51f0da54f2165c6b07ada8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
