@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60e10b67_f495a3b1",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:02:19Z",
+      "side": 1,
+      "message": "Hmm, we might be able to enforce this only for cell. Underlying Wifi can\u0027t get any of the other telephony capabilities (eg DUN or MMS).\n\nFor wifi we\u0027ll just have to require INTERNET.",
+      "range": {
+        "startLine": 130,
+        "startChar": 45,
+        "endLine": 130,
+        "endChar": 83
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b33a067_3f971cb5",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:02:19Z",
+      "side": 1,
+      "message": "What does valid mean?\n\nIt looks like a valid update is only if the networks match?\n\nif mSelectedUnderlyingNetworkRecord is null (as in startup), will this check return false?",
+      "range": {
+        "startLine": 204,
+        "startChar": 59,
+        "endLine": 204,
+        "endChar": 68
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10b48a02_88259d92",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:02:19Z",
+      "side": 1,
+      "message": "Suggest maybe \"isSameNetwork\", and pass in the UnderlyingNetworkRecord too? then this method can be static 😊",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b92fc29_21ea7839",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:02:19Z",
+      "side": 1,
+      "message": ", and no action is taken on any events firing",
+      "range": {
+        "startLine": 278,
+        "startChar": 13,
+        "endLine": 278,
+        "endChar": 67
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "483ff5aa_502c180b",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:02:19Z",
+      "side": 1,
+      "message": "Extraneous; suggest:\n\nRouteSelectionCallback is used to select the \"best\" underlying Network\n\n\u003cp\u003eThe \"best\" network is determined by ConnectivityService, which is treated as a source of truth.",
+      "range": {
+        "startLine": 284,
+        "startChar": 30,
+        "endLine": 284,
+        "endChar": 50
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67793bc7_70122699",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:02:19Z",
+      "side": 1,
+      "message": "We may want to check this for all callbacks. Then we can just remove it from getCapsWithSuspended and friends.",
+      "range": {
+        "startLine": 295,
+        "startChar": 12,
+        "endLine": 295,
+        "endChar": 54
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6d013ea_0f9287a4",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:02:19Z",
+      "side": 1,
+      "message": "Suggest making this an \"handleNetworkLost(Network network)\" function, and then this NetworkCallback function basically becomes a thin wrapper",
+      "range": {
+        "startLine": 304,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 78
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5be60ded_d6cf94f5",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-23T00:02:19Z",
+      "side": 1,
+      "message": "Similarly, this interleaves scope between the inner and outer classes, suggest having a handleNetworkSuspended() function",
+      "range": {
+        "startLine": 320,
+        "startChar": 43,
+        "endLine": 320,
+        "endChar": 63
+      },
+      "revId": "1ae46a58fadc2d81a27de6bf6d4e847e8c7085dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
