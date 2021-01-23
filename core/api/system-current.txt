@@ -6556,6 +6556,16 @@ package android.net {
     method @NonNull public String toSafeString();
   }
 
+  public final class VpnInfo implements android.os.Parcelable {
+    ctor public VpnInfo(int, @Nullable String, @Nullable String[]);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.VpnInfo> CREATOR;
+    field public final int ownerUid;
+    field @Nullable public final String[] underlyingIfaces;
+    field @Nullable public final String vpnIface;
+  }
+
   public class VpnService extends android.app.Service {
     method @RequiresPermission(android.Manifest.permission.CONTROL_VPN) public static void prepareAndAuthorize(android.content.Context);
   }
