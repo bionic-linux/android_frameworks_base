@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c08e3ab_d2f4cbc5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3446,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-24T01:54:24Z",
+      "side": 1,
+      "message": "Yep, good call.",
+      "parentUuid": "b95c053e_99bbdecf",
+      "range": {
+        "startLine": 3446,
+        "startChar": 12,
+        "endLine": 3446,
+        "endChar": 86
+      },
+      "revId": "c020d3de57ee51856db22b89d7d4bb9df573d081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d557de0_70a41b69",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d0d4bc6_835442cb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-24T01:54:24Z",
+      "side": 1,
+      "message": "Looking at the old code, it looks like the only case it solved was when upon handleRegisterNetworkRequest(), if no satisfier was found then to send null for the request to the factories. \n\nThe existing code on rematch will as you mention, already send the score if a satisfier is found. This happens at l.7381 when we iterate over the change events. However, if no change event exists, then it doesn\u0027t appear that we send a score to the factory which this code would then eventually catch.\n\nYou do make a good point though in that I will send lower priority requests of a potentially satisfied NRI which doesn\u0027t align with our current approach.\n\nI pushed up a new patch that doesn\u0027t have the same issue of sending requests for a satisfied NRI while also catching the edge case of a unsatisfied NRI. The only difference I see with the code you suggested above is that my latest patch won\u0027t send higher priority unsatisfied requests of type REQUEST to the factories with null. If you think we need that, I can update the patch to take that into account.",
+      "parentUuid": "6d557de0_70a41b69",
+      "range": {
+        "startLine": 3473,
+        "startChar": 12,
+        "endLine": 3475,
+        "endChar": 13
+      },
+      "revId": "c020d3de57ee51856db22b89d7d4bb9df573d081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8858fb8c_c3bd7226",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 20
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-22T09:14:09Z",
       "side": 1,
       "message": "ensureNotMultilayerRequest throws IAE – but no argument is incorrect here. IllegalStateException is probably a better exception to throw here.",
+      "range": {
+        "startLine": 3484,
+        "startChar": 0,
+        "endLine": 3484,
+        "endChar": 85
+      },
+      "revId": "c020d3de57ee51856db22b89d7d4bb9df573d081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcf973e7_207c3ac9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3484,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-24T01:54:24Z",
+      "side": 1,
+      "message": "My thought here was that the nri was incorrect as it wasn\u0027t multilayer however I think you can also make that argument for IllegalStateException as you mention. I will go ahead and change it.",
+      "parentUuid": "8858fb8c_c3bd7226",
       "range": {
         "startLine": 3484,
         "startChar": 0,
