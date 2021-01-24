@@ -101,6 +101,7 @@ import android.security.Credentials;
 import android.security.KeyStore;
 import android.security.KeyStore2;
 import android.security.KeyStoreException;
+import android.security.LegacyVpnProfileStore;
 import android.security.keystore.AndroidKeyStoreProvider;
 import android.security.keystore.KeyProperties;
 import android.system.keystore2.Domain;
@@ -3093,11 +3094,9 @@ public class Vpn {
         // Permissions checked during startVpnProfile()
         Binder.withCleanCallingIdentity(
                 () -> {
-                    keyStore.put(
+                    LegacyVpnProfileStore.put(
                             getProfileNameForPackage(packageName),
-                            encodedProfile,
-                            Process.SYSTEM_UID,
-                            0 /* flags */);
+                            encodedProfile);
                 });
 
         // TODO: if package has CONTROL_VPN, grant the ACTIVATE_PLATFORM_VPN appop.
@@ -3138,7 +3137,7 @@ public class Vpn {
                         }
                     }
 
-                    keyStore.delete(getProfileNameForPackage(packageName), Process.SYSTEM_UID);
+                    LegacyVpnProfileStore.remove(getProfileNameForPackage(packageName));
                 });
     }
 
@@ -3156,7 +3155,7 @@ public class Vpn {
             return null;
         }
 
-        final byte[] encoded = keyStore.get(getProfileNameForPackage(packageName));
+        final byte[] encoded = LegacyVpnProfileStore.get(getProfileNameForPackage(packageName));
         if (encoded == null) return null;
 
         return VpnProfile.decode("" /* Key unused */, encoded);
