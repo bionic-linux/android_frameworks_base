@@ -25,7 +25,6 @@ import android.annotation.Nullable;
 import android.annotation.RequiresFeature;
 import android.content.pm.PackageManager;
 import android.security.Credentials;
-import android.security.KeyStore;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.net.VpnProfile;
@@ -35,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.KeyFactory;
+import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.CertificateEncodingException;
@@ -65,6 +65,7 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
     /** Prefix for when a Private Key is stored directly in the profile @hide */
     public static final String PREFIX_INLINE = "INLINE:";
 
+    private static final String ANDROID_KEYSTORE_PROVIDER = "AndroidKeyStore";
     private static final String MISSING_PARAM_MSG_TMPL = "Required parameter was not provided: %s";
     private static final String EMPTY_CERT = "";
 
@@ -429,23 +430,9 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
         return profile;
     }
 
-    /**
-     * Constructs a Ikev2VpnProfile from an internal-use VpnProfile instance.
-     *
-     * <p>Redundant authentication information (not related to profile type) will be discarded.
-     *
-     * @hide
-     */
-    @NonNull
-    public static Ikev2VpnProfile fromVpnProfile(@NonNull VpnProfile profile)
-            throws IOException, GeneralSecurityException {
-        return fromVpnProfile(profile, null);
-    }
-
     private static PrivateKey getPrivateKeyFromAndroidKeystore(String alias) {
         try {
-            final java.security.KeyStore keystore =
-                    java.security.KeyStore.getInstance("AndroidKeyStore");
+            final KeyStore keystore = KeyStore.getInstance(ANDROID_KEYSTORE_PROVIDER);
             keystore.load(null);
             final Key key = keystore.getKey(alias, null);
             if (!(key instanceof PrivateKey)) {
@@ -462,15 +449,12 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
      * Builds the Ikev2VpnProfile from the given profile.
      *
      * @param profile the source VpnProfile to build from
-     * @param keyStore the Android Keystore instance to use to retrieve the private key, or null if
-     *     the private key is PEM-encoded into the profile.
      * @return The IKEv2/IPsec VPN profile
      * @hide
      */
     @NonNull
-    public static Ikev2VpnProfile fromVpnProfile(
-            @NonNull VpnProfile profile, @Nullable KeyStore keyStore)
-            throws IOException, GeneralSecurityException {
+    public static Ikev2VpnProfile fromVpnProfile(@NonNull VpnProfile profile)
+            throws GeneralSecurityException {
         final Builder builder = new Builder(profile.server, profile.ipsecIdentifier);
         builder.setProxy(profile.proxy);
         builder.setAllowedAlgorithms(profile.getAllowedAlgorithms());
@@ -494,8 +478,6 @@ public final class Ikev2VpnProfile extends PlatformVpnProfile {
             case TYPE_IKEV2_IPSEC_RSA:
                 final PrivateKey key;
                 if (profile.ipsecSecret.startsWith(PREFIX_KEYSTORE_ALIAS)) {
-                    Objects.requireNonNull(keyStore, "Missing Keystore for aliased PrivateKey");
-
                     final String alias =
                             profile.ipsecSecret.substring(PREFIX_KEYSTORE_ALIAS.length());
                     key = getPrivateKeyFromAndroidKeystore(alias);
