@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d27ba81f_f7d8cb7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-25T06:27:38Z",
+      "side": 1,
+      "message": "Might be typo. I think you mean utilize.",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "c3ff8ac00e97d443bc9f599b05366437cab22dd9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
