@@ -16,6 +16,23 @@
       "message": "OWNERS+1",
       "revId": "2912b101aaa34abfa9637f2f00c992e7d129b994",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a390e7ef_8314cdd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1222074
+      },
+      "writtenOn": "2021-01-25T21:43:38Z",
+      "side": 1,
+      "message": "Please set Autosubmit vote +1 for this CL",
+      "revId": "2912b101aaa34abfa9637f2f00c992e7d129b994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
