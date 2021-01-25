@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68d9e332_95e528d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-01-25T14:15:44Z",
+      "side": 1,
+      "message": "Hmm..., the constructor is the only usage in Proxy.java.",
+      "revId": "b6eaffb3fc2c963afe732f861d04b764ced80624",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
