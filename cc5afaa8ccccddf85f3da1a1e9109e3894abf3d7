@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a33bc79c_dc29554e",
+        "filename": "Android.bp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-25T02:58:07Z",
+      "side": 1,
+      "message": "Please also add NetworkState.* and NetworkStateSnapshot.*",
+      "revId": "cc5afaa8ccccddf85f3da1a1e9109e3894abf3d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
