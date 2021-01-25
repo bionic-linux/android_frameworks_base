@@ -38,6 +38,8 @@ import android.os.UserManager;
 import android.security.keystore.AndroidKeyStoreProvider;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
+import android.system.keystore2.Domain;
+import android.system.keystore2.KeyDescriptor;
 
 import com.android.org.conscrypt.TrustedCertificateStore;
 
@@ -584,6 +586,27 @@ public final class KeyChain {
         return null;
     }
 
+    /**
+     * This prefix is used to disambiguate grant aliase strings from normal key alias strings.
+     * Technically, a key alias string can use the same prefix. However, a collision does not
+     * lead to privilege escalation, because grants are access controlled in the Keystore daemon.
+     * @hide
+     */
+    public static final String GRANT_ALIAS_PREFIX = "ks2_keychain_grant_id:";
+
+    private static KeyDescriptor getGrantDescriptor(String keyid) {
+        KeyDescriptor result = new KeyDescriptor();
+        result.domain = Domain.GRANT;
+        result.blob = null;
+        result.alias = null;
+        try {
+            result.nspace = Long.decode(keyid.substring(GRANT_ALIAS_PREFIX.length()));
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        return result;
+    }
+
     /** @hide */
     @Nullable @WorkerThread
     public static KeyPair getKeyPair(@NonNull Context context, @NonNull String alias)
@@ -607,11 +630,23 @@ public final class KeyChain {
 
         if (keyId == null) {
             return null;
+        }
+
+        if (AndroidKeyStoreProvider.isKeystore2Enabled()) {
+            try {
+                return android.security.keystore2.AndroidKeyStoreProvider
+                        .loadAndroidKeyStoreKeyPairFromKeystore(
+                                KeyStore2.getInstance(),
+                                getGrantDescriptor(keyId));
+            } catch (UnrecoverableKeyException | KeyPermanentlyInvalidatedException e) {
+                throw new KeyChainException(e);
+            }
         } else {
             try {
                 return AndroidKeyStoreProvider.loadAndroidKeyStoreKeyPairFromKeystore(
                         KeyStore.getInstance(), keyId, KeyStore.UID_SELF);
-            } catch (RuntimeException | UnrecoverableKeyException | KeyPermanentlyInvalidatedException e) {
+            } catch (RuntimeException | UnrecoverableKeyException
+                    | KeyPermanentlyInvalidatedException e) {
                 throw new KeyChainException(e);
             }
         }
@@ -729,11 +764,8 @@ public final class KeyChain {
     @Deprecated
     public static boolean isBoundKeyAlgorithm(
             @NonNull @KeyProperties.KeyAlgorithmEnum String algorithm) {
-        if (!isKeyAlgorithmSupported(algorithm)) {
-            return false;
-        }
-
-        return KeyStore.getInstance().isHardwareBacked(algorithm);
+        // All supported algorithms are in hardware backed. Individual keys may not be.
+        return true;
     }
 
     /** @hide */
