@@ -22,6 +22,30 @@
       },
       "revId": "40b2df50b3bdacffe8569f272ba64710fa88aa47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c45394d3_ee7a7b74",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-25T03:27:42Z",
+      "side": 1,
+      "message": "Creating a context is a fairly expensive operation (look up all the stuff it does transitively in ContextImpl. All the members there are already referenced somewhere, so this is somewhere around 500 bytes, tops (napkin estimate).\nConsidering how frequently we send this broadcast, I think the tradeoff is worth it.\n\nIf we get concerned with the amount of memory taken by our contexts, we could also have some strategy for caching them per user (but it\u0027s not trivial as it\u0027s not like all contexts are the same save for the user).\n\nIn this case I like Paul\u0027s choice.",
+      "parentUuid": "16f3be98_e50b3b79",
+      "range": {
+        "startLine": 318,
+        "startChar": 26,
+        "endLine": 318,
+        "endChar": 41
+      },
+      "revId": "40b2df50b3bdacffe8569f272ba64710fa88aa47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
