@@ -2386,6 +2386,11 @@ interface ITelephony {
      * Remove the EAB contacts from the EAB database.
      */
     int removeContactFromEab(int subId, String contacts);
+    
+    /**
+     * Get the EAB contact from the EAB database.
+     */
+    String getContactFromEab(String contact);
 
     /**
      * Set a SignalStrengthUpdateRequest to receive notification when Signal Strength breach the
@@ -2399,4 +2404,5 @@ interface ITelephony {
      */
     void clearSignalStrengthUpdateRequest(int subId, in SignalStrengthUpdateRequest request,
             String callingPackage);
+            
 }
