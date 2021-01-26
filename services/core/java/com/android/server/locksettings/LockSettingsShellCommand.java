@@ -33,6 +33,7 @@ import com.android.internal.widget.PasswordValidationError;
 
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.function.Function;
 
 class LockSettingsShellCommand extends ShellCommand {
 
@@ -45,15 +46,21 @@ class LockSettingsShellCommand extends ShellCommand {
     private static final String COMMAND_VERIFY = "verify";
     private static final String COMMAND_GET_DISABLED = "get-disabled";
     private static final String COMMAND_REMOVE_CACHE = "remove-cache";
+    private static final String COMMAND_SET_ROR_PROVIDER_PACKAGE =
+            "set-resume-on-reboot-provider-package";
     private static final String COMMAND_HELP = "help";
 
     private int mCurrentUserId;
     private final LockPatternUtils mLockPatternUtils;
+    private final Function<String, Boolean> mResumeOnRebootProviderSetter;
+
     private String mOld = "";
     private String mNew = "";
 
-    LockSettingsShellCommand(LockPatternUtils lockPatternUtils) {
+    LockSettingsShellCommand(LockPatternUtils lockPatternUtils,
+            Function<String, Boolean> resumeOnRebootProviderSetter) {
         mLockPatternUtils = lockPatternUtils;
+        mResumeOnRebootProviderSetter = resumeOnRebootProviderSetter;
     }
 
     @Override
@@ -70,6 +77,7 @@ class LockSettingsShellCommand extends ShellCommand {
                     case COMMAND_HELP:
                     case COMMAND_GET_DISABLED:
                     case COMMAND_SET_DISABLED:
+                    case COMMAND_SET_ROR_PROVIDER_PACKAGE:
                         break;
                     default:
                         getErrPrintWriter().println(
@@ -81,6 +89,9 @@ class LockSettingsShellCommand extends ShellCommand {
                 // Commands that do not require authentication go here.
                 case COMMAND_REMOVE_CACHE:
                     runRemoveCache();
+                    return 0;
+                case COMMAND_SET_ROR_PROVIDER_PACKAGE:
+                    runSetResumeOnRebootProviderPackage();
                     return 0;
                 case COMMAND_HELP:
                     onHelp();
@@ -172,6 +183,9 @@ class LockSettingsShellCommand extends ShellCommand {
             pw.println("");
             pw.println("  remove-cache [--user USER_ID]");
             pw.println("    Removes cached unified challenge for the managed profile.");
+            pw.println("  set-resume-on-reboot-provider-package <package_name>");
+            pw.println("    Sets the package name for server based resume on reboot service "
+                    + "provider.");
             pw.println("");
         }
     }
@@ -256,6 +270,14 @@ class LockSettingsShellCommand extends ShellCommand {
         mLockPatternUtils.setLockCredential(pin, getOldCredential(), mCurrentUserId);
         getOutPrintWriter().println("Pin set to '" + mNew + "'");
         return true;
+    }
+
+    private boolean runSetResumeOnRebootProviderPackage() {
+        final String packageName = mNew;
+        if (mResumeOnRebootProviderSetter == null) {
+            return false;
+        }
+        return mResumeOnRebootProviderSetter.apply(packageName);
     }
 
     private boolean runClear() {
