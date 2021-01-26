@@ -187,6 +187,8 @@ public class LockSettingsService extends ILockSettings.Stub {
     private static final String PREV_SYNTHETIC_PASSWORD_HANDLE_KEY = "prev-sp-handle";
     private static final String SYNTHETIC_PASSWORD_UPDATE_TIME_KEY = "sp-handle-ts";
     private static final String USER_SERIAL_NUMBER_KEY = "serial-number";
+    private static final String PROP_ROR_PROVIDER_PACKAGE =
+            "persist.sys.resume_on_reboot_provider_package";
 
     // No challenge provided
     private static final int CHALLENGE_NONE = 0;
@@ -2377,16 +2379,30 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
     }
 
+    boolean setResumeOnRebootProviderPackage(String packageName, int callerPid, int callerUid) {
+        Slog.i(TAG, "Setting " + PROP_ROR_PROVIDER_PACKAGE + " to " + packageName);
+        mContext.enforcePermission(android.Manifest.permission.BIND_RESUME_ON_REBOOT_SERVICE,
+                callerPid, callerUid, TAG);
+        SystemProperties.set(PROP_ROR_PROVIDER_PACKAGE, packageName);
+        return true;
+    }
+
     @Override
     public void onShellCommand(FileDescriptor in, FileDescriptor out, FileDescriptor err,
             String[] args, ShellCallback callback, ResultReceiver resultReceiver) {
         enforceShell();
-        final long origId = Binder.clearCallingIdentity();
+        final int origPid = Binder.getCallingPid();
+        final int origUid = Binder.getCallingUid();
+        // The calling identity is an Returns an opaque.
+        final long identity = Binder.clearCallingIdentity();
+        Slog.e(TAG, "Caller pid " + origPid + " Caller uid " + origUid);
         try {
-            (new LockSettingsShellCommand(new LockPatternUtils(mContext))).exec(
-                    this, in, out, err, args, callback, resultReceiver);
+            final LockSettingsShellCommand command =
+                    new LockSettingsShellCommand(new LockPatternUtils(mContext),
+                    name -> setResumeOnRebootProviderPackage(name, origPid, origUid));
+            command.exec(this, in, out, err, args, callback, resultReceiver);
         } finally {
-            Binder.restoreCallingIdentity(origId);
+            Binder.restoreCallingIdentity(identity);
         }
     }
 

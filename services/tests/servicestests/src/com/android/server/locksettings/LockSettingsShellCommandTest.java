@@ -86,7 +86,7 @@ public class LockSettingsShellCommandTest {
         MockitoAnnotations.initMocks(this);
         final Context context = InstrumentationRegistry.getTargetContext();
         mUserId = ActivityManager.getCurrentUser();
-        mCommand = new LockSettingsShellCommand(mLockPatternUtils);
+        mCommand = new LockSettingsShellCommand(mLockPatternUtils, null);
         when(mLockPatternUtils.hasSecureLockScreen()).thenReturn(true);
     }
 
