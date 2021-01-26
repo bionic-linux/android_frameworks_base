@@ -16,6 +16,23 @@
       "message": "I think this issue is already fixed in an internal branch. +Samiul to keep me honest",
       "revId": "580d241a6b22e004b060eeba41ba9760b8fda6da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66731a5c_b208bf8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1439319
+      },
+      "writtenOn": "2021-01-26T12:44:34Z",
+      "side": 1,
+      "message": "When installing a multi-session, don\u0027t set INSTALL_APEX flag on the parent session. INSTALL_APEX should only be set on child sessions that are installing APEX.\n\nAll our tests expects this. We have even added tests in S to enforce this.",
+      "revId": "580d241a6b22e004b060eeba41ba9760b8fda6da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
