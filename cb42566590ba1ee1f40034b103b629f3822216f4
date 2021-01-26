@@ -33,6 +33,23 @@
       "message": "@toddke, Ping for API-review, thanks!",
       "revId": "cb42566590ba1ee1f40034b103b629f3822216f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78560caf_4a744bf5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2021-01-26T05:53:39Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "cb42566590ba1ee1f40034b103b629f3822216f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
