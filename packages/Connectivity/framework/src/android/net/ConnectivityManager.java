@@ -5097,6 +5097,7 @@ public class ConnectivityManager {
      *                  completion of setOemNetworkPreference();
      * @param preference {@link OemNetworkPreferences} The application network preference to be set.
      */
+    @RequiresPermission(android.Manifest.permission.CONTROL_OEM_PAID_NETWORK_PREFERENCE)
     private void setOemNetworkPreference(@NonNull final Executor executor,
             @NonNull final OnSetOemNetworkPreferenceListener listener,
             @NonNull final OemNetworkPreferences preference) {
