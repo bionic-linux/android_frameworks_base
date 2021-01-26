@@ -62,6 +62,29 @@
       },
       "revId": "631a710048cabf78c0baa76669c711e7afa23483",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3536c8c9_4c674461",
+        "filename": "core/java/android/net/INetworkOfferCallback.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-26T10:58:27Z",
+      "side": 1,
+      "message": "Question: why do we use this instead of provider Id?",
+      "range": {
+        "startLine": 53,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
