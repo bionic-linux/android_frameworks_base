@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cddc381_0cbf775f",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-26T09:06:53Z",
+      "side": 1,
+      "message": "Switched to ArrayUtils.toIntArray(). Since it requires a list, converting to ArrayList before calling toIntArray(). Java is dumb.\n\nUnfortunately, the IntArray class that it points to as a replacement doesn\u0027t even accept any collection at all, and is absolutely useless to us. Deprecated without matching functionality.",
+      "parentUuid": "841ef47a_2ec5b30b",
+      "range": {
+        "startLine": 242,
+        "startChar": 18,
+        "endLine": 242,
+        "endChar": 31
+      },
+      "revId": "7af6f5e92a9ae99592991245f403c8557d21c6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a2d8440_29848a27",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-26T03:56:09Z",
       "side": 1,
       "message": "lol, I think that for this to hold, technically you need a Collections.unmodifiableSet() view of it, no?",
+      "range": {
+        "startLine": 243,
+        "startChar": 38,
+        "endLine": 243,
+        "endChar": 42
+      },
+      "revId": "7af6f5e92a9ae99592991245f403c8557d21c6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91e94d30_1fbdb0d5",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-26T09:06:53Z",
+      "side": 1,
+      "message": "This is technically safe, since there\u0027s no way to get a modifiable set reference once the builder.build() has been called.",
+      "parentUuid": "0a2d8440_29848a27",
       "range": {
         "startLine": 243,
         "startChar": 38,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a076a3df_9c7f74c3",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-26T09:06:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42900b74_7af6ca85",
+      "range": {
+        "startLine": 254,
+        "startChar": 27,
+        "endLine": 254,
+        "endChar": 39
+      },
+      "revId": "7af6f5e92a9ae99592991245f403c8557d21c6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56cf39f4_484a13a0",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e38b617_b01c0381",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-26T09:06:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56cf39f4_484a13a0",
+      "range": {
+        "startLine": 283,
+        "startChar": 17,
+        "endLine": 283,
+        "endChar": 50
+      },
+      "revId": "7af6f5e92a9ae99592991245f403c8557d21c6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "228b0b37_d454f047",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-01-26T03:56:09Z",
       "side": 1,
       "message": "Suggest an @see to point to the setter that talks about the ordering and restrictions or some other documentation enhancements.",
+      "range": {
+        "startLine": 307,
+        "startChar": 18,
+        "endLine": 307,
+        "endChar": 34
+      },
+      "revId": "7af6f5e92a9ae99592991245f403c8557d21c6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b236c9b_2c99d403",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-26T09:06:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "228b0b37_d454f047",
       "range": {
         "startLine": 307,
         "startChar": 18,
