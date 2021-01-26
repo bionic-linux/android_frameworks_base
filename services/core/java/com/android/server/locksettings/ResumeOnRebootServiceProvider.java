@@ -31,6 +31,7 @@ import android.os.IBinder;
 import android.os.ParcelableException;
 import android.os.RemoteCallback;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.provider.DeviceConfig;
 import android.service.resumeonreboot.IResumeOnRebootService;
@@ -55,6 +56,10 @@ public class ResumeOnRebootServiceProvider {
             Manifest.permission.BIND_RESUME_ON_REBOOT_SERVICE;
     private static final String TAG = "ResumeOnRebootServiceProvider";
 
+    // The system property name that overrides the default service provider package name.
+    static final String PROP_ROR_PROVIDER_PACKAGE =
+            "persist.sys.resume_on_reboot_provider_package";
+
     private final Context mContext;
     private final PackageManager mPackageManager;
 
@@ -70,14 +75,20 @@ public class ResumeOnRebootServiceProvider {
 
     @Nullable
     private ServiceInfo resolveService() {
+        String testAppName = SystemProperties.get(PROP_ROR_PROVIDER_PACKAGE, "");
+
         Intent intent = new Intent();
         intent.setAction(ResumeOnRebootService.SERVICE_INTERFACE);
-        if (PROVIDER_PACKAGE != null && !PROVIDER_PACKAGE.equals("")) {
+        int queryFlag = PackageManager.GET_SERVICES;
+        if (!testAppName.isEmpty()) {
+            Slog.i(TAG, "Using test app: " + testAppName);
+            intent.setPackage(testAppName);
+        } else if (PROVIDER_PACKAGE != null && !PROVIDER_PACKAGE.equals("")) {
             intent.setPackage(PROVIDER_PACKAGE);
+            queryFlag |= PackageManager.MATCH_SYSTEM_ONLY;
         }
 
-        List<ResolveInfo> resolvedIntents =
-                mPackageManager.queryIntentServices(intent, PackageManager.MATCH_SYSTEM_ONLY);
+        List<ResolveInfo> resolvedIntents = mPackageManager.queryIntentServices(intent, queryFlag);
         for (ResolveInfo resolvedInfo : resolvedIntents) {
             if (resolvedInfo.serviceInfo != null
                     && PROVIDER_REQUIRED_PERMISSION.equals(resolvedInfo.serviceInfo.permission)) {
