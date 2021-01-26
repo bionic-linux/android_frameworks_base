@@ -45,15 +45,20 @@ class LockSettingsShellCommand extends ShellCommand {
     private static final String COMMAND_VERIFY = "verify";
     private static final String COMMAND_GET_DISABLED = "get-disabled";
     private static final String COMMAND_REMOVE_CACHE = "remove-cache";
+    private static final String COMMAND_SET_ROR_PROVIDER_PACKAGE =
+            "set-resume-on-reboot-provider-package";
     private static final String COMMAND_HELP = "help";
 
     private int mCurrentUserId;
     private final LockPatternUtils mLockPatternUtils;
+    private final LockSettingsService mLockSettingsService;
     private String mOld = "";
     private String mNew = "";
 
-    LockSettingsShellCommand(LockPatternUtils lockPatternUtils) {
+    LockSettingsShellCommand(LockPatternUtils lockPatternUtils,
+            LockSettingsService lockSettingsService) {
         mLockPatternUtils = lockPatternUtils;
+        mLockSettingsService = lockSettingsService;
     }
 
     @Override
@@ -70,6 +75,7 @@ class LockSettingsShellCommand extends ShellCommand {
                     case COMMAND_HELP:
                     case COMMAND_GET_DISABLED:
                     case COMMAND_SET_DISABLED:
+                    case COMMAND_SET_ROR_PROVIDER_PACKAGE:
                         break;
                     default:
                         getErrPrintWriter().println(
@@ -81,6 +87,9 @@ class LockSettingsShellCommand extends ShellCommand {
                 // Commands that do not require authentication go here.
                 case COMMAND_REMOVE_CACHE:
                     runRemoveCache();
+                    return 0;
+                case COMMAND_SET_ROR_PROVIDER_PACKAGE:
+                    runSetResumeOnRebootProviderPackage();
                     return 0;
                 case COMMAND_HELP:
                     onHelp();
@@ -256,6 +265,11 @@ class LockSettingsShellCommand extends ShellCommand {
         mLockPatternUtils.setLockCredential(pin, getOldCredential(), mCurrentUserId);
         getOutPrintWriter().println("Pin set to '" + mNew + "'");
         return true;
+    }
+
+    private boolean runSetResumeOnRebootProviderPackage() {
+        final String packageName = mNew;
+        return mLockSettingsService.setResumeOnRebootProviderPackage(packageName);
     }
 
     private boolean runClear() {

@@ -36,6 +36,7 @@ import static com.android.internal.widget.LockPatternUtils.USER_FRP;
 import static com.android.internal.widget.LockPatternUtils.frpCredentialEnabled;
 import static com.android.internal.widget.LockPatternUtils.userOwnsFrpCredential;
 
+import android.Manifest;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -186,6 +187,8 @@ public class LockSettingsService extends ILockSettings.Stub {
     private static final String PREV_SYNTHETIC_PASSWORD_HANDLE_KEY = "prev-sp-handle";
     private static final String SYNTHETIC_PASSWORD_UPDATE_TIME_KEY = "sp-handle-ts";
     private static final String USER_SERIAL_NUMBER_KEY = "serial-number";
+    private static final String PROP_ROR_PROVIDER_PACKAGE =
+            "persist.sys.resume_on_reboot_provider_package";
 
     // No challenge provided
     private static final int CHALLENGE_NONE = 0;
@@ -2375,13 +2378,22 @@ public class LockSettingsService extends ILockSettings.Stub {
         }
     }
 
+    boolean setResumeOnRebootProviderPackage(String packageName) {
+        Slog.e(TAG, "setting " + PROP_ROR_PROVIDER_PACKAGE + " to " + packageName);
+        mContext.enforceCallingOrSelfPermission(
+                android.Manifest.permission.BIND_RESUME_ON_REBOOT_SERVICE, TAG);
+        Slog.e(TAG, "setting after permission check");
+        SystemProperties.set(PROP_ROR_PROVIDER_PACKAGE, packageName);
+        return true;
+    }
+
     @Override
     public void onShellCommand(FileDescriptor in, FileDescriptor out, FileDescriptor err,
             String[] args, ShellCallback callback, ResultReceiver resultReceiver) {
         enforceShell();
         final long origId = Binder.clearCallingIdentity();
         try {
-            (new LockSettingsShellCommand(new LockPatternUtils(mContext))).exec(
+            (new LockSettingsShellCommand(new LockPatternUtils(mContext), this)).exec(
                     this, in, out, err, args, callback, resultReceiver);
         } finally {
             Binder.restoreCallingIdentity(origId);

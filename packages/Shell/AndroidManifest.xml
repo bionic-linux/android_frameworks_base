@@ -349,6 +349,8 @@
     <!-- Permission required for CTS test - CtsSensorPrivacyTestCases -->
     <uses-permission android:name="android.permission.MANAGE_SENSOR_PRIVACY" />
 
+    <!--uses-permission android:name="android.permission.BIND_RESUME_ON_REBOOT_SERVICE" /-->
+
     <application android:label="@string/app_label"
                 android:theme="@android:style/Theme.DeviceDefault.DayNight"
                 android:defaultToDeviceProtectedStorage="true"
