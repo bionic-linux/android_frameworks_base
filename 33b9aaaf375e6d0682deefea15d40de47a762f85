@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f535423d_2457cae1",
+        "filename": "core/java/android/security/keymaster/KeymasterDefs.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2021-01-26T20:29:54Z",
+      "side": 1,
+      "message": "Why not KM_PURPOSE_AGREE_KEY, for consistency with the KeyMint enum?",
+      "range": {
+        "startLine": 180,
+        "startChar": 28,
+        "endLine": 180,
+        "endChar": 48
+      },
+      "revId": "33b9aaaf375e6d0682deefea15d40de47a762f85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
