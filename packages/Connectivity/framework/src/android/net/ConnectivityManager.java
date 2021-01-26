@@ -5097,6 +5097,7 @@ public class ConnectivityManager {
      * @param listener {@link OnSetOemNetworkPreferenceListener} optional listener used to
      *                  communicate completion of setOemNetworkPreference();
      */
+    @RequiresPermission(android.Manifest.permission.CONTROL_OEM_PAID_NETWORK_PREFERENCE)
     private void setOemNetworkPreference(@NonNull final OemNetworkPreferences preference,
             @NonNull final Executor executor,
             @Nullable final OnSetOemNetworkPreferenceListener listener) {
