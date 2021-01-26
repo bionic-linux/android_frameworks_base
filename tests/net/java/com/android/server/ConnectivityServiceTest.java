@@ -136,6 +136,7 @@ import android.app.AlarmManager;
 import android.app.AppOpsManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.usage.NetworkStatsManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentProvider;
@@ -167,7 +168,6 @@ import android.net.INetd;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
-import android.net.INetworkStatsService;
 import android.net.IQosCallback;
 import android.net.InetAddresses;
 import android.net.InterfaceConfigurationParcel;
@@ -189,7 +189,6 @@ import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
 import android.net.NetworkStack;
 import android.net.NetworkStackClient;
-import android.net.NetworkStateSnapshot;
 import android.net.NetworkTestResultParcelable;
 import android.net.ProxyInfo;
 import android.net.QosCallbackException;
@@ -386,7 +385,7 @@ public class ConnectivityServiceTest {
 
     @Mock DeviceIdleInternal mDeviceIdleInternal;
     @Mock INetworkManagementService mNetworkManagementService;
-    @Mock INetworkStatsService mStatsService;
+    @Mock NetworkStatsManager mStatsManager;
     @Mock IBatteryStats mBatteryStatsService;
     @Mock IDnsResolver mMockDnsResolver;
     @Mock INetd mMockNetd;
@@ -500,6 +499,7 @@ public class ConnectivityServiceTest {
             if (Context.TELEPHONY_SERVICE.equals(name)) return mTelephonyManager;
             if (Context.ETHERNET_SERVICE.equals(name)) return mEthernetManager;
             if (Context.NETWORK_POLICY_SERVICE.equals(name)) return mNetworkPolicyManager;
+            if (Context.NETWORK_STATS_SERVICE.equals(name)) return mStatsManager;
             return super.getSystemService(name);
         }
 
@@ -1403,7 +1403,6 @@ public class ConnectivityServiceTest {
         returnRealCallingUid();
         mService = new ConnectivityService(mServiceContext,
                 mNetworkManagementService,
-                mStatsService,
                 mMockDnsResolver,
                 mock(IpConnectivityLog.class),
                 mMockNetd,
@@ -5212,18 +5211,19 @@ public class ConnectivityServiceTest {
         assertEquals(expectedSet, actualSet);
     }
 
-    private void expectForceUpdateIfaces(Network[] networks, String defaultIface,
+    private void expectNetworkStatus(Network[] networks, String defaultIface,
             Integer vpnUid, String vpnIfname, String[] underlyingIfaces) throws Exception {
-        ArgumentCaptor<Network[]> networksCaptor = ArgumentCaptor.forClass(Network[].class);
-        ArgumentCaptor<UnderlyingNetworkInfo[]> vpnInfosCaptor = ArgumentCaptor.forClass(
-                UnderlyingNetworkInfo[].class);
+        ArgumentCaptor<List<Network>> networksCaptor = ArgumentCaptor.forClass(List.class);
+        ArgumentCaptor<List<UnderlyingNetworkInfo>> vpnInfosCaptor =
+                ArgumentCaptor.forClass(List.class);
 
-        verify(mStatsService, atLeastOnce()).forceUpdateIfaces(networksCaptor.capture(),
-                any(NetworkStateSnapshot[].class), eq(defaultIface), vpnInfosCaptor.capture());
+        verify(mStatsManager, atLeastOnce()).notifyNetworkStatus(networksCaptor.capture(),
+                any(List.class), eq(defaultIface), vpnInfosCaptor.capture());
 
-        assertSameElementsNoDuplicates(networksCaptor.getValue(), networks);
+        assertSameElementsNoDuplicates(networksCaptor.getValue().toArray(), networks);
 
-        UnderlyingNetworkInfo[] infos = vpnInfosCaptor.getValue();
+        UnderlyingNetworkInfo[] infos =
+                vpnInfosCaptor.getValue().toArray(new UnderlyingNetworkInfo[0]);
         if (vpnUid != null) {
             assertEquals("Should have exactly one VPN:", 1, infos.length);
             UnderlyingNetworkInfo info = infos[0];
@@ -5237,8 +5237,9 @@ public class ConnectivityServiceTest {
         }
     }
 
-    private void expectForceUpdateIfaces(Network[] networks, String defaultIface) throws Exception {
-        expectForceUpdateIfaces(networks, defaultIface, null, null, new String[0]);
+    private void expectNetworkStatus(
+            Network[] networks, String defaultIface) throws Exception {
+        expectNetworkStatus(networks, defaultIface, null, null, new String[0]);
     }
 
     @Test
@@ -5258,46 +5259,46 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.connect(false);
         mCellNetworkAgent.sendLinkProperties(cellLp);
         waitForIdle();
-        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
-        reset(mStatsService);
+        expectNetworkStatus(onlyCell, MOBILE_IFNAME);
+        reset(mStatsManager);
 
         // Default network switch should update ifaces.
         mWiFiNetworkAgent.connect(false);
         mWiFiNetworkAgent.sendLinkProperties(wifiLp);
         waitForIdle();
         assertEquals(wifiLp, mService.getActiveLinkProperties());
-        expectForceUpdateIfaces(onlyWifi, WIFI_IFNAME);
-        reset(mStatsService);
+        expectNetworkStatus(onlyWifi, WIFI_IFNAME);
+        reset(mStatsManager);
 
         // Disconnect should update ifaces.
         mWiFiNetworkAgent.disconnect();
         waitForIdle();
-        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
-        reset(mStatsService);
+        expectNetworkStatus(onlyCell, MOBILE_IFNAME);
+        reset(mStatsManager);
 
         // Metered change should update ifaces
         mCellNetworkAgent.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         waitForIdle();
-        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
-        reset(mStatsService);
+        expectNetworkStatus(onlyCell, MOBILE_IFNAME);
+        reset(mStatsManager);
 
         mCellNetworkAgent.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         waitForIdle();
-        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
-        reset(mStatsService);
+        expectNetworkStatus(onlyCell, MOBILE_IFNAME);
+        reset(mStatsManager);
 
         // Temp metered change shouldn't update ifaces
         mCellNetworkAgent.addCapability(NetworkCapabilities.NET_CAPABILITY_TEMPORARILY_NOT_METERED);
         waitForIdle();
-        verify(mStatsService, never()).forceUpdateIfaces(eq(onlyCell), any(
-                NetworkStateSnapshot[].class), eq(MOBILE_IFNAME), eq(new UnderlyingNetworkInfo[0]));
-        reset(mStatsService);
+        verify(mStatsManager, never()).notifyNetworkStatus(eq(Arrays.asList(onlyCell)),
+                any(List.class), eq(MOBILE_IFNAME), any(List.class));
+        reset(mStatsManager);
 
         // Roaming change should update ifaces
         mCellNetworkAgent.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING);
         waitForIdle();
-        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
-        reset(mStatsService);
+        expectNetworkStatus(onlyCell, MOBILE_IFNAME);
+        reset(mStatsManager);
 
         // Test VPNs.
         final LinkProperties lp = new LinkProperties();
@@ -5310,7 +5311,7 @@ public class ConnectivityServiceTest {
                 mCellNetworkAgent.getNetwork(), mMockVpn.getNetwork()};
 
         // A VPN with default (null) underlying networks sets the underlying network's interfaces...
-        expectForceUpdateIfaces(cellAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+        expectNetworkStatus(cellAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
                 new String[]{MOBILE_IFNAME});
 
         // ...and updates them as the default network switches.
@@ -5327,9 +5328,9 @@ public class ConnectivityServiceTest {
 
         waitForIdle();
         assertEquals(wifiLp, mService.getActiveLinkProperties());
-        expectForceUpdateIfaces(wifiAndVpn, WIFI_IFNAME, Process.myUid(), VPN_IFNAME,
+        expectNetworkStatus(wifiAndVpn, WIFI_IFNAME, Process.myUid(), VPN_IFNAME,
                 new String[]{WIFI_IFNAME});
-        reset(mStatsService);
+        reset(mStatsManager);
 
         // A VPN that sets its underlying networks passes the underlying interfaces, and influences
         // the default interface sent to NetworkStatsService by virtue of applying to the system
@@ -5339,22 +5340,22 @@ public class ConnectivityServiceTest {
         // applies to the system server UID should not have any bearing on network stats.
         mService.setUnderlyingNetworksForVpn(onlyCell);
         waitForIdle();
-        expectForceUpdateIfaces(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+        expectNetworkStatus(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
                 new String[]{MOBILE_IFNAME});
-        reset(mStatsService);
+        reset(mStatsManager);
 
         mService.setUnderlyingNetworksForVpn(cellAndWifi);
         waitForIdle();
-        expectForceUpdateIfaces(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+        expectNetworkStatus(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
                 new String[]{MOBILE_IFNAME, WIFI_IFNAME});
-        reset(mStatsService);
+        reset(mStatsManager);
 
         // Null underlying networks are ignored.
         mService.setUnderlyingNetworksForVpn(cellNullAndWifi);
         waitForIdle();
-        expectForceUpdateIfaces(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+        expectNetworkStatus(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
                 new String[]{MOBILE_IFNAME, WIFI_IFNAME});
-        reset(mStatsService);
+        reset(mStatsManager);
 
         // If an underlying network disconnects, that interface should no longer be underlying.
         // This doesn't actually work because disconnectAndDestroyNetwork only notifies
@@ -5366,17 +5367,17 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.disconnect();
         waitForIdle();
         assertNull(mService.getLinkProperties(mCellNetworkAgent.getNetwork()));
-        expectForceUpdateIfaces(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+        expectNetworkStatus(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
                 new String[]{MOBILE_IFNAME, WIFI_IFNAME});
 
         // Confirm that we never tell NetworkStatsService that cell is no longer the underlying
         // network for the VPN...
-        verify(mStatsService, never()).forceUpdateIfaces(any(Network[].class),
-                any(NetworkStateSnapshot[].class), any() /* anyString() doesn't match null */,
-                argThat(infos -> infos[0].underlyingIfaces.size() == 1
-                        && WIFI_IFNAME.equals(infos[0].underlyingIfaces.get(0))));
-        verifyNoMoreInteractions(mStatsService);
-        reset(mStatsService);
+        verify(mStatsManager, never()).notifyNetworkStatus(any(List.class),
+                any(List.class), any() /* anyString() doesn't match null */,
+                argThat(infos -> infos.get(0).underlyingIfaces.size() == 1
+                        && WIFI_IFNAME.equals(infos.get(0).underlyingIfaces.get(0))));
+        verifyNoMoreInteractions(mStatsManager);
+        reset(mStatsManager);
 
         // ... but if something else happens that causes notifyIfacesChangedForNetworkStats to be
         // called again, it does. For example, connect Ethernet, but with a low score, such that it
@@ -5385,13 +5386,13 @@ public class ConnectivityServiceTest {
         mEthernetNetworkAgent.adjustScore(-40);
         mEthernetNetworkAgent.connect(false);
         waitForIdle();
-        verify(mStatsService).forceUpdateIfaces(any(Network[].class),
-                any(NetworkStateSnapshot[].class), any() /* anyString() doesn't match null */,
-                argThat(vpnInfos -> vpnInfos[0].underlyingIfaces.size() == 1
-                        && WIFI_IFNAME.equals(vpnInfos[0].underlyingIfaces.get(0))));
+        verify(mStatsManager).notifyNetworkStatus(any(List.class),
+                any(List.class), any() /* anyString() doesn't match null */,
+                argThat(vpnInfos -> vpnInfos.get(0).underlyingIfaces.size() == 1
+                        && WIFI_IFNAME.equals(vpnInfos.get(0).underlyingIfaces.get(0))));
         mEthernetNetworkAgent.disconnect();
         waitForIdle();
-        reset(mStatsService);
+        reset(mStatsManager);
 
         // When a VPN declares no underlying networks (i.e., no connectivity), getAllVpnInfo
         // does not return the VPN, so CS does not pass it to NetworkStatsService. This causes
@@ -5401,27 +5402,27 @@ public class ConnectivityServiceTest {
         // Also, for the same reason as above, the active interface passed in is null.
         mService.setUnderlyingNetworksForVpn(new Network[0]);
         waitForIdle();
-        expectForceUpdateIfaces(wifiAndVpn, null);
-        reset(mStatsService);
+        expectNetworkStatus(wifiAndVpn, null);
+        reset(mStatsManager);
 
         // Specifying only a null underlying network is the same as no networks.
         mService.setUnderlyingNetworksForVpn(onlyNull);
         waitForIdle();
-        expectForceUpdateIfaces(wifiAndVpn, null);
-        reset(mStatsService);
+        expectNetworkStatus(wifiAndVpn, null);
+        reset(mStatsManager);
 
         // Specifying networks that are all disconnected is the same as specifying no networks.
         mService.setUnderlyingNetworksForVpn(onlyCell);
         waitForIdle();
-        expectForceUpdateIfaces(wifiAndVpn, null);
-        reset(mStatsService);
+        expectNetworkStatus(wifiAndVpn, null);
+        reset(mStatsManager);
 
         // Passing in null again means follow the default network again.
         mService.setUnderlyingNetworksForVpn(null);
         waitForIdle();
-        expectForceUpdateIfaces(wifiAndVpn, WIFI_IFNAME, Process.myUid(), VPN_IFNAME,
+        expectNetworkStatus(wifiAndVpn, WIFI_IFNAME, Process.myUid(), VPN_IFNAME,
                 new String[]{WIFI_IFNAME});
-        reset(mStatsService);
+        reset(mStatsManager);
     }
 
     @Test
