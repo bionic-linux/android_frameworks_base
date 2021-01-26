@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02695e01_45474924",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-26T07:44:55Z",
+      "side": 1,
+      "message": "Here is what would be a nice test of this. CSTest mocks netd and can trigger unsolicited events.\n\n• Add a test in ConnectivityServiceTest\n• Call it testClatdResponseToUnsolicitedEvents\n• Bring up a v6-only network and check clatd starts (we probably have this)\n• Send the unsolicited event\n• Check that it stopped (verify(mock netd))\n• Send another unsolicited event\n• Check that it starts\n• Also check that sending unsolicited events when the time is not ripe does not cause it to start/stop\n  e.g : check it doesn\u0027t start if it\u0027s already started\n        check it doesn\u0027t stop after already stopped\n        check it doesn\u0027t start on a dual-stack network\n",
+      "revId": "b69865516b46d9d22f3f1145d0e6d5a738c41b14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

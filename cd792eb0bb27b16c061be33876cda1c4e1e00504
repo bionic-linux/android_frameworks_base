@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f2fcebb_d91e22ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-26T07:44:55Z",
+      "side": 1,
+      "message": "Nit :\n\nIt\u0027s true there is no need, but it may be better.\n\nBut we determined that it\u0027s not actually possible to have Nat464Xlat register by itself because these objects come and go and there is no way to unregister from the netd events.",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "cd792eb0bb27b16c061be33876cda1c4e1e00504",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
