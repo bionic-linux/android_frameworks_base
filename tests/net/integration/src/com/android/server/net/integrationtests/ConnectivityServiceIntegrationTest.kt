@@ -25,7 +25,6 @@ import android.content.ServiceConnection
 import android.net.ConnectivityManager
 import android.net.IDnsResolver
 import android.net.INetd
-import android.net.INetworkStatsService
 import android.net.LinkProperties
 import android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
@@ -86,8 +85,6 @@ class ConnectivityServiceIntegrationTest {
     // should crash if they are used before being initialized.
     @Mock
     private lateinit var netManager: INetworkManagementService
-    @Mock
-    private lateinit var statsService: INetworkStatsService
     @Mock
     private lateinit var log: IpConnectivityLog
     @Mock
@@ -168,7 +165,7 @@ class ConnectivityServiceIntegrationTest {
     }
 
     private inner class TestConnectivityService(deps: Dependencies) : ConnectivityService(
-            context, netManager, statsService, dnsResolver, log, netd, deps)
+            context, netManager, dnsResolver, log, netd, deps)
 
     private fun makeDependencies(): ConnectivityService.Dependencies {
         val deps = spy(ConnectivityService.Dependencies())
