@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec9bf95f_29dbe50d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-26T18:16:35Z",
+      "side": 1,
+      "message": "Just small comments.",
+      "revId": "b917ddfc3a140f04ef732d20d51e0a6d8f90e00c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5930ae2_f627acf7",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-26T18:16:35Z",
+      "side": 1,
+      "message": "You could use a SortedSet\u003c\u003e internally?",
+      "range": {
+        "startLine": 267,
+        "startChar": 15,
+        "endLine": 267,
+        "endChar": 19
+      },
+      "revId": "b917ddfc3a140f04ef732d20d51e0a6d8f90e00c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

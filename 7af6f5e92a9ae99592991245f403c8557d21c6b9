@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0e659ff_d28e7c97",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-26T18:16:35Z",
+      "side": 1,
+      "message": "\u003e Switched to ArrayUtils.toIntArray().\n\nYou did?",
+      "parentUuid": "9cddc381_0cbf775f",
+      "range": {
+        "startLine": 242,
+        "startChar": 18,
+        "endLine": 242,
+        "endChar": 31
+      },
+      "revId": "7af6f5e92a9ae99592991245f403c8557d21c6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0a2d8440_29848a27",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 4
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "This is technically safe, since there\u0027s no way to get a modifiable set reference once the builder.build() has been called.",
       "parentUuid": "0a2d8440_29848a27",
+      "range": {
+        "startLine": 243,
+        "startChar": 38,
+        "endLine": 243,
+        "endChar": 42
+      },
+      "revId": "7af6f5e92a9ae99592991245f403c8557d21c6b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c18504c3_78366531",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-26T18:16:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91e94d30_1fbdb0d5",
       "range": {
         "startLine": 243,
         "startChar": 38,
