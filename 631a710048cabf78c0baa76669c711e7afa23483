@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fbce963_bcbbcf90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-26T10:51:33Z",
+      "side": 1,
+      "message": "Not finished but there are some comments.",
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fc16dcf_f8066583",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3330,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-26T10:51:33Z",
+      "side": 1,
+      "message": "IIRC a structure parcelable cannot be part of the system api, right?",
+      "range": {
+        "startLine": 3330,
+        "startChar": 27,
+        "endLine": 3330,
+        "endChar": 57
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad2758a_833458a3",
+        "filename": "core/java/android/net/INetworkOfferCallback.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-26T10:51:33Z",
+      "side": 1,
+      "message": "21",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
