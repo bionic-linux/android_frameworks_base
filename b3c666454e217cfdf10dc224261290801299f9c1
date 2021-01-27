@@ -16,6 +16,23 @@
       "message": "LGTM.  I\u0027d like Janis to review, since he\u0027s more familiar with how the SPI works.",
       "revId": "b3c666454e217cfdf10dc224261290801299f9c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8d8f79d_d534c363",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2021-01-27T14:22:06Z",
+      "side": 1,
+      "message": "+jsharkey for API review.",
+      "revId": "b3c666454e217cfdf10dc224261290801299f9c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
