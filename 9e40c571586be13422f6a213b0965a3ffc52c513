@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b80be967_9f6c1828",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3945,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-27T19:35:20Z",
+      "side": 1,
+      "message": "Should not be @hide",
+      "range": {
+        "startLine": 3945,
+        "startChar": 0,
+        "endLine": 3945,
+        "endChar": 16
+      },
+      "revId": "9e40c571586be13422f6a213b0965a3ffc52c513",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
