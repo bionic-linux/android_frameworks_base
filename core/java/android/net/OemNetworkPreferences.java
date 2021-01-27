@@ -18,6 +18,7 @@ package android.net;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.os.Bundle;
 import android.os.Parcelable;
 
@@ -29,6 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /** @hide */
+@SystemApi
 public final class OemNetworkPreferences implements Parcelable {
     /**
      * Use default behavior requesting networks. Equivalent to not setting any preference at all.
@@ -45,17 +47,17 @@ public final class OemNetworkPreferences implements Parcelable {
     /**
      * If an unmetered network is available, use it.
      * Otherwise, if a network with the OEM_PAID capability is available, use it.
-     * Otherwise, the app doesn't get a network.
+     * Otherwise, the app doesn't get a default network.
      */
     public static final int OEM_NETWORK_PREFERENCE_OEM_PAID_NO_FALLBACK = 2;
 
     /**
-     * Prefer only NET_CAPABILITY_OEM_PAID networks.
+     * Use only NET_CAPABILITY_OEM_PAID networks.
      */
     public static final int OEM_NETWORK_PREFERENCE_OEM_PAID_ONLY = 3;
 
     /**
-     * Prefer only NET_CAPABILITY_OEM_PRIVATE networks.
+     * Use only NET_CAPABILITY_OEM_PRIVATE networks.
      */
     public static final int OEM_NETWORK_PREFERENCE_OEM_PRIVATE_ONLY = 4;
 
@@ -174,6 +176,8 @@ public final class OemNetworkPreferences implements Parcelable {
      *
      * @param value int value of OemNetworkPreference
      * @return string version of OemNetworkPreference
+     *
+     * @hide
      */
     @NonNull
     public static String oemNetworkPreferenceToString(@OemNetworkPreference int value) {
