@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f77f3a1f_4b0a5970",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-01-27T03:02:39Z",
+      "side": 1,
+      "message": "Resolving as we reviewed offline and agreed on this approach.",
+      "parentUuid": "7d0d4bc6_835442cb",
+      "range": {
+        "startLine": 3473,
+        "startChar": 12,
+        "endLine": 3475,
+        "endChar": 13
+      },
+      "revId": "c020d3de57ee51856db22b89d7d4bb9df573d081",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8858fb8c_c3bd7226",
