@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b1f5a21_a3182d99",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 6565,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-01-27T10:26:15Z",
+      "side": 1,
+      "message": "I think the API guidelines discourage using arrays",
+      "range": {
+        "startLine": 6565,
+        "startChar": 33,
+        "endLine": 6565,
+        "endChar": 39
+      },
+      "revId": "bc7d31ae640e77aec5fb628d248005eb4624618f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
