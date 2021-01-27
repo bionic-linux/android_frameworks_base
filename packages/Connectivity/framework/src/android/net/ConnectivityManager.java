@@ -5052,10 +5052,12 @@ public class ConnectivityManager {
     }
 
     /**
-     * Listener for {@link #setOemNetworkPreference(Executor, OnSetOemNetworkPreferenceListener,
-     * OemNetworkPreferences)}.
+     * Listener for {@link #setOemNetworkPreference(Executor, OemNetworkPreferences,
+     * OnSetOemNetworkPreferenceListener)}.
+     * @hide
      */
-    private interface OnSetOemNetworkPreferenceListener {
+    @SystemApi
+    public interface OnSetOemNetworkPreferenceListener {
         /**
          * Called when setOemNetworkPreference() completes.
          * @param isSuccessful is true if setOemNetworkPreference() completes successfully, false
@@ -5071,17 +5073,19 @@ public class ConnectivityManager {
      * Calling this will overwrite the existing preference.
      *
      * @param executor the executor on which listener will be invoked.
+     * @param preference {@link OemNetworkPreferences} The application network preference to be set.
      * @param listener {@link OnSetOemNetworkPreferenceListener} Listener used to communicate
      *                  completion of setOemNetworkPreference();
-     * @param preference {@link OemNetworkPreferences} The application network preference to be set.
+     * @hide
      */
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.CONTROL_OEM_PAID_NETWORK_PREFERENCE)
-    private void setOemNetworkPreference(@NonNull final Executor executor,
-            @NonNull final OnSetOemNetworkPreferenceListener listener,
-            @NonNull final OemNetworkPreferences preference) {
+    public void setOemNetworkPreference(@NonNull final Executor executor,
+            @NonNull final OemNetworkPreferences preference,
+            @NonNull final OnSetOemNetworkPreferenceListener listener) {
         Objects.requireNonNull(executor, "Executor must be non-null");
-        Objects.requireNonNull(listener, "Listener must be non-null");
         Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
+        Objects.requireNonNull(listener, "Listener must be non-null");
         final IOnSetOemNetworkPreferenceListener listenerInternal =
                 new IOnSetOemNetworkPreferenceListener.Stub() {
                     @Override
