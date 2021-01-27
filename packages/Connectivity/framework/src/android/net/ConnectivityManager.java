@@ -5076,8 +5076,10 @@ public class ConnectivityManager {
     /**
      * Listener for {@link #setOemNetworkPreference(OemNetworkPreferences, Executor,
      * OnSetOemNetworkPreferenceListener)}.
+     * @hide
      */
-    private interface OnSetOemNetworkPreferenceListener {
+    @SystemApi
+    public interface OnSetOemNetworkPreferenceListener {
         /**
          * Called when setOemNetworkPreference() completes.
          * @param isSuccessful is true if setOemNetworkPreference() completes successfully, false
@@ -5096,9 +5098,11 @@ public class ConnectivityManager {
      * @param executor the executor on which listener will be invoked.
      * @param listener {@link OnSetOemNetworkPreferenceListener} optional listener used to
      *                  communicate completion of setOemNetworkPreference();
+     * @hide
      */
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.CONTROL_OEM_PAID_NETWORK_PREFERENCE)
-    private void setOemNetworkPreference(@NonNull final OemNetworkPreferences preference,
+    public void setOemNetworkPreference(@NonNull final OemNetworkPreferences preference,
             @NonNull final Executor executor,
             @Nullable final OnSetOemNetworkPreferenceListener listener) {
         Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
