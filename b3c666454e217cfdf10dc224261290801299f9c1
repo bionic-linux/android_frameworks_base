@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82f63788_20a59289",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1043663
+      },
+      "writtenOn": "2021-01-27T12:52:31Z",
+      "side": 1,
+      "message": "LGTM.  I\u0027d like Janis to review, since he\u0027s more familiar with how the SPI works.",
+      "revId": "b3c666454e217cfdf10dc224261290801299f9c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
