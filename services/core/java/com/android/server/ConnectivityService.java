@@ -9281,9 +9281,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
      *
      * Calling this will overwrite the existing preference.
      *
+     * @param preference {@link OemNetworkPreferences} The application network preference to be set.
      * @param listener {@link ConnectivityManager.OnSetOemNetworkPreferenceListener} Listener used
      * to communicate completion of setOemNetworkPreference();
-     * @param preference {@link OemNetworkPreferences} The application network preference to be set.
      */
     public void setOemNetworkPreference(
             @NonNull final OemNetworkPreferences preference,
