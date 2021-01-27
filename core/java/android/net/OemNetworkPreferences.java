@@ -18,6 +18,7 @@ package android.net;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.os.Bundle;
 import android.os.Parcelable;
 
@@ -29,6 +30,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /** @hide */
+@SystemApi
 public final class OemNetworkPreferences implements Parcelable {
     /**
      * Use default behavior requesting networks. Equivalent to not setting any preference at all.
