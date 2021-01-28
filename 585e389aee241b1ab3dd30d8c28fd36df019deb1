@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fc9bcbd_d6650714",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 6559,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T09:51:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we\u0027ll need this for VCN. I expect not, because :\n• the VCN service will need manage all this on its own anyway\n• we haven\u0027t heard about needing this class so far\n• the current codebase has no reference to this\n• IIUC IpSec+MOBIKE means only one underlying network, so no list of underlying interfaces\n• the only sense I can make of ownerUid would be the carrier app, but there may be multiple of those, and anyway the VCN needs to have authority on this.\n\nThat being said, I do think renaming it to UnderlyingNetworkInfo might not be a bad move, if we think other virtual networks will also look like this.\n\n+1 on exposing in a followup.",
+      "parentUuid": "b56f9fa4_2df304bf",
+      "range": {
+        "startLine": 6559,
+        "startChar": 21,
+        "endLine": 6559,
+        "endChar": 28
+      },
+      "revId": "585e389aee241b1ab3dd30d8c28fd36df019deb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ff47147_ed860205",
         "filename": "core/java/android/net/VpnInfo.java",
         "patchSetId": 9
