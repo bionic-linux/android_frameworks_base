@@ -22,6 +22,30 @@
       },
       "revId": "96eafe614b5475b6c2f42596ef00ec13d2fe4117",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90f766d0_c5d029fa",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T11:40:24Z",
+      "side": 1,
+      "message": "People who don\u0027t know what legacyInt is also won\u0027t know what legacyScore is. I think we already have a lot too many \"score\" words in here, so I prefer int.\n\nAlso note that being an int is the defining characteristic of this old thing. You are exactly right : the int represents nothing but the data type of the old score. That\u0027s exactly why we want to replace it : because it means nothing.\n\nI strongly prefer legacyInt.",
+      "parentUuid": "d44c8782_da84d7d1",
+      "range": {
+        "startLine": 34,
+        "startChar": 27,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "96eafe614b5475b6c2f42596ef00ec13d2fe4117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

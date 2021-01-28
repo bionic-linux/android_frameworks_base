@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "227240c4_3030cb2d",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T11:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46722cc3_45a273bb",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "3ac2ab83b68b5bd0c54fc40bf6a4ce456271eb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ccb1ac7f_7b864be9",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-22T03:55:45Z",
       "side": 1,
       "message": "It looks to me you should take a int array of different policy bits or change the function name to make it specific for IS_VALIDATED bit?\n\nIf it takes int array, you might want to test it.",
+      "range": {
+        "startLine": 58,
+        "startChar": 39,
+        "endLine": 58,
+        "endChar": 64
+      },
+      "revId": "3ac2ab83b68b5bd0c54fc40bf6a4ce456271eb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b9c60c4_9ab878a6",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T11:40:24Z",
+      "side": 1,
+      "message": "Followup changes will make apparent why I made it like this. There will be other arguments to this, meaning you\u0027ll eventually call this with\n\n  withPolicyBits(validated \u003d true, isVpn \u003d false, acceptUnvalidated \u003d true)",
+      "parentUuid": "ccb1ac7f_7b864be9",
       "range": {
         "startLine": 58,
         "startChar": 39,
