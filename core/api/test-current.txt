@@ -1378,6 +1378,10 @@ package android.provider {
     field public static final String VOICE_INTERACTION_SERVICE = "voice_interaction_service";
   }
 
+  public static final class SimPhonebookContract.SimRecords {
+    field public static final String QUERY_ARG_PIN2 = "android:query-arg-pin2";
+  }
+
   public static final class Telephony.Sms.Intents {
     field public static final String SMS_CARRIER_PROVISION_ACTION = "android.provider.Telephony.SMS_CARRIER_PROVISION";
   }
