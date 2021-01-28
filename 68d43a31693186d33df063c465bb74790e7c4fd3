@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92613e5f_43ca3fa2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-28T16:40:37Z",
+      "side": 1,
+      "message": "The feedback was more about following best-practices, less about a hard-and-fast rule that is enforceable with lint.  In addition, the OWNERS tooling is a volunteer effort for the moment, so the tooling RoI needs to be balanced against other work.",
+      "parentUuid": "e2499b08_b02a2ef9",
+      "revId": "68d43a31693186d33df063c465bb74790e7c4fd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ff87ea7_bf9abbc6",
