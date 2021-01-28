@@ -34,6 +34,24 @@
       "parentUuid": "5ac17782_c1504b94",
       "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1507a805_7f87a615",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-01-28T18:19:23Z",
+      "side": 1,
+      "message": "Yeah, LLS here is the consumer, who tries to find the server service implementation (gmscore). Because of the MATCH_SYSTEM_ONLY here, LLS won\u0027t be able to find fake impls provided by cts/gts tests.\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/locksettings/ResumeOnRebootServiceProvider.java?l\u003d80\n\nSo, jsharkey@ suggests us to use the existing pattern of overriding with sysprops.\nhttps://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/telephony/current/src/android/telephony/cts/SubscriptionManagerTest.java;l\u003d945;drc\u003dmaster;bpv\u003d0;bpt\u003d1\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/net/NetworkPolicyManagerShellCommand.java;l\u003d141?q\u003dsub-plan-owner\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/net/NetworkPolicyManagerService.java;l\u003d3471\n\nThe setting of the sysprop is then protected by a permission.",
+      "parentUuid": "4e2c9503_b07a279b",
+      "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
