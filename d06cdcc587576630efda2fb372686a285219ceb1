@@ -16,6 +16,24 @@
       "message": "+cc Rubin, we try to let cts/gts test to provide a test package (to replace gmscore) via a sysprop. And we will grant the SHELL the permission to set the sysprop. But today, we clear the binder\u0027s identity before shell command, this prevents us from checking the caller\u0027s permission explicitly for \u0027set the sysprop\u0027. So we are looking into refactor the logic for shell command a bit.\n\n```\n        enforceShell();\n        final long origId \u003d Binder.clearCallingIdentity();\n        try {\n            (new LockSettingsShellCommand(new LockPatternUtils(mContext))).exec(\n                    this, in, out, err, args, callback, resultReceiver);\n        } finally {\n            Binder.restoreCallingIdentity(origId);\n        }\n```",
       "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e2c9503_b07a279b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-01-28T14:10:58Z",
+      "side": 1,
+      "message": "Is there a particular reason you need to package to be a system property? Is there a low-level daemon that\u0027s consuming it? Can it just be some internal state that LSS persists?",
+      "parentUuid": "5ac17782_c1504b94",
+      "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
