@@ -35,6 +35,7 @@ import android.content.IntentFilter;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
@@ -45,16 +46,21 @@ import android.os.UserManager;
 import android.provider.DeviceConfig;
 import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.Slog;
 import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.server.SystemService;
 
+import java.io.File;
 import java.io.FileDescriptor;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * System service that manages app hibernation state, a state apps can enter that means they are
@@ -73,9 +79,16 @@ public final class AppHibernationService extends SystemService {
     private final IActivityManager mIActivityManager;
     private final UserManager mUserManager;
     @GuardedBy("mLock")
-    private final SparseArray<Map<String, UserPackageState>> mUserStates = new SparseArray<>();
+    private final SparseArray<Map<String, UserLevelState>> mUserStates = new SparseArray<>();
+    private final SparseArray<HibernationStateDiskStore<UserLevelState>> mUserDiskStores =
+            new SparseArray<>();
     @GuardedBy("mLock")
     private final Set<String> mGloballyHibernatedPackages = new ArraySet<>();
+    private final HibernationStateDiskStoreFactory<UserLevelState> mUserDiskStoreFactory;
+    private final UserLevelHibernationProto mUserLevelHibernationProto =
+            new UserLevelHibernationProto();
+    private final ScheduledExecutorService mScheduledExecutor =
+            Executors.newSingleThreadScheduledExecutor();
 
     /**
      * Initializes the system service.
@@ -87,19 +100,24 @@ public final class AppHibernationService extends SystemService {
      * @param context The system server context.
      */
     public AppHibernationService(@NonNull Context context) {
-        this(context, IPackageManager.Stub.asInterface(ServiceManager.getService("package")),
+        this(context,
+                IPackageManager.Stub.asInterface(ServiceManager.getService("package")),
                 ActivityManager.getService(),
-                context.getSystemService(UserManager.class));
+                context.getSystemService(UserManager.class),
+                ((file, readWriter, executorService) ->
+                        new HibernationStateDiskStore<>(file, readWriter, executorService)));
     }
 
     @VisibleForTesting
     AppHibernationService(@NonNull Context context, IPackageManager packageManager,
-            IActivityManager activityManager, UserManager userManager) {
+            IActivityManager activityManager, UserManager userManager,
+            HibernationStateDiskStoreFactory<UserLevelState> userDiskStoreFactory) {
         super(context);
         mContext = context;
         mIPackageManager = packageManager;
         mIActivityManager = activityManager;
         mUserManager = userManager;
+        mUserDiskStoreFactory = userDiskStoreFactory;
 
         final Context userAllContext = mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */);
 
@@ -130,8 +148,8 @@ public final class AppHibernationService extends SystemService {
             return false;
         }
         synchronized (mLock) {
-            final Map<String, UserPackageState> packageStates = mUserStates.get(userId);
-            final UserPackageState pkgState = packageStates.get(packageName);
+            final Map<String, UserLevelState> packageStates = mUserStates.get(userId);
+            final UserLevelState pkgState = packageStates.get(packageName);
             if (pkgState == null) {
                 throw new IllegalArgumentException(
                         String.format("Package %s is not installed for user %s",
@@ -168,8 +186,8 @@ public final class AppHibernationService extends SystemService {
             return;
         }
         synchronized (mLock) {
-            Map<String, UserPackageState> packageStates = mUserStates.get(userId);
-            UserPackageState pkgState = packageStates.get(packageName);
+            final Map<String, UserLevelState> packageStates = mUserStates.get(userId);
+            final UserLevelState pkgState = packageStates.get(packageName);
             if (pkgState == null) {
                 throw new IllegalArgumentException(
                         String.format("Package %s is not installed for user %s",
@@ -214,7 +232,7 @@ public final class AppHibernationService extends SystemService {
      * @param pkgState package hibernation state
      */
     private void hibernatePackageForUserL(@NonNull String packageName, int userId,
-            @NonNull UserPackageState pkgState) {
+            @NonNull UserLevelState pkgState) {
         Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "hibernatePackage");
         final long caller = Binder.clearCallingIdentity();
         try {
@@ -222,6 +240,8 @@ public final class AppHibernationService extends SystemService {
             mIPackageManager.deleteApplicationCacheFilesAsUser(packageName, userId,
                     null /* observer */);
             pkgState.hibernated = true;
+            List<UserLevelState> states = new ArrayList<>(mUserStates.get(userId).values());
+            mUserDiskStores.get(userId).scheduleWriteHibernationStates(states);
         } catch (RemoteException e) {
             throw new IllegalStateException(
                     "Failed to hibernate due to manager not being available", e);
@@ -237,12 +257,14 @@ public final class AppHibernationService extends SystemService {
      * @param pkgState package hibernation state
      */
     private void unhibernatePackageForUserL(@NonNull String packageName, int userId,
-            UserPackageState pkgState) {
+            UserLevelState pkgState) {
         Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, "unhibernatePackage");
         final long caller = Binder.clearCallingIdentity();
         try {
             mIPackageManager.setPackageStoppedState(packageName, false, userId);
             pkgState.hibernated = false;
+            List<UserLevelState> states = new ArrayList<>(mUserStates.get(userId).values());
+            mUserDiskStores.get(userId).scheduleWriteHibernationStates(states);
         } catch (RemoteException e) {
             throw new IllegalStateException(
                     "Failed to unhibernate due to manager not being available", e);
@@ -279,7 +301,7 @@ public final class AppHibernationService extends SystemService {
      * @param userId user id to add installed packages for
      */
     private void addUserPackageStatesL(int userId) {
-        Map<String, UserPackageState> packages = new ArrayMap<>();
+        Map<String, UserLevelState> packages = new ArrayMap<>();
         List<PackageInfo> packageList;
         try {
             packageList = mIPackageManager.getInstalledPackages(MATCH_ALL, userId).getList();
@@ -288,30 +310,59 @@ public final class AppHibernationService extends SystemService {
         }
 
         for (int i = 0, size = packageList.size(); i < size; i++) {
-            packages.put(packageList.get(i).packageName, new UserPackageState());
+            String packageName = packageList.get(i).packageName;
+            UserLevelState packageState = new UserLevelState();
+            packageState.packageName = packageName;
+            packages.put(packageName, packageState);
         }
         mUserStates.put(userId, packages);
     }
 
     @Override
     public void onUserUnlocking(@NonNull TargetUser user) {
-        // TODO: Pull from persistent disk storage. For now, just make from scratch.
+        int userId = user.getUserIdentifier();
+        File hibernationDir = new File(Environment.getDataSystemCeDirectory(userId), "hibernation");
+        HibernationStateDiskStore<UserLevelState> diskStore =
+                mUserDiskStoreFactory.makeHibernationStateDiskStore(hibernationDir,
+                        mUserLevelHibernationProto, mScheduledExecutor);
+        mUserDiskStores.put(userId, diskStore);
+        List<UserLevelState> storedStates = diskStore.readHibernationStates();
         synchronized (mLock) {
-            addUserPackageStatesL(user.getUserIdentifier());
+            addUserPackageStatesL(userId);
+            Map<String, UserLevelState> userStates = mUserStates.get(userId);
+            if (storedStates == null) {
+                // First time unlocking user
+                return;
+            }
+            for (int i = 0, size = storedStates.size(); i < size; i++) {
+                String packageName = storedStates.get(i).packageName;
+                UserLevelState stateInMemory = userStates.get(packageName);
+                if (stateInMemory == null) {
+                    Slog.w(TAG, String.format(
+                            "No hibernation state associated with package %s user %d. Maybe"
+                                    + "the package was uninstalled? ", packageName, userId));
+                    continue;
+                }
+                userStates.put(packageName, storedStates.get(i));
+            }
         }
     }
 
     @Override
     public void onUserStopping(@NonNull TargetUser user) {
+        int userId = user.getUserIdentifier();
+        // TODO: Flush any scheduled writes to disk immediately on user stopping / power off.
         synchronized (mLock) {
-            // TODO: Flush to disk when persistence is implemented
-            mUserStates.remove(user.getUserIdentifier());
+            mUserDiskStores.remove(userId);
+            mUserStates.remove(userId);
         }
     }
 
     private void onPackageAdded(@NonNull String packageName, int userId) {
+        UserLevelState newState = new UserLevelState();
+        newState.packageName = packageName;
         synchronized (mLock) {
-            mUserStates.get(userId).put(packageName, new UserPackageState());
+            mUserStates.get(userId).put(packageName, newState);
         }
     }
 
@@ -424,10 +475,20 @@ public final class AppHibernationService extends SystemService {
     }
 
     /**
-     * Data class that contains hibernation state info of a package for a user.
+     * Factory for {@link HibernationStateDiskStore} which can be injected.
+     * @param <T> data type to be written to disk
      */
-    private static final class UserPackageState {
-        public boolean hibernated;
-        // TODO: Track whether hibernation is exempted by the user
+    @VisibleForTesting
+    interface HibernationStateDiskStoreFactory<T> {
+
+        /**
+         * Returns a new {@link HibernationStateDiskStore}.
+         *
+         * @param stateDir directory where data will be saved
+         * @param readWriter proto writer/reader
+         * @param executorService executor service for running writes
+         */
+        HibernationStateDiskStore<T> makeHibernationStateDiskStore(File stateDir,
+                ProtoReadWriter<List<T>> readWriter, ScheduledExecutorService executorService);
     }
 }
