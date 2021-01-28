@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2499b08_b02a2ef9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2021-01-28T16:33:31Z",
+      "side": 1,
+      "message": "This should be a lint check if it\u0027s not permitted, right ?",
+      "parentUuid": "fea0da53_1afd4065",
+      "revId": "68d43a31693186d33df063c465bb74790e7c4fd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ff87ea7_bf9abbc6",
