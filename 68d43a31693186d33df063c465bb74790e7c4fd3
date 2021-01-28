@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fea0da53_1afd4065",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-28T16:28:52Z",
+      "side": 1,
+      "message": "CR-2 to structure these as files in specific directories",
+      "revId": "68d43a31693186d33df063c465bb74790e7c4fd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ff87ea7_bf9abbc6",
