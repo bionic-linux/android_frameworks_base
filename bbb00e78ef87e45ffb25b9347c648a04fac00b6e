@@ -69,6 +69,24 @@
       "message": "Beverly, friendly ping.",
       "revId": "bbb00e78ef87e45ffb25b9347c648a04fac00b6e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e3be296_cbc44cca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-01-28T14:08:04Z",
+      "side": 1,
+      "message": "thanks for clarifying! sgtm",
+      "parentUuid": "a61d4986_2bd777e7",
+      "revId": "bbb00e78ef87e45ffb25b9347c648a04fac00b6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
