@@ -75,16 +75,21 @@ public final class AppHibernationServiceTest {
     private IActivityManager mIActivityManager;
     @Mock
     private UserManager mUserManager;
+    @Mock
+    private HibernationStateDiskStore<UserLevelState> mHibernationStateDiskStore;
     @Captor
     private ArgumentCaptor<BroadcastReceiver> mReceiverCaptor;
 
     @Before
     public void setUp() throws RemoteException {
+        // Share class loader to allow access to package-private classes
+        System.setProperty("dexmaker.share_classloader", "true");
         MockitoAnnotations.initMocks(this);
         doReturn(mContext).when(mContext).createContextAsUser(any(), anyInt());
 
         mAppHibernationService = new AppHibernationService(mContext, mIPackageManager,
-                mIActivityManager, mUserManager);
+                mIActivityManager, mUserManager,
+                (stateDir, readWriter, executorService) -> mHibernationStateDiskStore);
 
         verify(mContext).registerReceiver(mReceiverCaptor.capture(), any());
         mBroadcastReceiver = mReceiverCaptor.getValue();
