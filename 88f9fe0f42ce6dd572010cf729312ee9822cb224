@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c6231a9_eb84ae59",
+        "filename": "core/tests/coretests/src/android/content/integrity/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-01-28T17:18:37Z",
+      "side": 1,
+      "message": "yeah ... that\u0027s what i get for copy-pasta!",
+      "parentUuid": "0a541e36_b208d1c9",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 71
+      },
+      "revId": "88f9fe0f42ce6dd572010cf729312ee9822cb224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ecb9fdb_ba7be545",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2caad623_4057eb98",
+        "filename": "core/tests/coretests/src/android/content/pm/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-01-28T17:18:37Z",
+      "side": 1,
+      "message": "wait. what the hell did the gerrit web ide do?! i\u0027ll fix.",
+      "parentUuid": "6ecb9fdb_ba7be545",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 57
+      },
+      "revId": "88f9fe0f42ce6dd572010cf729312ee9822cb224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f94fcfb2_2e0287f4",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-01-28T17:02:45Z",
       "side": 1,
       "message": "You\u0027re already in the directory, so I think you want this:\n\n  include /core/java/android/content/res/OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 59
+      },
+      "revId": "88f9fe0f42ce6dd572010cf729312ee9822cb224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb687a8a_ff2674e8",
+        "filename": "core/tests/coretests/src/android/content/res/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-01-28T17:18:37Z",
+      "side": 1,
+      "message": "yeah ... that\u0027s what i get for copy-pasta!",
+      "parentUuid": "f94fcfb2_2e0287f4",
       "range": {
         "startLine": 1,
         "startChar": 0,
