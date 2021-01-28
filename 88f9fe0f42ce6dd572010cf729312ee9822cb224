@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a3b997c_0ae98b77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-28T17:02:45Z",
+      "side": 1,
+      "message": "Notes inline",
+      "revId": "88f9fe0f42ce6dd572010cf729312ee9822cb224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a541e36_b208d1c9",
+        "filename": "core/tests/coretests/src/android/content/integrity/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-28T17:02:45Z",
+      "side": 1,
+      "message": "I\u0027m thinking you\u0027d want a line like this:\n\n  include /core/java/android/content/integrity/OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 71
+      },
+      "revId": "88f9fe0f42ce6dd572010cf729312ee9822cb224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ecb9fdb_ba7be545",
+        "filename": "core/tests/coretests/src/android/content/pm/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-28T17:02:45Z",
+      "side": 1,
+      "message": "Hrm, this still smells funky.  Perhaps you\u0027re meaning to write this:\n\n  include /core/java/android/content/integrity/OWNERS\n\n  per-file AppSearchPersonTest.java \u003d file:/core/java/android/content/pm/SHORTCUT_OWNERS\n  per-file SigningDetailsTest.java \u003d mpgroover@google.com\n  per-file SigningDetailsTest.java \u003d cbrubaker@google.com\n\n(This ensures that your change is additive, instead of replacing those existing owners.)",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 57
+      },
+      "revId": "88f9fe0f42ce6dd572010cf729312ee9822cb224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f94fcfb2_2e0287f4",
+        "filename": "core/tests/coretests/src/android/content/res/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-01-28T17:02:45Z",
+      "side": 1,
+      "message": "You\u0027re already in the directory, so I think you want this:\n\n  include /core/java/android/content/res/OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 59
+      },
+      "revId": "88f9fe0f42ce6dd572010cf729312ee9822cb224",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
