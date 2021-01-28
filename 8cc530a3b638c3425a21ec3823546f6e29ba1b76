@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc5b676d_67fb7a43",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-28T20:15:23Z",
+      "side": 1,
+      "message": "Suggest rebase to use the NOT_VCN_MANAGED",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 55
+      },
+      "revId": "8cc530a3b638c3425a21ec3823546f6e29ba1b76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33dd071d_647096a5",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-28T20:15:23Z",
+      "side": 1,
+      "message": "Suggest encapsulating this, so we aren\u0027t storing everything in global variables.\n\nThis would give us a more extensible option incase we need to track multiple networks.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "8cc530a3b638c3425a21ec3823546f6e29ba1b76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38eff312_45a4c525",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-28T20:15:23Z",
+      "side": 1,
+      "message": "Yep, this is somewhat scary in that we\u0027re managing more different states that need to be coordinated.",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 5
+      },
+      "revId": "8cc530a3b638c3425a21ec3823546f6e29ba1b76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8669b11c_8b25f285",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-28T20:15:23Z",
+      "side": 1,
+      "message": "Nit: this could be merged into maybeNotifyCallback, by just comparing the last sent UnderlyingNetworkRecord with a newly generated one.",
+      "range": {
+        "startLine": 260,
+        "startChar": 9,
+        "endLine": 263,
+        "endChar": 9
+      },
+      "revId": "8cc530a3b638c3425a21ec3823546f6e29ba1b76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
