@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d957b5d8_f038ab03",
+        "filename": "core/java/android/util/EmptyArray.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2021-01-28T17:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7311d5d_ee93f11c",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "27382eca5fca332c5d3de457636cc82b0fa5512f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "291cd909_c2cb1273",
