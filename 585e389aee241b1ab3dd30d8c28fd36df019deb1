@@ -71,6 +71,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50e740d5_38e4bfbd",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 6559,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-28T16:03:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3f89b2_bdc5e5bc",
+      "range": {
+        "startLine": 6559,
+        "startChar": 2,
+        "endLine": 6559,
+        "endChar": 8
+      },
+      "revId": "585e389aee241b1ab3dd30d8c28fd36df019deb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4a988ec_f3a32c1c",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 6559,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-28T16:03:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc9bcbd_d6650714",
+      "range": {
+        "startLine": 6559,
+        "startChar": 21,
+        "endLine": 6559,
+        "endChar": 28
+      },
+      "revId": "585e389aee241b1ab3dd30d8c28fd36df019deb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ff47147_ed860205",
@@ -84,6 +132,30 @@
       "writtenOn": "2021-01-28T07:58:04Z",
       "side": 1,
       "message": "There\u0027s no need for priv-apps to use this, right? If not, then:\n\n@SystemApi(client\u003dMODULE_LIBRARIES)",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "585e389aee241b1ab3dd30d8c28fd36df019deb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93633af1_69bc08ae",
+        "filename": "core/java/android/net/VpnInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-28T16:03:25Z",
+      "side": 1,
+      "message": "Done in the next patch",
+      "parentUuid": "5ff47147_ed860205",
       "range": {
         "startLine": 34,
         "startChar": 0,
