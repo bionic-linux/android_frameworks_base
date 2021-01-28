@@ -34,6 +34,24 @@
       "parentUuid": "3f8f0f0e_4eb9ea58",
       "revId": "1128114af14c9682ffdded8162349db79bda17f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71776a77_622f92d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-01-28T15:39:49Z",
+      "side": 1,
+      "message": "FYI apparently there is a discrepancy between the way that the \"code owners\" plugin interprets the OWNERS file and the \"Find Owners\" which is why I needed your +1. See https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d14008 for more details.",
+      "parentUuid": "4f861fd6_6194ab62",
+      "revId": "1128114af14c9682ffdded8162349db79bda17f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
