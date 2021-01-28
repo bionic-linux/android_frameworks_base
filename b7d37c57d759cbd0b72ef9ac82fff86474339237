@@ -215,6 +215,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27a2cd2d_72432a72",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T09:16:01Z",
+      "side": 1,
+      "message": "There is no such thing as a correct-by-default implementation for network agent in the presence of default capabilities and that\u0027s a big part of the issue with them. If you say that this capability has to be always set by default for agents, than changes in the future when, say, some telephony agent comes in. The answer to that kind of question is always going to be \"yeah but it\u0027s a telephony agent so it MUST know to remove it !\"... and yeah I could make the exact opposite argument and be the exact same amount of right. Also remember that your \"correct\" is somebody else\u0027s \"incorrect\", as has been exemplified literally countless times during the design of the VCN.\n\nIn practice the simple fact is that adding capabilities like NOT_VCN is a mess in particular because the simpler solution is, by far, to go and touch all the network factories. Making a \"default agent\" implementation is deceptively tempting, but it actually complexify things, because every time you add anything you still have to think about each individual agent but you have to reckon with whatever the \"default\" implementation of the agent is doing on top of the default capabilities implementation, so it\u0027s even worse. Not as bad as actually adding one to the default caps, which at this point I think is downright untractable.\n\n\nEdit (this was written some time ago) : changed strategies.",
+      "parentUuid": "4b68c882_e74906ff",
+      "range": {
+        "startLine": 486,
+        "startChar": 7,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "942beaef_2ea8b8f5",
