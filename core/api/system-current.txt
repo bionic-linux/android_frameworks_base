@@ -8297,9 +8297,9 @@ package android.provider {
   }
 
   public static final class SimPhonebookContract.SimRecords {
-    field public static final String EXTRA_NAME_VALIDATION_RESULT = "android.provider.extra.NAME_VALIDATION_RESULT";
+    field public static final String EXTRA_ENCODED_NAME_LENGTH = "android.provider.extra.ENCODED_NAME_LENGTH";
+    field public static final String GET_ENCODED_NAME_LENGTH_METHOD_NAME = "get_encoded_name_length";
     field public static final String QUERY_ARG_PIN2 = "android:query-arg-pin2";
-    field public static final String VALIDATE_NAME_PATH_SEGMENT = "validate_name";
   }
 
   public static final class Telephony.Carriers implements android.provider.BaseColumns {
