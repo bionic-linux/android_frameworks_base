@@ -25,15 +25,13 @@ import static android.provider.SimPhonebookContract.ElementaryFiles.EF_SDN_PATH_
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.WorkerThread;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.telephony.SubscriptionInfo;
 import android.telephony.TelephonyManager;
 
@@ -41,7 +39,6 @@ import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.Objects;
 
 /**
  * The contract between the provider of contact records on the device's SIM cards and applications.
@@ -122,12 +119,12 @@ public final class SimPhonebookContract {
          * The name for this record.
          *
          * <p>An {@link IllegalArgumentException} will be thrown by insert and update if this
-         * exceeds the maximum supported length or contains unsupported characters.
-         * {@link #validateName(ContentResolver, int, int, String)} )} can be used to
-         * check whether the name is supported.
+         * exceeds the maximum supported length. Use
+         * {@link #getEncodedNameLength(ContentResolver, String)} to check how long the name
+         * will be after encoding.
          *
          * @see ElementaryFiles#NAME_MAX_LENGTH
-         * @see #validateName(ContentResolver, int, int, String) )
+         * @see #getEncodedNameLength(ContentResolver, String)
          */
         public static final String NAME = "name";
         /**
@@ -149,24 +146,26 @@ public final class SimPhonebookContract {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/sim-contact_v2";
 
         /**
-         * The path segment that is appended to {@link #getContentUri(int, int)} which indicates
-         * that the following path segment contains a name to be validated.
+         * The method name used to get the encoded length of a value for {@link SimRecords#NAME}
+         * column.
          *
          * @hide
-         * @see #validateName(ContentResolver, int, int, String)
+         * @see #getEncodedNameLength(ContentResolver, String)
+         * @see ContentResolver#call(String, String, String, Bundle)
          */
         @SystemApi
-        public static final String VALIDATE_NAME_PATH_SEGMENT = "validate_name";
+        public static final String GET_ENCODED_NAME_LENGTH_METHOD_NAME = "get_encoded_name_length";
 
         /**
-         * The key for a cursor extra that contains the result of a validate name query.
+         * The key for an integer cursor extra that contains the length in bytes of an encoded name.
          *
          * @hide
-         * @see #validateName(ContentResolver, int, int, String)
+         * @see #getEncodedNameLength(ContentResolver, String)
+         * @see #GET_ENCODED_NAME_LENGTH_METHOD_NAME
          */
         @SystemApi
-        public static final String EXTRA_NAME_VALIDATION_RESULT =
-                "android.provider.extra.NAME_VALIDATION_RESULT";
+        public static final String EXTRA_ENCODED_NAME_LENGTH =
+                "android.provider.extra.ENCODED_NAME_LENGTH";
 
 
         /**
@@ -244,32 +243,26 @@ public final class SimPhonebookContract {
         }
 
         /**
-         * Validates a value that is being provided for the {@link #NAME} column.
+         * Returns the number of bytes required to encode the specified name when it is stored
+         * on the SIM.
          *
-         * <p>The return value can be used to check if the name is valid. If it is not valid then
-         * inserts and updates to the specified elementary file that use the provided name value
-         * will throw an {@link IllegalArgumentException}.
+         * <p>{@link ElementaryFiles#NAME_MAX_LENGTH} is specified in bytes but the encoded name
+         * may require more than 1 byte per character depending on the characters it contains. So
+         * this method can be used to check whether a name exceeds the max length.
          *
-         * <p>If the specified SIM or elementary file don't exist then
-         * {@link NameValidationResult#getMaxEncodedLength()} will be zero and
-         * {@link NameValidationResult#isValid()} will return false.
+         * @return the number bytes required by the encoded name or -1 if the name is unsupported.
+         * @see SimRecords#NAME
+         * @see ElementaryFiles#NAME_MAX_LENGTH
          */
-        @NonNull
         @WorkerThread
-        public static NameValidationResult validateName(
-                @NonNull ContentResolver resolver, int subscriptionId,
-                @ElementaryFiles.EfType int efType,
-                @NonNull String name) {
-            Bundle queryArgs = new Bundle();
-            queryArgs.putString(SimRecords.NAME, name);
-            try (Cursor cursor =
-                         resolver.query(buildContentUri(subscriptionId, efType)
-                                 .appendPath(VALIDATE_NAME_PATH_SEGMENT)
-                                 .build(), null, queryArgs, null)) {
-                NameValidationResult result = cursor.getExtras()
-                        .getParcelable(EXTRA_NAME_VALIDATION_RESULT);
-                return result != null ? result : new NameValidationResult(name, "", 0, 0);
+        public static int getEncodedNameLength(
+                @NonNull ContentResolver resolver, @Nullable String name) {
+            Bundle result = resolver.call(AUTHORITY, GET_ENCODED_NAME_LENGTH_METHOD_NAME, name,
+                    null);
+            if (result == null) {
+                return -1;
             }
+            return result.getInt(EXTRA_ENCODED_NAME_LENGTH, -1);
         }
 
         private static Uri.Builder buildContentUri(
@@ -281,106 +274,6 @@ public final class SimPhonebookContract {
                     .appendPath(getEfUriPath(efType));
         }
 
-        /** Contains details about the validity of a value provided for the {@link #NAME} column. */
-        public static final class NameValidationResult implements Parcelable {
-
-            @NonNull
-            public static final Creator<NameValidationResult> CREATOR =
-                    new Creator<NameValidationResult>() {
-
-                        @Override
-                        public NameValidationResult createFromParcel(@NonNull Parcel in) {
-                            return new NameValidationResult(in);
-                        }
-
-                        @NonNull
-                        @Override
-                        public NameValidationResult[] newArray(int size) {
-                            return new NameValidationResult[size];
-                        }
-                    };
-
-            private final String mName;
-            private final String mSanitizedName;
-            private final int mEncodedLength;
-            private final int mMaxEncodedLength;
-
-            /** Creates a new instance from the provided values. */
-            public NameValidationResult(@NonNull String name, @NonNull String sanitizedName,
-                    int encodedLength, int maxEncodedLength) {
-                this.mName = Objects.requireNonNull(name);
-                this.mSanitizedName = Objects.requireNonNull(sanitizedName);
-                this.mEncodedLength = encodedLength;
-                this.mMaxEncodedLength = maxEncodedLength;
-            }
-
-            private NameValidationResult(Parcel in) {
-                this(in.readString(), in.readString(), in.readInt(), in.readInt());
-            }
-
-            /** Returns the original name that is being validated. */
-            @NonNull
-            public String getName() {
-                return mName;
-            }
-
-            /**
-             * Returns a sanitized copy of the original name with all unsupported characters
-             * replaced with spaces.
-             */
-            @NonNull
-            public String getSanitizedName() {
-                return mSanitizedName;
-            }
-
-            /**
-             * Returns whether the original name isValid.
-             *
-             * <p>If this returns false then inserts and updates using the name will throw an
-             * {@link IllegalArgumentException}
-             */
-            public boolean isValid() {
-                return mMaxEncodedLength > 0 && mEncodedLength <= mMaxEncodedLength
-                        && Objects.equals(
-                        mName, mSanitizedName);
-            }
-
-            /** Returns whether the character at the specified position is supported by the SIM. */
-            public boolean isSupportedCharacter(int position) {
-                return mName.charAt(position) == mSanitizedName.charAt(position);
-            }
-
-            /**
-             * Returns the number of bytes required to save the name.
-             *
-             * <p>This may be more than the number of characters in the name.
-             */
-            public int getEncodedLength() {
-                return mEncodedLength;
-            }
-
-            /**
-             * Returns the maximum number of bytes that are supported for the name.
-             *
-             * @see ElementaryFiles#NAME_MAX_LENGTH
-             */
-            public int getMaxEncodedLength() {
-                return mMaxEncodedLength;
-            }
-
-            @Override
-            public int describeContents() {
-                return 0;
-            }
-
-            @Override
-            public void writeToParcel(@NonNull Parcel dest, int flags) {
-                dest.writeString(mName);
-                dest.writeString(mSanitizedName);
-                dest.writeInt(mEncodedLength);
-                dest.writeInt(mMaxEncodedLength);
-            }
-        }
     }
 
     /** Constants for metadata about the elementary files of the SIM cards in the phone. */
