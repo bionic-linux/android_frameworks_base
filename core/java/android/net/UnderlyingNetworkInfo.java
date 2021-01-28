@@ -16,8 +16,11 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -27,10 +30,10 @@ import java.util.Objects;
 
 /**
  * A lightweight container used to carry information of the ongoing VPN.
- * Internal use only.
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 public final class UnderlyingNetworkInfo implements Parcelable {
     public final int ownerUid;
     @Nullable
