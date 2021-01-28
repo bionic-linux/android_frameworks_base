@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6c8d433_77ae2812",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2021-01-28T03:55:50Z",
+      "side": 1,
+      "message": "waiting for the internal CL to be merged to avoid merge conflict..",
+      "revId": "9d23b2dca0c5be6b2bca367dce59524b38f88532",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
