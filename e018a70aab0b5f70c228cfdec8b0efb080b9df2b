@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c43cb3de_f1d2cb7a",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f074e09c_3198363f",
+      "range": {
+        "startLine": 41,
+        "startChar": 50,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7120887a_fc47d726",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8617add7_48fced78",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "That\u0027s legacy behavior unfortunately, and up to the factory. For WiFi, once you select it once, it\u0027s still true on automatic reconnects.",
+      "parentUuid": "7120887a_fc47d726",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d218e55_b99cd7b6",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-22T13:42:31Z",
       "side": 1,
       "message": "Any reason that we don\u0027t want to use EXPLICITLY_SELECTED or similar name?\nPeople might not be able to follow if they don\u0027t trace the code to know they are actually the same thing.",
+      "range": {
+        "startLine": 50,
+        "startChar": 35,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2b20667_6c136cd7",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "The reason I renamed this is that EXPLICITLY_SELECTED strongly sounds to me like the network was just tapped, and emphatically that\u0027s not what it means, so I find it extremely confusing and want to avoid it. In the future I plan to add a flag for when a network was just tapped in UI and call that POLICY_JUST_TAPPED.\n\nI don\u0027t particularly like ONCE_CHOSEN_BY_USER, but if you have any better name...",
+      "parentUuid": "9d218e55_b99cd7b6",
       "range": {
         "startLine": 50,
         "startChar": 35,
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4a321db_38d01370",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you\u0027re getting at ; like network capabilities, these are flags, an the fact that they are stored in a long is an implementation detail never exposed. Fundamentally these will always semantically stay booleans.\n\nI don\u0027t think this is likely, but if we ever hit 63 bits we can have a second var to hold the additional bits, because the long is never exposed. Like in NetworkCapabilities.\n\nIf we even need things that are not bits (no known use case today, but I think it\u0027s likely at some point), we can still pass that here, and hold them in other vars different from mPolicy. Like in NetworkCapabilities.\n\nNote that this is a standard way of creating an immutable object with some members changed. \u0027with\u0027 is used like this more and more for these objects.",
+      "parentUuid": "0a0d8b38_ae31c433",
+      "range": {
+        "startLine": 72,
+        "startChar": 34,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f1dcba44_696aa1cb",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 2
@@ -106,6 +202,30 @@
       "writtenOn": "2021-01-22T13:42:31Z",
       "side": 1,
       "message": "Wait a minute, this implies if we have 63 bits we will have 63 parameters, right?\nI\u0027m not sure it is a good idea once you have a function call like below it could be error-prone.\n  withPolicyBits(true, false, false, true, true, false, true,false);",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0daf012c_4807067f",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "No.\n\nIt\u0027s very unlikely this grows very long, but if it does, we won\u0027t have cases where we need to change everything at the same time. Then, we will have multiple functions to affect different bits according to our usage. Say for example we have 8 VPN flags to change together and 4 user-chosing flags, then we\u0027d have\n\n  /** @hide */\n  public NetworkScore withVpnPolicies(boolean isVpn, boolean vpnFlag1, boolean vpnFlag2...)\n  /** @hide */\n  public NetworkScore withUserPolicies(boolean onceChosen, boolean acceptUnvalidated, boolean userFlag1...)\n\nNot all arguments to the \u0027with\u0027 functions need to be booleans if we have non-boolean fields, and we can easily have as many as we want for useful use cases.",
+      "parentUuid": "f1dcba44_696aa1cb",
       "range": {
         "startLine": 73,
         "startChar": 12,
@@ -139,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e9d5c8e_da23fe07",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "I\u0027d rather avoid the overhead of doing this. The whole point of a \u0027with\u0027 method is to save the performance of creating a builder, but forcing the use of BitUtils.pack makes it even slower than using a builder. I also don\u0027t think this makes the code any easier to read.\n\n  new ArrayList\u003c\u003e flags\n  if (isValidated) add(POLICY_IS_VALIDATED)\n  if (isVpn) add(POLICY_IS_VPN)\n  return new NetworkScore(BitUtils.pack(CollectionUtils.toIntArray(flags)))\n\nI can align the values if you\u0027d prefer that ? I think it makes things easier to read.",
+      "parentUuid": "01e3d0f5_91f1fd1a",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 75
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b023cc5_5a06442c",
@@ -156,6 +300,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d0271e9_9f2e5a79",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "We have hasPolicy(), is that not what you mean ? Or do you mean a method that would return an int[] ? NetworkCapabilities doesn\u0027t have that, which tells me we are unlikely to need it. I don\u0027t want to ever return the long because it\u0027s an implementation detail and it would prevent us from changing it in the future, as explained in other comments.\n\nNow if there is a use case, we can consider it, but for now there is no planned use case for such a method.\n\nDoes this answer the question ?",
+      "parentUuid": "6b023cc5_5a06442c",
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4306b5f9_81286cbb",
@@ -169,6 +331,30 @@
       "writtenOn": "2021-01-22T13:42:31Z",
       "side": 1,
       "message": "IIUC this need test?",
+      "range": {
+        "startLine": 100,
+        "startChar": 16,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cf1ccf0_e6026f11",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "Added some explicit tests. But also, this has a *lot* of transitive coverage in ConnectivityServiceTest.",
+      "parentUuid": "4306b5f9_81286cbb",
       "range": {
         "startLine": 100,
         "startChar": 16,
@@ -202,6 +388,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "724cf9c1_97655628",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "I agree, but as you can see from NetworkAgentInfo from where this is copied, this is existing behavior.",
+      "parentUuid": "f7fc4dcf_556662c7",
+      "range": {
+        "startLine": 108,
+        "startChar": 30,
+        "endLine": 108,
+        "endChar": 55
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "161e536f_7aa4de8a",
@@ -215,6 +425,30 @@
       "writtenOn": "2021-01-22T13:42:31Z",
       "side": 1,
       "message": "I believe this deserves some comment?",
+      "range": {
+        "startLine": 113,
+        "startChar": 68,
+        "endLine": 113,
+        "endChar": 93
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a8adaa7_ee19ff1f",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "161e536f_7aa4de8a",
       "range": {
         "startLine": 113,
         "startChar": 68,
@@ -248,6 +482,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "783ba088_784e8426",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b53841e2_22d548aa",
+      "range": {
+        "startLine": 126,
+        "startChar": 46,
+        "endLine": 126,
+        "endChar": 53
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46a20f00_9d5793f1",
@@ -261,6 +519,24 @@
       "writtenOn": "2021-01-22T13:42:31Z",
       "side": 1,
       "message": "1. IIUC we cannot actually update networkAgentConfig.\nThus I feel the naming is slightly inaccurate.\nIf this is the only case, maybe name it more specifically, e.g. nai.updateScoreForSetAcceptUnvalidated?\n\n2. Not sure if it is better if we follow the design pattern of below.\nupdateCapabilities vs updateUids\nupdateLinkProperties vs updateInterfaces\nThe benefit is that you can remove the limitation of \"must be called after update the config.\"",
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1df17c51_60809721",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3745,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "1. \nWe can\u0027t update the ref to networkAgentConfig, but as you can see this updates the contents of it so the object certainly is updated. It\u0027s not only acceptUnvalidated, there is also partial connectivity.\n\nThat being said I don\u0027t feel strongly. I don\u0027t think we\u0027ll have to ever mix in more than these two bits from NAC, so if you still think it should be named updateScoreForSetAcceptUnvalidated, reply to this comment and I\u0027ll do it.\n\n2.\nSorry I don\u0027t understand well what the suggestion is. Can you post some pseudocode to clarify what this would look like ?",
+      "parentUuid": "46a20f00_9d5793f1",
       "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -288,6 +564,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af8244f9_d0df6db6",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebf603d7_4ecb99ae",
+      "range": {
+        "startLine": 814,
+        "startChar": 7,
+        "endLine": 814,
+        "endChar": 70
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d71e6947_b6bd0377",
@@ -301,6 +601,30 @@
       "writtenOn": "2021-01-22T13:42:31Z",
       "side": 1,
       "message": "Maybe describe what is expected to be done in this function?",
+      "range": {
+        "startLine": 822,
+        "startChar": 32,
+        "endLine": 822,
+        "endChar": 42
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7ef1dba_b92f476b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-01-28T14:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d71e6947_b6bd0377",
       "range": {
         "startLine": 822,
         "startChar": 32,
