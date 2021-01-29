@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d1c9637_5d206712",
+        "filename": "services/core/java/com/android/server/vcn/VcnNetworkProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-01-29T23:49:14Z",
+      "side": 1,
+      "message": "Can you put a comment here that just clarifies that a NetworkRequest, once created is immutable? Otherwise, this is not going to properly identify these. I feel like this is assuming \"future\" behavior and I\u0027d like a paper trail in case we need to debug it.\n\nThe immutability has to e an invariant.",
+      "range": {
+        "startLine": 88,
+        "startChar": 51,
+        "endLine": 88,
+        "endChar": 65
+      },
+      "revId": "dd9ab01cbdaa0ee2019c1dec6891633dabe86f75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
