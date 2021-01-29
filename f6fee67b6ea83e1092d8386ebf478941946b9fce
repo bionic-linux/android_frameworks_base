@@ -22,6 +22,30 @@
       },
       "revId": "f6fee67b6ea83e1092d8386ebf478941946b9fce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a673422d_dc7c408c",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-01-29T21:23:35Z",
+      "side": 1,
+      "message": "someone wanting something to be in this list! Feel free to add any interfaces. If the watchdog ANR starts taking too long, data will get drop, which would impact the ability to debug issues, and we would either shorten it or increase the timeout (or something creative).",
+      "parentUuid": "2bf943d4_db3915ea",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 55
+      },
+      "revId": "f6fee67b6ea83e1092d8386ebf478941946b9fce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
