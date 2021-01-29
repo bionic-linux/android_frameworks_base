@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29710656_8f23e1c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T09:11:29Z",
+      "side": 1,
+      "message": "Mostly stylistic comments.\n\nOtherwise, everything looks reasonable, but I don\u0027t know the keystore structure quite well enough to effectively review the keystore-specific changes.",
+      "revId": "31b557ea3690f718183cae9f4e67b23266133a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9de21270_90491971",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T09:11:29Z",
+      "side": 1,
+      "message": "Nit: Jean will probably like all variables to be final where possible:\n\nfinal java.security.KeyStore keystore \u003d java.security.Keystore.getInstance(\"AndroidKeyStore\");",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 16
+      },
+      "revId": "31b557ea3690f718183cae9f4e67b23266133a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f93c8d8b_06d69960",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T09:11:29Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 449,
+        "startChar": 12,
+        "endLine": 449,
+        "endChar": 15
+      },
+      "revId": "31b557ea3690f718183cae9f4e67b23266133a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49db5fe0_4c0df04e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2034,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T09:11:29Z",
+      "side": 1,
+      "message": "Is this defined somewhere that gives a guarantee?\n\nAlso, perhaps make this a constant? Bonus if it\u0027s part of the keystore APIs.",
+      "range": {
+        "startLine": 2034,
+        "startChar": 0,
+        "endLine": 2034,
+        "endChar": 81
+      },
+      "revId": "31b557ea3690f718183cae9f4e67b23266133a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
