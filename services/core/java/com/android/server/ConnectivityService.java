@@ -3589,10 +3589,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // As this request was not satisfied on rematch and thus never had any scores sent to the
         // factories, send null now for each request of type REQUEST.
         for (final NetworkRequest req : nri.mRequests) {
-            if (!req.isRequest()) {
-                continue;
-            }
-            sendUpdatedScoreToFactories(req, null);
+            if (req.isRequest()) sendUpdatedScoreToFactories(req, null);
         }
     }
 
@@ -3769,7 +3766,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         mNetworkRequestInfoLogs.log("RELEASE " + nri);
 
         if (null != nri.getActiveRequest()) {
-            if (nri.getActiveRequest().isRequest()) {
+            if (!nri.getActiveRequest().isListen()) {
                 removeSatisfiedNetworkRequestFromNetwork(nri);
             } else {
                 nri.setSatisfier(null, null);
@@ -5576,8 +5573,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
 
         // The network currently satisfying this request, or null if none. Must only be touched
-        // on the handler thread. This only makes sense for network requests and not for listens,
-        // as defined by NetworkRequest#isRequest(). For listens, this is always null.
+        // on the handler thread. This only makes sense for network requests that are satisfied by
+        // a single networks, i.e., not for listens. For listens, this is always null.
         @Nullable
         private NetworkAgentInfo mSatisfier;
         NetworkAgentInfo getSatisfier() {
@@ -7015,8 +7012,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private void sendUpdatedScoreToFactories(NetworkAgentInfo nai) {
         for (int i = 0; i < nai.numNetworkRequests(); i++) {
             NetworkRequest nr = nai.requestAt(i);
-            // Don't send listening requests to factories. b/17393458
-            if (nr.isListen()) continue;
+            // Don't send listening or track default request to factories. b/17393458
+            if (!nr.isRequest()) continue;
             sendUpdatedScoreToFactories(nr, nai);
         }
     }
@@ -7078,10 +7075,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         ensureRunningOnConnectivityServiceThread();
         for (final NetworkRequestInfo nri : getNrisFromGlobalRequests()) {
             for (final NetworkRequest req : nri.mRequests) {
-                if (req.isListen() && nri.getActiveRequest() == req) {
+                if (!req.isRequest() && nri.getActiveRequest() == req) {
                     break;
                 }
-                if (req.isListen()) {
+                if (!req.isRequest()) {
                     continue;
                 }
                 // Only set the nai for the request it is satisfying.
@@ -7231,8 +7228,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nai.numRequestNetworkRequests() != 0) {
             for (int i = 0; i < nai.numNetworkRequests(); i++) {
                 NetworkRequest nr = nai.requestAt(i);
-                // Ignore listening requests.
-                if (nr.isListen()) continue;
+                // Ignore listening and track default requests.
+                if (!nr.isRequest()) continue;
                 loge("Dead network still had at least " + nr);
                 break;
             }
