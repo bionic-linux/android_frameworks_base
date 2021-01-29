@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5ccd919_f34eed4f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3943,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-01-29T19:50:28Z",
+      "side": 1,
+      "message": "Can you mention that the cache expiration for RCS capabilities is managed by the provisioning manager?",
+      "range": {
+        "startLine": 3943,
+        "startChar": 10,
+        "endLine": 3943,
+        "endChar": 14
+      },
+      "revId": "7024f93cd3c64bbb780b4fb33ab6c7af4487cdb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
