@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc46d23a_f0f64148",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d5ddac5_8dcb2df8",
+      "range": {
+        "startLine": 29,
+        "startChar": 53,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea3c5c01_b447a9ee",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-01-29T06:07:28Z",
       "side": 1,
       "message": "/** The owner of this network. */",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2361548_e90df449",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea3c5c01_b447a9ee",
       "range": {
         "startLine": 35,
         "startChar": 4,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae52a91c_34a8cbb1",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ab98024_963fe37f",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a89ab558_4139301d",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-01-29T06:07:28Z",
       "side": 1,
       "message": "/** The names of the interfaces underlying this network. */",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4752fa3_7509919a",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a89ab558_4139301d",
       "range": {
         "startLine": 39,
         "startChar": 4,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9b6a467_3c379bc4",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "Done,\nit can happens in test code.\nThe test is updated accordingly.",
+      "parentUuid": "afe83dde_939dcfc5",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 41,
+        "endChar": 69
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4b0b48e_4c4984ba",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd6a6639_f9c80bdb",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4b0b48e_4c4984ba",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60e903a8_2fdc214b",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-01-29T06:07:28Z",
       "side": 1,
       "message": "it\u0027s @NonNull",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 70
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88a13fb9_114dcbf4",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e903a8_2fdc214b",
       "range": {
         "startLine": 61,
         "startChar": 44,
@@ -204,6 +372,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5ea4518f_1450ed8d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4866,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "IIUC Vpn is one type of the networks that has underlying networks.\nAnd this function only supports Vpn.\nThus, I think the name should be preserved until we return information of all types of underlying networks?",
+      "parentUuid": "ea5afe99_fcd4a3bc",
+      "range": {
+        "startLine": 4866,
+        "startChar": 41,
+        "endLine": 4866,
+        "endChar": 54
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "35d2cd49_d93e6bf9",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 10
@@ -215,6 +407,30 @@
       "writtenOn": "2021-01-29T06:07:28Z",
       "side": 1,
       "message": "If you remove this check, do the tests crash? If not, I\u0027d remove it.\n\nIn any case, even if this check is necessary, it means that UnderlyingNetworkInfo#iface can never be null, right?",
+      "range": {
+        "startLine": 4910,
+        "startChar": 8,
+        "endLine": 4910,
+        "endChar": 71
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c81157f_b0962970",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4910,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "1. It failed android.net.cts.NetworkAgentTest#testSetUnderlyingNetworks,\nwhere we did not set interface name at initialLp.\nIIUC we can fix the test but I think it should be done in another CL\nto reduce the risk of reverting this CL.\nTODO added.\n\n2. It can happens in test code, it is fixed in this CL.",
+      "parentUuid": "35d2cd49_d93e6bf9",
       "range": {
         "startLine": 4910,
         "startChar": 8,
@@ -248,6 +464,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3478ec1_e8bacb68",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 8255,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad32871f_1696b177",
+      "range": {
+        "startLine": 8255,
+        "startChar": 4,
+        "endLine": 8255,
+        "endChar": 40
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f88fe65_da9f64ad",
@@ -261,6 +501,30 @@
       "writtenOn": "2021-01-29T06:07:28Z",
       "side": 1,
       "message": "Is this already a defensive copy, I wonder? If NSS converts it from an ArrayList\u003cUnderlyingNetworkInfo\u003e to an UnderlyingNetworkInfo[] in this call, then there\u0027s no need to make a copy here, perhaps?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 5
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a083edc2_8c14379a",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T10:00:46Z",
+      "side": 1,
+      "message": "For current patch they are still using arrays.\nSo IIUC this can only be fixed after aosp/1560408.",
+      "parentUuid": "1f88fe65_da9f64ad",
       "range": {
         "startLine": 119,
         "startChar": 0,
