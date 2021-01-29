@@ -43,6 +43,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7f1f8734_2def6931",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:27:38Z",
+      "side": 1,
+      "message": "FYI: If you need to unblock, and requestBackgroundNetwork is not merged, feel free to just switch to requestNetwork() with a TODO",
+      "range": {
+        "startLine": 110,
+        "startChar": 29,
+        "endLine": 110,
+        "endChar": 53
+      },
+      "revId": "2ac75162233f413ebe700c5c6dd088ef47f05da1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25da7f10_d8b5431b",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:27:38Z",
+      "side": 1,
+      "message": "FYI: If you want, you can also just create a mHandler variable and then pass it in here. Either way.",
+      "range": {
+        "startLine": 111,
+        "startChar": 41,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "2ac75162233f413ebe700c5c6dd088ef47f05da1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4e701903_d6d2eed3",
         "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
         "patchSetId": 12
