@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "80d426b0_60d1e1a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-01-29T22:19:56Z",
+      "side": 1,
+      "message": "so the intention was always that types and enums should be available to *all* API levels, to make the lives of app developers trying to do \"reflection\" via dlsym() less painful. (in practice, the extent to which this was observed seems to vary wildly.)\n\ndo you have an example of a macro you think shouldn\u0027t be available? the only one i saw here was\n```\n#define AMIDI_API __attribute__((visibility(\"default\")))\n```\n\nwhich seems like it shouldn\u0027t even be necessary? your .map.txt file takes care of this and is the canonical source of truth for what actually gets exposed?",
+      "parentUuid": "fe3c5632_09175908",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "f4b2772988a7ac90527e86768d29c620dc672346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4a7d3f73_9a5bf1a9",
