@@ -22,6 +22,29 @@
       },
       "revId": "7024f93cd3c64bbb780b4fb33ab6c7af4487cdb0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1534afad_543b96b3",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3944,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-01-29T19:54:07Z",
+      "side": 1,
+      "message": "Also, looking at this again, this should by default match the RCS capabilities cache timeout and then override it for carriers that require the 30 day limit (unless all carriers have a separate requirement for 30 days for non-RCS caps.) Can you also double check the specs?",
+      "range": {
+        "startLine": 3944,
+        "startChar": 31,
+        "endLine": 3944,
+        "endChar": 55
+      },
+      "revId": "7024f93cd3c64bbb780b4fb33ab6c7af4487cdb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
