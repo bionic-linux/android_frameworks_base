@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8dd9ef8_628f0207",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:25:50Z",
+      "side": 1,
+      "message": "Looks close",
+      "revId": "2ac75162233f413ebe700c5c6dd088ef47f05da1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "773ea4a4_ead2be15",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:25:50Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest keeping this in the same order as the arguments above, just so it\u0027s trivial to glance between the two",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "2ac75162233f413ebe700c5c6dd088ef47f05da1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e701903_d6d2eed3",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:25:50Z",
+      "side": 1,
+      "message": "Tiniest of nits: suggest isComplete() or isValid(); if it\u0027s not buildable, it\u0027s because it\u0027s not a valid record (as opposed to it being valid, but not buildable because policy or something else)",
+      "range": {
+        "startLine": 202,
+        "startChar": 31,
+        "endLine": 202,
+        "endChar": 42
+      },
+      "revId": "2ac75162233f413ebe700c5c6dd088ef47f05da1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2343dc74_b0aff557",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:25:50Z",
+      "side": 1,
+      "message": "Do we need to clear this here? It seems like this would be identical to not clearing it; when the new record is valid/complete, it won\u0027t match the existing one.",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 30
+      },
+      "revId": "2ac75162233f413ebe700c5c6dd088ef47f05da1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51b57723_80a4002a",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-01-29T08:25:50Z",
+      "side": 1,
+      "message": "Nit, since this is never going to be used anywhere else, suggest inlineing",
+      "range": {
+        "startLine": 249,
+        "startChar": 32,
+        "endLine": 249,
+        "endChar": 52
+      },
+      "revId": "2ac75162233f413ebe700c5c6dd088ef47f05da1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
