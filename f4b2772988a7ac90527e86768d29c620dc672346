@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe3c5632_09175908",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-01-29T21:55:06Z",
+      "side": 1,
+      "message": "i imagine this works for functions, and variables.\nmaybe for enums and types?\ni imagine that macro definitions might still need to be\nprotected via __ANDROID_API__ conditionals.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "f4b2772988a7ac90527e86768d29c620dc672346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4a7d3f73_9a5bf1a9",
