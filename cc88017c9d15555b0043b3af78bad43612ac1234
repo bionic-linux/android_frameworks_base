@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61e0ff84_feb6b73a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d5ddac5_8dcb2df8",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "on the networks that underly a given virtual network",
+      "range": {
+        "startLine": 29,
+        "startChar": 53,
+        "endLine": 29,
+        "endChar": 71
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea3c5c01_b447a9ee",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "/** The owner of this network. */",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ab98024_963fe37f",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "/** The interface name of this network */",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a89ab558_4139301d",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "/** The names of the interfaces underlying this network. */",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afe83dde_939dcfc5",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "Does this really need to be @Nullable? Can it ever even be set to null? If not, mark @NonNull and Objects.requireNonNull it.",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 41,
+        "endChar": 69
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4b0b48e_4c4984ba",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "fix name",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60e903a8_2fdc214b",
+        "filename": "core/java/android/net/UnderlyingNetworkInfo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "it\u0027s @NonNull",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 70
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea5afe99_fcd4a3bc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4866,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "createUnderlyingNetworkInfo",
+      "range": {
+        "startLine": 4866,
+        "startChar": 41,
+        "endLine": 4866,
+        "endChar": 54
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35d2cd49_d93e6bf9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 4910,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "If you remove this check, do the tests crash? If not, I\u0027d remove it.\n\nIn any case, even if this check is necessary, it means that UnderlyingNetworkInfo#iface can never be null, right?",
+      "range": {
+        "startLine": 4910,
+        "startChar": 8,
+        "endLine": 4910,
+        "endChar": 71
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad32871f_1696b177",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 8255,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "Can you add:\n\n    // TODO: stop calling into Vpn.java and get this information from data in this class.",
+      "range": {
+        "startLine": 8255,
+        "startChar": 4,
+        "endLine": 8255,
+        "endChar": 40
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f88fe65_da9f64ad",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-01-29T06:07:28Z",
+      "side": 1,
+      "message": "Is this already a defensive copy, I wonder? If NSS converts it from an ArrayList\u003cUnderlyingNetworkInfo\u003e to an UnderlyingNetworkInfo[] in this call, then there\u0027s no need to make a copy here, perhaps?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 5
+      },
+      "revId": "cc88017c9d15555b0043b3af78bad43612ac1234",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
