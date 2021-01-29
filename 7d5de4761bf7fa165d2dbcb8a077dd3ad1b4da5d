@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34bfabe2_5caf94df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T11:43:51Z",
+      "side": 1,
+      "message": "LGTM with nits that could be ignored.",
+      "revId": "7d5de4761bf7fa165d2dbcb8a077dd3ad1b4da5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c55972a7_eeb42d58",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T11:43:51Z",
+      "side": 1,
+      "message": "filterNetworkInfoForUid?",
+      "range": {
+        "startLine": 1372,
+        "startChar": 17,
+        "endLine": 1372,
+        "endChar": 34
+      },
+      "revId": "7d5de4761bf7fa165d2dbcb8a077dd3ad1b4da5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdcaa1a3_6b5ff574",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T11:43:51Z",
+      "side": 1,
+      "message": "nit: getFilteredNetworkInfoForType?\nNot feel strongly.",
+      "range": {
+        "startLine": 1456,
+        "startChar": 24,
+        "endLine": 1456,
+        "endChar": 46
+      },
+      "revId": "7d5de4761bf7fa165d2dbcb8a077dd3ad1b4da5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
