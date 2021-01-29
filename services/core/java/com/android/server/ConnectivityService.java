@@ -5755,10 +5755,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         switch (reqType) {
             case TRACK_DEFAULT:
                 // If the request type is TRACK_DEFAULT, the passed {@code networkCapabilities}
-                // is unused and will be replaced by the one from the default network request.
-                // This allows callers to keep track of the system default network.
+                // is unused and will be replaced by ones appropriate for the caller.
+                // This allows callers to keep track of the default network for their app.
                 networkCapabilities = createDefaultNetworkCapabilitiesForUid(callingUid);
                 enforceAccessPermission();
+                break;
+            case TRACK_SYSTEM_DEFAULT:
+                enforceNetworkStackOrSettingsPermission();
+                networkCapabilities = new NetworkCapabilities(mDefaultRequest.networkCapabilities);
                 break;
             case BACKGROUND_REQUEST:
                 enforceNetworkStackOrSettingsPermission();
@@ -5778,11 +5782,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
         ensureRequestableCapabilities(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
                 Binder.getCallingPid(), callingUid, callingPackageName);
+
         // Set the UID range for this request to the single UID of the requester, or to an empty
         // set of UIDs if the caller has the appropriate permission and UIDs have not been set.
         // This will overwrite any allowed UIDs in the requested capabilities. Though there
         // are no visible methods to set the UIDs, an app could use reflection to try and get
         // networks for other apps so it's essential that the UIDs are overwritten.
+        //
+        // Don't do this for TRACK_SYSTEM_DEFAULT requests because their capabilities must exactly
+        // match the default request's capabilities.
         restrictRequestUidsForCallerAndSetRequestorInfo(networkCapabilities,
                 callingUid, callingPackageName);
 
