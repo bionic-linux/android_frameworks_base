@@ -3561,6 +3561,11 @@ public class ConnectivityServiceTest {
         mCm.registerDefaultNetworkCallback(defaultNetworkCallback);
         defaultNetworkCallback.assertNoCallback();
 
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        final TestNetworkCallback systemDefaultCallback = new TestNetworkCallback();
+        mCm.registerSystemDefaultNetworkCallback(systemDefaultCallback, handler);
+        systemDefaultCallback.assertNoCallback();
+
         // Create a TRANSPORT_CELLULAR request to keep the mobile interface up
         // whenever Wi-Fi is up. Without this, the mobile network agent is
         // reaped before any other activity can take place.
@@ -3575,27 +3580,35 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.connect(true);
         cellNetworkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         defaultNetworkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        systemDefaultCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         assertEquals(defaultNetworkCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
+        assertEquals(systemDefaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
         // Bring up wifi and expect CALLBACK_AVAILABLE.
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
         mWiFiNetworkAgent.connect(true);
         cellNetworkCallback.assertNoCallback();
         defaultNetworkCallback.expectAvailableDoubleValidatedCallbacks(mWiFiNetworkAgent);
+        systemDefaultCallback.expectAvailableDoubleValidatedCallbacks(mWiFiNetworkAgent);
         assertEquals(defaultNetworkCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
+        assertEquals(systemDefaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
         // Bring down cell. Expect no default network callback, since it wasn't the default.
         mCellNetworkAgent.disconnect();
         cellNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
         defaultNetworkCallback.assertNoCallback();
+        systemDefaultCallback.assertNoCallback();
         assertEquals(defaultNetworkCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
+        assertEquals(systemDefaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
         // Bring up cell. Expect no default network callback, since it won't be the default.
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
         mCellNetworkAgent.connect(true);
         cellNetworkCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
         defaultNetworkCallback.assertNoCallback();
+        systemDefaultCallback.assertNoCallback();
         assertEquals(defaultNetworkCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
+        assertEquals(systemDefaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
         // Bring down wifi. Expect the default network callback to notified of LOST wifi
         // followed by AVAILABLE cell.
@@ -3603,19 +3616,25 @@ public class ConnectivityServiceTest {
         cellNetworkCallback.assertNoCallback();
         defaultNetworkCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
         defaultNetworkCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        systemDefaultCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        systemDefaultCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
         mCellNetworkAgent.disconnect();
         cellNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
         defaultNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        systemDefaultCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
         waitForIdle();
         assertEquals(null, mCm.getActiveNetwork());
 
         mMockVpn.establishForMyUid();
         assertUidRangesUpdatedForMyUid(true);
         defaultNetworkCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
+        systemDefaultCallback.assertNoCallback();
         assertEquals(defaultNetworkCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
+        assertEquals(null, systemDefaultCallback.getLastAvailableNetwork());
 
         mMockVpn.disconnect();
         defaultNetworkCallback.expectCallback(CallbackEntry.LOST, mMockVpn);
+        systemDefaultCallback.assertNoCallback();
         waitForIdle();
         assertEquals(null, mCm.getActiveNetwork());
     }
@@ -6060,6 +6079,7 @@ public class ConnectivityServiceTest {
         final TestNetworkCallback wifiNetworkCallback = new TestNetworkCallback();
         final TestNetworkCallback vpnNetworkCallback = new TestNetworkCallback();
         final TestNetworkCallback defaultCallback = new TestNetworkCallback();
+        final TestNetworkCallback systemDefaultCallback = new TestNetworkCallback();
         final NetworkRequest genericNotVpnRequest = new NetworkRequest.Builder().build();
         final NetworkRequest genericRequest = new NetworkRequest.Builder()
                 .removeCapability(NET_CAPABILITY_NOT_VPN).build();
@@ -6073,6 +6093,8 @@ public class ConnectivityServiceTest {
         mCm.registerNetworkCallback(wifiRequest, wifiNetworkCallback);
         mCm.registerNetworkCallback(vpnNetworkRequest, vpnNetworkCallback);
         mCm.registerDefaultNetworkCallback(defaultCallback);
+        mCm.registerSystemDefaultNetworkCallback(systemDefaultCallback,
+                new Handler(ConnectivityThread.getInstanceLooper()));
         defaultCallback.assertNoCallback();
 
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
@@ -6082,6 +6104,7 @@ public class ConnectivityServiceTest {
         genericNotVpnNetworkCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         wifiNetworkCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         defaultCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        systemDefaultCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
         vpnNetworkCallback.assertNoCallback();
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
@@ -6102,7 +6125,10 @@ public class ConnectivityServiceTest {
         wifiNetworkCallback.assertNoCallback();
         vpnNetworkCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
+        systemDefaultCallback.assertNoCallback();
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
+        assertEquals(mWiFiNetworkAgent.getNetwork(),
+                systemDefaultCallback.getLastAvailableNetwork());
 
         ranges.clear();
         mMockVpn.setUids(ranges);
@@ -6119,6 +6145,7 @@ public class ConnectivityServiceTest {
         // much, but that is the reason the test here has to check for an update to the
         // capabilities instead of the expected LOST then AVAILABLE.
         defaultCallback.expectCallback(CallbackEntry.NETWORK_CAPS_UPDATED, mMockVpn);
+        systemDefaultCallback.assertNoCallback();
 
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setUids(ranges);
@@ -6130,6 +6157,7 @@ public class ConnectivityServiceTest {
         // TODO : Here like above, AVAILABLE would be correct, but because this can't actually
         // happen outside of the test, ConnectivityService does not rematch callbacks.
         defaultCallback.expectCallback(CallbackEntry.NETWORK_CAPS_UPDATED, mMockVpn);
+        systemDefaultCallback.assertNoCallback();
 
         mWiFiNetworkAgent.disconnect();
 
@@ -6138,6 +6166,7 @@ public class ConnectivityServiceTest {
         wifiNetworkCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
         vpnNetworkCallback.assertNoCallback();
         defaultCallback.assertNoCallback();
+        systemDefaultCallback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
 
         mMockVpn.disconnect();
 
@@ -6146,12 +6175,14 @@ public class ConnectivityServiceTest {
         wifiNetworkCallback.assertNoCallback();
         vpnNetworkCallback.expectCallback(CallbackEntry.LOST, mMockVpn);
         defaultCallback.expectCallback(CallbackEntry.LOST, mMockVpn);
+        systemDefaultCallback.assertNoCallback();
         assertEquals(null, mCm.getActiveNetwork());
 
         mCm.unregisterNetworkCallback(genericNetworkCallback);
         mCm.unregisterNetworkCallback(wifiNetworkCallback);
         mCm.unregisterNetworkCallback(vpnNetworkCallback);
         mCm.unregisterNetworkCallback(defaultCallback);
+        mCm.unregisterNetworkCallback(systemDefaultCallback);
     }
 
     @Test
