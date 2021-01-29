@@ -6558,6 +6558,7 @@ package android.net {
   public interface TransportInfo {
     method public default boolean hasLocationSensitiveFields();
     method @NonNull public default android.net.TransportInfo makeCopy(boolean);
+    method @NonNull public default android.net.TransportInfo redact();
   }
 
   public abstract class Uri implements java.lang.Comparable<android.net.Uri> android.os.Parcelable {
