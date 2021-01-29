@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7a76eb28_17d9e3b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2021-01-29T12:33:15Z",
+      "side": 1,
+      "message": "Well, since the change was -2ed, I assumed it was more than just \"best-practices\". It\u0027s also perfectly acceptable to enforce best-practices with lint 😊.\n\nAck about not having time... is this documented anywhere so other\u0027s don\u0027t make the same mistake ?",
+      "parentUuid": "92613e5f_43ca3fa2",
+      "revId": "68d43a31693186d33df063c465bb74790e7c4fd3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6ff87ea7_bf9abbc6",
         "filename": "core/tests/coretests/src/android/content/OWNERS",
         "patchSetId": 2
