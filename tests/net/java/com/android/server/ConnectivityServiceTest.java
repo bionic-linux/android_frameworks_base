@@ -7204,6 +7204,17 @@ public class ConnectivityServiceTest {
         when(mKeyStore.get(Credentials.VPN + profileName)).thenReturn(encodedProfile);
     }
 
+    private void establishLegacyLockdownVpn(final Network underlying) throws Exception {
+        // The legacy lockdown VPN only supports UID 0, and must always have an underlying network.
+        assertNotNull(underlying);
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(VPN_IFNAME);
+        final Set<UidRange> ranges = Collections.singleton(UidRange.createForUser(PRIMARY_USER));
+        mMockVpn.registerAgent(ranges);
+        mService.setUnderlyingNetworksForVpn(new Network[]{ underlying });
+        mMockVpn.connect(true);
+    }
+
     @Test
     public void testLegacyLockdownVpn() throws Exception {
         mServiceContext.setPermission(
@@ -7298,7 +7309,7 @@ public class ConnectivityServiceTest {
         mMockVpn.expectStartLegacyVpnRunner();
         b1 = expectConnectivityAction(TYPE_VPN, DetailedState.CONNECTED);
         ExpectedBroadcast b2 = expectConnectivityAction(TYPE_MOBILE, DetailedState.CONNECTED);
-        mMockVpn.establishForMyUid();
+        establishLegacyLockdownVpn(mCellNetworkAgent.getNetwork());
         callback.expectAvailableThenValidatedCallbacks(mMockVpn);
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         b1.expectBroadcast();
@@ -7346,7 +7357,7 @@ public class ConnectivityServiceTest {
         // The VPN comes up again on wifi.
         b1 = expectConnectivityAction(TYPE_VPN, DetailedState.CONNECTED);
         b2 = expectConnectivityAction(TYPE_WIFI, DetailedState.CONNECTED);
-        mMockVpn.establishForMyUid();
+        establishLegacyLockdownVpn(mWiFiNetworkAgent.getNetwork());
         callback.expectAvailableThenValidatedCallbacks(mMockVpn);
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         b1.expectBroadcast();
