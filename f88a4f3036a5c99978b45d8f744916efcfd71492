@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c65d1171_05c2e3f3",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T08:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e55d471e_a53eafdc",
+      "range": {
+        "startLine": 520,
+        "startChar": 13,
+        "endLine": 520,
+        "endChar": 14
+      },
+      "revId": "f88a4f3036a5c99978b45d8f744916efcfd71492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7eb889bd_17984018",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-28T09:16:01Z",
       "side": 1,
       "message": "Small gripe on the form of the comment : not sure if this is an \u0027or\u0027, an \u0027and\u0027, a cascaded if. The way it\u0027s written it sounds like an \u0027and\u0027, but that\u0027s not correct so I think it requires a bit of a rewording.\n\nThat being said the code is short and understandable, so I don\u0027t think you need too much explanation of the logic here. The reasons for why it\u0027s written like this are more important.",
+      "range": {
+        "startLine": 785,
+        "startChar": 0,
+        "endLine": 788,
+        "endChar": 71
+      },
+      "revId": "f88a4f3036a5c99978b45d8f744916efcfd71492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09ffc002_004cc0ef",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T08:01:59Z",
+      "side": 1,
+      "message": "Done.\nSee if it works for you.",
+      "parentUuid": "7eb889bd_17984018",
       "range": {
         "startLine": 785,
         "startChar": 0,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7166c85_6fda3e24",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T08:01:59Z",
+      "side": 1,
+      "message": "This method require access to the mNetworkCapabilties bits.\nIf we move that to the builder, we\u0027ll need check function such as NC.hasVcnSupportedCapabilities() and NC.isThereAnythingBesidesDefaultCapabilities(),\nwhich can be done but might not be pretty I think.\nBesides, I think this is an operation in NC, although it is called from NetworkRequest.\nJust like what we are doing for maybeMarkCapabilitiesRestricted.\n\nWDYT?\nIf feel strongly I\u0027ll move it.",
+      "parentUuid": "8f54907d_ebf5dfd5",
+      "range": {
+        "startLine": 796,
+        "startChar": 16,
+        "endLine": 796,
+        "endChar": 45
+      },
+      "revId": "f88a4f3036a5c99978b45d8f744916efcfd71492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e7879c3f_315e88ce",
         "filename": "core/java/android/net/NetworkCapabilities.java",
         "patchSetId": 10
@@ -83,6 +155,30 @@
       "writtenOn": "2021-01-28T09:16:01Z",
       "side": 1,
       "message": "I might be confused, but if setNotVcnManaged is true, then how is it possible that the capability is not already set ?\n\nIf I\u0027m missing something, then I think we should at least treat FALSE and TRUE the same way. By which I mean : if you need to add() when TRUE, then remove() when FALSE.",
+      "range": {
+        "startLine": 803,
+        "startChar": 0,
+        "endLine": 803,
+        "endChar": 62
+      },
+      "revId": "f88a4f3036a5c99978b45d8f744916efcfd71492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac887c56_4ce2c579",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-01-29T08:01:59Z",
+      "side": 1,
+      "message": "Done, Yes you are right.\nAnd it seems to me this can be further simplified by passing boolean modifiedNotVcnManaged.\nIf user add or remove NOT_VCN_MANAGED, set modifiedNotVcnManaged \u003d true, and do nothing in this function.\nOtherwise, do what we did for AUTO.\nSee if the new patch works for you.",
+      "parentUuid": "e7879c3f_315e88ce",
       "range": {
         "startLine": 803,
         "startChar": 0,
