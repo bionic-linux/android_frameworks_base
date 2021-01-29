@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bf943d4_db3915ea",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1644679
+      },
+      "writtenOn": "2021-01-29T15:58:28Z",
+      "side": 1,
+      "message": "What\u0027s the criteria for interfaces making it to this list?",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 55
+      },
+      "revId": "f6fee67b6ea83e1092d8386ebf478941946b9fce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
