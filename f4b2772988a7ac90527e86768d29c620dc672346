@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "71fd9af3_d916276d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1108919
+      },
+      "writtenOn": "2021-01-30T00:06:34Z",
+      "side": 1,
+      "message": "don\u0027t have an example of a macro that needs to be protected.\nmore curiousity about just what it did and didn\u0027t affect in general.\n\nand this wasn\u0027t something meant to hold up submitting this CL.",
+      "parentUuid": "80d426b0_60d1e1a8",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "f4b2772988a7ac90527e86768d29c620dc672346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4a7d3f73_9a5bf1a9",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
