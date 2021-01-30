@@ -183,6 +183,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b4948b_b9ba02a1",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-01-30T00:37:45Z",
+      "side": 1,
+      "message": "To recap, Jean clarified that this will move to the Connectivity module and will not be exposed as API, so we cannot use it. Instead updated to use an incremental approach to build the UnderlyingNetworkRecord\n\nDone",
+      "parentUuid": "535b6726_1f3a10a3",
+      "range": {
+        "startLine": 187,
+        "startChar": 20,
+        "endLine": 187,
+        "endChar": 31
+      },
+      "revId": "a246c74ef3dc39e1cf2209259cf098f7d2da2ce6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7beeff3_a9a74f8a",
