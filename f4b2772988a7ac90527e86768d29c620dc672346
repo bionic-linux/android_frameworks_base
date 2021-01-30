@@ -74,6 +74,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a167e761_ee24f202",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-01-30T00:15:10Z",
+      "side": 1,
+      "message": "cool, happy to help if you hit some weird cases (we certainly have in bionic historically, usually of the form \"broken configure script assumes that the presence of some macro constant is the way to test for the availability of a function that uses that constant\"), but hopefully that won\u0027t be the case for Android API.\n\nthis is all part of jiyong\u0027s grander plan to make it easier for app developers to test for API availability, but in the short term it\u0027s mainly just \"less crap for OS developers to have to remember --- use __INTRODUCED_IN() in your .h, write a .map.txt, job done!\".",
+      "parentUuid": "71fd9af3_d916276d",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "f4b2772988a7ac90527e86768d29c620dc672346",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4a7d3f73_9a5bf1a9",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
