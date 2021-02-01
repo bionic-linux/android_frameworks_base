@@ -16,6 +16,24 @@
       "message": "This looks like the same as first sub-test (line#188~190).\nIs this to test whether the bitmap of RNDIS could be cleared after the 2nd sub-test?\nMaybe adding error message upon assertion failure could help us to clarify which one of the sub-tests fails exactly.",
       "revId": "65d8caa4055c6045f3c96d1e5f28467bdc9cba7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff3e14fb_b65751dd",
+        "filename": "tests/UsbTests/src/com/android/server/usb/UsbHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:08:12Z",
+      "side": 1,
+      "message": "No particular goal except making the test realistic. The idea is that the production code is expected to turn on/off USB tethering like this: first enable NCM, then NCM+RNDIS, then NCM. I thought I\u0027d add a test that covers that sequence of events. If you prefer I can delete these lines.",
+      "parentUuid": "7d73aeab_deed3f3c",
+      "revId": "65d8caa4055c6045f3c96d1e5f28467bdc9cba7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
