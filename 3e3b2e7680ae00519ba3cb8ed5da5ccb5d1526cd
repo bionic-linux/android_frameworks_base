@@ -22,6 +22,29 @@
       },
       "revId": "3e3b2e7680ae00519ba3cb8ed5da5ccb5d1526cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "016d1ef7_433179b7",
+        "filename": "services/java/com/android/server/SystemServer.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-01T03:50:39Z",
+      "side": 1,
+      "message": "Can we remove this method and get CM in NPMS directly?",
+      "range": {
+        "startLine": 1564,
+        "startChar": 26,
+        "endLine": 1564,
+        "endChar": 49
+      },
+      "revId": "3e3b2e7680ae00519ba3cb8ed5da5ccb5d1526cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
