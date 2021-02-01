@@ -16,20 +16,18 @@
 
 package com.android.server.compat;
 
-import android.compat.Compatibility;
+import android.app.compat.PackageOverride;
 
-import com.android.internal.compat.CompatibilityChangeConfig;
+import com.android.internal.compat.CompatibilityOverrideConfig;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 class CompatibilityChangeConfigBuilder {
-    private Set<Long> mEnabled;
-    private Set<Long> mDisabled;
+    private Map<Long, PackageOverride> mOverrides;
 
     private CompatibilityChangeConfigBuilder() {
-        mEnabled = new HashSet<>();
-        mDisabled = new HashSet<>();
+        mOverrides = new HashMap<>();
     }
 
     static CompatibilityChangeConfigBuilder create() {
@@ -37,16 +35,16 @@ class CompatibilityChangeConfigBuilder {
     }
 
     CompatibilityChangeConfigBuilder enable(Long id) {
-        mEnabled.add(id);
+        mOverrides.put(id, new PackageOverride.Builder().addForAllVersions(true).build());
         return this;
     }
 
     CompatibilityChangeConfigBuilder disable(Long id) {
-        mDisabled.add(id);
+        mOverrides.put(id, new PackageOverride.Builder().addForAllVersions(false).build());
         return this;
     }
 
-    CompatibilityChangeConfig build() {
-        return new CompatibilityChangeConfig(new Compatibility.ChangeConfig(mEnabled, mDisabled));
+    CompatibilityOverrideConfig build() {
+        return new CompatibilityOverrideConfig(mOverrides);
     }
 }

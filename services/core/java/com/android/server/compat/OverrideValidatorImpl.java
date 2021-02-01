@@ -82,6 +82,8 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
         boolean disabled = mCompatConfig.isDisabled(changeId);
 
         // Allow any override for userdebug or eng builds.
+        // TODO(bfranz): This is an issue, because it allows overrides to be applied to apps that
+        // aren't installed and therefore breaks the assumptions.
         if (debuggableBuild) {
             return new OverrideAllowedState(ALLOWED, -1, -1);
         }
@@ -95,6 +97,7 @@ public class OverrideValidatorImpl extends IOverrideValidator.Stub {
         } catch (NameNotFoundException e) {
             return new OverrideAllowedState(DEFERRED_VERIFICATION, -1, -1);
         }
+        // TODO(bfranz): Need to allow the installer
         int appTargetSdk = applicationInfo.targetSdkVersion;
         // Only allow overriding debuggable apps.
         if ((applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == 0) {

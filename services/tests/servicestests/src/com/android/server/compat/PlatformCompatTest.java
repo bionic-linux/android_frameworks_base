@@ -196,6 +196,9 @@ public class PlatformCompatTest {
         mPlatformCompat.registerListener(1, mListener1);
         mPlatformCompat.registerListener(2, mListener1);
 
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
+
         mPlatformCompat.setOverrides(
                 CompatibilityChangeConfigBuilder.create().enable(1L).disable(2L).build(),
                 PACKAGE_NAME);
@@ -208,6 +211,9 @@ public class PlatformCompatTest {
         mPlatformCompat.registerListener(1, mListener1);
         mPlatformCompat.registerListener(2, mListener1);
 
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
+
         mPlatformCompat.setOverrides(
                 CompatibilityChangeConfigBuilder.create().enable(1L).disable(2L).build(),
                 PACKAGE_NAME);
@@ -218,6 +224,9 @@ public class PlatformCompatTest {
     @Test
     public void testListenerCalledOnSetOverridesTwoListeners() throws Exception {
         mPlatformCompat.registerListener(1, mListener1);
+
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
 
         mPlatformCompat.setOverrides(
                 CompatibilityChangeConfigBuilder.create().enable(1L).disable(2L).build(),
@@ -244,6 +253,10 @@ public class PlatformCompatTest {
         mPlatformCompat.registerListener(1, mListener1);
         mPlatformCompat.registerListener(2, mListener1);
 
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
+
+        // TODO(bfranz): This needs to shift to setOverridesForTest
         mPlatformCompat.setOverrides(
                 CompatibilityChangeConfigBuilder.create().enable(1L).disable(2L).build(),
                 PACKAGE_NAME);
@@ -252,9 +265,13 @@ public class PlatformCompatTest {
     }
 
     @Test
-    public void testListenerCalledOnSetOverridesTwoListenersForTest() throws Exception {
+    public void testListenerCalledOnSetOverridesForTestTwoListeners() throws Exception {
         mPlatformCompat.registerListener(1, mListener1);
 
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
+
+        // TODO(bfranz): This needs to shift to setOverridesForTest
         mPlatformCompat.setOverrides(
                 CompatibilityChangeConfigBuilder.create().enable(1L).disable(2L).build(),
                 PACKAGE_NAME);
@@ -280,6 +297,9 @@ public class PlatformCompatTest {
         mPlatformCompat.registerListener(1, mListener1);
         mPlatformCompat.registerListener(2, mListener2);
 
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
+
         mPlatformCompat.setOverrides(
                 CompatibilityChangeConfigBuilder.create().enable(1L).build(),
                 PACKAGE_NAME);
@@ -298,6 +318,9 @@ public class PlatformCompatTest {
     public void testListenerCalledOnClearOverridesMultipleOverrides() throws Exception {
         mPlatformCompat.registerListener(1, mListener1);
         mPlatformCompat.registerListener(2, mListener2);
+
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
 
         mPlatformCompat.setOverrides(
                 CompatibilityChangeConfigBuilder.create().enable(1L).disable(2L).build(),
@@ -318,6 +341,9 @@ public class PlatformCompatTest {
         mPlatformCompat.registerListener(1, mListener1);
         mPlatformCompat.registerListener(2, mListener2);
 
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
+
         mPlatformCompat.setOverrides(
                 CompatibilityChangeConfigBuilder.create().enable(1L).build(),
                 PACKAGE_NAME);
@@ -335,6 +361,9 @@ public class PlatformCompatTest {
     @Test
     public void testListenerCalledOnClearOverrideDoesntExist() throws Exception {
         mPlatformCompat.registerListener(1, mListener1);
+
+        when(mPackageManager.getApplicationInfo(eq(PACKAGE_NAME), anyInt()))
+                .thenReturn(ApplicationInfoBuilder.create().withPackageName(PACKAGE_NAME).build());
 
         mPlatformCompat.clearOverride(1, PACKAGE_NAME);
         // Listener not called when a non existing override is removed.
