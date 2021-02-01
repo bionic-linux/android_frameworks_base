@@ -52,6 +52,24 @@
       "parentUuid": "ff3e14fb_b65751dd",
       "revId": "65d8caa4055c6045f3c96d1e5f28467bdc9cba7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "400d4ed6_707d401a",
+        "filename": "tests/UsbTests/src/com/android/server/usb/UsbHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T22:44:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "699f5cbb_09f0a698",
+      "revId": "65d8caa4055c6045f3c96d1e5f28467bdc9cba7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
