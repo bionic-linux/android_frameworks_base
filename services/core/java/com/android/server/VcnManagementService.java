@@ -48,6 +48,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
+import android.util.ArraySet;
 import android.util.Log;
 import android.util.Slog;
 
@@ -66,6 +67,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -153,6 +156,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @GuardedBy("mLock")
     @NonNull
     private final Map<ParcelUuid, Vcn> mVcns = new ArrayMap<>();
+
+    @GuardedBy("mLock")
+    @NonNull
+    private final Set<ParcelUuid> mSafemodeVcns = new ArraySet<>();
 
     @GuardedBy("mLock")
     @NonNull
@@ -291,8 +298,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 @NonNull VcnContext vcnContext,
                 @NonNull ParcelUuid subscriptionGroup,
                 @NonNull VcnConfig config,
-                @NonNull TelephonySubscriptionSnapshot snapshot) {
-            return new Vcn(vcnContext, subscriptionGroup, config, snapshot);
+                @NonNull TelephonySubscriptionSnapshot snapshot,
+                @NonNull VcnSafemodeCallback safemodeCallback) {
+            return new Vcn(vcnContext, subscriptionGroup, config, snapshot, safemodeCallback);
         }
 
         /** Gets the subId indicated by the given {@link WifiInfo}. */
@@ -438,7 +446,12 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         // TODO(b/176939047): Support multiple VCNs active at the same time, or limit to one active
         //                    VCN.
 
-        final Vcn newInstance = mDeps.newVcn(mVcnContext, subscriptionGroup, config, mLastSnapshot);
+        final VcnSafemodeCallbackImpl safemodeCallback =
+                new VcnSafemodeCallbackImpl(subscriptionGroup);
+
+        final Vcn newInstance =
+                mDeps.newVcn(
+                        mVcnContext, subscriptionGroup, config, mLastSnapshot, safemodeCallback);
         mVcns.put(subscriptionGroup, newInstance);
 
         // Now that a new VCN has started, notify all registered listeners to refresh their
@@ -536,11 +549,19 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
     }
 
-    /** Get current configuration list for testing purposes */
+    /** Get current VCNs for testing purposes */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public Map<ParcelUuid, Vcn> getAllVcns() {
         synchronized (mLock) {
             return Collections.unmodifiableMap(mVcns);
+        }
+    }
+
+    /** Get current VCNs in safemode for testing purposes */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public Set<ParcelUuid> getVcnsInSafemode() {
+        synchronized (mLock) {
+            return Collections.unmodifiableSet(mSafemodeVcns);
         }
     }
 
@@ -650,5 +671,34 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
 
         return new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, networkCapabilities);
+    }
+
+    /** Callback for signalling when a Vcn has entered Safemode. */
+    public interface VcnSafemodeCallback {
+        /** Called by a Vcn to signal that it has entered Safemode. */
+        void onEnteredSafemode();
+    }
+
+    /** VcnSafemodeCallback is used by Vcns to notify VcnManagementService on entering Safemode. */
+    private class VcnSafemodeCallbackImpl implements VcnSafemodeCallback {
+        @NonNull private final ParcelUuid mSubGroup;
+
+        private VcnSafemodeCallbackImpl(@NonNull final ParcelUuid subGroup) {
+            mSubGroup = Objects.requireNonNull(subGroup, "Missing subGroup");
+        }
+
+        @Override
+        public void onEnteredSafemode() {
+            synchronized (mLock) {
+                // Ignore if this subscription group doesn't exist anymore
+                if (!mVcns.containsKey(mSubGroup)) {
+                    return;
+                }
+
+                mSafemodeVcns.add(mSubGroup);
+
+                // TODO(b/178140973): notify caller via VcnStatusCallback#onStatusChanged
+            }
+        }
     }
 }
