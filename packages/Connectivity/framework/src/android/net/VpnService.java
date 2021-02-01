@@ -40,9 +40,11 @@ import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
+import android.util.Log;
 
 import com.android.internal.net.VpnConfig;
 
+import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -265,7 +267,7 @@ public class VpnService extends Service {
      * @see #protect(int)
      */
     public boolean protect(Socket socket) {
-        return protect(socket.getFileDescriptor$().getInt$());
+        return protect(ParcelFileDescriptor.fromSocket(socket));
     }
 
     /**
@@ -276,7 +278,25 @@ public class VpnService extends Service {
      * @see #protect(int)
      */
     public boolean protect(DatagramSocket socket) {
-        return protect(socket.getFileDescriptor$().getInt$());
+        return protect(ParcelFileDescriptor.fromDatagramSocket(socket));
+    }
+
+    /**
+     * Internal method with an input {@link ParcelFileDescriptor} that is gotten from  a
+     * {@link DatagramSocket} or a {@link Socket}.
+     */
+    private boolean protect(@NonNull ParcelFileDescriptor pfd) {
+        final boolean res = NetworkUtils.protectFromVpn(pfd.getFileDescriptor());
+        try {
+            // It's a dup of the original fd. The original and the dup share the underlying socket
+            // in the kernel. The socket is never truly closed until the last fd pointing to the
+            // socket being closed. So close the dup one after binding the socket to control the
+            // lifetime of the dup fd.
+            pfd.close();
+        } catch (IOException e) {
+            Log.wtf("Fail to close the dup fd", e);
+        }
+        return res;
     }
 
     /**
