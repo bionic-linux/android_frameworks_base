@@ -13744,7 +13744,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                 kernelUsed += ionHeap;
             } else {
                 final long totalExportedDmabuf = Debug.getDmabufTotalExportedKb();
-                if (totalExportedDmabuf >= 0) {
+                final long totalDmaHeapPool = Debug.getDmaHeapPoolsSizeKb();
+                if (totalExportedDmabuf >= 0 && totalDmaHeapPool >= 0) {
                     final long dmabufUnmapped = totalExportedDmabuf - dmabufMapped;
                     pw.print("DMA-BUF Total Exported: ");
                     pw.print(stringifyKBSize(totalExportedDmabuf));
@@ -13753,7 +13754,8 @@ public class ActivityManagerService extends IActivityManager.Stub
                     pw.print(" mapped + ");
                     pw.print(stringifyKBSize(dmabufUnmapped));
                     pw.println(" unmapped) ");
-                    // TODO(b/167709539): also add pooled memory from DMA-BUF heaps
+                    pw.print("DMA-BUF Heaps Total pool size: ");
+                    pw.println(stringifyKBSize(totalDmaHeapPool));
                     kernelUsed += totalExportedDmabuf;
                 }
             }
@@ -14568,11 +14570,13 @@ public class ActivityManagerService extends IActivityManager.Stub
             kernelUsed += ionHeap;
         } else {
             final long totalExportedDmabuf = Debug.getDmabufTotalExportedKb();
-            if (totalExportedDmabuf >= 0) {
+            final long totalDmaHeapPool = Debug.getDmaHeapPoolsSizeKb();
+            if (totalExportedDmabuf >= 0 && totalDmaHeapPool >= 0) {
                 memInfoBuilder.append("DMA-BUF Total Exported: ");
                 memInfoBuilder.append(stringifyKBSize(totalExportedDmabuf));
+                memInfoBuilder.append("DMA-BUF Heaps Total pool size: ");
+                memInfoBuilder.append(stringifyKBSize(totalDmaHeapPool));
                 memInfoBuilder.append("\n");
-                // TODO(b/167709539): also add pooled memory from DMA-BUF heaps
                 kernelUsed += totalExportedDmabuf;
             }
         }
