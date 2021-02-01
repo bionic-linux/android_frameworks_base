@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bba23b1_4e46ae6d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "making",
+      "range": {
+        "startLine": 983,
+        "startChar": 26,
+        "endLine": 983,
+        "endChar": 30
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d048bc9e_878f98a2",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7237,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "Nit: this is the way we defined the nascent state, so I think it\u0027s just the implementation, not a hack. :-)",
+      "range": {
+        "startLine": 7237,
+        "startChar": 75,
+        "endLine": 7237,
+        "endChar": 96
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec20e1c0_7aa3623b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7653,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "Does this code have the effect of telling netd to put the network into the background (after we put it in the foreground in line 7598)?",
+      "range": {
+        "startLine": 7653,
+        "startChar": 12,
+        "endLine": 7653,
+        "endChar": 44
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63ed7010_e0945896",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "torn down",
+      "range": {
+        "startLine": 122,
+        "startChar": 75,
+        "endLine": 122,
+        "endChar": 83
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "342c5e82_11257bf5",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "This \"nascent\" state is implemented by the",
+      "range": {
+        "startLine": 123,
+        "startChar": 3,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7eb32ad1_633014a1",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "The nascent state ends when the 5-second timer fires, or as soon as the network satisfies a request, whichever is earlier.\n\n\u003d\u003d\u003d\u003d\n\nAlso - in this state, can you say whether the network is in the foreground, or in the background?",
+      "range": {
+        "startLine": 124,
+        "startChar": 71,
+        "endLine": 124,
+        "endChar": 72
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aa42270_a0ed5f04",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "I find this hard to read. Is it possible to simplify it somehow?\n\nMore in general, I find it confusing that isLingering() will return true even if the network is not lingering. If in the future someone else working on this code means \"isLingering\" \u003d\u003d \"the network is lingering\", they will be wrong, and that can lead to a bug.\n\nSuggestion: how about we rename \"linger timer\" to some thing more generic such as \"teardown timer\", \"inactive timer\", \"disconnect timer\", or even just \"timer? Then you\u0027d be able to do something like:\n\n    public boolean isNascent() {\n        return mHasTeardownTimer \u0026\u0026 mTeardownTimers.size() \u003d\u003d 1\n                \u0026\u0026 mTeardownTimers.first().requestId \u003d\u003d NetworkRequest.REQUEST_ID_NONE;\n    }\n\n    public boolean isLingering() {\n        return mHasTeardownTimer \u0026\u0026 !isNascent();\n    }\n\nthen I think this code would remain just:\n\n    return !isVPN() \u0026\u0026 numForegroundNetworkRequests() \u003d\u003d 0 \u0026\u0026 mNumBackgroundNetworkRequests \u003e 0\n                \u0026\u0026 !isLingering();",
+      "range": {
+        "startLine": 774,
+        "startChar": 16,
+        "endLine": 774,
+        "endChar": 50
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf12590d_f42a799e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 867,
+        "startChar": 48,
+        "endLine": 867,
+        "endChar": 51
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d38ad28_19bcec0c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "Maybe instead say \"There is no need to ensure that... because it is already verified anywhere ...\"",
+      "range": {
+        "startLine": 1773,
+        "startChar": 11,
+        "endLine": 1773,
+        "endChar": 34
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1573739c_60baec63",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "Can we use the new requestBackgroundNetwork API instead of doing this?",
+      "range": {
+        "startLine": 1791,
+        "startChar": 0,
+        "endLine": 1793,
+        "endChar": 81
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

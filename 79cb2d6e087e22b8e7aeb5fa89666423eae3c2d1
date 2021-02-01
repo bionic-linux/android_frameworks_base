@@ -189,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12201f0e_c0e0394e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "176baa93_a43f5634",
+      "range": {
+        "startLine": 687,
+        "startChar": 37,
+        "endLine": 687,
+        "endChar": 46
+      },
+      "revId": "79cb2d6e087e22b8e7aeb5fa89666423eae3c2d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "532e282c_cedfe5d3",
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "Yes we have two tests which already use this mechanism, refer to:\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/tests/net/java/com/android/server/ConnectivityServiceTest.java;l\u003d2298?q\u003dConnectivityServiceTest\u0026ss\u003dandroid\nSo for short-term I think it \"might\" be ok?\n\nFor long-term,\nI have another patch stack to adapt TestLooper into CS, if that happens we can use something like mTestLooper.moveTimeForward(long milliSeconds), that allows us to not really wait for the time, and verify things accurately regardless of the device processing speed. But it is SUPER slow now.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1438375\n\nWDYT?",
       "parentUuid": "532e282c_cedfe5d3",
+      "range": {
+        "startLine": 1659,
+        "startChar": 16,
+        "endLine": 1659,
+        "endChar": 90
+      },
+      "revId": "79cb2d6e087e22b8e7aeb5fa89666423eae3c2d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d4f6e85_f20fdb14",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T15:22:52Z",
+      "side": 1,
+      "message": "Ack. Maybe just keep an eye on the dashboards to check whether this test is flaky or not, and if not, don\u0027t worry about it?",
+      "parentUuid": "6a941ea2_c78c2172",
       "range": {
         "startLine": 1659,
         "startChar": 16,
