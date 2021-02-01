@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25b0bc87_6a5a32b9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-01T07:12:57Z",
+      "side": 1,
+      "message": "Per discussion, this was incorrect.\n\nIf an app calls getNetworkInfo(TYPE_WIFI), then the old code would ask NPMS whether the network was blocked based on whether the network had the the NOT_METERED capability. But the new code will ask NPMS whether the network was blocked based on an empty capabilities that is always metered. So if metered networks are blocked, it will say that unmetered wifi is blocked.\n\nAdded a test for this in aosp/1564978 , and fixed this code accordingly.",
+      "range": {
+        "startLine": 1470,
+        "startChar": 38,
+        "endLine": 1470,
+        "endChar": 63
+      },
+      "revId": "e7c75c83429391fb066ff1ed1d18f2f3a7da06ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
