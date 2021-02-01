@@ -34,6 +34,24 @@
       "parentUuid": "7d73aeab_deed3f3c",
       "revId": "65d8caa4055c6045f3c96d1e5f28467bdc9cba7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "699f5cbb_09f0a698",
+        "filename": "tests/UsbTests/src/com/android/server/usb/UsbHandlerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1330244
+      },
+      "writtenOn": "2021-02-01T15:38:16Z",
+      "side": 1,
+      "message": "Thanks for the explanation.\nIt makes sense, and I\u0027m fine to go with this way.",
+      "parentUuid": "ff3e14fb_b65751dd",
+      "revId": "65d8caa4055c6045f3c96d1e5f28467bdc9cba7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
