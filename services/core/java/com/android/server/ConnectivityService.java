@@ -1374,7 +1374,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private NetworkState getUnfilteredActiveNetworkState(int uid) {
-        NetworkAgentInfo nai = getDeviceDefaultNetwork();
+        NetworkAgentInfo nai = getDefaultNetworkForUid(uid);
 
         final Network[] networks = getVpnUnderlyingNetworks(uid);
         if (networks != null) {
@@ -1507,7 +1507,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        NetworkAgentInfo nai = getDeviceDefaultNetwork();
+        NetworkAgentInfo nai = getDefaultNetworkForUid(uid);
         if (nai == null || isNetworkWithCapabilitiesBlocked(nai.networkCapabilities, uid,
                 ignoreBlocked)) {
             return null;
@@ -1646,21 +1646,28 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         HashMap<Network, NetworkCapabilities> result = new HashMap<>();
 
-        final NetworkAgentInfo nai = getDeviceDefaultNetwork();
-        NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
-        if (nc != null) {
-            result.put(
-                    nai.network,
-                    createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                            nc, mDeps.getCallingUid(), callingPackageName));
+        for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
+            if (!nri.isBeingSatisfied()) {
+                continue;
+            }
+            final NetworkAgentInfo nai = nri.getSatisfier();
+            final NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
+            if (null != nc
+                    && nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)
+                    && !result.containsKey(nai.network)) {
+                result.put(
+                        nai.network,
+                        createWithLocationInfoSanitizedIfNecessaryWhenParceled(
+                                nc, mDeps.getCallingUid(), callingPackageName));
+            }
         }
 
         // No need to check mLockdownEnabled. If it's true, getVpnUnderlyingNetworks returns null.
         final Network[] networks = getVpnUnderlyingNetworks(Binder.getCallingUid());
-        if (networks != null) {
-            for (Network network : networks) {
-                nc = getNetworkCapabilitiesInternal(network);
-                if (nc != null) {
+        if (null != networks) {
+            for (final Network network : networks) {
+                final NetworkCapabilities nc = getNetworkCapabilitiesInternal(network);
+                if (null != nc) {
                     result.put(
                             network,
                             createWithLocationInfoSanitizedIfNecessaryWhenParceled(
@@ -1682,9 +1689,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     /**
      * Return LinkProperties for the active (i.e., connected) default
-     * network interface.  It is assumed that at most one default network
-     * is active at a time. If more than one is active, it is indeterminate
-     * which will be returned.
+     * network interface for the calling uid.
      * @return the ip properties for the active network, or {@code null} if
      * none is active
      */
@@ -3567,8 +3572,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
         rematchAllNetworksAndRequests();
-        // If an active request exists, return as its score has already been sent if needed.
-        if (null != nri.getActiveRequest()) {
+        // If the nri is satisfied, return as its score has already been sent if needed.
+        if (nri.isBeingSatisfied()) {
             return;
         }
 
@@ -3711,7 +3716,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (mNetworkRequests.get(nri.mRequests.get(0)) == null) {
             return;
         }
-        if (nri.getActiveRequest() != null) {
+        if (nri.isBeingSatisfied()) {
             return;
         }
         if (VDBG || (DBG && nri.mRequests.get(0).isRequest())) {
@@ -4954,8 +4959,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     // TODO This needs to be the default network that applies to the NAI.
-    private Network[] underlyingNetworksOrDefault(Network[] underlyingNetworks) {
-        final Network defaultNetwork = getNetwork(getDeviceDefaultNetwork());
+    private Network[] underlyingNetworksOrDefault(final int ownerUid,
+            Network[] underlyingNetworks) {
+        final Network defaultNetwork = getNetwork(getDefaultNetworkForUid(ownerUid));
         if (underlyingNetworks == null && defaultNetwork != null) {
             // null underlying networks means to track the default.
             underlyingNetworks = new Network[] { defaultNetwork };
@@ -4968,7 +4974,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // TODO: support more than one level of underlying networks, either via a fixed-depth search
         // (e.g., 2 levels of underlying networks), or via loop detection, or....
         if (!nai.supportsUnderlyingNetworks()) return false;
-        final Network[] underlying = underlyingNetworksOrDefault(nai.declaredUnderlyingNetworks);
+        final Network[] underlying = underlyingNetworksOrDefault(
+                nai.networkCapabilities.getOwnerUid(), nai.declaredUnderlyingNetworks);
         return ArrayUtils.contains(underlying, network);
     }
 
@@ -5593,6 +5600,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
             this(r, null);
         }
 
+        boolean isBeingSatisfied() {
+            return (null != mSatisfier && null != mActiveRequest);
+        }
+
         boolean isMultilayerRequest() {
             return mRequests.size() > 1;
         }
@@ -6122,10 +6133,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     final NetworkAgentInfo mNoServiceNetwork;
 
-    // TODO: b/178729499 update this in favor of a method taking in a UID.
     // The NetworkAgentInfo currently satisfying the device default request, if any.
     private NetworkAgentInfo getDeviceDefaultNetwork() {
         return mDeviceDefaultRequest.getSatisfier();
+    }
+
+    private NetworkAgentInfo getDefaultNetworkForUid(final int uid) {
+        for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
+            // Currently, all network requests will have the same uids therefore checking the first
+            // one is sufficient. If/when uids are tracked at the nri level, this can change.
+            final Set<UidRange> uids = nri.mRequests.get(0).networkCapabilities.getUids();
+            if (null == uids) {
+                continue;
+            }
+            for (final UidRange range : uids) {
+                if (range.contains(uid)) {
+                    return nri.getSatisfier();
+                }
+            }
+        }
+        return getDeviceDefaultNetwork();
     }
 
     @Nullable
@@ -6634,7 +6661,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     void applyUnderlyingCapabilities(@Nullable Network[] underlyingNetworks,
             @NonNull NetworkCapabilities agentCaps, @NonNull NetworkCapabilities newNc) {
-        underlyingNetworks = underlyingNetworksOrDefault(underlyingNetworks);
+        underlyingNetworks = underlyingNetworksOrDefault(
+                agentCaps.getOwnerUid(), underlyingNetworks);
         int[] transportTypes = agentCaps.getTransportTypes();
         int downKbps = NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
         int upKbps = NetworkCapabilities.LINK_BANDWIDTH_UNSPECIFIED;
