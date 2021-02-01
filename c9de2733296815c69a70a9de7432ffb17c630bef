@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05e99130_1ab18180",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-01T19:55:13Z",
+      "side": 1,
+      "message": "With global hibernation being a separate-ish state from user level hibernation, we can be a little more strict with stopped user state management.",
+      "revId": "c9de2733296815c69a70a9de7432ffb17c630bef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
