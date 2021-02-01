@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a239097b_08fc2a8b",
+        "filename": "core/api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 12138,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-01T20:57:25Z",
+      "side": 1,
+      "message": "To help namespace and organize these new constants better, could you add a common prefix to help developers find them?  Here\u0027s one possible suggestion:\n\n  FEATURE_KEYSTORE_LIMITED_USE_KEYS \u003d \"android.hardware.keystore.limited_use_keys\"\n  FEATURE_KEYSTORE_SINGLE_USE_KEYS \u003d \"android.hardware.keystore.single_use_keys\"",
+      "range": {
+        "startLine": 12138,
+        "startChar": 0,
+        "endLine": 12138,
+        "endChar": 106
+      },
+      "revId": "12fa01c5fd1085bc771903757c255536862b1195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
