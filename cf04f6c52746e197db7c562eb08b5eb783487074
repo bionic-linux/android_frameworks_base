@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35cba315_9cfc1fb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:46:28Z",
+      "side": 1,
+      "message": "So, I\u0027m a bit confused here.\nBefore this change, the activity is tracked by NMS, and the edge is triggered by the Netd unsolicited event onInterfaceClassActivityChanged.\nAfter this change, the activity is tracked by CS, and the edge is triggered by a change in the satisfier for the default internet request.\n\nWhy are these two equivalent ? Doesn\u0027t netd send activity notifications at other times, like when there is traffic ?",
+      "revId": "cf04f6c52746e197db7c562eb08b5eb783487074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "901c5299_1d6dbe4c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8705,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:46:28Z",
+      "side": 1,
+      "message": "Nit : considering this is an identical statement at the end of both branches of this if() clause and the last case returns anyway, this line is better written in l.8662 to avoid duplication and simplify.",
+      "range": {
+        "startLine": 8705,
+        "startChar": 16,
+        "endLine": 8705,
+        "endChar": 37
+      },
+      "revId": "cf04f6c52746e197db7c562eb08b5eb783487074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
