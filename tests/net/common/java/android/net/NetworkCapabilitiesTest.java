@@ -350,7 +350,7 @@ public class NetworkCapabilitiesTest {
 
         final NetworkCapabilities netCap = createNetworkCapabilitiesWithWifiInfo();
         final NetworkCapabilities netCapWithLocationSensitiveFields =
-                new NetworkCapabilities(netCap, true);
+                new NetworkCapabilities(netCap, true, true);
 
         assertParcelingIsLossless(netCapWithLocationSensitiveFields);
         testParcelSane(netCapWithLocationSensitiveFields);
@@ -365,7 +365,7 @@ public class NetworkCapabilitiesTest {
 
         final NetworkCapabilities netCap = createNetworkCapabilitiesWithWifiInfo();
         final NetworkCapabilities netCapWithoutLocationSensitiveFields =
-                new NetworkCapabilities(netCap, false);
+                new NetworkCapabilities(netCap, false, false);
 
         final NetworkCapabilities sanitizedNetCap =
                 new NetworkCapabilities(netCapWithoutLocationSensitiveFields);
@@ -379,7 +379,7 @@ public class NetworkCapabilitiesTest {
 
     private void testParcelSane(NetworkCapabilities cap) {
         if (isAtLeastS()) {
-            assertParcelSane(cap, 16);
+            assertParcelSane(cap, 17);
         } else if (isAtLeastR()) {
             assertParcelSane(cap, 15);
         } else {
@@ -956,18 +956,7 @@ public class NetworkCapabilitiesTest {
     }
 
     private class TestTransportInfo implements TransportInfo {
-        TestTransportInfo() {
-        }
-
-        @Override
-        public TransportInfo makeCopy(boolean parcelLocationSensitiveFields) {
-            return this;
-        }
-
-        @Override
-        public boolean hasLocationSensitiveFields() {
-            return false;
-        }
+        TestTransportInfo() { }
     }
 
     @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
