@@ -1282,33 +1282,23 @@ public class ConnectivityServiceTest {
         }
     }
 
+    private boolean hasUidRule(int rule) {
+        return (mUidRules & rule) == rule;
+    }
+
     private void updateUidNetworkingBlocked() {
         // Changes the return value of the mock NetworkPolicyManager's isUidNetworkingBlocked method
-        // based on the current UID rules and restrict background setting. Note that the test never
-        // pretends to be a foreground app, so always declare no connectivity if background
-        // networking is not allowed.
-        switch (mUidRules) {
-            case RULE_REJECT_ALL:
-                when(mNetworkPolicyManager.isUidNetworkingBlocked(anyInt(), anyBoolean()))
-                        .thenReturn(true);
-                break;
-
-            case RULE_REJECT_METERED:
-                when(mNetworkPolicyManager.isUidNetworkingBlocked(anyInt(), eq(true)))
-                        .thenReturn(true);
-                when(mNetworkPolicyManager.isUidNetworkingBlocked(anyInt(), eq(false)))
-                        .thenReturn(mRestrictBackground);
-                break;
-
-            case RULE_ALLOW_METERED:
-            case RULE_NONE:
-                when(mNetworkPolicyManager.isUidNetworkingBlocked(anyInt(), anyBoolean()))
-                        .thenReturn(mRestrictBackground);
-                break;
-
-            default:
-                fail("Unknown policy rule " + mUidRules);
-        }
+        // based on the current UID rules and restrict background setting. Note that this is just a
+        // subset of the full behaviour and is based on the following assumptions:
+        // 1. RULE_*_METERED only affects metered networks, and RULE_*_ALL affects all networks.
+        // 2. RULE_REJECT_* takes precedence over RULE_ALLOW_*.
+        // 3. Powersave rules are never enabled.
+        final boolean blocked = hasUidRule(RULE_REJECT_ALL);
+        final boolean meteredBlocked = blocked || hasUidRule(RULE_REJECT_METERED);
+        when(mNetworkPolicyManager.isUidNetworkingBlocked(anyInt(), eq(false) /* unmetered */))
+                .thenReturn(blocked);
+        when(mNetworkPolicyManager.isUidNetworkingBlocked(anyInt(), eq(true) /* metered */))
+                .thenReturn(blocked || meteredBlocked);
     }
 
     private void setUidRulesChanged(int uidRules) throws RemoteException {
@@ -6930,17 +6920,21 @@ public class ConnectivityServiceTest {
         setUidRulesChanged(RULE_NONE);
         cellNetworkCallback.assertNoCallback();
 
-        // Restrict the network based on BackgroundRestricted.
+        // Restrict background data. Networking is not blocked because the network is unmetered.
         setRestrictBackgroundChanged(true);
         cellNetworkCallback.expectBlockedStatusCallback(true, mCellNetworkAgent);
-        assertEquals(null, mCm.getActiveNetwork());
-        assertActiveNetworkInfo(TYPE_MOBILE, DetailedState.BLOCKED);
-        assertNetworkInfo(TYPE_MOBILE, DetailedState.BLOCKED);
-
+        assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
+        assertActiveNetworkInfo(TYPE_MOBILE, DetailedState.CONNECTED);
+        assertNetworkInfo(TYPE_MOBILE, DetailedState.CONNECTED);
         setRestrictBackgroundChanged(true);
         cellNetworkCallback.assertNoCallback();
-        setRestrictBackgroundChanged(false);
+
+        setUidRulesChanged(RULE_ALLOW_METERED);
         cellNetworkCallback.expectBlockedStatusCallback(false, mCellNetworkAgent);
+        assertActiveNetworkInfo(TYPE_MOBILE, DetailedState.CONNECTED);
+        assertNetworkInfo(TYPE_MOBILE, DetailedState.CONNECTED);
+
+        setRestrictBackgroundChanged(false);
         cellNetworkCallback.assertNoCallback();
         assertEquals(mCellNetworkAgent.getNetwork(), mCm.getActiveNetwork());
         assertActiveNetworkInfo(TYPE_MOBILE, DetailedState.CONNECTED);
