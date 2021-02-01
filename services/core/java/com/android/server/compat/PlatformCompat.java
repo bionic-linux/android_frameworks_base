@@ -25,6 +25,7 @@ import static android.os.Process.SYSTEM_UID;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.IActivityManager;
+import android.app.compat.PackageOverride;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +44,7 @@ import com.android.internal.compat.AndroidBuildClassifier;
 import com.android.internal.compat.ChangeReporter;
 import com.android.internal.compat.CompatibilityChangeConfig;
 import com.android.internal.compat.CompatibilityChangeInfo;
+import com.android.internal.compat.CompatibilityOverrideConfig;
 import com.android.internal.compat.IOverrideValidator;
 import com.android.internal.compat.IPlatformCompat;
 import com.android.internal.util.DumpUtils;
@@ -51,6 +53,8 @@ import com.android.server.LocalServices;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * System server internal API for gating and reporting compatibility changes.
@@ -159,7 +163,7 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     }
 
     @Override
-    public void setOverrides(CompatibilityChangeConfig overrides, String packageName) {
+    public void setOverrides(CompatibilityOverrideConfig overrides, String packageName) {
         checkCompatChangeOverridePermission();
         mCompatConfig.addOverrides(overrides, packageName);
         killPackage(packageName);
@@ -168,7 +172,15 @@ public class PlatformCompat extends IPlatformCompat.Stub {
     @Override
     public void setOverridesForTest(CompatibilityChangeConfig overrides, String packageName) {
         checkCompatChangeOverridePermission();
-        mCompatConfig.addOverrides(overrides, packageName);
+        Map<Long, PackageOverride> overridesMap = new HashMap<>();
+        for (long change : overrides.enabledChanges()) {
+            overridesMap.put(change, new PackageOverride.Builder().addForAllVersions(true).build());
+        }
+        for (long change : overrides.disabledChanges()) {
+            overridesMap.put(change, new PackageOverride.Builder().addForAllVersions(false)
+                    .build());
+        }
+        mCompatConfig.addOverrides(new CompatibilityOverrideConfig(overridesMap), packageName);
     }
 
     @Override

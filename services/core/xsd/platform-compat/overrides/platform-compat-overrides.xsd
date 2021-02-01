@@ -27,6 +27,23 @@
         <xs:attribute type="xs:boolean" name="enabled" use="required" />
     </xs:complexType>
 
+    <xs:complexType name="override-range">
+        <xs:attribute type="xs:long" name="minVersionCode" default="-9223372036854775808" />
+        <xs:attribute type="xs:long" name="maxVersionCode" default="9223372036854775807" />
+        <xs:attribute type="xs:boolean" name="enabled" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="raw-override-value">
+        <xs:attribute type="xs:string" name="packageName" use="required" />
+        <xs:element name="override-ranges">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="range" type="override-range" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+    </xs:complexType>
+
     <xs:complexType name="change-overrides">
         <xs:attribute type="xs:long" name="changeId" use="required"/>
         <xs:element name="validated">
@@ -40,6 +57,13 @@
             <xs:complexType>
                 <xs:sequence>
                     <xs:element name="override-value" type="override-value" maxOccurs="unbounded" minOccurs="0" />
+                </xs:sequence>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="raw">
+            <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="raw-override-value" type="raw-override-value" maxOccurs="unbounded" minOccurs="0" />
                 </xs:sequence>
             </xs:complexType>
         </xs:element>

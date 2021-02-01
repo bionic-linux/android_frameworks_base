@@ -20,7 +20,15 @@ import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.compat.Compatibility;
+import android.content.Context;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
+
+import com.android.internal.compat.CompatibilityOverrideConfig;
+import com.android.internal.compat.IPlatformCompat;
+
+import java.util.Map;
 
 /**
  * CompatChanges APIs - to be used by platform code only (including mainline
@@ -89,4 +97,18 @@ public final class CompatChanges {
         return QUERY_CACHE.query(ChangeIdStateQuery.byUid(changeId, uid));
     }
 
+    /**
+     * @hide
+     */
+    public static void setPackageOverride(String packageName,
+            Map<Long, PackageOverride> overrides) {
+        IPlatformCompat platformCompat = IPlatformCompat.Stub.asInterface(
+                ServiceManager.getService(Context.PLATFORM_COMPAT_SERVICE));
+        CompatibilityOverrideConfig config = new CompatibilityOverrideConfig(overrides);
+        try {
+            platformCompat.setOverrides(config, packageName);
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+    }
 }
