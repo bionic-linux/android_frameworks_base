@@ -29,6 +29,7 @@ import android.util.Slog;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.server.VcnManagementService.VcnSafemodeCallback;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 
 import java.util.Collections;
@@ -82,10 +83,19 @@ public class Vcn extends Handler {
     /** Triggers an immediate teardown of the entire Vcn, including GatewayConnections. */
     private static final int MSG_CMD_TEARDOWN = MSG_CMD_BASE;
 
+    /**
+     * Causes this VCN to immediately enter Safemode.
+     *
+     * <p>Upon entering Safemode, the VCN will unregister its RequestListener, tear down all of its
+     * VcnGatewayConnections, and notify VcnManagementService that it is in Safemode.
+     */
+    private static final int MSG_CMD_ENTER_SAFEMODE = MSG_CMD_BASE + 1;
+
     @NonNull private final VcnContext mVcnContext;
     @NonNull private final ParcelUuid mSubscriptionGroup;
     @NonNull private final Dependencies mDeps;
     @NonNull private final VcnNetworkRequestListener mRequestListener;
+    @NonNull private final VcnSafemodeCallback mVcnSafemodeCallback;
 
     @NonNull
     private final Map<VcnGatewayConnectionConfig, VcnGatewayConnection> mVcnGatewayConnections =
@@ -94,14 +104,21 @@ public class Vcn extends Handler {
     @NonNull private VcnConfig mConfig;
     @NonNull private TelephonySubscriptionSnapshot mLastSnapshot;
 
-    private boolean mIsRunning = true;
+    private boolean mIsActive = true;
 
     public Vcn(
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull VcnConfig config,
-            @NonNull TelephonySubscriptionSnapshot snapshot) {
-        this(vcnContext, subscriptionGroup, config, snapshot, new Dependencies());
+            @NonNull TelephonySubscriptionSnapshot snapshot,
+            @NonNull VcnSafemodeCallback vcnSafemodeCallback) {
+        this(
+                vcnContext,
+                subscriptionGroup,
+                config,
+                snapshot,
+                vcnSafemodeCallback,
+                new Dependencies());
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
@@ -110,10 +127,13 @@ public class Vcn extends Handler {
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull VcnConfig config,
             @NonNull TelephonySubscriptionSnapshot snapshot,
+            @NonNull VcnSafemodeCallback vcnSafemodeCallback,
             @NonNull Dependencies deps) {
         super(Objects.requireNonNull(vcnContext, "Missing vcnContext").getLooper());
         mVcnContext = vcnContext;
         mSubscriptionGroup = Objects.requireNonNull(subscriptionGroup, "Missing subscriptionGroup");
+        mVcnSafemodeCallback =
+                Objects.requireNonNull(vcnSafemodeCallback, "Missing vcnSafemodeCallback");
         mDeps = Objects.requireNonNull(deps, "Missing deps");
         mRequestListener = new VcnNetworkRequestListener();
 
@@ -160,7 +180,7 @@ public class Vcn extends Handler {
 
     @Override
     public void handleMessage(@NonNull Message msg) {
-        if (!mIsRunning) {
+        if (!mIsActive) {
             return;
         }
 
@@ -176,6 +196,9 @@ public class Vcn extends Handler {
                 break;
             case MSG_CMD_TEARDOWN:
                 handleTeardown();
+                break;
+            case MSG_CMD_ENTER_SAFEMODE:
+                handleEnterSafemode();
                 break;
             default:
                 Slog.wtf(getLogTag(), "Unknown msg.what: " + msg.what);
@@ -198,7 +221,13 @@ public class Vcn extends Handler {
             gatewayConnection.teardownAsynchronously();
         }
 
-        mIsRunning = false;
+        mIsActive = false;
+    }
+
+    private void handleEnterSafemode() {
+        handleTeardown();
+
+        mVcnSafemodeCallback.onEnteredSafemode();
     }
 
     private void handleNetworkRequested(
@@ -233,7 +262,8 @@ public class Vcn extends Handler {
                                 mVcnContext,
                                 mSubscriptionGroup,
                                 mLastSnapshot,
-                                gatewayConnectionConfig);
+                                gatewayConnectionConfig,
+                                new VcnGatewayStatusCallbackImpl());
                 mVcnGatewayConnections.put(gatewayConnectionConfig, vcnGatewayConnection);
             }
         }
@@ -242,7 +272,7 @@ public class Vcn extends Handler {
     private void handleSubscriptionsChanged(@NonNull TelephonySubscriptionSnapshot snapshot) {
         mLastSnapshot = snapshot;
 
-        if (mIsRunning) {
+        if (mIsActive) {
             for (VcnGatewayConnection gatewayConnection : mVcnGatewayConnections.values()) {
                 gatewayConnection.updateSubscriptionSnapshot(mLastSnapshot);
             }
@@ -279,9 +309,28 @@ public class Vcn extends Handler {
                 VcnContext vcnContext,
                 ParcelUuid subscriptionGroup,
                 TelephonySubscriptionSnapshot snapshot,
-                VcnGatewayConnectionConfig connectionConfig) {
+                VcnGatewayConnectionConfig connectionConfig,
+                VcnGatewayStatusCallback gatewayStatusCallback) {
             return new VcnGatewayConnection(
-                    vcnContext, subscriptionGroup, snapshot, connectionConfig);
+                    vcnContext,
+                    subscriptionGroup,
+                    snapshot,
+                    connectionConfig,
+                    gatewayStatusCallback);
+        }
+    }
+
+    /** Callback used for passing status signals from a VcnGatewayConnection to its managing Vcn. */
+    @VisibleForTesting(visibility = Visibility.PACKAGE)
+    public interface VcnGatewayStatusCallback {
+        /** Called by a VcnGatewayConnection to indicate that it has entered Safemode. */
+        void onEnteredSafemode();
+    }
+
+    private class VcnGatewayStatusCallbackImpl implements VcnGatewayStatusCallback {
+        @Override
+        public void onEnteredSafemode() {
+            sendMessage(obtainMessage(MSG_CMD_ENTER_SAFEMODE));
         }
     }
 }
