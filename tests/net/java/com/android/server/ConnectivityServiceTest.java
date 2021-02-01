@@ -8336,7 +8336,8 @@ public class ConnectivityServiceTest {
         mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
                 netCap, includeLocationSensitiveInfoInTransportInfo, callerUid,
                 mContext.getPackageName(), getAttributionTag());
-        verify(wifiInfo).makeCopy(eq(shouldMakeCopyWithLocationSensitiveFieldsParcelable));
+        verify(wifiInfo).makeCopy(
+                eq(shouldMakeCopyWithLocationSensitiveFieldsParcelable), eq(false));
     }
 
     @Test
@@ -8431,6 +8432,38 @@ public class ConnectivityServiceTest {
         verifyWifiInfoCopyNetCapsForCallerPermission(myUid,
                 true /* includeLocationSensitiveInfoInTransportInfo */,
                 false /* shouldMakeCopyWithLocationSensitiveFieldsParcelable */);
+    }
+
+    @Test
+    public void testCreateForCallerWithLocalMacAddressSanitizedWithLocalMacAddressPermission()
+            throws Exception {
+        mServiceContext.setPermission(Manifest.permission.LOCAL_MAC_ADDRESS, PERMISSION_GRANTED);
+
+        final WifiInfo wifiInfo = mock(WifiInfo.class);
+        when(wifiInfo.hasLocationSensitiveFields()).thenReturn(true);
+        when(wifiInfo.hasLocalMacAddressFields()).thenReturn(true);
+        final NetworkCapabilities netCap = new NetworkCapabilities().setTransportInfo(wifiInfo);
+
+        mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
+                netCap, false /* includeLocationSensitiveInfoInTransportInfo */, Process.myUid(),
+                mContext.getPackageName(), getAttributionTag());
+        verify(wifiInfo).makeCopy(eq(false), eq(true));
+    }
+
+    @Test
+    public void testCreateForCallerWithLocalMacAddressSanitizedWithoutLocalMacAddressPermission()
+            throws Exception {
+        mServiceContext.setPermission(Manifest.permission.LOCAL_MAC_ADDRESS, PERMISSION_DENIED);
+
+        final WifiInfo wifiInfo = mock(WifiInfo.class);
+        when(wifiInfo.hasLocationSensitiveFields()).thenReturn(true);
+        when(wifiInfo.hasLocalMacAddressFields()).thenReturn(true);
+        final NetworkCapabilities netCap = new NetworkCapabilities().setTransportInfo(wifiInfo);
+
+        mService.createWithLocationInfoSanitizedIfNecessaryWhenParceled(
+                netCap, false /* includeLocationSensitiveInfoInTransportInfo */, Process.myUid(),
+                mContext.getPackageName(), getAttributionTag());
+        verify(wifiInfo).makeCopy(eq(false), eq(false));
     }
 
     private void setupConnectionOwnerUid(int vpnOwnerUid, @VpnManager.VpnType int vpnType)
