@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a223e33b_1c5404bb",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3945,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-01T17:21:17Z",
+      "side": 1,
+      "message": "You can\u0027t @link to ProvisioningManager as it\u0027s a SystemApi.  I would just reference to it as {@code ProvisioningManager} here.",
+      "range": {
+        "startLine": 3945,
+        "startChar": 18,
+        "endLine": 3945,
+        "endChar": 60
+      },
+      "revId": "bc7534e76e2578cae5df5216dd8e6e8a062e88d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
