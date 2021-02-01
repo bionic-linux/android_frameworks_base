@@ -1812,13 +1812,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkCapabilities newNc;
         // Avoid doing location permission check if the transport info has no location sensitive
         // data.
-        if (nc.getTransportInfo() != null && nc.getTransportInfo().hasLocationSensitiveFields()
-                && includeLocationSensitiveInfoInTransportInfo) {
-            hasLocationPermission =
-                    hasLocationPermission(callerUid, callerPkgName, callingAttributionTag);
-            newNc = new NetworkCapabilities(nc, hasLocationPermission);
+        if (nc.getTransportInfo() != null) {
+            boolean hasLocalMacAddressPermission = false;
+            if (nc.getTransportInfo().hasLocationSensitiveFields()
+                    && includeLocationSensitiveInfoInTransportInfo) {
+                hasLocationPermission =
+                        hasLocationPermission(callerUid, callerPkgName, callingAttributionTag);
+            } else {
+                hasLocationPermission = false; // No location sensitive fields.
+            }
+            if (nc.getTransportInfo().hasLocalMacAddressFields()) {
+                hasLocalMacAddressPermission = checkLocalMacAddressPermission(callerUid);
+            }
+            newNc = new NetworkCapabilities(
+                    nc, hasLocationPermission != null ? hasLocationPermission : false,
+                    hasLocalMacAddressPermission);
         } else {
-            newNc = new NetworkCapabilities(nc, false /* parcelLocationSensitiveFields */);
+            newNc = new NetworkCapabilities(
+                    nc, false /* parcelLocationSensitiveFields */,
+                    false /* parcelLocalMacAddressFields */);
         }
         // Reset owner uid if not destined for the owner app.
         if (callerUid != nc.getOwnerUid()) {
@@ -2321,6 +2333,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void enforceKeepalivePermission() {
         mContext.enforceCallingOrSelfPermission(KeepaliveTracker.PERMISSION, "ConnectivityService");
+    }
+
+    private boolean checkLocalMacAddressPermission(int uid) {
+        return PERMISSION_GRANTED == mContext.checkPermission(
+                Manifest.permission.LOCAL_MAC_ADDRESS, -1 /* pid */, uid);
     }
 
     // Public because it's used by mLockdownTracker.
