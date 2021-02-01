@@ -423,7 +423,7 @@ public final class SignalThresholdInfo implements Parcelable {
          *
          * @hide
          */
-        public @NonNull Builder setThresholdsUnlimited(@NonNull int[] thresholds) {
+        public @NonNull Builder setSystemThresholds(@NonNull int[] thresholds) {
             Objects.requireNonNull(thresholds, "thresholds must not be null");
             mThresholds = thresholds.clone();
             Arrays.sort(mThresholds);
