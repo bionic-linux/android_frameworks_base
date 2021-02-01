@@ -81,14 +81,22 @@ public final class NetworkCapabilities implements Parcelable {
      */
     private final boolean mParcelLocationSensitiveFields;
 
+    /**
+     * Indicates whether parceling should preserve fields that are set based on permissions of
+     * the process receiving the {@link NetworkCapabilities}.
+     */
+    private final boolean mParcelLocalMacAddressFields;
+
     public NetworkCapabilities() {
         mParcelLocationSensitiveFields = false;
+        mParcelLocalMacAddressFields = false;
         clearAll();
         mNetworkCapabilities = DEFAULT_CAPABILITIES;
     }
 
     public NetworkCapabilities(NetworkCapabilities nc) {
-        this(nc, false /* parcelLocationSensitiveFields */);
+        this(nc, false /* parcelLocationSensitiveFields */,
+                false /* parcelLocalMacAddressFields */);
     }
 
     /**
@@ -100,8 +108,11 @@ public final class NetworkCapabilities implements Parcelable {
      */
     @SystemApi
     public NetworkCapabilities(
-            @Nullable NetworkCapabilities nc, boolean parcelLocationSensitiveFields) {
+            @Nullable NetworkCapabilities nc,
+            boolean parcelLocationSensitiveFields,
+            boolean parcelLocalMacAddressFields) {
         mParcelLocationSensitiveFields = parcelLocationSensitiveFields;
+        mParcelLocalMacAddressFields = parcelLocalMacAddressFields;
         if (nc != null) {
             set(nc);
         }
@@ -115,9 +126,10 @@ public final class NetworkCapabilities implements Parcelable {
     public void clearAll() {
         // Ensures that the internal copies maintained by the connectivity stack does not set
         // this bit.
-        if (mParcelLocationSensitiveFields) {
+        if (mParcelLocationSensitiveFields || mParcelLocalMacAddressFields) {
             throw new UnsupportedOperationException(
-                    "Cannot clear NetworkCapabilities when parcelLocationSensitiveFields is set");
+                    "Cannot clear NetworkCapabilities when parcelLocationSensitiveFields or"
+                            + " parcelLocalMacAddressFields is set");
         }
         mNetworkCapabilities = mTransportTypes = mUnwantedNetworkCapabilities = 0;
         mLinkUpBandwidthKbps = mLinkDownBandwidthKbps = LINK_BANDWIDTH_UNSPECIFIED;
@@ -146,7 +158,8 @@ public final class NetworkCapabilities implements Parcelable {
         mLinkDownBandwidthKbps = nc.mLinkDownBandwidthKbps;
         mNetworkSpecifier = nc.mNetworkSpecifier;
         if (nc.getTransportInfo() != null) {
-            setTransportInfo(nc.getTransportInfo().makeCopy(mParcelLocationSensitiveFields));
+            setTransportInfo(nc.getTransportInfo().makeCopy(
+                    mParcelLocationSensitiveFields, mParcelLocalMacAddressFields));
         } else {
             setTransportInfo(null);
         }

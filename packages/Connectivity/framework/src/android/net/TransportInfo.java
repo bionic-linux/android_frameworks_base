@@ -38,12 +38,15 @@ public interface TransportInfo {
      *
      * @param parcelLocationSensitiveFields Whether the location sensitive fields should be kept
      *                                      when parceling
+     * @param parcelLocalMacAddressFields Whether the local MAC address fields should be kept when
+     *                                    parceling
      * @return Copy of this instance.
      * @hide
      */
     @SystemApi
     @NonNull
-    default TransportInfo makeCopy(boolean parcelLocationSensitiveFields) {
+    default TransportInfo makeCopy(
+            boolean parcelLocationSensitiveFields, boolean parcelLocalMacAddressFields) {
         return this;
     }
 
@@ -58,6 +61,20 @@ public interface TransportInfo {
      */
     @SystemApi
     default boolean hasLocationSensitiveFields() {
+        return false;
+    }
+
+    /**
+     * Returns whether this TransportInfo type has local Mac address fields or not (helps
+     * to determine whether to perform a LOCAL_MAC_ADDRESS permission check or not before sending to
+     * apps).
+     *
+     * @return {@code true} if this instance contains local MAC address info, {@code false}
+     * otherwise.
+     * @hide
+     */
+    @SystemApi
+    default boolean hasLocalMacAddressFields() {
         return false;
     }
 }
