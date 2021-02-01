@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9507865_f65c5d80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "ConnectivityService",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34319af6_6e42a1dc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8633,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "Please add some documentation. What network are you speaking about ?",
+      "range": {
+        "startLine": 8633,
+        "startChar": 24,
+        "endLine": 8633,
+        "endChar": 38
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c93dcad7_17fd1ea6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8635,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "This has been obsoleted by the arrival of Java 7 in 2011. Please write new HashMap\u003c\u003e instead and remove the dependency.",
+      "range": {
+        "startLine": 8635,
+        "startChar": 69,
+        "endLine": 8635,
+        "endChar": 87
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "689e877f_7c1480ad",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8635,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "Are you sure HashMap is the best choice ? HashMap is appropriate for 100+ items. ArrayMap or other implementations are much faster when n is \u003c 10.",
+      "range": {
+        "startLine": 8635,
+        "startChar": 16,
+        "endLine": 8635,
+        "endChar": 23
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "429ecaa0_9420a065",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8670,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "For what app ? Default networks are per-app.",
+      "range": {
+        "startLine": 8670,
+        "startChar": 44,
+        "endLine": 8670,
+        "endChar": 63
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9789174_8e262450",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8673,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "netd doesn\u0027t really make any network activity anyway. It just happens to include the DNS resolver, but that\u0027s only for organizational reasons, so I\u0027m not too sure what you mean.",
+      "range": {
+        "startLine": 8673,
+        "startChar": 40,
+        "endLine": 8673,
+        "endChar": 54
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f90613aa_a8fbd6b0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8682,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "You can\u0027t call this on multiple threads at the same time because of beginBroadcast(), please specify the threading model. Should this always be called on a specific thread ? Should a lock be held ?",
+      "range": {
+        "startLine": 8682,
+        "startChar": 21,
+        "endLine": 8682,
+        "endChar": 40
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3822e23_8d06ff08",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8802,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "Map.remove returns the removed object. You don\u0027t need to get it first.",
+      "range": {
+        "startLine": 8802,
+        "startChar": 38,
+        "endLine": 8802,
+        "endChar": 44
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e29fb29d_ca87a2ec",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8850,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T13:39:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure the intent in writing this comment. Yes you are right, if the system is configured to not track activity then the system could either choose to always report active or always report inactive. We chose to always report active. So... are you questioning this choice ? What is the TODO here exactly, do you think we should always report false when the system is configured not to track activity ? Personally I think always reporting true is the better choice. If you think that\u0027s unclear, then of course it\u0027s fine to expand on the comment in l.8842~8843, but here I don\u0027t understand the addition.\n\nWhat is there to do for this TODO ?",
+      "range": {
+        "startLine": 8845,
+        "startChar": 0,
+        "endLine": 8850,
+        "endChar": 40
+      },
+      "revId": "5617f72b75fcde2aa8e69baf42b30f1a5ff3228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
