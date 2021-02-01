@@ -422,7 +422,9 @@ public abstract class NetworkAgent {
         }
 
         mInitialConfiguration = new InitialConfiguration(context,
-                new NetworkCapabilities(nc, /* parcelLocationSensitiveFields */ true),
+                new NetworkCapabilities(
+                        nc, true /* parcelLocationSensitiveFields */ ,
+                        true /* parcelLocalMacAddressFields */),
                 new LinkProperties(lp), score, config, ni);
     }
 
@@ -865,8 +867,9 @@ public abstract class NetworkAgent {
         mBandwidthUpdatePending.set(false);
         mLastBwRefreshTime = System.currentTimeMillis();
         final NetworkCapabilities nc =
-                new NetworkCapabilities(networkCapabilities,
-                        /* parcelLocationSensitiveFields */ true);
+                new NetworkCapabilities(
+                        networkCapabilities, true /* parcelLocationSensitiveFields */,
+                        true /* parcelLocalMacAddressFields */);
         queueOrSendMessage(reg -> reg.sendNetworkCapabilities(nc));
     }
 
