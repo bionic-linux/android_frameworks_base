@@ -13746,6 +13746,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                 kernelUsed += ionHeap;
             } else {
                 final long totalExportedDmabuf = Debug.getDmabufTotalExportedKb();
+                final long totalDmaHeapPool = Debug.getDmaHeapPoolsSizeKb();
                 if (totalExportedDmabuf >= 0) {
                     final long dmabufUnmapped = totalExportedDmabuf - dmabufMapped;
                     pw.print("DMA-BUF Total Exported: ");
@@ -13755,8 +13756,11 @@ public class ActivityManagerService extends IActivityManager.Stub
                     pw.print(" mapped + ");
                     pw.print(stringifyKBSize(dmabufUnmapped));
                     pw.println(" unmapped) ");
-                    // TODO(b/167709539): also add pooled memory from DMA-BUF heaps
                     kernelUsed += totalExportedDmabuf;
+                }
+                if (totalDmaHeapPool >= 0) {
+                    pw.print("DMA-BUF Heaps Total pool size: ");
+                    pw.println(stringifyKBSize(totalDmaHeapPool));
                 }
             }
             final long gpuUsage = Debug.getGpuTotalUsageKb();
@@ -14570,12 +14574,17 @@ public class ActivityManagerService extends IActivityManager.Stub
             kernelUsed += ionHeap;
         } else {
             final long totalExportedDmabuf = Debug.getDmabufTotalExportedKb();
+            final long totalDmaHeapPool = Debug.getDmaHeapPoolsSizeKb();
             if (totalExportedDmabuf >= 0) {
                 memInfoBuilder.append("DMA-BUF Total Exported: ");
                 memInfoBuilder.append(stringifyKBSize(totalExportedDmabuf));
                 memInfoBuilder.append("\n");
-                // TODO(b/167709539): also add pooled memory from DMA-BUF heaps
                 kernelUsed += totalExportedDmabuf;
+            }
+            if (totalDmaHeapPool >= 0) {
+                memInfoBuilder.append("DMA-BUF Heaps Total pool size: ");
+                memInfoBuilder.append(stringifyKBSize(totalDmaHeapPool));
+                memInfoBuilder.append("\n");
             }
         }
 
