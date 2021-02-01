@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007781233",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1567201?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f441474f_3a2e0514",
+        "filename": "core/java/android/os/Vibrator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-01T15:23:55Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 7
+      },
+      "revId": "bba627c7b78308b96e1ea3d732f0d43c76918df5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
