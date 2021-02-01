@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccdfbe0f_7fb0a4b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1542716
+      },
+      "writtenOn": "2021-02-01T15:03:46Z",
+      "side": 1,
+      "message": "This was already merged internally and I don\u0027t think we need to update AOSP. However if i\u0027ve missed something and we do need to update AOSP we\u0027d rather cherry pick the internal CL here.",
+      "revId": "13d3e09c01814c0b3622298e3224b7c910a9a56c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
