@@ -111,6 +111,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbfe6954_c02f43cc",
+        "filename": "core/java/android/net/INetworkOfferCallback.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T12:25:50Z",
+      "side": 1,
+      "message": "In fact these two are the same thing, but you\u0027re right – providerId is the better naming here. Done.",
+      "parentUuid": "3536c8c9_4c674461",
+      "range": {
+        "startLine": 53,
+        "startChar": 14,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "faf5a430_2eab3316",
@@ -124,6 +148,30 @@
       "writtenOn": "2021-01-27T07:44:40Z",
       "side": 1,
       "message": "IIUC if the caller uses the same callback object for offerNetwork, we might remove wrong proxy in this function.\nMaybe we\u0027ll need to add some checking mechanism when calling into offerNetwork?",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 30
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62d7fc73_934665be",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T12:25:50Z",
+      "side": 1,
+      "message": "The binder token identifies uniquely the offer, so implementations must not do that. Added the check ; in the new patchset the offerNetwork will throw if passed an existing callback, and the remote side will ignore the passed callback with a Log.wtf if for some reason the AIDL method is called directly.",
+      "parentUuid": "faf5a430_2eab3316",
       "range": {
         "startLine": 220,
         "startChar": 16,
@@ -157,6 +205,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80d96ba6_e0b3880d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5893,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T12:25:50Z",
+      "side": 1,
+      "message": "It should, if I have my binder death recipients in order. Which I didn\u0027t. Fixed.",
+      "parentUuid": "eb4bf4c1_97ff9714",
+      "range": {
+        "startLine": 5893,
+        "startChar": 17,
+        "endLine": 5893,
+        "endChar": 48
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4943df64_c98587e3",
@@ -170,6 +242,30 @@
       "writtenOn": "2021-01-27T07:44:40Z",
       "side": 1,
       "message": "Question: Does the serial number needs to be included in this class?",
+      "range": {
+        "startLine": 47,
+        "startChar": 67,
+        "endLine": 47,
+        "endChar": 92
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4db0136e_802c6d9e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-01T12:25:50Z",
+      "side": 1,
+      "message": "Doesn\u0027t look so. The messenger identifies the provider uniquely.",
+      "parentUuid": "4943df64_c98587e3",
       "range": {
         "startLine": 47,
         "startChar": 67,
