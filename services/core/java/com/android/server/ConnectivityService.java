@@ -1421,7 +1421,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private NetworkState getUnfilteredActiveNetworkState(int uid) {
-        NetworkAgentInfo nai = getFallbackNetwork();
+        NetworkAgentInfo nai = getDefaultNetworkForUid(uid);
 
         final Network[] networks = getVpnUnderlyingNetworks(uid);
         if (networks != null) {
@@ -1551,7 +1551,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        NetworkAgentInfo nai = getFallbackNetwork();
+        NetworkAgentInfo nai = getDefaultNetworkForUid(uid);
         if (nai == null || isNetworkWithCapabilitiesBlocked(nai.networkCapabilities, uid,
                 ignoreBlocked)) {
             return null;
@@ -6221,6 +6221,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // TODO: b/178729499 update this in favor of a method taking in a UID.
     // The NetworkAgentInfo currently satisfying the device's default request, if any.
     private NetworkAgentInfo getFallbackNetwork() {
+        return mFallbackNetworkRequest.getSatisfier();
+    }
+
+    private NetworkAgentInfo getDefaultNetworkForUid(final int uid) {
+        for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
+            // Currently, all network requests will have the same uids therefore checking the first
+            // one is suffecient. If/when uids are tracked at the nri level, this can change.
+            final Set<UidRange> uids = nri.mRequests.get(0).networkCapabilities.getUids();
+            if (null == uids) {
+                continue;
+            }
+            for (final UidRange range : uids) {
+                if (range.contains(uid)) {
+                    return nri.getSatisfier();
+                }
+            }
+        }
         return mFallbackNetworkRequest.getSatisfier();
     }
 
