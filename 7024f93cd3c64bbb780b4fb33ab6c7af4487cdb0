@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "809fe735_fe498bd8",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3943,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2021-02-01T07:13:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5ccd919_f34eed4f",
+      "range": {
+        "startLine": 3943,
+        "startChar": 10,
+        "endLine": 3943,
+        "endChar": 14
+      },
+      "revId": "7024f93cd3c64bbb780b4fb33ab6c7af4487cdb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1534afad_543b96b3",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-01-29T19:54:07Z",
       "side": 1,
       "message": "Also, looking at this again, this should by default match the RCS capabilities cache timeout and then override it for carriers that require the 30 day limit (unless all carriers have a separate requirement for 30 days for non-RCS caps.) Can you also double check the specs?",
+      "range": {
+        "startLine": 3944,
+        "startChar": 31,
+        "endLine": 3944,
+        "endChar": 55
+      },
+      "revId": "7024f93cd3c64bbb780b4fb33ab6c7af4487cdb0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a466539d_4de44639",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3944,
+      "author": {
+        "id": 1349878
+      },
+      "writtenOn": "2021-02-01T07:13:06Z",
+      "side": 1,
+      "message": "Per RCC.07 A.1.9, it should be 30 days. Also add into comment.\n\nSee:\nhttps://www.gsma.com/futurenetworks/wp-content/uploads/2019/10/RCC.07-v11.0.pdf\n\nThis parameter allows to better control the amount of capability query sent to non RCS contacts. When updating a capability for a non RCS contact, a capability query takes place only if the time since the last capability update took place is greater than this parameter.\nDefault value: 2592000 (30 days)",
+      "parentUuid": "1534afad_543b96b3",
       "range": {
         "startLine": 3944,
         "startChar": 31,
