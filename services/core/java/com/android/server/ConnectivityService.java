@@ -1394,7 +1394,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private NetworkState getUnfilteredActiveNetworkState(int uid) {
-        NetworkAgentInfo nai = getFallbackNetwork();
+        NetworkAgentInfo nai = getDefaultNetworkForUid(uid);
 
         final Network[] networks = getVpnUnderlyingNetworks(uid);
         if (networks != null) {
@@ -1527,7 +1527,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             }
         }
 
-        NetworkAgentInfo nai = getFallbackNetwork();
+        NetworkAgentInfo nai = getDefaultNetworkForUid(uid);
         if (nai == null || isNetworkWithCapabilitiesBlocked(nai.networkCapabilities, uid,
                 ignoreBlocked)) {
             return null;
@@ -1666,21 +1666,28 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         HashMap<Network, NetworkCapabilities> result = new HashMap<>();
 
-        final NetworkAgentInfo nai = getFallbackNetwork();
-        NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
-        if (nc != null) {
-            result.put(
-                    nai.network,
-                    createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                            nc, mDeps.getCallingUid(), callingPackageName));
+        for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
+            if (null == nri.getActiveRequest()) {
+                continue;
+            }
+            final NetworkAgentInfo nai = nri.getSatisfier();
+            final NetworkCapabilities nc = getNetworkCapabilitiesInternal(nai);
+            if (null != nc
+                    && nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED)
+                    && !result.containsKey(nai.network)) {
+                result.put(
+                        nai.network,
+                        createWithLocationInfoSanitizedIfNecessaryWhenParceled(
+                                nc, mDeps.getCallingUid(), callingPackageName));
+            }
         }
 
         // No need to check mLockdownEnabled. If it's true, getVpnUnderlyingNetworks returns null.
         final Network[] networks = getVpnUnderlyingNetworks(Binder.getCallingUid());
-        if (networks != null) {
-            for (Network network : networks) {
-                nc = getNetworkCapabilitiesInternal(network);
-                if (nc != null) {
+        if (null != networks) {
+            for (final Network network : networks) {
+                final NetworkCapabilities nc = getNetworkCapabilitiesInternal(network);
+                if (null != nc) {
                     result.put(
                             network,
                             createWithLocationInfoSanitizedIfNecessaryWhenParceled(
@@ -1702,9 +1709,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     /**
      * Return LinkProperties for the active (i.e., connected) default
-     * network interface.  It is assumed that at most one default network
-     * is active at a time. If more than one is active, it is indeterminate
-     * which will be returned.
+     * network interface for the calling uid.
      * @return the ip properties for the active network, or {@code null} if
      * none is active
      */
@@ -6223,9 +6228,25 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @VisibleForTesting
     final NetworkAgentInfo mDisconnectedNetwork;
 
-    // TODO: b/178729499 update this in favor of a method taking in a UID.
     // The NetworkAgentInfo currently satisfying the fallback request, if any.
     private NetworkAgentInfo getFallbackNetwork() {
+        return mFallbackRequest.getSatisfier();
+    }
+
+    private NetworkAgentInfo getDefaultNetworkForUid(final int uid) {
+        for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
+            // Currently, all network requests will have the same uids therefore checking the first
+            // one is suffecient. If/when uids are tracked at the nri level, this can change.
+            final Set<UidRange> uids = nri.mRequests.get(0).networkCapabilities.getUids();
+            if (null == uids) {
+                continue;
+            }
+            for (final UidRange range : uids) {
+                if (range.contains(uid)) {
+                    return nri.getSatisfier();
+                }
+            }
+        }
         return mFallbackRequest.getSatisfier();
     }
 
