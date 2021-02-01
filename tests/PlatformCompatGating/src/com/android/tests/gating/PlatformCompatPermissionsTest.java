@@ -31,6 +31,7 @@ import android.os.ServiceManager;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.android.internal.compat.CompatibilityChangeConfig;
+import com.android.internal.compat.CompatibilityOverrideConfig;
 import com.android.internal.compat.IPlatformCompat;
 
 import org.junit.After;
@@ -41,6 +42,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -213,11 +215,10 @@ public final class PlatformCompatPermissionsTest {
         thrown.expect(SecurityException.class);
         Set<Long> enabled = new HashSet<>();
         Set<Long> disabled = new HashSet<>();
-        ChangeConfig changeConfig = new ChangeConfig(enabled, disabled);
-        CompatibilityChangeConfig compatibilityChangeConfig =
-                new CompatibilityChangeConfig(changeConfig);
+        CompatibilityOverrideConfig config = new CompatibilityOverrideConfig(
+                Collections.emptyMap());
 
-        mPlatformCompat.setOverrides(compatibilityChangeConfig, "foo.bar");
+        mPlatformCompat.setOverrides(config, "foo.bar");
     }
     @Test
     public void setOverrides_overridesPermission_noThrow()
@@ -225,11 +226,10 @@ public final class PlatformCompatPermissionsTest {
         mUiAutomation.adoptShellPermissionIdentity(OVERRIDE_COMPAT_CHANGE_CONFIG);
         Set<Long> enabled = new HashSet<>();
         Set<Long> disabled = new HashSet<>();
-        ChangeConfig changeConfig = new ChangeConfig(enabled, disabled);
-        CompatibilityChangeConfig compatibilityChangeConfig =
-                new CompatibilityChangeConfig(changeConfig);
+        CompatibilityOverrideConfig config = new CompatibilityOverrideConfig(
+                Collections.emptyMap());
 
-        mPlatformCompat.setOverrides(compatibilityChangeConfig, "foo.bar");
+        mPlatformCompat.setOverrides(config, "foo.bar");
     }
 
     @Test

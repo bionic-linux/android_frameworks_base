@@ -39,11 +39,12 @@ import android.app.KeyguardManager;
 import android.app.ProfilerInfo;
 import android.app.UserSwitchObserver;
 import android.app.WaitResult;
+import android.app.compat.CompatChanges;
+import android.app.compat.PackageOverride;
 import android.app.usage.AppStandbyInfo;
 import android.app.usage.ConfigurationStats;
 import android.app.usage.IUsageStatsManager;
 import android.app.usage.UsageStatsManager;
-import android.compat.Compatibility;
 import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
 import android.content.Context;
@@ -88,7 +89,6 @@ import android.util.DisplayMetrics;
 import android.util.proto.ProtoOutputStream;
 import android.view.Display;
 
-import com.android.internal.compat.CompatibilityChangeConfig;
 import com.android.internal.util.HexDump;
 import com.android.internal.util.MemInfoReader;
 import com.android.server.compat.PlatformCompat;
@@ -2978,11 +2978,10 @@ final class ActivityManagerShellCommand extends ShellCommand {
                         pw.println("Enabled " + numChanges + " changes gated by targetSdkVersion "
                                 + targetSdkVersion + " for " + packageName + ".");
                     } else {
-                        enabled.add(changeId);
-                        CompatibilityChangeConfig overrides =
-                                new CompatibilityChangeConfig(
-                                        new Compatibility.ChangeConfig(enabled, disabled));
-                        platformCompat.setOverrides(overrides, packageName);
+                        CompatChanges.setPackageOverride(packageName,
+                                Collections.singletonMap(changeId,
+                                        new PackageOverride.Builder()
+                                                .addForAllVersions(true).build()));
                         pw.println("Enabled change " + changeId + " for " + packageName + ".");
                     }
                     return 0;
@@ -2997,11 +2996,10 @@ final class ActivityManagerShellCommand extends ShellCommand {
                         pw.println("Disabled " + numChanges + " changes gated by targetSdkVersion "
                                 + targetSdkVersion + " for " + packageName + ".");
                     } else {
-                        disabled.add(changeId);
-                        CompatibilityChangeConfig overrides =
-                                new CompatibilityChangeConfig(
-                                        new Compatibility.ChangeConfig(enabled, disabled));
-                        platformCompat.setOverrides(overrides, packageName);
+                        CompatChanges.setPackageOverride(packageName,
+                                Collections.singletonMap(changeId,
+                                        new PackageOverride.Builder()
+                                                .addForAllVersions(false).build()));
                         pw.println("Disabled change " + changeId + " for " + packageName + ".");
                     }
                     return 0;
