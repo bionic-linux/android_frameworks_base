@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7b7a386_7c3bc051",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-01T20:39:34Z",
+      "side": 1,
+      "message": "Let\u0027s discuss this on Wednesday\u0027s call. We may need a mechanism to extend this permission enforcement model for TransportInfo. ",
+      "revId": "f30878c4131c88650f645b5a4075ecde99a50dd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
