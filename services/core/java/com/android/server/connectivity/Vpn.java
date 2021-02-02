@@ -74,6 +74,7 @@ import android.net.UidRangeParcel;
 import android.net.UnderlyingNetworkInfo;
 import android.net.VpnManager;
 import android.net.VpnService;
+import android.net.VpnTransportInfo;
 import android.net.ipsec.ike.ChildSessionCallback;
 import android.net.ipsec.ike.ChildSessionConfiguration;
 import android.net.ipsec.ike.ChildSessionParams;
@@ -929,6 +930,7 @@ public class Vpn {
                 jniReset(mInterface);
                 mInterface = null;
                 mNetworkCapabilities.setUids(null);
+                mNetworkCapabilities.setTransportInfo(null);
             }
 
             // Revoke the connection or stop the VpnRunner.
@@ -1210,6 +1212,8 @@ public class Vpn {
         mNetworkCapabilities.setAdministratorUids(new int[] {mOwnerUID});
         mNetworkCapabilities.setUids(createUserAndRestrictedProfilesRanges(mUserId,
                 mConfig.allowedApplications, mConfig.disallowedApplications));
+
+        mNetworkCapabilities.setTransportInfo(new VpnTransportInfo(getActiveVpnType()));
 
         // Only apps targeting Q and above can explicitly declare themselves as metered.
         // These VPNs are assumed metered unless they state otherwise.
@@ -1736,6 +1740,7 @@ public class Vpn {
     private void cleanupVpnStateLocked() {
         mStatusIntent = null;
         mNetworkCapabilities.setUids(null);
+        mNetworkCapabilities.setTransportInfo(null);
         mConfig = null;
         mInterface = null;
 
@@ -1846,22 +1851,18 @@ public class Vpn {
     }
 
     /**
-     * Gets the currently running App-based VPN type
+     * Gets the currently running VPN type
      *
-     * @return the {@link VpnManager.VpnType}. {@link VpnManager.TYPE_VPN_NONE} if not running an
-     *     app-based VPN. While VpnService-based VPNs are always app VPNs and LegacyVpn is always
+     * @return the {@link VpnManager.VpnType}. {@link VpnManager.TYPE_VPN_NONE} if not running a
+     *     VPN. While VpnService-based VPNs are always app VPNs and LegacyVpn is always
      *     Settings-based, the Platform VPNs can be initiated by both apps and Settings.
      */
-    public synchronized int getActiveAppVpnType() {
-        if (VpnConfig.LEGACY_VPN.equals(mPackage)) {
-            return VpnManager.TYPE_VPN_NONE;
-        }
-
-        if (mVpnRunner != null && mVpnRunner instanceof IkeV2VpnRunner) {
-            return VpnManager.TYPE_VPN_PLATFORM;
-        } else {
-            return VpnManager.TYPE_VPN_SERVICE;
-        }
+    public synchronized int getActiveVpnType() {
+        if (!mNetworkInfo.isConnectedOrConnecting()) return VpnManager.TYPE_VPN_NONE;
+        if (mVpnRunner == null) return VpnManager.TYPE_VPN_SERVICE;
+        return mVpnRunner instanceof IkeV2VpnRunner
+                ? VpnManager.TYPE_VPN_PLATFORM
+                : VpnManager.TYPE_VPN_LEGACY;
     }
 
     private void updateAlwaysOnNotification(DetailedState networkState) {
