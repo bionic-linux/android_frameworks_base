@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "796871fd_5973ce65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1386891
+      },
+      "writtenOn": "2021-02-02T01:15:03Z",
+      "side": 1,
+      "message": "separate CL for tests/net/Android.bp as Lorenzo recommended in ag/13417790",
+      "revId": "7594ebdf90c3f9aa1c155279a107f2ecf6d0956d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
