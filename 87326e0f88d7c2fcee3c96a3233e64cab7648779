@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eca75c4b_75525d1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-02-02T19:03:22Z",
+      "side": 1,
+      "message": "re-running - looks really unrelated to me (issue w/ specific vertical\u0027s settings app, don\u0027t see networking message)",
+      "revId": "87326e0f88d7c2fcee3c96a3233e64cab7648779",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
