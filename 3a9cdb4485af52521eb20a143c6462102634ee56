@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f521af64_9e3a050c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2021-02-02T03:20:26Z",
+      "side": 1,
+      "message": "ctzsm@ PTAL. Here are example screenshots:\n\n* http://shortn/_c12dcGLBVX (setCookie)\n* http://shortn/_F2Am9u35Wt (getCookie)",
+      "revId": "3a9cdb4485af52521eb20a143c6462102634ee56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
