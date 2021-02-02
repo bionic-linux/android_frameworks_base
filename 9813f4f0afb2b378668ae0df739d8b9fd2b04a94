@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2362f86_c771ba4c",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-02T06:48:37Z",
+      "side": 1,
+      "message": "addressed in followup aosp/1569863\n\nDone",
+      "parentUuid": "44a62160_17e5b233",
+      "range": {
+        "startLine": 70,
+        "startChar": 40,
+        "endLine": 70,
+        "endChar": 78
+      },
+      "revId": "9813f4f0afb2b378668ae0df739d8b9fd2b04a94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5d2522e_bcdd7db3",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-01T23:08:11Z",
       "side": 1,
       "message": "Optional: Nathan correctly pointed out on one of my CLs that this can be made more readable by having a \"toRegister\" and \"toUnregister\" lists:\n\ntoRegister \u003d copyOf(newSubIds).removeAll(mSubIds)\ntoUnregister \u003d copyOf(mSubIds).removeAll(newSubIds)",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 58
+      },
+      "revId": "9813f4f0afb2b378668ae0df739d8b9fd2b04a94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e91981d_821a7847",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-02T06:48:37Z",
+      "side": 1,
+      "message": "addressed when fixing aosp/1557449\u0027s comment\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1557449/10..11/services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java#b61\n\nDone",
+      "parentUuid": "a5d2522e_bcdd7db3",
       "range": {
         "startLine": 152,
         "startChar": 0,
