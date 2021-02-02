@@ -22,6 +22,30 @@
       },
       "revId": "12fa01c5fd1085bc771903757c255536862b1195",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a0d89ae_a7c3bee3",
+        "filename": "core/api/current.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 12138,
+      "author": {
+        "id": 1801328
+      },
+      "writtenOn": "2021-02-02T06:33:14Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, updated now!",
+      "parentUuid": "a239097b_08fc2a8b",
+      "range": {
+        "startLine": 12138,
+        "startChar": 0,
+        "endLine": 12138,
+        "endChar": 106
+      },
+      "revId": "12fa01c5fd1085bc771903757c255536862b1195",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
