@@ -205,6 +205,7 @@ import android.net.UidRangeParcel;
 import android.net.UnderlyingNetworkInfo;
 import android.net.Uri;
 import android.net.VpnManager;
+import android.net.VpnTransportInfo;
 import android.net.metrics.IpConnectivityLog;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
@@ -1109,7 +1110,7 @@ public class ConnectivityServiceTest {
         }
 
         @Override
-        public int getActiveAppVpnType() {
+        public int getActiveVpnType() {
             return mVpnType;
         }
 
@@ -1122,10 +1123,13 @@ public class ConnectivityServiceTest {
         private void registerAgent(boolean isAlwaysMetered, Set<UidRange> uids, LinkProperties lp)
                 throws Exception {
             if (mAgentRegistered) throw new IllegalStateException("already registered");
+            updateState(NetworkInfo.DetailedState.CONNECTING, "registerAgent");
             mConfig = new VpnConfig();
             setUids(uids);
             if (!isAlwaysMetered) mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_METERED);
             mInterface = VPN_IFNAME;
+            mNetworkCapabilities.setTransportInfo(new VpnTransportInfo(
+                    getActiveVpnType(), "testSessionName"));
             mMockNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp,
                     mNetworkCapabilities);
             mMockNetworkAgent.waitForIdle(TIMEOUT_MS);
@@ -7203,6 +7207,7 @@ public class ConnectivityServiceTest {
     }
 
     private void establishLegacyLockdownVpn() throws Exception {
+        mMockVpn.setVpnType(VpnManager.TYPE_VPN_LEGACY);
         // The legacy lockdown VPN only supports userId 0.
         final Set<UidRange> ranges = Collections.singleton(UidRange.createForUser(PRIMARY_USER));
         mMockVpn.registerAgent(ranges);
@@ -7315,6 +7320,10 @@ public class ConnectivityServiceTest {
         assertTrue(vpnNc.hasTransport(TRANSPORT_CELLULAR));
         assertFalse(vpnNc.hasTransport(TRANSPORT_WIFI));
         assertFalse(vpnNc.hasCapability(NET_CAPABILITY_NOT_METERED));
+        VpnTransportInfo ti = (VpnTransportInfo) vpnNc.getTransportInfo();
+        assertNotNull(ti);
+        assertEquals(VpnManager.TYPE_VPN_LEGACY, ti.type);
+        assertNull(ti.sessionName);  // Redacted.
 
         // Switch default network from cell to wifi. Expect VPN to disconnect and reconnect.
         final LinkProperties wifiLp = new LinkProperties();
