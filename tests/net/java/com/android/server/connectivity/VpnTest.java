@@ -25,6 +25,7 @@ import static android.net.ConnectivityManager.NetworkCallback;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -74,6 +75,7 @@ import android.net.UidRange;
 import android.net.UidRangeParcel;
 import android.net.VpnManager;
 import android.net.VpnService;
+import android.net.VpnTransportInfo;
 import android.net.ipsec.ike.IkeSessionCallback;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
 import android.os.Build.VERSION_CODES;
@@ -997,6 +999,14 @@ public class VpnTest {
         startRacoon("hostname", "5.6.7.8"); // address returned by deps.resolve
     }
 
+    private void assertTransportInfoMatches(NetworkCapabilities nc, int type, String sessionName) {
+        assertNotNull(nc);
+        VpnTransportInfo ti = (VpnTransportInfo) nc.getTransportInfo();
+        assertNotNull(ti);
+        assertEquals(type, ti.type);
+        assertEquals(sessionName, ti.sessionName);
+    }
+
     public void startRacoon(final String serverAddr, final String expectedAddr)
             throws Exception {
         final ConditionVariable legacyRunnerReady = new ConditionVariable();
@@ -1018,9 +1028,11 @@ public class VpnTest {
         // not allow using ArgumentCaptors, and asserting within the answer lambda causes the test
         // process to crash instead of causing the test to fail cleanly.
         AtomicReference<LinkProperties> lpReference = new AtomicReference<>();
+        AtomicReference<NetworkCapabilities> ncReference = new AtomicReference<>();
         when(mConnectivityManager.registerNetworkAgent(any(), any(), any(), any(),
                 anyInt(), any(), anyInt())).thenAnswer(invocation -> {
                     lpReference.set(invocation.getArgument(2));
+                    ncReference.set(invocation.getArgument(3));
 
                     // The runner has registered an agent and is now ready.
                     legacyRunnerReady.open();
@@ -1055,6 +1067,9 @@ public class VpnTest {
             final List<RouteInfo> actualRoutes = lpReference.get().getRoutes();
             assertTrue("Expected throw route (" + expectedRoute + ") not found in " + actualRoutes,
                     actualRoutes.contains(expectedRoute));
+
+            assertTransportInfoMatches(ncReference.get(),
+                    VpnManager.TYPE_VPN_LEGACY, "testProfileName");
         } finally {
             // Now interrupt the thread, unblock the runner and clean up.
             vpn.mVpnRunner.exitVpnRunner();
