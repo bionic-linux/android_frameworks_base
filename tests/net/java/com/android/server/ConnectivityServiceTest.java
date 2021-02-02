@@ -205,6 +205,7 @@ import android.net.UidRangeParcel;
 import android.net.UnderlyingNetworkInfo;
 import android.net.Uri;
 import android.net.VpnManager;
+import android.net.VpnTransportInfo;
 import android.net.metrics.IpConnectivityLog;
 import android.net.shared.NetworkMonitorUtils;
 import android.net.shared.PrivateDnsConfig;
@@ -1109,7 +1110,7 @@ public class ConnectivityServiceTest {
         }
 
         @Override
-        public int getActiveAppVpnType() {
+        public int getActiveVpnType() {
             return mVpnType;
         }
 
@@ -1122,10 +1123,13 @@ public class ConnectivityServiceTest {
         private void registerAgent(boolean isAlwaysMetered, Set<UidRange> uids, LinkProperties lp)
                 throws Exception {
             if (mAgentRegistered) throw new IllegalStateException("already registered");
+            updateState(NetworkInfo.DetailedState.CONNECTING, "registerAgent");
             mConfig = new VpnConfig();
             setUids(uids);
             if (!isAlwaysMetered) mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_METERED);
             mInterface = VPN_IFNAME;
+            mNetworkCapabilities.setTransportInfo(new VpnTransportInfo(
+                    getActiveVpnType(), "testSessionName"));
             mMockNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp,
                     mNetworkCapabilities);
             mMockNetworkAgent.waitForIdle(TIMEOUT_MS);
@@ -7193,9 +7197,9 @@ public class ConnectivityServiceTest {
     }
 
     private void establishLegacyLockdownVpn() throws Exception {
+        mMockVpn.setVpnType(VpnManager.TYPE_VPN_LEGACY);
         final LinkProperties lp = new LinkProperties();
         lp.setInterfaceName(VPN_IFNAME);
-        // The legacy lockdown VPN only supports userId 0.
         final Set<UidRange> ranges = Collections.singleton(UidRange.createForUser(PRIMARY_USER));
         mMockVpn.registerAgent(ranges);
         mMockVpn.connect(true);
@@ -7279,6 +7283,13 @@ public class ConnectivityServiceTest {
         assertNetworkInfo(TYPE_WIFI, DetailedState.BLOCKED);
         assertNetworkInfo(TYPE_VPN, DetailedState.BLOCKED);
 
+        NetworkCapabilities vpnNc = mCm.getNetworkCapabilities(mMockVpn.getNetwork());
+        assertNotNull(vpnNc);
+        VpnTransportInfo ti = (VpnTransportInfo) vpnNc.getTransportInfo();
+        assertNotNull(ti);
+        assertEquals(VpnManager.TYPE_VPN_LEGACY, ti.type);
+        assertNull(ti.sessionName);  // Redacted.
+
         // TODO: it would be nice if we could simply rely on the production code here, and have
         // LockdownVpnTracker start the VPN, have the VPN code register its NetworkAgent with
         // ConnectivityService, etc. That would require duplicating a fair bit of code from the
@@ -7298,7 +7309,7 @@ public class ConnectivityServiceTest {
         establishLegacyLockdownVpn();
         callback.expectAvailableThenValidatedCallbacks(mMockVpn);
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
-        NetworkCapabilities vpnNc = mCm.getNetworkCapabilities(mMockVpn.getNetwork());
+        vpnNc = mCm.getNetworkCapabilities(mMockVpn.getNetwork());
         b1.expectBroadcast();
         b2.expectBroadcast();
         assertActiveNetworkInfo(TYPE_MOBILE, DetailedState.CONNECTED);
