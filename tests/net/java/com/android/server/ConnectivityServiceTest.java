@@ -6895,7 +6895,7 @@ public class ConnectivityServiceTest {
         cellNetworkCallback.expectCapabilitiesWithout(NET_CAPABILITY_NOT_METERED,
                 mCellNetworkAgent);
         cellNetworkCallback.expectBlockedStatusCallback(true, mCellNetworkAgent);
-        assertEquals(null, mCm.getActiveNetwork());
+        assertNull(mCm.getActiveNetwork());
         assertActiveNetworkInfo(TYPE_MOBILE, DetailedState.BLOCKED);
         assertNetworkInfo(TYPE_MOBILE, DetailedState.BLOCKED);
 
