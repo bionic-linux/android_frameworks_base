@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74c63e6d_dd3586f5",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1922,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-02-02T04:53:22Z",
+      "side": 1,
+      "message": "Do we want to rename it to UWB_PRIVILEGED? So that we can better accommodate other non-privileged UWB permissions in the future",
+      "range": {
+        "startLine": 1922,
+        "startChar": 49,
+        "endLine": 1922,
+        "endChar": 52
+      },
+      "revId": "b0038b9a9d3451325d9b6cb24cca4c977441cf7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
