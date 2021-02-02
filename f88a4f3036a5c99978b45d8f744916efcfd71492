@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a2044db_bbf18678",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-02T14:08:32Z",
+      "side": 1,
+      "message": "Done.\nI think the boolean is a part of the deduction.\nSee if the newest patch works for you.",
+      "parentUuid": "563f5ff3_30ee10b1",
+      "range": {
+        "startLine": 796,
+        "startChar": 16,
+        "endLine": 796,
+        "endChar": 45
+      },
+      "revId": "f88a4f3036a5c99978b45d8f744916efcfd71492",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7879c3f_315e88ce",
