@@ -16,6 +16,24 @@
       "message": "ctzsm@ PTAL. Here are example screenshots:\n\n* http://shortn/_c12dcGLBVX (setCookie)\n* http://shortn/_F2Am9u35Wt (getCookie)",
       "revId": "3a9cdb4485af52521eb20a143c6462102634ee56",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e84a54c_c62b285b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396522
+      },
+      "writtenOn": "2021-02-02T17:40:27Z",
+      "side": 1,
+      "message": "lgtm, thanks for the screenshots!",
+      "parentUuid": "f521af64_9e3a050c",
+      "revId": "3a9cdb4485af52521eb20a143c6462102634ee56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
