@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3da3af96_5d975851",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-02T03:25:15Z",
+      "side": 1,
+      "message": "This patch is going to replace the calls to update network activity to BSS.\n\nThere were two ways to update the network activity previously from NMS to BSS.\n1. Netd unsolicited event onInterfaceClassActivityChanged(NMS.onInterfaceClassActivityChanged -\u003e NMS.notifyInterfaceClassActivity -\u003e BSS)\n2. Idle timer setup/removal(CS -\u003e NMS.addIdleTimer -\u003e NMS.notifyInterfaceClassActivity -\u003e BSS)\n\nI already replaced the second path with the design in BSS to listen to the network activity change in IT4.3. So BSS does not rely on NMS to notify event from netd now. \n\nThen this patch is going to replace path 2. I also update the commit message to include the messages. See if it helps.",
+      "parentUuid": "35cba315_9cfc1fb5",
+      "revId": "cf04f6c52746e197db7c562eb08b5eb783487074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "901c5299_1d6dbe4c",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-02-01T13:46:28Z",
       "side": 1,
       "message": "Nit : considering this is an identical statement at the end of both branches of this if() clause and the last case returns anyway, this line is better written in l.8662 to avoid duplication and simplify.",
+      "range": {
+        "startLine": 8705,
+        "startChar": 16,
+        "endLine": 8705,
+        "endChar": 37
+      },
+      "revId": "cf04f6c52746e197db7c562eb08b5eb783487074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e9f9526_fecdb4cc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 8705,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-02T03:25:15Z",
+      "side": 1,
+      "message": "Done but I put in l.8716 after the else.",
+      "parentUuid": "901c5299_1d6dbe4c",
       "range": {
         "startLine": 8705,
         "startChar": 16,
