@@ -33,7 +33,7 @@ public interface TransportInfo {
      * were set based on the permissions of the process that originally received it.
      *
      * <p>By default {@link TransportInfo} does not preserve such fields during parceling, as
-     * they should not be shared outside of the process that receives them without appropriate
+     * they should not be shared outside of the process that receives them without appropriate@
      * checks.
      *
      * @param parcelLocationSensitiveFields Whether the location sensitive fields should be kept
@@ -59,5 +59,20 @@ public interface TransportInfo {
     @SystemApi
     default boolean hasLocationSensitiveFields() {
         return false;
+    }
+
+    /**
+     * @return a TransportInfo object without any sensitive information. The system will call
+     * this method before passing this TransportInfo to any application that lacks the
+     * {@link android.manifest.Permission#NETWORK_SETTINGS} or
+     * {@link NetworkStack#PERMISSION_MAINLINE_NETWORK_STACK} permissions. The object may be this
+     * object itself or a copy.
+     *
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    default TransportInfo redact() {
+        return this;
     }
 }
