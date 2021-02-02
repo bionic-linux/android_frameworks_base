@@ -16,6 +16,23 @@
       "message": "re-running - looks really unrelated to me (issue w/ specific vertical\u0027s settings app, don\u0027t see networking message)",
       "revId": "87326e0f88d7c2fcee3c96a3233e64cab7648779",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60d2bdcc_25629654",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-02-02T21:37:02Z",
+      "side": 1,
+      "message": "This flake is with the vibrator HAL :)",
+      "revId": "87326e0f88d7c2fcee3c96a3233e64cab7648779",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
