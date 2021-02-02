@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23f3e608_94243abe",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-02T06:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de21270_90491971",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 16
+      },
+      "revId": "31b557ea3690f718183cae9f4e67b23266133a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f93c8d8b_06d69960",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67577763_b1b3f4be",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-02T06:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f93c8d8b_06d69960",
+      "range": {
+        "startLine": 449,
+        "startChar": 12,
+        "endLine": 449,
+        "endChar": 15
+      },
+      "revId": "31b557ea3690f718183cae9f4e67b23266133a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "49db5fe0_4c0df04e",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-01-29T09:11:29Z",
       "side": 1,
       "message": "Is this defined somewhere that gives a guarantee?\n\nAlso, perhaps make this a constant? Bonus if it\u0027s part of the keystore APIs.",
+      "range": {
+        "startLine": 2034,
+        "startChar": 0,
+        "endLine": 2034,
+        "endChar": 81
+      },
+      "revId": "31b557ea3690f718183cae9f4e67b23266133a0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2782c269_4d739f53",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2034,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-02T06:49:47Z",
+      "side": 1,
+      "message": "I made this an API in Keystore2 because it will be used by WIFI in a similar way.",
+      "parentUuid": "49db5fe0_4c0df04e",
       "range": {
         "startLine": 2034,
         "startChar": 0,
