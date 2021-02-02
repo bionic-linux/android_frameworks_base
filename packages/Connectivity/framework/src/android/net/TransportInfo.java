@@ -60,4 +60,19 @@ public interface TransportInfo {
     default boolean hasLocationSensitiveFields() {
         return false;
     }
+
+    /**
+     * @return a TransportInfo object without any sensitive information. The system will call
+     * this method before passing this TransportInfo to any application that lacks the
+     * {@link android.manifest.Permission#NETWORK_SETTINGS} or
+     * {@link NetworkStack#PERMISSION_MAINLINE_NETWORK_STACK} permissions. The object may be this
+     * object itself or a copy.
+     *
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    default TransportInfo redact() {
+        return this;
+    }
 }
