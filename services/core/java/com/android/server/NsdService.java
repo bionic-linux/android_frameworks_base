@@ -20,7 +20,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
-import android.net.NetworkStack;
 import android.net.Uri;
 import android.net.nsd.INsdManager;
 import android.net.nsd.NsdManager;
@@ -42,6 +41,7 @@ import com.android.internal.util.DumpUtils;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.net.module.util.DnsSdTxtRecord;
+import com.android.net.module.util.PermissionUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -563,7 +563,7 @@ public class NsdService extends INsdManager.Stub {
     }
 
     public void setEnabled(boolean isEnabled) {
-        NetworkStack.checkNetworkStackPermission(mContext);
+        PermissionUtils.checkNetworkStackPermission(mContext);
         mNsdSettings.putEnabledStatus(isEnabled);
         notifyEnabled(isEnabled);
     }

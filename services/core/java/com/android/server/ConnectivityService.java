@@ -194,6 +194,7 @@ import com.android.internal.util.MessageUtils;
 import com.android.modules.utils.BasicShellCommandHandler;
 import com.android.net.module.util.LinkPropertiesUtils.CompareOrUpdateResult;
 import com.android.net.module.util.LinkPropertiesUtils.CompareResult;
+import com.android.net.module.util.PermissionUtils;
 import com.android.server.am.BatteryStatsService;
 import com.android.server.connectivity.AutodestructReference;
 import com.android.server.connectivity.DataConnectionStats;
@@ -1508,7 +1509,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public Network getActiveNetworkForUid(int uid, boolean ignoreBlocked) {
-        NetworkStack.checkNetworkStackPermission(mContext);
+        PermissionUtils.checkNetworkStackPermission(mContext);
         return getActiveNetworkForUidInternal(uid, ignoreBlocked);
     }
 
@@ -1539,7 +1540,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public NetworkInfo getActiveNetworkInfoForUid(int uid, boolean ignoreBlocked) {
-        NetworkStack.checkNetworkStackPermission(mContext);
+        PermissionUtils.checkNetworkStackPermission(mContext);
         final NetworkState state = getUnfilteredActiveNetworkState(uid);
         filterNetworkStateForUid(state, uid, ignoreBlocked);
         return state.networkInfo;
@@ -1845,7 +1846,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @Override
     public NetworkState[] getAllNetworkState() {
         // This contains IMSI details, so make sure the caller is privileged.
-        NetworkStack.checkNetworkStackPermission(mContext);
+        PermissionUtils.checkNetworkStackPermission(mContext);
 
         final ArrayList<NetworkState> result = Lists.newArrayList();
         for (Network network : getAllNetworks()) {
@@ -2284,7 +2285,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     // Public because it's used by mLockdownTracker.
     public void sendConnectedBroadcast(NetworkInfo info) {
-        NetworkStack.checkNetworkStackPermission(mContext);
+        PermissionUtils.checkNetworkStackPermission(mContext);
         sendGeneralBroadcast(info, CONNECTIVITY_ACTION);
     }
 
@@ -4585,7 +4586,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public void setGlobalProxy(final ProxyInfo proxyProperties) {
-        NetworkStack.checkNetworkStackPermission(mContext);
+        PermissionUtils.checkNetworkStackPermission(mContext);
         mProxyTracker.setGlobalProxy(proxyProperties);
     }
 
@@ -4981,7 +4982,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @Override
     public void setRequireVpnForUids(boolean requireVpn, UidRange[] ranges) {
-        NetworkStack.checkNetworkStackPermission(mContext);
+        PermissionUtils.checkNetworkStackPermission(mContext);
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SET_REQUIRE_VPN_FOR_UIDS,
                 encodeBool(requireVpn), 0 /* arg2 */, ranges));
     }

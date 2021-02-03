@@ -166,7 +166,6 @@ import android.net.NetworkPolicyManager;
 import android.net.NetworkQuotaInfo;
 import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
-import android.net.NetworkStack;
 import android.net.NetworkState;
 import android.net.NetworkStats;
 import android.net.NetworkTemplate;
@@ -239,6 +238,7 @@ import com.android.internal.util.FastXmlSerializer;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.StatLogger;
 import com.android.internal.util.XmlUtils;
+import com.android.net.module.util.PermissionUtils;
 import com.android.server.EventLogTags;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
@@ -1199,12 +1199,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     /**
      * Observer that watches for {@link INetworkManagementService} alerts.
      */
-    final private INetworkManagementEventObserver mAlertObserver
-            = new BaseNetworkObserver() {
+    private final INetworkManagementEventObserver mAlertObserver = new BaseNetworkObserver() {
         @Override
         public void limitReached(String limitName, String iface) {
             // only someone like NMS should be calling us
-            NetworkStack.checkNetworkStackPermission(mContext);
+            PermissionUtils.checkNetworkStackPermission(mContext);
 
             if (!LIMIT_GLOBAL_ALERT.equals(limitName)) {
                 mHandler.obtainMessage(MSG_LIMIT_REACHED, iface).sendToTarget();
