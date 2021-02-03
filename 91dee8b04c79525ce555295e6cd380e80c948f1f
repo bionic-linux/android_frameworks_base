@@ -124,6 +124,24 @@
       "parentUuid": "1c99a9f4_30d7d22b",
       "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41069f41_4663e329",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-02-03T15:33:00Z",
+      "side": 1,
+      "message": "\u003e Robert, when this was implemented, was there any particular reason to go through onWakeUp()?\n\nIt seemed to be the way to change power state to ON, as it is also called ACTION_SCREEN_ON.\nTo better understand, is `onWakeUp` on `ACTION_SCREEN_ON` okay because `onStandby` calls `disableDevices`, so calling \"`initializeCec`\" is safe on next wakeup?\n\nI don\u0027t insist on going through onWakeUp / calling initializeCec again.\nIf just changing the power status to POWER_STATUS_ON directly is enough, that\u0027s fine by me.\nDoes that change in power status need to be broadcast though?",
+      "parentUuid": "e2de8b30_0f2ec003",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
