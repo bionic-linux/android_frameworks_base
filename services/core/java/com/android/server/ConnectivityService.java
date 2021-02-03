@@ -2117,8 +2117,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private boolean isUidBlockedByRules(int uid, int uidRules, boolean isNetworkMetered,
             boolean isBackgroundRestricted) {
-        return NetworkPolicyManagerInternal.isUidNetworkingBlocked(uid, uidRules,
-                isNetworkMetered, isBackgroundRestricted);
+        return mPolicyManager.checkUidNetworkingBlocked(uid, uidRules, isNetworkMetered,
+                isBackgroundRestricted);
     }
 
     /**
