@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caac8369_4cec3447",
+        "filename": "core/proto/android/server/apphibernationservice.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Nit:s/package/package_name",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2b22ccc_30c3621c",
+        "filename": "core/proto/android/server/apphibernationservice.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Nit:s/package/package_name",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51ebc99d_7f5477a8",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Would it be a good idea to move this to the else block of following:\n\nif (diskStates !\u003d null) {\n\n} else {\n    for (int i \u003d 0, size \u003d packages.size(); i \u003c size; i++) {\n        String packageName \u003d packages.get(i).packageName;\n        UserLevelState state \u003d new UserLevelState();\n        state.packageName \u003d packageName;\n        userLevelStates.put(packageName, state);\n    }\n}",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 0
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac8746b5_aa172e77",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Can we use following here:\n\nSet\u003cString\u003e installedPackages \u003d new ArraySet\u003c\u003e(packages);",
+      "range": {
+        "startLine": 343,
+        "startChar": 12,
+        "endLine": 346,
+        "endChar": 13
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8638331_d3d9c277",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "if (diskStates !\u003d null) {\n  ...\n  ...\n} else {\n    for (int i \u003d 0, size \u003d packages.size(); i \u003c size; i++) {       \n        String packageName \u003d packages.get(i).packageName;\n        GlobalLevelState state \u003d new GlobalLevelState();\n        state.packageName \u003d packageName;\n        mGlobalHibernationStates.put(packageName, state);\n    }\n}",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 9
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "019a8b3c_15b5ee4c",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Can we use following here:\n\nSet\u003cString\u003e installedPackages \u003d new ArraySet\u003c\u003e(packages);",
+      "range": {
+        "startLine": 383,
+        "startChar": 0,
+        "endLine": 386,
+        "endChar": 13
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "247736e7_e254a43d",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Have you consider defining a constant for this ?",
+      "range": {
+        "startLine": 575,
+        "startChar": 70,
+        "endLine": 575,
+        "endChar": 83
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ee72664_e2de5f2e",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Maybe consider using constant defined above.",
+      "range": {
+        "startLine": 581,
+        "startChar": 78,
+        "endLine": 581,
+        "endChar": 91
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f0c443c_9f69f4b8",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelHibernationProto.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Could this be a final class ?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 86
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f311adc_ffd150ff",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "This looks similar to UserLevelState class. Do we really need two different classes ?",
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b49d224_a2701d22",
+        "filename": "services/core/java/com/android/server/apphibernation/HibernationStateDiskStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Could this be a final class ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 36
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "354e4cb3_930f5f93",
+        "filename": "services/core/java/com/android/server/apphibernation/HibernationStateDiskStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Would it be a good idea to add an info log here ?",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 23
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fad6c2f_35b6aa35",
+        "filename": "services/core/java/com/android/server/apphibernation/HibernationStateDiskStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Would it be a good idea to add an info log here ?",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 28
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a5d9f43_7d3e8bb7",
+        "filename": "services/core/java/com/android/server/apphibernation/UserLevelHibernationProto.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Could this be a final class ?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 78
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e551de5b_f48eb78b",
+        "filename": "services/tests/servicestests/src/com/android/server/apphibernation/HibernationStateDiskStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Could this class have final modifier ? \nCould this class have private visibility ?",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 72
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "832c4b6a_6e26c143",
+        "filename": "services/tests/servicestests/src/com/android/server/apphibernation/HibernationStateDiskStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-03T06:26:25Z",
+      "side": 1,
+      "message": "Could this class have final modifier ? \nCould this class have private visibility ?",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 76
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
