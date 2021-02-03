@@ -23,7 +23,6 @@ import android.net.INetdEventCallback;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkStack;
 import android.net.metrics.ApfProgramEvent;
 import android.net.metrics.IpConnectivityLog;
 import android.os.Binder;
@@ -40,6 +39,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.RingBuffer;
 import com.android.internal.util.TokenBucket;
+import com.android.net.module.util.PermissionUtils;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.connectivity.metrics.nano.IpConnectivityLogClass.IpConnectivityEvent;
@@ -305,7 +305,7 @@ final public class IpConnectivityMetrics extends SystemService {
 
         @Override
         public int logEvent(ConnectivityMetricsEvent event) {
-            NetworkStack.checkNetworkStackPermission(getContext());
+            PermissionUtils.checkNetworkStackPermission(getContext());
             return append(event);
         }
 
@@ -368,7 +368,7 @@ final public class IpConnectivityMetrics extends SystemService {
 
         @Override
         public void logDefaultNetworkValidity(boolean valid) {
-            NetworkStack.checkNetworkStackPermission(getContext());
+            PermissionUtils.checkNetworkStackPermission(getContext());
             mDefaultNetworkMetrics.logDefaultNetworkValidity(SystemClock.elapsedRealtime(), valid);
         }
 
@@ -376,7 +376,7 @@ final public class IpConnectivityMetrics extends SystemService {
         public void logDefaultNetworkEvent(Network defaultNetwork, int score, boolean validated,
                 LinkProperties lp, NetworkCapabilities nc, Network previousDefaultNetwork,
                 int previousScore, LinkProperties previousLp, NetworkCapabilities previousNc) {
-            NetworkStack.checkNetworkStackPermission(getContext());
+            PermissionUtils.checkNetworkStackPermission(getContext());
             final long timeMs = SystemClock.elapsedRealtime();
             mDefaultNetworkMetrics.logDefaultNetworkEvent(timeMs, defaultNetwork, score, validated,
                     lp, nc,  previousDefaultNetwork, previousScore, previousLp, previousNc);
