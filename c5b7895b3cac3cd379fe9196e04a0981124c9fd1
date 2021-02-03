@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7b7b3cd_f34f752a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-03T18:03:04Z",
+      "side": 1,
+      "message": "Thanks for quick review. Will tidy up and get to full review.",
+      "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec587062_44fed625",
@@ -48,6 +65,30 @@
       "writtenOn": "2021-02-03T17:52:57Z",
       "side": 1,
       "message": "I think this will break the dev UI code (PlatformCompatDashboard specifically and its corresponding test).",
+      "range": {
+        "startLine": 151,
+        "startChar": 9,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7afaebd6_b1384301",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-03T18:03:04Z",
+      "side": 1,
+      "message": "Oh yeah, I haven\u0027t uploaded those changes. Would it make sense for Settings to use the new API just like ActivityManagerShellCommand does?",
+      "parentUuid": "0cbba045_45f50288",
       "range": {
         "startLine": 151,
         "startChar": 9,
