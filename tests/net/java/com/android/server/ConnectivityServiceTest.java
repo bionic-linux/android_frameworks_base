@@ -8462,11 +8462,7 @@ public class ConnectivityServiceTest {
         final int myUid = Process.myUid();
         setupConnectionOwnerUidAsVpnApp(myUid, VpnManager.TYPE_VPN_PLATFORM);
 
-        try {
-            mService.getConnectionOwnerUid(getTestConnectionInfo());
-            fail("Expected SecurityException for non-VpnService app");
-        } catch (SecurityException expected) {
-        }
+        assertEquals(INVALID_UID, mService.getConnectionOwnerUid(getTestConnectionInfo()));
     }
 
     @Test
@@ -8474,11 +8470,7 @@ public class ConnectivityServiceTest {
         final int myUid = Process.myUid();
         setupConnectionOwnerUidAsVpnApp(myUid + 1, VpnManager.TYPE_VPN_SERVICE);
 
-        try {
-            mService.getConnectionOwnerUid(getTestConnectionInfo());
-            fail("Expected SecurityException for non-VpnService app");
-        } catch (SecurityException expected) {
-        }
+        assertEquals(INVALID_UID, mService.getConnectionOwnerUid(getTestConnectionInfo()));
     }
 
     @Test
