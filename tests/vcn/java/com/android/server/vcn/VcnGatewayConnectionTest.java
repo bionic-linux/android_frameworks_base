@@ -77,5 +77,10 @@ public class VcnGatewayConnectionTest extends VcnGatewayConnectionTestBase {
         mGatewayConnection.updateSubscriptionSnapshot(updatedSnapshot);
 
         verify(mUnderlyingNetworkTracker).updateSubscriptionSnapshot(eq(updatedSnapshot));
+        verifyWakeLockObtained();
+
+        mTestLooper.dispatchAll();
+
+        verifyWakeLockReleased();
     }
 }
