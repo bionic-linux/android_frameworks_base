@@ -51,6 +51,8 @@ import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.Message;
 import android.os.ParcelUuid;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
@@ -115,6 +117,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class VcnGatewayConnection extends StateMachine {
     private static final String TAG = VcnGatewayConnection.class.getSimpleName();
+
+    private static final String WAKE_LOCK_TAG = TAG + "_WakeLock";
 
     private static final InetAddress DUMMY_ADDR = InetAddresses.parseNumericAddress("192.0.2.0");
     private static final int ARG_NOT_PRESENT = Integer.MIN_VALUE;
@@ -409,6 +413,19 @@ public class VcnGatewayConnection extends StateMachine {
     @NonNull private final IpSecManager mIpSecManager;
     @NonNull private final IpSecTunnelInterface mTunnelIface;
 
+    /**
+     * WakeLock to be held when processing messages on the Handler queue.
+     *
+     * <p>Used to prevent the device from going to sleep while there are VCN-related events to
+     * process for this VcnGatewayConnection.
+     *
+     * <p>Obtain a WakeLock when enquing messages onto the Handler queue. Once all messages in the
+     * Handler queue have been processed, the WakeLock can be released and cleared.
+     */
+    @GuardedBy("mLock")
+    @Nullable private VcnWakeLock mWakeLock;
+
+
     /** Running state of this VcnGatewayConnection. */
     private boolean mIsRunning = true;
 
@@ -566,6 +583,8 @@ public class VcnGatewayConnection extends StateMachine {
             mTunnelIface.close();
         }
 
+        releaseWakeLock();
+
         mUnderlyingNetworkTracker.teardown();
     }
 
@@ -619,11 +638,42 @@ public class VcnGatewayConnection extends StateMachine {
         }
     }
 
+    private void obtainWakeLock() {
+        // Lock around checks to mWakeLock, as it may be accessed from outside the Handler thread
+        synchronized (mLock) {
+            if (mWakeLock == null) {
+                mWakeLock =
+                        mDeps.newWakeLock(
+                                mVcnContext, PowerManager.PARTIAL_WAKE_LOCK, WAKE_LOCK_TAG);
+                mWakeLock.setReferenceCounted(false);
+                mWakeLock.acquire();
+            }
+        }
+    }
+
+    private void releaseWakeLock() {
+        // Lock around checks to mWakeLock, as it may be accessed from outside the Handler thread
+        synchronized (mLock) {
+            if (mWakeLock != null) {
+                mWakeLock.release();
+                mWakeLock = null;
+            }
+        }
+    }
+
+    @Override
+    public void sendMessage(int what, int token) {
+        obtainWakeLock();
+        super.sendMessage(what, token);
+    }
+
     private void sendMessage(int what, int token, EventInfo data) {
+        obtainWakeLock();
         super.sendMessage(what, token, ARG_NOT_PRESENT, data);
     }
 
     private void sendMessage(int what, int token, int arg2, EventInfo data) {
+        obtainWakeLock();
         super.sendMessage(what, token, arg2, data);
     }
 
@@ -690,6 +740,11 @@ public class VcnGatewayConnection extends StateMachine {
                         TOKEN_ALL,
                         new EventDisconnectRequestedInfo(
                                 DISCONNECT_REASON_INTERNAL_ERROR + e.toString()));
+            }
+
+            // Release the Message-processing WakeLock if the Handler is empty
+            if (!getHandler().hasMessagesOrCallbacks()) {
+                releaseWakeLock();
             }
 
             return HANDLED;
@@ -819,6 +874,11 @@ public class VcnGatewayConnection extends StateMachine {
             // Only process if a valid token is presented.
             if (isValidToken(token)) {
                 return super.processMessage(msg);
+            }
+
+            // Release the Message-processing WakeLock if the Handler is empty
+            if (!getHandler().hasMessagesOrCallbacks()) {
+                releaseWakeLock();
             }
 
             Slog.v(TAG, "Message called with obsolete token: " + token + "; what: " + msg.what);
@@ -1219,6 +1279,12 @@ public class VcnGatewayConnection extends StateMachine {
                     ikeSessionCallback,
                     childSessionCallback);
         }
+
+        /** Builds a new WakeLock. */
+        public VcnWakeLock newWakeLock(
+                @NonNull VcnContext vcnContext, int wakeLockFlag, @NonNull String wakeLockTag) {
+            return new VcnWakeLock(vcnContext, wakeLockFlag, wakeLockTag);
+        }
     }
 
     /** Proxy implementation of IKE session, used for testing. */
@@ -1267,6 +1333,33 @@ public class VcnGatewayConnection extends StateMachine {
         /** Sets the underlying network used by the IkeSession. */
         public void setNetwork(@NonNull Network network) {
             mImpl.setNetwork(network);
+        }
+    }
+
+    /** Proxy Implementation of WakeLock, used for testing. */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static class VcnWakeLock {
+        private final WakeLock mImpl;
+
+        public VcnWakeLock(@NonNull VcnContext vcnContext, int flags, @NonNull String tag) {
+            final PowerManager powerManager =
+                    vcnContext.getContext().getSystemService(PowerManager.class);
+            mImpl = powerManager.newWakeLock(flags, tag);
+        }
+
+        /** Set the reference counting for this WakeLock. */
+        public void setReferenceCounted(boolean isReferenceCounted) {
+            mImpl.setReferenceCounted(isReferenceCounted);
+        }
+
+        /** Acquire this WakeLock. */
+        public void acquire() {
+            mImpl.acquire();
+        }
+
+        /** Release this Wakelock. */
+        public void release() {
+            mImpl.release();
         }
     }
 }
