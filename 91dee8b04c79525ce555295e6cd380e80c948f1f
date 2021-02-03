@@ -106,6 +106,24 @@
       "parentUuid": "6a7b09fc_82b22df1",
       "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2de8b30_0f2ec003",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-02-03T13:53:26Z",
+      "side": 1,
+      "message": "* just changing power status to POWER_STATUS_ON in bootComplete() seems reasonable. Robert, when this was implemented, was there any particular reason to go through onWakeUp()?\n* on quiescent boot, initializeCec() is only called once, already today. Can you provide more context on the test? If initializeCec() is only called once, is suppressing the HdmiCecFeatureActions and bypassing the CEC messages unnecessary?",
+      "parentUuid": "1c99a9f4_30d7d22b",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
