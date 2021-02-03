@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff441481_3a043183",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bba23b1_4e46ae6d",
+      "range": {
+        "startLine": 983,
+        "startChar": 26,
+        "endLine": 983,
+        "endChar": 30
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d048bc9e_878f98a2",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-01T15:22:52Z",
       "side": 1,
       "message": "Nit: this is the way we defined the nascent state, so I think it\u0027s just the implementation, not a hack. :-)",
+      "range": {
+        "startLine": 7237,
+        "startChar": 75,
+        "endLine": 7237,
+        "endChar": 96
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8de8af24_9f7f5f3c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7237,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Hmmm ok.",
+      "parentUuid": "d048bc9e_878f98a2",
       "range": {
         "startLine": 7237,
         "startChar": 75,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f13d960e_108c98d9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 7653,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Yes.\nYour understanding is correct.",
+      "parentUuid": "ec20e1c0_7aa3623b",
+      "range": {
+        "startLine": 7653,
+        "startChar": 12,
+        "endLine": 7653,
+        "endChar": 44
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63ed7010_e0945896",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-01T15:22:52Z",
       "side": 1,
       "message": "torn down",
+      "range": {
+        "startLine": 122,
+        "startChar": 75,
+        "endLine": 122,
+        "endChar": 83
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e27ea51d_d02a57ee",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63ed7010_e0945896",
       "range": {
         "startLine": 122,
         "startChar": 75,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6f36ef0_a9969abb",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "342c5e82_11257bf5",
+      "range": {
+        "startLine": 123,
+        "startChar": 3,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7eb32ad1_633014a1",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-02-01T15:22:52Z",
       "side": 1,
       "message": "The nascent state ends when the 5-second timer fires, or as soon as the network satisfies a request, whichever is earlier.\n\n\u003d\u003d\u003d\u003d\n\nAlso - in this state, can you say whether the network is in the foreground, or in the background?",
+      "range": {
+        "startLine": 124,
+        "startChar": 71,
+        "endLine": 124,
+        "endChar": 72
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a92f81b_857b333e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7eb32ad1_633014a1",
       "range": {
         "startLine": 124,
         "startChar": 71,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e64ad515_63ea2444",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Thanks for the suggesion.\nThe answer is yes and no.\nInactive timer SGTM, because when the timer fires, the network is not necessarily needed to be torn down, it might go to background instead.\n\nBut has a timer doesn\u0027t control if it is lingering.\nIt only represents the network is currently not needed for the listed requests.\nIf the network is still needed by other requests.\nYou\u0027ll see we have timers while mLingering \u003d false;\n\nDone in aosp/1571902.\nSee if it is better.",
+      "parentUuid": "3aa42270_a0ed5f04",
+      "range": {
+        "startLine": 774,
+        "startChar": 16,
+        "endLine": 774,
+        "endChar": 50
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf12590d_f42a799e",
@@ -175,6 +343,30 @@
       "writtenOn": "2021-02-01T15:22:52Z",
       "side": 1,
       "message": "a",
+      "range": {
+        "startLine": 867,
+        "startChar": 48,
+        "endLine": 867,
+        "endChar": 51
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "942bbf42_fcede598",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf12590d_f42a799e",
       "range": {
         "startLine": 867,
         "startChar": 48,
@@ -208,6 +400,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eddf397_8ad2c9a0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d38ad28_19bcec0c",
+      "range": {
+        "startLine": 1773,
+        "startChar": 11,
+        "endLine": 1773,
+        "endChar": 34
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1573739c_60baec63",
@@ -221,6 +437,30 @@
       "writtenOn": "2021-02-01T15:22:52Z",
       "side": 1,
       "message": "Can we use the new requestBackgroundNetwork API instead of doing this?",
+      "range": {
+        "startLine": 1791,
+        "startChar": 0,
+        "endLine": 1793,
+        "endChar": 81
+      },
+      "revId": "7c11dad2065e0de7fa93381aecb9f8ad7a2bad0c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63b55226_c104d0ae",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-03T12:59:31Z",
+      "side": 1,
+      "message": "No that one is request background network.\nWhat we need here is just monitoring.\n\nWhat we can replace is the setAlwaysOnNetworks(true) at l.1809.\nBut I don\u0027t see the benefit of doing it.",
+      "parentUuid": "1573739c_60baec63",
       "range": {
         "startLine": 1791,
         "startChar": 0,
