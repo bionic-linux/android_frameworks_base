@@ -121,12 +121,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
@@ -14356,10 +14354,24 @@ public class TelephonyManager {
     public static final String CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE =
             "CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE";
 
+    /**
+     * Indicates whether {@link #setPreferredNetworkType}, {@link
+     * #setPreferredNetworkTypeBitmask}, {@link #setAllowedNetworkTypes} and
+     * {@link #setAllowedNetworkTypesForReason} rely on
+     * setAllowedNetworkTypeBitmap from the radio interface (or use the
+     * deprecated setPreferredNetworkType).
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String CAPABILITY_ALLOWED_NETWORK_TYPES_USED =
+            "CAPABILITY_ALLOWED_NETWORK_TYPES_USED";
+
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef(prefix = "CAPABILITY_", value = {
             CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE,
+            CAPABILITY_ALLOWED_NETWORK_TYPES_USED,
     })
     public @interface RadioInterfaceCapability {}
 
