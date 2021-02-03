@@ -3459,6 +3459,19 @@ public class DisplayPolicy {
                 return;
             }
 
+            if (swipeTarget == mStatusBar) {
+                if (getInsetsPolicy().isHidden(ITYPE_NAVIGATION_BAR)
+                        && !getInsetsPolicy().isHidden(ITYPE_STATUS_BAR)
+                        || (restorePositionTypes != (Type.statusBars() | Type.navigationBars())
+                        && topAppHidesStatusBar())) {
+                    boolean changeStatusBar = getInsetsPolicy().setHidden(ITYPE_STATUS_BAR);
+                    Slog.d(TAG,"setHidden changeStatusBar before swipeTarget show "
+                            + changeStatusBar
+                            + " requestedState " + requestedState
+                            + " restorePositionTypes " + restorePositionTypes);
+                }
+            }
+
             if (controlTarget.canShowTransient()) {
                 // Show transient bars if they are hidden; restore position if they are visible.
                 mDisplayContent.getInsetsPolicy().showTransient(SHOW_TYPES_FOR_SWIPE);
