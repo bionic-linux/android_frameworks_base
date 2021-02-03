@@ -21,6 +21,7 @@ import static android.content.pm.PackageManager.GET_SIGNATURES;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.app.ActivityManager;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -54,13 +55,13 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @hide
  */
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 @SystemService(Context.NETWORK_POLICY_SERVICE)
 public class NetworkPolicyManager {
 
     /* POLICY_* are masks and can be ORed, although currently they are not.*/
     /**
      * No specific network policy, use system default.
-     * @hide
      */
     public static final int POLICY_NONE = 0x0;
     /**
@@ -124,6 +125,7 @@ public class NetworkPolicyManager {
     public static final int RULE_REJECT_ALL = 1 << 6;
     /**
      * Reject traffic on all networks for restricted networking mode.
+     * @hide
      */
     public static final int RULE_REJECT_RESTRICTED_MODE = 1 << 10;
 
@@ -448,9 +450,8 @@ public class NetworkPolicyManager {
      * @param meteredNetwork True if the network is metered.
      * @return true if networking is blocked for the given uid according to current networking
      *         policies.
-     *
-     * @hide
      */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
     public boolean isUidNetworkingBlocked(int uid, boolean meteredNetwork) {
         try {
             return mService.isUidNetworkingBlocked(uid, meteredNetwork);
@@ -471,9 +472,8 @@ public class NetworkPolicyManager {
      * @param isBackgroundRestricted True if data saver is enabled.
      *
      * @return true if networking is blocked for the UID under the specified conditions.
-     *
-     * @hide
      */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
     public boolean checkUidNetworkingBlocked(int uid, int uidRules,
             boolean isNetworkMetered, boolean isBackgroundRestricted) {
         try {
@@ -489,9 +489,8 @@ public class NetworkPolicyManager {
      *
      * @param uid The target uid.
      * @return true if the given uid is restricted from doing networking on metered networks.
-     *
-     * @hide
      */
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
     public boolean isUidRestrictedOnMeteredNetworks(int uid) {
         try {
             return mService.isUidRestrictedOnMeteredNetworks(uid);
@@ -502,6 +501,7 @@ public class NetworkPolicyManager {
 
     /**
      * Get multipath preference for the given network.
+     * @hide
      */
     public int getMultipathPreference(Network network) {
         try {
@@ -573,8 +573,12 @@ public class NetworkPolicyManager {
     }
 
     /**
-     * @hide
+     * Transfer the given uid rules to readable string.
+     *
+     * @param uidRules The target uid rules.
+     * @return The readable string of given uid rules.
      */
+    @NonNull
     public static String uidRulesToString(int uidRules) {
         final StringBuilder string = new StringBuilder().append(uidRules).append(" (");
         if (uidRules == RULE_NONE) {

@@ -35,6 +35,14 @@ package android.net {
     field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 
+  public class NetworkPolicyManager {
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public boolean checkUidNetworkingBlocked(int, int, boolean, boolean);
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public boolean isUidNetworkingBlocked(int, boolean);
+    method @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY) public boolean isUidRestrictedOnMeteredNetworks(int);
+    method @NonNull public static String uidRulesToString(int);
+    field public static final int POLICY_NONE = 0; // 0x0
+  }
+
   public final class TcpRepairWindow {
     ctor public TcpRepairWindow(int, int, int, int, int, int);
     field public final int maxWindow;
