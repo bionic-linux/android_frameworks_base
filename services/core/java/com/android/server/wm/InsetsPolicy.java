@@ -153,6 +153,18 @@ class InsetsPolicy {
         return provider != null && provider.hasWindow() && !provider.getSource().isVisible();
     }
 
+    boolean setHidden(@InternalInsetsType int type) {
+        if (!isHidden(type)) {
+            final InsetsSourceProvider provider = mStateController.peekSourceProvider(type);
+            if (provider != null && provider.hasWindow()) {
+                provider.getSource().setVisible(false);
+                provider.setServerVisible(false);
+                return provider.onInsetsModified(provider.getControlTarget(), provider.getSource());
+            }
+        }
+        return false;
+    }
+
     void showTransient(@InternalInsetsType int[] types) {
         boolean changed = false;
         for (int i = types.length - 1; i >= 0; i--) {
