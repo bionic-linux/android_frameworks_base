@@ -13729,6 +13729,7 @@ public class ActivityManagerService extends IActivityManager.Stub
             long kernelUsed = memInfo.getKernelUsedSizeKb();
             final long ionHeap = Debug.getIonHeapsSizeKb();
             final long ionPool = Debug.getIonPoolsSizeKb();
+            long eglMtrack = 0;
             if (ionHeap >= 0 && ionPool >= 0) {
                 final long ionMapped = Debug.getIonMappedSizeKb();
                 final long ionUnmapped = ionHeap - ionMapped;
@@ -13744,18 +13745,27 @@ public class ActivityManagerService extends IActivityManager.Stub
                 // Note: mapped ION memory is not accounted in PSS due to VM_PFNMAP flag being
                 // set on ION VMAs, therefore consider the entire ION heap as used kernel memory
                 kernelUsed += ionHeap;
+
+                for (int i=0; i<catMems.size(); i++) {
+                    MemItem memcat = catMems.get(i);
+                    String s = new String("EGL mtrack");
+                    if (s.equals(memcat.label) || s.equals(memcat.shortLabel)) {
+                        eglMtrack = memcat.pss + memcat.swapPss;
+                        break;
+                    }
+                }
             }
             final long gpuUsage = Debug.getGpuTotalUsageKb();
             if (gpuUsage >= 0) {
                 pw.print("      GPU: "); pw.println(stringifyKBSize(gpuUsage));
             }
-            final long lostRAM = memInfo.getTotalSizeKb() - (totalPss - totalSwapPss)
+            final long lostRAM = memInfo.getTotalSizeKb() - (totalPss - totalSwapPss - eglMtrack)
                     - memInfo.getFreeSizeKb() - memInfo.getCachedSizeKb()
                     - kernelUsed - memInfo.getZramTotalSizeKb();
             if (!opts.isCompact) {
-                pw.print(" Used RAM: "); pw.print(stringifyKBSize(totalPss - cachedPss
+                pw.print(" Used RAM: "); pw.print(stringifyKBSize(totalPss - cachedPss - eglMtrack
                         + kernelUsed)); pw.print(" (");
-                pw.print(stringifyKBSize(totalPss - cachedPss)); pw.print(" used pss + ");
+                pw.print(stringifyKBSize(totalPss - cachedPss - eglMtrack)); pw.print(" used pss + ");
                 pw.print(stringifyKBSize(kernelUsed)); pw.print(" kernel)\n");
                 pw.print(" Lost RAM: "); pw.println(stringifyKBSize(lostRAM));
             } else {
