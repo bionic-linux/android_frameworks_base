@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c941f04_2321345e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-03T17:52:57Z",
+      "side": 1,
+      "message": "Looks good overall, I have a couple of small comments.",
+      "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec587062_44fed625",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-03T17:52:57Z",
+      "side": 1,
+      "message": "this should require `OVERRIDE_COMPAT_CHANGE_CONFIG` (http://cs/android/frameworks/base/data/etc/privapp-permissions-platform.xml?l\u003d423)",
+      "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cbba045_45f50288",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-03T17:52:57Z",
+      "side": 1,
+      "message": "I think this will break the dev UI code (PlatformCompatDashboard specifically and its corresponding test).",
+      "range": {
+        "startLine": 151,
+        "startChar": 9,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
