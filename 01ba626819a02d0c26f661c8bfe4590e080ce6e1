@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6d4fe44_3a493ccc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-03T11:46:39Z",
+      "side": 1,
+      "message": "Hi this is a rather chunky change that allows targetting overrides to specific version codes. Could you have a look at the overall plan first before diving into nits, please? I still need to write javadocs etc.",
+      "revId": "01ba626819a02d0c26f661c8bfe4590e080ce6e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
