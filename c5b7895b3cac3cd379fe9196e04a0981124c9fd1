@@ -97,6 +97,30 @@
       },
       "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b55ecd7f_6099da5b",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-03T18:09:22Z",
+      "side": 1,
+      "message": "Yeah, I think so.",
+      "parentUuid": "7afaebd6_b1384301",
+      "range": {
+        "startLine": 151,
+        "startChar": 9,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
