@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "183239fc_73d61b16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-02-04T07:54:23Z",
+      "side": 1,
+      "message": "In fact, I have run the FrameworksCoreTests:NetworkPolicyManagerTest and FrameworksServicesTests:NetworkPolicyManagerServiceTest as well. Update comment accordingly.",
+      "parentUuid": "a9b90718_d2911ee8",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "15c5123ea57b3d2843ffdfbe5aa349c1b80de5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c949bca2_4e6b9c62",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 10
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-04T07:40:13Z",
       "side": 1,
       "message": "Question: is the value resovle at runtime?\nIf so maybe we should put this function at setup()?",
+      "range": {
+        "startLine": 1287,
+        "startChar": 71,
+        "endLine": 1287,
+        "endChar": 80
+      },
+      "revId": "15c5123ea57b3d2843ffdfbe5aa349c1b80de5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d5658fd_a43e4ef7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-02-04T07:54:23Z",
+      "side": 1,
+      "message": "I think it\u0027s resolved at runtime but only testNetworkBlockedStatus and testNetworkBlockedStatusBeforeAndAfterConnect need to mock these methods and have response. I\u0027m not a fan to put this function at setup().",
+      "parentUuid": "b2f18a66_3b8dd7dd",
       "range": {
         "startLine": 1287,
         "startChar": 71,
