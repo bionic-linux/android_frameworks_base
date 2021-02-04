@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69741deb_af9c44d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038763
+      },
+      "writtenOn": "2021-02-04T13:12:18Z",
+      "side": 1,
+      "message": "Can you submit to internal?",
+      "revId": "6a1cbe62674976f3545b4e1fbeee7995c0217cf4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
