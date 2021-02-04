@@ -142,6 +142,24 @@
       "parentUuid": "e2de8b30_0f2ec003",
       "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "627bcf29_2f1a6bb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-02-04T17:28:16Z",
+      "side": 1,
+      "message": "Thanks for having a look! `onWakeUp` on `ACTION_SCREEN_ON` is okay because CEC needs to be initialized at that time. It had been deactivated onStandby.\nOn boot however, CEC had already been initialized.\n\nIn that case it is fine to remove the second call to onWakeUp.",
+      "parentUuid": "41069f41_4663e329",
+      "revId": "91dee8b04c79525ce555295e6cd380e80c948f1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
