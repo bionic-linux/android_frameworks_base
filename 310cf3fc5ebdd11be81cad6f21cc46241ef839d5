@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a388dc16_c6afe816",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T06:31:22Z",
+      "side": 1,
+      "message": "Oh whoops, this isn\u0027t assigned to me yet... my bad.",
+      "revId": "310cf3fc5ebdd11be81cad6f21cc46241ef839d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "872eff09_de625924",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T06:31:22Z",
+      "side": 1,
+      "message": "Can this ever be non-null, and non-cancelled? ie, we leave a WakeupMessage tooling around?\n\nSuggest if the mDisconnectRequestAlarm is non-null, we should cancel and null it out first. (and null it out in l.662)",
+      "range": {
+        "startLine": 644,
+        "startChar": 16,
+        "endLine": 644,
+        "endChar": 39
+      },
+      "revId": "310cf3fc5ebdd11be81cad6f21cc46241ef839d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98798fac_8f3161ea",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T06:31:22Z",
+      "side": 1,
+      "message": "Nit, this should probably point back to VCN at some point. Perhaps TAG + \"_\" + DISCONNECT_REQUEST_ALARM",
+      "range": {
+        "startLine": 648,
+        "startChar": 32,
+        "endLine": 648,
+        "endChar": 56
+      },
+      "revId": "310cf3fc5ebdd11be81cad6f21cc46241ef839d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93c96a0a_0cb944a7",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTestBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T06:31:22Z",
+      "side": 1,
+      "message": "Could we add a simple test to check (probably in VcnGatewayConnectionTest) that a series of null, then non-null underlying networks cancels the wakeup message?",
+      "range": {
+        "startLine": 102,
+        "startChar": 11,
+        "endLine": 102,
+        "endChar": 39
+      },
+      "revId": "310cf3fc5ebdd11be81cad6f21cc46241ef839d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
