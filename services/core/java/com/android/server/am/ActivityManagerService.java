@@ -13756,8 +13756,12 @@ public class ActivityManagerService extends IActivityManager.Stub
                     pw.print(" mapped + ");
                     pw.print(stringifyKBSize(dmabufUnmapped));
                     pw.println(" unmapped)");
-                    // TODO(b/167709539): also add pooled memory from DMA-BUF heaps
                     kernelUsed += totalExportedDmabuf;
+                }
+                final long totalDmabufHeapPool = Debug.getDmabufHeapPoolsSizeKb();
+                if (totalDmabufHeapPool >= 0) {
+                    pw.print("DMA-BUF Heaps pool: ");
+                    pw.println(stringifyKBSize(totalDmabufHeapPool));
                 }
             }
             final long gpuUsage = Debug.getGpuTotalUsageKb();
@@ -14575,8 +14579,13 @@ public class ActivityManagerService extends IActivityManager.Stub
                 memInfoBuilder.append("DMA-BUF: ");
                 memInfoBuilder.append(stringifyKBSize(totalExportedDmabuf));
                 memInfoBuilder.append("\n");
-                // TODO(b/167709539): also add pooled memory from DMA-BUF heaps
                 kernelUsed += totalExportedDmabuf;
+            }
+            final long totalDmabufHeapPool = Debug.getDmabufHeapPoolsSizeKb();
+            if (totalDmabufHeapPool >= 0) {
+                memInfoBuilder.append("DMA-BUF Heaps pool: ");
+                memInfoBuilder.append(stringifyKBSize(totalDmabufHeapPool));
+                memInfoBuilder.append("\n");
             }
         }
 
