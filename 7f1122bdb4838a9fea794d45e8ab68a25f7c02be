@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "195eb63f_ca80cafb",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-04T02:39:00Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "8c6d96a0_1a233dce",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 0
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac8746b5_aa172e77",
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Packages is a list of PackageInfo so no. We could use streams and map to map the list of PackageInfo to a list of String beforehand but I think this is technically less performant and not that much more readable IMO.",
       "parentUuid": "ac8746b5_aa172e77",
+      "range": {
+        "startLine": 343,
+        "startChar": 12,
+        "endLine": 346,
+        "endChar": 13
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62203a2d_f6652f43",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-04T02:39:00Z",
+      "side": 1,
+      "message": "Let\u0027s keep it as it is.",
+      "parentUuid": "42e4a1d4_bcc4b36c",
       "range": {
         "startLine": 343,
         "startChar": 12,
@@ -455,6 +503,24 @@
       "side": 1,
       "message": "At this time, no, but I\u0027m wary of keeping them as the same state because they represent two different states conceptually. Anything else we would need to store on disk in the future would likely only apply to one state and not the other.",
       "parentUuid": "8f311adc_ffd150ff",
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73c5e0f9_bdb8df4c",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1248808
+      },
+      "writtenOn": "2021-02-04T02:39:00Z",
+      "side": 1,
+      "message": "We should keep them same until we have a good case to keep them separate. As far as storage goes we have two different proto messages to differentiate. Also we store user level stat with user id so it should not be too hard to separate them later on if we need. Am I understanding it right ?",
+      "parentUuid": "656b4180_122747e8",
       "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
