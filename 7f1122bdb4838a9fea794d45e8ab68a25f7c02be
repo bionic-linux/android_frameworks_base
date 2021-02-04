@@ -527,6 +527,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "174d4e9a_7b5437c6",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T19:26:19Z",
+      "side": 1,
+      "message": "Conceptually they are different states and will likely hold different data in the near future. For example, I anticipate a coming CL adding a boolean for userExempted for UserLevelHibernation only (unless I find a more appropriate location). \n\nI understand not designing for problems that don\u0027t exist yet but I think it\u0027s important to note from the beginning that these states are not the same and should not share the same data representation.",
+      "parentUuid": "73c5e0f9_bdb8df4c",
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b49d224_a2701d22",
         "filename": "services/core/java/com/android/server/apphibernation/HibernationStateDiskStore.java",
         "patchSetId": 5
