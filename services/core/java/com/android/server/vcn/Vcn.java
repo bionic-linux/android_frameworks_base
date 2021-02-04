@@ -133,13 +133,12 @@ public class Vcn extends Handler {
         super(Objects.requireNonNull(vcnContext, "Missing vcnContext").getLooper());
         mVcnContext = vcnContext;
         mSubscriptionGroup = Objects.requireNonNull(subscriptionGroup, "Missing subscriptionGroup");
+        mConfig = Objects.requireNonNull(config, "Missing config");
+        mLastSnapshot = Objects.requireNonNull(snapshot, "Missing snapshot");
         mVcnSafemodeCallback =
                 Objects.requireNonNull(vcnSafemodeCallback, "Missing vcnSafemodeCallback");
         mDeps = Objects.requireNonNull(deps, "Missing deps");
         mRequestListener = new VcnNetworkRequestListener();
-
-        mConfig = Objects.requireNonNull(config, "Missing config");
-        mLastSnapshot = Objects.requireNonNull(snapshot, "Missing snapshot");
 
         // Register to receive cached and future NetworkRequests
         mVcnContext.getVcnNetworkProvider().registerListener(mRequestListener);
