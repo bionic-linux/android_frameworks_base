@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1298a976_dba2ad2b",
+        "filename": "core/proto/android/server/apphibernationservice.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caac8369_4cec3447",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2b22ccc_30c3621c",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-03T06:26:25Z",
       "side": 1,
       "message": "Nit:s/package/package_name",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecc0d57a_770dc4a9",
+        "filename": "core/proto/android/server/apphibernationservice.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2b22ccc_30c3621c",
       "range": {
         "startLine": 40,
         "startChar": 18,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8c6d96a0_1a233dce",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "No, because we do still want packages that are installed but not stored on disk to be initialized with a hibernation state. i.e. if diskStates !\u003d null but installed packages has some packages that diskStates doesn\u0027t, we should still initialize states for these installed packages. The installed packages is the real source of truth here for which packages to track.\n\nThere are likely few scenarios where this would occur (e.g. the device may restart before a freshly installed package has had a chance to write its data to disk) but this is to guard against those kinds of things happening.",
+      "parentUuid": "51ebc99d_7f5477a8",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 0
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac8746b5_aa172e77",
         "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
         "patchSetId": 5
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-03T06:26:25Z",
       "side": 1,
       "message": "Can we use following here:\n\nSet\u003cString\u003e installedPackages \u003d new ArraySet\u003c\u003e(packages);",
+      "range": {
+        "startLine": 343,
+        "startChar": 12,
+        "endLine": 346,
+        "endChar": 13
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42e4a1d4_bcc4b36c",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Packages is a list of PackageInfo so no. We could use streams and map to map the list of PackageInfo to a list of String beforehand but I think this is technically less performant and not that much more readable IMO.",
+      "parentUuid": "ac8746b5_aa172e77",
       "range": {
         "startLine": 343,
         "startChar": 12,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29648ee5_624e5e78",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "e8638331_d3d9c277",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 9
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "019a8b3c_15b5ee4c",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-02-03T06:26:25Z",
       "side": 1,
       "message": "Can we use following here:\n\nSet\u003cString\u003e installedPackages \u003d new ArraySet\u003c\u003e(packages);",
+      "range": {
+        "startLine": 383,
+        "startChar": 0,
+        "endLine": 386,
+        "endChar": 13
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4937584f_155aa67d",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "019a8b3c_15b5ee4c",
       "range": {
         "startLine": 383,
         "startChar": 0,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6a354dd_7bb57f45",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "247736e7_e254a43d",
+      "range": {
+        "startLine": 575,
+        "startChar": 70,
+        "endLine": 575,
+        "endChar": 83
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ee72664_e2de5f2e",
@@ -175,6 +343,30 @@
       "writtenOn": "2021-02-03T06:26:25Z",
       "side": 1,
       "message": "Maybe consider using constant defined above.",
+      "range": {
+        "startLine": 581,
+        "startChar": 78,
+        "endLine": 581,
+        "endChar": 91
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "786c33bc_88a1df8d",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ee72664_e2de5f2e",
       "range": {
         "startLine": 581,
         "startChar": 78,
@@ -208,6 +400,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdf0e95d_1d483962",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelHibernationProto.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f0c443c_9f69f4b8",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 86
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f311adc_ffd150ff",
@@ -227,6 +443,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "656b4180_122747e8",
+        "filename": "services/core/java/com/android/server/apphibernation/GlobalLevelState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "At this time, no, but I\u0027m wary of keeping them as the same state because they represent two different states conceptually. Anything else we would need to store on disk in the future would likely only apply to one state and not the other.",
+      "parentUuid": "8f311adc_ffd150ff",
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b49d224_a2701d22",
         "filename": "services/core/java/com/android/server/apphibernation/HibernationStateDiskStore.java",
         "patchSetId": 5
@@ -238,6 +472,30 @@
       "writtenOn": "2021-02-03T06:26:25Z",
       "side": 1,
       "message": "Could this be a final class ?",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 36
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c2801e5_7edddf93",
+        "filename": "services/core/java/com/android/server/apphibernation/HibernationStateDiskStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "No because it needs to be mocked in tests.\n\n\n\"Cannot mock/spy class com.android.server.apphibernation.HibernationStateDiskStore\nMockito cannot mock/spy because :\n - final or anonymous class\"",
+      "parentUuid": "2b49d224_a2701d22",
       "range": {
         "startLine": 45,
         "startChar": 0,
@@ -271,6 +529,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94b3f538_938dd94e",
+        "filename": "services/core/java/com/android/server/apphibernation/HibernationStateDiskStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "354e4cb3_930f5f93",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 23
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5fad6c2f_35b6aa35",
@@ -284,6 +566,30 @@
       "writtenOn": "2021-02-03T06:26:25Z",
       "side": 1,
       "message": "Would it be a good idea to add an info log here ?",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 28
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "859cdfa6_f7c99718",
+        "filename": "services/core/java/com/android/server/apphibernation/HibernationStateDiskStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fad6c2f_35b6aa35",
       "range": {
         "startLine": 114,
         "startChar": 16,
@@ -317,6 +623,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ecab47b_5d450d24",
+        "filename": "services/core/java/com/android/server/apphibernation/UserLevelHibernationProto.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a5d9f43_7d3e8bb7",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 78
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e551de5b_f48eb78b",
@@ -340,6 +670,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13530ac5_df0a28d2",
+        "filename": "services/tests/servicestests/src/com/android/server/apphibernation/HibernationStateDiskStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e551de5b_f48eb78b",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 72
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "832c4b6a_6e26c143",
@@ -353,6 +707,30 @@
       "writtenOn": "2021-02-03T06:26:25Z",
       "side": 1,
       "message": "Could this class have final modifier ? \nCould this class have private visibility ?",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 76
+      },
+      "revId": "7f1122bdb4838a9fea794d45e8ab68a25f7c02be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b090a46d_64fd20e6",
+        "filename": "services/tests/servicestests/src/com/android/server/apphibernation/HibernationStateDiskStoreTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-02-04T01:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "832c4b6a_6e26c143",
       "range": {
         "startLine": 136,
         "startChar": 4,
