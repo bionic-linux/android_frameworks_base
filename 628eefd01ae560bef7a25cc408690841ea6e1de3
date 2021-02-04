@@ -16,6 +16,24 @@
       "message": "Hi Anton, I didn\u0027t follow the alphabetical order in this CL to avoid merge conflict with git_master. Can I create a separate CL on top of this CL stack to fix the order of Android.bp and api/Android.bp?",
       "revId": "628eefd01ae560bef7a25cc408690841ea6e1de3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "003122c1_c8c488b2",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-04T15:58:17Z",
+      "side": 1,
+      "message": "yup, sounds good thanks",
+      "parentUuid": "6e654a24_712a7f0c",
+      "revId": "628eefd01ae560bef7a25cc408690841ea6e1de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
