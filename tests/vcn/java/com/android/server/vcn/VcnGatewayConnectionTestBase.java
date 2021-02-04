@@ -22,8 +22,11 @@ import static com.android.server.vcn.VcnTestUtils.setupIpSecManager;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
@@ -44,6 +47,7 @@ import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.test.TestLooper;
 
+import com.android.internal.util.WakeupMessage;
 import com.android.server.IpSecService;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.Vcn.VcnGatewayStatusCallback;
@@ -54,6 +58,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.Collections;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class VcnGatewayConnectionTestBase {
     protected static final ParcelUuid TEST_SUB_GRP = new ParcelUuid(UUID.randomUUID());
@@ -62,6 +67,7 @@ public class VcnGatewayConnectionTestBase {
     protected static final int TEST_IPSEC_TRANSFORM_RESOURCE_ID = 2;
     protected static final int TEST_IPSEC_TUNNEL_RESOURCE_ID = 3;
     protected static final int TEST_SUB_ID = 5;
+    protected static final long ELAPSED_REAL_TIME = 123456789L;
     protected static final String TEST_IPSEC_TUNNEL_IFACE = "IPSEC_IFACE";
     protected static final UnderlyingNetworkRecord TEST_UNDERLYING_NETWORK_RECORD_1 =
             new UnderlyingNetworkRecord(
@@ -89,6 +95,8 @@ public class VcnGatewayConnectionTestBase {
     @NonNull protected final VcnGatewayConnection.Dependencies mDeps;
     @NonNull protected final UnderlyingNetworkTracker mUnderlyingNetworkTracker;
     @NonNull protected final VcnWakeLock mWakeLock;
+    @NonNull protected final WakeupMessage mTeardownTimeoutAlarm;
+    @NonNull protected final WakeupMessage mDisconnectRequestAlarm;
 
     @NonNull protected final IpSecService mIpSecSvc;
 
@@ -105,6 +113,8 @@ public class VcnGatewayConnectionTestBase {
         mDeps = mock(VcnGatewayConnection.Dependencies.class);
         mUnderlyingNetworkTracker = mock(UnderlyingNetworkTracker.class);
         mWakeLock = mock(VcnWakeLock.class);
+        mTeardownTimeoutAlarm = mock(WakeupMessage.class);
+        mDisconnectRequestAlarm = mock(WakeupMessage.class);
 
         mIpSecSvc = mock(IpSecService.class);
         setupIpSecManager(mContext, mIpSecSvc);
@@ -119,6 +129,25 @@ public class VcnGatewayConnectionTestBase {
         doReturn(mWakeLock)
                 .when(mDeps)
                 .newWakeLock(eq(mVcnContext), eq(PowerManager.PARTIAL_WAKE_LOCK), any());
+        doAnswer((invocation) -> {
+            // Mock-within a doAnswer is safe, because it doesn't actually run nested.
+            return mock(WakeupMessage.class);
+        }).when(mDeps).newWakeupMessage(eq(mVcnContext), any(), any(), any());
+        doReturn(mTeardownTimeoutAlarm)
+                .when(mDeps)
+                .newWakeupMessage(
+                        eq(mVcnContext),
+                        any(),
+                        eq(VcnGatewayConnection.TEARDOWN_TIMEOUT_ALARM),
+                        any());
+        doReturn(mDisconnectRequestAlarm)
+                .when(mDeps)
+                .newWakeupMessage(
+                        eq(mVcnContext),
+                        any(),
+                        eq(VcnGatewayConnection.DISCONNECT_REQUEST_ALARM),
+                        any());
+        doReturn(ELAPSED_REAL_TIME).when(mDeps).getElapsedRealTime();
     }
 
     @Before
@@ -174,5 +203,37 @@ public class VcnGatewayConnectionTestBase {
     protected void verifyWakeLockReleased() {
         verify(mWakeLock).release();
         verifyNoMoreInteractions(mWakeLock);
+    }
+
+    private Runnable verifyWakeupMessageCreatedAndScheduled(
+            @NonNull String tag,
+            @NonNull WakeupMessage msg,
+            long delayInMillis,
+            boolean expectCanceled) {
+        ArgumentCaptor<Runnable> runnableCaptor = ArgumentCaptor.forClass(Runnable.class);
+        verify(mDeps).newWakeupMessage(eq(mVcnContext), any(), eq(tag), runnableCaptor.capture());
+
+        verify(mDeps).getElapsedRealTime();
+        verify(msg).schedule(ELAPSED_REAL_TIME + delayInMillis);
+        verify(msg, expectCanceled ? times(1) : never()).cancel();
+
+        return runnableCaptor.getValue();
+    }
+
+    protected Runnable verifyTeardownTimeoutAlarm(boolean expectCanceled) {
+        return verifyWakeupMessageCreatedAndScheduled(
+                VcnGatewayConnection.TEARDOWN_TIMEOUT_ALARM,
+                mTeardownTimeoutAlarm,
+                TimeUnit.SECONDS.toMillis(VcnGatewayConnection.TEARDOWN_TIMEOUT_SECONDS),
+                expectCanceled);
+    }
+
+    protected Runnable verifyDisconnectRequestAlarm(boolean expectCanceled) {
+        return verifyWakeupMessageCreatedAndScheduled(
+                VcnGatewayConnection.DISCONNECT_REQUEST_ALARM,
+                mDisconnectRequestAlarm,
+                TimeUnit.SECONDS.toMillis(
+                        VcnGatewayConnection.NETWORK_LOSS_DISCONNECT_TIMEOUT_SECONDS),
+                expectCanceled);
     }
 }

@@ -77,6 +77,7 @@ public class VcnGatewayConnectionDisconnectedStateTest extends VcnGatewayConnect
         mTestLooper.dispatchAll();
 
         assertEquals(mGatewayConnection.mDisconnectedState, mGatewayConnection.getCurrentState());
+        verifyDisconnectRequestAlarm(false /* expectCanceled */);
     }
 
     @Test

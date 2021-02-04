@@ -61,6 +61,7 @@ public class VcnGatewayConnectionConnectingStateTest extends VcnGatewayConnectio
 
         assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
         verify(mIkeSession).kill();
+        verifyDisconnectRequestAlarm(false /* expectCanceled */);
     }
 
     @Test
@@ -73,6 +74,7 @@ public class VcnGatewayConnectionConnectingStateTest extends VcnGatewayConnectio
         assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
         verify(mIkeSession).close();
         verify(mIkeSession, never()).kill();
+        verifyTeardownTimeoutAlarm(false /* expectCanceled */);
     }
 
     @Test
@@ -92,6 +94,7 @@ public class VcnGatewayConnectionConnectingStateTest extends VcnGatewayConnectio
 
         assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
         verify(mIkeSession).close();
+        verifyTeardownTimeoutAlarm(false /* expectCanceled */);
     }
 
     @Test
@@ -101,5 +104,6 @@ public class VcnGatewayConnectionConnectingStateTest extends VcnGatewayConnectio
 
         assertEquals(mGatewayConnection.mRetryTimeoutState, mGatewayConnection.getCurrentState());
         verify(mIkeSession).close();
+        verifyTeardownTimeoutAlarm(true /* expectCanceled */);
     }
 }
