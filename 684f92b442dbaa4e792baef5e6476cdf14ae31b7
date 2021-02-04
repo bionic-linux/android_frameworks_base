@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "232fb9bc_ef878be0",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-04T19:08:51Z",
+      "side": 1,
+      "message": "Instead of a totally different name, how about an overload:\n\n/* public API */ setThresholds(int[]) {\n  setThresholds(thresholds, /* enforceLength\u003d */ true);\n}\n\n@hide\nsetThresholds(int[], boolean enforceLength) { ... }\n\nThen system callers can use the @hide API and just pass enforceLength \u003d false. \"setSystemThresholds\" sounds a bit weird IMO, so an overload would make naming more consistent.",
+      "range": {
+        "startLine": 426,
+        "startChar": 32,
+        "endLine": 426,
+        "endChar": 51
+      },
+      "revId": "684f92b442dbaa4e792baef5e6476cdf14ae31b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
