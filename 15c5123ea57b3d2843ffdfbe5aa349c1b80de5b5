@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9b90718_d2911ee8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-04T07:40:13Z",
+      "side": 1,
+      "message": "Please also include NetworkPolicyManagerServiceTest",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "15c5123ea57b3d2843ffdfbe5aa349c1b80de5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c949bca2_4e6b9c62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-04T07:40:13Z",
+      "side": 1,
+      "message": "LGTM with nits",
+      "revId": "15c5123ea57b3d2843ffdfbe5aa349c1b80de5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2f18a66_3b8dd7dd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-04T07:40:13Z",
+      "side": 1,
+      "message": "Question: is the value resovle at runtime?\nIf so maybe we should put this function at setup()?",
+      "range": {
+        "startLine": 1287,
+        "startChar": 71,
+        "endLine": 1287,
+        "endChar": 80
+      },
+      "revId": "15c5123ea57b3d2843ffdfbe5aa349c1b80de5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
