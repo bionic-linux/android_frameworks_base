@@ -70,6 +70,30 @@
       },
       "revId": "12779a7f1ed109973e81e8061ce46bcc368a617e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec08991a_239440c1",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-04T02:01:43Z",
+      "side": 1,
+      "message": "This list all looks like VCN-supportable capabilities. I think Ben is also looking over the list.",
+      "parentUuid": "2b36749b_fb30b764",
+      "range": {
+        "startLine": 190,
+        "startChar": 40,
+        "endLine": 190,
+        "endChar": 42
+      },
+      "revId": "12779a7f1ed109973e81e8061ce46bcc368a617e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
