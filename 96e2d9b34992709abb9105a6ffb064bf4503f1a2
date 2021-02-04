@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b42b3fe4_705823f4",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:42:44Z",
+      "side": 1,
+      "message": "Can we also add a comment noting how this intends to handle delayed messages?",
+      "range": {
+        "startLine": 435,
+        "startChar": 82,
+        "endLine": 435,
+        "endChar": 83
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee658df8_126f5e32",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:42:44Z",
+      "side": 1,
+      "message": "Can this ever get queued after the state machine has shut down? ie, we obtain one without ever releasing?",
+      "range": {
+        "startLine": 656,
+        "startChar": 8,
+        "endLine": 656,
+        "endChar": 97
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f62873f2_470be1c1",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:42:44Z",
+      "side": 1,
+      "message": "Suggest just using the \"VcnGatwayConnection\" tag; it\u0027s a bit more trackable.",
+      "range": {
+        "startLine": 661,
+        "startChar": 77,
+        "endLine": 661,
+        "endChar": 90
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d595bb5b_0eb38a31",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:42:44Z",
+      "side": 1,
+      "message": "I **think** you can re-acquire wakelocks that have been released, and construct a wakelock without needing to acquire. Perhaps we keep one for the life of the session?",
+      "range": {
+        "startLine": 673,
+        "startChar": 16,
+        "endLine": 673,
+        "endChar": 33
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1459bc8_4ad652da",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:42:44Z",
+      "side": 1,
+      "message": "If we\u0027re locking and considering multi-threaded operation, the condition and the wakelock should both be synchronized. Else we could get a case where two conditions are met, and both perform wakelock operations in the wrong order:\n\n                 \u003c-- hasMessageOrCallbacks()\nobtainWakelock() --\u003e\n                 \u003c-- releaseWakelock()\nsendMessage()    --\u003e\n\nThat said, I am actually starting to feel like the locking is causing more cognitive overhead than it\u0027s worth. We\u0027re relying heavily on the single-threaded approach, and it\u0027ll be hard to make sure the locking is correct. (and if it isn\u0027t correct, it gives us a false sense of security, which is worse).\n\nSuggest maybe we remove the locks, and add ensureRunningOnLooperThread() calls to incoming calls.",
+      "range": {
+        "startLine": 690,
+        "startChar": 0,
+        "endLine": 691,
+        "endChar": 51
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88d68b2e_9928e8aa",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:42:44Z",
+      "side": 1,
+      "message": "Could we add a comment that getHandler() cannot be null here; since it\u0027s actively processing a state?\n\n(if it\u0027s not actively processing, getHandler() can be null...)",
+      "range": {
+        "startLine": 760,
+        "startChar": 17,
+        "endLine": 760,
+        "endChar": 29
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ae65804_57e3cc6e",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTestBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-04T05:42:44Z",
+      "side": 1,
+      "message": "Acquired?",
+      "range": {
+        "startLine": 164,
+        "startChar": 33,
+        "endLine": 164,
+        "endChar": 41
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
