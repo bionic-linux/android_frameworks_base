@@ -26089,6 +26089,14 @@ package android.net.sip {
 
 }
 
+package android.net.vcn {
+
+  public final class VcnIkeConfig {
+    ctor public VcnIkeConfig(@NonNull IkeSessionParams, @NonNull TunnelModeChildSessionParams);
+  }
+
+}
+
 package android.nfc {
 
   public class FormatException extends java.lang.Exception {
