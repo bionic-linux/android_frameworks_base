@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2eb2cbf_4b9044c5",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-04T20:02:49Z",
+      "side": 0,
+      "message": "You\u0027re right; this does clean things up a lot.  Nice.",
+      "range": {
+        "startLine": 284,
+        "startChar": 33,
+        "endLine": 285,
+        "endChar": 66
+      },
+      "revId": "5f36d6f70a5cfeb598647757f9a16c6e6b50daa5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

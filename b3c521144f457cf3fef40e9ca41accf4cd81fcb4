@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbdfc030_cd6d1a66",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-04T20:02:49Z",
+      "side": 1,
+      "message": "Does this actually need to be a system API?  I presume it\u0027s hidden implementation detail of the API below consuming it?",
+      "range": {
+        "startLine": 157,
+        "startChar": 35,
+        "endLine": 157,
+        "endChar": 70
+      },
+      "revId": "b3c521144f457cf3fef40e9ca41accf4cd81fcb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "748c6389_468b75f7",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-04T20:02:49Z",
+      "side": 1,
+      "message": "You should define a constant for this such as NAME_UNSUPPORTED \u003d -1.",
+      "range": {
+        "startLine": 253,
+        "startChar": 68,
+        "endLine": 253,
+        "endChar": 71
+      },
+      "revId": "b3c521144f457cf3fef40e9ca41accf4cd81fcb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7930b7e8_a750c420",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-04T20:02:49Z",
+      "side": 1,
+      "message": "Make this @NonNull; a null name isn\u0027t really meaningful; I presume an empty name would be used in this case.",
+      "range": {
+        "startLine": 259,
+        "startChar": 52,
+        "endLine": 259,
+        "endChar": 60
+      },
+      "revId": "b3c521144f457cf3fef40e9ca41accf4cd81fcb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
