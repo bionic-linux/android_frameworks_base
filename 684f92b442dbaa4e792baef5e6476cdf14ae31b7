@@ -22,6 +22,30 @@
       },
       "revId": "684f92b442dbaa4e792baef5e6476cdf14ae31b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbc42970_e9afb6a8",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-02-04T20:28:32Z",
+      "side": 1,
+      "message": "Nice suggestion, thanks, Hunter! This is a good case for overload.\n1. They the same methods, just for different target caller (apps v.s. system)\n2. It can remove the duplication in logic\n3. And no API surface change :-)\n\nI picked up \"isSystem\" as the second boolean parameter, taking consideration we may have other restriction (e.g minimum interval when find the valid user case).",
+      "parentUuid": "232fb9bc_ef878be0",
+      "range": {
+        "startLine": 426,
+        "startChar": 32,
+        "endLine": 426,
+        "endChar": 51
+      },
+      "revId": "684f92b442dbaa4e792baef5e6476cdf14ae31b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
