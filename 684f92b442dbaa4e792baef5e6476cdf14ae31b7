@@ -46,6 +46,30 @@
       },
       "revId": "684f92b442dbaa4e792baef5e6476cdf14ae31b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "062120c4_0bae3735",
+        "filename": "telephony/java/android/telephony/SignalThresholdInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-04T21:30:17Z",
+      "side": 1,
+      "message": "Seems reasonable, though I\u0027ll note that isSystem feels a bit funny to me. As somebody writing OS code, I\u0027d be saying \"well of course I know the system, he\u0027s me.\" It almost feels like isSystem should be able to be deduced somehow. A more explicitly named param like allowAnyLength or similar makes it a bit more obvious what\u0027s going on and why it needs to be explicitly specified.",
+      "parentUuid": "fbc42970_e9afb6a8",
+      "range": {
+        "startLine": 426,
+        "startChar": 32,
+        "endLine": 426,
+        "endChar": 51
+      },
+      "revId": "684f92b442dbaa4e792baef5e6476cdf14ae31b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
