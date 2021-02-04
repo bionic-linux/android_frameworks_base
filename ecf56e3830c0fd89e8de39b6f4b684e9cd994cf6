@@ -16,6 +16,24 @@
       "message": "Would it be possible for only one of either getDmabufTotalExportedKb() or getDmaHeapPoolsSizeKb() returns a non -1 and the other -1?",
       "revId": "ecf56e3830c0fd89e8de39b6f4b684e9cd994cf6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1b3fd58_fff67f2e",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13748,
+      "author": {
+        "id": 1120612
+      },
+      "writtenOn": "2021-02-04T06:17:25Z",
+      "side": 1,
+      "message": "Sorry, yes, this is possible. Fixed in the latest PS.",
+      "parentUuid": "a0853122_f53cf33e",
+      "revId": "ecf56e3830c0fd89e8de39b6f4b684e9cd994cf6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
