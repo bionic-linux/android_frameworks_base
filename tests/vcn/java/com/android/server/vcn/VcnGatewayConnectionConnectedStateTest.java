@@ -68,6 +68,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
 
         assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
         verify(mIkeSession, never()).close();
+        verifyWakeupMessageCreatedAndScheduled(mGatewayConnection.getDisconnectRequestAlarm());
     }
 
     @Test
@@ -112,6 +113,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         mTestLooper.dispatchAll();
 
         assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
+        verifyWakeupMessageCreatedAndScheduled(mGatewayConnection.getTeardownRequestAlarm());
     }
 
     @Test
@@ -121,6 +123,7 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
 
         assertEquals(mGatewayConnection.mRetryTimeoutState, mGatewayConnection.getCurrentState());
         verify(mIkeSession).close();
+        verifyWakeupMessageCreatedAndScheduled(mGatewayConnection.getTeardownRequestAlarm());
     }
 
     // TODO: Add tests for childOpened() when ChildSessionConfiguration can be mocked or created
