@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5cada613_b3f89635",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6284,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-04T19:57:18Z",
+      "side": 1,
+      "message": "\u003e Edit : maybe we in fact want something more generic than flags if we\u0027re going to redact according to multiple permissions, appops, and system state like location turned on/off\n\nThat was an option we had considered before even for the existing location permission. The concern then was that this could result in duplicated permission checks inside the TransportInfo (along with any permission checks done by connectivity service for NetworkCapabilties). We could convert the booleans to a flag as mentioned in your initial proposal. That would ensure that TransportInfo internally does not perform it\u0027s own permission checks.",
+      "parentUuid": "867e575b_d542472c",
+      "range": {
+        "startLine": 6284,
+        "startChar": 79,
+        "endLine": 6284,
+        "endChar": 95
+      },
+      "revId": "7e8da21af73a3231cfa60023f7f8a3fb7ceab027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3abcbcb5_8f5942bb",
         "filename": "core/api/system-current.txt",
         "patchSetId": 2
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-04T07:37:50Z",
       "side": 1,
       "message": "This is very specific to WiFi. Can we instead have an API that takes a permission ?",
+      "range": {
+        "startLine": 6558,
+        "startChar": 37,
+        "endLine": 6558,
+        "endChar": 52
+      },
+      "revId": "7e8da21af73a3231cfa60023f7f8a3fb7ceab027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17609248_15fea088",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6558,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-04T19:57:18Z",
+      "side": 1,
+      "message": "That is a backup option that I proposed here: https://b.corp.google.com/issues/162602799#comment36. But, this seems more natural place to hold this info since:\n* Already an existing field in WifiInfo.\n* With MAC randomization, each connection can have a different MAC address. So, it seems natural to include that info along with other connection details. \n\nThe async API is also going to be pretty messy since we can now have concurrent connections. So, we will need something like WifiManager.getMacAddress(Network network). Apps will need to use the NetworkCallback to retrieve NEtwork object and then use the async API.",
+      "parentUuid": "3abcbcb5_8f5942bb",
       "range": {
         "startLine": 6558,
         "startChar": 37,

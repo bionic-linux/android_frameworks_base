@@ -16,6 +16,24 @@
       "message": "Let\u0027s discuss this on Wednesday\u0027s call. We may need a mechanism to extend this permission enforcement model for TransportInfo. ",
       "revId": "f30878c4131c88650f645b5a4075ecde99a50dd0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b89906c_f8c44faf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-02-04T19:57:18Z",
+      "side": 1,
+      "message": "I agree. This is was just a proposal. I wanted to discuss this in last week\u0027s meeting, I forgot about it. Let\u0027s discuss in the next week\u0027s meeting.",
+      "parentUuid": "d7b7a386_7c3bc051",
+      "revId": "f30878c4131c88650f645b5a4075ecde99a50dd0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
