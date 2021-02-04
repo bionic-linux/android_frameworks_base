@@ -17,6 +17,7 @@
 package android.net;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -26,13 +27,17 @@ import com.android.internal.util.Preconditions;
 import java.util.Objects;
 
 /** @hide */
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public final class StringNetworkSpecifier extends NetworkSpecifier implements Parcelable {
     /**
      * Arbitrary string used to pass (additional) information to the network factory.
+     * @hide
      */
     @NonNull
     public final String specifier;
 
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public StringNetworkSpecifier(@NonNull String specifier) {
         Preconditions.checkStringNotEmpty(specifier);
         this.specifier = specifier;

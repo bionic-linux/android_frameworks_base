@@ -35,6 +35,13 @@ package android.net {
     field public static final int TRANSPORT_TEST = 7; // 0x7
   }
 
+  public final class StringNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
+    ctor public StringNetworkSpecifier(@NonNull String);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.StringNetworkSpecifier> CREATOR;
+  }
+
   public final class TcpRepairWindow {
     ctor public TcpRepairWindow(int, int, int, int, int, int);
     field public final int maxWindow;
