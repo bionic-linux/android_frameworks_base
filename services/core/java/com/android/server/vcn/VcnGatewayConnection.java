@@ -60,6 +60,7 @@ import android.os.Message;
 import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.SystemClock;
 import android.util.ArraySet;
 import android.util.Slog;
 
@@ -67,6 +68,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.internal.util.WakeupMessage;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkRecord;
 import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkTrackerCallback;
@@ -128,13 +130,22 @@ import java.util.concurrent.TimeUnit;
  * lack of WakeLocks).
  *
  * <p>Any attempt to remove messages from the Handler should be done using {@link
- * #removeEqualMessages(int, Object)}. This is necessary to ensure that the WakeLock is correctly
- * released when no messages remain in the Handler queue.
+ * #removeEqualMessages}. This is necessary to ensure that the WakeLock is correctly released when
+ * no messages remain in the Handler queue.
  *
  * @hide
  */
 public class VcnGatewayConnection extends StateMachine {
     private static final String TAG = VcnGatewayConnection.class.getSimpleName();
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final String TEARDOWN_TIMEOUT_ALARM = TAG + "_TEARDOWN_TIMEOUT_ALARM";
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final String DISCONNECT_REQUEST_ALARM = TAG + "_DISCONNECT_REQUEST_ALARM";
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final String RETRY_TIMEOUT_ALARM = TAG + "RETRY_TIMEOUT_ALARM";
 
     private static final int[] MERGED_CAPABILITIES =
             new int[] {NET_CAPABILITY_NOT_METERED, NET_CAPABILITY_NOT_ROAMING};
@@ -148,7 +159,8 @@ public class VcnGatewayConnection extends StateMachine {
     private static final String DISCONNECT_REASON_TEARDOWN = "teardown() called on VcnTunnel";
     private static final int TOKEN_ALL = Integer.MIN_VALUE;
 
-    private static final int NETWORK_LOSS_DISCONNECT_TIMEOUT_SECONDS = 30;
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final int NETWORK_LOSS_DISCONNECT_TIMEOUT_SECONDS = 30;
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     static final int TEARDOWN_TIMEOUT_SECONDS = 5;
@@ -508,6 +520,10 @@ public class VcnGatewayConnection extends StateMachine {
      */
     private NetworkAgent mNetworkAgent;
 
+    @Nullable private WakeupMessage mTeardownTimeoutAlarm;
+    @Nullable private WakeupMessage mDisconnectRequestAlarm;
+    @Nullable private WakeupMessage mRetryTimeoutAlarm;
+
     public VcnGatewayConnection(
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
@@ -602,6 +618,14 @@ public class VcnGatewayConnection extends StateMachine {
         }
 
         releaseWakeLock();
+        if (mTeardownTimeoutAlarm != null) {
+            mTeardownTimeoutAlarm.cancel();
+            mTeardownTimeoutAlarm = null;
+        }
+        if (mDisconnectRequestAlarm != null) {
+            mDisconnectRequestAlarm.cancel();
+            mDisconnectRequestAlarm = null;
+        }
 
         mUnderlyingNetworkTracker.teardown();
     }
@@ -631,14 +655,27 @@ public class VcnGatewayConnection extends StateMachine {
             // TODO(b/179091925): Move the delayed-message handling to BaseState
 
             // If underlying is null, all underlying networks have been lost. Disconnect VCN after a
-            // timeout.
-            if (underlying == null) {
-                sendMessageDelayed(
-                        EVENT_DISCONNECT_REQUESTED,
-                        TOKEN_ALL,
-                        new EventDisconnectRequestedInfo(DISCONNECT_REASON_UNDERLYING_NETWORK_LOST),
-                        TimeUnit.SECONDS.toMillis(NETWORK_LOSS_DISCONNECT_TIMEOUT_SECONDS));
-            } else {
+            // timeout. Only schedule a NEW alarm if none is already set.
+            if (underlying == null && mDisconnectRequestAlarm == null) {
+                mDisconnectRequestAlarm =
+                        mDeps.newWakeupMessage(
+                                mVcnContext,
+                                getHandler(),
+                                DISCONNECT_REQUEST_ALARM,
+                                () -> sendMessageAndAcquireWakeLock(
+                                        EVENT_DISCONNECT_REQUESTED,
+                                        TOKEN_ALL,
+                                        new EventDisconnectRequestedInfo(
+                                                DISCONNECT_REASON_UNDERLYING_NETWORK_LOST)));
+                mDisconnectRequestAlarm.schedule(
+                        getAlarmTimeInMillis(NETWORK_LOSS_DISCONNECT_TIMEOUT_SECONDS));
+            } else if (underlying != null) {
+                // Received a new Network so any previous alarm is irrelevant - cancel and clear it.
+                if (mDisconnectRequestAlarm != null) {
+                    mDisconnectRequestAlarm.cancel();
+                    mDisconnectRequestAlarm = null;
+                }
+
                 // Cancel any existing disconnect due to previous loss of underlying network
                 removeEqualMessages(
                         EVENT_DISCONNECT_REQUESTED,
@@ -695,16 +732,6 @@ public class VcnGatewayConnection extends StateMachine {
         super.sendMessage(what, token, arg2, data);
     }
 
-    // TODO: remove this method once WakupMessage is used instead
-    private void sendMessageDelayed(int what, int token, EventInfo data, long timeout) {
-        super.sendMessageDelayed(what, token, ARG_NOT_PRESENT, data, timeout);
-    }
-
-    // TODO: remove this method once WakupMessage is used instead
-    private void sendMessageDelayed(int what, int token, int arg2, EventInfo data, long timeout) {
-        super.sendMessageDelayed(what, token, arg2, data, timeout);
-    }
-
     /**
      * Removes all messages matching the given parameters, and attempts to release mWakeLock if the
      * Handler is empty.
@@ -730,6 +757,31 @@ public class VcnGatewayConnection extends StateMachine {
         }
 
         maybeReleaseWakeLock();
+    }
+
+    private long getAlarmTimeInMillis(int seconds) {
+        return mDeps.getElapsedRealTime() + TimeUnit.SECONDS.toMillis(seconds);
+    }
+
+    private void setRetryTimeoutAlarm(long delay) {
+        mRetryTimeoutAlarm =
+                mDeps.newWakeupMessage(
+                        mVcnContext,
+                        getHandler(),
+                        RETRY_TIMEOUT_ALARM,
+                        () -> sendMessageAndAcquireWakeLock(
+                                EVENT_RETRY_TIMEOUT_EXPIRED, mCurrentToken));
+        final long alarmTime = mDeps.getElapsedRealTime() + delay;
+        mRetryTimeoutAlarm.schedule(alarmTime);
+    }
+
+    private void cancelRetryTimeoutAlarm() {
+        if (mRetryTimeoutAlarm != null) {
+            mRetryTimeoutAlarm.cancel();
+            mRetryTimeoutAlarm = null;
+        }
+
+        removeEqualMessages(EVENT_RETRY_TIMEOUT_EXPIRED);
     }
 
     private void sessionLost(int token, @Nullable Exception exception) {
@@ -788,8 +840,8 @@ public class VcnGatewayConnection extends StateMachine {
          * builds.
          *
          * <p>Here be dragons: processMessage() is final to ensure that mWakeLock is released once
-         * the Handler queue is empty. Future changes to processMessage() (or overrides to
-         * processMessage) MUST ensure that mWakeLock is correctly released.
+         * the Handler queue is empty. Future changes (or overrides) to processMessage() to MUST
+         * ensure that mWakeLock is correctly released.
          */
         @Override
         public final boolean processMessage(Message msg) {
@@ -971,10 +1023,16 @@ public class VcnGatewayConnection extends StateMachine {
             }
 
             mIkeSession.close();
-            sendMessageDelayed(
-                    EVENT_TEARDOWN_TIMEOUT_EXPIRED,
-                    mCurrentToken,
-                    TimeUnit.SECONDS.toMillis(TEARDOWN_TIMEOUT_SECONDS));
+
+            // Safe to blindly assign, as it is cancelled and cleared on exiting this state
+            mTeardownTimeoutAlarm =
+                    mDeps.newWakeupMessage(
+                            mVcnContext,
+                            getHandler(),
+                            TEARDOWN_TIMEOUT_ALARM,
+                            () -> sendMessageAndAcquireWakeLock(
+                                    EVENT_TEARDOWN_TIMEOUT_EXPIRED, mCurrentToken));
+            mTeardownTimeoutAlarm.schedule(getAlarmTimeInMillis(TEARDOWN_TIMEOUT_SECONDS));
         }
 
         @Override
@@ -1025,6 +1083,13 @@ public class VcnGatewayConnection extends StateMachine {
         @Override
         protected void exitState() throws Exception {
             mSkipRetryTimeout = false;
+
+            if (mTeardownTimeoutAlarm != null) {
+                mTeardownTimeoutAlarm.cancel();
+                mTeardownTimeoutAlarm = null;
+            }
+
+            removeEqualMessages(EVENT_TEARDOWN_TIMEOUT_EXPIRED);
         }
     }
 
@@ -1314,8 +1379,7 @@ public class VcnGatewayConnection extends StateMachine {
                 Slog.wtf(TAG, "Underlying network was null in retry state");
                 transitionTo(mDisconnectedState);
             } else {
-                sendMessageDelayed(
-                        EVENT_RETRY_TIMEOUT_EXPIRED, mCurrentToken, getNextRetryIntervalsMs());
+                setRetryTimeoutAlarm(getNextRetryIntervalsMs());
             }
         }
 
@@ -1328,8 +1392,6 @@ public class VcnGatewayConnection extends StateMachine {
 
                     // If new underlying is null, all networks were lost; go back to disconnected.
                     if (mUnderlying == null) {
-                        removeEqualMessages(EVENT_RETRY_TIMEOUT_EXPIRED);
-
                         transitionTo(mDisconnectedState);
                         return;
                     } else if (oldUnderlying != null
@@ -1340,8 +1402,6 @@ public class VcnGatewayConnection extends StateMachine {
 
                     // Fallthrough
                 case EVENT_RETRY_TIMEOUT_EXPIRED:
-                    removeEqualMessages(EVENT_RETRY_TIMEOUT_EXPIRED);
-
                     transitionTo(mConnectingState);
                     break;
                 case EVENT_DISCONNECT_REQUESTED:
@@ -1351,6 +1411,11 @@ public class VcnGatewayConnection extends StateMachine {
                     logUnhandledMessage(msg);
                     break;
             }
+        }
+
+        @Override
+        public void exitState() {
+            cancelRetryTimeoutAlarm();
         }
 
         private long getNextRetryIntervalsMs() {
@@ -1625,6 +1690,20 @@ public class VcnGatewayConnection extends StateMachine {
         public VcnWakeLock newWakeLock(
                 @NonNull VcnContext vcnContext, int wakeLockFlag, @NonNull String wakeLockTag) {
             return new VcnWakeLock(vcnContext, wakeLockFlag, wakeLockTag);
+        }
+
+        /** Builds a new WakeupMessage. */
+        public WakeupMessage newWakeupMessage(
+                @NonNull VcnContext vcnContext,
+                @NonNull Handler handler,
+                @NonNull String tag,
+                @NonNull Runnable runnable) {
+            return new WakeupMessage(vcnContext.getContext(), handler, tag, runnable);
+        }
+
+        /** Gets the elapsed real time since boot, in millis. */
+        public long getElapsedRealTime() {
+            return SystemClock.elapsedRealtime();
         }
     }
 
