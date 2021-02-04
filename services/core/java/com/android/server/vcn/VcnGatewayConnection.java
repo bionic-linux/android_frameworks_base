@@ -53,6 +53,7 @@ import android.os.Message;
 import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.SystemClock;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
@@ -60,6 +61,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
+import com.android.internal.util.WakeupMessage;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkRecord;
 import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkTrackerCallback;
@@ -119,6 +121,9 @@ public class VcnGatewayConnection extends StateMachine {
     private static final String TAG = VcnGatewayConnection.class.getSimpleName();
 
     private static final String WAKE_LOCK_TAG = TAG + "_WakeLock";
+
+    private static final String TEARDOWN_TIMEOUT_ALARM = "TeardownTimeoutAlarm";
+    private static final String DISCONNECT_REQUEST_ALARM = "DisconnectRequestAlarm";
 
     private static final InetAddress DUMMY_ADDR = InetAddresses.parseNumericAddress("192.0.2.0");
     private static final int ARG_NOT_PRESENT = Integer.MIN_VALUE;
@@ -490,6 +495,9 @@ public class VcnGatewayConnection extends StateMachine {
      */
     private NetworkAgent mNetworkAgent;
 
+    @Nullable private WakeupMessage mTeardownTimeoutAlarm;
+    @Nullable private WakeupMessage mDisconnectRequestAlarm;
+
     public VcnGatewayConnection(
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
@@ -584,6 +592,12 @@ public class VcnGatewayConnection extends StateMachine {
         }
 
         releaseWakeLock();
+        if (mTeardownTimeoutAlarm != null) {
+            mTeardownTimeoutAlarm.cancel();
+        }
+        if (mDisconnectRequestAlarm != null) {
+            mDisconnectRequestAlarm.cancel();
+        }
 
         mUnderlyingNetworkTracker.teardown();
     }
@@ -614,16 +628,26 @@ public class VcnGatewayConnection extends StateMachine {
             // If underlying is null, all underlying networks have been lost. Disconnect VCN after a
             // timeout.
             if (underlying == null) {
-                sendMessageDelayed(
-                        EVENT_DISCONNECT_REQUESTED,
-                        TOKEN_ALL,
-                        new EventDisconnectRequestedInfo(DISCONNECT_REASON_UNDERLYING_NETWORK_LOST),
-                        TimeUnit.SECONDS.toMillis(NETWORK_LOSS_DISCONNECT_TIMEOUT_SECONDS));
+                mDisconnectRequestAlarm =
+                        mDeps.newWakeupMessage(
+                                mVcnContext,
+                                getHandler(),
+                                DISCONNECT_REQUEST_ALARM,
+                                () -> sendMessage(
+                                        EVENT_DISCONNECT_REQUESTED,
+                                        TOKEN_ALL,
+                                        new EventDisconnectRequestedInfo(
+                                                DISCONNECT_REASON_UNDERLYING_NETWORK_LOST)));
+                mDisconnectRequestAlarm.schedule(
+                        getAlarmTimeInMillis(NETWORK_LOSS_DISCONNECT_TIMEOUT_SECONDS));
             } else if (getHandler() != null) {
                 // Cancel any existing disconnect due to loss of underlying network
                 // getHandler() can return null if the state machine has already quit. Since this is
                 // called from other classes, this condition must be verified.
 
+                if (mDisconnectRequestAlarm != null) {
+                    mDisconnectRequestAlarm.cancel();
+                }
                 getHandler()
                         .removeEqualMessages(
                                 EVENT_DISCONNECT_REQUESTED,
@@ -661,6 +685,10 @@ public class VcnGatewayConnection extends StateMachine {
         }
     }
 
+    private long getAlarmTimeInMillis(int seconds) {
+        return SystemClock.elapsedRealtime() + TimeUnit.SECONDS.toMillis(seconds);
+    }
+
     @Override
     public void sendMessage(int what, int token) {
         obtainWakeLock();
@@ -675,14 +703,6 @@ public class VcnGatewayConnection extends StateMachine {
     private void sendMessage(int what, int token, int arg2, EventInfo data) {
         obtainWakeLock();
         super.sendMessage(what, token, arg2, data);
-    }
-
-    private void sendMessageDelayed(int what, int token, EventInfo data, long timeout) {
-        super.sendMessageDelayed(what, token, ARG_NOT_PRESENT, data, timeout);
-    }
-
-    private void sendMessageDelayed(int what, int token, int arg2, EventInfo data, long timeout) {
-        super.sendMessageDelayed(what, token, arg2, data, timeout);
     }
 
     private void sessionLost(int token, @Nullable Exception exception) {
@@ -927,10 +947,14 @@ public class VcnGatewayConnection extends StateMachine {
             }
 
             mIkeSession.close();
-            sendMessageDelayed(
-                    EVENT_TEARDOWN_TIMEOUT_EXPIRED,
-                    mCurrentToken,
-                    TimeUnit.SECONDS.toMillis(TEARDOWN_TIMEOUT_SECONDS));
+
+            mTeardownTimeoutAlarm =
+                    mDeps.newWakeupMessage(
+                            mVcnContext,
+                            getHandler(),
+                            TEARDOWN_TIMEOUT_ALARM,
+                            () -> sendMessage(EVENT_TEARDOWN_TIMEOUT_EXPIRED, mCurrentToken));
+            mTeardownTimeoutAlarm.schedule(getAlarmTimeInMillis(TEARDOWN_TIMEOUT_SECONDS));
         }
 
         @Override
@@ -1225,6 +1249,18 @@ public class VcnGatewayConnection extends StateMachine {
         mIkeSession = session;
     }
 
+    @Nullable
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    WakeupMessage getTeardownRequestAlarm() {
+        return mTeardownTimeoutAlarm;
+    }
+
+    @Nullable
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    WakeupMessage getDisconnectRequestAlarm() {
+        return mDisconnectRequestAlarm;
+    }
+
     private IkeSessionParams buildIkeParams() {
         // TODO: Implement this once IkeSessionParams is persisted
         return null;
@@ -1284,6 +1320,15 @@ public class VcnGatewayConnection extends StateMachine {
         public VcnWakeLock newWakeLock(
                 @NonNull VcnContext vcnContext, int wakeLockFlag, @NonNull String wakeLockTag) {
             return new VcnWakeLock(vcnContext, wakeLockFlag, wakeLockTag);
+        }
+
+        /** Builds a new WakeupMessage. */
+        public WakeupMessage newWakeupMessage(
+                @NonNull VcnContext vcnContext,
+                @NonNull Handler handler,
+                @NonNull String tag,
+                @NonNull Runnable runnable) {
+            return new WakeupMessage(vcnContext.getContext(), handler, tag, runnable);
         }
     }
 

@@ -61,6 +61,7 @@ public class VcnGatewayConnectionConnectingStateTest extends VcnGatewayConnectio
 
         assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
         verify(mIkeSession).kill();
+        verifyWakeupMessageCreatedAndScheduled(mGatewayConnection.getDisconnectRequestAlarm());
     }
 
     @Test

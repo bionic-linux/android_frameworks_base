@@ -20,8 +20,11 @@ import static com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkR
 import static com.android.server.vcn.VcnGatewayConnection.VcnIkeSession;
 import static com.android.server.vcn.VcnTestUtils.setupIpSecManager;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -42,6 +45,7 @@ import android.os.ParcelUuid;
 import android.os.PowerManager;
 import android.os.test.TestLooper;
 
+import com.android.internal.util.WakeupMessage;
 import com.android.server.IpSecService;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.Vcn.VcnGatewayStatusCallback;
@@ -114,6 +118,10 @@ public class VcnGatewayConnectionTestBase {
         doReturn(mWakeLock)
                 .when(mDeps)
                 .newWakeLock(eq(mVcnContext), eq(PowerManager.PARTIAL_WAKE_LOCK), any());
+        doAnswer((invocation) -> {
+            // Mock-within a doAnswer is safe, because it doesn't actually run nested.
+            return mock(WakeupMessage.class);
+        }).when(mDeps).newWakeupMessage(eq(mVcnContext), any(), any(), any());
     }
 
     @Before
@@ -162,5 +170,12 @@ public class VcnGatewayConnectionTestBase {
     protected void verifyWakeLockReleased() {
         verify(mWakeLock).release();
         verifyNoMoreInteractions(mWakeLock);
+    }
+
+    protected void verifyWakeupMessageCreatedAndScheduled(WakeupMessage msg) {
+        verify(mDeps).newWakeupMessage(eq(mVcnContext), any(), any(), any());
+
+        assertNotNull(msg);
+        verify(msg).schedule(anyLong());
     }
 }
