@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e116273a_570e5f7f",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-04T02:41:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6316b9_d9f64917",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 87
+      },
+      "revId": "545f1e2e471142d2feecdf33999c371501f4029a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "145031a7_c95206fd",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-01-30T00:57:33Z",
       "side": 1,
       "message": "just to confirm, the mPdf here won\u0027t be in closed state already, right?",
+      "revId": "545f1e2e471142d2feecdf33999c371501f4029a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25029755_f369e116",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-04T02:41:20Z",
+      "side": 1,
+      "message": "Correct, we keep it open at all times.",
+      "parentUuid": "145031a7_c95206fd",
       "revId": "545f1e2e471142d2feecdf33999c371501f4029a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
