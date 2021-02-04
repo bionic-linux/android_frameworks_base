@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "362f5340_d4fd87e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T07:37:50Z",
+      "side": 1,
+      "message": "This looks very ad-hoc an API",
+      "revId": "7e8da21af73a3231cfa60023f7f8a3fb7ceab027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "867e575b_d542472c",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6284,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T07:37:50Z",
+      "side": 1,
+      "message": "This looks like it might multiply in the future. Can we instead add a new method that takes an int with flags and write the old boolean-based method on top of that ?\n\nEdit : maybe we in fact want something more generic than flags if we\u0027re going to redact according to multiple permissions, appops, and system state like location turned on/off.",
+      "range": {
+        "startLine": 6284,
+        "startChar": 79,
+        "endLine": 6284,
+        "endChar": 95
+      },
+      "revId": "7e8da21af73a3231cfa60023f7f8a3fb7ceab027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3abcbcb5_8f5942bb",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6558,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T07:37:50Z",
+      "side": 1,
+      "message": "This is very specific to WiFi. Can we instead have an API that takes a permission ?",
+      "range": {
+        "startLine": 6558,
+        "startChar": 37,
+        "endLine": 6558,
+        "endChar": 52
+      },
+      "revId": "7e8da21af73a3231cfa60023f7f8a3fb7ceab027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82a22b5e_6ec350b8",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T07:37:50Z",
+      "side": 1,
+      "message": "This test is meant to make sure that we don\u0027t forget adding a new test when we add a new field. Can you unit test your new functionality ?",
+      "range": {
+        "startLine": 382,
+        "startChar": 35,
+        "endLine": 382,
+        "endChar": 36
+      },
+      "revId": "7e8da21af73a3231cfa60023f7f8a3fb7ceab027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f7003a1_a7be290f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8450,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-04T07:37:50Z",
+      "side": 1,
+      "message": "This might be fine for a unit test in NCTests, but here can we test with a real WifiInfo ?",
+      "range": {
+        "startLine": 8450,
+        "startChar": 8,
+        "endLine": 8450,
+        "endChar": 55
+      },
+      "revId": "7e8da21af73a3231cfa60023f7f8a3fb7ceab027",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
