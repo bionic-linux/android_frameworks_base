@@ -110,6 +110,30 @@
       },
       "revId": "15c5123ea57b3d2843ffdfbe5aa349c1b80de5b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "118a758a_ed623b11",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-02-04T11:31:20Z",
+      "side": 1,
+      "message": "As we talked offline, keep the method here but update the method name to be more precisely.",
+      "parentUuid": "1d5658fd_a43e4ef7",
+      "range": {
+        "startLine": 1287,
+        "startChar": 71,
+        "endLine": 1287,
+        "endChar": 80
+      },
+      "revId": "15c5123ea57b3d2843ffdfbe5aa349c1b80de5b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
