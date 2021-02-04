@@ -44,7 +44,7 @@ import java.util.UUID;
 public class VcnTest {
     private static final String PKG_NAME = VcnTest.class.getPackage().getName();
     private static final ParcelUuid TEST_SUB_GROUP = new ParcelUuid(new UUID(0, 0));
-    private static final int NETWORK_SCORE = 50;
+    private static final int NETWORK_SCORE = 0;
     private static final int PROVIDER_ID = 5;
 
     private Context mContext;
