@@ -196,6 +196,14 @@ package android.net {
     field public final int code;
   }
 
+  public final class EthernetNetworkSpecifier extends android.net.NetworkSpecifier implements android.os.Parcelable {
+    ctor public EthernetNetworkSpecifier(@NonNull String);
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.EthernetNetworkSpecifier> CREATOR;
+    field @NonNull public final String interfaceName;
+  }
+
   public class InetAddresses {
     method public static boolean isNumericAddress(@NonNull String);
     method @NonNull public static java.net.InetAddress parseNumericAddress(@NonNull String);
