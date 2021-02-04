@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
+ * Copyright (C) 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,17 +25,22 @@ import com.android.internal.util.Preconditions;
 
 import java.util.Objects;
 
-/** @hide */
-public final class StringNetworkSpecifier extends NetworkSpecifier implements Parcelable {
+/**
+ * A {@link NetworkSpecifier} used to identify ethernet interfaces.
+ *
+ * @see EthernetManager
+ */
+public final class EthernetNetworkSpecifier extends NetworkSpecifier implements Parcelable {
+
     /**
-     * Arbitrary string used to pass (additional) information to the network factory.
+     * Name of the network interface.
      */
     @NonNull
-    public final String specifier;
+    public final String interfaceName;
 
-    public StringNetworkSpecifier(@NonNull String specifier) {
+    public EthernetNetworkSpecifier(@NonNull String specifier) {
         Preconditions.checkStringNotEmpty(specifier);
-        this.specifier = specifier;
+        this.interfaceName = specifier;
     }
 
     /** @hide */
@@ -46,18 +51,18 @@ public final class StringNetworkSpecifier extends NetworkSpecifier implements Pa
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof StringNetworkSpecifier)) return false;
-        return TextUtils.equals(specifier, ((StringNetworkSpecifier) o).specifier);
+        if (!(o instanceof EthernetNetworkSpecifier)) return false;
+        return TextUtils.equals(interfaceName, ((EthernetNetworkSpecifier) o).interfaceName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(specifier);
+        return Objects.hashCode(interfaceName);
     }
 
     @Override
     public String toString() {
-        return specifier;
+        return interfaceName;
     }
 
     @Override
@@ -67,16 +72,16 @@ public final class StringNetworkSpecifier extends NetworkSpecifier implements Pa
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(specifier);
+        dest.writeString(interfaceName);
     }
 
-    public static final @NonNull Parcelable.Creator<StringNetworkSpecifier> CREATOR =
-            new Parcelable.Creator<StringNetworkSpecifier>() {
-        public StringNetworkSpecifier createFromParcel(Parcel in) {
-            return new StringNetworkSpecifier(in.readString());
+    public static final @NonNull Parcelable.Creator<EthernetNetworkSpecifier> CREATOR =
+            new Parcelable.Creator<EthernetNetworkSpecifier>() {
+        public EthernetNetworkSpecifier createFromParcel(Parcel in) {
+            return new EthernetNetworkSpecifier(in.readString());
         }
-        public StringNetworkSpecifier[] newArray(int size) {
-            return new StringNetworkSpecifier[size];
+        public EthernetNetworkSpecifier[] newArray(int size) {
+            return new EthernetNetworkSpecifier[size];
         }
     };
 }

@@ -338,7 +338,7 @@ public class NetworkRequest implements Parcelable {
                 // specifiers were strings a null string and an empty string were considered
                 // equivalent. Hence no meaning is attached to a null or empty ("") string.
                 return setNetworkSpecifier(TextUtils.isEmpty(networkSpecifier) ? null
-                        : new StringNetworkSpecifier(networkSpecifier));
+                        : new EthernetNetworkSpecifier(networkSpecifier));
             }
         }
 
