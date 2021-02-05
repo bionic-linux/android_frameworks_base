@@ -22,6 +22,30 @@
       },
       "revId": "611093fbadd7c3bedf4469962c448a8cec6ee52a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25099d12_4d1bc214",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13761,
+      "author": {
+        "id": 1120612
+      },
+      "writtenOn": "2021-02-05T19:17:19Z",
+      "side": 1,
+      "message": "The pools are pre-allocated pages that has not yet been exported into DMA-BUFs and hence they are not part of totalExportedDmabuf. Similar to ION, The pools are accounted for in the proc/meminfo kReclaimable calculations though since they are reclaimable.",
+      "parentUuid": "e34ed748_f7a08c6f",
+      "range": {
+        "startLine": 13761,
+        "startChar": 27,
+        "endLine": 13761,
+        "endChar": 46
+      },
+      "revId": "611093fbadd7c3bedf4469962c448a8cec6ee52a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
