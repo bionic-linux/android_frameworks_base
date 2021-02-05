@@ -20,6 +20,8 @@ import static android.os.UserHandle.PER_USER_RANGE;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.UserHandle;
+import android.util.Range;
 
 import java.util.Collection;
 
@@ -41,7 +43,8 @@ public final class UidRange implements Parcelable {
     }
 
     public static UidRange createForUser(int userId) {
-        return new UidRange(userId * PER_USER_RANGE, (userId + 1) * PER_USER_RANGE - 1);
+        final Range<Integer> uidRange = UserHandle.getUidRangeForUser(UserHandle.of(userId));
+        return new UidRange(uidRange.getLower(), uidRange.getUpper());
     }
 
     /** Returns the smallest user Id which is contained in this UidRange */
