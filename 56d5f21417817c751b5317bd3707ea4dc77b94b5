@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a14322f9_01d4cfd8",
+        "filename": "core/java/android/os/Debug.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2575,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2021-02-05T02:07:38Z",
+      "side": 1,
+      "message": "Dmabuf?\nMaybe drop the heap and just getDmabufPoolsSizeKb ?",
+      "range": {
+        "startLine": 2575,
+        "startChar": 33,
+        "endLine": 2575,
+        "endChar": 36
+      },
+      "revId": "56d5f21417817c751b5317bd3707ea4dc77b94b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "868df1dd_ad8be84c",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 13763,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2021-02-05T02:07:38Z",
+      "side": 1,
+      "message": "shorten to \"DMA-BUF Pools\"",
+      "range": {
+        "startLine": 13763,
+        "startChar": 30,
+        "endLine": 13763,
+        "endChar": 61
+      },
+      "revId": "56d5f21417817c751b5317bd3707ea4dc77b94b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09ccf59b_0b2edc06",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14586,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2021-02-05T02:07:38Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 14586,
+        "startChar": 39,
+        "endLine": 14586,
+        "endChar": 69
+      },
+      "revId": "56d5f21417817c751b5317bd3707ea4dc77b94b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
