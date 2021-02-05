@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9f5cd89_068ee189",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c22541ec_b6ff2690",
+      "range": {
+        "startLine": 422,
+        "startChar": 12,
+        "endLine": 422,
+        "endChar": 52
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abdfc416_fa61efbf",
@@ -262,6 +286,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c6fbec0_21444614",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:15:37Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "942beaef_2ea8b8f5",
+      "range": {
+        "startLine": 488,
+        "startChar": 54,
+        "endLine": 488,
+        "endChar": 84
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87a4b151_92ee0f1b",
@@ -275,6 +323,30 @@
       "writtenOn": "2021-01-14T14:28:18Z",
       "side": 1,
       "message": "Nit: would shorten to \"maybeRemoveNotVcnManaged\", since it\u0027s shorter and simpler but still accurately describes what this method is supposed to do. Also, given the double negative (\"remove\" + \"not\"), I think it would be simpler if we removed NOT_VCN_MANAGED by default and only added NOT_VCN_MANAGED, if necessary, in NetworkRequest.Builder#build. See comments above.",
+      "range": {
+        "startLine": 773,
+        "startChar": 16,
+        "endLine": 773,
+        "endChar": 54
+      },
+      "revId": "b7d37c57d759cbd0b72ef9ac82fff86474339237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4eece85_bff6553e",
+        "filename": "core/java/android/net/NetworkCapabilities.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:15:37Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "87a4b151_92ee0f1b",
       "range": {
         "startLine": 773,
         "startChar": 16,
