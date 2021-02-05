@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ec71aa8_d28d982a",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1237773
+      },
+      "writtenOn": "2021-02-05T00:02:50Z",
+      "side": 1,
+      "message": "Ah OK I thought that the stuff that was referenced by the SimPhonebookProvider needed to be @SystemApi because it\u0027s a different module (I even thought I got build errors at some point). But it appears that is not the case so I\u0027ve removed all of the @SystemApi annotations and added @TestApi for the one constant where it\u0027s actually needed.",
+      "parentUuid": "cbdfc030_cd6d1a66",
+      "range": {
+        "startLine": 157,
+        "startChar": 35,
+        "endLine": 157,
+        "endChar": 70
+      },
+      "revId": "b3c521144f457cf3fef40e9ca41accf4cd81fcb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "748c6389_468b75f7",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52781017_27925f0e",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1237773
+      },
+      "writtenOn": "2021-02-05T00:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "748c6389_468b75f7",
+      "range": {
+        "startLine": 253,
+        "startChar": 68,
+        "endLine": 253,
+        "endChar": 71
+      },
+      "revId": "b3c521144f457cf3fef40e9ca41accf4cd81fcb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7930b7e8_a750c420",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-04T20:02:49Z",
       "side": 1,
       "message": "Make this @NonNull; a null name isn\u0027t really meaningful; I presume an empty name would be used in this case.",
+      "range": {
+        "startLine": 259,
+        "startChar": 52,
+        "endLine": 259,
+        "endChar": 60
+      },
+      "revId": "b3c521144f457cf3fef40e9ca41accf4cd81fcb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3f0b25a_8650a721",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1237773
+      },
+      "writtenOn": "2021-02-05T00:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7930b7e8_a750c420",
       "range": {
         "startLine": 259,
         "startChar": 52,
