@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96debce3_e994c0c8",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T09:54:30Z",
+      "side": 1,
+      "message": "removed in next CL (aosp/1574005)",
+      "range": {
+        "startLine": 683,
+        "startChar": 4,
+        "endLine": 691,
+        "endChar": 5
+      },
+      "revId": "66153d05ad352014bc1e8b54d290475ccbb42c2d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

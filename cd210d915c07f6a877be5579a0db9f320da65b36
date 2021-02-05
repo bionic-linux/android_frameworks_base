@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9568df45_3a06a51e",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T09:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae770910_b95e5bf0",
+      "range": {
+        "startLine": 684,
+        "startChar": 0,
+        "endLine": 684,
+        "endChar": 78
+      },
+      "revId": "cd210d915c07f6a877be5579a0db9f320da65b36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e777ad7_fb7d535b",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-05T07:54:25Z",
       "side": 1,
       "message": "nit message\n\nWe\u0027re processing a message, in a state.",
+      "range": {
+        "startLine": 749,
+        "startChar": 67,
+        "endLine": 749,
+        "endChar": 72
+      },
+      "revId": "cd210d915c07f6a877be5579a0db9f320da65b36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7008c4e1_94a73ade",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T09:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e777ad7_fb7d535b",
       "range": {
         "startLine": 749,
         "startChar": 67,

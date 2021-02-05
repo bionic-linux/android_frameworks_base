@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4404f1f0_310b1468",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T09:54:30Z",
+      "side": 1,
+      "message": "ack - per our discussion offline, even though onQuitting() unregisters the NetworkCallbacks synchronously, it does not guarantee that additional events aren\u0027t enqueued to the Handler in the meantime.",
+      "parentUuid": "a9351d3f_9cb87453",
+      "range": {
+        "startLine": 656,
+        "startChar": 8,
+        "endLine": 656,
+        "endChar": 97
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f62873f2_470be1c1",
