@@ -779,6 +779,9 @@ public final class ScanResult implements Parcelable {
         public static final int EID_EXT_HE_OPERATION = 36;
 
         /** @hide */
+        public static final int EID_WAPI = 68;
+
+        /** @hide */
         @UnsupportedAppUsage
         public int id;
         /** @hide */
