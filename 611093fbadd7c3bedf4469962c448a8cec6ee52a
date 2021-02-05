@@ -46,6 +46,30 @@
       },
       "revId": "611093fbadd7c3bedf4469962c448a8cec6ee52a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6aebbfb_53aaefde",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13761,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2021-02-05T21:08:58Z",
+      "side": 1,
+      "message": "Ah, good! So this is already accounted in memInfo.getCachedSizeKb(). It might be good to have a comment somewhere here that totalDmabufHeapPool and ionPool are included in memInfo.getCachedSizeKb(). Maybe add a comment at the lostRam calculation?",
+      "parentUuid": "25099d12_4d1bc214",
+      "range": {
+        "startLine": 13761,
+        "startChar": 27,
+        "endLine": 13761,
+        "endChar": 46
+      },
+      "revId": "611093fbadd7c3bedf4469962c448a8cec6ee52a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
