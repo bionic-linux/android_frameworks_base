@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000007934422",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1574816?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "30d7b84e_143a8099",
+        "filename": "packages/Connectivity/framework/src/android/net/Proxy.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-05T09:34:34Z",
+      "side": 1,
+      "message": "Wrong casing for \"sDefaultProxySelector\". static final variables should be ALL_UPPERCASE.",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "1fa657ef9fb68b1709a44b732dacc5268cd2da1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
