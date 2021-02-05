@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c744a240_259456d3",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T01:12:07Z",
+      "side": 1,
+      "message": "I don\u0027t really understand this, what does it do differently compared to setMockedUsers, that makes it work where setMockedUsers would be problematic ?",
+      "range": {
+        "startLine": 965,
+        "startChar": 8,
+        "endLine": 969,
+        "endChar": 72
+      },
+      "revId": "307be9707a9c631dc358a04fbe73e5914ccd15a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad9fbc6_acf33a54",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T01:12:07Z",
+      "side": 1,
+      "message": "Can this be:\n\n  final ArgumentCaptor\u003cLinkProperties\u003e lpCaptor \u003d ArgumentCaptor.forClass(LinkProperties.class);\n  verify(mConnectivityManager, timeout(10_000)).registerNetworkAgnet(..., lpCaptor.capture(), ..);\n  [...]\n  actualRoutes \u003d lpCaptor.value().getRoutes();\n\nThis should be able to replace the AtomicReference / ConditionVariable logic (which could also be replaced by a CompletableFuture)",
+      "range": {
+        "startLine": 1047,
+        "startChar": 12,
+        "endLine": 1048,
+        "endChar": 53
+      },
+      "revId": "307be9707a9c631dc358a04fbe73e5914ccd15a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
