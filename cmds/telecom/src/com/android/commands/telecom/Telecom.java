@@ -66,6 +66,7 @@ public final class Telecom extends BaseCommand {
     private static final String COMMAND_SET_PHONE_ACCOUNT_SUGGESTION_COMPONENT =
             "set-phone-acct-suggestion-component";
     private static final String COMMAND_UNREGISTER_PHONE_ACCOUNT = "unregister-phone-account";
+    private static final String COMMAND_SET_CALL_DIAGNOSTIC_SERVICE = "set-call-diagnostic-service";
     private static final String COMMAND_SET_DEFAULT_DIALER = "set-default-dialer";
     private static final String COMMAND_GET_DEFAULT_DIALER = "get-default-dialer";
     private static final String COMMAND_STOP_BLOCK_SUPPRESSION = "stop-block-suppression";
@@ -111,6 +112,7 @@ public final class Telecom extends BaseCommand {
                 + "usage: telecom register-sim-phone-account <COMPONENT> <ID> <USER_SN>"
                 + " <LABEL> <ADDRESS>\n"
                 + "usage: telecom unregister-phone-account <COMPONENT> <ID> <USER_SN>\n"
+                + "usage: telecom set-call-diagnostic-service <PACKAGE>\n"
                 + "usage: telecom set-default-dialer <PACKAGE>\n"
                 + "usage: telecom get-default-dialer\n"
                 + "usage: telecom get-system-dialer\n"
@@ -130,6 +132,7 @@ public final class Telecom extends BaseCommand {
                 + "telecom set-phone-account-disabled: Disables the given phone account, if it"
                         + " has already been registered with telecom.\n"
                 + "\n"
+                + "telecom set-call-diagnostic-service: overrides call diagnostic service.\n"
                 + "telecom set-default-dialer: Sets the override default dialer to the given"
                         + " component; this will override whatever the dialer role is set to.\n"
                 + "\n"
@@ -219,6 +222,9 @@ public final class Telecom extends BaseCommand {
                 break;
             case COMMAND_CLEANUP_STUCK_CALLS:
                 runCleanupStuckCalls();
+                break;
+            case COMMAND_SET_CALL_DIAGNOSTIC_SERVICE:
+                runSetCallDiagnosticService();
                 break;
             case COMMAND_SET_DEFAULT_DIALER:
                 runSetDefaultDialer();
@@ -343,6 +349,13 @@ public final class Telecom extends BaseCommand {
 
     private void runCleanupStuckCalls() throws RemoteException {
         mTelecomService.cleanupStuckCalls();
+    }
+
+    private void runSetCallDiagnosticService() throws RemoteException {
+        String packageName = nextArg();
+        if ("default".equals(packageName)) packageName = null;
+        mTelecomService.setTestCallDiagnosticService(packageName);
+        System.out.println("Success - " + packageName + " set as call diagnostic service.");
     }
 
     private void runSetDefaultDialer() throws RemoteException {
