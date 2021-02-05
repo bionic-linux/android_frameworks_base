@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "371e7234_40fa6771",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:59:54Z",
+      "side": 1,
+      "message": "nit: If it is going to be useful.\nMaybe define a POLICY_NONE for this?\nFeel free to ignore.",
+      "range": {
+        "startLine": 124,
+        "startChar": 48,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "5eb4acc13d013c38741ee16a2463c2f1993eb3f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

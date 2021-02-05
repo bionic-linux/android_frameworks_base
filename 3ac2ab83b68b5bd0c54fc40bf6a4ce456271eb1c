@@ -93,6 +93,30 @@
       },
       "revId": "3ac2ab83b68b5bd0c54fc40bf6a4ce456271eb1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a53134d_5676bea2",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:59:54Z",
+      "side": 1,
+      "message": "That being said I\u0027m still slightly not convinced with this given it is not flexible enough from my point of view.\nBut no strong opinion for this patch.\nLet\u0027s see how it goes in later patches.",
+      "parentUuid": "1b9c60c4_9ab878a6",
+      "range": {
+        "startLine": 58,
+        "startChar": 39,
+        "endLine": 58,
+        "endChar": 64
+      },
+      "revId": "3ac2ab83b68b5bd0c54fc40bf6a4ce456271eb1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
