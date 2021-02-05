@@ -22,6 +22,7 @@ import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UserIdInt;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.util.Range;
 
 import java.io.PrintWriter;
 
@@ -585,5 +586,19 @@ public final class UserHandle implements Parcelable {
      */
     public UserHandle(Parcel in) {
         mHandle = in.readInt(); // Keep this and createFromParcel() in sync.
+    }
+
+    /**
+     * Get a uid range by given user.
+     *
+     * @param user The UserHandle to get the user id.
+     * @return A Range representing the uid range of given user.
+     * @hide
+     */
+    @NonNull
+    @SystemApi
+    public static Range<Integer> getUidRangeForUser(@NonNull UserHandle user) {
+        return new Range<>(user.getIdentifier() * PER_USER_RANGE,
+                (user.getIdentifier() + 1) * PER_USER_RANGE - 1);
     }
 }

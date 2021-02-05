@@ -25,6 +25,8 @@ import static android.os.UserHandle.getUserId;
 
 import static org.junit.Assert.assertEquals;
 
+import android.util.Range;
+
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -116,5 +118,22 @@ public class UserHandleTest {
 
     private static int multiuser_get_app_id(int uid) {
         return getAppId(uid);
+    }
+
+    @Test
+    public void testGetUidRangeForUser() throws Exception {
+        final UserHandle primaryUser = UserHandle.getUserHandleForUid(10100);
+        final Range<Integer> uidRangeOfPrimaryUser = UserHandle.getUidRangeForUser(primaryUser);
+        assertEquals(primaryUser.getIdentifier() * UserHandle.PER_USER_RANGE,
+                (int) uidRangeOfPrimaryUser.getLower());
+        assertEquals((primaryUser.getIdentifier() + 1) * UserHandle.PER_USER_RANGE - 1,
+                (int) uidRangeOfPrimaryUser.getUpper());
+
+        final UserHandle secondaryUser = UserHandle.getUserHandleForUid(1010100);
+        final Range<Integer> uidRangeOfSecondaryUser = UserHandle.getUidRangeForUser(secondaryUser);
+        assertEquals(secondaryUser.getIdentifier() * UserHandle.PER_USER_RANGE,
+                (int) uidRangeOfSecondaryUser.getLower());
+        assertEquals((secondaryUser.getIdentifier() + 1) * UserHandle.PER_USER_RANGE - 1,
+                (int) uidRangeOfSecondaryUser.getUpper());
     }
 }
