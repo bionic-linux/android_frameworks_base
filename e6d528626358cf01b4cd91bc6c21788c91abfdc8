@@ -112,6 +112,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0e674e9_d2c1933b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T11:29:01Z",
+      "side": 1,
+      "message": "It seems we are doing the same thing for these 3 functions, which annoys me.\nMaybe merge mixInScore into setScore if we don\u0027t have other things to do in setScore?",
+      "range": {
+        "startLine": 873,
+        "startChar": 16,
+        "endLine": 873,
+        "endChar": 54
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7bccbd5a_0effd04a",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 11
@@ -128,6 +151,52 @@
         "startChar": 14,
         "endLine": 889,
         "endChar": 22
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "091a6f4c_98393fd3",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T11:29:01Z",
+      "side": 1,
+      "message": "nit: Can this be at l.40?\nIf this is done by formatter then I don\u0027t have concern.",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1260ccba_4e17ea5a",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T11:29:01Z",
+      "side": 1,
+      "message": "Hmmm\nI think test the content of string is not that useful.\nThis looks like a change detector to me.\n\nBut IIUC what we should test is that every policy should have a name.\nCould we enforce that by test?\nIf we have oversight to add a name for a policy.\nAn IllegalException might not be thrown at runtime if we did not have a rare policy.",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 60
       },
       "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
