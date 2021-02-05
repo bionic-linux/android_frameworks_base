@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f7f37ba_78e291bd",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T05:41:15Z",
+      "side": 1,
+      "message": "Right. setMockedUsers does not really work any more now because the production code has switched to the version of canHaveRestrictedProfile that takes no arguments - that\u0027s b/175883995. This CL is in an attempt to make progress on this specific test while that is fixed.\n\nThe most important reason to attempt that progress is that currently this test is passing without actually checking anything. This makes us think that the test is working when it isn\u0027t, and it also creates the risk that more sources of breakage will creep in.",
+      "parentUuid": "fcbb20eb_e2d5daea",
+      "range": {
+        "startLine": 965,
+        "startChar": 8,
+        "endLine": 969,
+        "endChar": 72
+      },
+      "revId": "307be9707a9c631dc358a04fbe73e5914ccd15a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ad9fbc6_acf33a54",
@@ -61,6 +85,30 @@
       "writtenOn": "2021-02-05T01:12:07Z",
       "side": 1,
       "message": "Can this be:\n\n  final ArgumentCaptor\u003cLinkProperties\u003e lpCaptor \u003d ArgumentCaptor.forClass(LinkProperties.class);\n  verify(mConnectivityManager, timeout(10_000)).registerNetworkAgnet(..., lpCaptor.capture(), ..);\n  [...]\n  actualRoutes \u003d lpCaptor.value().getRoutes();\n\nThis should be able to replace the AtomicReference / ConditionVariable logic (which could also be replaced by a CompletableFuture)",
+      "range": {
+        "startLine": 1047,
+        "startChar": 12,
+        "endLine": 1048,
+        "endChar": 53
+      },
+      "revId": "307be9707a9c631dc358a04fbe73e5914ccd15a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b32a7de0_9da9a01d",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T05:41:15Z",
+      "side": 1,
+      "message": "Much better, thanks! Didn\u0027t make it final because it would wrap :-)",
+      "parentUuid": "5ad9fbc6_acf33a54",
       "range": {
         "startLine": 1047,
         "startChar": 12,
