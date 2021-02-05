@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da38945b_5a1c6859",
+        "filename": "core/java/android/net/NetworkState.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-02-05T08:48:12Z",
+      "side": 1,
+      "message": "nit: @Nullable String subscriberId, @Nullable String networkId",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 49
+      },
+      "revId": "fa2ef56f5d706f18d3ab378a3e677432eec2018d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
