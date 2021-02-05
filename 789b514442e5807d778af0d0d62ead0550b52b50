@@ -59,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5cb5f46_4b830604",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3303,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189082a3_386a46a7",
+      "range": {
+        "startLine": 3303,
+        "startChar": 19,
+        "endLine": 3303,
+        "endChar": 27
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91acd12d_ae49566d",
@@ -72,6 +96,30 @@
       "writtenOn": "2021-02-05T05:09:52Z",
       "side": 1,
       "message": "Inactivity",
+      "range": {
+        "startLine": 3308,
+        "startChar": 26,
+        "endLine": 3308,
+        "endChar": 34
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad21d88_07c38387",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3308,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91acd12d_ae49566d",
       "range": {
         "startLine": 3308,
         "startChar": 26,
@@ -105,6 +153,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26a7fc4f_768334b5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3309,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04e9d4ed_ca05cdc0",
+      "range": {
+        "startLine": 3309,
+        "startChar": 25,
+        "endLine": 3309,
+        "endChar": 33
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb0dd895_516aed01",
@@ -118,6 +190,30 @@
       "writtenOn": "2021-02-05T05:09:52Z",
       "side": 1,
       "message": "Inactivity",
+      "range": {
+        "startLine": 3459,
+        "startChar": 17,
+        "endLine": 3459,
+        "endChar": 25
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c253a47_0378cd61",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3459,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb0dd895_516aed01",
       "range": {
         "startLine": 3459,
         "startChar": 17,
@@ -174,6 +270,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fadd4fdd_c96536a3",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e17e006e_0fc0b968",
+      "range": {
+        "startLine": 272,
+        "startChar": 11,
+        "endLine": 272,
+        "endChar": 19
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5055f548_8269afd1",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93972465_5eb2ecbf",
+      "range": {
+        "startLine": 272,
+        "startChar": 68,
+        "endLine": 272,
+        "endChar": 82
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43c58ec8_8a503021",
@@ -197,6 +341,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb28612c_7d40b855",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done in next CL.",
+      "parentUuid": "43c58ec8_8a503021",
+      "range": {
+        "startLine": 274,
+        "startChar": 27,
+        "endLine": 274,
+        "endChar": 28
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d432f1a_8a9fb54e",
@@ -210,6 +378,30 @@
       "writtenOn": "2021-02-05T05:09:52Z",
       "side": 1,
       "message": "Suggest \"inactivity timer\". \"Inactive timer\" could be interpreted to mean \"a timer that is not active\".",
+      "range": {
+        "startLine": 277,
+        "startChar": 28,
+        "endLine": 277,
+        "endChar": 41
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f722167_741c57d3",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d432f1a_8a9fb54e",
       "range": {
         "startLine": 277,
         "startChar": 28,
@@ -266,6 +458,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3da8aea7_99d74b24",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7aa4063_81f5bf81",
+      "range": {
+        "startLine": 283,
+        "startChar": 18,
+        "endLine": 283,
+        "endChar": 27
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b32b700_e78a5d88",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bfa741e_bc50196e",
+      "range": {
+        "startLine": 283,
+        "startChar": 68,
+        "endLine": 283,
+        "endChar": 83
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b1c5b9b_e554475d",
@@ -279,6 +519,30 @@
       "writtenOn": "2021-02-05T05:09:52Z",
       "side": 1,
       "message": "inactivity",
+      "range": {
+        "startLine": 284,
+        "startChar": 39,
+        "endLine": 284,
+        "endChar": 45
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa33c109_a6205562",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b1c5b9b_e554475d",
       "range": {
         "startLine": 284,
         "startChar": 39,
@@ -312,6 +576,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e89704c8_9ec7bd3f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ae61c67_1faf15c0",
+      "range": {
+        "startLine": 288,
+        "startChar": 53,
+        "endLine": 288,
+        "endChar": 59
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63707e58_83df85fc",
@@ -325,6 +613,30 @@
       "writtenOn": "2021-02-05T05:09:52Z",
       "side": 1,
       "message": "\"inactive\" (and this member should remain called \"mInactive\", not \"mInactivity\" since it is an adjective: the network is inactive).",
+      "range": {
+        "startLine": 291,
+        "startChar": 30,
+        "endLine": 291,
+        "endChar": 39
+      },
+      "revId": "789b514442e5807d778af0d0d62ead0550b52b50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01b30a21_ced86548",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T08:03:38Z",
+      "side": 1,
+      "message": "My life is so hard.",
+      "parentUuid": "63707e58_83df85fc",
       "range": {
         "startLine": 291,
         "startChar": 30,
