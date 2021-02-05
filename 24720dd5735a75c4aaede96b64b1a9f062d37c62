@@ -16,6 +16,24 @@
       "message": "The change to HdmiControlService looks good and will fix CEC being initialized twice.\n\nLet\u0027s move the change to HdmiCecLocalDeviceTv and HdmiCecStandbyModeHandler into a separate CL. It makes sense as well, but let\u0027s further clarify what we want to achieve.",
       "revId": "24720dd5735a75c4aaede96b64b1a9f062d37c62",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d757f63_3c002a7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-02-05T05:58:42Z",
+      "side": 1,
+      "message": "Update patchset 8, which includes modification of HdmiControlService only.",
+      "parentUuid": "050ac5dc_42f66b31",
+      "revId": "24720dd5735a75c4aaede96b64b1a9f062d37c62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
