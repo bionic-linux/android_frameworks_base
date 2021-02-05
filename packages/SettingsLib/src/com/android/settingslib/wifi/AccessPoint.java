@@ -213,7 +213,9 @@ public class AccessPoint implements Comparable<AccessPoint> {
     public static final int SECURITY_OWE = 4;
     public static final int SECURITY_SAE = 5;
     public static final int SECURITY_EAP_SUITE_B = 6;
-    public static final int SECURITY_MAX_VAL = 7; // Has to be the last
+    public static final int SECURITY_WAPI_PSK = 8;
+    public static final int SECURITY_WAPI_CERT = 9;
+    public static final int SECURITY_MAX_VAL = 10; // Has to be the last
 
     private static final int PSK_UNKNOWN = 0;
     private static final int PSK_WPA = 1;
@@ -242,6 +244,7 @@ public class AccessPoint implements Comparable<AccessPoint> {
 
     private int pskType = PSK_UNKNOWN;
     private int mEapType = EAP_UNKNOWN;
+    private int wapiPskType;
 
     private WifiConfiguration mConfig;
 
@@ -1042,6 +1045,10 @@ public class AccessPoint implements Comparable<AccessPoint> {
             case SECURITY_OWE:
                 return concise ? context.getString(R.string.wifi_security_short_owe) :
                     context.getString(R.string.wifi_security_owe);
+            case SECURITY_WAPI_PSK:
+                return context.getString(R.string.wifi_security_wapi_psk);
+            case SECURITY_WAPI_CERT:
+                return context.getString(R.string.wifi_security_wapi_cert);
             case SECURITY_NONE:
             default:
                 return concise ? "" : context.getString(R.string.wifi_security_none);
@@ -1746,7 +1753,9 @@ public class AccessPoint implements Comparable<AccessPoint> {
         final boolean isEap = result.capabilities.contains("EAP");
         final boolean isOwe = result.capabilities.contains("OWE");
         final boolean isOweTransition = result.capabilities.contains("OWE_TRANSITION");
-
+        final boolean isDpp = result.capabilities.contains("DPP");
+        final boolean isWapiPsk = result.capabilities.contains("WAPI-PSK");
+        final boolean isWapiCert = result.capabilities.contains("WAPI-CERT");
         if (isSae && isPsk) {
             final WifiManager wifiManager = (WifiManager)
                     context.getSystemService(Context.WIFI_SERVICE);
@@ -1770,6 +1779,10 @@ public class AccessPoint implements Comparable<AccessPoint> {
             return SECURITY_EAP;
         } else if (isOwe) {
             return SECURITY_OWE;
+        } else if (isWapiPsk) {
+            return SECURITY_WAPI_PSK;
+        } else if (isWapiCert) {
+            return SECURITY_WAPI_CERT;
         }
         return SECURITY_NONE;
     }
@@ -1790,6 +1803,12 @@ public class AccessPoint implements Comparable<AccessPoint> {
         }
         if (config.allowedKeyManagement.get(KeyMgmt.OWE)) {
             return SECURITY_OWE;
+        }
+        if (config.allowedKeyManagement.get(KeyMgmt.WAPI_PSK)) {
+            return SECURITY_WAPI_PSK;
+        }
+        if (config.allowedKeyManagement.get(KeyMgmt.WAPI_CERT)) {
+            return SECURITY_WAPI_CERT;
         }
         return (config.wepTxKeyIndex >= 0
                 && config.wepTxKeyIndex < config.wepKeys.length
