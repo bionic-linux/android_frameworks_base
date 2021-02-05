@@ -222,6 +222,24 @@
       "parentUuid": "27cd9b17_6024044f",
       "revId": "3a6de06e77f462bc9a7d7d4dc8a0b72ab6bb2f1c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12af577b_5b6dbd0c",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-05T00:19:01Z",
+      "side": 1,
+      "message": "If by the time, the process is still alive, system_server will be able to decode it. However if it\u0027s gone, the UID mapping will be removed - if this is the case, we\u0027d have to tweak the system_server code to \"remember\" it",
+      "parentUuid": "bd2b4a0f_690a47de",
+      "revId": "3a6de06e77f462bc9a7d7d4dc8a0b72ab6bb2f1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
