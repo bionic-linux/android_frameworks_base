@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "639862dd_d86780ee",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T01:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b42b3fe4_705823f4",
+      "range": {
+        "startLine": 435,
+        "startChar": 82,
+        "endLine": 435,
+        "endChar": 83
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee658df8_126f5e32",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-04T05:42:44Z",
       "side": 1,
       "message": "Can this ever get queued after the state machine has shut down? ie, we obtain one without ever releasing?",
+      "range": {
+        "startLine": 656,
+        "startChar": 8,
+        "endLine": 656,
+        "endChar": 97
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df347444_1d8b21bf",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T01:10:23Z",
+      "side": 1,
+      "message": "This should be handled in theory by onQuitting() releasing the WakeLock, but will wrap this in an additional check to isRunning to be safe - thoughts?",
+      "parentUuid": "ee658df8_126f5e32",
       "range": {
         "startLine": 656,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03a063c6_dd5e4736",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T01:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f62873f2_470be1c1",
+      "range": {
+        "startLine": 661,
+        "startChar": 77,
+        "endLine": 661,
+        "endChar": 90
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d595bb5b_0eb38a31",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-04T05:42:44Z",
       "side": 1,
       "message": "I **think** you can re-acquire wakelocks that have been released, and construct a wakelock without needing to acquire. Perhaps we keep one for the life of the session?",
+      "range": {
+        "startLine": 673,
+        "startChar": 16,
+        "endLine": 673,
+        "endChar": 33
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efe2fecc_c99b7442",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T01:10:23Z",
+      "side": 1,
+      "message": "Makes sense - changed to get a single WakeLock on construction. Added testing to verify this in VcnGatewayConnectionTest.\n\nDone",
+      "parentUuid": "d595bb5b_0eb38a31",
       "range": {
         "startLine": 673,
         "startChar": 16,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bdd6492_14d5c93a",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T01:10:23Z",
+      "side": 1,
+      "message": "Added ensureOnLooper() checks for all incoming methods. Also added to obtain/release WakeLock methods to be safe.\n\nDone",
+      "parentUuid": "b1459bc8_4ad652da",
+      "range": {
+        "startLine": 690,
+        "startChar": 0,
+        "endLine": 691,
+        "endChar": 51
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88d68b2e_9928e8aa",
@@ -139,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "570361a9_0ecd0542",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T01:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88d68b2e_9928e8aa",
+      "range": {
+        "startLine": 760,
+        "startChar": 17,
+        "endLine": 760,
+        "endChar": 29
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ae65804_57e3cc6e",
@@ -152,6 +296,30 @@
       "writtenOn": "2021-02-04T05:42:44Z",
       "side": 1,
       "message": "Acquired?",
+      "range": {
+        "startLine": 164,
+        "startChar": 33,
+        "endLine": 164,
+        "endChar": 41
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10cde93d_7ca72359",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTestBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-05T01:10:23Z",
+      "side": 1,
+      "message": "previously used \u0027obtained\u0027 to match the util method in VcnGatewayConnection (#obtainWakeLock). Changed both to use \u0027acquire\u0027\n\nDone",
+      "parentUuid": "7ae65804_57e3cc6e",
       "range": {
         "startLine": 164,
         "startChar": 33,
