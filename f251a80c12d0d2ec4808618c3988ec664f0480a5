@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a07d5f90_17292a54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-05T22:10:11Z",
+      "side": 1,
+      "message": "Looks correct, if this passes Settings-manual-testing + Ikev2VpnTest and ACTS",
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
