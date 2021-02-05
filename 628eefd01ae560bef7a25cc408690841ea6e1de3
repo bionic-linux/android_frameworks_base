@@ -34,6 +34,24 @@
       "parentUuid": "6e654a24_712a7f0c",
       "revId": "628eefd01ae560bef7a25cc408690841ea6e1de3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d89f5c58_852a567e",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-05T19:14:17Z",
+      "side": 1,
+      "message": "nvm. Since I have to merge aosp/1546302 first in git_master, I will also merge this CL first in git_master",
+      "parentUuid": "003122c1_c8c488b2",
+      "revId": "628eefd01ae560bef7a25cc408690841ea6e1de3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
