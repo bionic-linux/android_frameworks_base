@@ -16,7 +16,10 @@
 
 package android.net;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
+import android.os.UserHandle;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -63,5 +66,20 @@ public class UidRangeTest {
             fail("Exception not thrown for negative-length UID range");
         } catch (IllegalArgumentException expected) {
         }
+    }
+
+    @Test
+    public void testCreateForUser() throws Exception {
+        final int primaryUserId = 0;
+        final UidRange uidRangeOfPrimaryUser = UidRange.createForUser(primaryUserId);
+        assertEquals(primaryUserId * UserHandle.PER_USER_RANGE, uidRangeOfPrimaryUser.start);
+        assertEquals((primaryUserId + 1) * UserHandle.PER_USER_RANGE - 1,
+                uidRangeOfPrimaryUser.stop);
+
+        final int secondaryUserId = 10;
+        final UidRange uidRangeOfSecondaryUser = UidRange.createForUser(secondaryUserId);
+        assertEquals(secondaryUserId * UserHandle.PER_USER_RANGE, uidRangeOfSecondaryUser.start);
+        assertEquals((secondaryUserId + 1) * UserHandle.PER_USER_RANGE - 1,
+                uidRangeOfSecondaryUser.stop);
     }
 }
