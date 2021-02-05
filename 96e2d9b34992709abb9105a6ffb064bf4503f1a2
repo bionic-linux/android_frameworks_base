@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a9351d3f_9cb87453",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-05T07:54:25Z",
+      "side": 1,
+      "message": "Yep, checking isRunning was exactly what I was thinking. My worry was if UnderlyingNetworkTracker fired a callback after the state machine had shut down; we\u0027d grab the wake lock without a corresponding release upon StateMachine shutdown.",
+      "parentUuid": "df347444_1d8b21bf",
+      "range": {
+        "startLine": 656,
+        "startChar": 8,
+        "endLine": 656,
+        "endChar": 97
+      },
+      "revId": "96e2d9b34992709abb9105a6ffb064bf4503f1a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f62873f2_470be1c1",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 5
