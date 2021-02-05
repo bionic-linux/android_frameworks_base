@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fcbb20eb_e2d5daea",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-02-05T01:37:31Z",
+      "side": 1,
+      "message": "IIUC, the problem on setMockedUsers should be canHaveRestrictedProfile mock, it can\u0027t capture the user id correctly to return the right value. So here just returns the expected values like setMockedUsers does.\n\n doAnswer(invocation -\u003e {\n     final int id \u003d (int) invocation.getArguments()[0];\n     return (userMap.get(id).flags \u0026 UserInfo.FLAG_ADMIN) !\u003d 0;\n }).when(mUserManager).canHaveRestrictedProfile();",
+      "parentUuid": "c744a240_259456d3",
+      "range": {
+        "startLine": 965,
+        "startChar": 8,
+        "endLine": 969,
+        "endChar": 72
+      },
+      "revId": "307be9707a9c631dc358a04fbe73e5914ccd15a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ad9fbc6_acf33a54",
         "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
         "patchSetId": 8
