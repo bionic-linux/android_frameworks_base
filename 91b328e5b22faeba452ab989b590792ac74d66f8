@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93dd1e2d_9979e849",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T07:35:28Z",
+      "side": 1,
+      "message": "(resolving old comments as Gerrit now decides to show them when they\u0027re no longer relevant)",
+      "revId": "91b328e5b22faeba452ab989b590792ac74d66f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
