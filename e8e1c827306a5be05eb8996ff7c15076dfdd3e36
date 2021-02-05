@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5a04646_9c3a470b",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "Question: Not for this CL, do we need to name it CS managed policy or something?",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "e8e1c827306a5be05eb8996ff7c15076dfdd3e36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d354206a_4a4970a0",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "Maybe not for this CL, But it is possible to test the MAXes are correctly updated with reflection?\nE.g. inspecting the fields in IntDef or fields with specific prefix in this class?",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "e8e1c827306a5be05eb8996ff7c15076dfdd3e36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

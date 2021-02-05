@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46456647_5acc815d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "Test part is not yet reviewed. But here are some comments.",
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8414e675_1d76dffc",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "nit: /*pretendValidated*/",
+      "range": {
+        "startLine": 119,
+        "startChar": 32,
+        "endLine": 119,
+        "endChar": 33
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e1de954_fdf0a3de",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "range": {
+        "startLine": 124,
+        "startChar": 32,
+        "endLine": 124,
+        "endChar": 33
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9897a94_a70d31a4",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "nit: Can you give a sample output of this?",
+      "range": {
+        "startLine": 165,
+        "startChar": 18,
+        "endLine": 165,
+        "endChar": 26
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e5444fc_ea99fcd7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "Is it better if we call setScore here?\nIf so it makes setScore be the only entrance where we\u0027ll mixInscore and store it locally.\nI\u0027m slightly worried if it is going to be error-prone where people didn\u0027t do mix-in or just  use a score that is not mix-in\u0027d.\nOr is it worthy of enforcing that? for example let mixInScore returns a different type of object, e.g. FullScore and we only accept FullScore here.\n\nNo strong opinion.",
+      "range": {
+        "startLine": 353,
+        "startChar": 17,
+        "endLine": 353,
+        "endChar": 47
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bccbd5a_0effd04a",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "1. mixIn sounds to me that it will modify the original object instead of creating a new one.\nmaybe rename this function or just say it returns A new NetworkScore object?",
+      "range": {
+        "startLine": 889,
+        "startChar": 14,
+        "endLine": 889,
+        "endChar": 22
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

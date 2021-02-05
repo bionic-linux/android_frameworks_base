@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "34b5bc6e_86462116",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "POLICY_EVER_SELECTED?\nNo strong opinion just try my luck.",
+      "parentUuid": "f2b20667_6c136cd7",
+      "range": {
+        "startLine": 50,
+        "startChar": 35,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0a0d8b38_ae31c433",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 2
@@ -191,6 +215,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "004519e8_f0677a31",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "My problem is with the naming, where the bit is a technical term here implies \nthe implementation must be something related to bits.\n\nIs it better with something like:\nwithPolicyFlags\nwithPolicyBooleans\nwithPolicies\n\nNot going to bikeshedding here, so feel free to keep it as is or change to something you like more.",
+      "parentUuid": "c4a321db_38d01370",
+      "range": {
+        "startLine": 72,
+        "startChar": 34,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f1dcba44_696aa1cb",
         "filename": "core/java/android/net/NetworkScore.java",
         "patchSetId": 2
@@ -226,6 +274,30 @@
       "side": 1,
       "message": "No.\n\nIt\u0027s very unlikely this grows very long, but if it does, we won\u0027t have cases where we need to change everything at the same time. Then, we will have multiple functions to affect different bits according to our usage. Say for example we have 8 VPN flags to change together and 4 user-chosing flags, then we\u0027d have\n\n  /** @hide */\n  public NetworkScore withVpnPolicies(boolean isVpn, boolean vpnFlag1, boolean vpnFlag2...)\n  /** @hide */\n  public NetworkScore withUserPolicies(boolean onceChosen, boolean acceptUnvalidated, boolean userFlag1...)\n\nNot all arguments to the \u0027with\u0027 functions need to be booleans if we have non-boolean fields, and we can easily have as many as we want for useful use cases.",
       "parentUuid": "f1dcba44_696aa1cb",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a3178ea_237c3c6f",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "Do we need to expose them and can never modify the function signature?\nIf so it might be painful if we want to change a flag to another category in future, right?\nIf not I\u0027m ok with this.",
+      "parentUuid": "0daf012c_4807067f",
       "range": {
         "startLine": 73,
         "startChar": 12,
@@ -314,6 +386,24 @@
       "side": 1,
       "message": "We have hasPolicy(), is that not what you mean ? Or do you mean a method that would return an int[] ? NetworkCapabilities doesn\u0027t have that, which tells me we are unlikely to need it. I don\u0027t want to ever return the long because it\u0027s an implementation detail and it would prevent us from changing it in the future, as explained in other comments.\n\nNow if there is a use case, we can consider it, but for now there is no planned use case for such a method.\n\nDoes this answer the question ?",
       "parentUuid": "6b023cc5_5a06442c",
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73a5aab9_57281be1",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "Yes we do have getCapabilities() and getTransportTypes() that returns int[]\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/NetworkCapabilities.java;l\u003d594?q\u003dNetworkCapabilities\u0026ss\u003dandroid\n\nBut I\u0027m fine if you\u0027ll not going to need it in the test.",
+      "parentUuid": "7d0271e9_9f2e5a79",
       "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -537,6 +627,24 @@
       "side": 1,
       "message": "1. \nWe can\u0027t update the ref to networkAgentConfig, but as you can see this updates the contents of it so the object certainly is updated. It\u0027s not only acceptUnvalidated, there is also partial connectivity.\n\nThat being said I don\u0027t feel strongly. I don\u0027t think we\u0027ll have to ever mix in more than these two bits from NAC, so if you still think it should be named updateScoreForSetAcceptUnvalidated, reply to this comment and I\u0027ll do it.\n\n2.\nSorry I don\u0027t understand well what the suggestion is. Can you post some pseudocode to clarify what this would look like ?",
       "parentUuid": "46a20f00_9d5793f1",
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b55a4af_46af646c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3745,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-05T09:45:19Z",
+      "side": 1,
+      "message": "1. Nah\n2. I mean something like\nnai.updateScoreForNetworkAgentConfigUpdate(oldConfig, newConfig)\nBut it is unlikely you need that for now.",
+      "parentUuid": "1df17c51_60809721",
       "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
