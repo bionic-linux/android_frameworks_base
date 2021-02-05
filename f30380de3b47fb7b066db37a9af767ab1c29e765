@@ -22,6 +22,30 @@
       },
       "revId": "f30380de3b47fb7b066db37a9af767ab1c29e765",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c888cdb7_87557e0e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 26122,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-05T00:58:13Z",
+      "side": 1,
+      "message": "I thought so too. The linter disagreed with me. \n\nAfterwards, I found this in the API guidelines: go/android-api-guidelines#builder-method-naming",
+      "parentUuid": "6f763d80_d954cacc",
+      "range": {
+        "startLine": 26122,
+        "startChar": 78,
+        "endLine": 26122,
+        "endChar": 83
+      },
+      "revId": "f30380de3b47fb7b066db37a9af767ab1c29e765",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
