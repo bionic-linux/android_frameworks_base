@@ -284,6 +284,7 @@ applications that come with the platform
 
     <privapp-permissions package="com.android.server.telecom">
         <permission name="android.permission.BIND_CONNECTION_SERVICE"/>
+        <permission name="android.permission.BIND_CALL_DIAGNOSTIC_SERVICE"/>
         <permission name="android.permission.BIND_INCALL_SERVICE"/>
         <permission name="android.permission.CALL_PRIVILEGED"/>
         <permission name="android.permission.HANDLE_CAR_MODE_CHANGES"/>
@@ -447,6 +448,7 @@ applications that come with the platform
         <permission name="android.permission.MANAGE_SOUND_TRIGGER" />
         <permission name="android.permission.CAPTURE_AUDIO_HOTWORD" />
         <permission name="android.permission.MODIFY_QUIET_MODE" />
+        <permission name="android.permission.REGISTER_SIM_SUBSCRIPTION" />
     </privapp-permissions>
 
     <privapp-permissions package="com.android.statementservice">
