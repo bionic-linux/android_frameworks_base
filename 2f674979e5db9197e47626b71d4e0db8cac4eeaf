@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff6d9d09_551a0275",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 6561,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T12:23:27Z",
+      "side": 1,
+      "message": "Seems unrelated to this change",
+      "range": {
+        "startLine": 6561,
+        "startChar": 0,
+        "endLine": 6561,
+        "endChar": 70
+      },
+      "revId": "2f674979e5db9197e47626b71d4e0db8cac4eeaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2969f9c_b712ee9d",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T12:23:27Z",
+      "side": 1,
+      "message": "Not sure this is clear within this context given this is a member in CS. I suggest simply removing the reference, I think the description is plenty clear.",
+      "range": {
+        "startLine": 96,
+        "startChar": 63,
+        "endLine": 96,
+        "endChar": 79
+      },
+      "revId": "2f674979e5db9197e47626b71d4e0db8cac4eeaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef772d5b_e585b0de",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5749,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-05T12:23:27Z",
+      "side": 1,
+      "message": "Did you write the comment but not actually implement it ?\n\nISTM the test works because the NC of this callback specify NOT_VPN, but it would be subject to the default network of the calling process – which is not what we want. Unfortunately you don\u0027t have the APIs to write a test for this just yet – coming up in the next few business days.\n\nAlso, I don\u0027t think it would be entirely correct – the request UIDs should not be set, but the requestor info should (package name and UID of the requestor app). This is useful for location permission for example, and while this is currently limited to very privileged callers, I wouldn\u0027t bet we won\u0027t open it to less privileged callers that should not see location-sensitive information, nor can I vouch for our code never depending on this being actually set so that it will allow some of the operations the privileged users of this need.",
+      "range": {
+        "startLine": 5748,
+        "startChar": 0,
+        "endLine": 5749,
+        "endChar": 52
+      },
+      "revId": "2f674979e5db9197e47626b71d4e0db8cac4eeaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
