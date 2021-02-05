@@ -433,7 +433,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
     @GuardedBy("mLock")
     private void startVcnLocked(@NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
-        Slog.v(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
+        if (VDBG) {
+            Slog.v(TAG, "Starting VCN config for subGrp: " + subscriptionGroup);
+        }
 
         // TODO(b/176939047): Support multiple VCNs active at the same time, or limit to one active
         //                    VCN.
@@ -449,7 +451,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @GuardedBy("mLock")
     private void startOrUpdateVcnLocked(
             @NonNull ParcelUuid subscriptionGroup, @NonNull VcnConfig config) {
-        Slog.v(TAG, "Starting or updating VCN config for subGrp: " + subscriptionGroup);
+        if (VDBG) {
+            Slog.v(TAG, "Starting or updating VCN config for subGrp: " + subscriptionGroup);
+        }
 
         if (mVcns.containsKey(subscriptionGroup)) {
             mVcns.get(subscriptionGroup).updateConfig(config);
@@ -474,7 +478,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         if (!config.getProvisioningPackageName().equals(opPkgName)) {
             throw new IllegalArgumentException("Mismatched caller and VcnConfig creator");
         }
-        Slog.v(TAG, "VCN config updated for subGrp: " + subscriptionGroup);
+        if (VDBG) {
+            Slog.v(TAG, "VCN config updated for subGrp: " + subscriptionGroup);
+        }
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), config.getProvisioningPackageName());
@@ -498,7 +504,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @Override
     public void clearVcnConfig(@NonNull ParcelUuid subscriptionGroup) {
         requireNonNull(subscriptionGroup, "subscriptionGroup was null");
-        Slog.v(TAG, "VCN config cleared for subGrp: " + subscriptionGroup);
+        if (VDBG) {
+            Slog.v(TAG, "VCN config cleared for subGrp: " + subscriptionGroup);
+        }
 
         enforceCallingUserAndCarrierPrivilege(subscriptionGroup);
 

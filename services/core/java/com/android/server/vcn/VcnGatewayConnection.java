@@ -758,13 +758,18 @@ public class VcnGatewayConnection extends StateMachine {
         }
 
         protected void logUnexpectedEvent(int what) {
-            Slog.d(TAG, String.format(
-                    "Unexpected event code %d in state %s", what, this.getClass().getSimpleName()));
+            Slog.d(
+                    TAG,
+                    "Unexpected event code "
+                            + what
+                            + " in state "
+                            + this.getClass().getSimpleName());
         }
 
         protected void logWtfUnknownEvent(int what) {
-            Slog.wtf(TAG, String.format(
-                    "Unknown event code %d in state %s", what, this.getClass().getSimpleName()));
+            Slog.wtf(
+                    TAG,
+                    "Unknown event code " + what + " in state " + this.getClass().getSimpleName());
         }
     }
 
@@ -1302,25 +1307,33 @@ public class VcnGatewayConnection extends StateMachine {
 
         @Override
         public void onOpened(@NonNull IkeSessionConfiguration ikeSessionConfig) {
-            Slog.v(TAG, "IkeOpened for token " + mToken);
+            if (VDBG) {
+                Slog.v(TAG, "IkeOpened for token " + mToken);
+            }
             // Nothing to do here.
         }
 
         @Override
         public void onClosed() {
-            Slog.v(TAG, "IkeClosed for token " + mToken);
+            if (VDBG) {
+                Slog.v(TAG, "IkeClosed for token " + mToken);
+            }
             sessionClosed(mToken, null);
         }
 
         @Override
         public void onClosedExceptionally(@NonNull IkeException exception) {
-            Slog.v(TAG, "IkeClosedExceptionally for token " + mToken, exception);
+            if (VDBG) {
+                Slog.v(TAG, "IkeClosedExceptionally for token " + mToken, exception);
+            }
             sessionClosed(mToken, exception);
         }
 
         @Override
         public void onError(@NonNull IkeProtocolException exception) {
-            Slog.v(TAG, "IkeError for token " + mToken, exception);
+            if (VDBG) {
+                Slog.v(TAG, "IkeError for token " + mToken, exception);
+            }
             // Non-fatal, log and continue.
         }
     }
@@ -1334,25 +1347,33 @@ public class VcnGatewayConnection extends StateMachine {
 
         @Override
         public void onOpened(@NonNull ChildSessionConfiguration childConfig) {
-            Slog.v(TAG, "ChildOpened for token " + mToken);
+            if (VDBG) {
+                Slog.v(TAG, "ChildOpened for token " + mToken);
+            }
             childOpened(mToken, childConfig);
         }
 
         @Override
         public void onClosed() {
-            Slog.v(TAG, "ChildClosed for token " + mToken);
+            if (VDBG) {
+                Slog.v(TAG, "ChildClosed for token " + mToken);
+            }
             sessionLost(mToken, null);
         }
 
         @Override
         public void onClosedExceptionally(@NonNull IkeException exception) {
-            Slog.v(TAG, "ChildClosedExceptionally for token " + mToken, exception);
+            if (VDBG) {
+                Slog.v(TAG, "ChildClosedExceptionally for token " + mToken, exception);
+            }
             sessionLost(mToken, exception);
         }
 
         @Override
         public void onIpSecTransformCreated(@NonNull IpSecTransform transform, int direction) {
-            Slog.v(TAG, "ChildTransformCreated; Direction: " + direction + "; token " + mToken);
+            if (VDBG) {
+                Slog.v(TAG, "ChildTransformCreated; Direction: " + direction + "; token " + mToken);
+            }
             childTransformCreated(mToken, transform, direction);
         }
 
@@ -1360,7 +1381,11 @@ public class VcnGatewayConnection extends StateMachine {
         public void onIpSecTransformDeleted(@NonNull IpSecTransform transform, int direction) {
             // Nothing to be done; no references to the IpSecTransform are held, and this transform
             // will be closed by the IKE library.
-            Slog.v(TAG, "ChildTransformDeleted; Direction: " + direction + "; for token " + mToken);
+            if (VDBG) {
+                Slog.v(
+                        TAG,
+                        "ChildTransformDeleted; Direction: " + direction + "; for token " + mToken);
+            }
         }
     }
 
