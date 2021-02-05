@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "878aba4e_53e8da8e",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T05:55:13Z",
+      "side": 1,
+      "message": "Unused now; no need to respin though",
+      "range": {
+        "startLine": 1001,
+        "startChar": 32,
+        "endLine": 1001,
+        "endChar": 49
+      },
+      "revId": "9500317c2b9a7de2bea167a6a4491528c9a1e0bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

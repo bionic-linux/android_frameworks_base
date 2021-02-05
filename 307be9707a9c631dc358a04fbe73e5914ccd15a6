@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5ce158d_da100a2b",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-05T05:55:13Z",
+      "side": 1,
+      "message": "Got it, a comment would have been good for posterity but hopefully this gets fixed soon so there\u0027s not much posterity...",
+      "parentUuid": "1f7f37ba_78e291bd",
+      "range": {
+        "startLine": 965,
+        "startChar": 8,
+        "endLine": 969,
+        "endChar": 72
+      },
+      "revId": "307be9707a9c631dc358a04fbe73e5914ccd15a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ad9fbc6_acf33a54",
