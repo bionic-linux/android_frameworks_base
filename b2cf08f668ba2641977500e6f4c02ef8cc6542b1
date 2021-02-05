@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d3d7e97_a57b75f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "LGTM.\n\nThanks for taking the time to rename the timer. I feel a lot better about this CL now. Even if it turns out that this CL is not entirely correct or has unintended consequences, I think the new naming will be very helpful in reasoning about how the code should behave and fixing any issues that come up.\n\nComments inline should be very easy to address, I think all but one are just comments on comments.",
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b0c9559_980049ef",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3319,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "Seems like we should introduce an \"isInactive()\" method in NetworkAgentInfo that returns mInactive.",
+      "range": {
+        "startLine": 3319,
+        "startChar": 12,
+        "endLine": 3319,
+        "endChar": 50
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de73d2de_d14fa090",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3615,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "nai.isInactive?",
+      "range": {
+        "startLine": 3615,
+        "startChar": 49,
+        "endLine": 3615,
+        "endChar": 85
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3044c86b_7bc71d69",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7419,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "Might want to say that this will happen for all networks except in the case of an underlying network for a VCN.",
+      "range": {
+        "startLine": 7419,
+        "startChar": 50,
+        "endLine": 7419,
+        "endChar": 51
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8262dfb2_b8ebbb96",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7569,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "updateInactivityState",
+      "range": {
+        "startLine": 7569,
+        "startChar": 23,
+        "endLine": 7569,
+        "endChar": 40
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70107dd0_07bcef44",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7836,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "an inactivity",
+      "range": {
+        "startLine": 7836,
+        "startChar": 53,
+        "endLine": 7836,
+        "endChar": 61
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14657bec_22116d41",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7837,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "updateInactivityState",
+      "range": {
+        "startLine": 7837,
+        "startChar": 29,
+        "endLine": 7837,
+        "endChar": 46
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdd6fe8c_904bd45e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7837,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "state",
+      "range": {
+        "startLine": 7837,
+        "startChar": 62,
+        "endLine": 7837,
+        "endChar": 68
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d21fd79_9d417f6d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7840,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "connection",
+      "range": {
+        "startLine": 7840,
+        "startChar": 27,
+        "endLine": 7840,
+        "endChar": 36
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fe38dc6_37990391",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7841,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "as soon as the network satisfies a request for the first time.",
+      "range": {
+        "startLine": 7841,
+        "startChar": 38,
+        "endLine": 7841,
+        "endChar": 95
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f94a15f_71fce7b9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "inactive",
+      "range": {
+        "startLine": 1737,
+        "startChar": 46,
+        "endLine": 1737,
+        "endChar": 54
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85f8c3b8_c651a774",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "Inactive",
+      "range": {
+        "startLine": 1741,
+        "startChar": 30,
+        "endLine": 1741,
+        "endChar": 39
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "106245d8_98321436",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "inactive",
+      "range": {
+        "startLine": 1747,
+        "startChar": 61,
+        "endLine": 1747,
+        "endChar": 69
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48ab7514_5817e1f4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "the nascent timer expires",
+      "range": {
+        "startLine": 1770,
+        "startChar": 73,
+        "endLine": 1770,
+        "endChar": 97
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ff5f662_d5eaee8f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1794,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "inactive",
+      "range": {
+        "startLine": 1794,
+        "startChar": 46,
+        "endLine": 1794,
+        "endChar": 54
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5011897a_6cf96fe4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-05T15:36:28Z",
+      "side": 1,
+      "message": "Inactive",
+      "range": {
+        "startLine": 1798,
+        "startChar": 30,
+        "endLine": 1798,
+        "endChar": 39
+      },
+      "revId": "b2cf08f668ba2641977500e6f4c02ef8cc6542b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
