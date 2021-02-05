@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e34ed748_f7a08c6f",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13761,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2021-02-05T18:10:26Z",
+      "side": 1,
+      "message": "are these pools already accounted as part of totalExportedDmabuf? If not, shouldn\u0027t we subtract totalDmabufHeapPool from lostRAM (or add it to kernelUsed which will result in the same subtraction)?",
+      "range": {
+        "startLine": 13761,
+        "startChar": 27,
+        "endLine": 13761,
+        "endChar": 46
+      },
+      "revId": "611093fbadd7c3bedf4469962c448a8cec6ee52a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
