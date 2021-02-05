@@ -25,7 +25,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import androidx.test.filters.SmallTest;
@@ -34,6 +36,9 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
+
+import java.util.concurrent.TimeUnit;
 
 /** Tests for VcnGatewayConnection.ConnectedState */
 @RunWith(AndroidJUnit4.class)
@@ -57,6 +62,11 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
     @Test
     public void testEnterStateCreatesNewIkeSession() throws Exception {
         verify(mDeps).newIkeSession(any(), any(), any(), any(), any());
+    }
+
+    @Test
+    public void testEnterStateCancelsSafemodeAlarm() {
+        verifySafemodeTimeoutAlarmAndGetCallback(true /* expectCanceled */);
     }
 
     @Test
@@ -107,23 +117,50 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
     }
 
+    private void verifySafemodeTimeoutAlarmInOrder(
+            InOrder inOrderSafemodeVerification, boolean expectCanceled) {
+        inOrderSafemodeVerification
+                .verify(mSafemodeTimeoutAlarm)
+                .schedule(
+                        ELAPSED_REAL_TIME
+                                + TimeUnit.SECONDS.toMillis(
+                                        VcnGatewayConnection.SAFEMODE_TIMEOUT_SECONDS));
+        inOrderSafemodeVerification
+                .verify(mSafemodeTimeoutAlarm, expectCanceled ? times(1) : never())
+                .cancel();
+        inOrderSafemodeVerification.verifyNoMoreInteractions();
+    }
+
     @Test
     public void testChildSessionClosedTriggersDisconnect() throws Exception {
+        // Verify scheduled + canceled when entering ConnectedState
+        InOrder inOrder = inOrder(mSafemodeTimeoutAlarm);
+        verifySafemodeTimeoutAlarmInOrder(inOrder, true /* expectCanceled */);
+
         getChildSessionCallback().onClosed();
         mTestLooper.dispatchAll();
 
         assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
         verifyTeardownTimeoutAlarmAndGetCallback(false /* expectCanceled */);
+
+        // Verify scheduled but not canceled when exiting ConnectedState
+        verifySafemodeTimeoutAlarmInOrder(inOrder, false /* expectCanceled */);
     }
 
     @Test
     public void testIkeSessionClosedTriggersDisconnect() throws Exception {
+        // Verify scheduled + canceled when entering ConnectedState
+        InOrder inOrder = inOrder(mSafemodeTimeoutAlarm);
+        verifySafemodeTimeoutAlarmInOrder(inOrder, true /* expectCanceled */);
+
         getIkeSessionCallback().onClosed();
         mTestLooper.dispatchAll();
 
         assertEquals(mGatewayConnection.mRetryTimeoutState, mGatewayConnection.getCurrentState());
         verify(mIkeSession).close();
-        verifyTeardownTimeoutAlarmAndGetCallback(true /* expectCanceled */);
+
+        // Verify scheduled but not canceled when exiting ConnectedState
+        verifySafemodeTimeoutAlarmInOrder(inOrder, false /* expectCanceled */);
     }
 
     // TODO: Add tests for childOpened() when ChildSessionConfiguration can be mocked or created
