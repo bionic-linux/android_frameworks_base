@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3118cbc7_3871c32f",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 6042,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:41:51Z",
+      "side": 1,
+      "message": "I think the condoned order is :\n• Listener last\n• Executor immediately before\n• Other arguments first",
+      "range": {
+        "startLine": 6042,
+        "startChar": 132,
+        "endLine": 6042,
+        "endChar": 214
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5ce4af5_675d313a",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 6065,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:41:51Z",
+      "side": 1,
+      "message": "See comments on previous patchsets on the shape of this.",
+      "range": {
+        "startLine": 6065,
+        "startChar": 0,
+        "endLine": 6065,
+        "endChar": 69
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "449a7ad7_c0c4c29b",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 6427,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:41:51Z",
+      "side": 1,
+      "message": "Does this need to be in the surface ?",
+      "range": {
+        "startLine": 6427,
+        "startChar": 41,
+        "endLine": 6427,
+        "endChar": 69
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7a1b21e_53fb0478",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:41:51Z",
+      "side": 1,
+      "message": "doesn\u0027t get a default network (it can in fact still request a network explicitly if it so wishes)",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33b3d729_24e1b2f3",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T04:41:51Z",
+      "side": 1,
+      "message": "Use ?\n\nI think \"prefer\" suggests we might pick something else if available, which is not the behavior.",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 13
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
