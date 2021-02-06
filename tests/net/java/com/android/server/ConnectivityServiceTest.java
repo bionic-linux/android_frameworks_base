@@ -2851,6 +2851,7 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    @Ignore  // Takes more than 50 seconds to run on device
     public void testNetworkFactoryUnregister() throws Exception {
         final NetworkCapabilities filter = new NetworkCapabilities();
         filter.clearAll();
