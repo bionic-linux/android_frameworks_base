@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6f2a398_dc5f51f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:37:49Z",
+      "side": 1,
+      "message": "You can use FrameworksNetTests and CtsNetTestCasesLatestSdk. If memory serves, this will give you at least VpnTest and VpnHostsideTests under cts/, and VpnTest, VpnManagerTest and VpnProfile test under frameworks/base.\n\nAlso try CtsDevicePolicyManagerTestCases ; I believe DPM actually exercises some of this.\n\nFinally, Settings has its own tests for its UI and dialogs, which almost certainly call this transitively. A quick search says you should probably run SettingsRoboTests and SettingsUnitTests.\n\nI think that\u0027s all the automatic coverage you can get. We also have ACTS tests, but you can\u0027t run those yourself – once the patch is in, our testers will execute those manual tests and report if anything is wrong. I\u0027ll make sure to give Girish a heads up.",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a07d5f90_17292a54",
