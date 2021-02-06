@@ -16,6 +16,276 @@
       "message": "Looks correct, if this passes Settings-manual-testing + Ikev2VpnTest and ACTS",
       "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1db7599b_bd3b0d7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Main question is about backward compatibility. Of course if that\u0027s already handled by Keystore 2, we don\u0027t necessarily need to do anything here – but it sounds to me like this class, as the \"LegacyVpn\"ProfileStore, is expected to handle backward compatibility and PS4 doesn\u0027t do that.\n\nAlso, I haven\u0027t looked at the implementation on the other side to figure out what the backward compatibility story is, but if you want me to scrutinize it to see if the VPN use case is expected to match, please point me to a change or a code search link.",
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "735d9d34_2a76d86b",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "nit : 1",
+      "range": {
+        "startLine": 2,
+        "startChar": 20,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b556795b_fbda181a",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Curious : is this database something you are building just for this, or something you need to do for multiple clients anyway ? If the former, I guess eventually we should pass ownership to the networking team or migrate to some solution owned by the networking team.\n\n(no action to take for this comment)",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 80
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0575e5d7_e977ed6e",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Does this need to be synchronized ? I see little need.\n\nAlso consider go/synchronized-this-considered-harmful. As a static function this synchronizes on the class object, which is visible to everybody in the system server.",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12d97d1_a80cc584",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Don\u0027t we have a constant for this ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 82
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ddbbba0_c219e6a4",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Do we know what kind of conditions may trigger this ? (disk full, anything else ?)",
+      "range": {
+        "startLine": 48,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 48
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9af58cbb_f43f3ed3",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Does this provide fallback to the old KeyStore ? If not, I guess we need to implement it here, so that devices upgrading can still read their old profiles.",
+      "range": {
+        "startLine": 80,
+        "startChar": 36,
+        "endLine": 80,
+        "endChar": 39
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "587a9e4a_03a3c730",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Similar question here, where the fallback strategy needs to be different. When remove() is called, I guess we\u0027ll need to remove the key from both storages, as it might have been updated in the mean time.",
+      "range": {
+        "startLine": 104,
+        "startChar": 29,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40d3a2bd_07a426ce",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "...and similar question here, where we\u0027d in fact need to merge the list with priority to the  values returned by Keystore 2, if it\u0027s not done on the service side.",
+      "range": {
+        "startLine": 129,
+        "startChar": 36,
+        "endLine": 129,
+        "endChar": 40
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c3d94bf_cb5a2ecb",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Style nit : space",
+      "range": {
+        "startLine": 131,
+        "startChar": 22,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16b3da78_4befac32",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "If just to avoid the mutable var :\n\n  final String[] result \u003d ...\n  return result !\u003d null ? result : new String[0];",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ef85c2c_8c0a4977",
+        "filename": "keystore/java/android/security/LegacyVpnStoreException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-06T05:26:48Z",
+      "side": 1,
+      "message": "Is this something that could already happen with Keystore 1.0 ? It sounds like clients are expected to retry on this, and I don\u0027t think VPN has any code doing the retries. If this is a new concept, we may need to adjust the code that might receive this exception.\n\n(otherwise, well we\u0027ll be bug-for-bug compatible)",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
