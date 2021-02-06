@@ -16,7 +16,7 @@
 
 package android.telephony;
 
-import android.util.ArraySet;
+import java.util.Set;
 
 /**
  * Contains the set of supported capabilities that the Radio Interface supports on this device.
@@ -25,21 +25,10 @@ import android.util.ArraySet;
  */
 public class RadioInterfaceCapabilities {
 
-    private final ArraySet<String> mSupportedCapabilities;
+    private final Set<String> mSupportedCapabilities;
 
-
-    public RadioInterfaceCapabilities() {
-        mSupportedCapabilities = new ArraySet<>();
-    }
-
-    /**
-     * Marks a capability as supported
-     *
-     * @param capabilityName the name of the capability
-     */
-    public void addSupportedCapability(
-            @TelephonyManager.RadioInterfaceCapability String capabilityName) {
-        mSupportedCapabilities.add(capabilityName);
+    public RadioInterfaceCapabilities(final Set<String> supportedCapabilities) {
+        mSupportedCapabilities = supportedCapabilities;
     }
 
     /**
@@ -47,7 +36,9 @@ public class RadioInterfaceCapabilities {
      *
      * @param capabilityName the name of the capability
      */
-    public boolean isSupported(String capabilityName) {
+    public boolean isSupported(final String capabilityName) {
         return mSupportedCapabilities.contains(capabilityName);
     }
+
+
 }
