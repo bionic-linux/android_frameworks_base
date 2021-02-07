@@ -73,6 +73,9 @@ public class VcnManager {
                     VcnUnderlyingNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
             REGISTERED_POLICY_LISTENERS = new ConcurrentHashMap<>();
 
+    private static final Map<VcnStatusCallback, VcnStatusCallbackBinder>
+            REGISTERED_STATUS_CALLBACKS = new ConcurrentHashMap<>();
+
     @NonNull private final Context mContext;
     @NonNull private final IVcnManagementService mService;
 
@@ -99,6 +102,17 @@ public class VcnManager {
     public static Map<VcnUnderlyingNetworkPolicyListener, VcnUnderlyingNetworkPolicyListenerBinder>
             getAllPolicyListeners() {
         return Collections.unmodifiableMap(REGISTERED_POLICY_LISTENERS);
+    }
+
+    /**
+     * Get all currently registered VcnStatusCallbacks for testing purposes.
+     *
+     * @hide
+     */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    @NonNull
+    public static Map<VcnStatusCallback, VcnStatusCallbackBinder> getAllStatusCallbacks() {
+        return Collections.unmodifiableMap(REGISTERED_STATUS_CALLBACKS);
     }
 
     // TODO: Make setVcnConfig(), clearVcnConfig() Public API
@@ -267,6 +281,93 @@ public class VcnManager {
         }
     }
 
+    // TODO: make VcnStatusCallback @SystemApi
+    /**
+     * VcnStatusCallback is the interface for Carrier apps to receive updates for their VCNs.
+     *
+     * <p>VcnStatusCallbacks may be registered before {@link VcnConfig}s are provided for a
+     * subscription group.
+     *
+     * @hide
+     */
+    public interface VcnStatusCallback {
+        /**
+         * Invoked when the VCN for this Callback's subscription group enters safe mode.
+         *
+         * <p>A VCN will be put into safe mode if any of the gateway connections were unable to
+         * establish a connection within a system-determined timeout (while underlying networks were
+         * available).
+         *
+         * <p>A VCN-configuring app may opt to exit safe mode by (re)setting the VCN configuration
+         * via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
+         */
+        void onEnteredSafeMode();
+    }
+
+    /**
+     * Registers the given callback to receive status updates for the specified subscription.
+     *
+     * <p>Callbacks can be registered for a subscription before {@link VcnConfig}s are set for it.
+     *
+     * <p>A {@link VcnStatusCallback} may only be registered for one subscription at a time. {@link
+     * VcnStatusCallback}s may be reused once unregistered.
+     *
+     * <p>A {@link VcnStatusCallback} will only be invoked if the registering package has carrier
+     * privileges for the specified subscription at the time of invocation.
+     *
+     * @param subscriptionGroup The subscription group to match for callbacks
+     * @param executor The {@link Executor} to be used for invoking callbacks
+     * @param callback The VcnStatusCallback to be registered
+     * @throws IllegalStateException if callback is currently registered with VcnManager
+     * @hide
+     */
+    public void registerVcnStatusCallback(
+            @NonNull ParcelUuid subscriptionGroup,
+            @NonNull Executor executor,
+            @NonNull VcnStatusCallback callback) {
+        requireNonNull(subscriptionGroup, "subscriptionGroup must not be null");
+        requireNonNull(executor, "executor must not be null");
+        requireNonNull(callback, "callback must not be null");
+
+        VcnStatusCallbackBinder binder = new VcnStatusCallbackBinder(executor, callback);
+        if (REGISTERED_STATUS_CALLBACKS.putIfAbsent(callback, binder) != null) {
+            throw new IllegalStateException(
+                    "Attempting to register a callback that is already in use");
+        }
+
+        try {
+            mService.registerVcnStatusCallback(
+                    subscriptionGroup, binder, mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            REGISTERED_STATUS_CALLBACKS.remove(callback);
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Unregisters the given callback.
+     *
+     * <p>Once unregistered, the callback will stop receiving status updates for the subscription it
+     * was registered with.
+     *
+     * @param callback The callback to be unregistered
+     * @hide
+     */
+    public void unregisterVcnStatusCallback(@NonNull VcnStatusCallback callback) {
+        requireNonNull(callback, "callback must not be null");
+
+        VcnStatusCallbackBinder binder = REGISTERED_STATUS_CALLBACKS.remove(callback);
+        if (binder == null) {
+            return;
+        }
+
+        try {
+            mService.unregisterVcnStatusCallback(binder);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
     /**
      * Binder wrapper for added VcnUnderlyingNetworkPolicyListeners to receive signals from System
      * Server.
@@ -287,6 +388,27 @@ public class VcnManager {
         @Override
         public void onPolicyChanged() {
             mExecutor.execute(() -> mListener.onPolicyChanged());
+        }
+    }
+
+    /**
+     * Binder wrapper for VcnStatusCallbacks to receive signals from VcnManagementService.
+     *
+     * @hide
+     */
+    private static class VcnStatusCallbackBinder extends IVcnStatusCallback.Stub {
+        @NonNull private final Executor mExecutor;
+        @NonNull private final VcnStatusCallback mCallback;
+
+        private VcnStatusCallbackBinder(
+                @NonNull Executor executor, @NonNull VcnStatusCallback callback) {
+            mExecutor = executor;
+            mCallback = callback;
+        }
+
+        @Override
+        public void onEnteredSafeMode() {
+            mExecutor.execute(() -> mCallback.onEnteredSafeMode());
         }
     }
 }
