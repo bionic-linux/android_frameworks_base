@@ -3435,6 +3435,8 @@ public class PermissionManagerService extends IPermissionManager.Stub {
             if (!hasPrivappWhitelistEntry(perm, pkg)) {
                 // Only enforce whitelist this on boot
                 if (!mSystemReady
+                        // Ignore third-party apps event though with the shareduser
+                        && pkgSetting.isSystem()
                         // Updated system apps do not need to be whitelisted
                         && !pkgSetting.getPkgState().isUpdatedSystemApp()) {
                     ApexManager apexMgr = ApexManager.getInstance();
