@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2045348_97ff3129",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3322,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:38Z",
+      "side": 1,
+      "message": "Clarified. A callback identifies an offer uniquely. Providers can actually *update* offers by calling this again with the same callback. If they want to offer two different networks, then they\u0027ll need to use a different callback.",
+      "parentUuid": "2d1966c1_c8430595",
+      "range": {
+        "startLine": 3322,
+        "startChar": 23,
+        "endLine": 3322,
+        "endChar": 82
+      },
+      "revId": "c36977beeff84ce284addd4e7d83e4f5c7a27d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4308d94_f778bf99",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc96668e_8b3c01e4",
+        "filename": "core/java/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:38Z",
+      "side": 1,
+      "message": "Yes. This is existing behavior. In S, this will not happen by virtue of it eventually ranking in the same order as before. After S, we\u0027ll put in place anti-loop mechanisms. Offers will help at that time.",
+      "parentUuid": "b4308d94_f778bf99",
+      "range": {
+        "startLine": 3328,
+        "startChar": 16,
+        "endLine": 3328,
+        "endChar": 28
+      },
+      "revId": "c36977beeff84ce284addd4e7d83e4f5c7a27d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "24eb7ec6_59592f09",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-01-26T10:51:33Z",
       "side": 1,
       "message": "2021~",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "c36977beeff84ce284addd4e7d83e4f5c7a27d5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "552cdfb1_aaa02795",
+        "filename": "core/java/android/net/INetworkOfferCallback.aidl",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24eb7ec6_59592f09",
       "range": {
         "startLine": 2,
         "startChar": 17,
