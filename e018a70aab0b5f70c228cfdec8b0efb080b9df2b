@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1652355b_c1eeda47",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:22Z",
+      "side": 1,
+      "message": "Then EVER_USER_SELECTED, lest we think it might have been automatically selected.",
+      "parentUuid": "34b5bc6e_86462116",
+      "range": {
+        "startLine": 50,
+        "startChar": 35,
+        "endLine": 50,
+        "endChar": 46
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a0d8b38_ae31c433",
@@ -237,6 +261,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a90a98f5_e6558a3c",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:22Z",
+      "side": 1,
+      "message": "Ah I see. Yes, I think you\u0027re right. WithPolicies makes more sense.",
+      "parentUuid": "004519e8_f0677a31",
+      "range": {
+        "startLine": 72,
+        "startChar": 34,
+        "endLine": 72,
+        "endChar": 38
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1dcba44_696aa1cb",
@@ -298,6 +346,30 @@
       "side": 1,
       "message": "Do we need to expose them and can never modify the function signature?\nIf so it might be painful if we want to change a flag to another category in future, right?\nIf not I\u0027m ok with this.",
       "parentUuid": "0daf012c_4807067f",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "453e72cb_d4aa3bb2",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:22Z",
+      "side": 1,
+      "message": "No, this is never meant to be exposed, at least not in this form. You can notice how the comment says \"for ConnectivityService\".\n\nDepending on how this will expand it is possible we will want to expose some variants of this method. But I don\u0027t think it\u0027s ever going to become that big.",
+      "parentUuid": "5a3178ea_237c3c6f",
       "range": {
         "startLine": 73,
         "startChar": 12,
@@ -404,6 +476,24 @@
       "side": 1,
       "message": "Yes we do have getCapabilities() and getTransportTypes() that returns int[]\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/NetworkCapabilities.java;l\u003d594?q\u003dNetworkCapabilities\u0026ss\u003dandroid\n\nBut I\u0027m fine if you\u0027ll not going to need it in the test.",
       "parentUuid": "7d0271e9_9f2e5a79",
+      "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7aa7fbe_c726d23c",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:22Z",
+      "side": 1,
+      "message": "Let\u0027s add it only if it ever becomes necessary. For now I don\u0027t ever foresee a use case.",
+      "parentUuid": "73a5aab9_57281be1",
       "revId": "e018a70aab0b5f70c228cfdec8b0efb080b9df2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },

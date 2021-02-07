@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f07cfe11_0d0750a1",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:22Z",
+      "side": 1,
+      "message": "I\u0027d rather not, because eventually we can hope at least some of those move to the agents.",
+      "parentUuid": "b5a04646_9c3a470b",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "e8e1c827306a5be05eb8996ff7c15076dfdd3e36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d354206a_4a4970a0",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-05T09:45:19Z",
       "side": 1,
       "message": "Maybe not for this CL, But it is possible to test the MAXes are correctly updated with reflection?\nE.g. inspecting the fields in IntDef or fields with specific prefix in this class?",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 53
+      },
+      "revId": "e8e1c827306a5be05eb8996ff7c15076dfdd3e36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88afc113_bb612bd3",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:10:22Z",
+      "side": 1,
+      "message": "That is an awesome idea, and in most cases it\u0027s doable by enumerating the fields (the IntDef has source retention, so it\u0027s not available at runtime).\n\nIn this case the shared space between CS_MANAGED and AGENT_MANAGED makes it a bit trickier. Please look at my test and see if you like it.",
+      "parentUuid": "d354206a_4a4970a0",
       "range": {
         "startLine": 76,
         "startChar": 29,
