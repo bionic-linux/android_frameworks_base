@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9e90f6d_c2f65171",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1092759
+      },
+      "writtenOn": "2021-02-07T02:25:13Z",
+      "side": 1,
+      "message": "commit 2cf94bf6988a2be160288f92c029082c661590cf\nAuthor: Jeff Vander Stoep \u003cjeffv@google.com\u003e\nDate:   Tue Jan 23 01:16:18 2018 -0800\n\n    Reland: pm: Scan-as-privileged apps that share a privileged user\n    \n    Commits 2ede04735081bd8c0e399a280484fb9e6089f33f and\n    77029c5b16351775cb2333369ef9a4bc1d9acf58 touch the same code in\n    PackageManager. They landed in master at the same time causing\n    a build breakage. Reland with fixes to PackageSetting signatures\n    usage.\n    \n    Bug: 72235911\n    Test: build/flash Taimen, verify userdictionary provider\n        is scanned as priv-app.\n    Test: gts-tradefed run everything\n    \n    Change-Id: I57818409fa2f21c4f8f54651dd539790005d3e92\n",
+      "revId": "9a57200e6a8740510be0f98c18cd9df8cbb6e137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
