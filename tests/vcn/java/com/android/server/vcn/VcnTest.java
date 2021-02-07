@@ -174,6 +174,7 @@ public class VcnTest {
         statusCallback.onEnteredSafemode();
         mTestLooper.dispatchAll();
 
+        assertFalse(mVcn.isActive());
         for (final VcnGatewayConnection gatewayConnection : gatewayConnections) {
             verify(gatewayConnection).teardownAsynchronously();
         }

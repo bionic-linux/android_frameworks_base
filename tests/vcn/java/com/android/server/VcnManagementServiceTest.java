@@ -39,9 +39,11 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.annotation.NonNull;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -173,6 +175,7 @@ public class VcnManagementServiceTest {
 
         doReturn(TEST_PACKAGE_NAME).when(mMockContext).getOpPackageName();
 
+        doReturn(mMockContext).when(mVcnContext).getContext();
         doReturn(mTestLooper.getLooper()).when(mMockDeps).getLooper();
         doReturn(TEST_UID).when(mMockDeps).getBinderCallingUid();
         doReturn(mVcnContext)
@@ -651,14 +654,13 @@ public class VcnManagementServiceTest {
         verify(mMockPolicyListener).onPolicyChanged();
     }
 
-    @Test
-    public void testVcnSafemodeCallbackOnEnteredSafemode() throws Exception {
-        TelephonySubscriptionSnapshot snapshot =
-                triggerSubscriptionTrackerCbAndGetSnapshot(Collections.singleton(TEST_UUID_1));
+    private void verifyVcnSafemodeCallback(
+            @NonNull ParcelUuid subGroup, @NonNull TelephonySubscriptionSnapshot snapshot)
+            throws Exception {
         verify(mMockDeps)
                 .newVcn(
                         eq(mVcnContext),
-                        eq(TEST_UUID_1),
+                        eq(subGroup),
                         eq(TEST_VCN_CONFIG),
                         eq(snapshot),
                         mSafemodeCallbackCaptor.capture());
@@ -668,8 +670,74 @@ public class VcnManagementServiceTest {
         VcnSafemodeCallback safemodeCallback = mSafemodeCallbackCaptor.getValue();
         safemodeCallback.onEnteredSafemode();
 
-        assertFalse(mVcnMgmtSvc.getAllVcns().get(TEST_UUID_1).isActive());
         verify(mMockPolicyListener).onPolicyChanged();
+    }
+
+    @Test
+    public void testVcnSafemodeCallbackOnEnteredSafemode() throws Exception {
+        TelephonySubscriptionSnapshot snapshot =
+                triggerSubscriptionTrackerCbAndGetSnapshot(Collections.singleton(TEST_UUID_1));
+
+        verifyVcnSafemodeCallback(TEST_UUID_1, snapshot);
+    }
+
+    private void verifyVcnStatusCallbackOnEnteredSafemode(
+            @NonNull ParcelUuid subGroup,
+            @NonNull String pkgName,
+            int uid,
+            boolean hasPermissionsforSubGroup,
+            boolean hasLocationPermission)
+            throws Exception {
+        TelephonySubscriptionSnapshot snapshot =
+                triggerSubscriptionTrackerCbAndGetSnapshot(Collections.singleton(subGroup));
+
+        doReturn(hasPermissionsforSubGroup)
+                .when(snapshot)
+                .packageHasPermissionsForSubscriptionGroup(eq(subGroup), eq(pkgName));
+
+        doReturn(hasLocationPermission)
+                .when(mLocationPermissionChecker)
+                .checkLocationPermission(eq(pkgName), any(), eq(uid), any());
+
+        mVcnMgmtSvc.registerVcnStatusCallback(subGroup, mMockStatusCallback, pkgName);
+
+        // Trigger systemReady() to set up LocationPermissionChecker
+        mVcnMgmtSvc.systemReady();
+
+        verifyVcnSafemodeCallback(subGroup, snapshot);
+
+        boolean expectCallback = hasPermissionsforSubGroup && hasLocationPermission;
+        verify(mMockStatusCallback, expectCallback ? times(1) : never()).onEnteredSafemode();
+    }
+
+    @Test
+    public void testVcnStatusCallbackOnEnteredSafemodeWithCarrierPrivileges() throws Exception {
+        verifyVcnStatusCallbackOnEnteredSafemode(
+                TEST_UUID_1,
+                TEST_PACKAGE_NAME,
+                TEST_UID,
+                true /* hasPermissionsforSubGroup */,
+                true /* hasLocationPermission */);
+    }
+
+    @Test
+    public void testVcnStatusCallbackOnEnteredSafemodeWithoutCarrierPrivileges() throws Exception {
+        verifyVcnStatusCallbackOnEnteredSafemode(
+                TEST_UUID_1,
+                TEST_PACKAGE_NAME,
+                TEST_UID,
+                false /* hasPermissionsforSubGroup */,
+                true /* hasLocationPermission */);
+    }
+
+    @Test
+    public void testVcnStatusCallbackOnEnteredSafemodeWithoutLocationPermission() throws Exception {
+        verifyVcnStatusCallbackOnEnteredSafemode(
+                TEST_UUID_1,
+                TEST_PACKAGE_NAME,
+                TEST_UID,
+                true /* hasPermissionsforSubGroup */,
+                false /* hasLocationPermission */);
     }
 
     @Test
