@@ -782,6 +782,21 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                     return;
                 }
 
+                // Notify all registered StatusCallbacks for this subGroup
+                for (VcnStatusCallbackBinderDeath cbBinderDeath :
+                        mRegisteredStatusCallbacks.values()) {
+                    if (!mSubGroup.equals(cbBinderDeath.mSubGroup)) {
+                        continue;
+                    }
+                    if (!mLastSnapshot.packageHasPermissionsForSubscriptionGroup(
+                            mSubGroup, cbBinderDeath.mPkgName)) {
+                        continue;
+                    }
+
+                    Binder.withCleanCallingIdentity(
+                            () -> cbBinderDeath.mCallback.onEnteredSafemode());
+                }
+
                 notifyAllPolicyListenersLocked();
             }
         }

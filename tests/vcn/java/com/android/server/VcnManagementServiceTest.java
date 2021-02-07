@@ -649,6 +649,19 @@ public class VcnManagementServiceTest {
     public void testVcnSafemodeCallbackOnEnteredSafemode() throws Exception {
         TelephonySubscriptionSnapshot snapshot =
                 triggerSubscriptionTrackerCbAndGetSnapshot(Collections.singleton(TEST_UUID_1));
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, mMockStatusCallback, TEST_PACKAGE_NAME);
+        doReturn(true)
+                .when(snapshot)
+                .packageHasPermissionsForSubscriptionGroup(TEST_UUID_1, TEST_PACKAGE_NAME);
+
+        final IVcnStatusCallback cbWithoutPermissions = mock(IVcnStatusCallback.class);
+        final IBinder cbBinder = mock(IBinder.class);
+        doReturn(cbBinder).when(cbWithoutPermissions).asBinder();
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, cbWithoutPermissions, "android.test");
+        doReturn(false)
+                .when(snapshot)
+                .packageHasPermissionsForSubscriptionGroup(TEST_UUID_1, "android.test");
+
         verify(mMockDeps)
                 .newVcn(
                         eq(mVcnContext),
@@ -662,7 +675,8 @@ public class VcnManagementServiceTest {
         VcnSafemodeCallback safemodeCallback = mSafemodeCallbackCaptor.getValue();
         safemodeCallback.onEnteredSafemode();
 
-        assertFalse(mVcnMgmtSvc.getAllVcns().get(TEST_UUID_1).isActive());
+        verify(mMockStatusCallback).onEnteredSafemode();
+        verify(cbWithoutPermissions, never()).onEnteredSafemode();
         verify(mMockPolicyListener).onPolicyChanged();
     }
 
