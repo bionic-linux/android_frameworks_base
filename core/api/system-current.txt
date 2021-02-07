@@ -6046,8 +6046,15 @@ package android.net {
     method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_FACTORY}) public void unregisterNetworkProvider(@NonNull android.net.NetworkProvider);
     method public void unregisterQosCallback(@NonNull android.net.QosCallback);
     method @Deprecated @RequiresPermission(android.Manifest.permission.TETHER_PRIVILEGED) public void unregisterTetheringEventCallback(@NonNull android.net.ConnectivityManager.OnTetheringEventCallback);
+    field public static final String ACTION_PROMPT_LOST_VALIDATION = "android.net.action.PROMPT_LOST_VALIDATION";
+    field public static final String ACTION_PROMPT_PARTIAL_CONNECTIVITY = "android.net.action.PROMPT_PARTIAL_CONNECTIVITY";
+    field public static final String ACTION_PROMPT_UNVALIDATED = "android.net.action.PROMPT_UNVALIDATED";
     field public static final String EXTRA_CAPTIVE_PORTAL_PROBE_SPEC = "android.net.extra.CAPTIVE_PORTAL_PROBE_SPEC";
     field public static final String EXTRA_CAPTIVE_PORTAL_USER_AGENT = "android.net.extra.CAPTIVE_PORTAL_USER_AGENT";
+    field public static final String PRIVATE_DNS_DEFAULT_MODE_FALLBACK = "opportunistic";
+    field public static final String PRIVATE_DNS_MODE_OFF = "off";
+    field public static final String PRIVATE_DNS_MODE_OPPORTUNISTIC = "opportunistic";
+    field public static final String PRIVATE_DNS_MODE_PROVIDER_HOSTNAME = "hostname";
     field public static final int TETHERING_BLUETOOTH = 2; // 0x2
     field public static final int TETHERING_USB = 1; // 0x1
     field public static final int TETHERING_WIFI = 0; // 0x0
