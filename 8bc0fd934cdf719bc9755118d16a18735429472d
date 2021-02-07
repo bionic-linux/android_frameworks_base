@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46b648cc_dc6eed0a",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-07T18:05:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6aa13953_58d82059",
+      "range": {
+        "startLine": 418,
+        "startChar": 19,
+        "endLine": 418,
+        "endChar": 27
+      },
+      "revId": "8bc0fd934cdf719bc9755118d16a18735429472d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "539acfc6_ccde56db",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-01T05:53:47Z",
       "side": 1,
       "message": "Rename to requestsNetwork?",
+      "range": {
+        "startLine": 437,
+        "startChar": 19,
+        "endLine": 437,
+        "endChar": 28
+      },
+      "revId": "8bc0fd934cdf719bc9755118d16a18735429472d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dee73b2f_9d1009c7",
+        "filename": "core/java/android/net/NetworkRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-07T18:05:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "539acfc6_ccde56db",
       "range": {
         "startLine": 437,
         "startChar": 19,
