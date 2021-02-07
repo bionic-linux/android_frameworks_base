@@ -22,6 +22,30 @@
       },
       "revId": "5eb4acc13d013c38741ee16a2463c2f1993eb3f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceb459dc_06a862de",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-07T13:05:17Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s going to be very useful, but I think it\u0027s more readable, so done.",
+      "parentUuid": "371e7234_40fa6771",
+      "range": {
+        "startLine": 124,
+        "startChar": 48,
+        "endLine": 124,
+        "endChar": 50
+      },
+      "revId": "5eb4acc13d013c38741ee16a2463c2f1993eb3f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
