@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56073e3b_9ddf32c4",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 6042,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3118cbc7_3871c32f",
+      "range": {
+        "startLine": 6042,
+        "startChar": 132,
+        "endLine": 6042,
+        "endChar": 214
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5ce4af5_675d313a",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-06T04:41:51Z",
       "side": 1,
       "message": "See comments on previous patchsets on the shape of this.",
+      "range": {
+        "startLine": 6065,
+        "startChar": 0,
+        "endLine": 6065,
+        "endChar": 69
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83b5a57d_b15ef83b",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 6065,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:54:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c5ce4af5_675d313a",
       "range": {
         "startLine": 6065,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1547b937_1a1bc1df",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 18
+      },
+      "lineNbr": 6427,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:54:30Z",
+      "side": 1,
+      "message": "No, I don\u0027t believe so. Marking at @hide.",
+      "parentUuid": "449a7ad7_c0c4c29b",
+      "range": {
+        "startLine": 6427,
+        "startChar": 41,
+        "endLine": 6427,
+        "endChar": 69
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e7a1b21e_53fb0478",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9c648ae_10136068",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7a1b21e_53fb0478",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33b3d729_24e1b2f3",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-06T04:41:51Z",
       "side": 1,
       "message": "Use ?\n\nI think \"prefer\" suggests we might pick something else if available, which is not the behavior.",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 13
+      },
+      "revId": "2d97551cfb804c936db1fe61fa6a7a014f8cd044",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d63b8a49_01187207",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-07T05:54:30Z",
+      "side": 1,
+      "message": "Yep, works for me. I wasn\u0027t sure how strong of language we wanted to use here but I agree that what you suggest is better suited given the behavior.",
+      "parentUuid": "33b3d729_24e1b2f3",
       "range": {
         "startLine": 55,
         "startChar": 7,
