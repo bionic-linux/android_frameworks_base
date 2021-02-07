@@ -26,6 +26,7 @@ import static com.android.server.vcn.VcnTestUtils.setupSystemService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -52,6 +53,7 @@ import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.net.NetworkCapabilities.Transport;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnConfigTest;
@@ -70,7 +72,9 @@ import android.telephony.TelephonyManager;
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.android.internal.util.LocationPermissionChecker;
 import com.android.server.VcnManagementService.VcnSafemodeCallback;
+import com.android.server.VcnManagementService.VcnStatusCallbackInfo;
 import com.android.server.vcn.TelephonySubscriptionTracker;
 import com.android.server.vcn.Vcn;
 import com.android.server.vcn.VcnContext;
@@ -147,6 +151,8 @@ public class VcnManagementServiceTest {
             mock(PersistableBundleUtils.LockingReadWriteHelper.class);
     private final TelephonySubscriptionTracker mSubscriptionTracker =
             mock(TelephonySubscriptionTracker.class);
+    private final LocationPermissionChecker mLocationPermissionChecker =
+            mock(LocationPermissionChecker.class);
 
     private final ArgumentCaptor<VcnSafemodeCallback> mSafemodeCallbackCaptor =
             ArgumentCaptor.forClass(VcnSafemodeCallback.class);
@@ -155,6 +161,7 @@ public class VcnManagementServiceTest {
 
     private final IVcnUnderlyingNetworkPolicyListener mMockPolicyListener =
             mock(IVcnUnderlyingNetworkPolicyListener.class);
+    private final IVcnStatusCallback mMockStatusCallback = mock(IVcnStatusCallback.class);
     private final IBinder mMockIBinder = mock(IBinder.class);
 
     public VcnManagementServiceTest() throws Exception {
@@ -188,6 +195,9 @@ public class VcnManagementServiceTest {
         doReturn(mConfigReadWriteHelper)
                 .when(mMockDeps)
                 .newPersistableBundleLockingReadWriteHelper(any());
+        doReturn(mLocationPermissionChecker)
+                .when(mMockDeps)
+                .newLocationPermissionChecker(eq(mMockContext));
 
         // Setup VCN instance generation
         doAnswer((invocation) -> {
@@ -206,6 +216,7 @@ public class VcnManagementServiceTest {
         mVcnMgmtSvc = new VcnManagementService(mMockContext, mMockDeps);
 
         doReturn(mMockIBinder).when(mMockPolicyListener).asBinder();
+        doReturn(mMockIBinder).when(mMockStatusCallback).asBinder();
 
         // Make sure the profiles are loaded.
         mTestLooper.dispatchAll();
@@ -726,5 +737,44 @@ public class VcnManagementServiceTest {
 
         assertFalse(mVcnMgmtSvc.getAllVcns().get(TEST_UUID_1).isActive());
         verify(mMockPolicyListener).onPolicyChanged();
+    }
+
+    @Test
+    public void testRegisterVcnStatusCallback() throws Exception {
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, mMockStatusCallback, TEST_PACKAGE_NAME);
+
+        Map<IBinder, VcnStatusCallbackInfo> callbacks = mVcnMgmtSvc.getAllStatusCallbacks();
+        VcnStatusCallbackInfo cbInfo = callbacks.get(mMockIBinder);
+
+        assertNotNull(cbInfo);
+        assertEquals(TEST_UUID_1, cbInfo.getSubscriptionGroup());
+        assertEquals(mMockStatusCallback, cbInfo.getStatusCallback());
+        assertEquals(TEST_PACKAGE_NAME, cbInfo.getPackageName());
+        assertEquals(TEST_UID, cbInfo.getUid());
+        verify(mMockIBinder).linkToDeath(eq(cbInfo), anyInt());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRegisterVcnStatusCallbackDuplicate() {
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, mMockStatusCallback, TEST_PACKAGE_NAME);
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, mMockStatusCallback, TEST_PACKAGE_NAME);
+    }
+
+    @Test
+    public void testUnregisterVcnStatusCallback() {
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, mMockStatusCallback, TEST_PACKAGE_NAME);
+        Map<IBinder, VcnStatusCallbackInfo> callbacks = mVcnMgmtSvc.getAllStatusCallbacks();
+        VcnStatusCallbackInfo cbInfo = callbacks.get(mMockIBinder);
+
+        mVcnMgmtSvc.unregisterVcnStatusCallback(mMockStatusCallback);
+        assertTrue(mVcnMgmtSvc.getAllStatusCallbacks().isEmpty());
+        verify(mMockIBinder).unlinkToDeath(eq(cbInfo), anyInt());
+    }
+
+    @Test
+    public void testUnregisterVcnStatusCallbackNeverRegistered() {
+        mVcnMgmtSvc.unregisterVcnStatusCallback(mMockStatusCallback);
+
+        assertTrue(mVcnMgmtSvc.getAllStatusCallbacks().isEmpty());
     }
 }
