@@ -22,6 +22,7 @@ import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubsc
 import static java.util.Objects.requireNonNull;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -29,6 +30,7 @@ import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.IVcnManagementService;
+import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnUnderlyingNetworkPolicy;
@@ -54,6 +56,7 @@ import android.util.Slog;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
+import com.android.internal.util.LocationPermissionChecker;
 import com.android.server.vcn.TelephonySubscriptionTracker;
 import com.android.server.vcn.Vcn;
 import com.android.server.vcn.VcnContext;
@@ -147,6 +150,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull private final TelephonySubscriptionTracker mTelephonySubscriptionTracker;
     @NonNull private final VcnContext mVcnContext;
 
+    /** Can only be assigned when {@link #systemReady()} is called, since it uses AppOpsManager. */
+    @Nullable private LocationPermissionChecker mLocationPermissionChecker;
+
     @GuardedBy("mLock")
     @NonNull
     private final Map<ParcelUuid, VcnConfig> mConfigs = new ArrayMap<>();
@@ -168,6 +174,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull
     private final Map<IBinder, PolicyListenerBinderDeath> mRegisteredPolicyListeners =
             new ArrayMap<>();
+
+    @GuardedBy("mLock")
+    @NonNull
+    private final Map<IBinder, VcnStatusCallbackInfo> mRegisteredStatusCallbacks = new ArrayMap<>();
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     VcnManagementService(@NonNull Context context, @NonNull Dependencies deps) {
@@ -302,6 +312,11 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             // TODO(b/178501049): use the subId indicated by WifiInfo#getSubscriptionId
             return SubscriptionManager.INVALID_SUBSCRIPTION_ID;
         }
+
+        /** Creates a new LocationPermissionChecker for the provided Context. */
+        public LocationPermissionChecker newLocationPermissionChecker(@NonNull Context context) {
+            return new LocationPermissionChecker(context);
+        }
     }
 
     /** Notifies the VcnManagementService that external dependencies can be set up. */
@@ -309,6 +324,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         mContext.getSystemService(ConnectivityManager.class)
                 .registerNetworkProvider(mNetworkProvider);
         mTelephonySubscriptionTracker.register();
+        mLocationPermissionChecker = mDeps.newLocationPermissionChecker(mVcnContext.getContext());
     }
 
     private void enforcePrimaryUser() {
@@ -551,6 +567,14 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
     }
 
+    /** Get current VcnStatusCallbacks for testing purposes. */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public Map<IBinder, VcnStatusCallbackInfo> getAllStatusCallbacks() {
+        synchronized (mLock) {
+            return Collections.unmodifiableMap(mRegisteredStatusCallbacks);
+        }
+    }
+
     /** Binder death recipient used to remove a registered policy listener. */
     private class PolicyListenerBinderDeath implements Binder.DeathRecipient {
         @NonNull private final IVcnUnderlyingNetworkPolicyListener mListener;
@@ -670,6 +694,97 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         }
 
         return new VcnUnderlyingNetworkPolicy(false /* isTearDownRequested */, networkCapabilities);
+    }
+
+    /** Binder death recipient used to remove registered VcnStatusCallbacks. */
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    class VcnStatusCallbackInfo implements Binder.DeathRecipient {
+        @NonNull private final ParcelUuid mSubGroup;
+        @NonNull private final IVcnStatusCallback mCallback;
+        @NonNull private final String mPkgName;
+        private final int mUid;
+
+        private VcnStatusCallbackInfo(
+                @NonNull ParcelUuid subGroup,
+                @NonNull IVcnStatusCallback callback,
+                @NonNull String pkgName,
+                int uid) {
+            mSubGroup = subGroup;
+            mCallback = callback;
+            mPkgName = pkgName;
+            mUid = uid;
+        }
+
+        @NonNull
+        ParcelUuid getSubscriptionGroup() {
+            return mSubGroup;
+        }
+
+        @NonNull
+        IVcnStatusCallback getStatusCallback() {
+            return mCallback;
+        }
+
+        @NonNull
+        String getPackageName() {
+            return mPkgName;
+        }
+
+        int getUid() {
+            return mUid;
+        }
+
+        @Override
+        public void binderDied() {
+            Log.e(TAG, "app died without unregistering VcnStatusCallback");
+            unregisterVcnStatusCallback(mCallback);
+        }
+    }
+
+    /** Registers the provided callback for receiving VCN status updates. */
+    @Override
+    public void registerVcnStatusCallback(
+            @NonNull ParcelUuid subGroup,
+            @NonNull IVcnStatusCallback callback,
+            @NonNull String opPkgName) {
+        requireNonNull(subGroup, "subGroup must not be null");
+        requireNonNull(callback, "callback must not be null");
+        requireNonNull(opPkgName, "opPkgName must not be null");
+
+        final IBinder cbBinder = callback.asBinder();
+        final VcnStatusCallbackInfo cbInfo =
+                new VcnStatusCallbackInfo(
+                        subGroup, callback, opPkgName, mDeps.getBinderCallingUid());
+        synchronized (mLock) {
+            if (mRegisteredStatusCallbacks.containsKey(cbBinder)) {
+                throw new IllegalArgumentException(
+                        "Attempting to register a callback that is already in use");
+            }
+
+            mRegisteredStatusCallbacks.put(cbBinder, cbInfo);
+        }
+
+        try {
+            cbBinder.linkToDeath(cbInfo, 0 /* flags */);
+        } catch (RemoteException e) {
+            // Remote binder already died - cleanup registered Callback
+            cbInfo.binderDied();
+        }
+    }
+
+    /** Unregisters the provided callback from receiving future VCN status updates. */
+    @Override
+    public void unregisterVcnStatusCallback(@NonNull IVcnStatusCallback callback) {
+        requireNonNull(callback, "callback must not be null");
+
+        final IBinder cbBinder = callback.asBinder();
+        synchronized (mLock) {
+            VcnStatusCallbackInfo cbInfo = mRegisteredStatusCallbacks.remove(cbBinder);
+
+            if (cbInfo != null) {
+                cbBinder.unlinkToDeath(cbInfo, 0 /* flags */);
+            }
+        }
     }
 
     /** Callback for signalling when a Vcn has entered Safemode. */
