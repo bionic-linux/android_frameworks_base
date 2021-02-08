@@ -27,6 +27,7 @@ import android.annotation.TestApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.media.AudioDeviceInfo;
 import android.media.PlaybackParams;
 import android.net.Uri;
 import android.os.Binder;
@@ -59,6 +60,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 
 /**
@@ -2898,6 +2900,27 @@ public final class TvInputManager {
             try {
                 mInterface.overrideAudioSink(audioType, audioAddress, samplingRate, channelMask,
                         format);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        /**
+         * Override default audio sink from audio policy.
+         *
+         * @param device {@link android.media.AudioDeviceInfo} to use.
+         * @param samplingRate desired sampling rate. Use default when it's 0.
+         * @param channelMask desired channel mask. Use default when it's
+         *        AudioFormat.CHANNEL_OUT_DEFAULT.
+         * @param format desired format. Use default when it's AudioFormat.ENCODING_DEFAULT.
+         */
+        public void overrideAudioSinkWithDevice(@NonNull AudioDeviceInfo device, int samplingRate,
+                int channelMask, int format) {
+            Objects.requireNonNull(device);
+            try {
+                mInterface.overrideAudioSink(
+                        AudioDeviceInfo.convertDeviceTypeToInternalDevice(device.getType()),
+                        device.getAddress(), samplingRate, channelMask, format);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
