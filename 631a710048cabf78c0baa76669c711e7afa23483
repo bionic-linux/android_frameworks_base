@@ -278,6 +278,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34f3690e_d20f86c4",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:00:45Z",
+      "side": 1,
+      "message": "It is documented in detail in both NetworkProvider#offerNetwork and ConnectivityManager#offerNetwork, but it wasn\u0027t yet in the patchset where you originally made that comment.",
+      "parentUuid": "018fe306_7acca67a",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 30
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb4bf4c1_97ff9714",

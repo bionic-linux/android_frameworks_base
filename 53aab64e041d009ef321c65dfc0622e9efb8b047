@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6e9b627_7838248c",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkProvider.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:00:45Z",
+      "side": 1,
+      "message": "They don\u0027t need to, but it would be likely advantageous to do so.\n\nThe old design relied on NetworkFactories and they could only pass one filter. Because S avoids changes from the old code as much as possible, it inherits this and today they only file one offer that they use for all networks. That\u0027s why this is a TODO : expanding offers is not done yet, but if done it can help with the infinite loop problem we always had.",
+      "parentUuid": "7b7d0786_c9ac60c9",
+      "range": {
+        "startLine": 264,
+        "startChar": 72,
+        "endLine": 264,
+        "endChar": 82
+      },
+      "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0fc8490c_da287d4b",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a794066b_1fbc617c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6388,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:00:45Z",
+      "side": 1,
+      "message": "Yes. Thanks.",
+      "parentUuid": "0fc8490c_da287d4b",
+      "range": {
+        "startLine": 6388,
+        "startChar": 17,
+        "endLine": 6388,
+        "endChar": 18
+      },
+      "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e4dc909_3733522b",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-08T09:51:01Z",
       "side": 1,
       "message": "Question: What does null caps mean?\nDoes it means telephony can take all requests or it takes no request?",
+      "range": {
+        "startLine": 56,
+        "startChar": 28,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3113926_dfb5122f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:00:45Z",
+      "side": 1,
+      "message": "Null caps mean empty caps. Do you think I need to add a comment here ? I thought l.62 was pretty self-explanatory.",
+      "parentUuid": "1e4dc909_3733522b",
       "range": {
         "startLine": 56,
         "startChar": 28,
