@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bcd7511_f3cba11d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T14:31:40Z",
+      "side": 1,
+      "message": "NS07?",
+      "range": {
+        "startLine": 10,
+        "startChar": 47,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "6fd0ce693211e1b5fcb1c88eaeea04db4abd75ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db89de81_af873c9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T14:31:40Z",
+      "side": 1,
+      "message": "LGTM except hashCode and commit message",
+      "revId": "6fd0ce693211e1b5fcb1c88eaeea04db4abd75ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5151559_fdca14cf",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T14:31:40Z",
+      "side": 1,
+      "message": "I know this is fancy. But I don\u0027t think anyone else could fix it if it is not correct.\nCould we just use the old fashioned way e.g. Objects.hash()?",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 23
+      },
+      "revId": "6fd0ce693211e1b5fcb1c88eaeea04db4abd75ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
