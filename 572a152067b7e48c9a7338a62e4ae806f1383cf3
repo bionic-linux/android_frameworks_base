@@ -62,6 +62,24 @@
       "message": "/** @hide */",
       "revId": "572a152067b7e48c9a7338a62e4ae806f1383cf3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d89b85bf_94b6a4a1",
+        "filename": "core/java/android/bluetooth/BluetoothUuid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-02-08T16:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33db66dc_41edf3d0",
+      "revId": "572a152067b7e48c9a7338a62e4ae806f1383cf3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
