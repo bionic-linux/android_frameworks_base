@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c39c8da2_9e56c395",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 6561,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-08T16:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff6d9d09_551a0275",
+      "range": {
+        "startLine": 6561,
+        "startChar": 0,
+        "endLine": 6561,
+        "endChar": 70
+      },
+      "revId": "2f674979e5db9197e47626b71d4e0db8cac4eeaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2969f9c_b712ee9d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cb2c23b_4c1c1745",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-08T16:13:00Z",
+      "side": 1,
+      "message": "Simplified.",
+      "parentUuid": "c2969f9c_b712ee9d",
+      "range": {
+        "startLine": 96,
+        "startChar": 63,
+        "endLine": 96,
+        "endChar": 79
+      },
+      "revId": "2f674979e5db9197e47626b71d4e0db8cac4eeaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef772d5b_e585b0de",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-05T12:23:27Z",
       "side": 1,
       "message": "Did you write the comment but not actually implement it ?\n\nISTM the test works because the NC of this callback specify NOT_VPN, but it would be subject to the default network of the calling process – which is not what we want. Unfortunately you don\u0027t have the APIs to write a test for this just yet – coming up in the next few business days.\n\nAlso, I don\u0027t think it would be entirely correct – the request UIDs should not be set, but the requestor info should (package name and UID of the requestor app). This is useful for location permission for example, and while this is currently limited to very privileged callers, I wouldn\u0027t bet we won\u0027t open it to less privileged callers that should not see location-sensitive information, nor can I vouch for our code never depending on this being actually set so that it will allow some of the operations the privileged users of this need.",
+      "range": {
+        "startLine": 5748,
+        "startChar": 0,
+        "endLine": 5749,
+        "endChar": 52
+      },
+      "revId": "2f674979e5db9197e47626b71d4e0db8cac4eeaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc379b3_27aab306",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5749,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-08T16:13:00Z",
+      "side": 1,
+      "message": "Actually no special logic is necessary here. What ensures that (regular, per-app) default network callbacks prefer VPNs over the default network is that restrictRequestUidsForCallerAndSetRequestorInfo calls setSingleUid on the capabilities. That is already skipped if the caller is privileged. So I\u0027ve removed the comment.\n\nThat said - the fact that the code touches the capabilities so much creates the risk that future changes might break the equivalence between this request and the default request. I\u0027ve added a safety check against that.\n\nThe CTS tests in this topic do check that when a VPN applies to the user, the default network seen by this callback does not change, but the network seen by registerDefaultNetworkCallback does change.",
+      "parentUuid": "ef772d5b_e585b0de",
       "range": {
         "startLine": 5748,
         "startChar": 0,
