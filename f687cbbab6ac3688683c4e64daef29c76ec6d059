@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73dc71fb_0a18ef6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T03:36:20Z",
+      "side": 1,
+      "message": "It\u0027s 2021 ; not supporting utf-8 is ridiculous in this age. Anyone who doesn\u0027t is years late on their update. Generally it should really be okay to put non-ascii characters in code when it makes things easier to read now.",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "f687cbbab6ac3688683c4e64daef29c76ec6d059",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
