@@ -112,6 +112,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa0a68d6_64581255",
+        "filename": "core/java/android/net/INetworkOfferCallback.aidl",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T09:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad2758a_833458a3",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3536c8c9_4c674461",
@@ -220,6 +244,30 @@
       "side": 1,
       "message": "Sorry I was confused ; a provider can only register a callback once, because if they reuse the same callback that is an *update* of the offer.",
       "parentUuid": "62d7fc73_934665be",
+      "range": {
+        "startLine": 220,
+        "startChar": 16,
+        "endLine": 220,
+        "endChar": 30
+      },
+      "revId": "631a710048cabf78c0baa76669c711e7afa23483",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "018fe306_7acca67a",
+        "filename": "core/java/android/net/NetworkProvider.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T09:51:01Z",
+      "side": 1,
+      "message": "If so, that should be documented in the javadoc of offerNetwork?\nOr it is somewhere documented but I missed?",
+      "parentUuid": "f58ee8f4_7ae4b998",
       "range": {
         "startLine": 220,
         "startChar": 16,
