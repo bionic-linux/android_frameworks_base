@@ -16,6 +16,24 @@
       "message": "Add documentation why we need to use this class for empty array. I guess it saves some memory and for better performance.",
       "revId": "ff3ca13c28b9f3c6f1f44eea6c2740f9bc21415d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30eedcb1_c5646374",
+        "filename": "core/java/com/android/internal/util/EmptyArray.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2021-02-08T18:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97fa7d2e_fcd974bd",
+      "revId": "ff3ca13c28b9f3c6f1f44eea6c2740f9bc21415d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
