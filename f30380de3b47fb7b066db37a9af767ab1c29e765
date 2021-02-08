@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa33b268_5cb51507",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-08T23:23:30Z",
+      "side": 1,
+      "message": "Other than the naming question, no concerns. Let\u0027s engage Jean.",
+      "revId": "f30380de3b47fb7b066db37a9af767ab1c29e765",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f763d80_d954cacc",
@@ -38,6 +55,30 @@
       "side": 1,
       "message": "I thought so too. The linter disagreed with me. \n\nAfterwards, I found this in the API guidelines: go/android-api-guidelines#builder-method-naming",
       "parentUuid": "6f763d80_d954cacc",
+      "range": {
+        "startLine": 26122,
+        "startChar": 78,
+        "endLine": 26122,
+        "endChar": 83
+      },
+      "revId": "f30380de3b47fb7b066db37a9af767ab1c29e765",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b76d972d_831270fd",
+        "filename": "core/api/current.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 26122,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-08T23:23:30Z",
+      "side": 1,
+      "message": "As per offline discussion, I think it\u0027s worth sending an email to API council and asking about this. I think we might be hitting a situation that just isn\u0027t addressed (fully) in the guidelines. Meanwhile, let\u0027s discuss with jchalard.",
+      "parentUuid": "c888cdb7_87557e0e",
       "range": {
         "startLine": 26122,
         "startChar": 78,
