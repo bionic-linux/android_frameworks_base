@@ -2902,5 +2902,15 @@ public final class TvInputManager {
                 throw new RuntimeException(e);
             }
         }
+
+        public void overrideAudioSinkWithDeviceType(int deviceType, @Nullable String audioAddress,
+                int samplingRate, int channelMask, int format) {
+            try {
+                mInterface.overrideAudioSinkWithDeviceType(deviceType, audioAddress, samplingRate,
+                        channelMask, format);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

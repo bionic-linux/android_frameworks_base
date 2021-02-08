@@ -31,6 +31,7 @@ import android.hardware.hdmi.IHdmiControlService;
 import android.hardware.hdmi.IHdmiDeviceEventListener;
 import android.hardware.hdmi.IHdmiHotplugEventListener;
 import android.hardware.hdmi.IHdmiSystemAudioModeChangeListener;
+import android.media.AudioDeviceInfo;
 import android.media.AudioDevicePort;
 import android.media.AudioFormat;
 import android.media.AudioGain;
@@ -1156,6 +1157,13 @@ class TvInputHardwareManager implements TvInputHal.Callback {
 
                 updateAudioConfigLocked();
             }
+        }
+
+        @Override
+        public void overrideAudioSinkWithDeviceType(int deviceType, String audioAddress,
+                int samplingRate, int channelMask, int format) {
+            int audioType = AudioDeviceInfo.convertDeviceTypeToInternalDevice(deviceType);
+            overrideAudioSink(audioType, audioAddress, samplingRate, channelMask, format);
         }
 
         public void onMediaStreamVolumeChanged() {

@@ -55,4 +55,21 @@ interface ITvInputHardware {
      */
     void overrideAudioSink(int audioType, String audioAddress, int samplingRate, int channelMask,
             int format);
+
+    /**
+     * Override default audio sink from audio policy. When override is on, it is
+     * TvInputService's responsibility to adjust to audio configuration change
+     * (for example, when the audio sink becomes unavailable or more desirable
+     * audio sink is detected).
+     *
+     * @param deviceType one of AudioDeviceInfo.TYPE_* values. When it's * TYPE_UNKNOWN, override
+     *        becomes off.
+     * @param audioAddress audio address of the overriding device.
+     * @param samplingRate desired sampling rate. Use default when it's 0.
+     * @param channelMask desired channel mask. Use default when it's
+     *        AudioFormat.CHANNEL_OUT_DEFAULT.
+     * @param format desired format. Use default when it's AudioFormat.ENCODING_DEFAULT.
+     */
+    void overrideAudioSinkWithDeviceType(int deviceType, String audioAddress, int samplingRate,
+            int channelMask, int format);
 }
