@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a24f67e_ef23a3b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-08T09:57:30Z",
+      "side": 1,
+      "message": "CtsNetTestCases:ProxyInfoTest would be more appropriate since it\u0027s based on validate()",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "3414740fda223ae4acf90e2739d440c391e2f5f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
