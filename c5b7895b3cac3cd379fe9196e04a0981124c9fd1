@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ea3486b_9366008c",
+        "filename": "core/java/android/app/compat/CompatChanges.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-08T16:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec587062_44fed625",
+      "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cbba045_45f50288",
