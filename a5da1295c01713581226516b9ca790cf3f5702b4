@@ -51,6 +51,24 @@
       "parentUuid": "12ce38f0_3cdc9173",
       "revId": "a5da1295c01713581226516b9ca790cf3f5702b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f544ca31_abb1d63e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-02-08T18:05:46Z",
+      "side": 1,
+      "message": "After discussed with Jean, provide another way to test BatteryStatsManager#reportNetworkInterfaceForTransports, please refer to aosp/1475901",
+      "parentUuid": "9df1e96b_5ba9bfc0",
+      "revId": "a5da1295c01713581226516b9ca790cf3f5702b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
