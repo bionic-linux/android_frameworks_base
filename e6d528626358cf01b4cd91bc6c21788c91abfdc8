@@ -416,6 +416,30 @@
       },
       "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "704e8f71_0f4c0860",
+        "filename": "tests/net/common/java/android/net/NetworkScoreTest.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:00:35Z",
+      "side": 1,
+      "message": "In the test, iterated through all policy constants and made sure all of them returned a string that\u0027s neither null or empty. Does this address your concern ?",
+      "parentUuid": "f7dc4cd0_51c36c68",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 60
+      },
+      "revId": "e6d528626358cf01b4cd91bc6c21788c91abfdc8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
