@@ -121,6 +121,30 @@
       },
       "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ac962d8_11600031",
+        "filename": "core/java/com/android/internal/compat/IPlatformCompat.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-08T15:15:48Z",
+      "side": 1,
+      "message": "Uploaded in https://r.android.com/1580444",
+      "parentUuid": "b55ecd7f_6099da5b",
+      "range": {
+        "startLine": 151,
+        "startChar": 9,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "c5b7895b3cac3cd379fe9196e04a0981124c9fd1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
