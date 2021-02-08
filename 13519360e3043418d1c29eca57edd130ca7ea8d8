@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "256c93f6_00d88109",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2021-02-08T03:54:29Z",
+      "side": 1,
+      "message": "Hi Henry and Mikhail,\n\nPlease see this bug fix in ITvInputHardware.aidl for your review.\n\nKind regards,\nDean",
+      "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
