@@ -33,6 +33,24 @@
       "message": "Dean, the ITvInputHardware interface is also marked with \u0027@hide\u0027, same as the constants from AudioManager. I believe, the components that have access to ITvInputHardware should also have access to these constants.",
       "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c316168d_e4707a7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2021-02-08T23:12:57Z",
+      "side": 1,
+      "message": "Hi Mikhail, I think the situation is a bit different.\n\nMy vendor TvInputService app is doing:\n\n1. mTvInputManager \u003d (TvInputManager) context.getSystemService(Context.TV_INPUT_SERVICE);\n\n\u003d\u003e This uses Public SDK TvInputManager\n\n2. mHardware \u003d mTvInputManager.acquireTvInputHardware(mHdmiHwId, mTvInputInfo, mHardwareCallback);\n\n\u003d\u003e This uses SystemApi acquireTvInputHardware and returns a SystemApi Hardware\n\n3. mHardware.overrideAudioSinkWithDeviceType(AudioDeviceInfo.TYPE_BUS, \"\", 0, AudioFormat.CHANNEL_OUT_DEFAULT, AudioFormat.ENCODING_DEFAULT);\n\n\u003d\u003e the new interface overrideAudioSinkWithDeviceType is needed because the existing overrideAudioSink requires @hide (non SystemApi) arguments.\n\nI encountered the build error because requiring private platform access needs the LOCAL_PRIVATE_PLATFORM_APIS, but my vendor module also needs LOCAL_VENDOR_MODULE / LOCAL_PROPRIETARY_MODULE, and the build system does not allow both and causes the error in:\n\nhttps://cs.android.com/android/platform/superproject/+/master:build/make/core/sdk_check.mk;l\u003d31?q\u003dLOCAL_PRIVATE_PLATFORM_APIS\u0026ss\u003dandroid%2Fplatform%2Fsuperproject\n\nbecause the LOCAL_SDK_VERSION gets set automatically by the build system for vendor modules it seems.",
+      "parentUuid": "66b7956a_fd59cd4a",
+      "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
