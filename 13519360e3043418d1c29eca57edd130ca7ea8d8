@@ -16,6 +16,23 @@
       "message": "Hi Henry and Mikhail,\n\nPlease see this bug fix in ITvInputHardware.aidl for your review.\n\nKind regards,\nDean",
       "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66b7956a_fd59cd4a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-02-08T20:31:47Z",
+      "side": 1,
+      "message": "Dean, the ITvInputHardware interface is also marked with \u0027@hide\u0027, same as the constants from AudioManager. I believe, the components that have access to ITvInputHardware should also have access to these constants.",
+      "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
