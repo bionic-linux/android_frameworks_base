@@ -37,6 +37,41 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0709a00b_95bc3f5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-08T17:08:35Z",
+      "side": 1,
+      "message": "Thanks for quick review!",
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fed452c0_ddebf967",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-08T17:08:35Z",
+      "side": 1,
+      "message": "Hmm, I felt this was a cleaner way, especially for overrides that use multiple version ranges. It\u0027s unclear what would go to deferred in that case. Also feels like less moving back and forth between deferred and evaluated.",
+      "parentUuid": "b0bda9c4_3df79a7c",
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "173fd643_780fd591",
         "filename": "core/java/android/app/compat/PackageOverride.java",
         "patchSetId": 3
@@ -48,6 +83,30 @@
       "writtenOn": "2021-02-08T16:54:13Z",
       "side": 1,
       "message": "Maybe this is showing my ignorance, but it seems like you\u0027d have simpler checks (in `containsVersion` and `isOverlapping`) if you used Long.MIN_VALUE and Long.MAX_VALUE instead of null. I assume there are other good reasons to use null, though?",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 43
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "058e7c08_1d784af9",
+        "filename": "core/java/android/app/compat/PackageOverride.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-08T17:08:35Z",
+      "side": 1,
+      "message": "Yeah, I swayed back and forth, will change to MIN, MAX.",
+      "parentUuid": "173fd643_780fd591",
       "range": {
         "startLine": 124,
         "startChar": 8,
@@ -104,6 +163,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37f60908_239adf63",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-08T17:08:35Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure if the platform actually enforces non-negative version numbers, so i felt I wanted to play it safe. I\u0027ll switch away from null, it just adds complexity for no gain.",
+      "parentUuid": "ed9b4d91_abb761a2",
+      "range": {
+        "startLine": 363,
+        "startChar": 20,
+        "endLine": 365,
+        "endChar": 89
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6aa0f830_a6b162df",
@@ -117,6 +200,30 @@
       "writtenOn": "2021-02-08T16:54:13Z",
       "side": 1,
       "message": "These changes need to be reflected in CTS as well http://cs/android/cts/hostsidetests/appcompat/host/lib/src/android/compat/cts/Change.java (for parsing from toString and from XML)",
+      "range": {
+        "startLine": 410,
+        "startChar": 8,
+        "endLine": 414,
+        "endChar": 63
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f1e0596_773083bb",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-08T17:08:35Z",
+      "side": 1,
+      "message": "Thanks, will look into that next. What\u0027s the set of tests you run on CTS?",
+      "parentUuid": "6aa0f830_a6b162df",
       "range": {
         "startLine": 410,
         "startChar": 8,
