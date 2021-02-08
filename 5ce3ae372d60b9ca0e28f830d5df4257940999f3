@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f11fc3ff_e969f98d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T12:46:09Z",
+      "side": 1,
+      "message": "Question: do we want to Log.wtf if any agent tries to do that?",
+      "range": {
+        "startLine": 2853,
+        "startChar": 24,
+        "endLine": 2853,
+        "endChar": 28
+      },
+      "revId": "5ce3ae372d60b9ca0e28f830d5df4257940999f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51afc5e2_7aa4fe9b",
+        "filename": "services/core/java/com/android/server/connectivity/InternalScore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T12:46:09Z",
+      "side": 1,
+      "message": "Should these be keeped at NetworkScore since you\u0027ll put agent managed policies there?\nOr maybe put them together in a common class?",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "5ce3ae372d60b9ca0e28f830d5df4257940999f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c1cffb9_bac6cdc1",
+        "filename": "services/core/java/com/android/server/connectivity/InternalScore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T12:46:09Z",
+      "side": 1,
+      "message": "Is it better to make them share a base class to put the common things in that class?\nIIUC they could be policies, range constants, getLegacyInt, toString, mPolicy, hasPolicy.",
+      "range": {
+        "startLine": 152,
+        "startChar": 15,
+        "endLine": 152,
+        "endChar": 27
+      },
+      "revId": "5ce3ae372d60b9ca0e28f830d5df4257940999f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
