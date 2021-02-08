@@ -4687,6 +4687,7 @@ package android.media.tv {
 
   public static final class TvInputManager.Hardware {
     method public void overrideAudioSink(int, String, int, int, int);
+    method public void overrideAudioSinkWithDevice(@Nullable android.media.AudioDeviceInfo, int, int, int);
     method public void setStreamVolume(float);
     method public boolean setSurface(android.view.Surface, android.media.tv.TvStreamConfig);
   }
