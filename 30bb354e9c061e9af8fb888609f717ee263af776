@@ -72,6 +72,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2f287cc2_743c3e28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-08T17:19:07Z",
+      "side": 1,
+      "message": "Fair enough, sounds good.",
+      "parentUuid": "fed452c0_ddebf967",
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "173fd643_780fd591",
         "filename": "core/java/android/app/compat/PackageOverride.java",
         "patchSetId": 3
@@ -229,6 +247,53 @@
         "startChar": 8,
         "endLine": 414,
         "endChar": 63
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fc51618_c7e65570",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-08T17:19:07Z",
+      "side": 1,
+      "message": "The affected test is http://cs/android/cts/hostsidetests/appcompat/compatchanges/src/com/android/cts/appcompat/CompatChangesValidConfigTest.java , but I usually run the full\n`atest CtsAppCompatHostTestCases`",
+      "parentUuid": "8f1e0596_773083bb",
+      "range": {
+        "startLine": 410,
+        "startChar": 8,
+        "endLine": 414,
+        "endChar": 63
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70d08e88_23971222",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-08T17:19:07Z",
+      "side": 1,
+      "message": "I assume the package manager would prevent users from directly upgrading from debuggable build to a regular one already, so this check is pretty superfluous. Wanted to be rather safe than sorry.",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 434,
+        "endChar": 84
       },
       "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
