@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c4f7100_7849dc5c",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-08T21:20:04Z",
+      "side": 1,
+      "message": "I think we\u0027ll need to do permission checks as well. Perhaps pull in and use the LocationPermissionChecker?",
+      "range": {
+        "startLine": 791,
+        "startChar": 0,
+        "endLine": 794,
+        "endChar": 21
+      },
+      "revId": "1df16e1d4e75b3894348fc2ef8ed00df7954c5b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
