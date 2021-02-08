@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "065e3029_db435d2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:03:58Z",
+      "side": 1,
+      "message": "Gerrit bug : I need to add some comment",
+      "revId": "ce00fc985bdfc16d20ad4514e7b8b7130cba15c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
