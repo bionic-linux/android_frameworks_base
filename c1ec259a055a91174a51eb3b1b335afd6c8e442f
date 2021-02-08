@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05fc86b4_e598e33f",
+        "filename": "services/core/java/com/android/server/connectivity/InternalScore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:00:25Z",
+      "side": 1,
+      "message": "I think the reason I named it like this is because it will never be exposed in the future – it must not, structurally.\n\nBut point taken about the name having to reflect the functionality rather than the scope. Renamed to FullScore.",
+      "parentUuid": "76fe673d_97aa5744",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "c1ec259a055a91174a51eb3b1b335afd6c8e442f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db63c5b5_8700d25a",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-08T10:15:28Z",
       "side": 1,
       "message": "Similar to mUidRules, the variable contains multiple policies, so IIUC this should be mPolicies?",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "c1ec259a055a91174a51eb3b1b335afd6c8e442f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bff76365_10ca2789",
+        "filename": "services/core/java/com/android/server/connectivity/InternalScore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:00:25Z",
+      "side": 1,
+      "message": "Either is correct English-wise (either each bit is a policy, or you consider the policy to be the sum total of it). Made it mPolicies.",
+      "parentUuid": "db63c5b5_8700d25a",
       "range": {
         "startLine": 40,
         "startChar": 23,
