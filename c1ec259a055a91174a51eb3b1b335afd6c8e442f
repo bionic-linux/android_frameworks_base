@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76fe673d_97aa5744",
+        "filename": "services/core/java/com/android/server/connectivity/InternalScore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T10:15:28Z",
+      "side": 1,
+      "message": "I don\u0027t really like the naming because if it has to be exposed in future we\u0027ll need an effort for renaming. To me the class name should reflect the functionality instead of scope, because scope might change over time.\nHow about FullScore, AssessedScore, ProspectiveScore?\n\nBut for now the name is clear enough, and we can change that in any time.\nFeel free to keep it as is.",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "c1ec259a055a91174a51eb3b1b335afd6c8e442f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db63c5b5_8700d25a",
+        "filename": "services/core/java/com/android/server/connectivity/InternalScore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T10:15:28Z",
+      "side": 1,
+      "message": "Similar to mUidRules, the variable contains multiple policies, so IIUC this should be mPolicies?",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "c1ec259a055a91174a51eb3b1b335afd6c8e442f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
