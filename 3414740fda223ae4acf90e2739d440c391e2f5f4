@@ -22,6 +22,30 @@
       },
       "revId": "3414740fda223ae4acf90e2739d440c391e2f5f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e99f0ca_1aec2260",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-08T10:26:05Z",
+      "side": 1,
+      "message": "Verified and message updated to add CtsNetTestCases:ProxyInfoTest",
+      "parentUuid": "8a24f67e_ef23a3b0",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "3414740fda223ae4acf90e2739d440c391e2f5f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
