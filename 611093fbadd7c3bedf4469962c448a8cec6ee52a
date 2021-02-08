@@ -70,6 +70,30 @@
       },
       "revId": "611093fbadd7c3bedf4469962c448a8cec6ee52a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5017a4e_ee39c431",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13761,
+      "author": {
+        "id": 1120612
+      },
+      "writtenOn": "2021-02-08T20:13:25Z",
+      "side": 1,
+      "message": "Added the comment at the lostRam calculation, thank you!",
+      "parentUuid": "e6aebbfb_53aaefde",
+      "range": {
+        "startLine": 13761,
+        "startChar": 27,
+        "endLine": 13761,
+        "endChar": 46
+      },
+      "revId": "611093fbadd7c3bedf4469962c448a8cec6ee52a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
