@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99ef4c1b_7145816e",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-08T13:15:27Z",
+      "side": 1,
+      "message": "Stupid Question: why?\nStill don\u0027t understand the connection between them here.\nIIUC it should be used somewhere, but I cannot find it in later pathes.\nCan you kindly help to point out?",
+      "range": {
+        "startLine": 871,
+        "startChar": 56,
+        "endLine": 872,
+        "endChar": 46
+      },
+      "revId": "cba029e28e66bf8ab7aac73b288aa2a34cc4703a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
