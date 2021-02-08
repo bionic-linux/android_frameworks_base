@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c65eb5e3_a2e63444",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-08T15:03:15Z",
+      "side": 1,
+      "message": "Gerrit bug : I need to add some comment",
+      "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b7d0786_c9ac60c9",
