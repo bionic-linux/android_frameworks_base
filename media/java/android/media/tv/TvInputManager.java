@@ -27,6 +27,7 @@ import android.annotation.TestApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.media.AudioDeviceInfo;
 import android.media.PlaybackParams;
 import android.net.Uri;
 import android.os.Binder;
@@ -2898,6 +2899,17 @@ public final class TvInputManager {
             try {
                 mInterface.overrideAudioSink(audioType, audioAddress, samplingRate, channelMask,
                         format);
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public void overrideAudioSinkWithDevice(@Nullable AudioDeviceInfo device, int samplingRate,
+                int channelMask, int format) {
+            try {
+                mInterface.overrideAudioSink(
+                        AudioDeviceInfo.convertDeviceTypeToInternalDevice(device.getType()),
+                        device.getAddress(), samplingRate, channelMask, format);
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
