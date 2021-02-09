@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da0f5d3b_2b7755bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121894
+      },
+      "writtenOn": "2021-02-09T17:32:39Z",
+      "side": 1,
+      "message": "FYI: presubmit properly ran the test on device (as part of test mapping) and on host side (as part of suite/host-unit-tests) which confirms the change worked.",
+      "revId": "91e0330153c8d67e3eb1ae85a047dff54096ad5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
