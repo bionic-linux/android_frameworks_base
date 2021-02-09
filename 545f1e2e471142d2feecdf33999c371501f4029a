@@ -81,6 +81,24 @@
       "parentUuid": "145031a7_c95206fd",
       "revId": "545f1e2e471142d2feecdf33999c371501f4029a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d8c8178_9f2e2f3d",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-02-09T01:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25029755_f369e116",
+      "revId": "545f1e2e471142d2feecdf33999c371501f4029a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
