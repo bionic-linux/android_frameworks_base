@@ -135,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad57063e_da8cea16",
+        "filename": "core/java/android/app/compat/PackageOverride.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-09T13:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "058e7c08_1d784af9",
+      "range": {
+        "startLine": 124,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 43
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71fd76ce_b2e2771d",
@@ -148,6 +172,30 @@
       "writtenOn": "2021-02-08T16:54:13Z",
       "side": 1,
       "message": "Are these checks necessary?\nYou could probably just make them null if equal to the extremes.",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 44
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b7019b1_c5ea00d1",
+        "filename": "core/java/android/app/compat/PackageOverride.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-09T13:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71fd76ce_b2e2771d",
       "range": {
         "startLine": 136,
         "startChar": 12,
@@ -278,6 +326,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "53626973_b46c1573",
+        "filename": "services/core/java/com/android/server/compat/CompatChange.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-09T13:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fc51618_c7e65570",
+      "range": {
+        "startLine": 410,
+        "startChar": 8,
+        "endLine": 414,
+        "endChar": 63
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "70d08e88_23971222",
         "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
         "patchSetId": 3
@@ -289,6 +361,30 @@
       "writtenOn": "2021-02-08T17:19:07Z",
       "side": 1,
       "message": "I assume the package manager would prevent users from directly upgrading from debuggable build to a regular one already, so this check is pretty superfluous. Wanted to be rather safe than sorry.",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 434,
+        "endChar": 84
+      },
+      "revId": "30bb354e9c061e9af8fb888609f717ee263af776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96c20d43_bff1f336",
+        "filename": "services/tests/servicestests/src/com/android/server/compat/CompatConfigTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-09T13:47:18Z",
+      "side": 1,
+      "message": "Removed this comment. It was there because in an earlier iteration the test was failing, but all good now.",
+      "parentUuid": "70d08e88_23971222",
       "range": {
         "startLine": 434,
         "startChar": 0,
