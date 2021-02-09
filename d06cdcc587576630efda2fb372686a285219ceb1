@@ -70,6 +70,24 @@
       "parentUuid": "1507a805_7f87a615",
       "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef2228b5_b2e482fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-02-09T18:29:41Z",
+      "side": 1,
+      "message": "Yeah, Jeff replied on an email. Quoted inline\n\"\"\"\nAs an alternative idea, here\u0027s one design pattern we\u0027ve used elsewhere in CTS to use a \"cmd\" to force-set a package name for testing purposes:\n\nhttps://cs.android.com/android/platform/superproject/+/master:cts/tests/tests/telephony/current/src/android/telephony/cts/SubscriptionManagerTest.java;l\u003d945;drc\u003dmaster;bpv\u003d0;bpt\u003d1\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/net/NetworkPolicyManagerShellCommand.java;l\u003d141?q\u003dsub-plan-owner\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/net/NetworkPolicyManagerService.java;l\u003d3471\n\nThat design pattern enables CTS to pivot to side-loaded APK while the core design still remains secure, since the underlying method protects itself by requiring the caller (CTS) hold a tangentially relevant permission which AID_SHELL already holds for other reasons.\n\"\"\"\n\nI believe in our particular case, we need to preserve this setting across reboot. B/c we need to use the test app for unlock. So we cannot use LSS\u0027s in-memory storage. And a system property is better than the LSS\u0027s no disk storage in terms of security. What do you think?",
+      "parentUuid": "14dad709_351df8d0",
+      "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
