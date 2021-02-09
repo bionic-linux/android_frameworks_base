@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce2fcade_dbd2f77d",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2394,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-02-09T22:30:35Z",
+      "side": 1,
+      "message": "Any reason this function can\u0027t just be part of LockSettingsShellCommand and have to be passed in ? Is it due to visibility of PROP_ROR_PROVIDER_PACKAGE ?\n\nThis pattern is a bit weird.",
+      "range": {
+        "startLine": 2385,
+        "startChar": 1,
+        "endLine": 2394,
+        "endChar": 0
+      },
+      "revId": "cdf44ec3da19e9e9157bf1f3703a2de0309cab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2b9d66b_80ecfcf8",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2401,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-02-09T22:30:35Z",
+      "side": 1,
+      "message": "nit: not clear what the comment means.",
+      "range": {
+        "startLine": 2401,
+        "startChar": 0,
+        "endLine": 2401,
+        "endChar": 56
+      },
+      "revId": "cdf44ec3da19e9e9157bf1f3703a2de0309cab58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
