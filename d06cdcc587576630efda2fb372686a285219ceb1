@@ -52,6 +52,24 @@
       "parentUuid": "4e2c9503_b07a279b",
       "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14dad709_351df8d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-09T13:04:40Z",
+      "side": 1,
+      "message": "Can you point me to Jeff\u0027s comment? I still think system property is an over-kill here, since you would need to add selinux policy, consider API implications for new system property, for something that\u0027s purely produced and consumed within LSS",
+      "parentUuid": "1507a805_7f87a615",
+      "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
