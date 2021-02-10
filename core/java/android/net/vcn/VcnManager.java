@@ -17,7 +17,9 @@ package android.net.vcn;
 
 import static java.util.Objects.requireNonNull;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemService;
 import android.content.Context;
@@ -31,6 +33,8 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -267,6 +271,49 @@ public class VcnManager {
         }
     }
 
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+        GATEWAY_CONNECTION_ERROR_INTERNAL_FAILURE,
+        GATEWAY_CONNECTION_ERROR_AUTHENTICATION_FAILED,
+        GATEWAY_CONNECTION_ERROR_GATEWAY_CONNECTION_DIED,
+        GATEWAY_CONNECTION_ERROR_DNS_FAILURE
+    })
+    public @interface GatewayConnectionError {}
+
+    /**
+     * Value indicating that an internal failure occurred in the specified Gateway Connection.
+     *
+     * @hide
+     */
+    public static final int GATEWAY_CONNECTION_ERROR_INTERNAL_FAILURE = 1;
+
+    /**
+     * Value indicating that an authentication failure occurred when establishing the specified
+     * Gateway Connection.
+     *
+     * @hide
+     */
+    public static final int GATEWAY_CONNECTION_ERROR_AUTHENTICATION_FAILED = 2;
+
+    /**
+     * Value indicating that the specified Gateway Connection died unexpectedly.
+     *
+     * <p>This may be caused by external events such as network failures or server-requested
+     * teardowns.
+     *
+     * @hide
+     */
+    public static final int GATEWAY_CONNECTION_ERROR_GATEWAY_CONNECTION_DIED = 3;
+
+    /**
+     * Value indicating that the specified Gateway Connection was unable to resolve the connection's
+     * host name.
+     *
+     * @hide
+     */
+    public static final int GATEWAY_CONNECTION_ERROR_DNS_FAILURE = 4;
+
     // TODO: make VcnStatusCallback @SystemApi
     /**
      * VcnStatusCallback is the interface for Carrier apps to receive updates for their VCNs.
@@ -290,6 +337,24 @@ public class VcnManager {
          * via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
          */
         public abstract void onEnteredSafeMode();
+
+        /**
+         * Invoked when a VCN Gateway Connection corresponding to this callback's subscription
+         * encounters an error.
+         *
+         * @param gatewayNetworkCapabilities an array of underlying NetworkCapabilities for the
+         *     Gateway Connection that encountered the error for identification purposes. These will
+         *     be a sorted list with no duplicates, matching one of the {@link
+         *     VcnGatewayConnectionConfig}s set in the {@link VcnConfig} for this subscription
+         *     group.
+         * @param errorType the {@link GatewayConnectionError} type that occurred
+         * @param message a description of the error that occurred, or null if no description is
+         *     provided
+         */
+        public abstract void onGatewayConnectionError(
+                @NonNull int[] gatewayNetworkCapabilities,
+                @GatewayConnectionError int errorType,
+                @Nullable String message);
     }
 
     /**
@@ -384,11 +449,12 @@ public class VcnManager {
      *
      * @hide
      */
-    private class VcnStatusCallbackBinder extends IVcnStatusCallback.Stub {
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static class VcnStatusCallbackBinder extends IVcnStatusCallback.Stub {
         @NonNull private final Executor mExecutor;
         @NonNull private final VcnStatusCallback mCallback;
 
-        private VcnStatusCallbackBinder(
+        public VcnStatusCallbackBinder(
                 @NonNull Executor executor, @NonNull VcnStatusCallback callback) {
             mExecutor = executor;
             mCallback = callback;
@@ -397,6 +463,17 @@ public class VcnManager {
         @Override
         public void onEnteredSafeMode() {
             mExecutor.execute(() -> mCallback.onEnteredSafeMode());
+        }
+
+        @Override
+        public void onGatewayConnectionError(
+                @NonNull int[] gatewayNetworkCapabilities,
+                @GatewayConnectionError int errorType,
+                @Nullable String message) {
+            mExecutor.execute(
+                    () ->
+                            mCallback.onGatewayConnectionError(
+                                    gatewayNetworkCapabilities, errorType, message));
         }
     }
 }

@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -33,6 +34,7 @@ import android.content.Context;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
 import android.net.vcn.VcnManager.VcnStatusCallback;
+import android.net.vcn.VcnManager.VcnStatusCallbackBinder;
 import android.net.vcn.VcnManager.VcnUnderlyingNetworkPolicyListener;
 import android.os.ParcelUuid;
 
@@ -45,7 +47,11 @@ import java.util.concurrent.Executor;
 
 public class VcnManagerTest {
     private static final ParcelUuid SUB_GROUP = new ParcelUuid(new UUID(0, 0));
+    private static final int[] UNDERLYING_NETWORK_CAPABILITIES = {
+        NetworkCapabilities.NET_CAPABILITY_IMS, NetworkCapabilities.NET_CAPABILITY_INTERNET
+    };
     private static final Executor INLINE_EXECUTOR = Runnable::run;
+    private static final String ERROR_MSG = "error-msg";
 
     private IVcnManagementService mMockVcnManagementService;
     private VcnUnderlyingNetworkPolicyListener mMockPolicyListener;
@@ -144,14 +150,8 @@ public class VcnManagerTest {
     public void testRegisterVcnStatusCallback() throws Exception {
         mVcnManager.registerVcnStatusCallback(SUB_GROUP, INLINE_EXECUTOR, mMockStatusCallback);
 
-        ArgumentCaptor<IVcnStatusCallback> captor =
-                ArgumentCaptor.forClass(IVcnStatusCallback.class);
         verify(mMockVcnManagementService)
-                .registerVcnStatusCallback(eq(SUB_GROUP), captor.capture(), any());
-
-        IVcnStatusCallback callbackWrapper = captor.getValue();
-        callbackWrapper.onEnteredSafeMode();
-        verify(mMockStatusCallback).onEnteredSafeMode();
+                .registerVcnStatusCallback(eq(SUB_GROUP), notNull(), any());
     }
 
     @Test(expected = IllegalStateException.class)
@@ -194,5 +194,24 @@ public class VcnManagerTest {
     @Test(expected = NullPointerException.class)
     public void testUnregisterNullVcnStatusCallback() throws Exception {
         mVcnManager.unregisterVcnStatusCallback(null);
+    }
+
+    @Test
+    public void testVcnStatusCallbackBinder() throws Exception {
+        IVcnStatusCallback cbBinder =
+                new VcnStatusCallbackBinder(INLINE_EXECUTOR, mMockStatusCallback);
+
+        cbBinder.onEnteredSafeMode();
+        verify(mMockStatusCallback).onEnteredSafeMode();
+
+        cbBinder.onGatewayConnectionError(
+                UNDERLYING_NETWORK_CAPABILITIES,
+                VcnManager.GATEWAY_CONNECTION_ERROR_AUTHENTICATION_FAILED,
+                ERROR_MSG);
+        verify(mMockStatusCallback)
+                .onGatewayConnectionError(
+                        eq(UNDERLYING_NETWORK_CAPABILITIES),
+                        eq(VcnManager.GATEWAY_CONNECTION_ERROR_AUTHENTICATION_FAILED),
+                        eq(ERROR_MSG));
     }
 }
