@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52051663_e1f6553c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T14:18:33Z",
+      "side": 1,
+      "message": "Awesome, yet another gerrit bug, now I have to add yet another comment for nothing",
+      "revId": "0266dbcf9b2ce4c703da6c90be85abb41ebba5d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
