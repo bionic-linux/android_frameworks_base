@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03116d67_767eeae4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 5813,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T02:04:29Z",
+      "side": 1,
+      "message": "I think you can actually afford to throw ISE or something. This is something that we\u0027d want to reboot the device over.",
+      "range": {
+        "startLine": 5813,
+        "startChar": 12,
+        "endLine": 5813,
+        "endChar": 19
+      },
+      "revId": "20987c31752267ba4ebd87cc252d5bb57fd13a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "952a9055_607bec26",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T02:04:29Z",
+      "side": 1,
+      "message": "Considering this in fact does affect the behavior of some of the internals, do we want to test separately for processes with and without NETWORK_SETTINGS ? This could become a helper method taking a boolean determining whether to grant NETWORK_SETTINGS. It might be a bit intrusive, but it may be worth it in terms of coverage.",
+      "range": {
+        "startLine": 3652,
+        "startChar": 8,
+        "endLine": 3654,
+        "endChar": 36
+      },
+      "revId": "20987c31752267ba4ebd87cc252d5bb57fd13a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b31a5552_6f8dea69",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 6161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T02:04:29Z",
+      "side": 1,
+      "message": "The same applies here",
+      "range": {
+        "startLine": 6161,
+        "startChar": 24,
+        "endLine": 6161,
+        "endChar": 37
+      },
+      "revId": "20987c31752267ba4ebd87cc252d5bb57fd13a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
