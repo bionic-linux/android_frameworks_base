@@ -6219,6 +6219,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     /**
+     * Determine if default network callbacks are needed for the given nri.
+     * @param nri the nri to check with only per-app default nris needing this support currently.
+     * @param nai the nai to check against.
+     * @return true if the given nri is a per-app default that needs default network callbacks sent.
+     */
+    private boolean isPerAppDefaultCallbackNeeded(@NonNull final NetworkRequestInfo nri,
+            @NonNull final NetworkAgentInfo nai) {
+        return (isPerAppDefaultRequest(nri)
+                && nai.networkCapabilities.deduceRestrictedCapability());
+    }
+
+    /**
      * Determine if an nri is a managed default request that disallows default networking.
      * @param nri the request to evaluate
      * @return true if device-default networking is disallowed
@@ -7794,10 +7806,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
             sendUpdatedScoreToFactories(event);
 
             if (null != event.mNewNetwork) {
-                notifyNetworkAvailable(event.mNewNetwork, event.mNetworkRequestInfo);
+                notifyNetworkAvailableForDefault(event.mNewNetwork, event.mNetworkRequestInfo);
             } else {
-                callCallbackForRequest(event.mNetworkRequestInfo, event.mOldNetwork,
-                        ConnectivityManager.CALLBACK_LOST, 0);
+                notifyNetworkLostForDefault(event.mOldNetwork, event.mNetworkRequestInfo);
             }
         }
 
@@ -8115,6 +8126,58 @@ public class ConnectivityService extends IConnectivityManager.Stub
         sendUpdatedScoreToFactories(nai);
     }
 
+    protected void notifyNetworkAvailableForDefault(@NonNull final NetworkAgentInfo nai,
+            @NonNull final NetworkRequestInfo nri) {
+        if (!isPerAppDefaultCallbackNeeded(nri, nai)) {
+            notifyNetworkAvailable(nai, nri);
+            return;
+        }
+
+        final ArraySet<NetworkRequestInfo> nris = getTrackDefaultNrisForUids(nri.getUids());
+        notifyNetworkAvailable(nai, nris);
+    }
+
+    protected void notifyNetworkLostForDefault(@NonNull final NetworkAgentInfo nai,
+            @NonNull final NetworkRequestInfo nri) {
+        if (!isPerAppDefaultCallbackNeeded(nri, nai)) {
+            callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_LOST, 0);
+            return;
+        }
+
+        final ArraySet<NetworkRequestInfo> nris = getTrackDefaultNrisForUids(nri.getUids());
+        notifyNetworkLost(nai, nris);
+    }
+
+    private ArraySet<NetworkRequestInfo> getTrackDefaultNrisForUids(
+            @NonNull final Set<UidRange> uids) {
+        final ArraySet<NetworkRequestInfo> nris = new ArraySet<>();
+        for (final Map.Entry<NetworkRequest, NetworkRequestInfo> entry
+                : mNetworkRequests.entrySet()) {
+            final NetworkRequest key = entry.getKey();
+            final NetworkRequestInfo value = entry.getValue();
+            if (NetworkRequest.Type.TRACK_DEFAULT != key.type
+                    && key.networkCapabilities.getUids() != uids) {
+                continue;
+            }
+            nris.add(value);
+        }
+        return nris;
+    }
+
+    protected void notifyNetworkAvailable(@NonNull final NetworkAgentInfo nai,
+            @NonNull final Set<NetworkRequestInfo> nris) {
+        for (final NetworkRequestInfo nri : nris) {
+            notifyNetworkAvailable(nai, nri);
+        }
+    }
+
+    protected void notifyNetworkLost(@NonNull final NetworkAgentInfo nai,
+            @NonNull final Set<NetworkRequestInfo> nris) {
+        for (final NetworkRequestInfo nri : nris) {
+            callCallbackForRequest(nri, nai, ConnectivityManager.CALLBACK_LOST, 0);
+        }
+    }
+
     // Notify only this one new request of the current state. Transfer all the
     // current state by calling NetworkCapabilities and LinkProperties callbacks
     // so that callers can be guaranteed to have as close to atomicity in state
@@ -8253,19 +8316,29 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    protected void notifyNetworkCallbacks(NetworkAgentInfo networkAgent, int notifyType, int arg1) {
+    protected void notifyNetworkCallbacks(
+            @NonNull final NetworkAgentInfo nai, final int notifyType, final int arg1) {
         if (VDBG || DDBG) {
-            String notification = ConnectivityManager.getCallbackName(notifyType);
-            log("notifyType " + notification + " for " + networkAgent.toShortString());
+            final String notification = ConnectivityManager.getCallbackName(notifyType);
+            log("notifyType " + notification + " for " + nai.toShortString());
         }
-        for (int i = 0; i < networkAgent.numNetworkRequests(); i++) {
-            NetworkRequest nr = networkAgent.requestAt(i);
-            NetworkRequestInfo nri = mNetworkRequests.get(nr);
-            if (VDBG) log(" sending notification for " + nr);
+
+        final ArraySet<NetworkRequestInfo> nris = new ArraySet<>();
+        for (int i = 0; i < nai.numNetworkRequests(); i++) {
+            final NetworkRequestInfo nri = mNetworkRequests.get(nai.requestAt(i));
+            if (!isPerAppDefaultCallbackNeeded(nri, nai)) {
+                nris.add(nri);
+                continue;
+            }
+            nris.addAll(getTrackDefaultNrisForUids(nri.getUids()));
+        }
+
+        for (final NetworkRequestInfo nri : nris) {
+            if (VDBG) log(" sending notification for " + nri.mRequests.get(0));
             if (nri.mPendingIntent == null) {
-                callCallbackForRequest(nri, networkAgent, notifyType, arg1);
+                callCallbackForRequest(nri, nai, notifyType, arg1);
             } else {
-                sendPendingIntentForRequest(nri, networkAgent, notifyType);
+                sendPendingIntentForRequest(nri, nai, notifyType);
             }
         }
     }
