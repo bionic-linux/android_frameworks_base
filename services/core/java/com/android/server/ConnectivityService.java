@@ -247,6 +247,7 @@ import java.util.SortedSet;
 import java.util.StringJoiner;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @hide
@@ -3652,10 +3653,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void handleRegisterNetworkRequest(@NonNull final NetworkRequestInfo nri) {
-        handleRegisterNetworkRequest(Collections.singletonList(nri));
+        registerNetworkRequests(Collections.singleton(nri));
     }
 
-    private void handleRegisterNetworkRequest(@NonNull final List<NetworkRequestInfo> nris) {
+    private void registerNetworkRequests(@NonNull final Set<NetworkRequestInfo> nris) {
         ensureRunningOnConnectivityServiceThread();
         for (final NetworkRequestInfo nri : nris) {
             mNetworkRequestInfoLogs.log("REGISTER " + nri);
@@ -3786,7 +3787,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private NetworkRequestInfo getNriForAppRequest(
             NetworkRequest request, int callingUid, String requestedOperation) {
-        final NetworkRequestInfo nri = mNetworkRequests.get(request);
+        // Check mNetworkRequests first and if that is null, then check to see if this is a per-app
+        // tracked network request.
+        final NetworkRequestInfo nri = mNetworkRequests.get(request) != null
+                ? mNetworkRequests.get(request) : getPerAppDefaultTrackedNri(request);
 
         if (nri != null) {
             if (Process.SYSTEM_UID != callingUid && Process.NETWORK_STACK_UID != callingUid
@@ -3835,8 +3839,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (nri == null) {
             return;
         }
-        // handleReleaseNetworkRequest() paths don't apply to multilayer requests.
-        ensureNotMultilayerRequest(nri, "handleReleaseNetworkRequest");
         if (VDBG || (DBG && request.isRequest())) {
             log("releasing " + request + " (release request)");
         }
@@ -3847,28 +3849,33 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void handleRemoveNetworkRequest(@NonNull final NetworkRequestInfo nri) {
+        removeNetworkRequests(Collections.singleton(nri));
+    }
+
+    private void removeNetworkRequests(@NonNull final Set<NetworkRequestInfo> nris) {
         ensureRunningOnConnectivityServiceThread();
-
-        nri.unlinkDeathRecipient();
-        for (final NetworkRequest req : nri.mRequests) {
-            mNetworkRequests.remove(req);
-            if (req.isListen()) {
-                removeListenRequestFromNetworks(req);
+        for (final NetworkRequestInfo nri : nris) {
+            nri.unlinkDeathRecipient();
+            for (final NetworkRequest req : nri.mRequests) {
+                mNetworkRequests.remove(req);
+                if (req.isListen()) {
+                    removeListenRequestFromNetworks(req);
+                }
             }
-        }
-        mDefaultNetworkRequests.remove(nri);
-        mNetworkRequestCounter.decrementCount(nri.mUid);
-        mNetworkRequestInfoLogs.log("RELEASE " + nri);
+            mDefaultNetworkRequests.remove(nri);
+            mNetworkRequestCounter.decrementCount(nri.mUid);
+            mNetworkRequestInfoLogs.log("RELEASE " + nri);
 
-        if (null != nri.getActiveRequest()) {
-            if (!nri.getActiveRequest().isListen()) {
-                removeSatisfiedNetworkRequestFromNetwork(nri);
-            } else {
-                nri.setSatisfier(null, null);
+            if (null != nri.getActiveRequest()) {
+                if (!nri.getActiveRequest().isListen()) {
+                    removeSatisfiedNetworkRequestFromNetwork(nri);
+                } else {
+                    nri.setSatisfier(null, null);
+                }
             }
-        }
 
-        cancelNpiRequests(nri);
+            cancelNpiRequests(nri);
+        }
     }
 
     private void cancelNpiRequests(@NonNull final NetworkRequestInfo nri) {
@@ -5645,6 +5652,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final int mUid;
         @Nullable
         final String mCallingAttributionTag;
+        // In order to preserve the mapping of NetworkRequest-to-callback when apps register
+        // callbacks using a returned NetworkRequest, the original NetworkRequest needs to be
+        // maintained for keying off of. This is only a concern when the original nri
+        // mNetworkRequests changes which happens currently for apps that register callbacks to
+        // track the default network. In those cases, the nri is updated to have mNetworkRequests
+        // that match the per-app default nri that currently tracks the calling app's uid so that
+        // callbacks are fired at the appropriate time. When the callbacks fire,
+        // mNetworkRequestForCallback will be used so as to preserve the caller's mapping. When
+        // callbacks are updated to key off of an nri vs NetworkRequest, this stops being an issue.
+        // TODO b/177608132: make sure callbacks are indexed by NRIs and not NetworkRequest objects.
+        @Nullable
+        private final NetworkRequest mNetworkRequestForCallback;
+        NetworkRequest getNetworkRequestForCallback() {
+            return mNetworkRequestForCallback;
+        }
 
         /**
          * Get the list of UIDs this nri applies to.
@@ -5670,6 +5692,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mPendingIntent = pi;
             mMessenger = null;
             mBinder = null;
+            mNetworkRequestForCallback = null;
             mPid = getCallingPid();
             mUid = mDeps.getCallingUid();
             mNetworkRequestCounter.incrementCountOrThrow(mUid);
@@ -5688,6 +5711,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mMessenger = m;
             ensureAllNetworkRequestsHaveType(mRequests);
             mBinder = binder;
+            mNetworkRequestForCallback = null;
             mPid = getCallingPid();
             mUid = mDeps.getCallingUid();
             mPendingIntent = null;
@@ -5699,6 +5723,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
             } catch (RemoteException e) {
                 binderDied();
             }
+        }
+
+        NetworkRequestInfo(@NonNull final NetworkRequestInfo nri,
+                @NonNull final List<NetworkRequest> r,
+                @Nullable final NetworkRequest requestForCallback) {
+            super();
+            mRequests = initializeRequests(r);
+            ensureAllNetworkRequestsHaveType(mRequests);
+            mMessenger = nri.mMessenger;
+            mBinder = nri.mBinder;
+            mNetworkRequestForCallback = requestForCallback;
+            mPid = nri.mPid;
+            mUid = nri.mUid;
+            mPendingIntent = nri.mPendingIntent;
+            mCallingAttributionTag = nri.mCallingAttributionTag;
         }
 
         NetworkRequestInfo(@NonNull final NetworkRequest r) {
@@ -5904,10 +5943,10 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         ensureValid(networkCapabilities);
 
-        NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,
+        final NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,
                 nextNetworkRequestId(), reqType);
-        NetworkRequestInfo nri =
-                new NetworkRequestInfo(networkRequest, messenger, binder, callingAttributionTag);
+        final NetworkRequestInfo nri = getNriToRegister(
+                new NetworkRequestInfo(networkRequest, messenger, binder, callingAttributionTag));
         if (DBG) log("requestNetwork for " + nri);
 
         // For TRACK_SYSTEM_DEFAULT callbacks, the capabilities have been modified since they were
@@ -5926,6 +5965,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     nri), timeoutMs);
         }
         return networkRequest;
+    }
+
+    /**
+     * Return the nri to be used when registering a network request. Specifically, this is used with
+     * requests registered to track the default request. If there is currently a per-app default
+     * tracking the app requestor, then we need to create a version of this nri that mirrors that of
+     * the tracking per-app default so that callbacks are sent to the app requestor appropriately.
+     * @param nri the nri to check for registration.
+     * @return the nri to use with registration.
+     */
+    private NetworkRequestInfo getNriToRegister(@NonNull final NetworkRequestInfo nri) {
+        final NetworkRequest nr = nri.mRequests.get(0);
+        if (NetworkRequest.Type.TRACK_DEFAULT != nr.type
+                || !isPerAppDefaultTrackingUid(nr.getRequestorUid())) {
+            return nri;
+        }
+        final List<NetworkRequest> copiedRequests =
+                copyPerAppDefaultNetworkRequestsForUid(
+                        nr.getRequestorUid(), nr.getRequestorPackageName());
+        return new NetworkRequestInfo(nri, copiedRequests, nr);
     }
 
     private void enforceNetworkRequestPermissions(NetworkCapabilities networkCapabilities,
@@ -6218,6 +6277,110 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private boolean isPerAppDefaultRequest(@NonNull final NetworkRequestInfo nri) {
         return (mDefaultNetworkRequests.contains(nri) && mDefaultRequest != nri);
+    }
+
+    private ArraySet<NetworkRequestInfo> getPerAppDefaultRequests() {
+        return new ArraySet<>(mDefaultNetworkRequests
+                .stream()
+                .filter(this::isPerAppDefaultRequest)
+                .collect(Collectors.toSet()));
+    }
+
+    /**
+     * Check if the given uid is being tracked by a per-application default network request.
+     * @param uid the uid to check.
+     * @return true of the uid is being tracked by a per-app default, false otherwise.
+     */
+    private boolean isPerAppDefaultTrackingUid(@NonNull final int uid) {
+        return getPerAppDefaultTrackingUid(uid) != null;
+    }
+
+    /**
+     * Return the per-application default network request currently tracking the given uid.
+     * @param uid the uid to check.
+     * @return the NetworkRequestInfo tracking the given uid, null if none exists.
+     */
+    @Nullable
+    private NetworkRequestInfo getPerAppDefaultTrackingUid(@NonNull final int uid) {
+        return getNriTrackingUid(uid, getPerAppDefaultRequests());
+    }
+
+    /**
+     * Return the network request from the given Set currently tracking the given uid.
+     * @param uid the uid to check.
+     * @param nris the nris to check if tracking the given uid.
+     * @return the NetworkRequestInfo tracking the given uid, null if none exists.
+     */
+    @Nullable
+    private NetworkRequestInfo getNriTrackingUid(@NonNull final int uid,
+            @NonNull final Set<NetworkRequestInfo> nris) {
+        for (final NetworkRequestInfo nri : nris) {
+            // Checking the first request is sufficient as only multilayer requests will have more
+            // then one request and for multilayer, all requests will track the same uids.
+            if (nri.mRequests.get(0).networkCapabilities.appliesToUid(uid)) {
+                return nri;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a copy of the network requests of the per-application default request that is currently
+     * tracking the given uid.
+     * @param requestorUid the uid to check the per-app default for.
+     * @param requestorPackageName the requestor's package name.
+     * @return a copy of the per-app default's NetworkRequest that is tracking the given uid. If
+     * none, an empty list is returned.
+     */
+    @NonNull
+    private List<NetworkRequest> copyPerAppDefaultNetworkRequestsForUid(
+            @NonNull final int requestorUid, @NonNull final String requestorPackageName) {
+        final List<NetworkRequest> requests = new ArrayList<>();
+        final NetworkRequestInfo nri = getPerAppDefaultTrackingUid(requestorUid);
+        if (null == nri) {
+            return requests;
+        }
+        requests.addAll(copyNetworkRequestsForUid(requestorUid, requestorPackageName, nri));
+        return requests;
+    }
+
+    /**
+     * Copy the given nri's NetworkRequest collection.
+     * @param requestorUid the uid to set on the copied collection.
+     * @param requestorPackageName the package name to set on the copied collection.
+     * @param nriForCopy the nri who NetworkRequest collection is to be copied.
+     * @return the copied NetworkRequest collection.
+     */
+    @NonNull
+    private List<NetworkRequest> copyNetworkRequestsForUid(
+            @NonNull final int requestorUid, @NonNull final String requestorPackageName,
+            @NonNull final NetworkRequestInfo nriForCopy) {
+        final List<NetworkRequest> requests = new ArrayList<>();
+        for (final NetworkRequest nr : nriForCopy.mRequests) {
+            final NetworkCapabilities netCap = new NetworkCapabilities(nr.networkCapabilities);
+            netCap.setUids(new ArraySet<>());
+            restrictRequestUidsForCallerAndSetRequestorInfo(
+                    netCap, requestorUid, requestorPackageName);
+            requests.add(new NetworkRequest(
+                    netCap, nr.legacyType, nextNetworkRequestId(), nr.type));
+        }
+        return requests;
+    }
+
+    /**
+     * Get the nri that is currently being tracked for callbacks by per-app defaults.
+     * @param nr the network request to check for equality against.
+     * @return the nri if one exists, null otherwise.
+     */
+    @Nullable
+    private NetworkRequestInfo getPerAppDefaultTrackedNri(@NonNull final NetworkRequest nr) {
+        for (final NetworkRequestInfo nri : mNetworkRequests.values()) {
+            if (null != nri.mNetworkRequestForCallback
+                    && nri.mNetworkRequestForCallback.equals(nr)) {
+                return nri;
+            }
+        }
+        return null;
     }
 
     /**
@@ -7304,7 +7467,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // matter too much at this point as long as the callback can be found.
         // TODO b/177608132: make sure callbacks are indexed by NRIs and not NetworkRequest objects.
         // TODO: check if defensive copies of data is needed.
-        final NetworkRequest nrForCallback = new NetworkRequest(nri.mRequests.get(0));
+        final NetworkRequest nrForCallback = new NetworkRequest(
+                nri.getNetworkRequestForCallback() == null
+                        ? nri.mRequests.get(0) : nri.getNetworkRequestForCallback());
         putParcelable(bundle, nrForCallback);
         Message msg = Message.obtain();
         if (notificationType != ConnectivityManager.CALLBACK_UNAVAIL) {
@@ -9367,7 +9532,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (DBG) {
             log("set OEM network preferences :" + preference.toString());
         }
-        final List<NetworkRequestInfo> nris =
+        final ArraySet<NetworkRequestInfo> nris =
                 new OemNetworkRequestFactory().createNrisFromOemNetworkPreferences(preference);
         updateDefaultNetworksForOemNetworkPreference(nris);
         mOemNetworkPreferences = preference;
@@ -9379,27 +9544,93 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     private void updateDefaultNetworksForOemNetworkPreference(
-            @NonNull final List<NetworkRequestInfo> nris) {
+            @NonNull final Set<NetworkRequestInfo> nris) {
         ensureRunningOnConnectivityServiceThread();
-        clearNonDefaultNetworkAgents();
-        addDefaultNetworkRequests(nris);
+        removeNetworkRequests(getPerAppDefaultRequests());
+        addPerAppDefaultNetworkRequests(nris);
     }
 
-    private void clearNonDefaultNetworkAgents() {
-        // Copy mDefaultNetworkRequests to iterate and remove elements from it in
-        // handleRemoveNetworkRequest() without getting a ConcurrentModificationException.
-        final NetworkRequestInfo[] nris =
-                mDefaultNetworkRequests.toArray(new NetworkRequestInfo[0]);
+    private void addPerAppDefaultNetworkRequests(@NonNull final Set<NetworkRequestInfo> nris) {
+        mDefaultNetworkRequests.addAll(nris);
+        final ArraySet<NetworkRequestInfo> perAppCallbackRequestsToUpdate =
+                getPerAppCallbackRequestsToUpdate();
+        removeNetworkRequests(perAppCallbackRequestsToUpdate);
+        nris.addAll(createPerAppCallbackRequestsToRegister(perAppCallbackRequestsToUpdate));
+        registerNetworkRequests(nris);
+    }
+
+    /**
+     * All current requests that are tracking the default network need to be assessed as to whether
+     * or not the current set of per-application default requests will be changing their default
+     * network. If so, those requests will need to be updated so that they will send callbacks for
+     * default network changes at the appropriate time. Additionally, those requests tracking the
+     * default that were previously updated by this flow will need to be reassessed.
+     * @return the nris which will need to be updated.
+     */
+    private ArraySet<NetworkRequestInfo> getPerAppCallbackRequestsToUpdate() {
+        final ArraySet<NetworkRequestInfo> defaultCallbackRequests = new ArraySet<>();
+        // Get the distinct nris to check.
+        final List<NetworkRequestInfo> nris =
+                mNetworkRequests.values().stream().distinct().collect(Collectors.toList());
         for (final NetworkRequestInfo nri : nris) {
-            if (mDefaultRequest != nri) {
-                handleRemoveNetworkRequest(nri);
+            // Include this nri if it is currently being tracked.
+            if (null != nri.mNetworkRequestForCallback) {
+                defaultCallbackRequests.add(nri);
+                continue;
+            }
+            // We only track callbacks for requests tracking the default.
+            if (NetworkRequest.Type.TRACK_DEFAULT != nri.mRequests.get(0).type) {
+                continue;
+            }
+            // Include this nri if it will be tracked by the new per-app default requests.
+            final int requestorUid = nri.mRequests.get(0).getRequestorUid();
+            final boolean isNriGoingToBeTracked = null != getPerAppDefaultTrackingUid(requestorUid);
+            if (isNriGoingToBeTracked) {
+                defaultCallbackRequests.add(nri);
             }
         }
+        return defaultCallbackRequests;
     }
 
-    private void addDefaultNetworkRequests(@NonNull final List<NetworkRequestInfo> nris) {
-        mDefaultNetworkRequests.addAll(nris);
-        handleRegisterNetworkRequest(nris);
+    /**
+     * Create nris for those network requests that are currently tracking the default network that
+     * are being controlled by a per-application default.
+     * @param perAppCallbackRequestsForUpdate the baseline network requests to be used as the
+     * foundation when creating the nri. Important items include the calling uid's original
+     * NetworkRequest to be used when mapping callbacks as well as the caller's uid and name. These
+     * requests are assumed to have already been validated as needing to be updated.
+     * @return the Set of nris to use when registering network requests.
+     */
+    private ArraySet<NetworkRequestInfo> createPerAppCallbackRequestsToRegister(
+            @NonNull final ArraySet<NetworkRequestInfo> perAppCallbackRequestsForUpdate) {
+        final ArraySet<NetworkRequestInfo> callbackRequestsToRegister = new ArraySet<>();
+        for (final NetworkRequestInfo callbackRequest : perAppCallbackRequestsForUpdate) {
+            final int requestorUid = callbackRequest.mRequests.get(0).getRequestorUid();
+            final NetworkRequestInfo trackingNri = getPerAppDefaultTrackingUid(requestorUid);
+
+            // If this nri is not being tracked, the change it back to an untracked nri.
+            if (null == trackingNri) {
+                callbackRequestsToRegister.add(new NetworkRequestInfo(
+                        callbackRequest,
+                        Collections.singletonList(callbackRequest.mNetworkRequestForCallback),
+                        null /* requestForCallback */));
+                continue;
+            }
+
+            final String requestorPackageName =
+                    callbackRequest.mRequests.get(0).getRequestorPackageName();
+            // If the original request was already saved in mNetworkRequestForCallback, use it,
+            // otherwise the original request is still in callbackRequest.mRequests.get(0).
+            final NetworkRequest nrForCallback =
+                    null == trackingNri.mNetworkRequestForCallback
+                            ? callbackRequest.mRequests.get(0)
+                            : trackingNri.mNetworkRequestForCallback;
+            callbackRequestsToRegister.add(new NetworkRequestInfo(
+                    callbackRequest,
+                    copyNetworkRequestsForUid(requestorUid, requestorPackageName, trackingNri),
+                    nrForCallback));
+        }
+        return callbackRequestsToRegister;
     }
 
     /**
@@ -9407,9 +9638,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
      */
     @VisibleForTesting
     final class OemNetworkRequestFactory {
-        List<NetworkRequestInfo> createNrisFromOemNetworkPreferences(
+        ArraySet<NetworkRequestInfo> createNrisFromOemNetworkPreferences(
                 @NonNull final OemNetworkPreferences preference) {
-            final List<NetworkRequestInfo> nris = new ArrayList<>();
+            final ArraySet<NetworkRequestInfo> nris = new ArraySet<>();
             final SparseArray<Set<Integer>> uids =
                     createUidsFromOemNetworkPreferences(preference);
             for (int i = 0; i < uids.size(); i++) {
