@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d749136_4b752056",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061116
+      },
+      "writtenOn": "2021-02-10T10:42:11Z",
+      "side": 1,
+      "message": "I rolled back changes on the shell command, so hopefully merge conflicts will go away.",
+      "revId": "525688b13f117789e19b0184261a2a102936953c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
