@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca5d8b7b_82634699",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-10T03:50:30Z",
+      "side": 1,
+      "message": "It\u0027s a bit strange that this sets a TYPE_VPN_NONE transportInfo by default, but prepareInternal and cleanupVpnStateLocked reset it to null\nShould it be null in the initial state instead ? Or reset to TYPE_VPN_NONE in the other methods ?",
+      "range": {
+        "startLine": 439,
+        "startChar": 29,
+        "endLine": 439,
+        "endChar": 45
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "261ba20a_c0fc0f42",
         "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
         "patchSetId": 17
@@ -89,6 +112,46 @@
         "endLine": 1866,
         "endChar": 49
       },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c1f3799_d843e95b",
+        "filename": "tests/net/java/android/net/VpnTransportInfoTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-10T03:50:30Z",
+      "side": 1,
+      "message": "Nit: not necessary, this is done by the line above",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41fb533d_4abf3279",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-10T03:50:30Z",
+      "side": 1,
+      "message": "It would be nice to have an assertion to check that the type is TYPE_VPN_SERVICE on VpnService: maybe reuse what\u0027s done in setupConnectionOwnerUid ?\nCould be added separately.",
       "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
