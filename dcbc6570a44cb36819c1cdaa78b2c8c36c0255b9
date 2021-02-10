@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008085419",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1583505?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ca4e7c4f_bdb2519f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-10T22:29:06Z",
+      "side": 1,
+      "message": "Unrecognized finding :\nterms and conditions...terms and conditions\n",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "dcbc6570a44cb36819c1cdaa78b2c8c36c0255b9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
