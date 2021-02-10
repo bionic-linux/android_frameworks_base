@@ -16,10 +16,8 @@
 
 package android.net.vcn;
 
-import android.net.vcn.VcnGatewayError;
-
 /** @hide */
-interface IVcnStatusCallback {
-    void onEnteredSafemode();
-    void onGatewayError(in int[] gatewayNetworkCapabilities, in VcnGatewayError cause);
-}
+parcelable VcnGatewayError;
+
+parcelable VcnGatewayAuthError;
+parcelable VcnGatewayIkeError;

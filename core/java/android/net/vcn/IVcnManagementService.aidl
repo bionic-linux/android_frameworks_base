@@ -23,6 +23,7 @@ import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnUnderlyingNetworkPolicy;
 import android.os.ParcelUuid;
+import android.net.vcn.VcnGatewayError;
 
 /**
  * @hide
@@ -37,4 +38,6 @@ interface IVcnManagementService {
 
     void registerVcnStatusCallback(in ParcelUuid subscriptionGroup, in IVcnStatusCallback callback, in String opPkgName);
     void unregisterVcnStatusCallback(in IVcnStatusCallback callback);
+
+    void triggerOnGatewayError(in IVcnStatusCallback cb, in int[] netCaps, in VcnGatewayError cause);
 }

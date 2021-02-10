@@ -52,6 +52,7 @@ import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 import android.util.Log;
 import android.util.Slog;
+import android.net.vcn.VcnManager.VcnGatewayException;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -630,6 +631,11 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 listener.asBinder().unlinkToDeath(listenerBinderDeath, 0 /* flags */);
             }
         }
+    }
+
+    @Override
+    public void triggerOnGatewayError(IVcnStatusCallback cb, int[] netCaps, VcnGatewayException cause) {
+        cb.onGatewayError(netCaps, cause);
     }
 
     /**
