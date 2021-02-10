@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e417d21_c084f3a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T10:09:57Z",
+      "side": 1,
+      "message": "Comments addressed in aosp/1581292 .",
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f722e32_9e65f565",
@@ -14,6 +31,30 @@
       "writtenOn": "2021-02-10T03:23:50Z",
       "side": 1,
       "message": "Any reason not to just return type ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 34
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12e01a98_905f653a",
+        "filename": "core/java/android/net/VpnTransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T10:09:57Z",
+      "side": 1,
+      "message": "I think we expect this class to have other fields soon, so it seemed like that would be marginally less work if this method already uses Objects.hash.",
+      "parentUuid": "1f722e32_9e65f565",
       "range": {
         "startLine": 51,
         "startChar": 15,
@@ -47,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a7a7eb6_0ec80ef3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T10:09:57Z",
+      "side": 1,
+      "message": "Done in an upcoming CL.",
+      "parentUuid": "ca5d8b7b_82634699",
+      "range": {
+        "startLine": 439,
+        "startChar": 29,
+        "endLine": 439,
+        "endChar": 45
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "261ba20a_c0fc0f42",
@@ -70,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01fd7e9e_975bc7a4",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T10:09:57Z",
+      "side": 1,
+      "message": "Done in an upcoming CL.",
+      "parentUuid": "261ba20a_c0fc0f42",
+      "range": {
+        "startLine": 934,
+        "startChar": 54,
+        "endLine": 934,
+        "endChar": 58
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8589996_4304fc32",
@@ -83,6 +172,30 @@
       "writtenOn": "2021-02-10T03:23:50Z",
       "side": 1,
       "message": "likewise",
+      "range": {
+        "startLine": 1748,
+        "startChar": 46,
+        "endLine": 1748,
+        "endChar": 50
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79e597a7_30d30185",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T10:09:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8589996_4304fc32",
       "range": {
         "startLine": 1748,
         "startChar": 46,
@@ -139,6 +252,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1a3f267_0be26954",
+        "filename": "tests/net/java/android/net/VpnTransportInfoTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T10:09:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c1f3799_d843e95b",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41fb533d_4abf3279",
@@ -152,6 +289,24 @@
       "writtenOn": "2021-02-10T03:50:30Z",
       "side": 1,
       "message": "It would be nice to have an assertion to check that the type is TYPE_VPN_SERVICE on VpnService: maybe reuse what\u0027s done in setupConnectionOwnerUid ?\nCould be added separately.",
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "250ff216_432cd500",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T10:09:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41fb533d_4abf3279",
       "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
