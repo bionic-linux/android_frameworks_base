@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e919567c_19c4a752",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T01:25:52Z",
+      "side": 1,
+      "message": "since this is checked in sendMessage(), I don\u0027t think it has to be checked here.",
+      "range": {
+        "startLine": 580,
+        "startChar": 20,
+        "endLine": 580,
+        "endChar": 47
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c6aa3a_a7b37715",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T01:25:52Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 623,
+        "startChar": 24,
+        "endLine": 623,
+        "endChar": 51
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6633c8e6_2fac8aee",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T01:25:52Z",
+      "side": 1,
+      "message": "I spoke with Ben about this. It\u0027s a little scary to override sendMessage like this. My preference would be to do this in 2 steps:\n\n1) override sendMessage() with (at least) a WTF() taht doesn\u0027t grab the wakelock.\n2) make a new method like sendWakeLockedMessage() and use that instead.",
+      "range": {
+        "startLine": 669,
+        "startChar": 16,
+        "endLine": 669,
+        "endChar": 27
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb00f286_16307298",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T01:25:52Z",
+      "side": 1,
+      "message": "A little off-topic, but should this be final so that children don\u0027t override it? It\u0027s not possible due to the override in ActiveBase, but I\u0027d love it if that could change.",
+      "range": {
+        "startLine": 739,
+        "startChar": 8,
+        "endLine": 739,
+        "endChar": 14
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "590bee71_07889813",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T01:25:52Z",
+      "side": 1,
+      "message": "Yeah, and now I\u0027m scared. We can\u0027t make the BaseState processMessage() final, but we have to remember to release the WakeLock every time we override processMessage(), which is what I prefer not to do...",
+      "range": {
+        "startLine": 879,
+        "startChar": 23,
+        "endLine": 879,
+        "endChar": 37
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64c4576f_31341726",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T01:25:52Z",
+      "side": 1,
+      "message": "Since all this needs is a Context, why a VcnContext here? Testing?",
+      "range": {
+        "startLine": 1677,
+        "startChar": 36,
+        "endLine": 1677,
+        "endChar": 46
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d5545b2_5c4de7cc",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T01:25:52Z",
+      "side": 1,
+      "message": "I don\u0027t believe this class ever used a version that\u0027s not refcounted. Perhaps YAGNI this out? Since we have an encapsulating class for test-ability anyway, might as well make use of it to just set this thing up the way we want as part of the constructor.",
+      "range": {
+        "startLine": 1684,
+        "startChar": 20,
+        "endLine": 1684,
+        "endChar": 39
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

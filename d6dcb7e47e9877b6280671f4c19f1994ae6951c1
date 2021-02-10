@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "729e81d2_1def29fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T01:25:52Z",
+      "side": 1,
+      "message": "I\u0027d really like it if:\n1) Future extenders of this class didn\u0027t have to worry about the locking; and/or\n2) Maintainers could be explicitly aware that they are grabbing wakelocks as a side effect of sendMessage().\n\nFor 1, that would mean making the locking thread-safe and ensuring that nobody has to carry locking code forward as they add/update states.\nFor 2, that at least means updating naming so that side effects are visible.\n\nThe real thorn in all this is the ActiveBaseState.",
+      "revId": "d6dcb7e47e9877b6280671f4c19f1994ae6951c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
