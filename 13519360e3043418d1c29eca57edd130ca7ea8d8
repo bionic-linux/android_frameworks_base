@@ -51,6 +51,24 @@
       "parentUuid": "66b7956a_fd59cd4a",
       "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64a8c499_8dfb4265",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-02-10T21:16:10Z",
+      "side": 1,
+      "message": "Thanks for the explanation Dean! Indeed I see that AudioManager.DEVICE_* constants are not SystemApis, just hidden.\n\nMyself I\u0027m not an expert both on SDK APIs and TV input framework. The change seems reasonable, I have one question though: have you considered just using \u0027AudioDeviceInfo\u0027 instance instead of \u0027type, address\u0027 pair? This would look like a more consistent API to me.\n\nIf Henry is OK with this change, and Jean-Michel is agree from the API standpoint, then I certainly will not have any objections.",
+      "parentUuid": "c316168d_e4707a7d",
+      "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
