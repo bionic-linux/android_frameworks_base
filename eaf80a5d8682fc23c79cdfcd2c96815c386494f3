@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "09d18e74_7456c2b2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2016,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de7017a9_e462193c",
+      "range": {
+        "startLine": 2016,
+        "startChar": 8,
+        "endLine": 2016,
+        "endChar": 17
+      },
+      "revId": "eaf80a5d8682fc23c79cdfcd2c96815c386494f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d49f693c_4d1224dc",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-05T21:51:40Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 2017,
+        "startChar": 8,
+        "endLine": 2017,
+        "endChar": 21
+      },
+      "revId": "eaf80a5d8682fc23c79cdfcd2c96815c386494f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7ce6410_2ef6d9f2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:04:01Z",
+      "side": 1,
+      "message": "This cannot be final. I am reusing the reference below.",
+      "parentUuid": "d49f693c_4d1224dc",
       "range": {
         "startLine": 2017,
         "startChar": 8,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "837319cc_93465c1f",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2022,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed12f2f3_c0b16df6",
+      "range": {
+        "startLine": 2022,
+        "startChar": 8,
+        "endLine": 2022,
+        "endChar": 11
+      },
+      "revId": "eaf80a5d8682fc23c79cdfcd2c96815c386494f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25ba0dce_9804e10f",
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "626c5b3e_cafa350c",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2061,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25ba0dce_9804e10f",
+      "range": {
+        "startLine": 2061,
+        "startChar": 35,
+        "endLine": 2061,
+        "endChar": 43
+      },
+      "revId": "eaf80a5d8682fc23c79cdfcd2c96815c386494f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45040fe0_1a905823",
@@ -123,6 +219,30 @@
       "writtenOn": "2021-02-05T21:51:40Z",
       "side": 1,
       "message": "final",
+      "range": {
+        "startLine": 2074,
+        "startChar": 16,
+        "endLine": 2074,
+        "endChar": 27
+      },
+      "revId": "eaf80a5d8682fc23c79cdfcd2c96815c386494f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5c80779_6353b968",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2074,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:04:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45040fe0_1a905823",
       "range": {
         "startLine": 2074,
         "startChar": 16,
