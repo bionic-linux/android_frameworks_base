@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "910e0707_916d2c9e",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T02:35:39Z",
+      "side": 1,
+      "message": "As the logic behaves right now, it looks like we can make DisconnectRequestAlarm @NonNull; you always cancel and re-schedule the alarm if necessary. since the WakeupAlarm will allow \"rescheduling\" by simply calling \"schedule\" again, that\u0027s 100% safe, and cancelling a canceled alarm is also 100% safe (it maintains an internal isScheduled boolean).\n\nThat said, I think that if the logic receives multiple onSelectedUnderlyingNetworkChanged() events that contain null, this is going to back-to-back reschedule the disconnect request for a later time... which isn\u0027t what we want, so we should:\n-only cancel an alarm if we receive a non-null-network\n-schedule an alarm if none is scheduled AND we receive a null network.\n\nSince nullability is the obvious choice for not re-scheduling a scheduled alarm, I think we should keep it nullable and use nullability to not cancel an alarm if back-to-back null underlying networks are received.\n\nOr... you could keep it non-null and expose the internal isScheduled() boolean (synchronized, of course).... or a scheduleIfUnscheduled() method... options abound.",
+      "range": {
+        "startLine": 646,
+        "startChar": 0,
+        "endLine": 657,
+        "endChar": 47
+      },
+      "revId": "4c8a53f8f3a7e30f5495f0a17ffd830f1559aae7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "752f32cd_f7702163",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-10T02:35:39Z",
+      "side": 1,
+      "message": "I take it that it\u0027s necessary to wrap a sendMessage() in a sendMessage() because of the WakeLock()? Grumble grumble. If you look, you\u0027ll see that WakeupMessage directly calls Handler.dispatchMessage(). Is there some way that we can exploit that? For instance, should we override dispatchMessage() to grab the lovely VcnWakeLock?",
+      "range": {
+        "startLine": 661,
+        "startChar": 38,
+        "endLine": 661,
+        "endChar": 49
+      },
+      "revId": "4c8a53f8f3a7e30f5495f0a17ffd830f1559aae7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
