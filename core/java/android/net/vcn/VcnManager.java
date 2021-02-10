@@ -307,6 +307,21 @@ public class VcnManager {
          * VcnConfig}s via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
          */
         void onEnteredSafemode();
+
+        /**
+         * Invoked when a VCN Gateway corresponding to this callback's subscription encounters an error.
+         *
+         * @param gatewayNetworkCapabilities
+         * @param cause
+         */
+
+        void onGatewayError(@NonNull int[] gatewayNetworkCapabilities, VcnGatewayError cause);
+    }
+
+    /** @hide */
+    public void triggerOnGatewayError(@NonNull VcnStatusCallback cb, int[] netCaps, VcnGatewayError cause) {
+        VcnStatusCallbackBinder cbBinder = new VcnStatusCallbackBinder(Runnable::run, cb);
+        mService.triggerOnGatewayError(cbBinder, netCaps, cause);
     }
 
     /**
@@ -414,6 +429,11 @@ public class VcnManager {
         @Override
         public void onEnteredSafemode() {
             mExecutor.execute(() -> mCallback.onEnteredSafemode());
+        }
+
+        @Override
+        public void onGatewayError(@NonNull int[] gatewayNetworkCapabilities, @NonNull ServiceSpecificException cause) {
+            mExecutor.execute(() -> mCallback.onGatewayError(gatewayNetworkCapabilities, cause));
         }
     }
 }
