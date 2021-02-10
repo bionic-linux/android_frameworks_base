@@ -1137,6 +1137,7 @@ public class VcnGatewayConnection extends StateMachine {
                     transitionTo(mDisconnectingState);
                     break;
                 case EVENT_TRANSFORM_CREATED:
+                    setupInterfaceIfNecessary();
                     final EventTransformCreatedInfo transformCreatedInfo =
                             (EventTransformCreatedInfo) msg.obj;
 
@@ -1148,6 +1149,7 @@ public class VcnGatewayConnection extends StateMachine {
                             transformCreatedInfo.direction);
                     break;
                 case EVENT_SETUP_COMPLETED:
+                    setupInterfaceIfNecessary();
                     mChildConfig = ((EventSetupCompletedInfo) msg.obj).childSessionConfig;
 
                     setupInterfaceAndNetworkAgent(mCurrentToken, mTunnelIface, mChildConfig);
@@ -1158,6 +1160,20 @@ public class VcnGatewayConnection extends StateMachine {
                 default:
                     logUnhandledMessage(msg);
                     break;
+            }
+        }
+
+        private void setupInterfaceIfNecessary() {
+            if (mTunnelIface == null) {
+                try {
+                    // Requires a real Network object in order to be created; doing this any earlier
+                    // means not having a real Network object, or picking an incorrect Network.
+                    mTunnelIface =
+                            mIpSecManager.createIpSecTunnelInterface(
+                                    DUMMY_ADDR, DUMMY_ADDR, mUnderlying.network);
+                } catch (IOException | ResourceUnavailableException e) {
+                    teardownAsynchronously();
+                }
             }
         }
 
@@ -1182,6 +1198,8 @@ public class VcnGatewayConnection extends StateMachine {
                 // Network not yet set up, or child not yet connected.
                 if (mNetworkAgent != null && mChildConfig != null) {
                     // If only network properties changed and agent is active, update properties
+
+                    // mTunnelIface cannot be null here if a NetworkAgent already exists
                     updateNetworkAgent(mTunnelIface, mNetworkAgent, mChildConfig);
                 }
             }
