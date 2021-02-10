@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "508c2a4d_8e4f4b70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-10T16:06:10Z",
+      "side": 1,
+      "message": "LG, thanks!  😊\n",
+      "revId": "6a0d50dd2ee47a1b38793303355490b367478b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "183d9ed6_2e9ccd28",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsShellCommand.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-10T16:06:10Z",
+      "side": 1,
+      "message": "nit: add an empty newline before this command to match the usage style of other commands above:\n\n  pw.println(\"\");",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 81
+      },
+      "revId": "6a0d50dd2ee47a1b38793303355490b367478b33",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
