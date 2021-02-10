@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27e4f06d_de7dae9f",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsShellCommand.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-02-10T02:49:52Z",
+      "side": 1,
+      "message": "nit:mCallingPid, same below.",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "162b4ff28753698b2aa8d4d04f747742472281cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
