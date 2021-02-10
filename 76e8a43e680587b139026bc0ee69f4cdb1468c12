@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f722e32_9e65f565",
+        "filename": "core/java/android/net/VpnTransportInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T03:23:50Z",
+      "side": 1,
+      "message": "Any reason not to just return type ?",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 34
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "261ba20a_c0fc0f42",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T03:23:50Z",
+      "side": 1,
+      "message": "Should we say\n\n  new VpnTransportInfo(VpnManager.TYPE_VPN_NONE) here too to match l.439 ?\n\nNot feeling strongly.",
+      "range": {
+        "startLine": 934,
+        "startChar": 54,
+        "endLine": 934,
+        "endChar": 58
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8589996_4304fc32",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T03:23:50Z",
+      "side": 1,
+      "message": "likewise",
+      "range": {
+        "startLine": 1748,
+        "startChar": 46,
+        "endLine": 1748,
+        "endChar": 50
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ed04264_e97d9543",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 1866,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T03:23:50Z",
+      "side": 1,
+      "message": "Note that this means the FAILED status used to return the type and will now return NONE. This is harmless (and in fact better) because VpnService never goes to FAILED AFAICT, and others have no business calling getConnectionOwnerUid.",
+      "range": {
+        "startLine": 1866,
+        "startChar": 26,
+        "endLine": 1866,
+        "endChar": 49
+      },
+      "revId": "76e8a43e680587b139026bc0ee69f4cdb1468c12",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

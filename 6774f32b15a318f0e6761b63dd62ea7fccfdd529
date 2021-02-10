@@ -377,6 +377,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b4235cf_78d44854",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T03:23:50Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure it\u0027s never called for legacy VPNs, but I still think it clarifies the code. You\u0027d be forced to do it if it was an enum 😊",
+      "parentUuid": "7d74802e_de180876",
+      "range": {
+        "startLine": 987,
+        "startChar": 12,
+        "endLine": 987,
+        "endChar": 18
+      },
+      "revId": "6774f32b15a318f0e6761b63dd62ea7fccfdd529",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6cb27ed_ef0d4036",
@@ -414,6 +438,30 @@
       "side": 1,
       "message": "Attempted. Not sure what this should do, though.",
       "parentUuid": "e6cb27ed_ef0d4036",
+      "range": {
+        "startLine": 1025,
+        "startChar": 8,
+        "endLine": 1025,
+        "endChar": 14
+      },
+      "revId": "6774f32b15a318f0e6761b63dd62ea7fccfdd529",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "920a8b1f_4c636754",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T03:23:50Z",
+      "side": 1,
+      "message": "What you have is fine. I\u0027d have suggested returning true, but what you have is better just in case we have some bug letting some VPN app sneak a TYPE_VPN_LEGACY in there somehow.",
+      "parentUuid": "41373c72_a0443ad0",
       "range": {
         "startLine": 1025,
         "startChar": 8,
