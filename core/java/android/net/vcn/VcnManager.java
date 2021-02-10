@@ -17,7 +17,9 @@ package android.net.vcn;
 
 import static java.util.Objects.requireNonNull;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemService;
 import android.content.Context;
@@ -32,6 +34,8 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -268,6 +272,97 @@ public class VcnManager {
         }
     }
 
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+        VCN_ERROR_CLASS_INFORMATIONAL,
+        VCN_ERROR_CLASS_CONFIGURATION_ISSUE,
+    })
+    public @interface VcnErrorClass {}
+
+    /**
+     * Error Type for informational errors that do not have a clear resolution (such as a
+     * server-requested teardown).
+     *
+     * @hide
+     */
+    public static final int VCN_ERROR_CLASS_INFORMATIONAL = 1;
+
+    /**
+     * Error Type for configuration-related issues (such as authentication failures).
+     *
+     * @hide
+     */
+    public static final int VCN_ERROR_CLASS_CONFIGURATION_ISSUE = 2;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({
+        VCN_ERROR_CODE_INTERNAL_FAILURE,
+        VCN_ERROR_CODE_GATEWAY_CONNECTION_DIED,
+        VCN_ERROR_CODE_GATEWAY_NETWORK_LOST,
+        VCN_ERROR_CODE_AUTHENTICATION_FAILED,
+        VCN_ERROR_CODE_REMOTE_ERROR
+    })
+    public @interface VcnErrorCode {}
+
+    private static final int VCN_ERROR_CODE_INFORMATIONAL_BASE = 0;
+    private static final int VCN_ERROR_CODE_CONFIGURATION_BASE = 100;
+
+    /**
+     * Value indicating that an internal failure occurred in this Gateway Connection.
+     *
+     * <p>Only returned for {@link VcnErrorClass} {@link #VCN_ERROR_CLASS_INFORMATIONAL}.
+     *
+     * @hide
+     */
+    public static final int VCN_ERROR_CODE_INTERNAL_FAILURE = VCN_ERROR_CODE_INFORMATIONAL_BASE + 1;
+
+    /**
+     * Value indicating that this Gateway Connection died unexpectedly.
+     *
+     * <p>This may be caused by external events such as a server-requested teardown.
+     *
+     * <p>Only returned for {@link VcnErrorClass} {@link #VCN_ERROR_CLASS_INFORMATIONAL}.
+     *
+     * @hide
+     */
+    public static final int VCN_ERROR_CODE_GATEWAY_CONNECTION_DIED =
+            VCN_ERROR_CODE_INFORMATIONAL_BASE + 2;
+
+    /**
+     * Value indicating that all available underlying Network(s) for this Gateway Connection were
+     * lost.
+     *
+     * <p>Only returned for {@link VcnErrorClass} {@link #VCN_ERROR_CLASS_INFORMATIONAL}.
+     *
+     * @hide
+     */
+    public static final int VCN_ERROR_CODE_GATEWAY_NETWORK_LOST =
+            VCN_ERROR_CODE_INFORMATIONAL_BASE + 3;
+
+    /**
+     * Value indicating that an authentication failure occurred when establishing this Gateway
+     * Connection.
+     *
+     * <p>Only returned for {@link VcnErrorClass} {@link #VCN_ERROR_CLASS_CONFIGURATION_ISSUE}.
+     *
+     * @hide
+     */
+    public static final int VCN_ERROR_CODE_AUTHENTICATION_FAILED =
+            VCN_ERROR_CODE_CONFIGURATION_BASE + 1;
+
+    /**
+     * Value indicating that the remote encountered an error.
+     *
+     * <p>For example, this can occur if the remote proposes incompatible encryption algorithms.
+     *
+     * <p>Only returned for {@link VcnErrorClass} {@link #VCN_ERROR_CLASS_CONFIGURATION_ISSUE}.
+     *
+     * @hide
+     */
+    public static final int VCN_ERROR_CODE_REMOTE_ERROR = VCN_ERROR_CODE_CONFIGURATION_BASE + 2;
+
     // TODO: make VcnStatusCallback @SystemApi
     /**
      * VcnStatusCallback is the interface for Carrier apps to receive updates for their VCNs.
@@ -291,6 +386,25 @@ public class VcnManager {
          * via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
          */
         public abstract void onEnteredSafeMode();
+
+        /**
+         * Invoked when a VCN Gateway Connection corresponding to this callback's subscription
+         * encounters an error.
+         *
+         * @param networkCapabilities an array of underlying NetworkCapabilities for the Gateway
+         *     Connection that encountered the error for identification purposes. These will be a
+         *     sorted list with no duplicates, matching one of the {@link
+         *     VcnGatewayConnectionConfig}s set in the {@link VcnConfig} for this subscription
+         *     group.
+         * @param errorClass the {@link VcnErrorClass} of the error that occurred
+         * @param errorCode the specific {@link VcnErrorCode} of the error that occurred
+         * @param cause the Throwable that caused the error, or {@code null} if none
+         */
+        public abstract void onGatewayConnectionError(
+                @NonNull int[] networkCapabilities,
+                @VcnErrorClass int errorClass,
+                @VcnErrorCode int errorCode,
+                @Nullable Throwable cause);
     }
 
     /**
@@ -391,11 +505,12 @@ public class VcnManager {
      *
      * @hide
      */
-    private class VcnStatusCallbackBinder extends IVcnStatusCallback.Stub {
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static class VcnStatusCallbackBinder extends IVcnStatusCallback.Stub {
         @NonNull private final Executor mExecutor;
         @NonNull private final VcnStatusCallback mCallback;
 
-        private VcnStatusCallbackBinder(
+        public VcnStatusCallbackBinder(
                 @NonNull Executor executor, @NonNull VcnStatusCallback callback) {
             mExecutor = executor;
             mCallback = callback;
@@ -405,6 +520,40 @@ public class VcnManager {
         public void onEnteredSafeMode() {
             Binder.withCleanCallingIdentity(
                     () -> mExecutor.execute(() -> mCallback.onEnteredSafeMode()));
+        }
+
+        @Override
+        public void onGatewayConnectionError(
+                @NonNull int[] networkCapabilities,
+                @VcnErrorClass int errorClass,
+                @VcnErrorCode int errorCode,
+                @Nullable String exceptionClass,
+                @Nullable String exceptionMessage) {
+            final Throwable cause = createThrowableByClassName(exceptionClass, exceptionMessage);
+
+            Binder.withCleanCallingIdentity(
+                    () ->
+                            mExecutor.execute(
+                                    () ->
+                                            mCallback.onGatewayConnectionError(
+                                                    networkCapabilities,
+                                                    errorClass,
+                                                    errorCode,
+                                                    cause)));
+        }
+
+        private static Throwable createThrowableByClassName(
+                @Nullable String className, @Nullable String message) {
+            if (className == null) {
+                return null;
+            }
+
+            try {
+                Class<?> c = Class.forName(className);
+                return (Throwable) c.getConstructor(String.class).newInstance(message);
+            } catch (ReflectiveOperationException | ClassCastException e) {
+                return new RuntimeException(className + ": " + message);
+            }
         }
     }
 }
