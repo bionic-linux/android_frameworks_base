@@ -502,6 +502,11 @@ public class Vpn {
         updateAlwaysOnNotification(detailedState);
     }
 
+    private void resetNetworkCapabilities() {
+        mNetworkCapabilities.setUids(null);
+        mNetworkCapabilities.setTransportInfo(new VpnTransportInfo(VpnManager.TYPE_VPN_NONE));
+    }
+
     /**
      * Chooses whether to force all connections to go though VPN.
      *
@@ -941,8 +946,7 @@ public class Vpn {
                 agentDisconnect();
                 jniReset(mInterface);
                 mInterface = null;
-                mNetworkCapabilities.setUids(null);
-                mNetworkCapabilities.setTransportInfo(null);
+                resetNetworkCapabilities();
             }
 
             // Revoke the connection or stop the VpnRunner.
@@ -1754,8 +1758,7 @@ public class Vpn {
 
     private void cleanupVpnStateLocked() {
         mStatusIntent = null;
-        mNetworkCapabilities.setUids(null);
-        mNetworkCapabilities.setTransportInfo(null);
+        resetNetworkCapabilities();
         mConfig = null;
         mInterface = null;
 

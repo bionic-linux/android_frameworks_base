@@ -200,6 +200,7 @@ import android.net.ResolverParamsParcel;
 import android.net.RouteInfo;
 import android.net.RouteInfoParcel;
 import android.net.SocketKeepalive;
+import android.net.TransportInfo;
 import android.net.UidRange;
 import android.net.UidRangeParcel;
 import android.net.UnderlyingNetworkInfo;
@@ -1280,6 +1281,15 @@ public class ConnectivityServiceTest {
             }
         };
         return new VpnManagerService(mServiceContext, deps);
+    }
+
+    private void assertVpnTransportInfo(NetworkCapabilities nc, int type) {
+        assertNotNull(nc);
+        final TransportInfo ti = nc.getTransportInfo();
+        assertTrue("VPN TransportInfo is not a VpnTransportInfo: " + ti,
+                ti instanceof VpnTransportInfo);
+        assertEquals(type, ((VpnTransportInfo) ti).type);
+
     }
 
     private void processBroadcastForVpn(Intent intent) {
@@ -6438,6 +6448,8 @@ public class ConnectivityServiceTest {
         assertTrue(nc.hasCapability(NET_CAPABILITY_VALIDATED));
         assertFalse(nc.hasCapability(NET_CAPABILITY_NOT_METERED));
         assertTrue(nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+
+        assertVpnTransportInfo(nc, VpnManager.TYPE_VPN_SERVICE);
     }
 
     private void assertDefaultNetworkCapabilities(int userId, NetworkAgentWrapper... networks) {
@@ -6477,6 +6489,7 @@ public class ConnectivityServiceTest {
         assertFalse(nc.hasCapability(NET_CAPABILITY_NOT_METERED));
         // A VPN without underlying networks is not suspended.
         assertTrue(nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        assertVpnTransportInfo(nc, VpnManager.TYPE_VPN_SERVICE);
 
         final int userId = UserHandle.getUserId(Process.myUid());
         assertDefaultNetworkCapabilities(userId /* no networks */);
@@ -6640,6 +6653,7 @@ public class ConnectivityServiceTest {
         // By default, VPN is set to track default network (i.e. its underlying networks is null).
         // In case of no default network, VPN is considered metered.
         assertFalse(nc.hasCapability(NET_CAPABILITY_NOT_METERED));
+        assertVpnTransportInfo(nc, VpnManager.TYPE_VPN_SERVICE);
 
         // Connect to Cell; Cell is the default network.
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
@@ -6697,6 +6711,7 @@ public class ConnectivityServiceTest {
         NetworkCapabilities nc = mCm.getNetworkCapabilities(mMockVpn.getNetwork());
         assertNotNull("nc=" + nc, nc.getUids());
         assertEquals(nc.getUids(), uidRangesForUid(uid));
+        assertVpnTransportInfo(nc, VpnManager.TYPE_VPN_SERVICE);
 
         // Set an underlying network and expect to see the VPN transports change.
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
