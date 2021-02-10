@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6f7e6158_195bf62f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T13:56:36Z",
+      "side": 1,
+      "message": "Ah yes",
+      "parentUuid": "7bcd7511_f3cba11d",
+      "range": {
+        "startLine": 10,
+        "startChar": 47,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "6fd0ce693211e1b5fcb1c88eaeea04db4abd75ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "db89de81_af873c9f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 9
@@ -37,6 +61,23 @@
       "writtenOn": "2021-02-08T14:31:40Z",
       "side": 1,
       "message": "LGTM except hashCode and commit message",
+      "revId": "6fd0ce693211e1b5fcb1c88eaeea04db4abd75ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e901728_bff1641f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T13:56:36Z",
+      "side": 1,
+      "message": "This patch is no longer needed, as I found a much simpler method that doesn\u0027t require storing this at all.",
       "revId": "6fd0ce693211e1b5fcb1c88eaeea04db4abd75ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -54,6 +95,30 @@
       "writtenOn": "2021-02-08T14:31:40Z",
       "side": 1,
       "message": "I know this is fancy. But I don\u0027t think anyone else could fix it if it is not correct.\nCould we just use the old fashioned way e.g. Objects.hash()?",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 23
+      },
+      "revId": "6fd0ce693211e1b5fcb1c88eaeea04db4abd75ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2d15978_48242f3b",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T13:56:36Z",
+      "side": 1,
+      "message": "Do you really think it\u0027s that hard ? With the explanation I don\u0027t think it\u0027s a big problem. Bit math is easy for most programmers. Besides, by S, the legacy int is removed, and we can just return the policy.\n\nAlso and importantly Objects.hash() can\u0027t give us a perfect hash. A perfect hash is a very important property for performance, and this is O(1). There is a world of difference between this simple implementation and an Objects.hash()-based one.",
+      "parentUuid": "a5151559_fdca14cf",
       "range": {
         "startLine": 84,
         "startChar": 15,
