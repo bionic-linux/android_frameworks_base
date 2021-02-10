@@ -106,6 +106,24 @@
       "parentUuid": "ef2228b5_b2e482fc",
       "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69c23885_7848f733",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-02-10T20:15:44Z",
+      "side": 1,
+      "message": "Yeah, thanks for point out. `adb shell` actually holds the permission since it will have uid 2000. After some discussion with Jeff \u0026 security, we find our priority is to protect against a remote malicious app, (who won\u0027t have shell access). And attackers can do much more if they can access adb shell....\n\nFor us, we won\u0027t change the impl provider once the ror flow starts. So there is no provider change in the danger zone.",
+      "parentUuid": "6b354169_0a56fdb3",
+      "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
