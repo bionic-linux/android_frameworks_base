@@ -36,7 +36,6 @@ public class VpnTransportInfoTest {
     public void testParceling() {
         VpnTransportInfo v = new VpnTransportInfo(VpnManager.TYPE_VPN_PLATFORM);
         assertParcelSane(v, 1 /* fieldCount */);
-        assertParcelingIsLossless(v);
     }
 
     @Test
