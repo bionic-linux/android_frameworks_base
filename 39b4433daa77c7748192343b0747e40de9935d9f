@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33d6a2d5_b39b2664",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-10T18:40:43Z",
+      "side": 1,
+      "message": "GatewayConnection; Gateway usually means the server",
+      "range": {
+        "startLine": 296,
+        "startChar": 29,
+        "endLine": 296,
+        "endChar": 30
+      },
+      "revId": "39b4433daa77c7748192343b0747e40de9935d9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30bc20f5_da95f5d6",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-10T18:40:43Z",
+      "side": 1,
+      "message": "Suggest ERROR_INTERNAL_FAILURE and ERROR_SESSION_DIED\n\nIf IKE gets a DNS failure, do we get any special failure? That might be worth piping up",
+      "range": {
+        "startLine": 303,
+        "startChar": 4,
+        "endLine": 303,
+        "endChar": 10
+      },
+      "revId": "39b4433daa77c7748192343b0747e40de9935d9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e557b3ff_48a9a7cd",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-10T18:40:43Z",
+      "side": 1,
+      "message": "ditto?",
+      "range": {
+        "startLine": 337,
+        "startChar": 22,
+        "endLine": 337,
+        "endChar": 23
+      },
+      "revId": "39b4433daa77c7748192343b0747e40de9935d9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
