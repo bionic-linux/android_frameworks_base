@@ -45,6 +45,8 @@ import java.util.concurrent.Executor;
 
 public class VcnManagerTest {
     private static final ParcelUuid SUB_GROUP = new ParcelUuid(new UUID(0, 0));
+    private static final int[] UNDERLYING_NETWORK_CAPABILITIES =
+            {NetworkCapabilities.NET_CAPABILITY_IMS, NetworkCapabilities.NET_CAPABILITY_INTERNET};
     private static final Executor INLINE_EXECUTOR = Runnable::run;
 
     private IVcnManagementService mMockVcnManagementService;
