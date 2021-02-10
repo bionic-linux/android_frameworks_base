@@ -88,6 +88,24 @@
       "parentUuid": "14dad709_351df8d0",
       "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b354169_0a56fdb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-10T16:52:21Z",
+      "side": 1,
+      "message": "LockSettingsStorage.setString() will persist it for you in the database. \n\nIf you go with the system property approach as is, you have a slight discrepancy: \ncmd lock_settings set-resume-on-reboot-provider-package requires caller to hold BIND_RESUME_ON_REBOOT_SERVICE, but you could also just call adb shell setprop persist.sys.resume_on_reboot_provider_package which is protected differently (via selinux policy).",
+      "parentUuid": "ef2228b5_b2e482fc",
+      "revId": "d06cdcc587576630efda2fb372686a285219ceb1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
