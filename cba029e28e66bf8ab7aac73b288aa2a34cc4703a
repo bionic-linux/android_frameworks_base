@@ -22,6 +22,30 @@
       },
       "revId": "cba029e28e66bf8ab7aac73b288aa2a34cc4703a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "690c9cfc_f1279225",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T13:55:24Z",
+      "side": 1,
+      "message": "Unneeded now. I have found a better way that doesn\u0027t require this patch or the patch above it. Abandoned.",
+      "parentUuid": "99ef4c1b_7145816e",
+      "range": {
+        "startLine": 871,
+        "startChar": 56,
+        "endLine": 872,
+        "endChar": 46
+      },
+      "revId": "cba029e28e66bf8ab7aac73b288aa2a34cc4703a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
