@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5264dcb_0104d568",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-10T01:13:12Z",
+      "side": 1,
+      "message": "Suggest doing this first; we should give the system priority",
+      "range": {
+        "startLine": 824,
+        "startChar": 0,
+        "endLine": 824,
+        "endChar": 49
+      },
+      "revId": "2aacdec148c32533c031969a86539fb84edc38fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7a3a811_ec0e6267",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-10T01:13:12Z",
+      "side": 1,
+      "message": "Let\u0027s move this out into the actual test; it\u0027s a little clearer what we\u0027re expecting.\n\nAt that point, the method would be \"triggerVcnStatusCallbackOnEnteredSafeMode\"",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 710,
+        "endChar": 93
+      },
+      "revId": "2aacdec148c32533c031969a86539fb84edc38fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
