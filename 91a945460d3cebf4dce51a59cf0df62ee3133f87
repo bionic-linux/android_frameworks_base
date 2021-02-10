@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6571be2c_699d7812",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 6429,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T02:53:43Z",
+      "side": 1,
+      "message": "As we saw in an earlier patch, let\u0027s rename this",
+      "range": {
+        "startLine": 6429,
+        "startChar": 57,
+        "endLine": 6429,
+        "endChar": 64
+      },
+      "revId": "91a945460d3cebf4dce51a59cf0df62ee3133f87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60d21ca8_4c1a1248",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T02:53:43Z",
+      "side": 1,
+      "message": "This needs to be @SystemApi or there is no way for the client to build this object",
+      "range": {
+        "startLine": 103,
+        "startChar": 30,
+        "endLine": 103,
+        "endChar": 37
+      },
+      "revId": "91a945460d3cebf4dce51a59cf0df62ee3133f87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
