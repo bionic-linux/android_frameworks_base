@@ -16,6 +16,23 @@
       "message": "Hello, could you please take a look on my CL?\nThanks.",
       "revId": "614f0a48bae8f30501093e8007f09af302d1944c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0bc72eb_a6942edb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1567114
+      },
+      "writtenOn": "2021-02-10T01:34:44Z",
+      "side": 1,
+      "message": "Thank you for reporting this issue.\n\nFirst, PiP is not yet officially supported in AAOS and not recommended to be used.\n\nAlso, when we call setOccluded(false), that should mean that Keyguard was already visible but an Activity shown on top of it has disappeared. Therefore, the real problem seems to be that setOccluded(true) and then setOccluded(false) was called when Keyguard was not visible to begin with. I think a more fundamental solution should address this issue instead.\n\nWe are calling show() on reset() for an edge case unrelated to occlusion, so deleting it doesn\u0027t seem to be a safe change to make.",
+      "revId": "614f0a48bae8f30501093e8007f09af302d1944c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
