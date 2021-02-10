@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d102a0b4_d430fde0",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 4305,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T02:42:37Z",
+      "side": 1,
+      "message": "I removed it because it needs to be consistent with restrictRequestUidsForCallerAndSetRequestorInfo, which allows the caller to specify the UIDs in the request (more specifically, not *overwrite* the UIDs) iff the caller has the settings permission.\n\nI considered changing restrictRequestUidsForCallerAndSetRequestorInfo to allow NETWORK_STACK to do this, but most permission checks in ConnectivityService do not do this, they only look at NETWORK_SETTINGS and not at NETWORK_STACK.\n\nIf we want to change this (and we probably should) I think it\u0027s probably best done in a separate CL since there are many cases to consider.",
+      "parentUuid": "c7b3c05b_e5da5a2a",
+      "range": {
+        "startLine": 4305,
+        "startChar": 12,
+        "endLine": 4305,
+        "endChar": 54
+      },
+      "revId": "2f674979e5db9197e47626b71d4e0db8cac4eeaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2969f9c_b712ee9d",

@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8ec843d_4ac4f32e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 5813,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T02:42:37Z",
+      "side": 1,
+      "message": "Done in an upcoming CL.",
+      "parentUuid": "03116d67_767eeae4",
+      "range": {
+        "startLine": 5813,
+        "startChar": 12,
+        "endLine": 5813,
+        "endChar": 19
+      },
+      "revId": "20987c31752267ba4ebd87cc252d5bb57fd13a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "952a9055_607bec26",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60dd07a7_15fc6019",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T02:42:37Z",
+      "side": 1,
+      "message": "Actually I\u0027m not sure that\u0027s a good idea.\n\nWithout NETWORK_SETTINGS the system default callback cannot be filed at all (it will throw SecurityException). So even if we do make it a helper method, it will be littered with stuff like:\n\n    if (systemDefaultCallback !\u003d null) systemDefaultCallback.assertNoCallback();\n\n    if (systemDefaultCallback !\u003d null) {\n        systemDefaultCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);\n    }\n\n    if (systemDefaultCallback !\u003d null) {\n        assertEquals(systemDefaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());\n    }\n\nTo avoid all that ugly/distracting code I suppose we could add the concept of \"callback that is not registered\" to TestNetworkCallback, and ensure that all the expectXyz() methods on it simply do nothing if it\u0027s not registered... but on the other hand that seems extremely error-prone because if we ever make the mistake of not actually registering a callback, then we\u0027ll have a test method full of assertions that looks fine but actually doesn\u0027t check anything.\n\nI think it\u0027s better simply to throw an exception if the caller does not have NETWORK_SETTINGS. I\u0027ve done that in an upcoming CL.",
+      "parentUuid": "952a9055_607bec26",
+      "range": {
+        "startLine": 3652,
+        "startChar": 8,
+        "endLine": 3654,
+        "endChar": 36
+      },
+      "revId": "20987c31752267ba4ebd87cc252d5bb57fd13a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b31a5552_6f8dea69",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-10T02:04:29Z",
       "side": 1,
       "message": "The same applies here",
+      "range": {
+        "startLine": 6161,
+        "startChar": 24,
+        "endLine": 6161,
+        "endChar": 37
+      },
+      "revId": "20987c31752267ba4ebd87cc252d5bb57fd13a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "430b7cb6_0f57976f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 6161,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-10T02:42:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b31a5552_6f8dea69",
       "range": {
         "startLine": 6161,
         "startChar": 24,
