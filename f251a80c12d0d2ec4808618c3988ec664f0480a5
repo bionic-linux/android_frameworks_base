@@ -104,6 +104,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2fce1f3_506f5c8d",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "This is indeed just for VPN. No other client used keystore in this way.",
+      "parentUuid": "b556795b_fbda181a",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 80
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0575e5d7_e977ed6e",
@@ -127,6 +151,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8324b74b_ded15807",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0575e5d7_e977ed6e",
+      "range": {
+        "startLine": 39,
+        "startChar": 19,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f12d97d1_a80cc584",
@@ -140,6 +188,30 @@
       "writtenOn": "2021-02-06T05:26:48Z",
       "side": 1,
       "message": "Don\u0027t we have a constant for this ?",
+      "range": {
+        "startLine": 41,
+        "startChar": 48,
+        "endLine": 41,
+        "endChar": 82
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbf2f4a6_044667f6",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "We do now.",
+      "parentUuid": "f12d97d1_a80cc584",
       "range": {
         "startLine": 41,
         "startChar": 48,
@@ -175,6 +247,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ad6f0ab_98e7f1f3",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "Essentially, unexpected file system or IPC errors. Keystore.put() used to return false in cases like these, which the VPN dialog seemed to have ignored so far. Now we would throw a runtime exception. Con, it may make the UI look bad if not handled. Pro we notice that something went wrong.\n\nWhat would you like?",
+      "parentUuid": "6ddbbba0_c219e6a4",
+      "range": {
+        "startLine": 48,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 48
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9af58cbb_f43f3ed3",
         "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
         "patchSetId": 4
@@ -186,6 +282,30 @@
       "writtenOn": "2021-02-06T05:26:48Z",
       "side": 1,
       "message": "Does this provide fallback to the old KeyStore ? If not, I guess we need to implement it here, so that devices upgrading can still read their old profiles.",
+      "range": {
+        "startLine": 80,
+        "startChar": 36,
+        "endLine": 80,
+        "endChar": 39
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a12ab228_40df69c8",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "The fallback is in the else arm. So unless keystore 2 is enabled this just calls the old implementation. When Keystore2 is enabled it always calls the new interface. The back end will make the old profiles available through the new interface. It will import them into the new database an demand.",
+      "parentUuid": "9af58cbb_f43f3ed3",
       "range": {
         "startLine": 80,
         "startChar": 36,
@@ -221,6 +341,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c1cab83_b57c0d1f",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "Same as above. The backend will take care of the backward compatibility and consistency. I intend to remove the old interface entirely once Keystore2 is the default.",
+      "parentUuid": "587a9e4a_03a3c730",
+      "range": {
+        "startLine": 104,
+        "startChar": 29,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40d3a2bd_07a426ce",
         "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
         "patchSetId": 4
@@ -232,6 +376,30 @@
       "writtenOn": "2021-02-06T05:26:48Z",
       "side": 1,
       "message": "...and similar question here, where we\u0027d in fact need to merge the list with priority to the  values returned by Keystore 2, if it\u0027s not done on the service side.",
+      "range": {
+        "startLine": 129,
+        "startChar": 36,
+        "endLine": 129,
+        "endChar": 40
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "095d905c_dde5a24f",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "Right, the keystore 2 daemon knows about all profiles, old and new. When we are done this is completely transparent. If you were to enable keystore 2 now those would be different databases, but we should have the legacy blob support working this week and landed soon after.",
+      "parentUuid": "40d3a2bd_07a426ce",
       "range": {
         "startLine": 129,
         "startChar": 36,
@@ -265,6 +433,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "118e3841_3ebe48a4",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c3d94bf_cb5a2ecb",
+      "range": {
+        "startLine": 131,
+        "startChar": 22,
+        "endLine": 131,
+        "endChar": 23
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16b3da78_4befac32",
@@ -288,6 +480,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f5716d0_2005b14a",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16b3da78_4befac32",
+      "range": {
+        "startLine": 132,
+        "startChar": 16,
+        "endLine": 135,
+        "endChar": 30
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ef85c2c_8c0a4977",
@@ -301,6 +517,30 @@
       "writtenOn": "2021-02-06T05:26:48Z",
       "side": 1,
       "message": "Is this something that could already happen with Keystore 1.0 ? It sounds like clients are expected to retry on this, and I don\u0027t think VPN has any code doing the retries. If this is a new concept, we may need to adjust the code that might receive this exception.\n\n(otherwise, well we\u0027ll be bug-for-bug compatible)",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ceb6500d_73d8bab5",
+        "filename": "keystore/java/android/security/LegacyVpnStoreException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-10T05:48:27Z",
+      "side": 1,
+      "message": "Keystore.put() turns all errors into false, which the VPN config dialog ignores. get() turns all errors into null.\n\nThe error message is a copy paste error. I recycled this from the backend busy exception from keystore 2 which has a limited number of operation slots. This is not something that can occur in this context. The only time an exception like this is thrown is in case of an unexpected error such as IPC/Binder or file system errors.\n\nRight now the behavior is identical to the old interface only that actual error conditions are thrown as runtime exceptions. I can silence them and mimic the old behavior.\n\nLet me know what you prefer.",
+      "parentUuid": "2ef85c2c_8c0a4977",
       "range": {
         "startLine": 29,
         "startChar": 11,
