@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6609c2b6_f9f5c34d",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 21
+      },
+      "lineNbr": 6429,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T06:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6571be2c_699d7812",
+      "range": {
+        "startLine": 6429,
+        "startChar": 57,
+        "endLine": 6429,
+        "endChar": 64
+      },
+      "revId": "91a945460d3cebf4dce51a59cf0df62ee3133f87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60d21ca8_4c1a1248",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-10T02:53:43Z",
       "side": 1,
       "message": "This needs to be @SystemApi or there is no way for the client to build this object",
+      "range": {
+        "startLine": 103,
+        "startChar": 30,
+        "endLine": 103,
+        "endChar": 37
+      },
+      "revId": "91a945460d3cebf4dce51a59cf0df62ee3133f87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8195210_bc2a75f5",
+        "filename": "core/java/android/net/OemNetworkPreferences.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-10T06:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60d21ca8_4c1a1248",
       "range": {
         "startLine": 103,
         "startChar": 30,
