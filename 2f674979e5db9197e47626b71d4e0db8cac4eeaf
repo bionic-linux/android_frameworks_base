@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88cb408d_68662be0",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 4305,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T03:06:58Z",
+      "side": 1,
+      "message": "Fair enough. Thanks.",
+      "parentUuid": "d102a0b4_d430fde0",
+      "range": {
+        "startLine": 4305,
+        "startChar": 12,
+        "endLine": 4305,
+        "endChar": 54
+      },
+      "revId": "2f674979e5db9197e47626b71d4e0db8cac4eeaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2969f9c_b712ee9d",

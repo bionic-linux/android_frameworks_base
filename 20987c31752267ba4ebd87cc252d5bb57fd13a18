@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80018b77_a112810b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-10T03:06:58Z",
+      "side": 1,
+      "message": "Right, the code you describe is exactly what I meant by intrusive.\n\nI agree the change on TestNetworkCallback would be fairly confusing, but maybe this method could have a local class doing the equivalent with only what this test uses. Or, we could have somewhere a helper method to create a wrapper that delegates iff non-null.\n\nIn any case, what you have is fine.",
+      "parentUuid": "60dd07a7_15fc6019",
+      "range": {
+        "startLine": 3652,
+        "startChar": 8,
+        "endLine": 3654,
+        "endChar": 36
+      },
+      "revId": "20987c31752267ba4ebd87cc252d5bb57fd13a18",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b31a5552_6f8dea69",
