@@ -17,6 +17,7 @@ package android.net.vcn;
 
 import static java.util.Objects.requireNonNull;
 
+import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
@@ -32,6 +33,8 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -287,6 +290,18 @@ public class VcnManager {
         }
     }
 
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({GATEWAY_ERROR_AUTHENTICATION_FAILED})
+    public @interface GatewayError {}
+
+    /**
+     * GatewayError value representing an authentication failure when establishing the Gateway.
+     *
+     * @hide
+     */
+    public static final int GATEWAY_ERROR_AUTHENTICATION_FAILED = 1;
+
     // TODO: make VcnStatusCallback @SystemApi
     /**
      * VcnStatusCallback is the interface for Carrier apps to receive updates for their VCNs.
@@ -308,6 +323,22 @@ public class VcnManager {
          * via {@link #setVcnConfig(ParcelUuid, VcnConfig)}.
          */
         void onEnteredSafemode();
+
+        /**
+         * Invoked when a VCN Gateway corresponding to this callback's subscription encounters an
+         * error.
+         *
+         * @param gatewayNetworkCapabilities an array of underlying NetworkCapabilities for the VCN
+         *     Gateway that encountered the error for identification purposes. These will exactly
+         *     match one of the {@link VcnGatewayConnectionConfig}s set in the {@link VcnConfig} for
+         *     this
+         * @param errorType the {@link GatewayError} type that occurred
+         * @param message a description of the error that occurred
+         */
+        void onGatewayError(
+                @NonNull int[] gatewayNetworkCapabilities,
+                @GatewayError int errorType,
+                @NonNull String message);
     }
 
     /**
@@ -416,6 +447,13 @@ public class VcnManager {
         @Override
         public void onEnteredSafemode() {
             mExecutor.execute(() -> mCallback.onEnteredSafemode());
+        }
+
+        @Override
+        public void onGatewayError(
+                @NonNull int[] gatewayNetworkCapabilities, int cause, @NonNull String message) {
+            mExecutor.execute(
+                    () -> mCallback.onGatewayError(gatewayNetworkCapabilities, cause, message));
         }
     }
 }
