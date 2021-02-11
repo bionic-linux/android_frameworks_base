@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008112103",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1584516?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e36460c2_766835ff",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-11T21:26:47Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(KeyguardManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 668,
+        "startChar": 16,
+        "endLine": 668,
+        "endChar": 59
+      },
+      "revId": "490bbe224acace3a85c267b62b946916b0bdb731",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
