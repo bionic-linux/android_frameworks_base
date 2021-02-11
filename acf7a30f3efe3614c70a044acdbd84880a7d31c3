@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "844b33c5_63fa246b",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-11T20:57:23Z",
+      "side": 1,
+      "message": "I\u0027ve filed b/180031815. I\u0027d like to get rid of this.",
+      "range": {
+        "startLine": 1113,
+        "startChar": 36,
+        "endLine": 1113,
+        "endChar": 46
+      },
+      "revId": "acf7a30f3efe3614c70a044acdbd84880a7d31c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
