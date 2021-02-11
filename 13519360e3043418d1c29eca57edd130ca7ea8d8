@@ -69,6 +69,24 @@
       "parentUuid": "c316168d_e4707a7d",
       "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33e6fbc8_4290ac96",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133568
+      },
+      "writtenOn": "2021-02-11T22:31:25Z",
+      "side": 1,
+      "message": "Hi Mikhail I agree. Clients can use AudioManager.getDevices() to retrieve AudioDeviceInfos, and the API will be better. Also, I don\u0027t think the AIDL change is needed (otherwise a lot of Parcelable changes are needed). I will push a PS3 which resolves these issues. Thanks for your review!",
+      "parentUuid": "64a8c499_8dfb4265",
+      "revId": "13519360e3043418d1c29eca57edd130ca7ea8d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
