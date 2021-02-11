@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4034ab59_bb2821e3",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e919567c_19c4a752",
+      "range": {
+        "startLine": 580,
+        "startChar": 20,
+        "endLine": 580,
+        "endChar": 47
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91c6aa3a_a7b37715",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-10T01:25:52Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 623,
+        "startChar": 24,
+        "endLine": 623,
+        "endChar": 51
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01bf433c_8242c729",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:37:54Z",
+      "side": 1,
+      "message": "are we sure we want this removed? Since this is invoked outside of VcnGatewayConnection (in UnderlyingNetworkTracker), it is somewhat harder to guarantee it is invoked on the same Thread.\n\nIt may be worth the redundant check for the safety (especially with the WakeupMessage assignment here in aosp/1574005)",
+      "parentUuid": "91c6aa3a_a7b37715",
       "range": {
         "startLine": 623,
         "startChar": 24,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b0279e4_5dff7fa6",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:37:54Z",
+      "side": 1,
+      "message": "Per our conversation offline, moving to only use sendMessageAndAcquireWakeLock() for all sendMessage() calls. Also overrode all sendMessage() methods to Log.wtf()\n\nAdditionally, will document at the class-level that future classes should use this new sendMessage() unless there is an explicit reason not to",
+      "parentUuid": "6633c8e6_2fac8aee",
+      "range": {
+        "startLine": 669,
+        "startChar": 16,
+        "endLine": 669,
+        "endChar": 27
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb00f286_16307298",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b146689_a983d99c",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:37:54Z",
+      "side": 1,
+      "message": "per our conversation offline, making BaseState#processMessage final and merging ActiveBaseState\u0027s token check into isValidToken(token)\n\nAlso documenting that this is done to ensure the WakeLock is released",
+      "parentUuid": "fb00f286_16307298",
+      "range": {
+        "startLine": 739,
+        "startChar": 8,
+        "endLine": 739,
+        "endChar": 14
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "590bee71_07889813",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-10T01:25:52Z",
       "side": 1,
       "message": "Yeah, and now I\u0027m scared. We can\u0027t make the BaseState processMessage() final, but we have to remember to release the WakeLock every time we override processMessage(), which is what I prefer not to do...",
+      "range": {
+        "startLine": 879,
+        "startChar": 23,
+        "endLine": 879,
+        "endChar": 37
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c4c3085_5057c536",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590bee71_07889813",
       "range": {
         "startLine": 879,
         "startChar": 23,
@@ -141,6 +261,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22087dea_50c99ad8",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:37:54Z",
+      "side": 1,
+      "message": "Felt weird to split the VcnContext -\u003e PowerManager process. Otherwise, we will get Context from VcnContext when calling Dependencies#newWakeLock, then get the SystemService from Context here\n\nVcnContext and Context are both mocked in testing",
+      "parentUuid": "64c4576f_31341726",
+      "range": {
+        "startLine": 1677,
+        "startChar": 36,
+        "endLine": 1677,
+        "endChar": 46
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0d5545b2_5c4de7cc",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 15
@@ -152,6 +296,30 @@
       "writtenOn": "2021-02-10T01:25:52Z",
       "side": 1,
       "message": "I don\u0027t believe this class ever used a version that\u0027s not refcounted. Perhaps YAGNI this out? Since we have an encapsulating class for test-ability anyway, might as well make use of it to just set this thing up the way we want as part of the constructor.",
+      "range": {
+        "startLine": 1684,
+        "startChar": 20,
+        "endLine": 1684,
+        "endChar": 39
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2426cd67_67a0faef",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:37:54Z",
+      "side": 1,
+      "message": "Was included for testing purposes. Combined with VcnWakeLock constructor",
+      "parentUuid": "0d5545b2_5c4de7cc",
       "range": {
         "startLine": 1684,
         "startChar": 20,
