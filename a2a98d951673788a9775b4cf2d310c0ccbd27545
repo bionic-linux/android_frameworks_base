@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7b95964_bbd94151",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-11T23:00:33Z",
+      "side": 1,
+      "message": "I like the set/cancel that you did with the retryTimeoutAlarm. Consider doing it for all 3? This will also allow the nullability signal of the alarm to be encapsulated so that the \"do not reschedule if scheduled\" and the \"cleanup\" behavior are consistent.",
+      "range": {
+        "startLine": 660,
+        "startChar": 16,
+        "endLine": 660,
+        "endChar": 39
+      },
+      "revId": "a2a98d951673788a9775b4cf2d310c0ccbd27545",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

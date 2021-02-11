@@ -93,6 +93,30 @@
       },
       "revId": "4c8a53f8f3a7e30f5495f0a17ffd830f1559aae7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfa43727_b35867a7",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-11T23:00:33Z",
+      "side": 1,
+      "message": "Ok, so the purpose here is to ensure that the message is ordered properly in the queue? I didn\u0027t consider that. SG.",
+      "parentUuid": "bc51a179_94db1dd6",
+      "range": {
+        "startLine": 661,
+        "startChar": 38,
+        "endLine": 661,
+        "endChar": 49
+      },
+      "revId": "4c8a53f8f3a7e30f5495f0a17ffd830f1559aae7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
