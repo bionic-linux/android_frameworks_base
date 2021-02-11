@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04b14640_7bc12b9c",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-11T22:05:32Z",
+      "side": 1,
+      "message": "If it\u0027s redundant, then it doesn\u0027t provide additional safety...\n\nBut, it looks like there is a problem. the UnderlyingNetworkTracker.callback() should be invoked on a provided Handler (or Executor). Right now it\u0027s not because there\u0027s not a handler/executor parameter AFAIK. Let\u0027s fix that!",
+      "parentUuid": "01bf433c_8242c729",
+      "range": {
+        "startLine": 623,
+        "startChar": 24,
+        "endLine": 623,
+        "endChar": 51
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6633c8e6_2fac8aee",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 15
@@ -273,6 +297,30 @@
       "side": 1,
       "message": "Felt weird to split the VcnContext -\u003e PowerManager process. Otherwise, we will get Context from VcnContext when calling Dependencies#newWakeLock, then get the SystemService from Context here\n\nVcnContext and Context are both mocked in testing",
       "parentUuid": "64c4576f_31341726",
+      "range": {
+        "startLine": 1677,
+        "startChar": 36,
+        "endLine": 1677,
+        "endChar": 46
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45518490_65566008",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-11T22:05:32Z",
+      "side": 1,
+      "message": "Generally you want to minimize the scope of inputs to a method (less cognitive load that way: the contract is clearer), but it\u0027s NBD. The extreme case of passing around the world is global scope. :)",
+      "parentUuid": "22087dea_50c99ad8",
       "range": {
         "startLine": 1677,
         "startChar": 36,
