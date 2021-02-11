@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b70e83dc_97257f51",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:42:32Z",
+      "side": 1,
+      "message": "Continued to keep the alarm Nullable as I feel this design is more straightforward (as opposed to overriding WakeupMessage to expose an isScheduled())\n\nDone",
+      "parentUuid": "910e0707_916d2c9e",
+      "range": {
+        "startLine": 646,
+        "startChar": 0,
+        "endLine": 657,
+        "endChar": 47
+      },
+      "revId": "4c8a53f8f3a7e30f5495f0a17ffd830f1559aae7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "752f32cd_f7702163",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-10T02:35:39Z",
       "side": 1,
       "message": "I take it that it\u0027s necessary to wrap a sendMessage() in a sendMessage() because of the WakeLock()? Grumble grumble. If you look, you\u0027ll see that WakeupMessage directly calls Handler.dispatchMessage(). Is there some way that we can exploit that? For instance, should we override dispatchMessage() to grab the lovely VcnWakeLock?",
+      "range": {
+        "startLine": 661,
+        "startChar": 38,
+        "endLine": 661,
+        "endChar": 49
+      },
+      "revId": "4c8a53f8f3a7e30f5495f0a17ffd830f1559aae7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc51a179_94db1dd6",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-11T07:42:32Z",
+      "side": 1,
+      "message": "This was an intentional choice - dispatchMessage() is guaranteed to execute immediately. However, we don\u0027t want it to preempt the current Handler queue, as there may be events in the queue that resolve this alarm.\n\nFrom a WakeLock / wokeness perspective, because dispatchMessage() is called from WakeupMessage#onAlarm (which we know will execute without the device going to sleep), the sendMessageAndAcquireWakeLock() here will acquire the WakeLock if not already held and ensure the device stays awake while processing all messages in the Handler queue.",
+      "parentUuid": "752f32cd_f7702163",
       "range": {
         "startLine": 661,
         "startChar": 38,
