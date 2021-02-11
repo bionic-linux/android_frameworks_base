@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d7b8168_ca3452d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-11T14:21:40Z",
+      "side": 1,
+      "message": "Rubber-stamping TestAPI",
+      "revId": "c5616b51d1cdbfa6059144aa183b4cb0e1f306ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
