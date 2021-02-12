@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa93444b_6d790158",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-12T22:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33d6a2d5_b39b2664",
+      "range": {
+        "startLine": 296,
+        "startChar": 29,
+        "endLine": 296,
+        "endChar": 30
+      },
+      "revId": "39b4433daa77c7748192343b0747e40de9935d9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30bc20f5_da95f5d6",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bdf06bed_adf4c8dc",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-12T22:44:22Z",
+      "side": 1,
+      "message": "Also added ERROR_INTERNAL_FAILURE and ERROR_SESSION_DIED.\n\nThere is not a specific IKE Exception for DNS Failure - it will be returned as IkeInternalException(UnknownHostException) which we can certainly check for. Howver, this may be worth exposing as a typed-Exception under IkeNonProtocolException - thoughts?\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:packages/modules/IPsec/src/java/com/android/internal/net/ipsec/ike/IkeSessionStateMachine.java;drc\u003dmaster;l\u003d1215\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/packages/Connectivity/framework/src/android/net/Network.java;drc\u003dmaster;l\u003d144",
+      "parentUuid": "30bc20f5_da95f5d6",
+      "range": {
+        "startLine": 303,
+        "startChar": 4,
+        "endLine": 303,
+        "endChar": 10
+      },
+      "revId": "39b4433daa77c7748192343b0747e40de9935d9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e557b3ff_48a9a7cd",
         "filename": "core/java/android/net/vcn/VcnManager.java",
         "patchSetId": 4
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-10T18:40:43Z",
       "side": 1,
       "message": "ditto?",
+      "range": {
+        "startLine": 337,
+        "startChar": 22,
+        "endLine": 337,
+        "endChar": 23
+      },
+      "revId": "39b4433daa77c7748192343b0747e40de9935d9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "418bf16b_8ae9577f",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-12T22:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e557b3ff_48a9a7cd",
       "range": {
         "startLine": 337,
         "startChar": 22,
