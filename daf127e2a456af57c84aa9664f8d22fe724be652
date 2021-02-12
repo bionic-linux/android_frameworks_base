@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f4df9f4_b80db237",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-12T20:06:21Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not sure I explained this correctly last time.\n\nUnderlyingNetworkTracker.callback() is currently only invoked from the NetworkCallbacks in UNT and the NetworkCallbacks are registered to ConnectivityService with the VCN Looper. This means everything is already safe as-is and we do not technically need to check that we are on the Looper thread.\n\nI am proposing we keep this check because it is cheap and will protect us in the future (just in case the NetworkCallback registration ever changes). Thoughts?",
+      "parentUuid": "04b14640_7bc12b9c",
+      "range": {
+        "startLine": 623,
+        "startChar": 24,
+        "endLine": 623,
+        "endChar": 51
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6633c8e6_2fac8aee",
         "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
         "patchSetId": 15
@@ -321,6 +345,30 @@
       "side": 1,
       "message": "Generally you want to minimize the scope of inputs to a method (less cognitive load that way: the contract is clearer), but it\u0027s NBD. The extreme case of passing around the world is global scope. :)",
       "parentUuid": "22087dea_50c99ad8",
+      "range": {
+        "startLine": 1677,
+        "startChar": 36,
+        "endLine": 1677,
+        "endChar": 46
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aec1a179_b0c981ce",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-12T20:06:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45518490_65566008",
       "range": {
         "startLine": 1677,
         "startChar": 36,
