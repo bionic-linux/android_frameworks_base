@@ -167,6 +167,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1c8cb14_d47e900e",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-12T21:40:26Z",
+      "side": 1,
+      "message": "Created b/180132994 and added a TODO to circle back\n\nMarking resolved for the time being",
+      "parentUuid": "257dbaee_90116009",
+      "range": {
+        "startLine": 623,
+        "startChar": 24,
+        "endLine": 623,
+        "endChar": 51
+      },
+      "revId": "daf127e2a456af57c84aa9664f8d22fe724be652",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6633c8e6_2fac8aee",
