@@ -34,6 +34,24 @@
       "parentUuid": "dcf9ef0c_0b972ece",
       "revId": "a2873601207f87f3cc826adbaab6d45cda8e1042",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dad549ff_33e5c680",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-02-12T23:06:02Z",
+      "side": 1,
+      "message": "We can iterate backwards: for (int i \u003d mTombstones.size() - 1; i \u003e\u003d 0; i--) {...}, so we don\u0027t need to restart the iteration if one of them needs to be purged",
+      "parentUuid": "6a0f816e_9dc0bee3",
+      "revId": "a2873601207f87f3cc826adbaab6d45cda8e1042",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
