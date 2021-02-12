@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd861d06_1507f926",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-12T16:23:52Z",
+      "side": 1,
+      "message": "This does clean things up a lot; nice.",
+      "revId": "55bdf7bdb8f3f80763281ae36b1a76ea817f33ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76ba7c94_fe0f7e67",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-12T16:23:52Z",
+      "side": 1,
+      "message": "See guidelines on returning -1 for errors: \ngo/android-api-guidelines#return-error\n\nIt is preferable to have a documented @throws indicating an exception which would be thrown if the provider is broken.  -1 is being used for \"couldn\u0027t encode name\" and for \"provider unavailable\".  It is reasonable to return the -1 constant where the name can\u0027t be encoded and to throw IllegalStateException where the provider is unavailable (since that is a more exceptional situation).",
+      "range": {
+        "startLine": 269,
+        "startChar": 23,
+        "endLine": 269,
+        "endChar": 46
+      },
+      "revId": "55bdf7bdb8f3f80763281ae36b1a76ea817f33ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
