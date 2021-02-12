@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ce8626b_92558460",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:58:41Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "d355329c0e47504fa25b141ad1d3c9ae6192dda9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6436ff81_30c9fec5",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:58:41Z",
+      "side": 1,
+      "message": "These should be @NonNull.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "d355329c0e47504fa25b141ad1d3c9ae6192dda9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "124df34a_05583e63",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:58:41Z",
+      "side": 1,
+      "message": "Per comment on other CL, maybe just \"legacyType\"?",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "d355329c0e47504fa25b141ad1d3c9ae6192dda9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3d820cd_053adf6c",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T02:58:41Z",
+      "side": 1,
+      "message": "Please add javadocs for all fields.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "d355329c0e47504fa25b141ad1d3c9ae6192dda9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
