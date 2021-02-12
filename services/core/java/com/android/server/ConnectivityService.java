@@ -4824,7 +4824,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         if (!mLockdownEnabled) {
             return null;
         }
-        // The legacy lockdown VPN always only applies to UID 0.
+        // The legacy lockdown VPN always only applies to userId 0.
         final NetworkAgentInfo nai = getVpnForUid(Process.FIRST_APPLICATION_UID);
         if (nai == null || !isLegacyLockdownNai(nai)) return null;
 
