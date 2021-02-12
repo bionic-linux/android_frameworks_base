@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "378a8ee6_cfaa4c21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-12T17:09:27Z",
+      "side": 1,
+      "message": "woot! looks good\n\n+omakoto FYI",
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0ce7a4b_1ad784be",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-12T17:09:27Z",
+      "side": 1,
+      "message": "can you remove the duped sources from here now?\n\n    \":services-non-updatable-sources\"",
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68a56dae_f4197bf4",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-12T17:09:27Z",
+      "side": 1,
+      "message": "can either put this in a variable and reuse with the above, or put this plus the other \"shared\" stuff in a stubs_defaults {}",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 221,
+        "endChar": 40
+      },
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b06cc64_bfb07438",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-12T17:09:27Z",
+      "side": 1,
+      "message": "are you planning on first checking this in, then remove the existing one, then rename this one?\n\nI would not mind if you took a slightly more aggressive approach than I did, and start with renaming the existing api/current.txt to api/current-all.txt or something like that, and then rebase this CL on that one and make this the canonical current.txt from the start. WDYT?",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 52
+      },
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b80f7200_a215efb8",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-12T17:09:27Z",
+      "side": 1,
+      "message": "android-non-updatable is the pattern we use elsewhere",
+      "range": {
+        "startLine": 239,
+        "startChar": 19,
+        "endLine": 239,
+        "endChar": 40
+      },
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59c8f5d1_cf84e0da",
+        "filename": "services/api/non-updatable-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-12T17:09:27Z",
+      "side": 1,
+      "message": "this file is almost certainly going to conflict with sc-dev, so you probably have to start there 😞\n\n(though if presubmit passes it doesn\u0027t conflict, let\u0027s hope :D )",
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
