@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bbcd3ac_038d6b07",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-12T19:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0ce7a4b_1ad784be",
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68a56dae_f4197bf4",
@@ -65,6 +83,30 @@
       "writtenOn": "2021-02-12T17:09:27Z",
       "side": 1,
       "message": "can either put this in a variable and reuse with the above, or put this plus the other \"shared\" stuff in a stubs_defaults {}",
+      "range": {
+        "startLine": 215,
+        "startChar": 10,
+        "endLine": 221,
+        "endChar": 40
+      },
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f33dcd8f_1ef21f2f",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-12T19:07:22Z",
+      "side": 1,
+      "message": "Done, although I\u0027m not sure the shared stuff will still be needed in the stubs merge step?",
+      "parentUuid": "68a56dae_f4197bf4",
       "range": {
         "startLine": 215,
         "startChar": 10,
@@ -100,6 +142,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "95084453_b987a33f",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-12T19:07:22Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned the rename would not work well if the stubs are different upstream - is that possible? Unless you have a strong opinion on this, I\u0027d rather do it as I believe you did for frameworks stubs:\n- create non-updatable system server stubs\n- create a separate set of system server stubs by merging the non-updatable and module stubs and check that the merged stubs are equivalent to the ones created from all sources\n- replace old stubs with new stubs and remove old stub rules",
+      "parentUuid": "8b06cc64_bfb07438",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 52
+      },
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b80f7200_a215efb8",
         "filename": "services/Android.bp",
         "patchSetId": 1
@@ -111,6 +177,30 @@
       "writtenOn": "2021-02-12T17:09:27Z",
       "side": 1,
       "message": "android-non-updatable is the pattern we use elsewhere",
+      "range": {
+        "startLine": 239,
+        "startChar": 19,
+        "endLine": 239,
+        "endChar": 40
+      },
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd085f58_edf9279b",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-12T19:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b80f7200_a215efb8",
       "range": {
         "startLine": 239,
         "startChar": 19,
@@ -134,6 +224,24 @@
       "writtenOn": "2021-02-12T17:09:27Z",
       "side": 1,
       "message": "this file is almost certainly going to conflict with sc-dev, so you probably have to start there 😞\n\n(though if presubmit passes it doesn\u0027t conflict, let\u0027s hope :D )",
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "458de7e0_5cdd4aa5",
+        "filename": "services/api/non-updatable-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-02-12T19:07:22Z",
+      "side": 1,
+      "message": "🤞",
+      "parentUuid": "59c8f5d1_cf84e0da",
       "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
