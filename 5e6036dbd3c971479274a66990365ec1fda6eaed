@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ae7e0a9_421262ac",
+        "filename": "tests/net/integration/src/com/android/server/net/integrationtests/ConnectivityServiceIntegrationTest.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T07:48:41Z",
+      "side": 0,
+      "message": "Now that this is no longer mocked, what happens when the test ConnectivityService calls mNetworkStatsManager.notifyNetworkStatus()? Will it call through to the real service and fail permissions checks?\n\nIf so, then it seems better to call call context.addMockSystemService instead.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 59
+      },
+      "revId": "5e6036dbd3c971479274a66990365ec1fda6eaed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

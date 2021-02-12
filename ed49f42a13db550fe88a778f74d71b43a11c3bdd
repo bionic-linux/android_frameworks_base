@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "262d4696_9e0a8359",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T07:48:41Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "ed49f42a13db550fe88a778f74d71b43a11c3bdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "416339aa_b1eab460",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T07:48:41Z",
+      "side": 1,
+      "message": "I assume this is guaranteed to return non-null when SystemServer initializes ConnectivityService?",
+      "range": {
+        "startLine": 1057,
+        "startChar": 8,
+        "endLine": 1057,
+        "endChar": 77
+      },
+      "revId": "ed49f42a13db550fe88a778f74d71b43a11c3bdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
