@@ -33,20 +33,12 @@ import android.util.Log;
  */
 public class Authorization {
     private static final String TAG = "KeystoreAuthorization";
-    private static IKeystoreAuthorization sIKeystoreAuthorization;
 
     public static final int SYSTEM_ERROR = ResponseCode.SYSTEM_ERROR;
 
-    public Authorization() {
-        sIKeystoreAuthorization = null;
-    }
-
-    private static synchronized IKeystoreAuthorization getService() {
-        if (sIKeystoreAuthorization == null) {
-            sIKeystoreAuthorization = IKeystoreAuthorization.Stub.asInterface(
+    private static IKeystoreAuthorization getService() {
+        return IKeystoreAuthorization.Stub.asInterface(
                     ServiceManager.checkService("android.security.authorization"));
-        }
-        return sIKeystoreAuthorization;
     }
 
     /**
@@ -55,7 +47,7 @@ public class Authorization {
      * @param authToken created by Android authenticators.
      * @return 0 if successful or {@code ResponseCode.SYSTEM_ERROR}.
      */
-    public int addAuthToken(@NonNull HardwareAuthToken authToken) {
+    public static int addAuthToken(@NonNull HardwareAuthToken authToken) {
         if (!android.security.keystore2.AndroidKeyStoreProvider.isInstalled()) return 0;
         try {
             getService().addAuthToken(authToken);
@@ -73,7 +65,7 @@ public class Authorization {
      * @param authToken
      * @return 0 if successful or a {@code ResponseCode}.
      */
-    public int addAuthToken(@NonNull byte[] authToken) {
+    public static int addAuthToken(@NonNull byte[] authToken) {
         return addAuthToken(AuthTokenUtils.toHardwareAuthToken(authToken));
     }
 
@@ -86,7 +78,7 @@ public class Authorization {
      *
      * @return 0 if successful or a {@code ResponseCode}.
      */
-    public int onLockScreenEvent(@NonNull boolean locked, @NonNull int userId,
+    public static int onLockScreenEvent(@NonNull boolean locked, @NonNull int userId,
             @Nullable byte[] syntheticPassword) {
         if (!android.security.keystore2.AndroidKeyStoreProvider.isInstalled()) return 0;
         try {
