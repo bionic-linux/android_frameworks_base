@@ -22,6 +22,30 @@
       },
       "revId": "a2a98d951673788a9775b4cf2d310c0ccbd27545",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "027ce519_bc57c9ce",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-12T21:56:59Z",
+      "side": 1,
+      "message": "agreed - should have used that pattern initially.\n\nAll other alarms - teardown timeout alarm, retry timeout alarm, and safemode timeout alarm (in next CL) - have a lifecycle bounded by state transitions, so they should never be non-null during reassignment. Added Log.wtf() to track this.\n\nDone",
+      "parentUuid": "c7b95964_bbd94151",
+      "range": {
+        "startLine": 660,
+        "startChar": 16,
+        "endLine": 660,
+        "endChar": 39
+      },
+      "revId": "a2a98d951673788a9775b4cf2d310c0ccbd27545",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
