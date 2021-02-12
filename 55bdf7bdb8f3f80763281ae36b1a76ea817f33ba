@@ -39,6 +39,30 @@
       },
       "revId": "55bdf7bdb8f3f80763281ae36b1a76ea817f33ba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85164ff3_6536374c",
+        "filename": "core/java/android/provider/SimPhonebookContract.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1237773
+      },
+      "writtenOn": "2021-02-12T17:15:37Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I\u0027ve changed it to throw IllegalStateException when the provider doesn\u0027t return a result.",
+      "parentUuid": "76ba7c94_fe0f7e67",
+      "range": {
+        "startLine": 269,
+        "startChar": 23,
+        "endLine": 269,
+        "endChar": 46
+      },
+      "revId": "55bdf7bdb8f3f80763281ae36b1a76ea817f33ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
