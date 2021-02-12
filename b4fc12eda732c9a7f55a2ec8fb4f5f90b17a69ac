@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e2cb445_2afdea99",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 5385,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-12T09:58:02Z",
+      "side": 1,
+      "message": "This adds an extra permission check to a codepath that IIRC is called extremely frequently. Is there a reason we couldn\u0027t simply move the static isUidNetworkingBlocked method from NetworkPolicyManagerInternal to NetworkPolicyManager?\n\nThere is no need to do a permission check and add an AIDL interface method to call a method that doesn\u0027t expose any data and doesn\u0027t change any state.",
+      "range": {
+        "startLine": 5385,
+        "startChar": 17,
+        "endLine": 5385,
+        "endChar": 47
+      },
+      "revId": "b4fc12eda732c9a7f55a2ec8fb4f5f90b17a69ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
