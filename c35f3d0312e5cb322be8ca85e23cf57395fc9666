@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bab6235_d072c408",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-12T20:29:33Z",
+      "side": 1,
+      "message": "Nit, suggest to add language indicating when someone should override this.",
+      "range": {
+        "startLine": 846,
+        "startChar": 11,
+        "endLine": 846,
+        "endChar": 18
+      },
+      "revId": "c35f3d0312e5cb322be8ca85e23cf57395fc9666",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
