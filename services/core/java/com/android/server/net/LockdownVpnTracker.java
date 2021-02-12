@@ -16,7 +16,6 @@
 
 package com.android.server.net;
 
-import static android.net.ConnectivityManager.TYPE_NONE;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.VpnManager.NOTIFICATION_CHANNEL_VPN;
 import static android.provider.Settings.ACTION_VPN_SETTINGS;
@@ -33,8 +32,8 @@ import android.net.ConnectivityManager;
 import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.net.NetworkInfo.DetailedState;
 import android.net.NetworkRequest;
 import android.os.Handler;
 import android.security.KeyStore;
@@ -45,7 +44,7 @@ import com.android.internal.R;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 import com.android.internal.net.VpnConfig;
 import com.android.internal.net.VpnProfile;
-import com.android.server.EventLogTags;
+import com.android.net.module.util.NetworkCapabilitiesUtils;
 import com.android.server.connectivity.Vpn;
 
 import java.util.List;
@@ -81,8 +80,10 @@ public class LockdownVpnTracker {
 
     private class NetworkCallback extends ConnectivityManager.NetworkCallback {
         private Network mNetwork = null;
+        private NetworkCapabilities mNetworkCapabilities = null;
         private LinkProperties mLinkProperties = null;
 
+        @Override
         public void onLinkPropertiesChanged(Network network, LinkProperties lp) {
             boolean networkChanged = false;
             if (!network.equals(mNetwork)) {
@@ -100,6 +101,16 @@ public class LockdownVpnTracker {
             }
         }
 
+        @Override
+        public void onCapabilitiesChanged(Network network, NetworkCapabilities nc) {
+            // Always called immediately before onLinkPropertiesChanged when a network connects.
+            if (!network.equals(mNetwork)) return;
+            mNetworkCapabilities = nc;
+            // No need to do anything. LockdownVpnTracker would not respond to network capability
+            // changes, only to network connects/disconnects. This is only used for logging anyway.
+        }
+
+        @Override
         public void onLost(Network network) {
             // The default network has gone down.
             mNetwork = null;
@@ -115,6 +126,10 @@ public class LockdownVpnTracker {
 
         public LinkProperties getLinkProperties() {
             return mLinkProperties;
+        }
+
+        public NetworkCapabilities getNetworkCapabilities() {
+            return mNetworkCapabilities;
         }
     }
 
@@ -165,8 +180,10 @@ public class LockdownVpnTracker {
      */
     private void handleStateChangedLocked() {
         final Network network = mDefaultNetworkCallback.getNetwork();
-        final NetworkInfo egressInfo = mCm.getNetworkInfo(network);  // Only for logging
         final LinkProperties egressProp = mDefaultNetworkCallback.getLinkProperties();
+        final NetworkCapabilities egressNc = mDefaultNetworkCallback.getNetworkCapabilities();
+        final int egressTransport = NetworkCapabilitiesUtils.getDisplayTransport(
+                egressNc.getTransportTypes());
 
         final NetworkInfo vpnInfo = mVpn.getNetworkInfo();
         final VpnConfig vpnConfig = mVpn.getLegacyVpnConfig();
@@ -176,10 +193,9 @@ public class LockdownVpnTracker {
         final boolean egressChanged = egressProp == null
                 || !TextUtils.equals(mAcceptedEgressIface, egressProp.getInterfaceName());
 
-        final int egressType = (egressInfo == null) ? TYPE_NONE : egressInfo.getType();
         final String egressIface = (egressProp == null) ?
                 null : egressProp.getInterfaceName();
-        Log.d(TAG, "handleStateChanged: egress=" + egressType
+        Log.d(TAG, "handleStateChanged: egress=" + egressTransport
                 + " " + mAcceptedEgressIface + "->" + egressIface);
 
         if (egressDisconnected || egressChanged) {
@@ -188,15 +204,6 @@ public class LockdownVpnTracker {
         }
         if (egressDisconnected) {
             hideNotification();
-            return;
-        }
-        if (vpnInfo.getDetailedState() == DetailedState.FAILED) {
-            EventLogTags.writeLockdownVpnError(egressType);
-        }
-
-        if (mErrorCount > MAX_ERROR_COUNT) {
-            // Cannot happen because ConnectivityService never sees a NetworkInfo in state FAILED.
-            showNotification(R.string.vpn_lockdown_error, R.drawable.vpn_disconnected);
             return;
         }
 
@@ -209,7 +216,6 @@ public class LockdownVpnTracker {
             }
 
             Log.d(TAG, "Active network connected; starting VPN");
-            EventLogTags.writeLockdownVpnConnecting(egressType);
             showNotification(R.string.vpn_lockdown_connecting, R.drawable.vpn_disconnected);
 
             mAcceptedEgressIface = egressIface;
@@ -243,7 +249,6 @@ public class LockdownVpnTracker {
 
             Log.d(TAG, "VPN connected using iface=" + iface
                     + ", sourceAddr=" + sourceAddrs.toString());
-            EventLogTags.writeLockdownVpnConnected(egressType);
             showNotification(R.string.vpn_lockdown_connected, R.drawable.vpn_connected);
         }
     }
