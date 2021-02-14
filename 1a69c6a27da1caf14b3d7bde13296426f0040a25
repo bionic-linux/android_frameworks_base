@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbcbbc57_fb8038a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-14T18:24:02Z",
+      "side": 1,
+      "message": "Cherry-pick of merged CL ag/13063757",
+      "revId": "1a69c6a27da1caf14b3d7bde13296426f0040a25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
