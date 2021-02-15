@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1f9bfc8_367f48a0",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-15T10:42:23Z",
+      "side": 1,
+      "message": "only checkbuilds",
+      "parentUuid": "83db0b3e_6c120d73",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 47
+      },
+      "revId": "3deb19e10bbfa766735713ecdb42a16439777a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f2a3716_5ad27fbc",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-12T18:28:55Z",
       "side": 1,
       "message": "why public?",
+      "range": {
+        "startLine": 76,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "3deb19e10bbfa766735713ecdb42a16439777a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fab2244e_71635a62",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-15T10:42:23Z",
+      "side": 1,
+      "message": "I don\u0027t know if it matters for checkbuild (or if we wanted to make .checkapi depend on it). Do you know?",
+      "parentUuid": "1f2a3716_5ad27fbc",
       "range": {
         "startLine": 76,
         "startChar": 16,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbb50cad_b90cebf7",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-15T10:42:23Z",
+      "side": 1,
+      "message": "Yes, across this whole file actually. We could dedupe the additions here a little bit with genrule_defaults, but I think that\u0027s probably not worth it. Alternatively checking in a shell script that invokes metalava the right way. However I want some major re-surgery of these rules happen (see b/169103987), so don\u0027t particularly want to invest time in short-term improvements.",
+      "parentUuid": "9dc02d25_1524cf10",
+      "range": {
+        "startLine": 255,
+        "startChar": 9,
+        "endLine": 255,
+        "endChar": 56
+      },
+      "revId": "3deb19e10bbfa766735713ecdb42a16439777a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46576916_d0ede1ad",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-12T18:28:55Z",
       "side": 1,
       "message": "for my education, when does this migration happen? What\u0027s the use of that?",
+      "range": {
+        "startLine": 258,
+        "startChar": 47,
+        "endLine": 259,
+        "endChar": 33
+      },
+      "revId": "3deb19e10bbfa766735713ecdb42a16439777a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "852ef56c_7249826c",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-15T10:42:23Z",
+      "side": 1,
+      "message": "Someone exports a MODULE_LIBS API in one dessert release, then in a future release decide to make the API public to all apps. Normally the compat check would fail because the MODULE_LIBS API no longer contains the API (but the released MODULE_LIBS api does). This is the reason for providing the \"base\".",
+      "parentUuid": "46576916_d0ede1ad",
       "range": {
         "startLine": 258,
         "startChar": 47,
