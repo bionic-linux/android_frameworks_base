@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffe50d0c_c6176eec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2021-02-15T15:14:13Z",
+      "side": 1,
+      "message": "THB I prefer too-long commit headline to abbreviations like this. It gets obvious after reading the full commit message, but sometimes people read only the headline.",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "4d6224156e1557a724729c94e60e6b30f04801a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bb05e03_50ead70f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2021-02-15T15:14:13Z",
+      "side": 1,
+      "message": "+1",
+      "revId": "4d6224156e1557a724729c94e60e6b30f04801a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
