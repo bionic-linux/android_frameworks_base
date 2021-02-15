@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fac246f_b2c81332",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "I think we need at least two big comprehensive tests on top of these that check our edges. One is for transitions in OEM preference in a given network environment. testPerAppDefaultRegisterDefaultNetworkCallback could be that test, but as of this patchset it\u0027s very terse and limited. Here is what it could do to test the general OEM_PAID policy :\n\n\n - File a listen for OEM_PAID (remove NOT_RESTRICTED) ①\n - File a general listen for everything. ②\n - File a default network callback. ③\n - File a \"system default\" network callback (this was added last week). ④\n - Check that nobody got a callback.\n - Check the default network is null.\n\n - Install the preference.\n - Check no callbacks.\n - Check the default network is null.\n - Uninstall the preference.\n\n - Connect OEM_PAID.\n - Check that ① and ② get the right callback, and ③ and ④ don\u0027t.\n - Check the default network is the null.\n\n - Install the preference.\n - Check onAvailable on ③ and none on ①②④.\n - Check the default network is the OEM one.\n - Change to a preference for some other app than Process.myUid.\n - Check onLost on ③ and nothing on ①②④.\n - Check the default network is null.\n - Uninstall the preference.\n - Check onLost on ③\n - Check the default network is null\n\n - Connect cellular.\n - Check that ② and ③ and ④ get callbacks, and not ①.\n\n - Install the preference.\n - Check onAvailable on ③ for the OEM_PAID network, nothing on ①②④\n - Check the default network is OEM_PAID\n - Change to a pref for some other app than Process.myUid\n - Check onLost on ③\n - Check the default network is null\n - Change back to a pref for Process.myUid\n - Check onAvailable on ③\n - Check the default network is OEM_PAID\n - Uninstall the preference\n - Check onLost on ③\n - Check the default network is null\n\n - Connect unmetered wifi.\n - Check that ②③④ get callbacks\n\n - Install the preference\n - Check no callback on ①②③④ ⇐\n - Check default is Wifi\n - Change to a pref for some other app\n - Check no callback on ①②③④\n - Check default is Wifi\n - Uninstall preference\n - Check no callback on ①②③④\n - Check default is Wifi\n\n - Cleanup by disconnecting and unfiling everything.\n\n\nAnother test (or another section in the same test) is probably needed to check OEM_PAID_ONLY. Where I wrote ⇐, we need to check onLost on ③, and that the default is null.\n\n\nThen we\u0027ll need a test that changes the connectivity state given a policy. Something like :\n\n - File a listen for OEM_PAID (remove NOT_RESTRICTED) ①\n - File a general listen for everything. ②\n - File a default network callback. ③\n - File a \"system default\" network callback (this was added last week). ④\n - Check that nobody got a callback.\n - Check the default network is null.\n\n - Install OEM_PAID preference\n - Check no callbacks on ①②③④\n - Check default is null\n\n - Bring up cell\n - Check callbacks for cell on ②③④ ⇐\n - Check default is cell\n\n - Bring up OEM_PAID\n - Check onAvailable for OEM_PAID on ①②③, but not on ④\n - Check default network is OEM_PAID\n\n - Bring down OEM_PAID\n - Check onLost for OEM_PAID on ①②③\n - Check default network is cell\n\n - Bring up WiFi\n - Check onAvailable on ②③④\n - Check default network is WiFi\n\n - Bring up OEM_PAID\n - Check onAvailable on ①②\n - Check default network is WiFi\n\n - Bring down Wifi\n - Check onAvailable for OEM_PAID on ③, onLost on ②, onAvailable for cell on ④\n - Check default is OEM_PAID\n\n - Bring up WiFi\n - Check onAvailable on ②③④\n - Check default is WiFi\n\n - Bring down cell\n - Check onLost on ② but on nothing else ⇐\n - Bring up cell\n - Check onAvailable on ② but on nothing else\n\n - Bring down OEM_PAID\n - Check onLost on ①②\n\n - Bring down WiFi\n - Check onLost on ②, onAvailable for cell on ③④\n - Check default is WiFi\n\n - Bring up OEM_PAID\n - Check onAvailable for cell on ①②③\n - Check default is OEM_PAID\n\n - Bring down cell\n - Check onLost on ②④\n - Check default is OEM_PAID\n\n - Bring down OEM_PAID\n - Check onLost on ①③\n - Check default is null\n\n - Clean up by disconnecting and unfiling everything.\n\nLikewise, testing OEM_PAID_ONLY is probably necessary with differences where I marked with ⇐.\n\nAh, finally, it is an invariant that getActiveNetwork must always return whatever was last sent to onAvailable to ③. So I suggest every instance of \"check default is xxx\", the test just says assertEquals(cm.getActiveNetwork(), defaultCallback.getLastNetwork()).\n\n\n\nOf course it doesn\u0027t need to be in this patch.",
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2f35aa3_d1ef90d8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Can you just call waitForIdle() instead of this ? It\u0027s not wrong to have this of course, but if the existing call can be used without concrete drawbacks, I\u0027d rather keep things simpler.",
+      "range": {
+        "startLine": 604,
+        "startChar": 17,
+        "endLine": 604,
+        "endChar": 45
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85fd6750_7befeaf5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Not sure I understand this comment",
+      "range": {
+        "startLine": 1574,
+        "startChar": 11,
+        "endLine": 1574,
+        "endChar": 37
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6daeb85_29ff1f3e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "If you want to keep this check, let\u0027s add a comment that NetworkInfo#equals is not useful.\n\nAlso maybe move these 2 checks in l.1601, as they are much less important than getActiveNetwork.",
+      "range": {
+        "startLine": 1576,
+        "startChar": 69,
+        "endLine": 1576,
+        "endChar": 77
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "514a87c7_4ec3b649",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9604,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Does this build ? It looks like a wrong rebase",
+      "range": {
+        "startLine": 9604,
+        "startChar": 14,
+        "endLine": 9604,
+        "endChar": 22
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bcc1c94_2315f9c9",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9639,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Generally I strongly prefer naming this kind of argument. At the very least have a boolean BRING_UP \u003d true and one BRING_DOWN \u003d false. Otherwise the callsite is always very unclear. Is this true for up or for down again ?",
+      "range": {
+        "startLine": 9639,
+        "startChar": 88,
+        "endLine": 9639,
+        "endChar": 95
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ce60760_d263f337",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9655,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Not sure what makes ethernet so different it needs helpers to do the exact same thing as the others ?",
+      "range": {
+        "startLine": 9655,
+        "startChar": 20,
+        "endLine": 9655,
+        "endChar": 41
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38f19318_072c38fe",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9685,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Given that this is done in l.9675, let\u0027s not also do it here",
+      "range": {
+        "startLine": 9685,
+        "startChar": 8,
+        "endLine": 9685,
+        "endChar": 36
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56c7ae2b_4ddfae78",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9717,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "This check looks to me like a change-detector. Behavior is not contingent on the specific contents of the internal mDefaultNetworkRequests ; in fact the latter is very much an implementation detail of the former. Generally we shouldn\u0027t have tests that require updates when we change the implementation details, only when we change the behavior.\n\nOf course it\u0027s always a tradeoff. In this case it\u0027s true that mDefaultRequests is pretty fundamental to how this works and I don\u0027t see it changing any time soon, but I see this as a bit borderline.",
+      "range": {
+        "startLine": 9694,
+        "startChar": 0,
+        "endLine": 9717,
+        "endChar": 5
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6258724_cb721fde",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9721,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "nit (you don\u0027t need to change this at this point) : it\u0027s a pretty common thing for tests and their helpers to just throw Exception.",
+      "range": {
+        "startLine": 9721,
+        "startChar": 19,
+        "endLine": 9721,
+        "endChar": 71
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7732d567_3ea9cf39",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9723,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Do you need to do this considering it\u0027s done in l.9737 ?",
+      "range": {
+        "startLine": 9723,
+        "startChar": 0,
+        "endLine": 9723,
+        "endChar": 65
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a671bce8_08169c1d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9769,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Instead of waiting for the handler and check the callback arrived, which is brittle, slow and difficult to manage (how to know when we need to wait ?), let\u0027s just wait for the callback itself.\nThere are plenty of examples in this file of how to achieve this with callbacks. Something like this should do the job :\n\n  class TestOemListenerCallback extends ... {\n    final CompletableFuture\u003cObject\u003e done \u003d new CompletableFuture\u003c\u003e()\n    override onComplete() {\n      done.complete(new Object());\n    }\n    void expectOnComplete(timeout) {\n      done.get(timeout)\n    }\n  }",
+      "range": {
+        "startLine": 9769,
+        "startChar": 0,
+        "endLine": 9769,
+        "endChar": 63
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90c01730_7ab59fa2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9795,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "I suggest we merge some of these tests with the ones below. The scenarios for synchronous getters and callbacks are all the same ; the same test can simply execute the scenario while checking both the callbacks and the synchronous methods at the same time.",
+      "range": {
+        "startLine": 9794,
+        "startChar": 8,
+        "endLine": 9795,
+        "endChar": 48
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "670fbca4_72977981",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9808,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Let\u0027s remove duplication by introducing some more helper functions.",
+      "range": {
+        "startLine": 9802,
+        "startChar": 0,
+        "endLine": 9808,
+        "endChar": 49
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99c16e99_4a7f3691",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9819,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Did you want to use your helper here ? I don\u0027t think it makes a difference if we test with Wifi or Ethernet.",
+      "range": {
+        "startLine": 9815,
+        "startChar": 0,
+        "endLine": 9819,
+        "endChar": 40
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60831169_9981d456",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9905,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T11:19:24Z",
+      "side": 1,
+      "message": "Can we also validate that we don\u0027t get a callback if the UID won\u0027t match ?",
+      "range": {
+        "startLine": 9905,
+        "startChar": 0,
+        "endLine": 9905,
+        "endChar": 51
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
