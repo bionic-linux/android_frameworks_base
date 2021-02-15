@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb264d33_55f3c058",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9946,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:39:30Z",
+      "side": 1,
+      "message": "checkNetworkDestroy ? shouldDestroyNetwork ?",
+      "range": {
+        "startLine": 9946,
+        "startChar": 26,
+        "endLine": 9946,
+        "endChar": 43
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8e61e64_d4b6eeb2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9947,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:39:30Z",
+      "side": 1,
+      "message": "Maybe make this a constant one level higher, so that callers can reference it instead of copying it. You could call it oemPreferenceAnyNetId or something",
+      "range": {
+        "startLine": 9947,
+        "startChar": 18,
+        "endLine": 9947,
+        "endChar": 26
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec9b9e1b_a9f13038",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9972,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:39:30Z",
+      "side": 1,
+      "message": "Suggest inlining this and even importing it.",
+      "range": {
+        "startLine": 9972,
+        "startChar": 0,
+        "endLine": 9972,
+        "endChar": 70
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcfada57_94d0cc8d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9990,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:39:30Z",
+      "side": 1,
+      "message": "You mean it was replaced right ?",
+      "range": {
+        "startLine": 9990,
+        "startChar": 73,
+        "endLine": 9990,
+        "endChar": 86
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb014949_fc335e6d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10014,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T12:39:30Z",
+      "side": 1,
+      "message": "For these naked constants, suggest annotating them /* times */, /* useDestroyNetwork */",
+      "range": {
+        "startLine": 10014,
+        "startChar": 26,
+        "endLine": 10014,
+        "endChar": 27
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
