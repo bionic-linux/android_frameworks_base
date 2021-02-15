@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c482bea3_17a20304",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T13:27:34Z",
+      "side": 1,
+      "message": "This is very useful coverage exactly of the kind that we need.",
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7521e5ae_6d020b92",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9716,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T13:27:34Z",
+      "side": 1,
+      "message": "Here you can cheaply add some very useful coverage for callbacks by just registering a new one, expecting the correct onAvailable, and unregistering it immediately.\n\n  appcb \u003d new TestNetworkCallback()\n  syscb \u003d new TestNetworkCallback()\n  registerDefaultNetworkCallback(appcb)\n  registerSystemDefaultNetworkCallback(syscb)\n\n  appcb.expectAvailableXXX(expectedOemNetworkPrefNai);\n  syscb.expectAvailableXXX(expectedFallbackNai);\n  unregister(appcb)\n  unregister(syscb)\n\n\nThis is not completely sufficient to test the callbacks because we need to test how they behave while continously registered (e.g. this doesn\u0027t even test onLost), but that\u0027s still going to be very useful for a very small cost.",
+      "range": {
+        "startLine": 9716,
+        "startChar": 8,
+        "endLine": 9716,
+        "endChar": 9
+      },
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "118d3693_8d97429e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10238,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T13:27:34Z",
+      "side": 1,
+      "message": "in the following order ?",
+      "range": {
+        "startLine": 10238,
+        "startChar": 76,
+        "endLine": 10238,
+        "endChar": 94
+      },
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d84abc1d_c4c3e2ce",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10240,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T13:27:34Z",
+      "side": 1,
+      "message": "Maybe this line of doc is superfluous :D",
+      "range": {
+        "startLine": 10240,
+        "startChar": 0,
+        "endLine": 10240,
+        "endChar": 24
+      },
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faed8682_273a9a61",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10390,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T13:27:34Z",
+      "side": 1,
+      "message": "cellular",
+      "range": {
+        "startLine": 10390,
+        "startChar": 60,
+        "endLine": 10390,
+        "endChar": 67
+      },
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
