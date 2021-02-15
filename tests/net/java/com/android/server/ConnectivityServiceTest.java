@@ -1293,10 +1293,8 @@ public class ConnectivityServiceTest {
     }
 
     private void processBroadcastForVpn(Intent intent) {
-        // The BroadcastReceiver for this broadcast checks it is being run on the handler thread.
-        final Handler handler = new Handler(mVMSHandlerThread.getLooper());
-        handler.post(() -> mServiceContext.sendBroadcast(intent));
-        HandlerUtils.waitForIdle(handler, TIMEOUT_MS);
+        mServiceContext.sendBroadcast(intent);
+        HandlerUtils.waitForIdle(mVMSHandlerThread, TIMEOUT_MS);
         waitForIdle();
     }
 
@@ -6830,6 +6828,7 @@ public class ConnectivityServiceTest {
         final Intent addedIntent = new Intent(ACTION_USER_ADDED);
         addedIntent.putExtra(Intent.EXTRA_USER_HANDLE, RESTRICTED_USER);
         processBroadcastForVpn(addedIntent);
+        waitForIdle();
         assertNull(mCm.getActiveNetworkForUid(uid));
         assertNull(mCm.getActiveNetworkForUid(restrictedUid));
 
