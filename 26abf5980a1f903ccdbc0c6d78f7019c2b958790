@@ -16,6 +16,23 @@
       "message": "Thanks!",
       "revId": "26abf5980a1f903ccdbc0c6d78f7019c2b958790",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17dc148f_af0589b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-15T10:59:20Z",
+      "side": 1,
+      "message": "LGTM, but will need to CP to sc-dev first",
+      "revId": "26abf5980a1f903ccdbc0c6d78f7019c2b958790",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

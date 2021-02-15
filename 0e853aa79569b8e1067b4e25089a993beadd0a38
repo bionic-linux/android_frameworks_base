@@ -164,6 +164,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "762687f9_9a99e6ed",
+        "filename": "services/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-15T10:59:20Z",
+      "side": 1,
+      "message": "yup, that\u0027s fine too. The rename tends to fail because of b/177984070, so perhaps more work the way I suggested.",
+      "parentUuid": "95084453_b987a33f",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 52
+      },
+      "revId": "0e853aa79569b8e1067b4e25089a993beadd0a38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b80f7200_a215efb8",
