@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca3b3a1d_93582b11",
+        "filename": "test-base/hiddenapi/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-02-15T11:00:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this target (and possible this entire patchset) any more.\n\naosp/907113 which added this states:\n\"The UnsupportedAppUsage annotations could not be added directly to the java files in src/ as they have to be built against the current api which does not include the annotation.\"\n\nBut that\u0027s not true anymore (since aosp/1182335). The annotation is now defined in it\u0027s own build target :unsupportedappusage which android.test.base could depend on. So we can now just move the annotations directly into the source and get rid of this extra complexity.\n\nOr a I missing something?",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "1679bf2a26ffee91b5f7934993d0dbe5e95f5332",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
