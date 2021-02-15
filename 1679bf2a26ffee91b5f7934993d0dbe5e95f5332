@@ -63,6 +63,30 @@
       },
       "revId": "1679bf2a26ffee91b5f7934993d0dbe5e95f5332",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3197161_c12ec396",
+        "filename": "test-base/hiddenapi/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-02-15T15:38:25Z",
+      "side": 1,
+      "message": "Makes sense, thanks",
+      "parentUuid": "371a4d84_f8572ddf",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "1679bf2a26ffee91b5f7934993d0dbe5e95f5332",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

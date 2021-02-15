@@ -39,6 +39,29 @@
       "message": "+1",
       "revId": "4d6224156e1557a724729c94e60e6b30f04801a0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2aed34a_084cf3cb",
+        "filename": "test-base/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-02-15T15:38:25Z",
+      "side": 1,
+      "message": "can you add a TODO here to remove this, with a reference to the tracking bug you filed?",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 36
+      },
+      "revId": "4d6224156e1557a724729c94e60e6b30f04801a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
