@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76ce6719_67564796",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-15T17:31:37Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "41720d23_86be336d",
+      "range": {
+        "startLine": 76,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "3deb19e10bbfa766735713ecdb42a16439777a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9dc02d25_1524cf10",
