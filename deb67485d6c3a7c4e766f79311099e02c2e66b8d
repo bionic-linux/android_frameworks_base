@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b1288b7_2d131abe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-15T13:22:12Z",
+      "side": 1,
+      "message": "It turns out you already had some large part of this in the last test, except they only tets for the synchronous methods, which is not what most apps use nowadays thankfully. I added some comments there to suggest how to cheaply add some good callback coverage. It doesn\u0027t mean we can avoid the above :) We do need a test with some continuous callback checks (where they aren\u0027t unregistered every time).",
+      "parentUuid": "2fac246f_b2c81332",
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2f35aa3_d1ef90d8",
