@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4374a90d_7befa542",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-16T20:40:03Z",
+      "side": 1,
+      "message": "I think the concept of a session is internal no? Thus, I would try to keep this error callback generic / not expose implementation details. Really the GATEWAY_CONNECTION died, which is the outcome of the session dying no?",
+      "range": {
+        "startLine": 320,
+        "startChar": 53,
+        "endLine": 320,
+        "endChar": 61
+      },
+      "revId": "88959d8ccc60f1fd1bc5bebe2205880bc7744e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65461303_fdd6485b",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-16T20:40:03Z",
+      "side": 1,
+      "message": "In general, I\u0027d prefer to have errors split out to try and differentiate between the user-visible result and the underlying reason.\n\nFor instance, is there a distinction between \"session was never established\" vs \"established session died\"? Some errors likely only make sense in one of those instances. If so, we can then fan out error codes specific to those two events (hopefully with additional information like GATEWAY_ADDRESS_RESOLUTION_FAILURE (which is the end-result of DNS lookup failure)).\n\nIt\u0027s sometimes preferable to have a flat list of error codes and impose some structure around them; sometimes it\u0027s better to have two separate sets of enums in case the lists of \"results\" and \"reasons\" are semi-independent.",
+      "range": {
+        "startLine": 328,
+        "startChar": 28,
+        "endLine": 328,
+        "endChar": 64
+      },
+      "revId": "88959d8ccc60f1fd1bc5bebe2205880bc7744e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6521960_5120befa",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-16T20:40:03Z",
+      "side": 1,
+      "message": "Generally it\u0027s nice for these to be a Throwable instead of just a string. Provides a lot more room for expansion. API council really liked:\n\nhttps://source.corp.google.com/android/frameworks/base/telephony/java/android/telephony/TelephonyManager.java;l\u003d6245?q\u003dTelephonyManager.java\u0026ct\u003dos\u0026sq\u003dpackage:%5Eandroid$\n\nOf course, past performance is not an indicator of future returns... but",
+      "range": {
+        "startLine": 368,
+        "startChar": 26,
+        "endLine": 368,
+        "endChar": 32
+      },
+      "revId": "88959d8ccc60f1fd1bc5bebe2205880bc7744e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
