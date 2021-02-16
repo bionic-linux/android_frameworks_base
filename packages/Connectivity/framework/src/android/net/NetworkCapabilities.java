@@ -1243,10 +1243,10 @@ public final class NetworkCapabilities implements Parcelable {
 
     /**
      * Sets the optional bearer specific network specifier.
-     * This has no meaning if a single transport is also not specified, so calling
-     * this without a single transport set will generate an exception, as will
-     * subsequently adding or removing transports after this is set.
-     * </p>
+     *
+     * <p>This has no meaning if multiple transports are specified, and will throw an Illegal State
+     * Exception if more than one transports are specified. Addition or removal of transport types
+     * after setting a NetworkSpecifier must fulfill the same conditions.
      *
      * @param networkSpecifier A concrete, parcelable framework class that extends
      *                         NetworkSpecifier.
@@ -1255,9 +1255,9 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public @NonNull NetworkCapabilities setNetworkSpecifier(
             @NonNull NetworkSpecifier networkSpecifier) {
-        if (networkSpecifier != null && Long.bitCount(mTransportTypes) != 1) {
-            throw new IllegalStateException("Must have a single transport specified to use " +
-                    "setNetworkSpecifier");
+        if (networkSpecifier != null && Long.bitCount(mTransportTypes) > 1) {
+            throw new IllegalStateException(
+                    "Must have at most one transport specified to use setNetworkSpecifier");
         }
 
         mNetworkSpecifier = networkSpecifier;
