@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c8fe045_12843e05",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9776,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:32:04Z",
+      "side": 1,
+      "message": "Done. I went with the rename since it\u0027s quite likely this is being used in the subsequent patches.",
+      "parentUuid": "7e6f1c3a_9a566aff",
+      "range": {
+        "startLine": 9776,
+        "startChar": 67,
+        "endLine": 9776,
+        "endChar": 69
+      },
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6b7df9e_7567e58a",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-16T13:13:47Z",
       "side": 1,
       "message": "You don\u0027t need this any more 😊",
+      "range": {
+        "startLine": 9825,
+        "startChar": 8,
+        "endLine": 9825,
+        "endChar": 19
+      },
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69ff1a77_1151d75f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9825,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:32:04Z",
+      "side": 1,
+      "message": "Ahhh yes, very true :)",
+      "parentUuid": "d6b7df9e_7567e58a",
       "range": {
         "startLine": 9825,
         "startChar": 8,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66081ca0_ae172bec",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 10013,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:32:04Z",
+      "side": 1,
+      "message": "Nope, removed.",
+      "parentUuid": "a785da77_dce28baf",
+      "range": {
+        "startLine": 10013,
+        "startChar": 8,
+        "endLine": 10013,
+        "endChar": 44
+      },
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5bbf7d4_df64b505",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-02-16T13:13:47Z",
       "side": 1,
       "message": "...and then like in some of your other test cases, connect a default network and make sure the callback fires correctly.",
+      "range": {
+        "startLine": 10029,
+        "startChar": 49,
+        "endLine": 10029,
+        "endChar": 50
+      },
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "facbdd7f_54f44b2a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 10029,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5bbf7d4_df64b505",
       "range": {
         "startLine": 10029,
         "startChar": 49,

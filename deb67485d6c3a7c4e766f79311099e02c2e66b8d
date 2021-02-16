@@ -295,6 +295,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b1b0813_8582bb7c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9639,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T23:32:04Z",
+      "side": 1,
+      "message": "Yep, agreed. I think usage of \u0027toggle\u0027 was confusing in this case.",
+      "parentUuid": "9e5fc391_7dc467e5",
+      "range": {
+        "startLine": 9639,
+        "startChar": 88,
+        "endLine": 9639,
+        "endChar": 95
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ce60760_d263f337",
