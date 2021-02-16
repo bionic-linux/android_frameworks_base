@@ -273,6 +273,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e5fc391_7dc467e5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9639,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:13:47Z",
+      "side": 1,
+      "message": "No, I\u0027m concerned about the call sites. The old argument name was clear enough I think (but the new one is better).\n\nMy problem is more about callsites looking like this :\n\n  toggleONPA(TRANSPORT_CELLULAR, true);\n\n...does this mean we should toggle it, and the boolean means something else ? Or, is true for up, or true for down ? There are three ways to solve this I think :\n\n  toggleONPA(TRANSPORT_CELLULAR, true /* connectAgent */)\n\n...this is clear enough but often forgotten.\n\n  final boolean BRING_UP \u003d true;\n  final boolean BRING_DOWN \u003d false;\n  toggleONPA(TRANSPORT_CELLULAR, BRING_UP);\n\n...which is relatively simple, and was my suggestion, and is harder to forget as the impl of the function also would use the constants\n\nBut now I see there may be a better way, by just renaming the function. \"toggle\" means to flip the status whatever it was, and I think this is where the confusion comes from with the boolean, so you could just rename the method\n\n  setOemNetworkPreferenceAgentConnected(TRANSPORT_CELLULAR, true)\n\n...which hopefully is self-explanatory.",
+      "parentUuid": "4351bd72_540544ee",
+      "range": {
+        "startLine": 9639,
+        "startChar": 88,
+        "endLine": 9639,
+        "endChar": 95
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ce60760_d263f337",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18

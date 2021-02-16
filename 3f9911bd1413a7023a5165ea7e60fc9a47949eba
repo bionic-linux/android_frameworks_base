@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4757fae2_ca349c88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:13:47Z",
+      "side": 1,
+      "message": "Reviewed comments and diffs, need a last pass on the final artifact but this looks pretty great now",
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e6f1c3a_9a566aff",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9776,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:13:47Z",
+      "side": 1,
+      "message": "Do you want to insert something here to clarify this is for a different UID ? It\u0027s called only once (well, twice, but for the other you could call the CurrentUid version) and it\u0027s its defining characteristic. In fact you could even inline it and I think it\u0027d be clearer.",
+      "range": {
+        "startLine": 9776,
+        "startChar": 67,
+        "endLine": 9776,
+        "endChar": 69
+      },
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6b7df9e_7567e58a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9825,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:13:47Z",
+      "side": 1,
+      "message": "You don\u0027t need this any more 😊",
+      "range": {
+        "startLine": 9825,
+        "startChar": 8,
+        "endLine": 9825,
+        "endChar": 19
+      },
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a785da77_dce28baf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 10013,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:13:47Z",
+      "side": 1,
+      "message": "Is this comment useful ? The next line reads \"register\" and the one after than \"assert no callbacks\".",
+      "range": {
+        "startLine": 10013,
+        "startChar": 8,
+        "endLine": 10013,
+        "endChar": 44
+      },
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5bbf7d4_df64b505",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 10029,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:13:47Z",
+      "side": 1,
+      "message": "...and then like in some of your other test cases, connect a default network and make sure the callback fires correctly.",
+      "range": {
+        "startLine": 10029,
+        "startChar": 49,
+        "endLine": 10029,
+        "endChar": 50
+      },
+      "revId": "3f9911bd1413a7023a5165ea7e60fc9a47949eba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
