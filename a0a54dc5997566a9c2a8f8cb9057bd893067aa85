@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51726ffa_2b10ab93",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1695352c_b4a6e45b",
+      "range": {
+        "startLine": 98,
+        "startChar": 40,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "19e9e399_3e9bafcc",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-16T05:13:42Z",
       "side": 1,
       "message": "So if I say :\n\n  val builder \u003d VcnConfig.Builder().addGatewayConnectionConfig(gatewayConfig1)\n  val config1 \u003d builder.build()\n  builder.addGatewayConnectionConfig(gatewayConfig2)\n  val config2 \u003d builder.build()\n  val result \u003d config1.getGatewayConnectionConfigs()\n\n...then result contains both. This is because Collections.unmodifiableSet only provides a view of the underlying set.",
+      "range": {
+        "startLine": 201,
+        "startChar": 47,
+        "endLine": 201,
+        "endChar": 72
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebda0f54_fc7a28db",
+        "filename": "core/java/android/net/vcn/VcnConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Done. Took a defensive copy in VcnConfig constructor.",
+      "parentUuid": "19e9e399_3e9bafcc",
       "range": {
         "startLine": 201,
         "startChar": 47,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "957c6566_bc1e4d16",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "This being a carrier network, it seems reasonable to start with requiring only cell capabilities; it didn\u0027t seem to make sense for a VCN network to advertise support for WIFI_P2P or OEM_PAID, and similiarly for underlying networks.\n\nAdded a bit of additional comments.",
+      "parentUuid": "964f1899_0e7c7f9e",
+      "range": {
+        "startLine": 59,
+        "startChar": 90,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14cd9ea3_8bc6b2da",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 11
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-16T05:13:42Z",
       "side": 1,
       "message": "I think we should either :\n• Remove this sentence, and not have any commitment to the specific behavior (that\u0027s what we do for VPNs)\n• Specify how it\u0027s determined (while I can imagine what happens when there is only one underlying network, this sentence doesn\u0027t let me know how it determines what to do in the presence of multiple underlying networks).",
+      "range": {
+        "startLine": 78,
+        "startChar": 22,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "434cdf2f_669a0f81",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "14cd9ea3_8bc6b2da",
       "range": {
         "startLine": 78,
         "startChar": 22,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8f0d499_cf6843bb",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Oh, apologies. Thanks.",
+      "parentUuid": "dfc6080f_ee74e73a",
+      "range": {
+        "startLine": 316,
+        "startChar": 23,
+        "endLine": 316,
+        "endChar": 56
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4611c57a_4ea5a490",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-02-16T05:13:42Z",
       "side": 1,
       "message": "But it\u0027s also available to MNOs right ? Shouldn\u0027t we just say carrier ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 52,
+        "endLine": 40,
+        "endChar": 57
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f53dbb43_1320c48f",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4611c57a_4ea5a490",
       "range": {
         "startLine": 40,
         "startChar": 52,
@@ -185,6 +329,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8f8fa61_390ff3b8",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eae6208_85d29a24",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e9f7544_ab0c0981",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b37f6513_d9a2e40f",
+      "range": {
+        "startLine": 45,
+        "startChar": 30,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbef3139_8bb7ffc1",
@@ -208,6 +400,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba8de2c8_ae5fce71",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbef3139_8bb7ffc1",
+      "range": {
+        "startLine": 101,
+        "startChar": 47,
+        "endLine": 101,
+        "endChar": 79
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38c8e315_b5639cac",
@@ -221,6 +437,30 @@
       "writtenOn": "2021-02-16T05:13:42Z",
       "side": 1,
       "message": "What kind of condition may trigger this ? Disk full ? If so, I\u0027m not sure the advice to retry is the best one.",
+      "range": {
+        "startLine": 103,
+        "startChar": 48,
+        "endLine": 103,
+        "endChar": 70
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e293dd3_3ae0f099",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Added a bit more information.",
+      "parentUuid": "38c8e315_b5639cac",
       "range": {
         "startLine": 103,
         "startChar": 48,

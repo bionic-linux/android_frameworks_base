@@ -87,6 +87,30 @@
       },
       "revId": "f30380de3b47fb7b066db37a9af767ab1c29e765",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07bdb7e7_6afa3029",
+        "filename": "core/api/current.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 26122,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T10:50:17Z",
+      "side": 1,
+      "message": "Per response, this seems like a case to just suppress the lint and continue.",
+      "parentUuid": "b76d972d_831270fd",
+      "range": {
+        "startLine": 26122,
+        "startChar": 78,
+        "endLine": 26122,
+        "endChar": 83
+      },
+      "revId": "f30380de3b47fb7b066db37a9af767ab1c29e765",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
