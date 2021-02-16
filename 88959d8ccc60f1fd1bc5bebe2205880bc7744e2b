@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "25c1bb41_0c02d8c5",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T22:46:01Z",
+      "side": 1,
+      "message": "This is intended to signify a VcnGatewayConnection dying. Updated name to GATEWAY_CONNECTION_ERROR_GATEWAY_CONNECTION_DIED - thoughts?",
+      "parentUuid": "4374a90d_7befa542",
+      "range": {
+        "startLine": 320,
+        "startChar": 53,
+        "endLine": 320,
+        "endChar": 61
+      },
+      "revId": "88959d8ccc60f1fd1bc5bebe2205880bc7744e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "65461303_fdd6485b",
         "filename": "core/java/android/net/vcn/VcnManager.java",
         "patchSetId": 23
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abe82e82_5b30a441",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T22:46:01Z",
+      "side": 1,
+      "message": "There is not currently a distinction between not-established and already-established errors. From what I can tell, the groupings are:\n\nerror while establishing session:\n- internal failure\n- authentication failure\n- DNS failure\n\nerror during established session:\n- internal failure\n- gateway connection died\n\nistm that the only possible results are either CONNECTION_DIED and FAILED_TO_ESTABLISH_CONNECTION. For this reason, I\u0027m leaning towards a flat list with some structure to them (additionally, documentation can be improved to differentiate the errors as well). Thoughts?",
+      "parentUuid": "65461303_fdd6485b",
+      "range": {
+        "startLine": 328,
+        "startChar": 28,
+        "endLine": 328,
+        "endChar": 64
+      },
+      "revId": "88959d8ccc60f1fd1bc5bebe2205880bc7744e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c6521960_5120befa",
         "filename": "core/java/android/net/vcn/VcnManager.java",
         "patchSetId": 23
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-16T20:40:03Z",
       "side": 1,
       "message": "Generally it\u0027s nice for these to be a Throwable instead of just a string. Provides a lot more room for expansion. API council really liked:\n\nhttps://source.corp.google.com/android/frameworks/base/telephony/java/android/telephony/TelephonyManager.java;l\u003d6245?q\u003dTelephonyManager.java\u0026ct\u003dos\u0026sq\u003dpackage:%5Eandroid$\n\nOf course, past performance is not an indicator of future returns... but",
+      "range": {
+        "startLine": 368,
+        "startChar": 26,
+        "endLine": 368,
+        "endChar": 32
+      },
+      "revId": "88959d8ccc60f1fd1bc5bebe2205880bc7744e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0feee0b3_1ae71fd9",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T22:46:01Z",
+      "side": 1,
+      "message": "Agreed that a Throwable/Exception is preferrable, but the idea of passing a String classname over the binder and using reflection to instantiate somewhat scares me. This also assumes that all Exceptions have String constructors, which is not the case for many IKE Exceptions (see InvalidKeException, InvalidIkeSpiException, IkeNetworkLostException, etc).\n\nIt also adds an additional place where OEMs could unintentionally break things (add an invalid class name or any potential string modifications).",
+      "parentUuid": "c6521960_5120befa",
       "range": {
         "startLine": 368,
         "startChar": 26,
