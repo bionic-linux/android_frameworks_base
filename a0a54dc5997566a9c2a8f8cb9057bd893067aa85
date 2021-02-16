@@ -192,6 +192,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "404e51ce_f5149bd4",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-16T18:28:26Z",
+      "side": 1,
+      "message": "I think this is a safe restriction and also within the spirit of the VCN. If at some point later we find a valid use case for carrier networks to specify WIFI_P2P, then it\u0027s easier to relax restrictions than add them.",
+      "parentUuid": "73ecc68b_47795096",
+      "range": {
+        "startLine": 59,
+        "startChar": 90,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14cd9ea3_8bc6b2da",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 11
