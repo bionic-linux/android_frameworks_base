@@ -144,6 +144,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1d7745c9_67e47429",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:18:43Z",
+      "side": 1,
+      "message": "But is it useful to forbid it ?",
+      "parentUuid": "957c6566_bc1e4d16",
+      "range": {
+        "startLine": 59,
+        "startChar": 90,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14cd9ea3_8bc6b2da",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 11

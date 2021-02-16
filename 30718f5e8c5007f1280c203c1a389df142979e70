@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f536f56_b9a48371",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:18:43Z",
+      "side": 1,
+      "message": "Yeah so there was another one lurking here",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "30718f5e8c5007f1280c203c1a389df142979e70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18919b70_28ca310f",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-16T13:18:43Z",
+      "side": 1,
+      "message": "Can you add this in the test patch that will use it, instead of this here patch which is meant to expose the VCN surface ?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 5
+      },
+      "revId": "30718f5e8c5007f1280c203c1a389df142979e70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
