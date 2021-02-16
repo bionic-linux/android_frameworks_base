@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b0438de_9959b1ec",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T23:48:49Z",
+      "side": 1,
+      "message": "Per discussion offline, reving this API shape to distinguish between different classifications of errors. Will re-assign once it is ready for review",
+      "parentUuid": "abe82e82_5b30a441",
+      "range": {
+        "startLine": 328,
+        "startChar": 28,
+        "endLine": 328,
+        "endChar": 64
+      },
+      "revId": "88959d8ccc60f1fd1bc5bebe2205880bc7744e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c6521960_5120befa",
         "filename": "core/java/android/net/vcn/VcnManager.java",
         "patchSetId": 23
