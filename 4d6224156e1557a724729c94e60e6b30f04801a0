@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "560c74ac_83dc5356",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-02-16T13:33:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ffe50d0c_c6176eec",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "4d6224156e1557a724729c94e60e6b30f04801a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3bb05e03_50ead70f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-15T15:38:25Z",
       "side": 1,
       "message": "can you add a TODO here to remove this, with a reference to the tracking bug you filed?",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 36
+      },
+      "revId": "4d6224156e1557a724729c94e60e6b30f04801a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80ca11bb_c426b3b1",
+        "filename": "test-base/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-02-16T13:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2aed34a_084cf3cb",
       "range": {
         "startLine": 44,
         "startChar": 5,
