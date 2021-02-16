@@ -1255,9 +1255,9 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public @NonNull NetworkCapabilities setNetworkSpecifier(
             @NonNull NetworkSpecifier networkSpecifier) {
-        if (networkSpecifier != null && Long.bitCount(mTransportTypes) != 1) {
-            throw new IllegalStateException("Must have a single transport specified to use " +
-                    "setNetworkSpecifier");
+        if (networkSpecifier != null && Long.bitCount(mTransportTypes) > 1) {
+            throw new IllegalStateException(
+                    "Must have at most one transport specified to use setNetworkSpecifier");
         }
 
         mNetworkSpecifier = networkSpecifier;
