@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c486ccc7_3a47f13f",
+        "filename": "keystore/java/android/security/KeyStore2.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2021-02-16T16:47:46Z",
+      "side": 1,
+      "message": "It seems like negative numbers don\u0027t survive the round trip correctly. At least I started noticing errors when connecting to an enterprise network via a granted key, and when I started printing \"nspace\", it worked when it was positive and didn\u0027t work when it was negative.",
+      "range": {
+        "startLine": 184,
+        "startChar": 33,
+        "endLine": 184,
+        "endChar": 37
+      },
+      "revId": "237b641064b2481d4843edf1ea73e5dffd6d0055",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
