@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "200c44f1_2f90a0ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-02-16T18:53:34Z",
+      "side": 1,
+      "message": "Thanks!\nI normally add the (cherrypicked from ...) line that an automatic cherrypick between branches of the same tree would generate. But Merged-In: contains essentially the same information, and is much more important, so I\u0027m not sure about official policy.",
+      "revId": "c31c4f9b313dff8f8a0630f15b66b53338e6049a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
