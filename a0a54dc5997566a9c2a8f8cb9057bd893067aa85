@@ -168,6 +168,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "73ecc68b_47795096",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-16T18:15:58Z",
+      "side": 1,
+      "message": "I believe so. Given that this is for carrier apps, I don\u0027t trust them to know what is acceptable in terms of dynamic capabilities. When creating a NetworkAgent, I\u0027d rather not have to scrub the list of dynamic/connectivity-managed caps like VALIDATED and FOREGROUND.\n\nI can see carrier apps doing so otherwise.",
+      "parentUuid": "1d7745c9_67e47429",
+      "range": {
+        "startLine": 59,
+        "startChar": 90,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "a0a54dc5997566a9c2a8f8cb9057bd893067aa85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14cd9ea3_8bc6b2da",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 11
