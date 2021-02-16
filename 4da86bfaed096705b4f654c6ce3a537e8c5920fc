@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4023a3c3_6ca1d1a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T18:58:28Z",
+      "side": 1,
+      "message": "lost +2 again due to merge conflict with aosp/1590414",
+      "revId": "4da86bfaed096705b4f654c6ce3a537e8c5920fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
