@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3c19947_abe42103",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9946,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:53Z",
+      "side": 1,
+      "message": "Went with shouldDestroyNetwork.",
+      "parentUuid": "bb264d33_55f3c058",
+      "range": {
+        "startLine": 9946,
+        "startChar": 26,
+        "endLine": 9946,
+        "endChar": 43
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e8e61e64_d4b6eeb2",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-15T12:39:30Z",
       "side": 1,
       "message": "Maybe make this a constant one level higher, so that callers can reference it instead of copying it. You could call it oemPreferenceAnyNetId or something",
+      "range": {
+        "startLine": 9947,
+        "startChar": 18,
+        "endLine": 9947,
+        "endChar": 26
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a77fcc49_80343243",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9947,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:53Z",
+      "side": 1,
+      "message": "Yep, sounds good.",
+      "parentUuid": "e8e61e64_d4b6eeb2",
       "range": {
         "startLine": 9947,
         "startChar": 18,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43469029_b840820e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9972,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:53Z",
+      "side": 1,
+      "message": "I added the imports as you suggested but I\u0027d prefer not to inline them. I personally like having the pref right at the top of each test for readability. Feel free to reopen if you want to discuss more.",
+      "parentUuid": "ec9b9e1b_a9f13038",
+      "range": {
+        "startLine": 9972,
+        "startChar": 0,
+        "endLine": 9972,
+        "endChar": 70
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fcfada57_94d0cc8d",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f4ce490_673a7978",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9990,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcfada57_94d0cc8d",
+      "range": {
+        "startLine": 9990,
+        "startChar": 73,
+        "endLine": 9990,
+        "endChar": 86
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb014949_fc335e6d",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-15T12:39:30Z",
       "side": 1,
       "message": "For these naked constants, suggest annotating them /* times */, /* useDestroyNetwork */",
+      "range": {
+        "startLine": 10014,
+        "startChar": 26,
+        "endLine": 10014,
+        "endChar": 27
+      },
+      "revId": "965f5c5466ae821d5dae92003557c063db0b8257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfbb71d5_5ec7b98c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10014,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb014949_fc335e6d",
       "range": {
         "startLine": 10014,
         "startChar": 26,
