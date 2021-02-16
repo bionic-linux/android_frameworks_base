@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbd4156a_80cd60a1",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T00:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ffffa7_99ad04dd",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 320,
+        "endChar": 29
+      },
+      "revId": "723a2823d21153cf598a5f9b2e188ecd04cceadd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e793962_d2d96d70",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-15T21:27:29Z",
       "side": 1,
       "message": "As I\u0027m thinking more, it might be worth genericizing this to status ints; Can you file a post-IC bug for that?\n\nSomething like:\nVCN_STATUS_CONNECTING \u003d 0 // Anything that is not tearing down, and not connected\nVCN_STATUS_CONNECTED \u003d 1 // Connected state\nVCN_STATUS_IN_SAFE_MODE \u003d 2 // Safe mode",
+      "range": {
+        "startLine": 347,
+        "startChar": 13,
+        "endLine": 347,
+        "endChar": 30
+      },
+      "revId": "723a2823d21153cf598a5f9b2e188ecd04cceadd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "428f4316_4119f3f2",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T00:14:36Z",
+      "side": 1,
+      "message": "ack - created b/180347399 to track this for post-IC",
+      "parentUuid": "0e793962_d2d96d70",
       "range": {
         "startLine": 347,
         "startChar": 13,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4a2cb5f_2aa067f4",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T00:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55ad0195_f8ab08f1",
+      "range": {
+        "startLine": 355,
+        "startChar": 15,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "723a2823d21153cf598a5f9b2e188ecd04cceadd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12a5ff4a_7ace2248",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-15T21:27:29Z",
       "side": 1,
       "message": "for this subscription group?",
+      "range": {
+        "startLine": 356,
+        "startChar": 25,
+        "endLine": 356,
+        "endChar": 34
+      },
+      "revId": "723a2823d21153cf598a5f9b2e188ecd04cceadd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c70e8b52_da2fe477",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T00:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12a5ff4a_7ace2248",
       "range": {
         "startLine": 356,
         "startChar": 25,

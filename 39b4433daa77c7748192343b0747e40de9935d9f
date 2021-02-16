@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66f85bcb_9667fdba",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-16T00:14:36Z",
+      "side": 1,
+      "message": "Added GATEWAY_CONNECTION_ERROR_DNS_FAILURE and created b/180343927 to track adding a typed IKE Exception post-IC\n\nDone",
+      "parentUuid": "b020ceaa_785ac9f0",
+      "range": {
+        "startLine": 303,
+        "startChar": 4,
+        "endLine": 303,
+        "endChar": 10
+      },
+      "revId": "39b4433daa77c7748192343b0747e40de9935d9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e557b3ff_48a9a7cd",
