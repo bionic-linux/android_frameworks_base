@@ -59,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "637447ca_f658eaec",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f35aa3_d1ef90d8",
+      "range": {
+        "startLine": 604,
+        "startChar": 17,
+        "endLine": 604,
+        "endChar": 45
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85fd6750_7befeaf5",
@@ -72,6 +96,30 @@
       "writtenOn": "2021-02-15T11:19:24Z",
       "side": 1,
       "message": "Not sure I understand this comment",
+      "range": {
+        "startLine": 1574,
+        "startChar": 11,
+        "endLine": 1574,
+        "endChar": 37
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30f3c488_9c4205b1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "I don\u0027t understand it either :) Removed.",
+      "parentUuid": "85fd6750_7befeaf5",
       "range": {
         "startLine": 1574,
         "startChar": 11,
@@ -105,6 +153,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca73368b_5f3e0c51",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "I removed the second one since getActiveNetworkInfoUnfiltered() no longer exists and moved the first one to the spot you suggested.",
+      "parentUuid": "b6daeb85_29ff1f3e",
+      "range": {
+        "startLine": 1576,
+        "startChar": 69,
+        "endLine": 1576,
+        "endChar": 77
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "514a87c7_4ec3b649",
@@ -118,6 +190,30 @@
       "writtenOn": "2021-02-15T11:19:24Z",
       "side": 1,
       "message": "Does this build ? It looks like a wrong rebase",
+      "range": {
+        "startLine": 9604,
+        "startChar": 14,
+        "endLine": 9604,
+        "endChar": 22
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b44030f6_0f73aab4",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9604,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "Well, this CL builds but not the one before it. Fixed.",
+      "parentUuid": "514a87c7_4ec3b649",
       "range": {
         "startLine": 9604,
         "startChar": 14,
@@ -153,6 +249,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4351bd72_540544ee",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9639,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "I went ahead and renamed it, let me know if this works? Otherwise, I understand the issue you are bringing up (hopefully the rename helps) but if the rename doesn\u0027t help, can you add a bit more context as to what you mean with the booleans you suggest? Thanks!",
+      "parentUuid": "3bcc1c94_2315f9c9",
+      "range": {
+        "startLine": 9639,
+        "startChar": 88,
+        "endLine": 9639,
+        "endChar": 95
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ce60760_d263f337",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -164,6 +284,30 @@
       "writtenOn": "2021-02-15T11:19:24Z",
       "side": 1,
       "message": "Not sure what makes ethernet so different it needs helpers to do the exact same thing as the others ?",
+      "range": {
+        "startLine": 9655,
+        "startChar": 20,
+        "endLine": 9655,
+        "endChar": 41
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0cf6c77_d9594011",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9655,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "These methods will be reused in a future CL, e.g.:\nhttps://r.android.com/c/platform/frameworks/base/+/1579207/18/tests/net/java/com/android/server/ConnectivityServiceTest.java#10430",
+      "parentUuid": "2ce60760_d263f337",
       "range": {
         "startLine": 9655,
         "startChar": 20,
@@ -199,6 +343,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "515d48a0_a2337faf",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9685,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38f19318_072c38fe",
+      "range": {
+        "startLine": 9685,
+        "startChar": 8,
+        "endLine": 9685,
+        "endChar": 36
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "56c7ae2b_4ddfae78",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 18
@@ -210,6 +378,30 @@
       "writtenOn": "2021-02-15T11:19:24Z",
       "side": 1,
       "message": "This check looks to me like a change-detector. Behavior is not contingent on the specific contents of the internal mDefaultNetworkRequests ; in fact the latter is very much an implementation detail of the former. Generally we shouldn\u0027t have tests that require updates when we change the implementation details, only when we change the behavior.\n\nOf course it\u0027s always a tradeoff. In this case it\u0027s true that mDefaultRequests is pretty fundamental to how this works and I don\u0027t see it changing any time soon, but I see this as a bit borderline.",
+      "range": {
+        "startLine": 9694,
+        "startChar": 0,
+        "endLine": 9717,
+        "endChar": 5
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49ca7178_bb3be711",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9717,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "Yep, acknowledged. Typically, I prefer to test only via public APIs however sometimes that can be a bit challenging as you mention.",
+      "parentUuid": "56c7ae2b_4ddfae78",
       "range": {
         "startLine": 9694,
         "startChar": 0,
@@ -243,6 +435,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3bbc06a_de4085ac",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9721,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "I went ahead and changed it and thanks for the context on that one.",
+      "parentUuid": "d6258724_cb721fde",
+      "range": {
+        "startLine": 9721,
+        "startChar": 19,
+        "endLine": 9721,
+        "endChar": 71
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7732d567_3ea9cf39",
@@ -266,6 +482,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d66704a6_f667bbb3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9723,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "This method will end up being called in other test CLs, just in this one it doesn\u0027t appear to be as necessary but will be more so in future CLs.",
+      "parentUuid": "7732d567_3ea9cf39",
+      "range": {
+        "startLine": 9723,
+        "startChar": 0,
+        "endLine": 9723,
+        "endChar": 65
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a671bce8_08169c1d",
@@ -279,6 +519,30 @@
       "writtenOn": "2021-02-15T11:19:24Z",
       "side": 1,
       "message": "Instead of waiting for the handler and check the callback arrived, which is brittle, slow and difficult to manage (how to know when we need to wait ?), let\u0027s just wait for the callback itself.\nThere are plenty of examples in this file of how to achieve this with callbacks. Something like this should do the job :\n\n  class TestOemListenerCallback extends ... {\n    final CompletableFuture\u003cObject\u003e done \u003d new CompletableFuture\u003c\u003e()\n    override onComplete() {\n      done.complete(new Object());\n    }\n    void expectOnComplete(timeout) {\n      done.get(timeout)\n    }\n  }",
+      "range": {
+        "startLine": 9769,
+        "startChar": 0,
+        "endLine": 9769,
+        "endChar": 63
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6b8b1c4_30d1a20e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9769,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "Ok yeah, this is a great idea. Done.",
+      "parentUuid": "a671bce8_08169c1d",
       "range": {
         "startLine": 9769,
         "startChar": 0,
@@ -335,6 +599,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c458b49_9c5b4d9f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9808,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "670fbca4_72977981",
+      "range": {
+        "startLine": 9802,
+        "startChar": 0,
+        "endLine": 9808,
+        "endChar": 49
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99c16e99_4a7f3691",
@@ -358,6 +646,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b73451ea_0325da14",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9819,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "Unfortunately I need to do this in this one case since I need a restricted, unmetered network which the helper doesn\u0027t provide. \n\nI could update the helper however based off of the multi-default use-cases, I need the restricted network to stay as metered otherwise it will always match the \"unmetered\" rule in the preference which wouldn\u0027t give me the granularity of control I need in the tests to validate the unmetered -\u003e oem_paid/private -\u003e default scenarios.\n\nI did change the name of the agent though to use the ethernet one since that was the transport.",
+      "parentUuid": "99c16e99_4a7f3691",
+      "range": {
+        "startLine": 9815,
+        "startChar": 0,
+        "endLine": 9819,
+        "endChar": 40
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60831169_9981d456",
@@ -371,6 +683,30 @@
       "writtenOn": "2021-02-15T11:19:24Z",
       "side": 1,
       "message": "Can we also validate that we don\u0027t get a callback if the UID won\u0027t match ?",
+      "range": {
+        "startLine": 9905,
+        "startChar": 0,
+        "endLine": 9905,
+        "endChar": 51
+      },
+      "revId": "deb67485d6c3a7c4e766f79311099e02c2e66b8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38842a36_73d6ea86",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9905,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-16T08:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60831169_9981d456",
       "range": {
         "startLine": 9905,
         "startChar": 0,
