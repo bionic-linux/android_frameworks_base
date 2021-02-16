@@ -666,6 +666,12 @@ public class NetworkCapabilitiesTest {
     }
 
     @Test
+    public void testSetNetworkSpecifierNoTransportNc() {
+        NetworkCapabilities nc = new NetworkCapabilities();
+        nc.setNetworkSpecifier(new StringNetworkSpecifier("specs"));
+    }
+
+    @Test
     public void testSetNetworkSpecifierOnMultiTransportNc() {
         // Sequence 1: Transport + Transport + NetworkSpecifier
         NetworkCapabilities nc1 = new NetworkCapabilities();
@@ -787,13 +793,10 @@ public class NetworkCapabilitiesTest {
                 .setNetworkSpecifier(specifier)
                 .build();
         assertEquals(specifier, nc1.getNetworkSpecifier());
-        try {
-            final NetworkCapabilities nc2 = new NetworkCapabilities.Builder()
-                    .setNetworkSpecifier(specifier)
-                    .build();
-            fail("Must have a single transport type. Without transport type or multiple transport"
-                    + " types is invalid.");
-        } catch (IllegalStateException expected) { }
+
+        final NetworkCapabilities nc2 =
+                new NetworkCapabilities.Builder().setNetworkSpecifier(specifier).build();
+        assertEquals(specifier, nc2.getNetworkSpecifier());
     }
 
     @Test
