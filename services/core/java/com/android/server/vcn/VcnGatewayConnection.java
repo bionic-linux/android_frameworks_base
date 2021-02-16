@@ -1609,8 +1609,7 @@ public class VcnGatewayConnection extends StateMachine {
 
         @Override
         protected void exitState() {
-            // Attempt to set the safe mode alarm - this requires the Vcn Network being validated
-            // while in ConnectedState (which cancels the previous alarm)
+            // Will only set a new alarm if no safe mode alarm is currently scheduled.
             setSafeModeAlarm();
         }
     }
