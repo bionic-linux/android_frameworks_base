@@ -104,6 +104,7 @@ import android.media.audiopolicy.AudioPolicyConfig;
 import android.media.audiopolicy.AudioProductStrategy;
 import android.media.audiopolicy.AudioVolumeGroup;
 import android.media.audiopolicy.IAudioPolicyCallback;
+import android.media.audiopolicy.IAudioVolumeChangeDispatcher;
 import android.media.projection.IMediaProjection;
 import android.media.projection.IMediaProjectionCallback;
 import android.media.projection.IMediaProjectionManager;
@@ -2749,6 +2750,29 @@ public class AudioService extends IAudioService.Stub
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
                 != PackageManager.PERMISSION_GRANTED) {
             throw new SecurityException("Missing MODIFY_AUDIO_ROUTING permission");
+        }
+    }
+
+    //================================
+    // Audio Volume Change Dispatcher
+    //================================
+    private final AudioVolumeChangeHandler mAudioVolumeChangeHandler =
+        new AudioVolumeChangeHandler();
+
+    /** @see AudioManager#registerAudioVolumeCallback(attr, int, int) */
+    public void registerAudioVolumeCallback(IAudioVolumeChangeDispatcher avc) {
+        enforceModifyAudioRoutingPermission();
+        synchronized (mAudioVolumeChangeHandler) {
+            mAudioVolumeChangeHandler.init();
+            mAudioVolumeChangeHandler.registerListener(avc);
+        }
+    }
+
+    /** @see AudioManager#setVolumeIndexForAttributes(attr, int, int) */
+    public void unregisterAudioVolumeCallback(IAudioVolumeChangeDispatcher avc) {
+        enforceModifyAudioRoutingPermission();
+        synchronized (mAudioVolumeChangeHandler) {
+            mAudioVolumeChangeHandler.unregisterListener(avc);
         }
     }
 
