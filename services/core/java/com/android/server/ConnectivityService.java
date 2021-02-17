@@ -4982,9 +4982,11 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public void setProvisioningNotificationVisible(boolean visible, int networkType,
+    public void setProvisioningNotificationVisible(boolean visible, Network network,
             String action) {
         enforceSettingsPermission();
+        NetworkAgentInfo networkAgentInfo = this.getNetworkAgentInfoForNetwork(network);
+        int networkType = networkAgentInfo.networkAgentConfig.legacyType;
         if (!ConnectivityManager.isNetworkTypeValid(networkType)) {
             return;
         }
