@@ -22,6 +22,30 @@
       },
       "revId": "13836837a698ce364d8274712b4a689dde91140f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6139b46b_93b7d758",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T18:19:08Z",
+      "side": 1,
+      "message": "Per discussion with Jean, updating the API to be:\n\nonGatewayConnectionError(int[] netCaps, int errorCode, @Nullable Throwable detail)\n\nthe error codes initially will be:\n- internal error\n- config error\n- network error",
+      "parentUuid": "924c0df7_8d0048be",
+      "range": {
+        "startLine": 406,
+        "startChar": 16,
+        "endLine": 406,
+        "endChar": 44
+      },
+      "revId": "13836837a698ce364d8274712b4a689dde91140f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
