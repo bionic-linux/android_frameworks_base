@@ -42,8 +42,8 @@ import android.media.AudioAttributes.AttributeSystemUsage;
 import android.media.audiopolicy.AudioPolicy;
 import android.media.audiopolicy.AudioPolicy.AudioPolicyFocusListener;
 import android.media.audiopolicy.AudioProductStrategy;
+import android.media.audiopolicy.AudioVolumeChangeDispatcher;
 import android.media.audiopolicy.AudioVolumeGroup;
-import android.media.audiopolicy.AudioVolumeGroupChangeHandler;
 import android.media.projection.MediaProjection;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
@@ -101,8 +101,9 @@ public class AudioManager {
     private static final String TAG = "AudioManager";
     private static final boolean DEBUG = false;
     private static final AudioPortEventHandler sAudioPortEventHandler = new AudioPortEventHandler();
-    private static final AudioVolumeGroupChangeHandler sAudioAudioVolumeGroupChangedHandler =
-            new AudioVolumeGroupChangeHandler();
+
+    private final AudioVolumeChangeDispatcher mAudioVolumeChangeDispatcher =
+            new AudioVolumeChangeDispatcher();
 
     /**
      * Broadcast intent, a hint for applications that audio is about to become
@@ -6642,11 +6643,7 @@ public class AudioManager {
     public void registerVolumeGroupCallback(
             @NonNull Executor executor,
             @NonNull VolumeGroupCallback callback) {
-        Preconditions.checkNotNull(executor, "executor must not be null");
-        Preconditions.checkNotNull(callback, "volume group change cb must not be null");
-        sAudioAudioVolumeGroupChangedHandler.init();
-        // TODO: make use of executor
-        sAudioAudioVolumeGroupChangedHandler.registerListener(callback);
+        mAudioVolumeChangeDispatcher.addAudioVolumeListener(executor, callback);
     }
 
    /**
@@ -6655,11 +6652,11 @@ public class AudioManager {
     * @param callback the {@link VolumeGroupCallback} to unregister
     */
     @SystemApi
-    public void unregisterVolumeGroupCallback(
-            @NonNull VolumeGroupCallback callback) {
-        Preconditions.checkNotNull(callback, "volume group change cb must not be null");
-        sAudioAudioVolumeGroupChangedHandler.unregisterListener(callback);
+    public void unregisterVolumeGroupCallback(@NonNull VolumeGroupCallback callback) {
+        mAudioVolumeChangeDispatcher.removeAudioVolumeListener(callback);
     }
+
+    //====================================================================
 
     /**
      * Return if an asset contains haptic channels or not.
