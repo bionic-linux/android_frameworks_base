@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0af08c1_14462b4a",
+        "filename": "media/java/android/media/audiopolicy/AudioVolumeChangeDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-02-17T15:30:27Z",
+      "side": 1,
+      "message": "we should maintain a list of callbacks: there can be more than one client installing a callback per AudioManager instance.\nSee implementation of CommunicationDeviceDispatcherStub",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 53
+      },
+      "revId": "6a985ba7b868666dc0db8e52c73b1e2a4b96d4a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b48a7e03_9b531129",
+        "filename": "media/java/android/media/audiopolicy/AudioVolumeChangeDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-02-17T15:30:27Z",
+      "side": 1,
+      "message": "@GuardedBy(\"AudioVolumeChangeDispatcher.class\")",
+      "range": {
+        "startLine": 102,
+        "startChar": 34,
+        "endLine": 102,
+        "endChar": 44
+      },
+      "revId": "6a985ba7b868666dc0db8e52c73b1e2a4b96d4a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
