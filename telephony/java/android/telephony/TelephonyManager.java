@@ -121,12 +121,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
@@ -14593,8 +14591,13 @@ public class TelephonyManager {
      *     <li>Generate the ks_NAF/ ks_Ext_NAF to be returned via the callback.</li>
      * </ol>
      *
-     * <p> Requires Permission: MODIFY_PHONE_STATE or that the calling app has carrier
-     * privileges (see {@link #hasCarrierPrivileges}).
+     * <p> Requires Permission:
+     * <ul>
+     *     <li>{@link android.Manifest.permission#MODIFY_PHONE_STATE},</li>
+     *     <li>{@link android.Manifest.permission#PERFORM_IMS_SINGLE_REGISTRATION},</li>
+     *     <li>or that the caller has carrier privileges (see
+     *         {@link TelephonyManager#hasCarrierPrivileges()}).</li>
+     * </ul>
      * @param appType icc application type, like {@link #APPTYPE_USIM} or {@link
      * #APPTYPE_ISIM} or {@link#APPTYPE_UNKNOWN}
      * @param nafId Network Application Function(NAF) fully qualified domain name and
@@ -14621,7 +14624,8 @@ public class TelephonyManager {
      */
     @SystemApi
     @WorkerThread
-    @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    @RequiresPermission(anyOf = {android.Manifest.permission.MODIFY_PHONE_STATE,
+            Manifest.permission.PERFORM_IMS_SINGLE_REGISTRATION})
     public void bootstrapAuthenticationRequest(
             @UiccAppTypeExt int appType, @NonNull Uri nafId,
             @NonNull UaSecurityProtocolIdentifier securityProtocol,
