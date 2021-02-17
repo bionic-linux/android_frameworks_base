@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "924c0df7_8d0048be",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-17T04:46:00Z",
+      "side": 1,
+      "message": "Maybe before you make any other changes, perhaps get Jean\u0027s opinion on the number and specificity of the error codes and the Throwable... I was thinking merge the \"detailed\" codes into the throwable and just provide generalized information via the codes... but I don\u0027t want to make you churn another patch set only to have Jean request a different set of churn.\n\nNow that we\u0027ve spent a good deal of time thinking about this, you can speak authoritatively about the benefits and drawbacks of the shape, and whatever shape Jean prefers should have some weight since he\u0027s the API reviewer.",
+      "range": {
+        "startLine": 406,
+        "startChar": 16,
+        "endLine": 406,
+        "endChar": 44
+      },
+      "revId": "13836837a698ce364d8274712b4a689dde91140f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
