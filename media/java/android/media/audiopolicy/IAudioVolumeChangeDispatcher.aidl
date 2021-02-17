@@ -15,8 +15,10 @@
 
 package android.media.audiopolicy;
 
+import android.media.audiopolicy.AudioDevicePortGain;
+
 /**
- * AIDL for the AudioService to signal audio volume groups changes
+ * AIDL for the AudioService to signal audio volume groups and gains changes
  *
  * {@hide}
  */
@@ -28,4 +30,12 @@ oneway interface IAudioVolumeChangeDispatcher {
      * @param flags one or more flags to describe the volume change.
      */
     void onAudioVolumeGroupChanged(int group, int flags);
+
+    /**
+     * Called when one or more gain on the associated Device Port has been changed and specifies
+     * why it has been changed.
+     * @param reasons that lead to the device port configuration changes.
+     * @param audioDevicePortConfigs list of device port configuration changed.
+     */
+    void onAudioDevicePortGainsChanged(int reasons, in List<AudioDevicePortGain> audioDevicePortGains);
 }

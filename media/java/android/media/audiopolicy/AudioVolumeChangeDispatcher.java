@@ -31,7 +31,7 @@ import java.util.concurrent.Executor;
 
 /**
  * @hide
- * Internal dispatcher class for volume change handling.
+ * Internal dispatcher class for volume and gain change handling.
  */
 public class AudioVolumeChangeDispatcher  {
     private static final String TAG = "AudioVolumeChangeDispatcher";
@@ -56,6 +56,25 @@ public class AudioVolumeChangeDispatcher  {
                 return;
             }
             executor.execute(() -> callback.onAudioVolumeGroupChanged(group, flags));
+        }
+
+        @Override
+        public void onAudioDevicePortGainsChanged(
+                int reasons, List<AudioDevicePortGain> audioDevicePortGains) {
+            Log.d(TAG, "onAudioDevicePortGainsChanged reasons=" + reasons
+                    + ", gains=" + audioDevicePortGains.toString());
+            Executor executor;
+            VolumeGroupCallback callback;
+
+            synchronized (AudioVolumeChangeDispatcher.this) {
+                executor = mExecutor;
+                callback = mAudioVolumeCallback;
+            }
+            if ((executor == null) || (callback == null)) {
+                return;
+            }
+            executor.execute(() -> callback.onAudioDevicePortGainsChanged(
+                    reasons, audioDevicePortGains));
         }
     };
 
