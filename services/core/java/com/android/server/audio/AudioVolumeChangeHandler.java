@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,33 +14,30 @@
  * limitations under the License.
  */
 
-package android.media.audiopolicy;
+package com.android.server.audio;
 
 import android.annotation.NonNull;
-import android.media.AudioManager;
+import android.media.audiopolicy.IAudioVolumeChangeDispatcher;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.os.RemoteException;
+import android.util.Log;
 
 import com.android.internal.util.Preconditions;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * The AudioVolumeGroupChangeHandler handles AudioManager.OnAudioVolumeGroupChangedListener
- * callbacks posted from JNI
- *
- * TODO: Make use of Executor of callbacks.
- * @hide
+ * The AudioVolumeChangeHandler handles AudioVolume callbacks posted from JNI
  */
-public class AudioVolumeGroupChangeHandler {
+/* private package */ class AudioVolumeChangeHandler {
+    private static final String TAG = "AudioVolumeChangeHandler";
     private Handler mHandler;
     private HandlerThread mHandlerThread;
-    private final ArrayList<AudioManager.VolumeGroupCallback> mListeners =
-            new ArrayList<AudioManager.VolumeGroupCallback>();
-
-    private static final String TAG = "AudioVolumeGroupChangeHandler";
+    private final ArrayList<IAudioVolumeChangeDispatcher> mListeners = new ArrayList<>();
 
     private static final int AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED = 1000;
     private static final int AUDIOVOLUMEGROUP_EVENT_NEW_LISTENER = 4;
@@ -70,17 +67,16 @@ public class AudioVolumeGroupChangeHandler {
             mHandler = new Handler(mHandlerThread.getLooper()) {
                 @Override
                 public void handleMessage(Message msg) {
-                    ArrayList<AudioManager.VolumeGroupCallback> listeners;
+                    List<IAudioVolumeChangeDispatcher> listeners;
                     synchronized (this) {
                         if (msg.what == AUDIOVOLUMEGROUP_EVENT_NEW_LISTENER) {
                             listeners =
-                                    new ArrayList<AudioManager.VolumeGroupCallback>();
+                                    new ArrayList<IAudioVolumeChangeDispatcher>();
                             if (mListeners.contains(msg.obj)) {
-                                listeners.add(
-                                        (AudioManager.VolumeGroupCallback) msg.obj);
+                                listeners.add((IAudioVolumeChangeDispatcher) msg.obj);
                             }
                         } else {
-                            listeners = (ArrayList<AudioManager.VolumeGroupCallback>)
+                            listeners = (ArrayList<IAudioVolumeChangeDispatcher>)
                                     mListeners.clone();
                         }
                     }
@@ -88,20 +84,24 @@ public class AudioVolumeGroupChangeHandler {
                         return;
                     }
 
-                    switch (msg.what) {
-                        case AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED:
-                            for (int i = 0; i < listeners.size(); i++) {
-                                listeners.get(i).onAudioVolumeGroupChanged((int) msg.arg1,
-                                                                           (int) msg.arg2);
-                            }
-                            break;
-
-                        default:
-                            break;
+                    try {
+                        switch (msg.what) {
+                            case AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED:
+                                Log.v(TAG, "AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED ");
+                                for (int i = 0; i < listeners.size(); i++) {
+                                    listeners.get(i).onAudioVolumeGroupChanged((int) msg.arg1,
+                                                                               (int) msg.arg2);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    } catch (RemoteException e) {
+                        Log.w(TAG, "Could not call volume change callback()", e);
                     }
                 }
             };
-            native_setup(new WeakReference<AudioVolumeGroupChangeHandler>(this));
+            native_setup(new WeakReference<AudioVolumeChangeHandler>(this));
         }
     }
 
@@ -117,9 +117,9 @@ public class AudioVolumeGroupChangeHandler {
     private native void native_finalize();
 
    /**
-    * @param cb the {@link AudioManager.VolumeGroupCallback} to register
+    * @param cb the {@link IAudioVolumeChangeDispatcher} to register
     */
-    public void registerListener(@NonNull AudioManager.VolumeGroupCallback cb) {
+    public void registerListener(@NonNull IAudioVolumeChangeDispatcher cb) {
         Preconditions.checkNotNull(cb, "volume group callback shall not be null");
         synchronized (this) {
             mListeners.add(cb);
@@ -132,9 +132,9 @@ public class AudioVolumeGroupChangeHandler {
     }
 
    /**
-    * @param cb the {@link AudioManager.VolumeGroupCallback} to unregister
+    * @param cb the {@link IAudioVolumeChangeDispatcher} to unregister
     */
-    public void unregisterListener(@NonNull AudioManager.VolumeGroupCallback cb) {
+    public void unregisterListener(@NonNull IAudioVolumeChangeDispatcher cb) {
         Preconditions.checkNotNull(cb, "volume group callback shall not be null");
         synchronized (this) {
             mListeners.remove(cb);
@@ -148,8 +148,8 @@ public class AudioVolumeGroupChangeHandler {
     @SuppressWarnings("unused")
     private static void postEventFromNative(Object moduleRef,
                                             int what, int arg1, int arg2, Object obj) {
-        AudioVolumeGroupChangeHandler eventHandler =
-                (AudioVolumeGroupChangeHandler) ((WeakReference) moduleRef).get();
+        AudioVolumeChangeHandler eventHandler =
+                (AudioVolumeChangeHandler) ((WeakReference) moduleRef).get();
         if (eventHandler == null) {
             return;
         }
