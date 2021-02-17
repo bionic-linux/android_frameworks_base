@@ -556,6 +556,7 @@ public class Binder implements IBinder {
      * Add the calling thread to the IPC thread pool.  This function does
      * not return until the current process is exiting.
      */
+    // 此处为Java层的实现，需要调用native层的joinThreadPool()函数
     public static final void joinThreadPool() {
         BinderInternal.joinThreadPool();
     }
