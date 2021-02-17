@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67b7ad4e_2287270d",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T00:21:50Z",
+      "side": 1,
+      "message": "thoughts on \u0027updateNetworkRequests\u0027? I\u0027m not sure the \"or\" applies here, since we\u0027re always registering. It\u0027s more a question of sometimes unregistering (which always happens, except for the initial call).\n\nThis change would also match \u0027updateSubIdsAndCellularRequests\u0027 naming",
+      "range": {
+        "startLine": 123,
+        "startChar": 17,
+        "endLine": 123,
+        "endChar": 48
+      },
+      "revId": "1703a72b7d7158fe7c030f2d24a94af54fc92609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8e257d5_a7530ec1",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T00:21:50Z",
+      "side": 1,
+      "message": "thoughts on moving this closer to the CM call below? imo that would help connect it to the new register() call",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 63
+      },
+      "revId": "1703a72b7d7158fe7c030f2d24a94af54fc92609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbbc9c4f_ab468201",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T00:21:50Z",
+      "side": 1,
+      "message": "nit: suggest something similar to \"Update NetworkRequests to match the updated Subscription info\"",
+      "range": {
+        "startLine": 225,
+        "startChar": 11,
+        "endLine": 225,
+        "endChar": 69
+      },
+      "revId": "1703a72b7d7158fe7c030f2d24a94af54fc92609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce102142_f66911cb",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T00:21:50Z",
+      "side": 1,
+      "message": "nit: it\u0027s not just cell callbacks that get unregistered",
+      "range": {
+        "startLine": 225,
+        "startChar": 55,
+        "endLine": 225,
+        "endChar": 59
+      },
+      "revId": "1703a72b7d7158fe7c030f2d24a94af54fc92609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36a5436e_7b9ccefc",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T00:21:50Z",
+      "side": 1,
+      "message": "nit: verifyRequests seems a little vague to me - thoughts on verifyBackgroundNetworkRequests()? verifyNetworkRequestsFiled?\n\nWe could even include the unregister() verification here and make it something like verifyNetworkRequestsRegisteredAndUnregistered?",
+      "range": {
+        "startLine": 156,
+        "startChar": 17,
+        "endLine": 156,
+        "endChar": 31
+      },
+      "revId": "1703a72b7d7158fe7c030f2d24a94af54fc92609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8599f0df_47d9c466",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T00:21:50Z",
+      "side": 1,
+      "message": "Why are we expecting N number of RouteSelectionCallbacks to be registered? afaict, only one is filed per startup / TelephonySubscriptionUpdate",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 177,
+        "endChar": 63
+      },
+      "revId": "1703a72b7d7158fe7c030f2d24a94af54fc92609",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
