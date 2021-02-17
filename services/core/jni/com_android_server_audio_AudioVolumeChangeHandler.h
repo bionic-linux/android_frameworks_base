@@ -23,6 +23,7 @@ namespace android {
 
 // keep in sync with AudioManager.AudioVolumeGroupChangeHandler.java
 #define AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED                   1000
+#define AUDIOVOLUMEGROUP_EVENT_DEVICE_PORT_GAIN_CHANGED         1001
 
 class JNIAudioVolumeChangeHandler: public AudioSystem::AudioVolumeGroupCallback
 {
@@ -30,6 +31,8 @@ public:
     JNIAudioVolumeChangeHandler(JNIEnv* env, jobject thiz, jobject weak_thiz);
     ~JNIAudioVolumeChangeHandler();
 
+    void onAudioDevicePortGainsChanged(
+            int reasons, const std::vector<audio_port_config>& gains) override;
     void onAudioVolumeGroupChanged(volume_group_t group, int flags) override;
 
 private:
