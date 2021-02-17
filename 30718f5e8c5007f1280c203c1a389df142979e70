@@ -93,6 +93,30 @@
       },
       "revId": "30718f5e8c5007f1280c203c1a389df142979e70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "259aac59_ed857881",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T05:01:36Z",
+      "side": 1,
+      "message": "Sorry. Gerrit showed it to me as added in this patch.",
+      "parentUuid": "c602c624_4b9e5e25",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 5
+      },
+      "revId": "30718f5e8c5007f1280c203c1a389df142979e70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
