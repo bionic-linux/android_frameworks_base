@@ -36,7 +36,7 @@ import java.util.concurrent.Executor;
 
 /**
  * @hide
- * Internal dispatcher class for volume change handling.
+ * Internal dispatcher class for volume and gain change handling.
  */
 public class AudioVolumeChangeDispatcher  {
     private static final String TAG = "AudioVolumeChangeDispatcher";
@@ -80,6 +80,33 @@ public class AudioVolumeChangeDispatcher  {
                 for (AudioVolumeListenerInfo info : audioVolumeListeners) {
                     info.mExecutor.execute(() ->
                             info.mListener.onAudioVolumeGroupChanged(group, flags));
+                }
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
+        }
+
+        @Override
+        public void onAudioDevicePortGainsChanged(
+                int reasons, List<AudioDevicePortGain> audioDevicePortGains) {
+            Log.d(TAG, "onAudioDevicePortGainsChanged reasons=" + reasons
+                    + ", gains=" + audioDevicePortGains.toString());
+
+            // make a shallow copy of listeners so callback is not executed under lock
+            final ArrayList<AudioVolumeListenerInfo> audioVolumeListeners;
+
+            synchronized (AudioVolumeChangeDispatcher.this) {
+                if (mAudioVolumeListeners == null || mAudioVolumeListeners.isEmpty()) {
+                    return;
+                }
+                audioVolumeListeners =
+                        (ArrayList<AudioVolumeListenerInfo>) mAudioVolumeListeners.clone();
+            }
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                for (AudioVolumeListenerInfo info : audioVolumeListeners) {
+                    info.mExecutor.execute(() -> info.mListener.onAudioDevicePortGainsChanged(
+                            reasons, audioDevicePortGains));
                 }
             } finally {
                 Binder.restoreCallingIdentity(ident);

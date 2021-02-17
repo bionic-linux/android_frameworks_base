@@ -36,6 +36,7 @@ import android.media.IVolumeController;
 import android.media.IVolumeController;
 import android.media.PlayerBase;
 import android.media.VolumePolicy;
+import android.media.audiopolicy.AudioDevicePortGain;
 import android.media.audiopolicy.AudioPolicyConfig;
 import android.media.audiopolicy.AudioProductStrategy;
 import android.media.audiopolicy.AudioVolumeGroup;

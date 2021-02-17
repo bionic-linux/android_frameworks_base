@@ -17,6 +17,7 @@
 package com.android.server.audio;
 
 import android.annotation.NonNull;
+import android.media.audiopolicy.AudioDevicePortGain;
 import android.media.audiopolicy.IAudioVolumeChangeDispatcher;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -40,6 +41,7 @@ import java.util.List;
     private final ArrayList<IAudioVolumeChangeDispatcher> mListeners = new ArrayList<>();
 
     private static final int AUDIOVOLUMEGROUP_EVENT_VOLUME_CHANGED = 1000;
+    private static final int AUDIOVOLUMEGROUP_EVENT_DEVICE_PORT_GAIN_CHANGED = 1001;
     private static final int AUDIOVOLUMEGROUP_EVENT_NEW_LISTENER = 4;
 
     /**
@@ -91,6 +93,15 @@ import java.util.List;
                                 for (int i = 0; i < listeners.size(); i++) {
                                     listeners.get(i).onAudioVolumeGroupChanged((int) msg.arg1,
                                                                                (int) msg.arg2);
+                                }
+                                break;
+                            case AUDIOVOLUMEGROUP_EVENT_DEVICE_PORT_GAIN_CHANGED:
+                                Log.v(TAG, "AUDIOVOLUMEGROUP_EVENT_DEVICE_PORT_GAIN_CHANGED ");
+                                final int reasons = (int) msg.arg1;
+                                final List<AudioDevicePortGain> gains =
+                                        (List<AudioDevicePortGain>) msg.obj;
+                                for (int i = 0; i < listeners.size(); i++) {
+                                    listeners.get(i).onAudioDevicePortGainsChanged(reasons, gains);
                                 }
                                 break;
                             default:
