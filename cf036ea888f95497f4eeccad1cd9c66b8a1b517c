@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d21f7e19_b2a43c6b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T03:04:25Z",
+      "side": 1,
+      "message": "To avoid the NAI escaping (as it\u0027s a very internal implementation detail of CS), can we perform the checks on the associated Network object instead ?",
+      "range": {
+        "startLine": 927,
+        "startChar": 8,
+        "endLine": 929,
+        "endChar": 9
+      },
+      "revId": "cf036ea888f95497f4eeccad1cd9c66b8a1b517c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d22c8500_bc21571d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 9928,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-17T03:04:25Z",
+      "side": 1,
+      "message": "In the interest of terseness, can we merge this test with the last test in this file ? It should be as simple as moving these two assertDefaultNC lines in the right place in that test.",
+      "range": {
+        "startLine": 9928,
+        "startChar": 8,
+        "endLine": 9928,
+        "endChar": 68
+      },
+      "revId": "cf036ea888f95497f4eeccad1cd9c66b8a1b517c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
