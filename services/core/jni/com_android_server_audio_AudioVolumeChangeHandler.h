@@ -31,6 +31,8 @@ public:
     JNIAudioVolumeChangeHandler(JNIEnv* env, jobject thiz, jobject weak_thiz);
     ~JNIAudioVolumeChangeHandler();
 
+    void onAudioDevicePortGainsChanged(
+            int reasons, const std::vector<audio_port_config>& gains) override;
     void onAudioVolumeGroupChanged(volume_group_t group, int flags) override;
 
 private:
