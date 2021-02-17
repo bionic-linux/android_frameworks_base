@@ -4253,6 +4253,7 @@ package android.media {
 
   public abstract static class AudioManager.VolumeGroupCallback {
     ctor public AudioManager.VolumeGroupCallback();
+    method public void onAudioDevicePortGainsChanged(int, @NonNull java.util.List<android.media.audiopolicy.AudioDevicePortGain>);
     method public void onAudioVolumeGroupChanged(int, int);
   }
 
@@ -4349,6 +4350,12 @@ package android.media.audiofx {
 }
 
 package android.media.audiopolicy {
+
+  public final class AudioDevicePortGain implements android.os.Parcelable {
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.media.audiopolicy.AudioDevicePortGain> CREATOR;
+  }
 
   public class AudioMix {
     method public int getMixState();
