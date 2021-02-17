@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "11e2cac5_5b810235",
+        "filename": "media/java/android/media/audiopolicy/AudioVolumeChangeDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-02-17T16:19:47Z",
+      "side": 1,
+      "message": "ok, this was also my dilemna... Sometimes we register only one (like AudioServer state), sometimes more than one per mgr is allowed",
+      "parentUuid": "b0af08c1_14462b4a",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 53
+      },
+      "revId": "6a985ba7b868666dc0db8e52c73b1e2a4b96d4a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b48a7e03_9b531129",
         "filename": "media/java/android/media/audiopolicy/AudioVolumeChangeDispatcher.java",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-17T15:30:27Z",
       "side": 1,
       "message": "@GuardedBy(\"AudioVolumeChangeDispatcher.class\")",
+      "range": {
+        "startLine": 102,
+        "startChar": 34,
+        "endLine": 102,
+        "endChar": 44
+      },
+      "revId": "6a985ba7b868666dc0db8e52c73b1e2a4b96d4a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3664f93b_73f4e024",
+        "filename": "media/java/android/media/audiopolicy/AudioVolumeChangeDispatcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-02-17T16:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b48a7e03_9b531129",
       "range": {
         "startLine": 102,
         "startChar": 34,
