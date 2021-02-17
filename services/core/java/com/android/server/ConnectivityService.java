@@ -5016,16 +5016,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public void setProvisioningNotificationVisible(boolean visible, int networkType,
-            String action) {
+    public void setProvisioningNotificationVisible(final boolean visible, final Network network,
+            final String action) {
         enforceSettingsPermission();
+        final NetworkAgentInfo networkAgentInfo = getNetworkAgentInfoForNetwork(network);
+        final int networkType = networkAgentInfo.networkAgentConfig.legacyType;
         if (!ConnectivityManager.isNetworkTypeValid(networkType)) {
             return;
         }
         final long ident = Binder.clearCallingIdentity();
         try {
             // Concatenate the range of types onto the range of NetIDs.
-            int id = NetIdManager.MAX_NET_ID + 1 + (networkType - ConnectivityManager.TYPE_NONE);
+            final int id =
+                    NetIdManager.MAX_NET_ID + 1 + (networkType - ConnectivityManager.TYPE_NONE);
             mNotifier.setProvNotificationVisible(visible, id, action);
         } finally {
             Binder.restoreCallingIdentity(ident);

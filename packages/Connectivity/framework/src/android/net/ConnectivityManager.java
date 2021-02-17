@@ -3101,10 +3101,11 @@ public class ConnectivityManager {
      * @deprecated Doesn't properly deal with multiple connected networks of the same type.
      */
     @Deprecated
-    public void setProvisioningNotificationVisible(boolean visible, int networkType,
+    @SystemApi
+    public void setProvisioningNotificationVisible(boolean visible, Network network,
             String action) {
         try {
-            mService.setProvisioningNotificationVisible(visible, networkType, action);
+            mService.setProvisioningNotificationVisible(visible, network, action);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

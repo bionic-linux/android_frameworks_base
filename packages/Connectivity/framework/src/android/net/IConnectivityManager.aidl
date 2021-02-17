@@ -126,7 +126,7 @@ interface IConnectivityManager
     void setRequireVpnForUids(boolean requireVpn, in UidRange[] ranges);
     void setLegacyLockdownVpnEnabled(boolean enabled);
 
-    void setProvisioningNotificationVisible(boolean visible, int networkType, in String action);
+    void setProvisioningNotificationVisible(boolean visible, in Network network, in String action);
 
     void setAirplaneMode(boolean enable);
 
