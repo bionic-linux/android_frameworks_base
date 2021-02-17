@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7e8e97f_7aeb6441",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-17T18:49:49Z",
+      "side": 1,
+      "message": "This has a nice clean look to it. I think that post-IC we should see if there\u0027s something we can use to identify the network other than an int[] networkCapabilities, but right now that\u0027s what we\u0027ve got.\n",
+      "revId": "b9dd304ecd689283279176efa25f8584879192de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c74c705_269df74e",
+        "filename": "core/java/android/net/vcn/IVcnStatusCallback.aidl",
+        "patchSetId": 31
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-17T18:49:49Z",
+      "side": 1,
+      "message": "Perhaps consider ServiceSpecificException? It conveniently has an error code and a String, and it\u0027s \"Parcelable\". :-)\n\nhttps://source.corp.google.com/android/frameworks/base/core/java/android/os/Parcel.java;l\u003d2193?q\u003dParcel.java\u0026sq\u003dpackage:%5Eandroid$",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "b9dd304ecd689283279176efa25f8584879192de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
