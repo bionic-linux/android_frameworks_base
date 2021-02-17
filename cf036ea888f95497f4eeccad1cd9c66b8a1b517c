@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "055b3423_f71c3753",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T05:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d21f7e19_b2a43c6b",
+      "range": {
+        "startLine": 927,
+        "startChar": 8,
+        "endLine": 929,
+        "endChar": 9
+      },
+      "revId": "cf036ea888f95497f4eeccad1cd9c66b8a1b517c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d22c8500_bc21571d",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-17T03:04:25Z",
       "side": 1,
       "message": "In the interest of terseness, can we merge this test with the last test in this file ? It should be as simple as moving these two assertDefaultNC lines in the right place in that test.",
+      "range": {
+        "startLine": 9928,
+        "startChar": 8,
+        "endLine": 9928,
+        "endChar": 68
+      },
+      "revId": "cf036ea888f95497f4eeccad1cd9c66b8a1b517c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95665b21_6a903c5f",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 9928,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-17T05:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d22c8500_bc21571d",
       "range": {
         "startLine": 9928,
         "startChar": 8,
