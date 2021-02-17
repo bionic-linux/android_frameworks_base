@@ -33,8 +33,7 @@ import java.util.Objects;
  * @hide
  */
 public final class VcnUnderlyingNetworkPolicy implements Parcelable {
-    private final boolean mIsTearDownRequested;
-    private final NetworkCapabilities mMergedNetworkCapabilities;
+    private final VcnNetworkPolicyResult mVcnNetworkPolicyResult;
 
     /**
      * Constructs a VcnUnderlyingNetworkPolicy with the specified parameters.
@@ -46,8 +45,8 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
         Objects.requireNonNull(
                 mergedNetworkCapabilities, "mergedNetworkCapabilities must be nonnull");
 
-        mIsTearDownRequested = isTearDownRequested;
-        mMergedNetworkCapabilities = mergedNetworkCapabilities;
+        mVcnNetworkPolicyResult =
+                new VcnNetworkPolicyResult(isTearDownRequested, mergedNetworkCapabilities);
     }
 
     /**
@@ -55,7 +54,7 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
      * be torn down.
      */
     public boolean isTeardownRequested() {
-        return mIsTearDownRequested;
+        return mVcnNetworkPolicyResult.isTeardownRequested();
     }
 
     /**
@@ -64,12 +63,12 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
      */
     @NonNull
     public NetworkCapabilities getMergedNetworkCapabilities() {
-        return mMergedNetworkCapabilities;
+        return mVcnNetworkPolicyResult.getNetworkCapabilities();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mIsTearDownRequested, mMergedNetworkCapabilities);
+        return Objects.hash(mVcnNetworkPolicyResult);
     }
 
     @Override
@@ -78,8 +77,7 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
         if (!(o instanceof VcnUnderlyingNetworkPolicy)) return false;
         final VcnUnderlyingNetworkPolicy that = (VcnUnderlyingNetworkPolicy) o;
 
-        return mIsTearDownRequested == that.mIsTearDownRequested
-                && mMergedNetworkCapabilities.equals(that.mMergedNetworkCapabilities);
+        return mVcnNetworkPolicyResult.equals(that.mVcnNetworkPolicyResult);
     }
 
     /** {@inheritDoc} */
@@ -91,8 +89,8 @@ public final class VcnUnderlyingNetworkPolicy implements Parcelable {
     /** {@inheritDoc} */
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeBoolean(mIsTearDownRequested);
-        dest.writeParcelable(mMergedNetworkCapabilities, flags);
+        dest.writeBoolean(mVcnNetworkPolicyResult.isTeardownRequested());
+        dest.writeParcelable(mVcnNetworkPolicyResult.getNetworkCapabilities(), flags);
     }
 
     /** Implement the Parcelable interface */
