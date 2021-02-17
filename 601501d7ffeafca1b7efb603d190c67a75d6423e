@@ -22,6 +22,30 @@
       },
       "revId": "601501d7ffeafca1b7efb603d190c67a75d6423e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90288877_aebae32f",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-17T02:26:21Z",
+      "side": 1,
+      "message": "Filed b/180451635 for the frameworks team to consider.",
+      "parentUuid": "be540eb8_46d14c13",
+      "range": {
+        "startLine": 112,
+        "startChar": 32,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "601501d7ffeafca1b7efb603d190c67a75d6423e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
