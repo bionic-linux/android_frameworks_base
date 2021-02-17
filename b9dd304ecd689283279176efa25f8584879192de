@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae4b5bba_66be8718",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T21:56:51Z",
+      "side": 1,
+      "message": "filed b/180522464 to track this post-IC",
+      "parentUuid": "e7e8e97f_7aeb6441",
+      "revId": "b9dd304ecd689283279176efa25f8584879192de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c74c705_269df74e",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-02-17T18:49:49Z",
       "side": 1,
       "message": "Perhaps consider ServiceSpecificException? It conveniently has an error code and a String, and it\u0027s \"Parcelable\". :-)\n\nhttps://source.corp.google.com/android/frameworks/base/core/java/android/os/Parcel.java;l\u003d2193?q\u003dParcel.java\u0026sq\u003dpackage:%5Eandroid$",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "b9dd304ecd689283279176efa25f8584879192de",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0572a878_fa5e30cd",
+        "filename": "core/java/android/net/vcn/IVcnStatusCallback.aidl",
+        "patchSetId": 31
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-17T21:56:51Z",
+      "side": 1,
+      "message": "After clarifying offline, I do like this shape more but I think this is best scoped as post-IC cleanup.\n\nFiled b/180521637 to track and added a TODO in VcnManager",
+      "parentUuid": "6c74c705_269df74e",
       "range": {
         "startLine": 25,
         "startChar": 22,
