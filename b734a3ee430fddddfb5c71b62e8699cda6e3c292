@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "165fa768_fe274374",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065793
+      },
+      "writtenOn": "2021-02-17T16:35:41Z",
+      "side": 1,
+      "message": "Correct a typo in Javadocs for AutomaticGainControl.\n\nI encountered this mistake at\nhttps://developer.android.com/reference/android/media/audiofx/AutomaticGainControl",
+      "revId": "b734a3ee430fddddfb5c71b62e8699cda6e3c292",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
