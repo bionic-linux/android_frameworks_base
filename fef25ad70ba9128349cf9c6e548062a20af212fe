@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6edbe82_906e899d",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-18T06:55:34Z",
+      "side": 1,
+      "message": "s/s//",
+      "range": {
+        "startLine": 1248,
+        "startChar": 43,
+        "endLine": 1248,
+        "endChar": 44
+      },
+      "revId": "fef25ad70ba9128349cf9c6e548062a20af212fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e8d562e_8c9f03dd",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-18T06:55:34Z",
+      "side": 1,
+      "message": "Write this in one word",
+      "range": {
+        "startLine": 1247,
+        "startChar": 86,
+        "endLine": 1248,
+        "endChar": 16
+      },
+      "revId": "fef25ad70ba9128349cf9c6e548062a20af212fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b4d34f0_3a6c73a0",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-18T06:55:34Z",
+      "side": 1,
+      "message": "Did you want to mutate the test to test that you still get ISE when",
+      "range": {
+        "startLine": 800,
+        "startChar": 4,
+        "endLine": 800,
+        "endChar": 5
+      },
+      "revId": "fef25ad70ba9128349cf9c6e548062a20af212fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
