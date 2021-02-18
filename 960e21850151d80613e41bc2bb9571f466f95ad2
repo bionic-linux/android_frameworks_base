@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8327eff5_03a4ae1b",
+        "filename": "core/java/android/net/SubscriptionAwareSpecifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-18T06:50:54Z",
+      "side": 1,
+      "message": "non-public ?",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 51
+      },
+      "revId": "960e21850151d80613e41bc2bb9571f466f95ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fdb0e60_634df703",
+        "filename": "core/java/android/net/SubscriptionAwareSpecifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-18T06:50:54Z",
+      "side": 1,
+      "message": "Let\u0027s make this an interface.\n\nThen because it can no longer extend NetworkSpecifier, let\u0027s name it SubscriptionAware\n\nAlso you\u0027ll need to update the class comment to say this represents any class that has a subscription ID, but that in particular it is meant to be used by NetworkSpecifiers of transports that produce networks that may belong to a subscription",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "960e21850151d80613e41bc2bb9571f466f95ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
