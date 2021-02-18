@@ -22,6 +22,30 @@
       },
       "revId": "7f7b4cdcbc88c616f019994ed132f1e110974696",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e10c43a_de2e48b1",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-18T06:01:39Z",
+      "side": 1,
+      "message": "Right, mockito-target-minus-junit4 in the FrameworksNetTests build rule should be changed to  mockito-target-extended-minus-junit4 with the JNI libs added (so basically aosp/1475900 merged before to be sure)",
+      "parentUuid": "d0022166_9ca88be4",
+      "range": {
+        "startLine": 194,
+        "startChar": 18,
+        "endLine": 194,
+        "endChar": 37
+      },
+      "revId": "7f7b4cdcbc88c616f019994ed132f1e110974696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

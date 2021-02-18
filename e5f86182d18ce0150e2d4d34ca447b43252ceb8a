@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11a55c86_0aa490eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-18T06:01:39Z",
+      "side": 1,
+      "message": "I see the latest patchset still uses noteConnectivityChanged, maybe mention it in the commit message ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "e5f86182d18ce0150e2d4d34ca447b43252ceb8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
