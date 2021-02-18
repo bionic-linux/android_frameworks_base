@@ -25,6 +25,7 @@ import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.content.Context;
 import android.net.LinkProperties;
+import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Binder;
 import android.os.ParcelUuid;
@@ -222,11 +223,19 @@ public class VcnManager {
     public VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
             @NonNull NetworkCapabilities networkCapabilities,
             @NonNull LinkProperties linkProperties) {
+        return getUnderlyingNetworkPolicy(null /* network */, networkCapabilities, linkProperties);
+    }
+
+    private VcnUnderlyingNetworkPolicy getUnderlyingNetworkPolicy(
+            @Nullable Network network,
+            @NonNull NetworkCapabilities networkCapabilities,
+            @NonNull LinkProperties linkProperties) {
         requireNonNull(networkCapabilities, "networkCapabilities must not be null");
         requireNonNull(linkProperties, "linkProperties must not be null");
 
         try {
-            return mService.getUnderlyingNetworkPolicy(networkCapabilities, linkProperties);
+            return mService.getUnderlyingNetworkPolicy(
+                    network, networkCapabilities, linkProperties);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
