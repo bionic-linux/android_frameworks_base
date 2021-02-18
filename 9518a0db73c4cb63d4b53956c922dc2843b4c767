@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b779bfca_48c59d8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T12:52:45Z",
+      "side": 1,
+      "message": "LGTM with only nits and 1 naming problem.",
+      "revId": "9518a0db73c4cb63d4b53956c922dc2843b4c767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0595927_c15e8dae",
+        "filename": "services/core/java/com/android/server/connectivity/FullScore.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T12:52:45Z",
+      "side": 1,
+      "message": "nit: this looks not pretty to me since these constants are belongs to NetworkScore.\nThis is also why I think there should be a common base class.\nBut given that we could do that any time we want.\nThis is fine now.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 9
+      },
+      "revId": "9518a0db73c4cb63d4b53956c922dc2843b4c767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee041f30_68a0fc17",
+        "filename": "tests/net/java/com/android/server/connectivity/FullScoreTest.kt",
+        "patchSetId": 18
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T12:52:45Z",
+      "side": 1,
+      "message": "super nit: not sure if it is worthy to \n  1. collect the output and see they are distinct, e.g. count the length of a set of names.\n  2. Give MAX_CS_MANAGED_POLICY+1 and assert throws.\nNo strong opinion, feel free to keep it as is or do in follow-up.",
+      "range": {
+        "startLine": 90,
+        "startChar": 42,
+        "endLine": 90,
+        "endChar": 81
+      },
+      "revId": "9518a0db73c4cb63d4b53956c922dc2843b4c767",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
