@@ -21,6 +21,7 @@ import static android.content.pm.UserInfo.FLAG_PRIMARY;
 import static android.content.pm.UserInfo.FLAG_PROFILE;
 import static android.os.UserHandle.USER_SYSTEM;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -202,6 +203,11 @@ public class RebootEscrowManagerTests {
         public int getLoadEscrowDataRetryIntervalSeconds() {
             // Retry in 1 seconds
             return 1;
+        }
+
+        @Override
+        public String getVbmetaDigest(boolean other) {
+            return other ? "" : "fake digest";
         }
 
         @Override
@@ -433,13 +439,15 @@ public class RebootEscrowManagerTests {
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
         doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(),
                 eq(0) /* error code */, eq(1) /* HAL based */, eq(1) /* attempt count */,
-                anyInt(), anyInt(), anyInt());
+                anyInt(), eq(0) /* vbmeta status */, anyInt());
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> keyByteCaptor.getValue());
 
         mService.loadRebootEscrowDataIfAvailable(null);
         verify(mRebootEscrow).retrieveKey();
         assertTrue(metricsSuccessCaptor.getValue());
         verify(mKeyStoreManager).clearKeyStoreEncryptionKey();
+        assertEquals(mStorage.getLong(RebootEscrowManager.REBOOT_ESCROW_KEY_ARMED_TIMESTAMP,
+                -1, USER_SYSTEM), -1);
     }
 
     @Test
@@ -468,7 +476,7 @@ public class RebootEscrowManagerTests {
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
         doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(),
                 eq(0) /* error code */, eq(2) /* Server based */, eq(1) /* attempt count */,
-                anyInt(), anyInt(), anyInt());
+                anyInt(), eq(0) /* vbmeta status */, anyInt());
 
         when(mServiceConnection.unwrap(any(), anyLong()))
                 .thenAnswer(invocation -> invocation.getArgument(0));
@@ -607,9 +615,14 @@ public class RebootEscrowManagerTests {
         when(mInjected.getBootCount()).thenReturn(10);
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> keyByteCaptor.getValue());
 
+        // Trigger a vbmeta digest mismatch
+        mStorage.setString(RebootEscrowManager.REBOOT_ESCROW_KEY_VBMETA_DIGEST,
+                "non sense value", USER_SYSTEM);
         mService.loadRebootEscrowDataIfAvailable(null);
         verify(mInjected).reportMetric(eq(true), eq(0) /* error code */, eq(1) /* HAL based */,
-                eq(1) /* attempt count */, anyInt(), anyInt(), anyInt());
+                eq(1) /* attempt count */, anyInt(), eq(2) /* vbmeta status */, anyInt());
+        assertEquals(mStorage.getString(RebootEscrowManager.REBOOT_ESCROW_KEY_VBMETA_DIGEST,
+                "", USER_SYSTEM), "");
     }
 
     @Test
