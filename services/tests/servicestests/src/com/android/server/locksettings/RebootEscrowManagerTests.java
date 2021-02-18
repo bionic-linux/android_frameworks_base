@@ -205,6 +205,11 @@ public class RebootEscrowManagerTests {
         }
 
         @Override
+        public String getVbmetaDigest(boolean other) {
+            return other ? "" : "fake digest";
+        }
+
+        @Override
         public void reportMetric(boolean success, int errorCode, int serviceType, int attemptCount,
                 int escrowDurationInSeconds, int vbmetaDigestStatus) {
             mInjected.reportMetric(success, errorCode, serviceType, attemptCount,
@@ -432,7 +437,7 @@ public class RebootEscrowManagerTests {
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
         doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(),
                 eq(0) /* error code */, eq(1) /* HAL based */, eq(1) /* attempt count */,
-                anyInt(), anyInt());
+                anyInt(), eq(0) /* vbmeta status */);
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> keyByteCaptor.getValue());
 
         mService.loadRebootEscrowDataIfAvailable(null);
@@ -467,7 +472,7 @@ public class RebootEscrowManagerTests {
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
         doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(),
                 eq(0) /* error code */, eq(2) /* Server based */, eq(1) /* attempt count */,
-                anyInt(), anyInt());
+                anyInt(), eq(0) /* vbmeta status */);
 
         when(mServiceConnection.unwrap(any(), anyLong()))
                 .thenAnswer(invocation -> invocation.getArgument(0));
@@ -501,7 +506,8 @@ public class RebootEscrowManagerTests {
         // pretend reboot happens here
         when(mInjected.getBootCount()).thenReturn(1);
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
-        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
+        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture(),
+                anyInt(), anyInt(), anyInt(), anyInt(), anyInt());
 
         when(mServiceConnection.unwrap(any(), anyLong()))
                 .thenThrow(new IOException())
@@ -605,9 +611,12 @@ public class RebootEscrowManagerTests {
         when(mInjected.getBootCount()).thenReturn(10);
         when(mRebootEscrow.retrieveKey()).thenAnswer(invocation -> keyByteCaptor.getValue());
 
+        // Trigger a vbmeta digest mismatch
+        mStorage.setString(RebootEscrowManager.REBOOT_ESCROW_KEY_VBMETA_DIGEST,
+                "non sense value", USER_SYSTEM);
         mService.loadRebootEscrowDataIfAvailable(null);
         verify(mInjected).reportMetric(eq(true), eq(0) /* error code */, eq(1) /* HAL based */,
-                eq(1) /* attempt count */, anyInt(), anyInt());
+                eq(1) /* attempt count */, anyInt(), eq(2) /* vbmeta status */);
     }
 
     @Test
