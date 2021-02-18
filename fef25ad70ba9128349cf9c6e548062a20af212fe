@@ -47,6 +47,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbb656f3_a4ed77f4",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-18T07:55:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e8d562e_8c9f03dd",
+      "range": {
+        "startLine": 1247,
+        "startChar": 86,
+        "endLine": 1248,
+        "endChar": 16
+      },
+      "revId": "fef25ad70ba9128349cf9c6e548062a20af212fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dcaee33_449685da",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-18T07:55:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6edbe82_906e899d",
+      "range": {
+        "startLine": 1248,
+        "startChar": 43,
+        "endLine": 1248,
+        "endChar": 44
+      },
+      "revId": "fef25ad70ba9128349cf9c6e548062a20af212fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b4d34f0_3a6c73a0",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-18T06:55:34Z",
       "side": 1,
       "message": "Did you want to mutate the test to test that you still get ISE when",
+      "range": {
+        "startLine": 800,
+        "startChar": 4,
+        "endLine": 800,
+        "endChar": 5
+      },
+      "revId": "fef25ad70ba9128349cf9c6e548062a20af212fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85daf9c8_479aefef",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-18T07:55:53Z",
+      "side": 1,
+      "message": "Oh, now I know why I didn\u0027t add it. It\u0027s in testSetNetworkSpecifierOnMultiTransportNc() on l.675",
+      "parentUuid": "6b4d34f0_3a6c73a0",
       "range": {
         "startLine": 800,
         "startChar": 4,
