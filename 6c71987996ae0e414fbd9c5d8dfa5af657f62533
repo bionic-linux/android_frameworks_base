@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "818a67b1_6a3a657c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 8892,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-18T04:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b0f7dc_686f2203",
+      "range": {
+        "startLine": 8892,
+        "startChar": 8,
+        "endLine": 8892,
+        "endChar": 15
+      },
+      "revId": "6c71987996ae0e414fbd9c5d8dfa5af657f62533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6353af56_2e1fafed",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfd5cea3_51fba61e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 8893,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-18T04:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6353af56_2e1fafed",
+      "range": {
+        "startLine": 8893,
+        "startChar": 8,
+        "endLine": 8893,
+        "endChar": 15
+      },
+      "revId": "6c71987996ae0e414fbd9c5d8dfa5af657f62533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "098fe906_fc3d26fb",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-16T11:58:59Z",
       "side": 1,
       "message": "Suggestion of wording :\n\n  TODO : distinguish between the cases where mActiveIdleTimers is empty because tracking is\n  disabled (negative idle timer value configured), or no active default network. In the\n  latter case, this reports active but it should report inactive.",
+      "range": {
+        "startLine": 9116,
+        "startChar": 15,
+        "endLine": 9121,
+        "endChar": 77
+      },
+      "revId": "6c71987996ae0e414fbd9c5d8dfa5af657f62533",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7194e37d_07078e32",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 9121,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-18T04:00:59Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. updated",
+      "parentUuid": "098fe906_fc3d26fb",
       "range": {
         "startLine": 9116,
         "startChar": 15,
