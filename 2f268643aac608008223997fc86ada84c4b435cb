@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b416a05_eec6f931",
+        "filename": "keystore/java/android/security/UserManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-18T21:36:43Z",
+      "side": 1,
+      "message": "I know this is in a separate package, but it\u0027s likely going to cause autocomplete headaches for most framework developers who heavily use the existing android.os.UserManager.\n\nIn addition, the \"Manager\" suffix is typically reserved for classes that are obtained from a Context.getSystemService(), which is another reason to find a different name to avoid confusion.\n\nI don\u0027t have a great alternative naming suggestion, so the best idea I can offer as a suggestion is \"KeyStoreUtils\", since this generally appears to be a collection of static methods that are for internal use.",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "2f268643aac608008223997fc86ada84c4b435cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3799be58_f3c32f39",
+        "filename": "keystore/java/android/security/UserManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-18T21:36:43Z",
+      "side": 1,
+      "message": "Note that if this a remote Binder interface, they may also throw unchecked exceptions; if you wanted to be extremely careful, you might consider:\n\n  } catch (ServiceSpecificException e) {\n    ...\n  } catch (Exception e) {\n    ...\n  }\n\nIndeed, this is what Installer does when it\u0027s making calls down to installd.\n\nFinally, it looks like some of the code calling these methods isn\u0027t actually checking the returned error values/codes, which means errors are being quietly ignored?  You may want to use Log.wtf() in these cases so that you get nice loud server-side logs collected to highlight any trouble in the wild.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "2f268643aac608008223997fc86ada84c4b435cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
