@@ -16,6 +16,24 @@
       "message": "\u003e Patch Set 2: Autosubmit+1 Code-Review+2 Presubmit-Ready+1\n\u003e \n\u003e By voting Code-Review+2 the following files are still code-owner approved by John Reck:\n\u003e * libs/hwui/RecordingCanvas.cpp\n\u003e * libs/hwui/hwui/Canvas.cpp\n\u003e * libs/hwui/hwui/Canvas.h\n\u003e \n\nThis got Presubmit-Verified -1.\nBut I can\u0027t access the link of status.\nIs there anything I have to do?\nDoes this patch need to modify? ",
       "revId": "2d51b609b23f4ab0fd6a78fd13a8df6d932ca30e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d519a2dc_716ddf38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2021-02-18T21:44:40Z",
+      "side": 1,
+      "message": "There\u0027s nothing you have to do. There\u0027s a merge conflict to the internal branch that I need to resolve first.",
+      "parentUuid": "02651d01_9c4f2d22",
+      "revId": "2d51b609b23f4ab0fd6a78fd13a8df6d932ca30e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
