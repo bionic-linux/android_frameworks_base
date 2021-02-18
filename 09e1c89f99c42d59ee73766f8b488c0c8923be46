@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e1df52a_45ee76ed",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T09:29:01Z",
+      "side": 1,
+      "message": "nit: maybe say the score is fully assessed by CS or something.\nBut the class type is somehow self-explaining.\nSo no strong opinion.",
+      "range": {
+        "startLine": 308,
+        "startChar": 49,
+        "endLine": 308,
+        "endChar": 50
+      },
+      "revId": "09e1c89f99c42d59ee73766f8b488c0c8923be46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
