@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9312d944_69288d28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-18T05:49:05Z",
+      "side": 1,
+      "message": "Nit: included",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9f80653_f0cca7d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-18T05:49:05Z",
+      "side": 1,
+      "message": "Also explain why this is the right solution to the problem",
+      "range": {
+        "startLine": 11,
+        "startChar": 38,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71869685_cba50ea8",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-18T05:49:05Z",
+      "side": 1,
+      "message": "Originally this makes sure that if there was already an address set (by a previous iteration of the loop), it would be kept.\nNow you\u0027re checking if staticIpConfiguration.getIpAddress() \u003d\u003d null, but it can never be non-null since the address is only set on the builder.\n\nMaybe you could have a boolean \"hasIpAddress\" to keep the previous behavior ?",
+      "range": {
+        "startLine": 296,
+        "startChar": 36,
+        "endLine": 296,
+        "endChar": 80
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67f0a898_4bc0945d",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-18T05:49:05Z",
+      "side": 1,
+      "message": "Same as above: this won\u0027t be non-null since it is never set in the loop",
+      "range": {
+        "startLine": 307,
+        "startChar": 58,
+        "endLine": 307,
+        "endChar": 68
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "972ee477_72a7cbe7",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-18T05:49:05Z",
+      "side": 1,
+      "message": "Also here",
+      "range": {
+        "startLine": 324,
+        "startChar": 62,
+        "endLine": 324,
+        "endChar": 72
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69c5c9e2_6577ab58",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-18T05:49:05Z",
+      "side": 1,
+      "message": "Instead of mutating the configuration, these should be added to the builder.\nCan you remove staticIpConfiguration completely in this loop ?",
+      "range": {
+        "startLine": 331,
+        "startChar": 50,
+        "endLine": 331,
+        "endChar": 63
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
