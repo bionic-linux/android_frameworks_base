@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b298a25b_6ea65789",
+        "filename": "core/java/android/os/RecoverySystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2021-02-18T15:23:18Z",
+      "side": 1,
+      "message": "nit: link to KeyManager.isDeviceSecure here to make it easier for developers to discover an api  to check whether device has a lock screen. :)",
+      "range": {
+        "startLine": 637,
+        "startChar": 39,
+        "endLine": 637,
+        "endChar": 52
+      },
+      "revId": "7449f584247c31208320d266889cae166667d85f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
