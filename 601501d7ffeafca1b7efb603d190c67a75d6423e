@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58dcd389_d2faa625",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-18T19:33:48Z",
+      "side": 1,
+      "message": "No access to that doc 🙃  but updated to \"priv-apps.\" Lmk if you have some more specific terminology in mind here.",
+      "parentUuid": "6f0d294d_3e27b810",
+      "range": {
+        "startLine": 49,
+        "startChar": 81,
+        "endLine": 50,
+        "endChar": 7
+      },
+      "revId": "601501d7ffeafca1b7efb603d190c67a75d6423e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be540eb8_46d14c13",
