@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85180229_61a4bff9",
+        "filename": "core/java/android/net/NetworkScore.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-18T12:53:50Z",
+      "side": 1,
+      "message": "mPolicies?",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "bde1ba10c60c5f65db3c8845e266cfe8155fd711",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
