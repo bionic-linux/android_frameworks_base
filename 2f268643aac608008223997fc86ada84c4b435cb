@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1736a511_39e3afd1",
+        "filename": "keystore/java/android/security/UserManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-19T00:56:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7a257f_3cf35871",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "2f268643aac608008223997fc86ada84c4b435cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3799be58_f3c32f39",
@@ -61,6 +85,30 @@
       "writtenOn": "2021-02-18T21:36:43Z",
       "side": 1,
       "message": "Note that if this a remote Binder interface, they may also throw unchecked exceptions; if you wanted to be extremely careful, you might consider:\n\n  } catch (ServiceSpecificException e) {\n    ...\n  } catch (Exception e) {\n    ...\n  }\n\nIndeed, this is what Installer does when it\u0027s making calls down to installd.\n\nFinally, it looks like some of the code calling these methods isn\u0027t actually checking the returned error values/codes, which means errors are being quietly ignored?  You may want to use Log.wtf() in these cases so that you get nice loud server-side logs collected to highlight any trouble in the wild.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 37
+      },
+      "revId": "2f268643aac608008223997fc86ada84c4b435cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb812e6_e722f888",
+        "filename": "keystore/java/android/security/UserManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-19T00:56:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3799be58_f3c32f39",
       "range": {
         "startLine": 54,
         "startChar": 0,
