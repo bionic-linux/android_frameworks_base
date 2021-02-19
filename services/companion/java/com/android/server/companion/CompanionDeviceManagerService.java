@@ -31,6 +31,8 @@ import android.annotation.CheckResult;
 import android.annotation.Nullable;
 import android.app.AppOpsManager;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.companion.Association;
 import android.companion.AssociationRequest;
 import android.companion.CompanionDeviceManager;
@@ -709,4 +711,15 @@ public class CompanionDeviceManagerService extends SystemService implements Bind
         }
     }
 
+
+    private class BluetoothDeviceConnectedListener
+            extends BluetoothAdapter.BluetoothConnectionCallback {
+        @Override
+        public void onDeviceConnected(BluetoothDevice device) {
+        }
+
+        @Override
+        public void onDeviceDisconnected(BluetoothDevice device) {
+        }
+    }
 }
