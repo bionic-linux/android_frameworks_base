@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c35ac2e_23dc8150",
+        "filename": "services/core/java/com/android/server/locksettings/SyntheticPasswordCrypto.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-02-19T17:09:27Z",
+      "side": 1,
+      "message": "is it intentional that this is part of this CL?",
+      "range": {
+        "startLine": 143,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 33
+      },
+      "revId": "7de7d1f147db71a459765c6ebfac103579e18f84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
