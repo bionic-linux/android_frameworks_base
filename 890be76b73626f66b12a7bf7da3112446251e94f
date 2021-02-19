@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea85078a_0a9bb731",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6508,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-19T16:21:31Z",
+      "side": 1,
+      "message": "Yeah basic device info is always included if ID attestation is requested.",
+      "parentUuid": "624fa31e_3afb768c",
+      "range": {
+        "startLine": 6508,
+        "startChar": 24,
+        "endLine": 6508,
+        "endChar": 62
+      },
+      "revId": "890be76b73626f66b12a7bf7da3112446251e94f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8d1cfd1_433f28b7",
@@ -88,6 +112,29 @@
         "startChar": 24,
         "endLine": 6548,
         "endChar": 29
+      },
+      "revId": "890be76b73626f66b12a7bf7da3112446251e94f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b5d5359_35fb30f5",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6551,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-02-19T16:21:31Z",
+      "side": 1,
+      "message": "Do you know what encoding format keystore.attestKey() used to use? Want to make sure we don\u0027t accidentally change the format.",
+      "range": {
+        "startLine": 6551,
+        "startChar": 45,
+        "endLine": 6551,
+        "endChar": 60
       },
       "revId": "890be76b73626f66b12a7bf7da3112446251e94f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
