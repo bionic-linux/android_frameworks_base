@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5453b526_113815ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-02-19T10:44:27Z",
+      "side": 1,
+      "message": "Add reportNetworkInterfaceForTransports to dependencies so that we don\u0027t need FrameworksNetTests supports mock final class.\n+lorenzo@, please take a look. Is this ok for you?",
+      "revId": "bba31aab5bb31e46e8d621ffc8cdadfaa54ff052",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
