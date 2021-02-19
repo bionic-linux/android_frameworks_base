@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9d7a257f_3cf35871",
+        "filename": "keystore/java/android/security/UserManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-19T00:25:08Z",
+      "side": 1,
+      "message": "How about AndroidKeystoreMaintenance? Then I\u0027ll add function that are not strictly \"user management\" to this class, like deleting all keys for an app.",
+      "parentUuid": "7b416a05_eec6f931",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "2f268643aac608008223997fc86ada84c4b435cb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3799be58_f3c32f39",
         "filename": "keystore/java/android/security/UserManager.java",
         "patchSetId": 4
