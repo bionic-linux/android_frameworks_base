@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "888e66d2_f8f7ec14",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1683110
+      },
+      "writtenOn": "2021-02-19T12:37:59Z",
+      "side": 1,
+      "message": "Will we deprecate this in S?",
+      "range": {
+        "startLine": 419,
+        "startChar": 28,
+        "endLine": 419,
+        "endChar": 58
+      },
+      "revId": "9ffaa1f6b5089f5e396adcbc819e5299ec5e3464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "563c4760_d17d1ff5",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1683110
+      },
+      "writtenOn": "2021-02-19T12:37:59Z",
+      "side": 1,
+      "message": "Looks like the period is not needed (?)\nIf yes, please also revise the following javadoc.",
+      "range": {
+        "startLine": 507,
+        "startChar": 29,
+        "endLine": 507,
+        "endChar": 30
+      },
+      "revId": "9ffaa1f6b5089f5e396adcbc819e5299ec5e3464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f625163d_9fe1b701",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1683110
+      },
+      "writtenOn": "2021-02-19T12:37:59Z",
+      "side": 1,
+      "message": "nit: suggest to change the sequence to (L, R, C) to align with previous definition.\nMETADATA_UNTETHERED_LEFT_LOW_BATTERY \u003d 21\nMETADATA_UNTETHERED_RIGHT_LOW_BATTERY \u003d 22",
+      "range": {
+        "startLine": 545,
+        "startChar": 28,
+        "endLine": 545,
+        "endChar": 65
+      },
+      "revId": "9ffaa1f6b5089f5e396adcbc819e5299ec5e3464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5219498a_85c5d4d5",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1683110
+      },
+      "writtenOn": "2021-02-19T12:37:59Z",
+      "side": 1,
+      "message": "typo: KEY",
+      "range": {
+        "startLine": 567,
+        "startChar": 42,
+        "endLine": 567,
+        "endChar": 45
+      },
+      "revId": "9ffaa1f6b5089f5e396adcbc819e5299ec5e3464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
