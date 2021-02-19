@@ -138,6 +138,30 @@
       },
       "revId": "890be76b73626f66b12a7bf7da3112446251e94f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e48ce13_e919d6ea",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6551,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-19T18:16:33Z",
+      "side": 1,
+      "message": "Keystore only returned DER, the same as getEncoded().",
+      "parentUuid": "3b5d5359_35fb30f5",
+      "range": {
+        "startLine": 6551,
+        "startChar": 45,
+        "endLine": 6551,
+        "endChar": 60
+      },
+      "revId": "890be76b73626f66b12a7bf7da3112446251e94f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
