@@ -16,6 +16,24 @@
       "message": "LGTM assuming we\u0027ve tested to make sure that this works correctly.",
       "revId": "2ce3029ba9a26310726356f803fd234d4fa3862d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "320a8ec2_ba758c1e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-02-19T00:12:47Z",
+      "side": 1,
+      "message": "per discussion offline, the update to VcnManagerTest shows this works as intended. Additionally, this will be removed in favor of sending ServiceSpecificException over the Binder (b/180521637) once we have some breathing room.",
+      "parentUuid": "a79f9202_3c8daa99",
+      "revId": "2ce3029ba9a26310726356f803fd234d4fa3862d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
