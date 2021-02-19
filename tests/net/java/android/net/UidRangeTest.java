@@ -16,6 +16,11 @@
 
 package android.net;
 
+import static android.os.UserHandle.MIN_SECONDARY_USER_ID;
+import static android.os.UserHandle.USER_SYSTEM;
+import static android.os.UserHandle.getUid;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import androidx.test.filters.SmallTest;
@@ -63,5 +68,17 @@ public class UidRangeTest {
             fail("Exception not thrown for negative-length UID range");
         } catch (IllegalArgumentException expected) {
         }
+    }
+
+    @Test
+    public void testGetStartAndEndUser() throws Exception {
+        final UidRange uidRangeOfPrimaryUser = new UidRange(
+                getUid(USER_SYSTEM, 10000), getUid(USER_SYSTEM, 10100));
+        final UidRange uidRangeOfSecondaryUser = new UidRange(
+                getUid(MIN_SECONDARY_USER_ID, 10000), getUid(MIN_SECONDARY_USER_ID, 10100));
+        assertEquals(USER_SYSTEM, uidRangeOfPrimaryUser.getStartUser());
+        assertEquals(USER_SYSTEM, uidRangeOfPrimaryUser.getEndUser());
+        assertEquals(MIN_SECONDARY_USER_ID, uidRangeOfSecondaryUser.getStartUser());
+        assertEquals(MIN_SECONDARY_USER_ID, uidRangeOfSecondaryUser.getEndUser());
     }
 }
