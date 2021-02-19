@@ -46,6 +46,30 @@
       },
       "revId": "7f7b4cdcbc88c616f019994ed132f1e110974696",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbad4f1c_3af01636",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-02-19T08:22:51Z",
+      "side": 1,
+      "message": "aosp/1475900 got -1 from Lorenzo, so I added reportNetworkInterfaceForTransports to dependencies for testing.",
+      "parentUuid": "5e10c43a_de2e48b1",
+      "range": {
+        "startLine": 194,
+        "startChar": 18,
+        "endLine": 194,
+        "endChar": 37
+      },
+      "revId": "7f7b4cdcbc88c616f019994ed132f1e110974696",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

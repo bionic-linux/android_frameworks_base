@@ -22,6 +22,53 @@
       },
       "revId": "e5f86182d18ce0150e2d4d34ca447b43252ceb8a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "506e94a1_adfbe0cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-02-19T08:22:51Z",
+      "side": 1,
+      "message": "ag/13483139 is trying to remove noteConnectivityChanged from ConnectivityService so it won\u0027t be called once ag/13483139 merged.",
+      "parentUuid": "11a55c86_0aa490eb",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "e5f86182d18ce0150e2d4d34ca447b43252ceb8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc613522_ec09f7a2",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 7555,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-02-19T08:22:51Z",
+      "side": 1,
+      "message": "TRANSPORT_WIFI",
+      "range": {
+        "startLine": 7555,
+        "startChar": 28,
+        "endLine": 7555,
+        "endChar": 37
+      },
+      "revId": "e5f86182d18ce0150e2d4d34ca447b43252ceb8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
