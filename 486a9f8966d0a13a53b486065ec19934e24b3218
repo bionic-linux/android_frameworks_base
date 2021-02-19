@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82795b21_11e74e09",
+        "filename": "services/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-19T15:58:30Z",
+      "side": 1,
+      "message": "rm or we\u0027ll have tears of blood when someone gets merge conflicts here in the future",
+      "revId": "486a9f8966d0a13a53b486065ec19934e24b3218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c46e8d9_e872db16",
+        "filename": "services/api/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-02-19T15:58:30Z",
+      "side": 1,
+      "message": "think you need to drop these from this CL (and put them in the follow-up without Merged-In if you agree with my comment)",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "486a9f8966d0a13a53b486065ec19934e24b3218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
