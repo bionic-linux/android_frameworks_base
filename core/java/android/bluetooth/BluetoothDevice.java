@@ -503,6 +503,95 @@ public final class BluetoothDevice implements Parcelable {
     public static final int METADATA_ENHANCED_SETTINGS_UI_URI = 16;
 
     /**
+     * Type of the Bluetooth device, must be within the list of
+     * METADATA_DEVICE_TYPE_*
+     * Data type should be {@String} as {@link Byte} array.
+     * @hide
+     */
+    @SystemApi
+    public static final int METADATA_DEVICE_TYPE = 17;
+
+    /**
+     * Battery level of the Bluetooth device, use when the Bluetooth device
+     * does not support HFP battery indicator.
+     * Data type should be {@String} as {@link Byte} array.
+     * @hide
+     */
+    @SystemApi
+    public static final int METADATA_MAIN_BATTERY = 18;
+
+    /**
+     * Whether the device is charging.
+     * Data type should be {@String} as {@link Byte} array.
+     * @hide
+     */
+    @SystemApi
+    public static final int METADATA_MAIN_CHARGING = 19;
+
+    /**
+     * The battery level of the Bluetooth device to show low battery icon.
+     * Data type should be {@String} as {@link Byte} array.
+     * @hide
+     */
+    @SystemApi
+    public static final int METADATA_MAIN_LOW_BATTERY = 20;
+
+    /**
+     * The battery level of the left headset to show low battery icon.
+     * Data type should be {@String} as {@link Byte} array.
+     * @hide
+     */
+    @SystemApi
+    public static final int METADATA_UNTETHERED_LEFT_LOW_BATTERY = 21;
+
+    /**
+     * The battery level of the right headset to show low battery icon.
+     * Data type should be {@String} as {@link Byte} array.
+     * @hide
+     */
+    @SystemApi
+    public static final int METADATA_UNTETHERED_RIGHT_LOW_BATTERY = 22;
+
+    /**
+     * The battery level of the case to show low battery icon.
+     * Data type should be {@String} as {@link Byte} array.
+     * @hide
+     */
+    @SystemApi
+    public static final int METADATA_UNTETHERED_CASE_LOW_BATTERY = 23;
+
+    /**
+     * The last ID of the metadata.
+     * @hide
+     */
+    public static final int METADATA_LAST_KEY = 23;
+
+    /**
+     * Device type which is used in METADATA_DEVICE_TYPE
+     * Indicates this Bluetooth device is a standard Bluetooth accessory or
+     * not listed in METADATA_DEVICE_TYPE_*.
+     * @hide
+     */
+    @SystemApi
+    public static final String METADATA_DEVICE_TYPE_DEFAULT = "Default";
+
+    /**
+     * Device type which is used in METADATA_DEVICE_TYPE
+     * Indicates this Bluetooth device is a Wear OS device.
+     * @hide
+     */
+    @SystemApi
+    public static final String METADATA_DEVICE_TYPE_WEAR_OS = "Wear OS";
+
+    /**
+     * Device type which is used in METADATA_DEVICE_TYPE
+     * Indicates this Bluetooth device is an untethered headset.
+     * @hide
+     */
+    @SystemApi
+    public static final String METADATA_DEVICE_TYPE_UNTETHERED_HEADSET = "Untethered Headset";
+
+    /**
      * Broadcast Action: This intent is used to broadcast the {@link UUID}
      * wrapped as a {@link android.os.ParcelUuid} of the remote device after it
      * has been fetched. This intent is sent only when the UUIDs of the remote
