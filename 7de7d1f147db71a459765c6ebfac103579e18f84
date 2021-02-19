@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39699b6e_1e160b3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-19T17:39:24Z",
+      "side": 1,
+      "message": "LGTM, thanks for making the naming adjustments!  😊",
+      "revId": "7de7d1f147db71a459765c6ebfac103579e18f84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c35ac2e_23dc8150",
