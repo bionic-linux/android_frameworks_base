@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07def6f3_8f415a00",
+        "filename": "core/java/android/net/SubscriptionAware.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-19T01:23:49Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 14
+      },
+      "revId": "bc824d8749585441f4531e2bff8661bf8bc2dccb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3ace682_3701fc89",
+        "filename": "core/java/android/net/SubscriptionAware.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-19T01:23:49Z",
+      "side": 1,
+      "message": "as-described, this feels like it belongs in telephony",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "bc824d8749585441f4531e2bff8661bf8bc2dccb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
