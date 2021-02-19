@@ -67,6 +67,23 @@
       "message": "LGTM from telephony perspective.",
       "revId": "47043de7b8d2f26c52eb06a3b59a62a6d7024021",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c83b2c5_69b9cf26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1140984
+      },
+      "writtenOn": "2021-02-19T11:27:09Z",
+      "side": 1,
+      "message": "Hi Fabian, Amit\n\nThanks for reviewing this patch.\nIs there any status update for integrating this patch?\nOr is there anything I need to do?\n\nPlease share your comment at your earliest convenience.\n\nThanks",
+      "revId": "47043de7b8d2f26c52eb06a3b59a62a6d7024021",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
