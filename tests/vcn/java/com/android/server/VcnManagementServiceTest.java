@@ -59,6 +59,7 @@ import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnConfigTest;
+import android.net.vcn.VcnManager;
 import android.net.vcn.VcnUnderlyingNetworkPolicy;
 import android.net.wifi.WifiInfo;
 import android.os.IBinder;
@@ -288,6 +289,14 @@ public class VcnManagementServiceTest {
 
     private TelephonySubscriptionSnapshot triggerSubscriptionTrackerCbAndGetSnapshot(
             Set<ParcelUuid> activeSubscriptionGroups, Map<Integer, ParcelUuid> subIdToGroupMap) {
+        return triggerSubscriptionTrackerCbAndGetSnapshot(
+                activeSubscriptionGroups, subIdToGroupMap, true /* hasCarrierPrivileges */);
+    }
+
+    private TelephonySubscriptionSnapshot triggerSubscriptionTrackerCbAndGetSnapshot(
+            Set<ParcelUuid> activeSubscriptionGroups,
+            Map<Integer, ParcelUuid> subIdToGroupMap,
+            boolean hasCarrierPrivileges) {
         final TelephonySubscriptionSnapshot snapshot = mock(TelephonySubscriptionSnapshot.class);
         doReturn(activeSubscriptionGroups).when(snapshot).getActiveSubscriptionGroups();
 
@@ -295,7 +304,7 @@ public class VcnManagementServiceTest {
                 (activeSubscriptionGroups == null || activeSubscriptionGroups.isEmpty())
                         ? Collections.emptySet()
                         : Collections.singleton(TEST_PACKAGE_NAME);
-        doReturn(true)
+        doReturn(hasCarrierPrivileges)
                 .when(snapshot)
                 .packageHasPermissionsForSubscriptionGroup(
                         argThat(val -> activeSubscriptionGroups.contains(val)),
@@ -549,13 +558,6 @@ public class VcnManagementServiceTest {
         mVcnMgmtSvc.removeVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
     }
 
-    private void setUpVcnSubscription(int subId, ParcelUuid subGroup) {
-        mVcnMgmtSvc.setVcnConfig(subGroup, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
-
-        triggerSubscriptionTrackerCbAndGetSnapshot(
-                Collections.singleton(subGroup), Collections.singletonMap(subId, subGroup));
-    }
-
     private void verifyMergedNetworkCapabilities(
             NetworkCapabilities mergedCapabilities,
             @Transport int transportType,
@@ -573,7 +575,17 @@ public class VcnManagementServiceTest {
     }
 
     private void setupSubscriptionAndStartVcn(int subId, ParcelUuid subGrp, boolean isVcnActive) {
-        setUpVcnSubscription(subId, subGrp);
+        setupSubscriptionAndStartVcn(subId, subGrp, isVcnActive, true /* hasCarrierPrivileges */);
+    }
+
+    private void setupSubscriptionAndStartVcn(
+            int subId, ParcelUuid subGrp, boolean isVcnActive, boolean hasCarrierPrivileges) {
+        mVcnMgmtSvc.systemReady();
+        triggerSubscriptionTrackerCbAndGetSnapshot(
+                Collections.singleton(subGrp),
+                Collections.singletonMap(subId, subGrp),
+                hasCarrierPrivileges);
+
         final Vcn vcn = startAndGetVcnInstance(subGrp);
         doReturn(isVcnActive).when(vcn).isActive();
     }
@@ -826,6 +838,47 @@ public class VcnManagementServiceTest {
         assertEquals(TEST_PACKAGE_NAME, cbInfo.mPkgName);
         assertEquals(TEST_UID, cbInfo.mUid);
         verify(mMockIBinder).linkToDeath(eq(cbInfo), anyInt());
+
+        verify(mMockStatusCallback).onVcnStatusChanged(VcnManager.VCN_STATUS_CODE_NOT_CONFIGURED);
+    }
+
+    @Test
+    public void testRegisterVcnStatusCallback_MissingPermission() throws Exception {
+        setupSubscriptionAndStartVcn(
+                TEST_SUBSCRIPTION_ID,
+                TEST_UUID_1,
+                true /* isActive */,
+                false /* hasCarrierPrivileges */);
+
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, mMockStatusCallback, TEST_PACKAGE_NAME);
+
+        verify(mMockStatusCallback).onVcnStatusChanged(VcnManager.VCN_STATUS_CODE_NOT_CONFIGURED);
+    }
+
+    @Test
+    public void testRegisterVcnStatusCallback_VcnActive() throws Exception {
+        setupSubscriptionAndStartVcn(
+                TEST_SUBSCRIPTION_ID,
+                TEST_UUID_1,
+                true /* isActive */,
+                true /* hasCarrierPrivileges */);
+
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, mMockStatusCallback, TEST_PACKAGE_NAME);
+
+        verify(mMockStatusCallback).onVcnStatusChanged(VcnManager.VCN_STATUS_CODE_ACTIVE);
+    }
+
+    @Test
+    public void testRegisterVcnStatusCallback_VcnSafeMode() throws Exception {
+        setupSubscriptionAndStartVcn(
+                TEST_SUBSCRIPTION_ID,
+                TEST_UUID_1,
+                false /* isActive */,
+                true /* hasCarrierPrivileges */);
+
+        mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_1, mMockStatusCallback, TEST_PACKAGE_NAME);
+
+        verify(mMockStatusCallback).onVcnStatusChanged(VcnManager.VCN_STATUS_CODE_SAFE_MODE);
     }
 
     @Test(expected = IllegalStateException.class)
