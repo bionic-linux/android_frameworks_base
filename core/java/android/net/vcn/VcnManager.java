@@ -332,6 +332,9 @@ public class VcnManager {
      * may have changed via {@link VcnNetworkPolicyListener#onPolicyChanged()}, a Network Provider
      * MUST poll for the updated Network policy based on that Network's capabilities and properties.
      *
+     * @param network the Network for which the VCN Network policy result is being generated for, or
+     *     {@code null} if the Network has not been registered with {@link
+     *     android.net.ConnectivityManager} yet.
      * @param networkCapabilities the NetworkCapabilities to be used in determining the Network
      *     policy result for this Network.
      * @param linkProperties the LinkProperties to be used in determining the Network policy result
@@ -344,13 +347,14 @@ public class VcnManager {
     @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_FACTORY)
     public VcnNetworkPolicyResult applyVcnNetworkPolicy(
+            @Nullable Network network,
             @NonNull NetworkCapabilities networkCapabilities,
             @NonNull LinkProperties linkProperties) {
         requireNonNull(networkCapabilities, "networkCapabilities must not be null");
         requireNonNull(linkProperties, "linkProperties must not be null");
 
         final VcnUnderlyingNetworkPolicy policy =
-                getUnderlyingNetworkPolicy(networkCapabilities, linkProperties);
+                getUnderlyingNetworkPolicy(network, networkCapabilities, linkProperties);
         return new VcnNetworkPolicyResult(
                 policy.isTeardownRequested(), policy.getMergedNetworkCapabilities());
     }
