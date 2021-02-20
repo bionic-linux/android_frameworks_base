@@ -18,6 +18,7 @@ package android.net.vcn.persistablebundleutils;
 
 import static org.junit.Assert.assertEquals;
 
+import android.net.ipsec.ike.ChildSaProposal;
 import android.net.ipsec.ike.IkeSaProposal;
 import android.net.ipsec.ike.SaProposal;
 import android.os.PersistableBundle;
@@ -44,6 +45,22 @@ public class SaProposalUtilsTest {
 
         PersistableBundle bundle = IkeSaProposalUtils.toPersistableBundle(proposal);
         SaProposal resultProposal = IkeSaProposalUtils.fromPersistableBundle(bundle);
+
+        assertEquals(proposal, resultProposal);
+    }
+
+    @Test
+    public void testPersistableBundleEncodeDecodeIsLosslessChildProposal() throws Exception {
+        ChildSaProposal proposal =
+                new ChildSaProposal.Builder()
+                        .addEncryptionAlgorithm(
+                                SaProposal.ENCRYPTION_ALGORITHM_AES_GCM_12,
+                                SaProposal.KEY_LEN_AES_128)
+                        .addDhGroup(SaProposal.DH_GROUP_1024_BIT_MODP)
+                        .build();
+
+        PersistableBundle bundle = ChildSaProposalUtils.toPersistableBundle(proposal);
+        SaProposal resultProposal = ChildSaProposalUtils.fromPersistableBundle(bundle);
 
         assertEquals(proposal, resultProposal);
     }
