@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "825cb8d9_f06e758b",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-02-20T02:59:59Z",
+      "side": 1,
+      "message": "That is the plan, after we make sure all the dependencies are removed.",
+      "parentUuid": "888e66d2_f8f7ec14",
+      "range": {
+        "startLine": 419,
+        "startChar": 28,
+        "endLine": 419,
+        "endChar": 58
+      },
+      "revId": "9ffaa1f6b5089f5e396adcbc819e5299ec5e3464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "563c4760_d17d1ff5",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-19T12:37:59Z",
       "side": 1,
       "message": "Looks like the period is not needed (?)\nIf yes, please also revise the following javadoc.",
+      "range": {
+        "startLine": 507,
+        "startChar": 29,
+        "endLine": 507,
+        "endChar": 30
+      },
+      "revId": "9ffaa1f6b5089f5e396adcbc819e5299ec5e3464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8de2b764_37ad899b",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-02-20T02:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "563c4760_d17d1ff5",
       "range": {
         "startLine": 507,
         "startChar": 29,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88f49463_2a44790c",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-02-20T02:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f625163d_9fe1b701",
+      "range": {
+        "startLine": 545,
+        "startChar": 28,
+        "endLine": 545,
+        "endChar": 65
+      },
+      "revId": "9ffaa1f6b5089f5e396adcbc819e5299ec5e3464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5219498a_85c5d4d5",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-19T12:37:59Z",
       "side": 1,
       "message": "typo: KEY",
+      "range": {
+        "startLine": 567,
+        "startChar": 42,
+        "endLine": 567,
+        "endChar": 45
+      },
+      "revId": "9ffaa1f6b5089f5e396adcbc819e5299ec5e3464",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5891f39b_96fc802d",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-02-20T02:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5219498a_85c5d4d5",
       "range": {
         "startLine": 567,
         "startChar": 42,
