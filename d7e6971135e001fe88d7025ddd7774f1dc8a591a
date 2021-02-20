@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d89b65b_f2bcd725",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-20T01:45:29Z",
+      "side": 1,
+      "message": "This probably needs to happen in the lock.",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 802,
+        "endChar": 0
+      },
+      "revId": "d7e6971135e001fe88d7025ddd7774f1dc8a591a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
