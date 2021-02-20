@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bc7b66e_a44ea83a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-20T03:51:57Z",
+      "side": 1,
+      "message": "LGTM with naming nits.\nFeel free to ignore or address in follow-ups.",
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1be6a739_83872c6e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5743,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-20T03:51:57Z",
+      "side": 1,
+      "message": "nit: ensureRunningOnConnectivityServiceThread()\nno strong opinion.",
+      "range": {
+        "startLine": 5743,
+        "startChar": 17,
+        "endLine": 5743,
+        "endChar": 48
+      },
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58cfc7ae_7a7915f6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5753,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-20T03:51:57Z",
+      "side": 1,
+      "message": "nit: handleUnregisterNetworkOffer",
+      "range": {
+        "startLine": 5753,
+        "startChar": 30,
+        "endLine": 5753,
+        "endChar": 46
+      },
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73146870_bbb14f03",
+        "filename": "services/core/java/com/android/server/connectivity/FullScore.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-20T03:51:57Z",
+      "side": 1,
+      "message": "nit: not sure if this is a good naming since it is adjetive.\nIs it clearer if name it createFromScore, getFromScore or something else?\nNo strong opinion.",
+      "range": {
+        "startLine": 132,
+        "startChar": 28,
+        "endLine": 132,
+        "endChar": 39
+      },
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0acfe550_8ecd5e1b",
+        "filename": "services/core/java/com/android/server/connectivity/FullScore.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-20T03:51:57Z",
+      "side": 1,
+      "message": "nit: everSelected or everUserSelected.\nIIUC we want a consistent name.\nNo strong opinion.",
+      "range": {
+        "startLine": 142,
+        "startChar": 68,
+        "endLine": 142,
+        "endChar": 80
+      },
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
