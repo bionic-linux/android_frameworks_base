@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb6043c7_d86a75d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-20T00:05:40Z",
+      "side": 1,
+      "message": "LGTM, but as we discussed on chat, there might be issues being hidden here by the client code not checking the returned error codes.  You may want to revisit that in a future CL to improve the robustness under error conditions.",
+      "revId": "13dd61336fe7b5d6eea4e82c4881c9f3b2b58ce8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
