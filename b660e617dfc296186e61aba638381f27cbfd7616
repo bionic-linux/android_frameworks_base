@@ -46,6 +46,30 @@
       },
       "revId": "b660e617dfc296186e61aba638381f27cbfd7616",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd01d2f3_ce78adfb",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6549,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-20T06:14:11Z",
+      "side": 0,
+      "message": "Okay this should be diagnosed again. See the KayChain app patch. I have not tested this though.",
+      "parentUuid": "ef170649_469e18e3",
+      "range": {
+        "startLine": 6548,
+        "startChar": 28,
+        "endLine": 6549,
+        "endChar": 82
+      },
+      "revId": "b660e617dfc296186e61aba638381f27cbfd7616",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
