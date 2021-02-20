@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008333314",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1597519?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "2b3ab6ce_63962b0c",
+          "description": "Change to \"services/core/java/com/android/server/recoverysystem/RecoverySystemService.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+              "range": {
+                "startLine": 145,
+                "startChar": 42,
+                "endLine": 145,
+                "endChar": 48
+              },
+              "replacement": "UNKNOWN"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f1e5f1a0_f2ca18b1",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-20T23:03:02Z",
+      "side": 1,
+      "message": "Common typo found: \"UNKOWN\" -- should it be \"UNKNOWN\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 145,
+        "startChar": 42,
+        "endLine": 145,
+        "endChar": 48
+      },
+      "revId": "c945213e3adbb6e81c0a775b19b470dc47da222f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008333314",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1597519?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "51fded8a_6399c516",
+          "description": "Change to \"services/core/java/com/android/server/recoverysystem/RecoverySystemService.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+              "range": {
+                "startLine": 152,
+                "startChar": 25,
+                "endLine": 152,
+                "endChar": 31
+              },
+              "replacement": "UNKNOWN"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c5be17be_485617d9",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-20T23:03:02Z",
+      "side": 1,
+      "message": "Common typo found: \"UNKOWN\" -- should it be \"UNKNOWN\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 152,
+        "startChar": 25,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "c945213e3adbb6e81c0a775b19b470dc47da222f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
