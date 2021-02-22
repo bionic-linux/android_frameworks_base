@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14697e25_14dfb628",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-22T14:39:14Z",
+      "side": 1,
+      "message": "This change looks fine but... what\u0027s the plan after this? Do you expect to add UidRange as a system API? If not, then it seems like we\u0027ll need to move the VPN code away from UidRange anyway, so this CL won\u0027t really be useful at all.",
+      "revId": "66ded137bf6e4e87e3c2de942bcad518ea1e36a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
