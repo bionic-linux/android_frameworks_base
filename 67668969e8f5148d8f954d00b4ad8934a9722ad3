@@ -16,6 +16,23 @@
       "message": "PTAL - resolved merge conflict",
       "revId": "67668969e8f5148d8f954d00b4ad8934a9722ad3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e77c96f1_655ee59f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-02-22T18:26:55Z",
+      "side": 1,
+      "message": "Trying again after downstream conflicts have been resolved.",
+      "revId": "67668969e8f5148d8f954d00b4ad8934a9722ad3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
