@@ -176,6 +176,7 @@ import android.util.ArraySet;
 import android.util.LocalLog;
 import android.util.Log;
 import android.util.Pair;
+import android.util.Range;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 
@@ -2738,7 +2739,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (0 == defaultRequest.mRequests.size()) {
                 pw.println("none, this should never occur.");
             } else {
-                pw.println(defaultRequest.mRequests.get(0).networkCapabilities.getUids());
+                pw.println(getUidRanges(defaultRequest.mRequests.get(0).networkCapabilities));
             }
             pw.decreaseIndent();
             pw.decreaseIndent();
@@ -5143,9 +5144,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         private Set<UidRange> getUids() {
             // networkCapabilities.getUids() returns a defensive copy.
             // multilayer requests will all have the same uids so return the first one.
-            final Set<UidRange> uids = null == mRequests.get(0).networkCapabilities.getUids()
-                    ? new ArraySet<>() : mRequests.get(0).networkCapabilities.getUids();
-            return uids;
+            return getUidRanges(mRequests.get(0).networkCapabilities);
         }
 
         NetworkRequestInfo(@NonNull final NetworkRequest r, @Nullable final PendingIntent pi,
@@ -5897,10 +5896,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
             // Currently, all network requests will have the same uids therefore checking the first
             // one is sufficient. If/when uids are tracked at the nri level, this can change.
-            final Set<UidRange> uids = nri.mRequests.get(0).networkCapabilities.getUids();
-            if (null == uids) {
-                continue;
-            }
+            final Set<UidRange> uids = getUidRanges(nri.mRequests.get(0).networkCapabilities);
+
             for (final UidRange range : uids) {
                 if (range.contains(uid)) {
                     return nri.getSatisfier();
@@ -6349,7 +6346,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
 
-        final Set<UidRange> ranges = nai.networkCapabilities.getUids();
+        final Set<UidRange> ranges = getUidRanges(nai.networkCapabilities);
         final int vpnAppUid = nai.networkCapabilities.getOwnerUid();
         // TODO: this create a window of opportunity for apps to receive traffic between the time
         // when the old rules are removed and the time when new rules are added. To fix this,
@@ -6707,12 +6704,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         maybeCloseSockets(nai, ranges, exemptUids);
     }
 
+    @NonNull
+    private static Set<UidRange> getUidRanges(@Nullable NetworkCapabilities nc) {
+        if (nc == null) return new ArraySet<>();
+
+        final Set<Range<Integer>> uids = nc.getUids();
+        return UidRange.convertFromIntRanges(uids);
+    }
+
     private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
-        Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
-        Set<UidRange> newRanges = null == newNc ? null : newNc.getUids();
-        if (null == prevRanges) prevRanges = new ArraySet<>();
-        if (null == newRanges) newRanges = new ArraySet<>();
+        Set<UidRange> prevRanges = getUidRanges(prevNc);
+        Set<UidRange> newRanges = getUidRanges(newNc);
         final Set<UidRange> prevRangesCopy = new ArraySet<>(prevRanges);
 
         prevRanges.removeAll(newRanges);
@@ -9078,9 +9081,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         private void setOemNetworkRequestUids(@NonNull final List<NetworkRequest> requests,
                 @NonNull final Set<Integer> uids) {
-            final Set<UidRange> ranges = new ArraySet<>();
+            final Set<Range<Integer>> ranges = new ArraySet<>();
             for (final int uid : uids) {
-                ranges.add(new UidRange(uid, uid));
+                ranges.add(new Range<Integer>(uid, uid));
             }
             for (final NetworkRequest req : requests) {
                 req.networkCapabilities.setUids(ranges);

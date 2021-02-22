@@ -18,10 +18,13 @@ package android.net;
 
 import static android.os.UserHandle.PER_USER_RANGE;
 
+import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.UserHandle;
+import android.util.ArraySet;
+import android.util.Range;
 
 import java.util.Collection;
 
@@ -149,5 +152,35 @@ public final class UidRange implements Parcelable {
             }
         }
         return false;
+    }
+
+    /**
+     *  Convert a set of {@code Range<Integer>} to a set of {@link UidRange}.
+     */
+    @NonNull
+    public static ArraySet<UidRange> convertFromIntRanges(
+            @Nullable Collection<Range<Integer>> ranges) {
+        if (null == ranges) return new ArraySet<>();
+
+        final ArraySet<UidRange> uids = new ArraySet<>();
+        for (Range<Integer> range : ranges) {
+            uids.add(new UidRange(range.getLower(), range.getUpper()));
+        }
+        return uids;
+    }
+
+    /**
+     *  Convert a set of {@link UidRange} to a set of {@code Range<Integer>}.
+     */
+    @NonNull
+    public static ArraySet<Range<Integer>> convertToIntRanges(
+            @Nullable Collection<UidRange> ranges) {
+        if (null == ranges) return new ArraySet<>();
+
+        final ArraySet<Range<Integer>> uids = new ArraySet<>();
+        for (UidRange range : ranges) {
+            uids.add(new Range<Integer>(range.start, range.stop));
+        }
+        return uids;
     }
 }
