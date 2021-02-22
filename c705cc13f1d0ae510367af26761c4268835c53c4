@@ -16,6 +16,23 @@
       "message": "As per note here a few ways to bypass API restrictions\nhttps://github.com/tiann/FreeReflection, reported as https://issuetracker.google.com/issues/179553953\nhttps://github.com/ChickenHook/RestrictionBypass, left a comment https://android-review.googlesource.com/c/platform/art/+/1208930 on how it works\n\nI know this will break Tinker, but any app can now DoS the device.\nAny input?",
       "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87241a6b_20ecd170",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-02-22T09:55:02Z",
+      "side": 1,
+      "message": "Do we have evidence that tinker is not using this anymore?",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
