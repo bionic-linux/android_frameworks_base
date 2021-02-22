@@ -31,6 +31,7 @@ import android.os.Parcelable;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.Range;
 import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -151,7 +152,7 @@ public final class NetworkCapabilities implements Parcelable {
             setTransportInfo(null);
         }
         mSignalStrength = nc.mSignalStrength;
-        setUids(nc.mUids); // Will make the defensive copy
+        setUids(nc.getUids()); // Will make the defensive copy
         setAdministratorUids(nc.getAdministratorUids());
         mOwnerUid = nc.mOwnerUid;
         mUnwantedNetworkCapabilities = nc.mUnwantedNetworkCapabilities;
@@ -1434,8 +1435,8 @@ public final class NetworkCapabilities implements Parcelable {
      * @hide
      */
     public @NonNull NetworkCapabilities setSingleUid(int uid) {
-        final ArraySet<UidRange> identity = new ArraySet<>(1);
-        identity.add(new UidRange(uid, uid));
+        final ArraySet<Range<Integer>> identity = new ArraySet<>(1);
+        identity.add(new Range<Integer>(uid, uid));
         setUids(identity);
         return this;
     }
@@ -1445,11 +1446,13 @@ public final class NetworkCapabilities implements Parcelable {
      * This makes a copy of the set so that callers can't modify it after the call.
      * @hide
      */
-    public @NonNull NetworkCapabilities setUids(Set<UidRange> uids) {
+    public @NonNull NetworkCapabilities setUids(Set<Range<Integer>> uids) {
         if (null == uids) {
             mUids = null;
         } else {
-            mUids = new ArraySet<>(uids);
+            final ArraySet<UidRange> ranges = new ArraySet<>();
+            uids.forEach(uid -> ranges.add(new UidRange(uid.getLower(), uid.getUpper())));
+            mUids = ranges;
         }
         return this;
     }
@@ -1459,8 +1462,12 @@ public final class NetworkCapabilities implements Parcelable {
      * This returns a copy of the set so that callers can't modify the original object.
      * @hide
      */
-    public @Nullable Set<UidRange> getUids() {
-        return null == mUids ? null : new ArraySet<>(mUids);
+    public @Nullable Set<Range<Integer>> getUids() {
+        if (mUids == null) return null;
+
+        final ArraySet<Range<Integer>> ranges = new ArraySet<>(mUids.size());
+        mUids.forEach(uid -> ranges.add(new Range<Integer>(uid.start, uid.stop)));
+        return ranges;
     }
 
     /**
