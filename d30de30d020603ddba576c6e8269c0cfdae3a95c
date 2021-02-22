@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0358a755_e72fef22",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-22T07:04:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9185173_8a12fd4b",
+      "range": {
+        "startLine": 424,
+        "startChar": 4,
+        "endLine": 424,
+        "endChar": 14
+      },
+      "revId": "d30de30d020603ddba576c6e8269c0cfdae3a95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03d31d16_ff232b57",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-17T05:38:30Z",
       "side": 1,
       "message": "As stated in the comment, this value may change from release to release. But once you make it system API it can never change. We need another solution.\n\nEasiest way to fix this might be to give this string its own value (\"fallback\", perhaps) and make the implementation (DnsManager?) treat PRIVATE_DNS_DEFAULT_MODE_FALLBACK the same as PRIVATE_DNS_MODE_OPPORTUNISTIC.",
+      "range": {
+        "startLine": 828,
+        "startChar": 4,
+        "endLine": 828,
+        "endChar": 14
+      },
+      "revId": "d30de30d020603ddba576c6e8269c0cfdae3a95c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11151d5e_1da1c8b3",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-22T07:04:47Z",
+      "side": 1,
+      "message": "If we want to treat PRIVATE_DNS_DEFAULT_MODE_FALLBACK as PRIVATE_DNS_MODE_OPPORTUNISTIC in callers side, why don\u0027t we use PRIVATE_DNS_MODE_OPPORTUNISTIC in callers side directly?\nAnd if we use PRIVATE_DNS_MODE_OPPORTUNISTIC in callers side directly, then we can remove PRIVATE_DNS_DEFAULT_MODE_FALLBACK, right?\n\nI\u0027ll have another commit to do this.",
+      "parentUuid": "03d31d16_ff232b57",
       "range": {
         "startLine": 828,
         "startChar": 4,
