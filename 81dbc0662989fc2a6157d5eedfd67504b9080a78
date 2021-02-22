@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1c5ff15_dff640b9",
+        "filename": "core/java/android/companion/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-22T17:16:53Z",
+      "side": 1,
+      "message": "Could you expand this to include at least two people overall?  That will help ensure there is good coverage when a single person is OOO.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "81dbc0662989fc2a6157d5eedfd67504b9080a78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c8151d1_210a06dd",
+        "filename": "core/java/com/android/internal/infra/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-22T17:16:53Z",
+      "side": 1,
+      "message": "Hmm, these all seem like general purpose utility classes that I think we\u0027d want a wider set of reviewers on.  Instead of assigning ownership to a single person, is there a specific team that you think would be a good owner?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "81dbc0662989fc2a6157d5eedfd67504b9080a78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8b372d4_177303f0",
+        "filename": "core/java/com/android/internal/util/function/pooled/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-22T17:16:53Z",
+      "side": 1,
+      "message": "Hmm, these all seem like general purpose utility classes that I think we\u0027d want a wider set of reviewers on.  Instead of assigning ownership to a single person, is there a specific team that you think would be a good owner?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "81dbc0662989fc2a6157d5eedfd67504b9080a78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd59483d_b5db969a",
+        "filename": "services/companion/java/com/android/server/companion/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-22T17:16:53Z",
+      "side": 1,
+      "message": "Could you follow the pattern in this doc and use an \"include\" directive to reference the other \"companion\" directory to ensure they stay in sync over time?\n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/OWNERS.md?q\u003downers.md",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "81dbc0662989fc2a6157d5eedfd67504b9080a78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
