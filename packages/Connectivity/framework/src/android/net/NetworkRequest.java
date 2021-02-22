@@ -229,7 +229,7 @@ public class NetworkRequest implements Parcelable {
          * @hide
          */
         public Builder setUids(Set<UidRange> uids) {
-            mNetworkCapabilities.setUids(uids);
+            mNetworkCapabilities.setUids(UidRange.convertToIntRanges(uids));
             return this;
         }
 
