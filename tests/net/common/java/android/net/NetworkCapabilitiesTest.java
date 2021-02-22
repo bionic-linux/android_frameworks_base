@@ -69,6 +69,7 @@ import android.net.wifi.aware.WifiAwareNetworkSpecifier;
 import android.os.Build;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.ArraySet;
+import android.util.Range;
 
 import androidx.test.runner.AndroidJUnit4;
 
@@ -240,9 +241,20 @@ public class NetworkCapabilitiesTest {
     @Test
     public void testSetUids() {
         final NetworkCapabilities netCap = new NetworkCapabilities();
-        final Set<UidRange> uids = new ArraySet<>();
-        uids.add(new UidRange(50, 100));
-        uids.add(new UidRange(3000, 4000));
+        // Null uids match all UIDs
+        netCap.setUids(null);
+        assertTrue(netCap.appliesToUid(10));
+        assertTrue(netCap.appliesToUid(200));
+        assertTrue(netCap.appliesToUid(3000));
+        assertTrue(netCap.appliesToUid(10010));
+        assertTrue(netCap.appliesToUidRange(new UidRange(50, 100)));
+        assertTrue(netCap.appliesToUidRange(new UidRange(70, 72)));
+        assertTrue(netCap.appliesToUidRange(new UidRange(3500, 3912)));
+        assertTrue(netCap.appliesToUidRange(new UidRange(1, 100000)));
+
+        final Set<Range<Integer>> uids = new ArraySet<>();
+        uids.add(uidRange(50, 100));
+        uids.add(uidRange(3000, 4000));
         netCap.setUids(uids);
         assertTrue(netCap.appliesToUid(50));
         assertTrue(netCap.appliesToUid(80));
@@ -275,7 +287,7 @@ public class NetworkCapabilitiesTest {
         assertTrue(netCap.equalsUids(netCap2));
         assertTrue(netCap2.equalsUids(netCap));
 
-        uids.add(new UidRange(600, 700));
+        uids.add(uidRange(600, 700));
         netCap2.setUids(uids);
         assertFalse(netCap2.satisfiedByUids(netCap));
         assertFalse(netCap.appliesToUid(650));
@@ -292,13 +304,21 @@ public class NetworkCapabilitiesTest {
         assertFalse(netCap2.appliesToUid(500));
         assertFalse(netCap2.appliesToUidRange(new UidRange(1, 100000)));
         assertTrue(new NetworkCapabilities().satisfiedByUids(netCap));
+
+        // Null uids satisfies everything.
+        netCap.setUids(null);
+        assertTrue(netCap2.satisfiedByUids(netCap));
+        assertTrue(netCap.satisfiedByUids(netCap2));
+        netCap2.setUids(null);
+        assertTrue(netCap2.satisfiedByUids(netCap));
+        assertTrue(netCap.satisfiedByUids(netCap2));
     }
 
     @Test
     public void testParcelNetworkCapabilities() {
-        final Set<UidRange> uids = new ArraySet<>();
-        uids.add(new UidRange(50, 100));
-        uids.add(new UidRange(3000, 4000));
+        final Set<Range<Integer>> uids = new ArraySet<>();
+        uids.add(uidRange(50, 100));
+        uids.add(uidRange(3000, 4000));
         final NetworkCapabilities netCap = new NetworkCapabilities()
             .addCapability(NET_CAPABILITY_INTERNET)
             .setUids(uids)
@@ -540,10 +560,14 @@ public class NetworkCapabilitiesTest {
         assertFalse(nc1.satisfiedByNetworkCapabilities(nc2));
     }
 
-    private ArraySet<UidRange> uidRange(int from, int to) {
-        final ArraySet<UidRange> range = new ArraySet<>(1);
-        range.add(new UidRange(from, to));
+    private ArraySet<Range<Integer>> uidRanges(int from, int to) {
+        final ArraySet<Range<Integer>> range = new ArraySet<>(1);
+        range.add(uidRange(from, to));
         return range;
+    }
+
+    private Range<Integer> uidRange(int from, int to) {
+        return new Range<Integer>(from, to);
     }
 
     @Test @IgnoreUpTo(Build.VERSION_CODES.Q)
@@ -601,14 +625,14 @@ public class NetworkCapabilitiesTest {
         } catch (IllegalStateException expected) {}
         nc1.setSSID(TEST_SSID);
 
-        nc1.setUids(uidRange(10, 13));
+        nc1.setUids(uidRanges(10, 13));
         assertNotEquals(nc1, nc2);
         nc2.combineCapabilities(nc1);  // Everything + 10~13 is still everything.
         assertNotEquals(nc1, nc2);
         nc1.combineCapabilities(nc2);  // 10~13 + everything is everything.
         assertEquals(nc1, nc2);
-        nc1.setUids(uidRange(10, 13));
-        nc2.setUids(uidRange(20, 23));
+        nc1.setUids(uidRanges(10, 13));
+        nc2.setUids(uidRanges(20, 23));
         assertNotEquals(nc1, nc2);
         nc1.combineCapabilities(nc2);
         assertTrue(nc1.appliesToUid(12));
@@ -774,7 +798,7 @@ public class NetworkCapabilitiesTest {
             assertTrue(DIFFERENT_TEST_SSID.equals(nc2.getSsid()));
         }
 
-        nc1.setUids(uidRange(10, 13));
+        nc1.setUids(uidRanges(10, 13));
         nc2.set(nc1);  // Overwrites, as opposed to combineCapabilities
         assertEquals(nc1, nc2);
 

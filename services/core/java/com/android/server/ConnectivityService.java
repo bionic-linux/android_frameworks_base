@@ -2852,7 +2852,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             if (0 == defaultRequest.mRequests.size()) {
                 pw.println("none, this should never occur.");
             } else {
-                pw.println(defaultRequest.mRequests.get(0).networkCapabilities.getUids());
+                pw.println(defaultRequest.mRequests.get(0).networkCapabilities.getUidRanges());
             }
             pw.decreaseIndent();
             pw.decreaseIndent();
@@ -5253,9 +5253,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         private Set<UidRange> getUids() {
             // networkCapabilities.getUids() returns a defensive copy.
             // multilayer requests will all have the same uids so return the first one.
-            final Set<UidRange> uids = null == mRequests.get(0).networkCapabilities.getUids()
-                    ? new ArraySet<>() : mRequests.get(0).networkCapabilities.getUids();
-            return uids;
+            final Set<UidRange> uids = mRequests.get(0).networkCapabilities.getUidRanges();
+            return (null == uids) ? new ArraySet<>() : uids;
         }
 
         NetworkRequestInfo(@NonNull final NetworkRequest r, @Nullable final PendingIntent pi,
@@ -6047,7 +6046,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
             // Currently, all network requests will have the same uids therefore checking the first
             // one is sufficient. If/when uids are tracked at the nri level, this can change.
-            final Set<UidRange> uids = nri.mRequests.get(0).networkCapabilities.getUids();
+            final Set<UidRange> uids = nri.mRequests.get(0).networkCapabilities.getUidRanges();
             if (null == uids) {
                 continue;
             }
@@ -6499,7 +6498,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             return;
         }
 
-        final Set<UidRange> ranges = nai.networkCapabilities.getUids();
+        final Set<UidRange> ranges = nai.networkCapabilities.getUidRanges();
         final int vpnAppUid = nai.networkCapabilities.getOwnerUid();
         // TODO: this create a window of opportunity for apps to receive traffic between the time
         // when the old rules are removed and the time when new rules are added. To fix this,
@@ -6859,8 +6858,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
-        Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUids();
-        Set<UidRange> newRanges = null == newNc ? null : newNc.getUids();
+        Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUidRanges();
+        Set<UidRange> newRanges = null == newNc ? null : newNc.getUidRanges();
         if (null == prevRanges) prevRanges = new ArraySet<>();
         if (null == newRanges) newRanges = new ArraySet<>();
         final Set<UidRange> prevRangesCopy = new ArraySet<>(prevRanges);
@@ -9250,9 +9249,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private static void setNetworkRequestUids(@NonNull final List<NetworkRequest> requests,
             @NonNull final Set<UidRange> uids) {
-        final Set<UidRange> ranges = new ArraySet<>(uids);
         for (final NetworkRequest req : requests) {
-            req.networkCapabilities.setUids(ranges);
+            req.networkCapabilities.setUids(UidRange.toIntRanges(uids));
         }
     }
 
