@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c123d1ba_13318ee0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2021-02-22T11:07:38Z",
+      "side": 1,
+      "message": "Nit: \nWould be nice to have a more detailed description here of how the mechanism is now structured (i.e. the attestation chain being in the CA cert chain).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "979000fa_a54216e7",
+        "filename": "keystore/java/android/security/KeyChain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2021-02-22T11:07:38Z",
+      "side": 1,
+      "message": "Where dose this constant come from?",
+      "range": {
+        "startLine": 642,
+        "startChar": 66,
+        "endLine": 642,
+        "endChar": 68
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "683c8841_31587ee6",
+        "filename": "keystore/java/android/security/KeyChain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2021-02-22T11:07:38Z",
+      "side": 1,
+      "message": "Remove this method as it now seems like dead come.",
+      "range": {
+        "startLine": 771,
+        "startChar": 0,
+        "endLine": 782,
+        "endChar": 5
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cffbef8_e68a4937",
+        "filename": "keystore/java/android/security/KeyChain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2021-02-22T11:07:38Z",
+      "side": 1,
+      "message": "There\u0027s a test in cts/tests/tests/keystore/src/android/keystore/cts/KeyChainTest.java that assumes DSA keys are not bound.",
+      "range": {
+        "startLine": 806,
+        "startChar": 36,
+        "endLine": 806,
+        "endChar": 55
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7544516_5a394647",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6547,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2021-02-22T11:07:38Z",
+      "side": 1,
+      "message": "I assume this is the attestation chain?",
+      "range": {
+        "startLine": 6547,
+        "startChar": 59,
+        "endLine": 6547,
+        "endChar": 76
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33a7fa34_5781185f",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6571,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2021-02-22T11:07:38Z",
+      "side": 1,
+      "message": "I note we do not log metrics on failure, which is a real shame.",
+      "range": {
+        "startLine": 6565,
+        "startChar": 0,
+        "endLine": 6571,
+        "endChar": 33
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
