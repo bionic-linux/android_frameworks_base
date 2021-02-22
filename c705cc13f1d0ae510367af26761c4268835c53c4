@@ -51,6 +51,23 @@
       "parentUuid": "87241a6b_20ecd170",
       "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "396f535a_686e8501",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2021-02-22T12:27:22Z",
+      "side": 1,
+      "message": "The sample app can make system crash because ActivityTaskSupervisor#resolveActivity posts setDebugFlagsForStartingActivity (since ActivityTaskManager is separated from ActivityManager) to android.display thread and then setNativeDebuggingAppLocked throws SecurityException due to not debuggable build.\n\nSo the accurate fix might be to move the validation of flags to resolveActivity. That throws SecurityException at binder thread to crash the abnormal caller.\n\nOtherwise if there are still places that can get the IBinder, the problem still exists.",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
