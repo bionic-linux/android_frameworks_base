@@ -16,6 +16,23 @@
       "message": "Hi Amy and Nick,\n\nBringing this change to your attention as you have recently modified TvInputManager.java.\n\nRegards,",
       "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9061ae7d_e32d357c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060286
+      },
+      "writtenOn": "2021-02-22T17:57:26Z",
+      "side": 1,
+      "message": "The other choice it to unhide the constants.  \n@Henry your choice.",
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
