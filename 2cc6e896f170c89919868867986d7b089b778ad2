@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a204c29_4b84e91e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2021-02-23T05:45:19Z",
+      "side": 1,
+      "message": "This change could probably be abandoned in favor of aosp/1574888.\nI don\u0027t see much difference between this change and the other one.",
+      "revId": "2cc6e896f170c89919868867986d7b089b778ad2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
