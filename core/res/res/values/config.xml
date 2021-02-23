@@ -6024,4 +6024,8 @@
     <!-- List of certificate to be used for font fs-verity integrity verification -->
     <string-array translatable="false" name="config_fontManagerServiceCerts">
     </string-array>
+
+    <!-- Override the screen brightness while the dream is showing.
+         Default value matches BRIGHTNESS_OVERRIDE_NONE. -->
+    <item name="config_defaultDreamScreenBrightness" format="float" type="dimen">-1.0</item>
 </resources>
