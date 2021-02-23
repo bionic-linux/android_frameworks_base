@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008397833",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1603205?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "8fd89ebd_6b46504b",
+          "description": "Change to \"cmds/telecom/src/com/android/commands/telecom/Telecom.java\"",
+          "replacements": [
+            {
+              "path": "cmds/telecom/src/com/android/commands/telecom/Telecom.java",
+              "range": {
+                "startLine": 358,
+                "startChar": 81,
+                "endLine": 358,
+                "endChar": 88
+              },
+              "replacement": "service"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "11c1d5a2_da1db878",
+        "filename": "cmds/telecom/src/com/android/commands/telecom/Telecom.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-02-23T22:06:00Z",
+      "side": 1,
+      "message": "Common typo found: \"serivce\" -- should it be \"service\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 358,
+        "startChar": 81,
+        "endLine": 358,
+        "endChar": 88
+      },
+      "revId": "854a1fd617a1814e9292103b2915411282136f56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
