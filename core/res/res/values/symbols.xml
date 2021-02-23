@@ -5530,4 +5530,5 @@
   <java-symbol type="drawable" name="ic_zen_mode_type_theater" />
   <java-symbol type="drawable" name="ic_zen_mode_type_unknown" />
 
+  <java-symbol type="dimen" name="config_defaultDreamScreenBrightness" />
 </resources>
