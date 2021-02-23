@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d59c05a_b4b78b7f",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-23T22:11:36Z",
+      "side": 1,
+      "message": "For binding to new Telecom API.",
+      "range": {
+        "startLine": 287,
+        "startChar": 45,
+        "endLine": 287,
+        "endChar": 73
+      },
+      "revId": "854a1fd617a1814e9292103b2915411282136f56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6355d166_83ca5e90",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-23T22:11:36Z",
+      "side": 1,
+      "message": "For CTS testing.",
+      "range": {
+        "startLine": 451,
+        "startChar": 45,
+        "endLine": 451,
+        "endChar": 70
+      },
+      "revId": "854a1fd617a1814e9292103b2915411282136f56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
