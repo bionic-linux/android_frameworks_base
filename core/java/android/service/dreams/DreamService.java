@@ -1061,6 +1061,10 @@ public class DreamService extends Service implements Window.Callback {
                     | (mFullscreen ? WindowManager.LayoutParams.FLAG_FULLSCREEN : 0)
                     | (mScreenBright ? WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON : 0)
                     );
+
+        lp.screenBrightness = getResources().getFloat(
+                com.android.internal.R.dimen.config_dreamScreenBrightness);
+
         mWindow.setAttributes(lp);
         // Workaround: Currently low-profile and in-window system bar backgrounds don't go
         // along well. Dreams usually don't need such bars anyways, so disable them by default.
