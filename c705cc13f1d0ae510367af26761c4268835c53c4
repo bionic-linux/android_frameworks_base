@@ -68,6 +68,24 @@
       "message": "The sample app can make system crash because ActivityTaskSupervisor#resolveActivity posts setDebugFlagsForStartingActivity (since ActivityTaskManager is separated from ActivityManager) to android.display thread and then setNativeDebuggingAppLocked throws SecurityException due to not debuggable build.\n\nSo the accurate fix might be to move the validation of flags to resolveActivity. That throws SecurityException at binder thread to crash the abnormal caller.\n\nOtherwise if there are still places that can get the IBinder, the problem still exists.",
       "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5860830f_8786939c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2021-02-23T05:09:04Z",
+      "side": 1,
+      "message": "Curious if the UnsupportedAppUsage annotation on the singleton exposed the reflection possibilities of all the APIs of the object?\n\nAlso wondering if all of the APIs are being used by tinker or just some of them?",
+      "parentUuid": "7856046b_6c15f8df",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
