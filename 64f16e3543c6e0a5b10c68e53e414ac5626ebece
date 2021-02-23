@@ -45,6 +45,190 @@
       },
       "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cda2326_72f96115",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-23T23:01:59Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 280,
+        "startChar": 69,
+        "endLine": 280,
+        "endChar": 70
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb0d3329_9a8f0a4f",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-23T23:01:59Z",
+      "side": 1,
+      "message": "what\u0027s the expected behavior if multiple diagnostic messages w/ different IDs are received without intervening clears? should all of them be displayed?",
+      "range": {
+        "startLine": 284,
+        "startChar": 22,
+        "endLine": 284,
+        "endChar": 95
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4995aa72_57a6a7ef",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-23T23:01:59Z",
+      "side": 1,
+      "message": "only?",
+      "range": {
+        "startLine": 290,
+        "startChar": 28,
+        "endLine": 290,
+        "endChar": 32
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea50a8c7_f695f2df",
+        "filename": "telecomm/java/android/telecom/CallDiagnosticService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-23T23:01:59Z",
+      "side": 1,
+      "message": "link/fix spelling",
+      "range": {
+        "startLine": 146,
+        "startChar": 40,
+        "endLine": 146,
+        "endChar": 62
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e56fb654_8faaede6",
+        "filename": "telecomm/java/android/telecom/DiagnosticCall.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-23T23:01:59Z",
+      "side": 1,
+      "message": "MESSAGE_",
+      "range": {
+        "startLine": 117,
+        "startChar": 22,
+        "endLine": 117,
+        "endChar": 28
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "414e2284_af3f1c51",
+        "filename": "telecomm/java/android/telecom/DiagnosticCall.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-23T23:01:59Z",
+      "side": 1,
+      "message": "what calls this? couldn\u0027t find it in this CL.\n\nAlso, why are the onCallDisconnected methods the only ones that are called on the main thread?",
+      "range": {
+        "startLine": 313,
+        "startChar": 43,
+        "endLine": 313,
+        "endChar": 61
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d396a75a_be75c1c8",
+        "filename": "telecomm/java/android/telecom/DiagnosticCall.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-23T23:01:59Z",
+      "side": 1,
+      "message": "fix link",
+      "range": {
+        "startLine": 361,
+        "startChar": 7,
+        "endLine": 361,
+        "endChar": 24
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a603529_53fdc4f5",
+        "filename": "telecomm/java/android/telecom/DiagnosticCall.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-02-23T23:01:59Z",
+      "side": 1,
+      "message": "I thought this comes from Telecom?\n\nAlso, why is this method needed if it just passes through to onCallDetailsChanged?",
+      "range": {
+        "startLine": 373,
+        "startChar": 7,
+        "endLine": 373,
+        "endChar": 61
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
