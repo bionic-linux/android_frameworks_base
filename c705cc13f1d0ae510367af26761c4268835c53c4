@@ -86,6 +86,42 @@
       "parentUuid": "7856046b_6c15f8df",
       "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5f1f3eb_8dac837a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-02-23T10:02:30Z",
+      "side": 1,
+      "message": "I saw there quite a few checks on the server side, should them all be moved to the client?\nFor starters setTrackAllocationApp, setNativeDebuggingAppLocked, setProfileApp, and possibly setDebugApp ( but this time it\u0027s a permission check, not debug vs non-debug check )\nAt least these seem the one able to crash the stack",
+      "parentUuid": "396f535a_686e8501",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35bddda2_d893ae57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-02-23T10:02:30Z",
+      "side": 1,
+      "message": "I\u0027ve been told the annotation has been removed in 12.\nAside from that, given how we can simply override startActivity I think all the fields can be made accessible via reflection.",
+      "parentUuid": "5860830f_8786939c",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
