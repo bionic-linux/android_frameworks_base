@@ -434,7 +434,7 @@ public abstract class NetworkAgent {
         }
 
         mInitialConfiguration = new InitialConfiguration(context,
-                new NetworkCapabilities(nc, /* parcelLocationSensitiveFields */ true),
+                new NetworkCapabilities(nc, TransportInfo.REDACTION_NONE),
                 new LinkProperties(lp), score, config, ni);
     }
 
@@ -878,8 +878,7 @@ public abstract class NetworkAgent {
         mBandwidthUpdatePending.set(false);
         mLastBwRefreshTime = System.currentTimeMillis();
         final NetworkCapabilities nc =
-                new NetworkCapabilities(networkCapabilities,
-                        /* parcelLocationSensitiveFields */ true);
+                new NetworkCapabilities(networkCapabilities, TransportInfo.REDACTION_NONE);
         queueOrSendMessage(reg -> reg.sendNetworkCapabilities(nc));
     }
 
