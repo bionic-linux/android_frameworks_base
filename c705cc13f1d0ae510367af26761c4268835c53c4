@@ -122,6 +122,24 @@
       "parentUuid": "5860830f_8786939c",
       "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6699eb5_77934a70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2021-02-23T10:32:36Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m able to reproduce the system crash on Android 10, but not on Android 11 emulator (RSR1.200819.001.A1).\n\nThe sample app crashed with below log on Android 11.\nFATAL EXCEPTION: main\nProcess: org.chickenhook.startflagexploit, PID: 9576\njava.lang.IllegalArgumentException: Unknown URI type: 1919184481\n\tat android.net.Uri$1.createFromParcel(Uri.java:1818)\n\tat android.net.Uri$1.createFromParcel(Uri.java:1807)\n\tat android.content.Intent.readFromParcel(Intent.java:10875)\n\tat org.chickenhook.startflagexploit.MainActivity.startActivityHook(MainActivity.kt:63)\n\tat org.chickenhook.startflagexploit.MainActivity$crash$1.transact(MainActivity.kt:154)\n\tat org.chickenhook.binderhooks.ProxyHook$FakeBinder.transact(ProxyHook.java:112)\n\tat android.app.IActivityTaskManager$Stub$Proxy.startActivity(IActivityTaskManager.java:3692)\n\tat android.app.Instrumentation.execStartActivity(Instrumentation.java:1862)\n\tat android.app.Activity.startActivityForResult(Activity.java:6038)\n\tat android.app.Activity.requestPermissions(Activity.java:5225)\n\tat androidx.core.app.ActivityCompat.requestPermissions(ActivityCompat.java:502)\n\tat org.chickenhook.startflagexploit.MainActivity.crash(MainActivity.kt:171)\n\tat org.chickenhook.startflagexploit.MainActivity$onCreate$1.onClick(MainActivity.kt:26)",
+      "parentUuid": "c5f1f3eb_8dac837a",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
