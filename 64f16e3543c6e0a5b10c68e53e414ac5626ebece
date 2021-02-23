@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f77e4b7_f0ab7fac",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-02-23T22:38:33Z",
+      "side": 1,
+      "message": "Signature only?",
+      "range": {
+        "startLine": 2273,
+        "startChar": 33,
+        "endLine": 2273,
+        "endChar": 42
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa351a36_fd63c01d",
+        "filename": "data/etc/privapp-permissions-platform.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-02-23T22:38:33Z",
+      "side": 1,
+      "message": "I do not think this is needed if permission is system only",
+      "range": {
+        "startLine": 287,
+        "startChar": 45,
+        "endLine": 287,
+        "endChar": 73
+      },
+      "revId": "64f16e3543c6e0a5b10c68e53e414ac5626ebece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
