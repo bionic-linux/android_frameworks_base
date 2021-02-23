@@ -6988,4 +6988,8 @@
 
     <!-- The key containing the branching boolean for legacy Search. -->
     <string name="config_defaultContextualSearchLegacyEnabled" translatable="false" />
+
+    <!-- Override the screen brightness while the dream is showing.
+         Default value matches BRIGHTNESS_OVERRIDE_NONE. -->
+    <item name="config_defaultDreamScreenBrightness" format="float" type="dimen">-1.0</item>
 </resources>
