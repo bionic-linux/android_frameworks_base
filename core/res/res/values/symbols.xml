@@ -5301,4 +5301,6 @@
   <java-symbol type="bool" name="config_viewBasedRotaryEncoderHapticsEnabled" />
 
   <java-symbol type="bool" name="config_quickSettingsShowMediaPlayer" />
+
+  <java-symbol type="dimen" name="config_defaultDreamScreenBrightness" />
 </resources>
