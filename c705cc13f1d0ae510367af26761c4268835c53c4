@@ -140,6 +140,24 @@
       "parentUuid": "c5f1f3eb_8dac837a",
       "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b772d21_1ec8d8ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-02-23T10:36:39Z",
+      "side": 1,
+      "message": "Is the emulator running userdebug?\nThe throws are skipped in this case",
+      "parentUuid": "c6699eb5_77934a70",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
