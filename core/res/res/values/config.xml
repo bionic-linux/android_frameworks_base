@@ -4792,7 +4792,6 @@
     <bool name="config_pdp_reject_enable_retry">false</bool>
     <!-- pdp data reject retry delay in ms -->
     <integer name="config_pdp_reject_retry_delay_ms">-1</integer>
-
     <!-- Whether or not to enable the binder heavy hitter watcher by default -->
     <bool name="config_defaultBinderHeavyHitterWatcherEnabled">false</bool>
 
@@ -5085,4 +5084,8 @@
 
     <!-- Whether this device should support taking app snapshots on closure -->
     <bool name="config_disableTaskSnapshots">false</bool>
+
+    <!-- Override the screen brightness while the dream is showing.
+         Default value matches BRIGHTNESS_OVERRIDE_NONE. -->
+    <item name="config_defaultDreamScreenBrightness" format="float" type="dimen">-1.0</item>
 </resources>
