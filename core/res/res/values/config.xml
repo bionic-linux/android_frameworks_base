@@ -4388,7 +4388,6 @@
     <bool name="config_pdp_reject_enable_retry">false</bool>
     <!-- pdp data reject retry delay in ms -->
     <integer name="config_pdp_reject_retry_delay_ms">-1</integer>
-
     <!-- Component names of the services which will keep critical code path warm -->
     <string-array name="config_keep_warming_services" translatable="false" />
 
@@ -4397,4 +4396,8 @@
 
     <!-- Whether to allow the caching of the SIM PIN for verification after unattended reboot -->
     <bool name="config_allow_pin_storage_for_unattended_reboot">true</bool>
+
+    <!-- Override the screen brightness while the dream is showing.
+         Default value matches BRIGHTNESS_OVERRIDE_NONE. -->
+    <item name="config_dreamScreenBrightness" format="float" type="dimen">-1.0</item>
 </resources>
