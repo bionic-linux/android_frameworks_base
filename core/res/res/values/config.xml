@@ -6111,4 +6111,8 @@
     <!-- Whether we should persist the brightness value in nits for the default display even if
          the underlying display device changes. -->
     <bool name="config_persistBrightnessNitsForDefaultDisplay">false</bool>
+
+    <!-- Override the screen brightness while the dream is showing.
+         Default value matches BRIGHTNESS_OVERRIDE_NONE. -->
+    <item name="config_defaultDreamScreenBrightness" format="float" type="dimen">-1.0</item>
 </resources>
