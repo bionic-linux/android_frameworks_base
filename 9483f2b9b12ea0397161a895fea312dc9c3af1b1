@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "921b7686_48259f43",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1339996
+      },
+      "writtenOn": "2021-02-23T14:50:30Z",
+      "side": 1,
+      "message": "*AsUser commands are being deprecated. Instead do:\n\n mContext.createContextAsUser(UserHandle.of(userId), /* flags */ 0)\n         .getPackageManager().getResourcesForApplication(packageToLoad);",
+      "range": {
+        "startLine": 312,
+        "startChar": 18,
+        "endLine": 312,
+        "endChar": 77
+      },
+      "revId": "9483f2b9b12ea0397161a895fea312dc9c3af1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
