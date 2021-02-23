@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e7230f4_7af98093",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9716,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-23T23:38:46Z",
+      "side": 1,
+      "message": "I couldn\u0027t do it exactly here since I need to keep the signature using a NetworkAgentInfo vs TestAgentWrapper however I did create helper methods for the above. Good catch and agree on the idea.",
+      "parentUuid": "7521e5ae_6d020b92",
+      "range": {
+        "startLine": 9716,
+        "startChar": 8,
+        "endLine": 9716,
+        "endChar": 9
+      },
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "118d3693_8d97429e",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-15T13:27:34Z",
       "side": 1,
       "message": "in the following order ?",
+      "range": {
+        "startLine": 10238,
+        "startChar": 76,
+        "endLine": 10238,
+        "endChar": 94
+      },
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e1f40c_fa52fceb",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10238,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-23T23:38:46Z",
+      "side": 1,
+      "message": "I think they both work but I\u0027ll go ahead and change since what you have is probably easier to read.",
+      "parentUuid": "118d3693_8d97429e",
       "range": {
         "startLine": 10238,
         "startChar": 76,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "597fd4de_26a49d0e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10240,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-23T23:38:46Z",
+      "side": 1,
+      "message": "Hah, yes, probably :)",
+      "parentUuid": "d84abc1d_c4c3e2ce",
+      "range": {
+        "startLine": 10240,
+        "startChar": 0,
+        "endLine": 10240,
+        "endChar": 24
+      },
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "faed8682_273a9a61",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-02-15T13:27:34Z",
       "side": 1,
       "message": "cellular",
+      "range": {
+        "startLine": 10390,
+        "startChar": 60,
+        "endLine": 10390,
+        "endChar": 67
+      },
+      "revId": "f9ee805730c76a42b68be41587e7e9fe4f36cfd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3470787_3a23e8dc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 10390,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-02-23T23:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faed8682_273a9a61",
       "range": {
         "startLine": 10390,
         "startChar": 60,
