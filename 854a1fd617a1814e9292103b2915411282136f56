@@ -45,6 +45,29 @@
       },
       "revId": "854a1fd617a1814e9292103b2915411282136f56",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ee08b61_26eb814e",
+        "filename": "telecomm/java/android/telecom/BluetoothCallQualityReport.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-23T22:12:25Z",
+      "side": 1,
+      "message": "This was missing, preventing the newly added API class from actually being parceled in an AIDL.",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "854a1fd617a1814e9292103b2915411282136f56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
