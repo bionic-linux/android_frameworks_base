@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8bc575be_2cf4435b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2021-02-23T15:14:21Z",
+      "side": 1,
+      "message": "Just for consistency\u0027s sake, can we make the commit message `--user`, in case someone tries it with `-id` from reading this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "9483f2b9b12ea0397161a895fea312dc9c3af1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cc30760_6446a5b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2021-02-23T15:14:21Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "9483f2b9b12ea0397161a895fea312dc9c3af1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "921b7686_48259f43",
         "filename": "services/core/java/com/android/server/om/OverlayManagerShellCommand.java",
         "patchSetId": 1
