@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a5efcf9_87d21dc3",
+        "filename": "tests/net/java/android/net/UidRangeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-24T07:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "031bd2b2_4d8dae6b",
+      "revId": "43b62d5bcc6fa2784340ce47313a36dd598efa90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6628521b_33ba354e",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-02-22T10:57:31Z",
       "side": 1,
       "message": "Can you also add a test case for when the start user and the end user is not the same ?\n\nFor example with new UidRange(getUid(10, 10000), getUid(12, 10100))\n\nAlso try with UidRange.createForUser(X) to make sure getStartUser and getEndUser are X",
+      "range": {
+        "startLine": 74,
+        "startChar": 16,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "43b62d5bcc6fa2784340ce47313a36dd598efa90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a81b89b_bdfe40c5",
+        "filename": "tests/net/java/android/net/UidRangeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-24T07:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6628521b_33ba354e",
       "range": {
         "startLine": 74,
         "startChar": 16,
