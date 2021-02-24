@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "986423f2_8d580339",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-02-24T19:06:11Z",
+      "side": 1,
+      "message": "Can we add an IntDef for all of these constants and annotate the param \"key\" in setMetadata and getMetadata with it?",
+      "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dce1853f_48ae8769",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-02-24T19:06:11Z",
+      "side": 1,
+      "message": "The naming and documentation for this was a bit confusing at first. I had to read the one pager linked on the bug to understand what it meant. I think we should try to rename the constant to something indicating it\u0027s the threshold (e.g. METADATA_UNTETHERED_LEFT_LOW_BATTERY_THRESHOLD). I know it\u0027s a mouthful, but it clears up its intent.",
+      "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f1ddeb7_8553271a",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-02-24T19:06:11Z",
+      "side": 1,
+      "message": "Consider making this a method as per the API council guidelines:\ngo/android-api-guidelines#min-max-constants",
+      "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9afb4c12_98d87af5",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-02-24T19:06:11Z",
+      "side": 1,
+      "message": "nit: we might want to drop \"METADATA\" in these constant names as it could get confused with the int constants defined above. So we could make this \"DEVICE_TYPE_DEFAULT\" and do the same with the two constants below.",
+      "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
