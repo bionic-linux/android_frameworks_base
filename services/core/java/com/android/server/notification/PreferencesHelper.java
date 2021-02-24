@@ -138,6 +138,8 @@ public class PreferencesHelper implements RankingConfig {
     static final int DEFAULT_BUBBLE_PREFERENCE = BUBBLE_PREFERENCE_NONE;
     static final boolean DEFAULT_MEDIA_NOTIFICATION_FILTERING = true;
 
+    private static final boolean DEFAULT_ALLOW_BYPASS_DND = false;
+
     /**
      * Default value for what fields are user locked. See {@link LockableAppFields} for all lockable
      * fields.
@@ -255,7 +257,7 @@ public class PreferencesHelper implements RankingConfig {
                                             parser, ATT_VISIBILITY, DEFAULT_VISIBILITY),
                                     XmlUtils.readBooleanAttribute(
                                             parser, ATT_SHOW_BADGE, DEFAULT_SHOW_BADGE),
-                                    bubblePref);
+                                    bubblePref, DEFAULT_ALLOW_BYPASS_DND);
                             r.importance = XmlUtils.readIntAttribute(
                                     parser, ATT_IMPORTANCE, DEFAULT_IMPORTANCE);
                             r.priority = XmlUtils.readIntAttribute(
@@ -379,19 +381,19 @@ public class PreferencesHelper implements RankingConfig {
             int uid) {
         return getOrCreatePackagePreferencesLocked(pkg, UserHandle.getUserId(uid), uid,
                 DEFAULT_IMPORTANCE, DEFAULT_PRIORITY, DEFAULT_VISIBILITY, DEFAULT_SHOW_BADGE,
-                DEFAULT_BUBBLE_PREFERENCE);
+                DEFAULT_BUBBLE_PREFERENCE, DEFAULT_ALLOW_BYPASS_DND);
     }
 
     private PackagePreferences getOrCreatePackagePreferencesLocked(String pkg,
             @UserIdInt int userId, int uid) {
         return getOrCreatePackagePreferencesLocked(pkg, userId, uid,
                 DEFAULT_IMPORTANCE, DEFAULT_PRIORITY, DEFAULT_VISIBILITY, DEFAULT_SHOW_BADGE,
-                DEFAULT_BUBBLE_PREFERENCE);
+                DEFAULT_BUBBLE_PREFERENCE, DEFAULT_ALLOW_BYPASS_DND);
     }
 
     private PackagePreferences getOrCreatePackagePreferencesLocked(String pkg,
             @UserIdInt int userId, int uid, int importance, int priority, int visibility,
-            boolean showBadge, int bubblePreference) {
+            boolean showBadge, int bubblePreference, boolean allowBypassDnd) {
         final String key = packagePreferencesKey(pkg, uid);
         PackagePreferences
                 r = (uid == UNKNOWN_UID)
@@ -414,6 +416,7 @@ public class PreferencesHelper implements RankingConfig {
                     r.oemLockedChannels = channels;
                 }
             }
+            r.allowedBypassingDnd = allowBypassDnd;
 
             try {
                 createDefaultChannelIfNeededLocked(r);
@@ -824,6 +827,8 @@ public class PreferencesHelper implements RankingConfig {
             if (NotificationChannel.DEFAULT_CHANNEL_ID.equals(channel.getId())) {
                 throw new IllegalArgumentException("Reserved id");
             }
+            // May the packagePreferences has not been created yet (on prior of this method call)
+            r.allowedBypassingDnd = hasDndAccess;
             NotificationChannel existing = r.channels.get(channel.getId());
             if (existing != null && fromTargetApp) {
                 // Actually modifying an existing channel - keep most of the existing settings
@@ -874,11 +879,10 @@ public class PreferencesHelper implements RankingConfig {
                     if (bypassDnd != existing.canBypassDnd()) {
                         existing.setBypassDnd(bypassDnd);
                         needsPolicyFileChange = true;
-
-                        if (bypassDnd != mAreChannelsBypassingDnd
-                                || previousExistingImportance != existing.getImportance()) {
-                            updateChannelsBypassingDnd(mContext.getUserId());
-                        }
+                    }
+                    if (bypassDnd != mAreChannelsBypassingDnd
+                            || previousExistingImportance != existing.getImportance()) {
+                        updateChannelsBypassingDnd(mContext.getUserId());
                     }
                 }
 
@@ -1584,7 +1588,7 @@ public class PreferencesHelper implements RankingConfig {
                 final PackagePreferences r = mPackagePreferences.valueAt(i);
                 // Package isn't associated with this userId or notifications from this package are
                 // blocked
-                if (userId != UserHandle.getUserId(r.uid) || r.importance == IMPORTANCE_NONE) {
+                if (!isPackageAllowedBypassingDndLocked(r, userId)) {
                     continue;
                 }
 
@@ -1597,6 +1601,40 @@ public class PreferencesHelper implements RankingConfig {
             }
         }
         return count;
+    }
+
+    /**
+     * Package must be associated with this userId or package is allowed to by pass Dnd
+     */
+    private boolean isPackageAllowedBypassingDndLocked(PackagePreferences pp, int userId) {
+        return (userId == UserHandle.getUserId(pp.uid) || pp.allowedBypassingDnd)
+                && (pp.importance != IMPORTANCE_NONE);
+    }
+
+    /**
+     * Package may not exist yet.
+     * First call to {@see createNotificationChannel} from NotificationManagerService will set
+     * it as it also ensure package has right to bypass Dnd.
+     * @param packageName to be granted or not to bypass Dnd
+     * @param userId
+     * @param allowBypassingDnd
+     */
+    void setPackageAllowedBypassingDnd(String packageName, int userId, boolean allowBypassingDnd) {
+        boolean found = false;
+        synchronized (mPackagePreferences) {
+            int N = mPackagePreferences.size();
+            for (int i = N - 1; i >= 0; i--) {
+                PackagePreferences pp = mPackagePreferences.valueAt(i);
+                if (UserHandle.getUserId(pp.uid) == userId && packageName == pp.pkg) {
+                    pp.allowedBypassingDnd = allowBypassingDnd;
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (found) {
+            updateConfig();
+        }
     }
 
     /**
@@ -1622,7 +1660,7 @@ public class PreferencesHelper implements RankingConfig {
                 final PackagePreferences r = mPackagePreferences.valueAt(i);
                 // Package isn't associated with this userId or notifications from this package are
                 // blocked
-                if (userId != UserHandle.getUserId(r.uid) || r.importance == IMPORTANCE_NONE) {
+                if (!isPackageAllowedBypassingDndLocked(r, userId)) {
                     continue;
                 }
 
@@ -1860,6 +1898,9 @@ public class PreferencesHelper implements RankingConfig {
                 if (r.importance != DEFAULT_IMPORTANCE) {
                     pw.print(" importance=");
                     pw.print(NotificationListenerService.Ranking.importanceToString(r.importance));
+                }
+                if (!r.allowedBypassingDnd) {
+                    pw.print(" allowedBypassingDnd=Yes");
                 }
                 if (r.priority != DEFAULT_PRIORITY) {
                     pw.print(" priority=");
@@ -2378,6 +2419,7 @@ public class PreferencesHelper implements RankingConfig {
         String pkg;
         int uid = UNKNOWN_UID;
         int importance = DEFAULT_IMPORTANCE;
+        boolean allowedBypassingDnd = DEFAULT_ALLOW_BYPASS_DND;
         int priority = DEFAULT_PRIORITY;
         int visibility = DEFAULT_VISIBILITY;
         boolean showBadge = DEFAULT_SHOW_BADGE;
