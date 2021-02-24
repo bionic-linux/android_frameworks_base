@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3762a057_ca322e74",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Yes, both of them compare the value start(lower) and stop(upper) value equal or not.",
+      "parentUuid": "5f958fd6_d2f10877",
+      "range": {
+        "startLine": 1438,
+        "startChar": 14,
+        "endLine": 1438,
+        "endChar": 38
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bc2c089_8cf15929",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-22T15:08:45Z",
       "side": 1,
       "message": "Consider:\n\n    for (Range\u003cInteger\u003e range : uids) {\n        ranges.add(new UidRange(...));\n    }\n\nto avoid the cost of the lambda. See:\n\nhttps://docs.google.com/document/d/19uJHo_U6AZ1lPT8UXq7rJRCPCdCeKB0-W3VwX97YTe0/edit?ts\u003d58925323#heading\u003dh.pwsh05d83jvx",
+      "range": {
+        "startLine": 1454,
+        "startChar": 12,
+        "endLine": 1454,
+        "endChar": 90
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d0c2dc7_45666dd3",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc2c089_8cf15929",
       "range": {
         "startLine": 1454,
         "startChar": 12,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b80961f3_c4a3c2f3",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6710,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b34060fa_5e7253c5",
+      "range": {
+        "startLine": 6710,
+        "startChar": 33,
+        "endLine": 6710,
+        "endChar": 50
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "055cde2f_632df1bb",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-02-22T15:08:45Z",
       "side": 1,
       "message": "Does this need to be nullable? If this is just a replacment for NetworkCapabilities#getUids(), then it probably doesn\u0027t need to be nullable. If it doesn\u0027t need to be nullable, @NonNull is generally safer.",
+      "range": {
+        "startLine": 6711,
+        "startChar": 8,
+        "endLine": 6711,
+        "endChar": 36
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9760405_fabdf229",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6711,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Make it @NonNull and update corresponding codes",
+      "parentUuid": "055cde2f_632df1bb",
       "range": {
         "startLine": 6711,
         "startChar": 8,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "825781e1_f3ee61bc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6717,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Create UidRange.convertFromIntRanges(Set\u003cRange\u003cInteger\u003e\u003e)",
+      "parentUuid": "c7ea71d9_6ef58e8a",
+      "range": {
+        "startLine": 6717,
+        "startChar": 25,
+        "endLine": 6717,
+        "endChar": 27
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df918638_6d86365a",
@@ -146,6 +266,30 @@
       "writtenOn": "2021-02-22T15:08:45Z",
       "side": 1,
       "message": "Suggest renaming to uidRanges because it returns more than one range.",
+      "range": {
+        "startLine": 542,
+        "startChar": 37,
+        "endLine": 542,
+        "endChar": 45
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f585217a_f338da06",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df918638_6d86365a",
       "range": {
         "startLine": 542,
         "startChar": 37,
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31db6dc4_f8910b39",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4793a376_09854467",
+      "range": {
+        "startLine": 548,
+        "startChar": 27,
+        "endLine": 548,
+        "endChar": 32
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "789cc5c7_7eba7a0b",
@@ -192,6 +360,30 @@
       "writtenOn": "2021-02-22T15:08:45Z",
       "side": 1,
       "message": "Do you need this extra UserHandle variable? Can you simply change PRIMARY_USER from an int to a UserHandle? Or are there too many things that still use the integers?",
+      "range": {
+        "startLine": 1396,
+        "startChar": 36,
+        "endLine": 1396,
+        "endChar": 54
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50d48a95_3c49bc58",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1396,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Interact with UserInfo/UserManager/VpnManagerService still use the integers. I think this variable is still needed until we refactor out all the usages.",
+      "parentUuid": "789cc5c7_7eba7a0b",
       "range": {
         "startLine": 1396,
         "startChar": 36,
@@ -225,6 +417,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53ff187a_af6d4643",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6834,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "801bb583_4e65c660",
+      "range": {
+        "startLine": 6834,
+        "startChar": 43,
+        "endLine": 6834,
+        "endChar": 71
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "818bd457_2cda2db7",
@@ -248,6 +464,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e364fced_223bdc34",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6835,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "818bd457_2cda2db7",
+      "range": {
+        "startLine": 6835,
+        "startChar": 43,
+        "endLine": 6835,
+        "endChar": 88
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b25588cb_75b110ec",
@@ -261,6 +501,30 @@
       "writtenOn": "2021-02-22T15:08:45Z",
       "side": 1,
       "message": "Out of curiosity, why do you need this cast?",
+      "range": {
+        "startLine": 9641,
+        "startChar": 39,
+        "endLine": 9641,
+        "endChar": 44
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bbe68a1_421dcbc8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 9641,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "getLower() and getUpper() return an Integer. Compiler complains it\u0027s ambiguous.\nCompliler will confuse to use assertEquals(long,long) or assertEquals(object, object) in Assert match.",
+      "parentUuid": "b25588cb_75b110ec",
       "range": {
         "startLine": 9641,
         "startChar": 39,
@@ -317,6 +581,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "210f0434_15a2507a",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e17ecff_565e3376",
+      "range": {
+        "startLine": 320,
+        "startChar": 25,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "820b9d62_a1bf74a8",
@@ -340,6 +628,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a25e5dc_5acfc218",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "820b9d62_a1bf74a8",
+      "range": {
+        "startLine": 371,
+        "startChar": 35,
+        "endLine": 371,
+        "endChar": 50
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "257fdd0c_c6f91308",
@@ -353,6 +665,30 @@
       "writtenOn": "2021-02-22T15:08:45Z",
       "side": 1,
       "message": "Suggest using a local (stop or userStop). Also elsewhere.",
+      "range": {
+        "startLine": 372,
+        "startChar": 70,
+        "endLine": 372,
+        "endChar": 85
+      },
+      "revId": "8f5dcb56b8c60e2ca8c59cf1bb4fd2bb6a2625fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "602b5406_d99a7a1a",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-02-24T02:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "257fdd0c_c6f91308",
       "range": {
         "startLine": 372,
         "startChar": 70,
