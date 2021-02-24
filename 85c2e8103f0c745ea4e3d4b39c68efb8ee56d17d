@@ -33,6 +33,24 @@
       "message": "Merged-In tag missing",
       "revId": "85c2e8103f0c745ea4e3d4b39c68efb8ee56d17d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "400a2a0e_1c8d2053",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1404253
+      },
+      "writtenOn": "2021-02-24T18:28:47Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "88fe3146_edf9629c",
+      "revId": "85c2e8103f0c745ea4e3d4b39c68efb8ee56d17d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
