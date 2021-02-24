@@ -42,6 +42,8 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_MMS;
 import static android.net.ConnectivityManager.TYPE_MOBILE_SUPL;
 import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.TYPE_WIFI;
+import static android.net.ConnectivityManager.USER_PREFERENCE_ENTERPRISE;
+import static android.net.ConnectivityManager.USER_PREFERENCE_SYSTEM_DEFAULT;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_DNS;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_FALLBACK;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTP;
@@ -72,6 +74,7 @@ import static android.net.NetworkCapabilities.NET_CAPABILITY_OEM_PRIVATE;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_RCS;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_SUPL;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_TEMPORARILY_NOT_METERED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_TRUSTED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_WIFI_P2P;
@@ -375,6 +378,12 @@ public class ConnectivityServiceTest {
     private static final int OEM_PREF_ANY_NET_ID = -1;
     // Set a non-zero value to verify the flow to set tcp init rwnd value.
     private static final int TEST_TCP_INIT_RWND = 60;
+
+    // Used for testing the per-work-profile default network.
+    private static final int TEST_APP_ID = 103;
+    private static final int TEST_WORK_PROFILE_USER_ID = 2;
+    private static final int TEST_WORK_PROFILE_APP_UID =
+            UidRange.createForUser(UserHandle.of(2)).start + TEST_APP_ID;
 
     private static final String CLAT_PREFIX = "v4-";
     private static final String MOBILE_IFNAME = "test_rmnet_data0";
@@ -1406,15 +1415,34 @@ public class ConnectivityServiceTest {
         fail("ConditionVariable was blocked for more than " + TIMEOUT_MS + "ms");
     }
 
-    private void registerNetworkCallbackAsUid(NetworkRequest request, NetworkCallback callback,
-            int uid) {
+    private <T> T doAsUid(final int uid, @NonNull final Supplier<T> what) {
         when(mDeps.getCallingUid()).thenReturn(uid);
         try {
-            mCm.registerNetworkCallback(request, callback);
-            waitForIdle();
+            return what.get();
         } finally {
             returnRealCallingUid();
         }
+    }
+
+    private void doAsUid(final int uid, @NonNull final Runnable what) {
+        doAsUid(uid, () -> {
+            what.run(); return Void.TYPE;
+        });
+    }
+
+    private void registerNetworkCallbackAsUid(NetworkRequest request, NetworkCallback callback,
+            int uid) {
+        doAsUid(uid, () -> {
+            mCm.registerNetworkCallback(request, callback);
+        });
+    }
+
+    private void registerDefaultNetworkCallbackAsUid(@NonNull final NetworkCallback callback,
+            final int uid) {
+        doAsUid(uid, () -> {
+            mCm.registerDefaultNetworkCallback(callback);
+            waitForIdle();
+        });
     }
 
     private static final int PRIMARY_USER = 0;
@@ -10759,5 +10787,459 @@ public class ConnectivityServiceTest {
         waitForIdle();
         verifyNoNetwork();
         mCm.unregisterNetworkCallback(cellCb);
+    }
+
+    private UidRangeParcel[] uidRangeFor(final UserHandle handle) {
+        UidRange range = UidRange.createForUser(handle);
+        return new UidRangeParcel[] { new UidRangeParcel(range.start, range.stop) };
+    }
+
+    private static class TestOnCompleteListener implements Runnable {
+        final class OnComplete {}
+        final ArrayTrackRecord<OnComplete>.ReadHead mHistory =
+                new ArrayTrackRecord<OnComplete>().newReadHead();
+
+        @Override
+        public void run() {
+            mHistory.add(new OnComplete());
+        }
+
+        public void expectOnComplete() {
+            mHistory.poll(TIMEOUT_MS, it -> true);
+        }
+    }
+
+    /**
+     * Make sure per-profile networking preference behaves as expected when the network
+     * goes up and down while the preference is active.
+     */
+    @Test
+    public void testPreferenceForUserNetworkUpDown() throws Exception {
+        final InOrder inOrder = inOrder(mMockNetd);
+        final UserHandle testHandle = UserHandle.of(TEST_WORK_PROFILE_USER_ID);
+        doReturn(true).when(mUserManager).isManagedProfile();
+
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+
+        final TestNetworkCallback systemCb = new TestNetworkCallback();
+        final TestNetworkCallback generalCb = new TestNetworkCallback();
+        final TestNetworkCallback appCb = new TestNetworkCallback();
+
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETTINGS, PERMISSION_GRANTED);
+
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        mCm.registerSystemDefaultNetworkCallback(systemCb, handler);
+        // The callback for the UID of the test app will not be subject to the preferences, as
+        // it doesn't run on the test user handle. It should follow the system default network.
+        mCm.registerDefaultNetworkCallback(generalCb);
+        // The callback for this UID should be subject to the preference, so it should follow
+        // the network for the test user handle.
+        registerDefaultNetworkCallbackAsUid(appCb, TEST_WORK_PROFILE_APP_UID);
+
+        systemCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        generalCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        appCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+
+        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+
+        // Setting a network preference for this user will create a new set of routing rules for
+        // the UID range that corresponds to this user, so as to define the default network
+        // for these apps separately. This is true because the multi-layer request relevant to
+        // this UID range contains a TRACK_DEFAULT, so the range will be moved through UID-specific
+        // rules to the correct network – in this case the system default network. The case where
+        // the default network for the profile happens to be the same as the system default
+        // is not handled specially, the rules are always active.
+        inOrder.verify(mMockNetd).networkAddUidRanges(mCellNetworkAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+
+        // The enterprise network is not ready yet.
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        appCb.assertNoCallback();
+
+        final NetworkCapabilities workNc = new NetworkCapabilities();
+        workNc.addCapability(NET_CAPABILITY_ENTERPRISE);
+        workNc.removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        final TestNetworkAgentWrapper workAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR,
+                new LinkProperties(), workNc);
+        workAgent.connect(false);
+
+        appCb.expectAvailableCallbacksUnvalidated(workAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        inOrder.verify(mMockNetd).networkAddUidRanges(workAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+        inOrder.verify(mMockNetd).networkRemoveUidRanges(mCellNetworkAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+
+        // Make sure changes to the work agent send callbacks to the app in the work profile, but
+        // not to the other apps.
+        workAgent.setNetworkValid(true /* isStrictMode */);
+        workAgent.mNetworkMonitor.forceReevaluation(Process.myUid());
+        appCb.expectCapabilitiesThat(workAgent, nc -> nc.hasCapability(NET_CAPABILITY_VALIDATED)
+                && nc.hasCapability(NET_CAPABILITY_ENTERPRISE));
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+
+        workAgent.addCapability(NET_CAPABILITY_TEMPORARILY_NOT_METERED);
+        appCb.expectCapabilitiesThat(workAgent, nc ->
+                nc.hasCapability(NET_CAPABILITY_TEMPORARILY_NOT_METERED));
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+
+        // Conversely, change a capability on the system-wide default network and make sure
+        // that only the apps outside of the work profile receive the callbacks.
+        mCellNetworkAgent.addCapability(NET_CAPABILITY_TEMPORARILY_NOT_METERED);
+        systemCb.expectCapabilitiesThat(mCellNetworkAgent, nc ->
+                nc.hasCapability(NET_CAPABILITY_TEMPORARILY_NOT_METERED));
+        generalCb.expectCapabilitiesThat(mCellNetworkAgent, nc ->
+                nc.hasCapability(NET_CAPABILITY_TEMPORARILY_NOT_METERED));
+        appCb.assertNoCallback();
+
+        // Disconnect and reconnect the system-wide default network and make sure that the
+        // apps on this network see the appropriate callbacks, and the app on the work profile
+        // doesn't because it continues to use the enterprise network.
+        mCellNetworkAgent.disconnect();
+        systemCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        generalCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        appCb.assertNoCallback();
+        inOrder.verify(mMockNetd).networkDestroy(mCellNetworkAgent.getNetwork().netId);
+
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        systemCb.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        generalCb.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        appCb.assertNoCallback();
+
+        // When the agent disconnects, test that the app on the work profile falls back to the
+        // default network.
+        workAgent.disconnect();
+        appCb.expectCallback(CallbackEntry.LOST, workAgent);
+        appCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        inOrder.verify(mMockNetd).networkDestroy(workAgent.getNetwork().netId);
+
+        mCellNetworkAgent.disconnect();
+        systemCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        generalCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        appCb.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        // TODO : why doesn't this work a second time ?
+        // inOrder.verify(mMockNetd).networkDestroy(mCellNetworkAgent.getNetwork().netId);
+
+        mCm.unregisterNetworkCallback(systemCb);
+        mCm.unregisterNetworkCallback(generalCb);
+        mCm.unregisterNetworkCallback(appCb);
+    }
+
+    /**
+     * Make sure that a per-profile network preference setting does not affect the callbacks
+     * of other profiles.
+     */
+    @Test
+    public void testPreferenceForUserNotGenerallyAvailable() throws Exception {
+        final InOrder inOrder = inOrder(mMockNetd);
+        final UserHandle testHandle = UserHandle.of(TEST_WORK_PROFILE_USER_ID);
+        doReturn(true).when(mUserManager).isManagedProfile();
+
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+        final TestNetworkCallback systemCb = new TestNetworkCallback();
+        final TestNetworkCallback generalCb = new TestNetworkCallback();
+        final TestNetworkCallback appCb = new TestNetworkCallback();
+
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETTINGS,
+                PERMISSION_GRANTED);
+
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        mCm.registerSystemDefaultNetworkCallback(systemCb, handler);
+        // The callback for the UID of the test app will not be subject to the preferences, as
+        // it doesn't run on the test user handle. It should follow the system default network.
+        mCm.registerDefaultNetworkCallback(generalCb);
+        // The callback for this UID should be subject to the preference, so it should follow
+        // the network for the test user handle.
+        registerDefaultNetworkCallbackAsUid(appCb, TEST_WORK_PROFILE_APP_UID);
+
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        appCb.assertNoCallback();
+
+        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+        inOrder.verify(mMockNetd, never()).networkAddUidRanges(anyInt(), any());
+
+        // Nothing happens yet
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        appCb.assertNoCallback();
+
+        final NetworkCapabilities workNcNc = new NetworkCapabilities();
+        workNcNc.addCapability(NET_CAPABILITY_ENTERPRISE);
+        workNcNc.removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        final TestNetworkAgentWrapper workAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR,
+                new LinkProperties(), workNcNc);
+        workAgent.connect(false);
+
+        appCb.expectAvailableCallbacksUnvalidated(workAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        inOrder.verify(mMockNetd).networkAddUidRanges(workAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+
+        workAgent.setNetworkValid(true /* isStrictMode */);
+        workAgent.mNetworkMonitor.forceReevaluation(Process.myUid());
+        appCb.expectCapabilitiesThat(workAgent, nc -> nc.hasCapability(NET_CAPABILITY_ENTERPRISE)
+                && !nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED));
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        inOrder.verify(mMockNetd, never()).networkAddUidRanges(anyInt(), any());
+
+        // When the agent disconnects, test that the app on the work profile falls back to the
+        // default network.
+        workAgent.disconnect();
+        appCb.expectCallback(CallbackEntry.LOST, workAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        inOrder.verify(mMockNetd).networkDestroy(workAgent.getNetwork().netId);
+
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        appCb.assertNoCallback();
+
+        mCm.unregisterNetworkCallback(systemCb);
+        mCm.unregisterNetworkCallback(generalCb);
+        mCm.unregisterNetworkCallback(appCb);
+    }
+
+    /**
+     * Test that, in a given networking context, calling setPreferenceForUser to set per-profile
+     * defaults on then off works as expected.
+     */
+    @Test
+    public void testSetPreferenceForUserOnOff() throws Exception {
+        final InOrder inOrder = inOrder(mMockNetd);
+        final UserHandle testHandle = UserHandle.of(TEST_WORK_PROFILE_USER_ID);
+        doReturn(true).when(mUserManager).isManagedProfile();
+
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+        // Connect both a regular cell agent and an enterprise network first.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+
+        // File a request to avoid the enterprise network being disconnected as soon as the default
+        // request goes away – it would make impossible to test that networkRemoveUidRanges
+        // is called, as the network would disconnect first for lack of a request.
+        final TestNetworkCallback keepUp = new TestNetworkCallback();
+        final NetworkRequest keepUpRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_ENTERPRISE)
+                .build();
+        mCm.requestNetwork(keepUpRequest, keepUp);
+        final NetworkCapabilities workNc = new NetworkCapabilities();
+        workNc.addCapability(NET_CAPABILITY_ENTERPRISE);
+        workNc.removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        final TestNetworkAgentWrapper workAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR,
+                new LinkProperties(), workNc);
+        workAgent.connect(true);
+
+        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+        inOrder.verify(mMockNetd).networkAddUidRanges(workAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+
+        final TestNetworkCallback systemCb = new TestNetworkCallback();
+        final TestNetworkCallback generalCb = new TestNetworkCallback();
+        final TestNetworkCallback appCb = new TestNetworkCallback();
+
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETTINGS, PERMISSION_GRANTED);
+
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        mCm.registerSystemDefaultNetworkCallback(systemCb, handler);
+        // The callback for the UID of the test app will not be subject to the preferences, as
+        // it doesn't run on the test user handle. It should follow the system default network.
+        mCm.registerDefaultNetworkCallback(generalCb);
+        // The callback for this UID should be subject to the preference, so it should follow
+        // the network for the test user handle.
+        registerDefaultNetworkCallbackAsUid(appCb, TEST_WORK_PROFILE_APP_UID);
+
+        systemCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        generalCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        appCb.expectAvailableCallbacksValidated(workAgent);
+
+        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_SYSTEM_DEFAULT,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+
+        appCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+        listener.expectOnComplete();
+        inOrder.verify(mMockNetd).networkRemoveUidRanges(workAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+
+        mCm.unregisterNetworkCallback(systemCb);
+        mCm.unregisterNetworkCallback(generalCb);
+        mCm.unregisterNetworkCallback(appCb);
+        mCm.unregisterNetworkCallback(keepUp);
+        workAgent.disconnect();
+        mCellNetworkAgent.disconnect();
+    }
+
+    /**
+     * Test per-profile default networks for two different profiles concurrently.
+     */
+    @Test
+    public void testSetPreferenceForTwoProfiles() throws Exception {
+        final InOrder inOrder = inOrder(mMockNetd);
+        final UserHandle testHandle2 = UserHandle.of(TEST_WORK_PROFILE_USER_ID);
+        final UserHandle testHandle4 = UserHandle.of(TEST_WORK_PROFILE_USER_ID + 2);
+        doReturn(true).when(mUserManager).isManagedProfile();
+
+        // Connect both a regular cell agent and an enterprise network first.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+
+        // File a request to avoid the enterprise network being disconnected as soon as the default
+        // request goes away – it would make impossible to test that networkRemoveUidRanges
+        // is called, as the network would disconnect first for lack of a request.
+        final TestNetworkCallback keepUp = new TestNetworkCallback();
+        final NetworkRequest keepUpRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_ENTERPRISE)
+                .build();
+        mCm.requestNetwork(keepUpRequest, keepUp);
+        final NetworkCapabilities workNc = new NetworkCapabilities();
+        workNc.addCapability(NET_CAPABILITY_ENTERPRISE);
+        workNc.removeCapability(NET_CAPABILITY_NOT_RESTRICTED);
+        final TestNetworkAgentWrapper workAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR,
+                new LinkProperties(), workNc);
+        workAgent.connect(true);
+
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+
+        final TestNetworkCallback systemCb = new TestNetworkCallback();
+        final TestNetworkCallback generalCb = new TestNetworkCallback();
+        final TestNetworkCallback app2Cb = new TestNetworkCallback();
+        final TestNetworkCallback app4Cb = new TestNetworkCallback();
+
+        mServiceContext.setPermission(Manifest.permission.NETWORK_SETTINGS, PERMISSION_GRANTED);
+
+        final Handler handler = new Handler(ConnectivityThread.getInstanceLooper());
+        mCm.registerSystemDefaultNetworkCallback(systemCb, handler);
+        // The callback for the UID of the test app will not be subject to the preferences, as
+        // it doesn't run on the test user handles. It should follow the system default network.
+        mCm.registerDefaultNetworkCallback(generalCb);
+        // The callback for this UID should be subject to the preference for the user handle 2, so
+        // it should follow the network for that user.
+        registerDefaultNetworkCallbackAsUid(app2Cb, TEST_WORK_PROFILE_APP_UID);
+        // The callback for this UID should be subject to the preference for the user handle 4, so
+        // it should follow the network for that user.
+        final int testWorkProfileAppUid4 = UidRange.createForUser(testHandle4).start + TEST_APP_ID;
+        registerDefaultNetworkCallbackAsUid(app4Cb, testWorkProfileAppUid4);
+
+        systemCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        generalCb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        app2Cb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        app4Cb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+
+        mCm.setNetworkPreferenceForUser(testHandle2, USER_PREFERENCE_ENTERPRISE,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+        inOrder.verify(mMockNetd).networkAddUidRanges(workAgent.getNetwork().netId,
+                uidRangeFor(testHandle2));
+
+        app2Cb.expectAvailableCallbacksValidated(workAgent);
+        app4Cb.assertNoCallback();
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+
+        mCm.setNetworkPreferenceForUser(testHandle4, USER_PREFERENCE_ENTERPRISE,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+        inOrder.verify(mMockNetd).networkAddUidRanges(workAgent.getNetwork().netId,
+                uidRangeFor(testHandle4));
+
+        app4Cb.expectAvailableCallbacksValidated(workAgent);
+        app2Cb.assertNoCallback();
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+
+        mCm.setNetworkPreferenceForUser(testHandle2, USER_PREFERENCE_SYSTEM_DEFAULT,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+        inOrder.verify(mMockNetd).networkRemoveUidRanges(workAgent.getNetwork().netId,
+                uidRangeFor(testHandle2));
+
+        app2Cb.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        app4Cb.assertNoCallback();
+        systemCb.assertNoCallback();
+        generalCb.assertNoCallback();
+
+        mCm.unregisterNetworkCallback(systemCb);
+        mCm.unregisterNetworkCallback(generalCb);
+        mCm.unregisterNetworkCallback(app2Cb);
+        mCm.unregisterNetworkCallback(app4Cb);
+        mCm.unregisterNetworkCallback(keepUp);
+        workAgent.disconnect();
+        mCellNetworkAgent.disconnect();
+    }
+
+    /**
+     * Make sure that OEM preference and per-profile preference can't be used at the same
+     * time and throw ISE if tried
+     */
+    @Test
+    public void testOemPreferenceAndProfilePreferenceExclusive() throws Exception {
+        final UserHandle testHandle = UserHandle.of(TEST_WORK_PROFILE_USER_ID);
+        doReturn(true).when(mUserManager).isManagedProfile();
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+
+        setupMultipleDefaultNetworksForOemNetworkPreferenceNotCurrentUidTest(
+                OEM_NETWORK_PREFERENCE_OEM_PAID_ONLY);
+        assertThrows("Should not be able to set per-profile pref while OEM prefs present",
+                IllegalStateException.class, () ->
+                        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+                                r -> r.run(), listener));
+
+        // Empty the OEM prefs
+        final TestOemListenerCallback oemPrefListener = new TestOemListenerCallback();
+        final OemNetworkPreferences emptyOemPref = new OemNetworkPreferences.Builder().build();
+        mService.setOemNetworkPreference(emptyOemPref, oemPrefListener);
+        oemPrefListener.expectOnComplete();
+
+        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+        assertThrows("Should not be able to set OEM prefs while per-profile pref is on",
+                IllegalStateException.class , () ->
+                        mService.setOemNetworkPreference(emptyOemPref, oemPrefListener));
+    }
+
+    /**
+     * Make sure wrong preferences for per-profile default networking are rejected.
+     */
+    @Test
+    public void testProfileNetworkPrefWrongPreference() throws Exception {
+        doReturn(true).when(mUserManager).isManagedProfile();
+        assertThrows("Should not be able to set an illegal preference",
+                IllegalArgumentException.class,
+                () -> mCm.setNetworkPreferenceForUser(UserHandle.of(TEST_WORK_PROFILE_USER_ID),
+                        USER_PREFERENCE_ENTERPRISE + 1, null, null));
+    }
+
+    /**
+     * Make sure requests for per-profile default networking for a non-work profile are
+     * rejected
+     */
+    @Test
+    public void testProfileNetworkPrefWrongProfile() throws Exception {
+        doReturn(false).when(mUserManager).isManagedProfile();
+        assertThrows("Should not be able to set a user pref for a non-work profile",
+                IllegalArgumentException.class , () ->
+                        mCm.setNetworkPreferenceForUser(UserHandle.of(TEST_WORK_PROFILE_USER_ID),
+                                USER_PREFERENCE_ENTERPRISE, null, null));
     }
 }
