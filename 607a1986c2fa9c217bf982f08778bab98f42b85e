@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cf9b397_8d186730",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 9836,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T00:07:23Z",
+      "side": 1,
+      "message": "Add a comment to explain this is necessary to call registerSystemDefaultNC",
+      "range": {
+        "startLine": 9836,
+        "startChar": 36,
+        "endLine": 9836,
+        "endChar": 52
+      },
+      "revId": "607a1986c2fa9c217bf982f08778bab98f42b85e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31b00102_239f26f5",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 9843,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T00:07:23Z",
+      "side": 1,
+      "message": "I think this may lower the usefulness of this method because it means the method can\u0027t be used if any default network is up",
+      "range": {
+        "startLine": 9843,
+        "startChar": 8,
+        "endLine": 9843,
+        "endChar": 51
+      },
+      "revId": "607a1986c2fa9c217bf982f08778bab98f42b85e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcff90e6_7ebf4453",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 9852,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T00:07:23Z",
+      "side": 1,
+      "message": "Let\u0027s do this as part of tearDown if the callbacks are non-null.",
+      "range": {
+        "startLine": 9848,
+        "startChar": 3,
+        "endLine": 9852,
+        "endChar": 0
+      },
+      "revId": "607a1986c2fa9c217bf982f08778bab98f42b85e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2cf5079_ad3a9277",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 9949,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T00:07:23Z",
+      "side": 1,
+      "message": "Once this is done in tearDown() replace this with a comment\n\n  // default NCs will be unregistered in tearDown",
+      "range": {
+        "startLine": 9949,
+        "startChar": 8,
+        "endLine": 9949,
+        "endChar": 44
+      },
+      "revId": "607a1986c2fa9c217bf982f08778bab98f42b85e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
