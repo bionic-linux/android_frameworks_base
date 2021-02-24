@@ -16,6 +16,23 @@
       "message": "Do you have the logic ready to define what the safe volume threshold is for A2DP devices? \nwhen absolute volume is used, how do you enforce it?\nWhen absolute volume is not use, how do you get the transfer function form digital signal dBFS to SPL from the headset?\n",
       "revId": "a99d0a4c7ac6ad9891b733e0034e84d6e078ff20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f949f8ae_ad52bffa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-02-24T10:10:51Z",
+      "side": 1,
+      "message": "I think a2dp devices that don’t support absolute volume are similar to digital headsets. \nbut if the device supports absolute volume, I still have no good way to get an accurate safe volume value.Do you have any suggestions ?",
+      "revId": "a99d0a4c7ac6ad9891b733e0034e84d6e078ff20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
