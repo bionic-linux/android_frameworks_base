@@ -191,7 +191,8 @@ public class PreferencesHelper implements RankingConfig {
 
         updateBadgingEnabled();
         updateBubblesEnabled();
-        syncChannelsBypassingDnd(mContext.getUserId());
+        mCurrentUserId = mContext.getUserId();
+        syncChannelsBypassingDnd(mCurrentUserId);
     }
 
     public void readXml(XmlPullParser parser, boolean forRestore, int userId)
@@ -790,7 +791,7 @@ public class PreferencesHelper implements RankingConfig {
                     // but the system can
                     if (group.isBlocked() != oldGroup.isBlocked()) {
                         group.lockFields(NotificationChannelGroup.USER_LOCKED_BLOCKED_STATE);
-                        updateChannelsBypassingDnd(mContext.getUserId());
+                        updateChannelsBypassingDnd(mCurrentUserId);
                     }
                 }
             }
@@ -871,13 +872,13 @@ public class PreferencesHelper implements RankingConfig {
                 // fields on the channel yet
                 if (existing.getUserLockedFields() == 0 && hasDndAccess) {
                     boolean bypassDnd = channel.canBypassDnd();
-                    if (bypassDnd != existing.canBypassDnd()) {
+                    if (bypassDnd != existing.canBypassDnd() || wasUndeleted) {
                         existing.setBypassDnd(bypassDnd);
                         needsPolicyFileChange = true;
 
                         if (bypassDnd != mAreChannelsBypassingDnd
                                 || previousExistingImportance != existing.getImportance()) {
-                            updateChannelsBypassingDnd(mContext.getUserId());
+                            updateChannelsBypassingDnd(mCurrentUserId);
                         }
                     }
                 }
@@ -941,7 +942,7 @@ public class PreferencesHelper implements RankingConfig {
 
             r.channels.put(channel.getId(), channel);
             if (channel.canBypassDnd() != mAreChannelsBypassingDnd) {
-                updateChannelsBypassingDnd(mContext.getUserId());
+                updateChannelsBypassingDnd(mCurrentUserId);
             }
             MetricsLogger.action(getChannelLog(channel, pkg).setType(
                     com.android.internal.logging.nano.MetricsProto.MetricsEvent.TYPE_OPEN));
@@ -1013,7 +1014,7 @@ public class PreferencesHelper implements RankingConfig {
 
             if (updatedChannel.canBypassDnd() != mAreChannelsBypassingDnd
                     || channel.getImportance() != updatedChannel.getImportance()) {
-                updateChannelsBypassingDnd(mContext.getUserId());
+                updateChannelsBypassingDnd(mCurrentUserId);
             }
         }
         updateConfig();
@@ -1110,7 +1111,7 @@ public class PreferencesHelper implements RankingConfig {
             mNotificationChannelLogger.logNotificationChannelDeleted(channel, uid, pkg);
 
             if (mAreChannelsBypassingDnd && channel.canBypassDnd()) {
-                updateChannelsBypassingDnd(mContext.getUserId());
+                updateChannelsBypassingDnd(mCurrentUserId);
             }
         }
     }
@@ -2168,6 +2169,7 @@ public class PreferencesHelper implements RankingConfig {
      * Called when user switches
      */
     public void onUserSwitched(int userId) {
+        mCurrentUserId = userId;
         syncChannelsBypassingDnd(userId);
     }
 
