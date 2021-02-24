@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f955576_b365a9aa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5743,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T12:05:27Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary because the method is already called handle*. Most of our handle* methods don\u0027t call this, and all reviewers and almost everybody touching this code already know handle* is code for \"must run on handler thread\" in this file.",
+      "parentUuid": "1be6a739_83872c6e",
+      "range": {
+        "startLine": 5743,
+        "startChar": 17,
+        "endLine": 5743,
+        "endChar": 48
+      },
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58cfc7ae_7a7915f6",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-20T03:51:57Z",
       "side": 1,
       "message": "nit: handleUnregisterNetworkOffer",
+      "range": {
+        "startLine": 5753,
+        "startChar": 30,
+        "endLine": 5753,
+        "endChar": 46
+      },
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bc511c3_d1292514",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 5753,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T12:05:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58cfc7ae_7a7915f6",
       "range": {
         "startLine": 5753,
         "startChar": 30,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44fa9eae_d708e4a5",
+        "filename": "services/core/java/com/android/server/connectivity/FullScore.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T12:05:27Z",
+      "side": 1,
+      "message": "Renamed to \"makePropsectiveScore\". It\u0027s essential that this score is prospective so I want to keep it in the name, but you\u0027re right that it\u0027s better if this method\u0027s name starts with a verb.",
+      "parentUuid": "73146870_bbb14f03",
+      "range": {
+        "startLine": 132,
+        "startChar": 28,
+        "endLine": 132,
+        "endChar": 39
+      },
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0acfe550_8ecd5e1b",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-02-20T03:51:57Z",
       "side": 1,
       "message": "nit: everSelected or everUserSelected.\nIIUC we want a consistent name.\nNo strong opinion.",
+      "range": {
+        "startLine": 142,
+        "startChar": 68,
+        "endLine": 142,
+        "endChar": 80
+      },
+      "revId": "1b1bc96c114ab702a8d230aad533f64257849d41",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "deb916f7_146e8e25",
+        "filename": "services/core/java/com/android/server/connectivity/FullScore.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T12:05:27Z",
+      "side": 1,
+      "message": "It\u0027s a very common thing for a local to use an abbreviated version of the full thing when it\u0027s not ambiguous. If we were to call all our NetworkCapabilities instances networkCapabilities rather than just \u0027nc\u0027 the code would become very unwieldly.\n\nIn this particular case I don\u0027t think it matters at all. But I wanted to point out that I disagree with your general comment.",
+      "parentUuid": "0acfe550_8ecd5e1b",
       "range": {
         "startLine": 142,
         "startChar": 68,

@@ -181,6 +181,30 @@
       },
       "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eec556d6_ef540ce7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-24T12:05:27Z",
+      "side": 1,
+      "message": "The behavior is to filter nothing. I\u0027m sorry I really struggle to think of how to make it clearer than the comment ; the comment explicitly says \"null means no filter\". Do you have any suggestions to clarify this ?",
+      "parentUuid": "6a964a99_e092282b",
+      "range": {
+        "startLine": 56,
+        "startChar": 28,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
