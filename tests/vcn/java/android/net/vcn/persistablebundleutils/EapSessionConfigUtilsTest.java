@@ -16,6 +16,8 @@
 
 package android.net.vcn.persistablebundleutils;
 
+import static android.telephony.TelephonyManager.APPTYPE_USIM;
+
 import static org.junit.Assert.assertEquals;
 
 import android.net.eap.EapSessionConfig;
@@ -32,8 +34,13 @@ import java.nio.charset.StandardCharsets;
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class EapSessionConfigUtilsTest {
+    private static final byte[] EAP_IDENTITY =
+            "test@android.net".getBytes(StandardCharsets.US_ASCII);
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
+    private static final int SUB_ID = 1;
+    private static final String NETWORK_NAME = "android.net";
+    private static final boolean ALLOW_MISMATCHED_NETWORK_NAMES = true;
 
     private EapSessionConfig.Builder createBuilderWithId() {
         final byte[] eapId = "test@android.net".getBytes(StandardCharsets.US_ASCII);
@@ -51,6 +58,33 @@ public class EapSessionConfigUtilsTest {
     public void testSetEapMsChapV2EncodeDecodeIsLossless() throws Exception {
         final EapSessionConfig config =
                 createBuilderWithId().setEapMsChapV2Config(USERNAME, PASSWORD).build();
+
+        verifyPersistableBundleEncodeDecodeIsLossless(config);
+    }
+
+    @Test
+    public void testSetEapSimEncodeDecodeIsLossless() throws Exception {
+        final EapSessionConfig config =
+                createBuilderWithId().setEapSimConfig(SUB_ID, APPTYPE_USIM).build();
+
+        verifyPersistableBundleEncodeDecodeIsLossless(config);
+    }
+
+    @Test
+    public void testSetEapAkaEncodeDecodeIsLossless() throws Exception {
+        final EapSessionConfig config =
+                createBuilderWithId().setEapAkaConfig(SUB_ID, APPTYPE_USIM).build();
+
+        verifyPersistableBundleEncodeDecodeIsLossless(config);
+    }
+
+    @Test
+    public void testSetEapAkaPrimeEncodeDecodeIsLossless() throws Exception {
+        final EapSessionConfig config =
+                createBuilderWithId()
+                        .setEapAkaPrimeConfig(
+                                SUB_ID, APPTYPE_USIM, NETWORK_NAME, ALLOW_MISMATCHED_NETWORK_NAMES)
+                        .build();
 
         verifyPersistableBundleEncodeDecodeIsLossless(config);
     }
