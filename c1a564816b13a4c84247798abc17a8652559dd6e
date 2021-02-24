@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53ca1df3_b72eae43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-02-24T18:41:27Z",
+      "side": 1,
+      "message": "Oh derp - looks like we should have caught this in the original review. Thanks for finding!\n\nI\u0027m surprised this isn\u0027t considered a linter error - javadoc style comments in a normal /* */ comment.",
+      "revId": "c1a564816b13a4c84247798abc17a8652559dd6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
