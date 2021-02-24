@@ -4644,7 +4644,7 @@ public class NotificationManagerService extends SystemService {
                         pkg, userId, mConditionProviders.getRequiredPermission())) {
                     mConditionProviders.setPackageOrComponentEnabled(
                             pkg, userId, true, granted);
-
+                    mPreferencesHelper.setPackageAllowedToBypassDnd(pkg, userId, granted);
                     getContext().sendBroadcastAsUser(new Intent(
                             ACTION_NOTIFICATION_POLICY_ACCESS_GRANTED_CHANGED)
                                     .setPackage(pkg)
