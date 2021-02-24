@@ -874,6 +874,17 @@ public class StorageManager {
     }
 
     /** {@hide} */
+    @UnsupportedAppUsage
+    public @Nullable VolumeInfo findEmulatedForPrivate(VolumeInfo privateVol, int userId) {
+        if (privateVol != null) {
+            return findVolumeById(privateVol.getId().replace("private", "emulated") + ";"
+                    + userId);
+        } else {
+            return null;
+        }
+    }
+
+    /** {@hide} */
     public @Nullable VolumeInfo findVolumeByQualifiedUuid(String volumeUuid) {
         if (Objects.equals(StorageManager.UUID_PRIVATE_INTERNAL, volumeUuid)) {
             return findVolumeById(VolumeInfo.ID_PRIVATE_INTERNAL);
