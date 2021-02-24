@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebeb00f5_f42a1d5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1404253
+      },
+      "writtenOn": "2021-02-24T16:14:24Z",
+      "side": 1,
+      "message": "+owners this change is already merged in master",
+      "revId": "5bbec104d82f3111343da0bdd8db2b78d95946d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
