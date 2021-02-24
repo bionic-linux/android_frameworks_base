@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "369f7e89_11f619b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-24T17:28:49Z",
+      "side": 1,
+      "message": "The attestation chain was always in the CA cert chain.\nAnd this is where device policy manager installed it after generating the chain with attestKey. It was only KeyChain that did things differently, mainly because the public API did not support device ID attestation. So really nothing has changed other than that KeyChain now calls the public API like any other app would to the same effect.",
+      "parentUuid": "c123d1ba_13318ee0",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "979000fa_a54216e7",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-22T11:07:38Z",
       "side": 1,
       "message": "Where dose this constant come from?",
+      "range": {
+        "startLine": 642,
+        "startChar": 66,
+        "endLine": 642,
+        "endChar": 68
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03d3c660_d3758c90",
+        "filename": "keystore/java/android/security/KeyChain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-24T17:28:49Z",
+      "side": 1,
+      "message": "Its the radix. I added a comment internally. Will back port to AOSP shortly.",
+      "parentUuid": "979000fa_a54216e7",
       "range": {
         "startLine": 642,
         "startChar": 66,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5df1c654_daba71a7",
+        "filename": "keystore/java/android/security/KeyChain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-24T17:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683c8841_31587ee6",
+      "range": {
+        "startLine": 771,
+        "startChar": 0,
+        "endLine": 782,
+        "endChar": 5
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0cffbef8_e68a4937",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ccc19ca_9e14cb3e",
+        "filename": "keystore/java/android/security/KeyChain.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-24T17:28:49Z",
+      "side": 1,
+      "message": "That may still be true for very old devices. But we cannot tell until we actually generate the key. The functionality for querying this information in advance has long been removed and this function deprecated. We probably have to remote this test.",
+      "parentUuid": "0cffbef8_e68a4937",
+      "range": {
+        "startLine": 806,
+        "startChar": 36,
+        "endLine": 806,
+        "endChar": 55
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7544516_5a394647",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-02-22T11:07:38Z",
       "side": 1,
       "message": "I assume this is the attestation chain?",
+      "range": {
+        "startLine": 6547,
+        "startChar": 59,
+        "endLine": 6547,
+        "endChar": 76
+      },
+      "revId": "9ed6c3f509973bb32330235cc4c3d12f99373e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "691c5c4f_114a606b",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6547,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-24T17:28:49Z",
+      "side": 1,
+      "message": "If you requested an attestation. Otherwise it is null.",
+      "parentUuid": "d7544516_5a394647",
       "range": {
         "startLine": 6547,
         "startChar": 59,
