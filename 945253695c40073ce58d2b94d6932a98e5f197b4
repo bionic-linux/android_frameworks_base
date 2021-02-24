@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc1ac55f_69478c3a",
+        "filename": "packages/Shell/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2021-02-24T00:31:19Z",
+      "side": 1,
+      "message": "remove indent?",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 8
+      },
+      "revId": "945253695c40073ce58d2b94d6932a98e5f197b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
