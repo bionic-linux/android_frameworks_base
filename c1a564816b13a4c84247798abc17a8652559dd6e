@@ -16,6 +16,23 @@
       "message": "Oh derp - looks like we should have caught this in the original review. Thanks for finding!\n\nI\u0027m surprised this isn\u0027t considered a linter error - javadoc style comments in a normal /* */ comment.",
       "revId": "c1a564816b13a4c84247798abc17a8652559dd6e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c5f432e_50763442",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-24T18:42:02Z",
+      "side": 1,
+      "message": "And now it all makes sense. You found the source of the confusion. :-D",
+      "revId": "c1a564816b13a4c84247798abc17a8652559dd6e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
