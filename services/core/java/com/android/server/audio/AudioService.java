@@ -7483,7 +7483,8 @@ public class AudioService extends IAudioService.Stub
     // mSafeMediaVolumeDevices lists the devices for which safe media volume is enforced,
     /*package*/ final Set<Integer> mSafeMediaVolumeDevices = new HashSet<>(
             Arrays.asList(AudioSystem.DEVICE_OUT_WIRED_HEADSET,
-                    AudioSystem.DEVICE_OUT_WIRED_HEADPHONE, AudioSystem.DEVICE_OUT_USB_HEADSET));
+                    AudioSystem.DEVICE_OUT_WIRED_HEADPHONE, AudioSystem.DEVICE_OUT_USB_HEADSET,
+                    AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES));
     // mMusicActiveMs is the cumulative time of music activity since safe volume was disabled.
     // When this time reaches UNSAFE_VOLUME_MUSIC_ACTIVE_MS_MAX, the safe media volume is re-enabled
     // automatically. mMusicActiveMs is rounded to a multiple of MUSIC_ACTIVE_POLL_PERIOD_MS.
