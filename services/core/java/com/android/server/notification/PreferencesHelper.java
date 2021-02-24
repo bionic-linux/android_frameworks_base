@@ -873,11 +873,10 @@ public class PreferencesHelper implements RankingConfig {
                     if (bypassDnd != existing.canBypassDnd()) {
                         existing.setBypassDnd(bypassDnd);
                         needsPolicyFileChange = true;
-
-                        if (bypassDnd != mAreChannelsBypassingDnd
-                                || previousExistingImportance != existing.getImportance()) {
-                            updateChannelsBypassingDnd(mContext.getUserId());
-                        }
+                    }
+                    if (bypassDnd != mAreChannelsBypassingDnd
+                            || previousExistingImportance != existing.getImportance()) {
+                        updateChannelsBypassingDnd(mContext.getUserId());
                     }
                 }
 
@@ -1618,7 +1617,7 @@ public class PreferencesHelper implements RankingConfig {
                 final PackagePreferences r = mPackagePreferences.valueAt(i);
                 // Package isn't associated with this userId or notifications from this package are
                 // blocked
-                if (userId != UserHandle.getUserId(r.uid) || r.importance == IMPORTANCE_NONE) {
+                if (/*userId != UserHandle.getUserId(r.uid) ||*/ r.importance == IMPORTANCE_NONE) {
                     continue;
                 }
 
