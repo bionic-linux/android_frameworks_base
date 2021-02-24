@@ -514,11 +514,11 @@ class StorageManagerService extends IStorageManager.Stub
     private @Nullable VolumeInfo findStorageForUuid(String volumeUuid) {
         final StorageManager storage = mContext.getSystemService(StorageManager.class);
         if (Objects.equals(StorageManager.UUID_PRIVATE_INTERNAL, volumeUuid)) {
-            return storage.findVolumeById(VolumeInfo.ID_EMULATED_INTERNAL + ";" + 0);
+            return storage.findVolumeById(VolumeInfo.ID_EMULATED_INTERNAL + ";" + mCurrentUserId);
         } else if (Objects.equals(StorageManager.UUID_PRIMARY_PHYSICAL, volumeUuid)) {
             return storage.getPrimaryPhysicalVolume();
         } else {
-            return storage.findEmulatedForPrivate(storage.findVolumeByUuid(volumeUuid));
+            return storage.findEmulatedForPrivate(storage.findVolumeByUuid(volumeUuid), mCurrentUserId);
         }
     }
 
