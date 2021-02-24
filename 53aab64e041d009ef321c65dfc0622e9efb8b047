@@ -205,6 +205,30 @@
       },
       "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40c44dbd_eb910782",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-24T12:43:13Z",
+      "side": 1,
+      "message": "Per discuss: It is a bug",
+      "parentUuid": "eec556d6_ef540ce7",
+      "range": {
+        "startLine": 56,
+        "startChar": 28,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
