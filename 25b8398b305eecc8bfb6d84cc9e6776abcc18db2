@@ -16,6 +16,29 @@
       "message": "This is just to share with you the blocking point... \nIf I do not comment the uid check, I need to run the cts with \"--user 0\" in Automotive environment",
       "revId": "25b8398b305eecc8bfb6d84cc9e6776abcc18db2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e74a9a29_e70264a4",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-02-24T16:32:01Z",
+      "side": 1,
+      "message": "this is to fix the second time I run the CTS test concerned",
+      "range": {
+        "startLine": 877,
+        "startChar": 19,
+        "endLine": 880,
+        "endChar": 21
+      },
+      "revId": "25b8398b305eecc8bfb6d84cc9e6776abcc18db2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
