@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "188be249_19cdb66d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-02-24T16:30:36Z",
+      "side": 1,
+      "message": "This is just to share with you the blocking point... \nIf I do not comment the uid check, I need to run the cts with \"--user 0\" in Automotive environment",
+      "revId": "25b8398b305eecc8bfb6d84cc9e6776abcc18db2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
