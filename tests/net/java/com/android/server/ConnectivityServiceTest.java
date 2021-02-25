@@ -35,6 +35,8 @@ import static android.net.ConnectivityManager.NETID_UNSET;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OPPORTUNISTIC;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+import static android.net.ConnectivityManager.PROFILE_NETWORK_PREFERENCE_ENTERPRISE;
+import static android.net.ConnectivityManager.PROFILE_NETWORK_PREFERENCE_SYSTEM_DEFAULT;
 import static android.net.ConnectivityManager.TYPE_ETHERNET;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
@@ -42,8 +44,6 @@ import static android.net.ConnectivityManager.TYPE_MOBILE_MMS;
 import static android.net.ConnectivityManager.TYPE_MOBILE_SUPL;
 import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.TYPE_WIFI;
-import static android.net.ConnectivityManager.USER_PREFERENCE_ENTERPRISE;
-import static android.net.ConnectivityManager.USER_PREFERENCE_SYSTEM_DEFAULT;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_DNS;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_FALLBACK;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_HTTP;
@@ -185,7 +185,7 @@ import android.net.INetd;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
-import android.net.IOnCompleteListener;
+import android.net.IOnSetOemNetworkPreferenceListener;
 import android.net.IQosCallback;
 import android.net.InetAddresses;
 import android.net.InterfaceConfigurationParcel;
@@ -10034,7 +10034,7 @@ public class ConnectivityServiceTest {
         oemPrefListener.expectOnComplete();
     }
 
-    private static class TestOemListenerCallback implements IOnCompleteListener {
+    private static class TestOemListenerCallback implements IOnSetOemNetworkPreferenceListener {
         final CompletableFuture<Object> mDone = new CompletableFuture<>();
 
         @Override
@@ -11042,7 +11042,7 @@ public class ConnectivityServiceTest {
                 INetd.PERMISSION_NONE);
 
         final TestOnCompleteListener listener = new TestOnCompleteListener();
-        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+        mCm.setProfileNetworkPreference(testHandle, PROFILE_NETWORK_PREFERENCE_ENTERPRISE,
                 r -> r.run(), listener);
         listener.expectOnComplete();
 
@@ -11181,7 +11181,7 @@ public class ConnectivityServiceTest {
         workAgent.connect(true);
 
         final TestOnCompleteListener listener = new TestOnCompleteListener();
-        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+        mCm.setProfileNetworkPreference(testHandle, PROFILE_NETWORK_PREFERENCE_ENTERPRISE,
                 r -> r.run(), listener);
         listener.expectOnComplete();
         inOrder.verify(mMockNetd).networkCreatePhysical(mCellNetworkAgent.getNetwork().netId,
@@ -11195,7 +11195,7 @@ public class ConnectivityServiceTest {
         mDefaultNetworkCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
         mProfileDefaultNetworkCallback.expectAvailableCallbacksValidated(workAgent);
 
-        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_SYSTEM_DEFAULT,
+        mCm.setProfileNetworkPreference(testHandle, PROFILE_NETWORK_PREFERENCE_SYSTEM_DEFAULT,
                 r -> r.run(), listener);
         listener.expectOnComplete();
 
@@ -11243,7 +11243,7 @@ public class ConnectivityServiceTest {
                 INetd.PERMISSION_SYSTEM);
 
         final TestOnCompleteListener listener = new TestOnCompleteListener();
-        mCm.setNetworkPreferenceForUser(testHandle2, USER_PREFERENCE_ENTERPRISE,
+        mCm.setProfileNetworkPreference(testHandle2, PROFILE_NETWORK_PREFERENCE_ENTERPRISE,
                 r -> r.run(), listener);
         listener.expectOnComplete();
         inOrder.verify(mMockNetd).networkAddUidRanges(workAgent.getNetwork().netId,
@@ -11253,7 +11253,7 @@ public class ConnectivityServiceTest {
         assertNoCallbacks(mSystemDefaultNetworkCallback, mDefaultNetworkCallback,
                 app4Cb);
 
-        mCm.setNetworkPreferenceForUser(testHandle4, USER_PREFERENCE_ENTERPRISE,
+        mCm.setProfileNetworkPreference(testHandle4, PROFILE_NETWORK_PREFERENCE_ENTERPRISE,
                 r -> r.run(), listener);
         listener.expectOnComplete();
         inOrder.verify(mMockNetd).networkAddUidRanges(workAgent.getNetwork().netId,
@@ -11263,7 +11263,7 @@ public class ConnectivityServiceTest {
         assertNoCallbacks(mSystemDefaultNetworkCallback, mDefaultNetworkCallback,
                 mProfileDefaultNetworkCallback);
 
-        mCm.setNetworkPreferenceForUser(testHandle2, USER_PREFERENCE_SYSTEM_DEFAULT,
+        mCm.setProfileNetworkPreference(testHandle2, PROFILE_NETWORK_PREFERENCE_SYSTEM_DEFAULT,
                 r -> r.run(), listener);
         listener.expectOnComplete();
         inOrder.verify(mMockNetd).networkRemoveUidRanges(workAgent.getNetwork().netId,
@@ -11294,7 +11294,8 @@ public class ConnectivityServiceTest {
                 OEM_NETWORK_PREFERENCE_OEM_PAID_ONLY);
         assertThrows("Should not be able to set per-profile pref while OEM prefs present",
                 IllegalStateException.class, () ->
-                        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+                        mCm.setProfileNetworkPreference(testHandle,
+                                PROFILE_NETWORK_PREFERENCE_ENTERPRISE,
                                 r -> r.run(), listener));
 
         // Empty the OEM prefs
@@ -11303,7 +11304,7 @@ public class ConnectivityServiceTest {
         mService.setOemNetworkPreference(emptyOemPref, oemPrefListener);
         oemPrefListener.expectOnComplete();
 
-        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+        mCm.setProfileNetworkPreference(testHandle, PROFILE_NETWORK_PREFERENCE_ENTERPRISE,
                 r -> r.run(), listener);
         listener.expectOnComplete();
         assertThrows("Should not be able to set OEM prefs while per-profile pref is on",
@@ -11320,8 +11321,8 @@ public class ConnectivityServiceTest {
         mServiceContext.setWorkProfile(testHandle, true);
         assertThrows("Should not be able to set an illegal preference",
                 IllegalArgumentException.class,
-                () -> mCm.setNetworkPreferenceForUser(testHandle,
-                        USER_PREFERENCE_ENTERPRISE + 1, null, null));
+                () -> mCm.setProfileNetworkPreference(testHandle,
+                        PROFILE_NETWORK_PREFERENCE_ENTERPRISE + 1, null, null));
     }
 
     /**
@@ -11334,7 +11335,7 @@ public class ConnectivityServiceTest {
         mServiceContext.setWorkProfile(testHandle, false);
         assertThrows("Should not be able to set a user pref for a non-work profile",
                 IllegalArgumentException.class , () ->
-                        mCm.setNetworkPreferenceForUser(testHandle,
-                                USER_PREFERENCE_ENTERPRISE, null, null));
+                        mCm.setProfileNetworkPreference(testHandle,
+                                PROFILE_NETWORK_PREFERENCE_ENTERPRISE, null, null));
     }
 }
