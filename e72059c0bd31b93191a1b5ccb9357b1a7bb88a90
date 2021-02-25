@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7adbded3_58c15334",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-02-25T04:20:27Z",
+      "side": 1,
+      "message": "nit: Should this check be updated given that there are gaps now and not all values between 0 and MOUNT_EXTERNAL_COUNT are valid?",
+      "range": {
+        "startLine": 802,
+        "startChar": 2,
+        "endLine": 802,
+        "endChar": 60
+      },
+      "revId": "e72059c0bd31b93191a1b5ccb9357b1a7bb88a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
