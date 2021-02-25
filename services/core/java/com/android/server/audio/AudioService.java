@@ -393,6 +393,27 @@ public class AudioService extends IAudioService.Stub
         AudioSystem.STREAM_MUSIC,       // STREAM_ACCESSIBILITY
         AudioSystem.STREAM_MUSIC        // STREAM_ASSISTANT
     };
+    /**
+     * For Automotive e.g., we may either use fixed volume or volume group definition.
+     * Some streams alias together in a phone/tablet configs may be hosted by different group
+     * in automotive OEM configuration.
+     * So, do not alias any stream on one another.
+     * @TODO: volume group definition hosting alias definition.
+     */
+    private final int[] STREAM_VOLUME_ALIAS_NONE = new int[] {
+        AudioSystem.STREAM_VOICE_CALL,      // STREAM_VOICE_CALL
+        AudioSystem.STREAM_SYSTEM,          // STREAM_SYSTEM
+        AudioSystem.STREAM_RING,            // STREAM_RING
+        AudioSystem.STREAM_MUSIC,           // STREAM_MUSIC
+        AudioSystem.STREAM_ALARM,           // STREAM_ALARM
+        AudioSystem.STREAM_NOTIFICATION,    // STREAM_NOTIFICATION
+        AudioSystem.STREAM_BLUETOOTH_SCO,   // STREAM_BLUETOOTH_SCO
+        AudioSystem.STREAM_SYSTEM_ENFORCED, // STREAM_SYSTEM_ENFORCED
+        AudioSystem.STREAM_DTMF,            // STREAM_DTMF
+        AudioSystem.STREAM_TTS,             // STREAM_TTS
+        AudioSystem.STREAM_ACCESSIBILITY,   // STREAM_ACCESSIBILITY
+        AudioSystem.STREAM_ASSISTANT        // STREAM_ASSISTANT
+    };
     private final int[] STREAM_VOLUME_ALIAS_DEFAULT = new int[] {
         AudioSystem.STREAM_VOICE_CALL,      // STREAM_VOICE_CALL
         AudioSystem.STREAM_RING,            // STREAM_SYSTEM
@@ -436,6 +457,7 @@ public class AudioService extends IAudioService.Stub
                     AudioSystem.DEVICE_OUT_LINE));
 
     private final boolean mUseFixedVolume;
+    private final boolean mUseVolumeGroupAliases;
 
     // If absolute volume is supported in AVRCP device
     private volatile boolean mAvrcpAbsVolSupported = false;
@@ -934,6 +956,8 @@ public class AudioService extends IAudioService.Stub
 
         mUseFixedVolume = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_useFixedVolume);
+        mUseVolumeGroupAliases = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_handleVolumeAliasesUsingVolumeGroups)
 
         mDeviceBroker = new AudioDeviceBroker(mContext, this);
 
@@ -1594,6 +1618,9 @@ public class AudioService extends IAudioService.Stub
         if (mIsSingleVolume) {
             mStreamVolumeAlias = STREAM_VOLUME_ALIAS_TELEVISION;
             dtmfStreamAlias = AudioSystem.STREAM_MUSIC;
+        } else if (mUseVolumeGroupAliases) {
+            mStreamVolumeAlias = STREAM_VOLUME_ALIAS_NONE;
+            dtmfStreamAlias = AudioSystem.STREAM_DTMF;
         } else {
             switch (mPlatformType) {
                 case AudioSystem.PLATFORM_VOICE:
