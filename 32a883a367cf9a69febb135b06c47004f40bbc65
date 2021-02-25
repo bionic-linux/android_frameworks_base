@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66d377c9_66e9df36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1463284
+      },
+      "writtenOn": "2021-02-25T15:19:26Z",
+      "side": 1,
+      "message": "Please remove reference to automotive platform to make it clear this is an issue more related to the volume group setup that\u0027s being used in this situation. Presumably other form factors using similar volume group setups could hit this issue?",
+      "revId": "32a883a367cf9a69febb135b06c47004f40bbc65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aea0c62_5467da44",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1463284
+      },
+      "writtenOn": "2021-02-25T15:19:26Z",
+      "side": 1,
+      "message": "I think this comment will be confusing because for AAOS and CarService we are exclusively using fixed volumes. So it would be better to make it clear that this is specifically necessary if using volume group definitions, presumably regardless of the form factor.",
+      "revId": "32a883a367cf9a69febb135b06c47004f40bbc65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e9a26d36_0565e606",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 3
@@ -20,6 +54,23 @@
         "endLine": 3567,
         "endChar": 3
       },
+      "revId": "32a883a367cf9a69febb135b06c47004f40bbc65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7c711e1_78ca5749",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3573,
+      "author": {
+        "id": 1463284
+      },
+      "writtenOn": "2021-02-25T15:19:26Z",
+      "side": 1,
+      "message": "Please file a bug attached to the TODO for what needs to be done and include it\u0027s number in the comment.",
       "revId": "32a883a367cf9a69febb135b06c47004f40bbc65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
