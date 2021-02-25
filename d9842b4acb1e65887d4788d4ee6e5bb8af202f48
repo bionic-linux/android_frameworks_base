@@ -135,6 +135,92 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d2034a7_6d001660",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7612,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T10:59:01Z",
+      "side": 1,
+      "message": "Question: I don\u0027t really trust my eyes on reviewing this logic.\nDo we have test that tests phase 1 \u0026 3?\ne.g. Make an array of reqs in NRI, adjust scores and assert the callbackas.",
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7feeb95b_e1778677",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7627,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T10:59:01Z",
+      "side": 1,
+      "message": "nit: Now I know could and might has different meaning. \nBut it takes me a while to understand.\nSince they can be both used to express possibility, e.g.\nThis (could|might) be my train.\n\nThus. this (could|might) confuse non-native english speakers.\nI think maybe name it more straightforward would be clearer.\nE.g. oldNeeded/newNeeded, oldBeat/newBeat\n\nNo strong opinion.",
+      "range": {
+        "startLine": 7627,
+        "startChar": 26,
+        "endLine": 7627,
+        "endChar": 35
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "816001b5_fc1a95ab",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7629,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T10:59:01Z",
+      "side": 1,
+      "message": "IIUC the only thing we needed in outer class is mNetworkRanker and ensureRunningOnConnectivityServiceThread().\nIs it feasible to pass mNetworkRanker by argument and delete the calling of ensureRunningOnConnectivityServiceThread?\nIf so we might be able to make this static and @VisibleByTest and explicitly test this function only. Which allows us to test more complex scenarios without the need of mocking agents/factories/providers/callbacks.\nConsider we only have 3 callers, this might be a good ideal.\n\nNo strong opinion.",
+      "range": {
+        "startLine": 7629,
+        "startChar": 23,
+        "endLine": 7629,
+        "endChar": 37
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f4f08d6_453370e7",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T10:59:01Z",
+      "side": 1,
+      "message": "I think this might need test, but not necessary in this CL:\n  1. onOfferNeeded(req） -\u003e assertTrue(neededFor(req))\n  2. null cap -\u003e assertTrue(canSatisfy(any req))",
+      "range": {
+        "startLine": 114,
+        "startChar": 15,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "36980bb3_ce9da1fd",
         "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
         "patchSetId": 11
@@ -220,6 +306,52 @@
         "startChar": 12,
         "endLine": 4190,
         "endChar": 23
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0da0b6c4_b914bef6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4211,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T10:59:01Z",
+      "side": 1,
+      "message": "Question: If the test factory might beat it, IIUC we\u0027ll get onOfferNeeded?\nThus to say expectNoRequest here is confusing.\nMaybe expectNoRequestChanges()?\nAnd testFactory.assertRequestCountEquals(1);",
+      "range": {
+        "startLine": 4211,
+        "startChar": 12,
+        "endLine": 4211,
+        "endChar": 42
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d22e9dff_794b9ad3",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4261,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T10:59:01Z",
+      "side": 1,
+      "message": "Question: Why move terminate outside finally?\nIIRC this is for aosp/1531798.\nIs that no going to happen again?",
+      "range": {
+        "startLine": 4261,
+        "startChar": 8,
+        "endLine": 4261,
+        "endChar": 32
       },
       "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
