@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "984b81b9_47bbfd80",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-25T11:08:23Z",
+      "side": 1,
+      "message": "This is more expensive than it needs to be, because you convert twice between ints and ranges. Can you just do something like this directly?\n\n    mUids \u003d (nc.mUids \u003d\u003d null) ? null : new ArraySet\u003c\u003e(nc.mUids);",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 87
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78941d20_0326fdd1",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-25T11:08:23Z",
+      "side": 1,
+      "message": "I expect this might end up becoming system API, in which case we probably want to have this take a Set\u003cRange\u003cInteger\u003e\u003e instead of a Set\u003cUidRange\u003e.",
+      "range": {
+        "startLine": 231,
+        "startChar": 35,
+        "endLine": 231,
+        "endChar": 43
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30c490c2_fc72ee3e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6731,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-25T11:08:23Z",
+      "side": 1,
+      "message": "If you do this, then the method will lose information when you call it: the code will no longer be able to distinguish between \"null nc\", \"non-null NC with null UID ranges\" and \"non-null NC with non-null but empty UID ranges\". These are not the same and we should not confuse them.\n\nCan nc even ever be null? If not, just make the parameter @NonNull and remove this null check.\n\nIf nc.mUids can actually be null, then it was probably a mistake for me to this method\u0027s return value be @NonNull, since that would also lose information. If nc.mUids can be null, then I think this method will have to be marked @Nullable.",
+      "range": {
+        "startLine": 6731,
+        "startChar": 8,
+        "endLine": 6731,
+        "endChar": 48
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cce00f5_320b39ea",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6735,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-25T11:08:23Z",
+      "side": 1,
+      "message": "Why do this extra copy? convertFromIntRanges already returns a new object, doesn\u0027t it?",
+      "range": {
+        "startLine": 6734,
+        "startChar": 0,
+        "endLine": 6735,
+        "endChar": 60
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4939d6c_4f548e8b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 9106,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-25T11:08:23Z",
+      "side": 1,
+      "message": "This is not the same as the previous code. Why change it? Also elsewhere.",
+      "range": {
+        "startLine": 9106,
+        "startChar": 27,
+        "endLine": 9106,
+        "endChar": 64
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f600eae8_d836ce45",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-25T11:08:23Z",
+      "side": 1,
+      "message": "This will fit on the previous line and make the CL easier to review. Also everywhere else.",
+      "range": {
+        "startLine": 414,
+        "startChar": 24,
+        "endLine": 414,
+        "endChar": 82
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
