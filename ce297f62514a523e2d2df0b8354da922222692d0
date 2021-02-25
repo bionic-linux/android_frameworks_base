@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1076f164_e8466b2e",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-25T00:21:59Z",
+      "side": 1,
+      "message": "is there a definitive way to check for safe mode other than \"not one of these other modes\"? If possible, I\u0027d rather that be a positive check followed by an else with a WTF in it.",
+      "range": {
+        "startLine": 793,
+        "startChar": 18,
+        "endLine": 793,
+        "endChar": 22
+      },
+      "revId": "ce297f62514a523e2d2df0b8354da922222692d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e89cb9ac_62c682cf",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-25T00:21:59Z",
+      "side": 1,
+      "message": "why do we get 2 instances of safe-mode callback? if it\u0027s not in safe-mode on register, then I\u0027d expect 2 different values, and if it is in safe mode, I don\u0027t know why it\u0027s being hit twice... (normally the same callback shouldn\u0027t get the same value back-to-back).",
+      "range": {
+        "startLine": 806,
+        "startChar": 47,
+        "endLine": 806,
+        "endChar": 72
+      },
+      "revId": "ce297f62514a523e2d2df0b8354da922222692d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
