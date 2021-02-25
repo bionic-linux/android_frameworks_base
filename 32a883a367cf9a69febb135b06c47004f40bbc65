@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a26d36_0565e606",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3567,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-02-25T15:11:48Z",
+      "side": 1,
+      "message": "@JM: some test cases of AudioManager assumes Ring stream is a UI sound and assume volume change is allowed while Dnd for this kind of stream.\n\nShall we enforce these CTS calling AM#getUiSoundsStreamType() also?",
+      "range": {
+        "startLine": 3567,
+        "startChar": 0,
+        "endLine": 3567,
+        "endChar": 3
+      },
+      "revId": "32a883a367cf9a69febb135b06c47004f40bbc65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
