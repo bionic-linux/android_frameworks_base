@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "883a21dd_dce49de7",
+        "filename": "tests/net/common/java/android/net/UidRangeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-25T10:43:58Z",
+      "side": 1,
+      "message": "Thanks for finding this!\nBut I think only testCreateForUser() cannot pass on R, testGetStartAndEndUser() uses getStartUser() and getEndUser() which are added before R.\n\nUpdated.",
+      "parentUuid": "90fcf874_7193b8e0",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 9
+      },
+      "revId": "acf80fd84da4a8e07972bcbcc6a16490e3db7960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad2bda91_17cce824",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-25T08:07:15Z",
       "side": 1,
       "message": "Can you try with just users 0 and 1 (consecutive users) ? SYSTEM\u003d0 and MIN_SECONDARY_USER_ID\u003d10, so there is a bunch of UIDs in between",
+      "range": {
+        "startLine": 96,
+        "startChar": 70,
+        "endLine": 96,
+        "endChar": 76
+      },
+      "revId": "acf80fd84da4a8e07972bcbcc6a16490e3db7960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcc1a840_0bd7a2fa",
+        "filename": "tests/net/common/java/android/net/UidRangeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-25T10:43:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2bda91_17cce824",
       "range": {
         "startLine": 96,
         "startChar": 70,

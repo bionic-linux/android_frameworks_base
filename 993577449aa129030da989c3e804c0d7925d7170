@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb6a915_476f683a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-02-25T10:43:58Z",
+      "side": 1,
+      "message": "Also run tests on Q and R device.\n\narm64-v8a CtsNetTestCasesLatestSdk\n----------------------------------\nandroid.net.cts (5 Tests)\n[1/5] android.net.UidRangeTest#testGetStartAndEndUser: PASSED (2ms)\n[2/5] android.net.UidRangeTest#testCreateForUser: ASSUMPTION_FAILED (4ms)\n[3/5] android.net.UidRangeTest#testStopLessThanStartDisallowed: PASSED (0ms)\n[4/5] android.net.UidRangeTest#testSingleItemUidRangeAllowed: PASSED (1ms)\n[5/5] android.net.UidRangeTest#testNegativeUidsDisallowed: PASSED (0ms)\n\nSummary\n-------\narm64-v8a CtsNetTestCasesLatestSdk: Passed: 4, Failed: 0, Ignored: 0, Assumption Failed: 1,    \n\nAll tests passed!",
+      "revId": "993577449aa129030da989c3e804c0d7925d7170",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
