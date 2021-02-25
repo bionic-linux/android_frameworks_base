@@ -33,6 +33,23 @@
       "message": "Thank you for your submission.\n\nHowever, I don\u0027t it\u0027s appropriate to circumvent the privileged permission checks for apps installed on /data. The purpose of the check is to make grants/denials for these very powerful permissions explicit.\n\nBy the way; the use of shared user is _highly discouraged_. Even more so when it comes to privileged applications.",
       "revId": "9a57200e6a8740510be0f98c18cd9df8cbb6e137",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa2c2e27_7a6818c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1022895
+      },
+      "writtenOn": "2021-02-25T22:49:48Z",
+      "side": 1,
+      "message": "Shareduiding from an untrusted app into a privileged comment is not something we actively support, you should not be doing it.\n\nThe failure is correct, any app with accesses to these privileged permissions must be declared, preloaded or no.",
+      "revId": "9a57200e6a8740510be0f98c18cd9df8cbb6e137",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
