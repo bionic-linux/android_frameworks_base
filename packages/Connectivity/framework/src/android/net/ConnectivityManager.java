@@ -59,6 +59,7 @@ import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.os.ServiceManager;
 import android.os.ServiceSpecificException;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -959,6 +960,33 @@ public class ConnectivityManager {
             default:
                 return false;
         }
+    }
+
+    /**
+     * Preference for {@link #setNetworkPreferenceForUser(UserHandle, int, Executor, Runnable)}.
+     * Specify that the traffic for this user should by default go on the system default network.
+     * @hide
+     */
+    // TODO : @SystemApi
+    public static final int USER_PREFERENCE_SYSTEM_DEFAULT = 0;
+
+    /**
+     * Preference for {@link #setNetworkPreferenceForUser(UserHandle, int, Executor, Runnable)}.
+     * Specify that the traffic for this user should by default go on a network with
+     * {@link NetworkCapabilities#NET_CAPABILITY_ENTERPRISE}, and on the system default network
+     * if no such network is available.
+     * @hide
+     */
+    // TODO : @SystemApi
+    public static final int USER_PREFERENCE_ENTERPRISE = 1;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(value = {
+            USER_PREFERENCE_SYSTEM_DEFAULT,
+            USER_PREFERENCE_ENTERPRISE
+    })
+    public @interface UserPreference {
     }
 
     /**
@@ -4990,6 +5018,8 @@ public class ConnectivityManager {
      * OnSetOemNetworkPreferenceListener)}.
      * @hide
      */
+    // TODO : remove this in favor of a vanilla runnable to follow API guidance to use
+    // functional interfaces when they are appropriate.
     @SystemApi
     public interface OnSetOemNetworkPreferenceListener {
         /**
@@ -5037,6 +5067,47 @@ public class ConnectivityManager {
             mService.setOemNetworkPreference(preference, listenerInternal);
         } catch (RemoteException e) {
             Log.e(TAG, "setOemNetworkPreference() failed for preference: " + preference.toString());
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Request that a user profile is put by default on a network following a given preference.
+     *
+     * See the documentation for the individual preferences for a description of the supported
+     * behaviors.
+     *
+     * @param profile the profile concerned.
+     * @param preference the preference for this user, as one of the USER_PREFERENCE_* constants.
+     * @param executor an executor to execute the listener on. Optional if listener is null.
+     * @param listener an optional listener to listen for completion of the operation.
+     * @throws IllegalArgumentException if {@code profile} is not a valid user profile.
+     * @throws SecurityException if missing the appropriate permissions.
+     * @hide
+     */
+    // TODO : @SystemApi
+    @RequiresPermission(android.Manifest.permission.NETWORK_STACK)
+    public void setNetworkPreferenceForUser(@NonNull final UserHandle profile,
+            @UserPreference final int preference,
+            @Nullable @CallbackExecutor final Executor executor,
+            @Nullable final Runnable listener) {
+        if (null != listener) {
+            Objects.requireNonNull(executor, "Pass a non-null executor, or a null listener");
+        }
+        final IOnCompleteListener proxy;
+        if (null == listener) {
+            proxy = null;
+        } else {
+            proxy = new IOnCompleteListener.Stub() {
+                @Override
+                public void onComplete() {
+                    executor.execute(listener::run);
+                }
+            };
+        }
+        try {
+            mService.setNetworkPreferenceForUser(profile, preference, proxy);
+        } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
     }

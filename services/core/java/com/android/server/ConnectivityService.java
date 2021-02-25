@@ -96,6 +96,7 @@ import android.net.INetworkActivityListener;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
+import android.net.IOnCompleteListener;
 import android.net.IOnSetOemNetworkPreferenceListener;
 import android.net.IQosCallback;
 import android.net.ISocketKeepaliveCallback;
@@ -9079,6 +9080,24 @@ public class ConnectivityService extends IConnectivityManager.Stub
             throw new UnsupportedOperationException(
                     "setOemNetworkPreference() is only available on automotive devices.");
         }
+    }
+
+    /**
+     * Request that a user profile is put by default on a network offering a given capability.
+     *
+     * If such a network is not available, the apps in the profile will use the default network
+     * instead, if available.
+     *
+     * @param profile the profile concerned.
+     * @param preference the preference for this user, as one of the
+     *                   android.net.ConnectivityManager.USER_PREFERENCE_* constants.
+     * @param listener an optional listener to listen for completion of the operation.
+     */
+    @Override
+    public void setNetworkPreferenceForUser(@NonNull final UserHandle profile,
+            @ConnectivityManager.UserPreference final int preference,
+            @Nullable final IOnCompleteListener listener) {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /**
