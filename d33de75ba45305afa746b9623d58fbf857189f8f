@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "131f282f_b357fad1",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-02-25T06:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "986423f2_8d580339",
+      "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dce1853f_48ae8769",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-02-24T19:06:11Z",
       "side": 1,
       "message": "The naming and documentation for this was a bit confusing at first. I had to read the one pager linked on the bug to understand what it meant. I think we should try to rename the constant to something indicating it\u0027s the threshold (e.g. METADATA_UNTETHERED_LEFT_LOW_BATTERY_THRESHOLD). I know it\u0027s a mouthful, but it clears up its intent.",
+      "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1aef42ef_c74496af",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-02-25T06:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce1853f_48ae8769",
       "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -52,6 +88,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f831d1a9_25d44ad2",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-02-25T06:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f1ddeb7_8553271a",
+      "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9afb4c12_98d87af5",
@@ -65,6 +119,24 @@
       "writtenOn": "2021-02-24T19:06:11Z",
       "side": 1,
       "message": "nit: we might want to drop \"METADATA\" in these constant names as it could get confused with the int constants defined above. So we could make this \"DEVICE_TYPE_DEFAULT\" and do the same with the two constants below.",
+      "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3441e61_210ffd24",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1306903
+      },
+      "writtenOn": "2021-02-25T06:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9afb4c12_98d87af5",
       "revId": "d33de75ba45305afa746b9623d58fbf857189f8f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
