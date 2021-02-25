@@ -119,6 +119,22 @@ prebuilt_etc {
 }
 
 prebuilt_etc {
+    name: "privapp_whitelist_com.android.packageinstaller",
+    system_ext_specific: true,
+    sub_dir: "permissions",
+    src: "com.android.packageinstaller.xml",
+    filename_from_src: true,
+}
+
+prebuilt_etc {
+    name: "privapp_whitelist_com.android.managedprovisioning",
+    system_ext_specific: true,
+    sub_dir: "permissions",
+    src: "com.android.managedprovisioning.xml",
+    filename_from_src: true,
+}
+
+prebuilt_etc {
     name: "privapp_whitelist_com.android.provision",
     system_ext_specific: true,
     sub_dir: "permissions",

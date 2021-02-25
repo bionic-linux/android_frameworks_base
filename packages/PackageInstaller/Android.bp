@@ -39,7 +39,10 @@ android_app {
     certificate: "platform",
     privileged: true,
     platform_apis: true,
+    system_ext_specific: true,
     rename_resources_package: false,
+
+    required: ["privapp_whitelist_com.android.packageinstaller"],
 
     static_libs: [
         "xz-java",

@@ -75,27 +75,6 @@ applications that come with the platform
         <permission name="android.permission.UPDATE_DEVICE_STATS"/>
     </privapp-permissions>
 
-    <privapp-permissions package="com.android.managedprovisioning">
-        <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
-        <permission name="android.permission.CHANGE_CONFIGURATION"/>
-        <permission name="android.permission.CONFIGURE_INTERACT_ACROSS_PROFILES"/>
-        <permission name="android.permission.CRYPT_KEEPER"/>
-        <permission name="android.permission.DELETE_PACKAGES"/>
-        <permission name="android.permission.INSTALL_PACKAGES"/>
-        <permission name="android.permission.INTERACT_ACROSS_USERS"/>
-        <permission name="android.permission.MANAGE_DEVICE_ADMINS"/>
-        <permission name="android.permission.MANAGE_USERS"/>
-        <permission name="android.permission.MASTER_CLEAR"/>
-        <permission name="android.permission.NETWORK_MANAGED_PROVISIONING"/>
-        <permission name="android.permission.PERFORM_CDMA_PROVISIONING"/>
-        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
-        <permission name="android.permission.SET_TIME"/>
-        <permission name="android.permission.SET_TIME_ZONE"/>
-        <permission name="android.permission.SHUTDOWN"/>
-        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
-        <permission name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"/>
-    </privapp-permissions>
-
     <privapp-permissions package="com.android.mms.service">
         <permission name="android.permission.BIND_CARRIER_MESSAGING_SERVICE"/>
         <permission name="android.permission.BIND_CARRIER_SERVICES"/>
@@ -119,16 +98,6 @@ applications that come with the platform
         <permission name="android.permission.SCORE_NETWORKS"/>
         <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
-    </privapp-permissions>
-
-    <privapp-permissions package="com.android.packageinstaller">
-        <permission name="android.permission.DELETE_PACKAGES"/>
-        <permission name="android.permission.INSTALL_PACKAGES"/>
-        <permission name="android.permission.USE_RESERVED_DISK"/>
-        <permission name="android.permission.MANAGE_USERS"/>
-        <permission name="android.permission.UPDATE_APP_OPS_STATS"/>
-        <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
-        <permission name="android.permission.PACKAGE_USAGE_STATS"/>
     </privapp-permissions>
 
     <privapp-permissions package="com.android.permissioncontroller">
