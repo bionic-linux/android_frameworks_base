@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae2f7bc7_f34b40f0",
+        "filename": "services/core/java/com/android/server/compat/CompatConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-02-25T11:06:04Z",
+      "side": 1,
+      "message": "could set the size of the from mChanges.size();\n\n  List\u003cCompatChange\u003e changes;\n  synchronized(mChanges) {\n    changes \u003d new ArrayList\u003c\u003e(mChanges.size());\n    ...",
+      "range": {
+        "startLine": 601,
+        "startChar": 53,
+        "endLine": 601,
+        "endChar": 54
+      },
+      "revId": "ec1d2c7c341b6c897a3894e228cb63d1869d5b8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
