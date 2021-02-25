@@ -33,6 +33,24 @@
       "message": "Hi Luo,\n\nwhat about CTS testcase BluetoothHostTest#testCodecMethodsAccessible?\nrevert will cause it fail",
       "revId": "5af3822905c96f713e4a5255b8d0437c42fb44e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0abd6b4_951c1ebe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1206463
+      },
+      "writtenOn": "2021-02-25T01:32:07Z",
+      "side": 1,
+      "message": "Hi Kou,\n\nThis case can pass on our side. And this CL is a backport instead of a fix, could you help check anything is missing on your side?",
+      "parentUuid": "f1524f7b_11185aeb",
+      "revId": "5af3822905c96f713e4a5255b8d0437c42fb44e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
