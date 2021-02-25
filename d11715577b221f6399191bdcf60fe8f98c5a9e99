@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1b6686a_54219d90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-02-25T08:36:48Z",
+      "side": 1,
+      "message": "We can abandon https://partner-android-review.googlesource.com/c/platform/cts/+/1855867 if this CL is accepted.\nBefore introducing the volume alias concept in volume group definition, we need at least to prevent aliasing and keep volume control per stream.",
+      "revId": "d11715577b221f6399191bdcf60fe8f98c5a9e99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
