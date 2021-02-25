@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab65fdfb_e34b054f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-25T19:39:26Z",
+      "side": 1,
+      "message": "Requesting Owners +2 for addition of a signature permission for protection of binding for a new service API.",
+      "revId": "c0a38e1d2a52bd261a9241e59a67ad8c9fb8563f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
