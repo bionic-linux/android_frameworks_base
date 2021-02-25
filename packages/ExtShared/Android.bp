@@ -39,4 +39,5 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard.proguard"],
     },
+    system_ext_specific: true,
 }
