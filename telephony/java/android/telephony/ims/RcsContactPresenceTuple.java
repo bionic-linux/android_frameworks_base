@@ -23,9 +23,12 @@ import android.annotation.SystemApi;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -366,6 +369,18 @@ public final class RcsContactPresenceTuple implements Parcelable {
          * string per RFC3339.
          */
         public @NonNull Builder setTimestamp(@NonNull String timestamp) {
+            LocalDateTime dateTime = LocalDateTime.parse(timestamp,
+                    DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            mPresenceTuple.mTimestamp = dateTime;
+            return this;
+        }
+
+        /**
+         * The optional timestamp indicating the data and time of the status change of this tuple.
+         * Per RFC3863 section 4.1.7, the timestamp is formatted as an IMPP datetime format
+         * string per RFC3339.
+         */
+        public @NonNull Builder setDateTime(@NonNull LocalDateTime timestamp) {
             mPresenceTuple.mTimestamp = timestamp;
             return this;
         }
@@ -397,7 +412,7 @@ public final class RcsContactPresenceTuple implements Parcelable {
     }
 
     private Uri mContactUri;
-    private String mTimestamp;
+    private LocalDateTime mTimestamp;
     private @BasicStatus String mStatus;
 
     // The service information in the service-description element.
@@ -416,7 +431,7 @@ public final class RcsContactPresenceTuple implements Parcelable {
 
     private RcsContactPresenceTuple(Parcel in) {
         mContactUri = in.readParcelable(Uri.class.getClassLoader());
-        mTimestamp = in.readString();
+        mTimestamp = convertTime(in.readString());
         mStatus = in.readString();
         mServiceId = in.readString();
         mServiceVersion = in.readString();
@@ -427,7 +442,7 @@ public final class RcsContactPresenceTuple implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel out, int flags) {
         out.writeParcelable(mContactUri, flags);
-        out.writeString(mTimestamp);
+        out.writeString(convertTime(mTimestamp));
         out.writeString(mStatus);
         out.writeString(mServiceId);
         out.writeString(mServiceVersion);
@@ -453,6 +468,21 @@ public final class RcsContactPresenceTuple implements Parcelable {
                 }
             };
 
+
+    private String convertTime(LocalDateTime dateTime) {
+        if (dateTime == null) {
+            return "";
+        }
+        return dateTime.toString();
+    }
+
+    private LocalDateTime convertTime(String dateTime) {
+        if (!TextUtils.isEmpty(dateTime)) {
+            return LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        }
+        return null;
+    }
+
     /** @return the status of the tuple element. */
     public @NonNull @BasicStatus String getStatus() {
         return mStatus;
@@ -475,6 +505,11 @@ public final class RcsContactPresenceTuple implements Parcelable {
 
     /** @return the timestamp element contained in the tuple if it exists */
     public @Nullable String getTimestamp() {
+        return (mTimestamp == null) ? null : mTimestamp.toString();
+    }
+
+    /** @return the timestamp element contained in the tuple if it exists */
+    public @Nullable LocalDateTime getDateTime() {
         return mTimestamp;
     }
 
