@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87880cc9_9e9e1488",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "Still not finished after l.4200 of CSTest.java\nBut here are some comments.\nLGTM with questions.",
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f647e1fa_6bfc0192",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3647,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "Question： don\u0027t really understand this.\nDoes it mean the request pass the rematch stage but was not satisfied by anything?",
+      "range": {
+        "startLine": 3647,
+        "startChar": 25,
+        "endLine": 3647,
+        "endChar": 46
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e2538a9_3c0f7853",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5695,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "Question: Why we don\u0027t need to send requests here?\nIIUC this is becaue it will be done when registerNetworkOffer?",
+      "range": {
+        "startLine": 5695,
+        "startChar": 4,
+        "endLine": 5695,
+        "endChar": 5
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c057088e_9d6e8bee",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6128,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "Do we need to issueNewNetworkNeeds here?\nFor example a good provider stop offer good networks.\nDo we need to send onOfferNeeded to the second best one?",
+      "range": {
+        "startLine": 6128,
+        "startChar": 4,
+        "endLine": 6128,
+        "endChar": 5
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93607261_61ffc5c6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7559,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "IIUC this is not only for new network?\nThis function iterate through mNetworkOffers and requests, right?\nIf so maybe we need a different name?\ne.g. dispatchRequest or something else?",
+      "range": {
+        "startLine": 7559,
+        "startChar": 17,
+        "endLine": 7559,
+        "endChar": 37
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59423ffa_ca14816b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7591,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "IIUC this does not updating any field in the offer.\nThus I think the naming is not clear.\nBut it dispatch the events accordingly.\nMaybe name it something different?\ne.g. maybeDispatchRequestsForOffer",
+      "range": {
+        "startLine": 7591,
+        "startChar": 17,
+        "endLine": 7591,
+        "endChar": 28
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36980bb3_ce9da1fd",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "Question: what about a network that cannot be validated forever?\nDoes it always get getLegacyIntAsValidated?",
+      "range": {
+        "startLine": 79,
+        "startChar": 57,
+        "endLine": 79,
+        "endChar": 80
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a076bcbc_3f12bc3d",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "Question: the equals here implies the challenger might beat the champion with the same score, right?\nIf so, is it possible that A beats B, then B beats A and cause a loop?",
+      "range": {
+        "startLine": 85,
+        "startChar": 45,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11a7f401_fb5bb1e0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2780,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "Question: \n1. who is calling this? Did not find a caller of this function, maybe I missed something.\n2. Does the nc means nc of a network?\n  If so, a. maybe name it networkNc?\n         b. IIUC it should be defaultCaps.satisfiedByNetworkCapabilities(nc)?",
+      "range": {
+        "startLine": 2780,
+        "startChar": 20,
+        "endLine": 2780,
+        "endChar": 43
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1025a025_d31770de",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4190,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "+ testFactory.assertRequestCountEquals(0); ?",
+      "range": {
+        "startLine": 4190,
+        "startChar": 12,
+        "endLine": 4190,
+        "endChar": 23
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

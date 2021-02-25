@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdf9f72d_12f7b69f",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "need Objects.requireNonNull?\nIt is unlikely to me since since we have another check in CM.",
+      "range": {
+        "startLine": 277,
+        "startChar": 48,
+        "endLine": 277,
+        "endChar": 56
+      },
+      "revId": "fed0ff607d08c40d17e2ef5929894e61add1c819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72bd1922_41c824d6",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-02-25T08:01:09Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 59,
+        "startChar": 11,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "fed0ff607d08c40d17e2ef5929894e61add1c819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
