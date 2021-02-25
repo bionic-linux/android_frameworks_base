@@ -393,6 +393,27 @@ public class AudioService extends IAudioService.Stub
         AudioSystem.STREAM_MUSIC,       // STREAM_ACCESSIBILITY
         AudioSystem.STREAM_MUSIC        // STREAM_ASSISTANT
     };
+    /**
+     * For Automotive e.g., we may either use fixed volume or volume group definition.
+     * Some streams alias together in a phone/tablet configs may be hosted by different group
+     * in automotive OEM configuration.
+     * So, do not alias any stream on one another.
+     * @TODO: volume group definition hosting alias definition.
+     */
+    private final int[] STREAM_VOLUME_ALIAS_NONE = new int[] {
+        AudioSystem.STREAM_VOICE_CALL,      // STREAM_VOICE_CALL
+        AudioSystem.STREAM_SYSTEM,          // STREAM_SYSTEM
+        AudioSystem.STREAM_RING,            // STREAM_RING
+        AudioSystem.STREAM_MUSIC,           // STREAM_MUSIC
+        AudioSystem.STREAM_ALARM,           // STREAM_ALARM
+        AudioSystem.STREAM_NOTIFICATION,    // STREAM_NOTIFICATION
+        AudioSystem.STREAM_BLUETOOTH_SCO,   // STREAM_BLUETOOTH_SCO
+        AudioSystem.STREAM_SYSTEM_ENFORCED, // STREAM_SYSTEM_ENFORCED
+        AudioSystem.STREAM_DTMF,            // STREAM_DTMF
+        AudioSystem.STREAM_TTS,             // STREAM_TTS
+        AudioSystem.STREAM_ACCESSIBILITY,   // STREAM_ACCESSIBILITY
+        AudioSystem.STREAM_ASSISTANT        // STREAM_ASSISTANT
+    };
     private final int[] STREAM_VOLUME_ALIAS_DEFAULT = new int[] {
         AudioSystem.STREAM_VOICE_CALL,      // STREAM_VOICE_CALL
         AudioSystem.STREAM_RING,            // STREAM_SYSTEM
@@ -436,6 +457,7 @@ public class AudioService extends IAudioService.Stub
                     AudioSystem.DEVICE_OUT_LINE));
 
     private final boolean mUseFixedVolume;
+    private final boolean mUseVolumeGroupAliases;
 
     // If absolute volume is supported in AVRCP device
     private volatile boolean mAvrcpAbsVolSupported = false;
@@ -934,6 +956,8 @@ public class AudioService extends IAudioService.Stub
 
         mUseFixedVolume = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_useFixedVolume);
+        mUseVolumeGroupAliases = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_handleVolumeAliasesUsingVolumeGroups);
 
         mDeviceBroker = new AudioDeviceBroker(mContext, this);
 
@@ -1594,6 +1618,9 @@ public class AudioService extends IAudioService.Stub
         if (mIsSingleVolume) {
             mStreamVolumeAlias = STREAM_VOLUME_ALIAS_TELEVISION;
             dtmfStreamAlias = AudioSystem.STREAM_MUSIC;
+        } else if (mUseVolumeGroupAliases) {
+            mStreamVolumeAlias = STREAM_VOLUME_ALIAS_NONE;
+            dtmfStreamAlias = AudioSystem.STREAM_DTMF;
         } else {
             switch (mPlatformType) {
                 case AudioSystem.PLATFORM_VOICE:
@@ -2430,7 +2457,7 @@ public class AudioService extends IAudioService.Stub
         // If either the client forces allowing ringer modes for this adjustment,
         // or the stream type is one that is affected by ringer modes
         if (((flags & AudioManager.FLAG_ALLOW_RINGER_MODES) != 0) ||
-                (streamTypeAlias == getUiSoundsStreamType())) {
+                (isUiSoundsStreamType(streamTypeAlias))) {
             int ringerMode = getRingerModeInternal();
             // do not vibrate if already in vibrate mode
             if (ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
@@ -3114,7 +3141,7 @@ public class AudioService extends IAudioService.Stub
             case Settings.Global.ZEN_MODE_ALARMS:
             case Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS:
                 return !isStreamMutedByRingerOrZenMode(streamTypeAlias)
-                        || streamTypeAlias == getUiSoundsStreamType()
+                        || isUiSoundsStreamType(streamTypeAlias)
                         || (flags & AudioManager.FLAG_ALLOW_RINGER_MODES) != 0;
         }
 
@@ -3533,9 +3560,24 @@ public class AudioService extends IAudioService.Stub
         return (mStreamStates[streamType].getIndex(device) + 5) / 10;
     }
 
-    /** @see AudioManager#getUiSoundsStreamType()  */
+    /** @see AudioManager#getUiSoundsStreamType()
+     * @TODO: when using VolumeGroup alias, we are lacking configurability for
+     *        UI Sounds identification. Fallback on Voice configuration for CTS.
+     */
     public int getUiSoundsStreamType() {
-        return mStreamVolumeAlias[AudioSystem.STREAM_SYSTEM];
+        return mUseVolumeGroupAliases ? STREAM_VOLUME_ALIAS_VOICE[AudioSystem.STREAM_SYSTEM]
+                : mStreamVolumeAlias[AudioSystem.STREAM_SYSTEM];
+    }
+
+    /**
+     * @TODO: when using VolumeGroup alias, we are lacking configurability for
+     *        UI Sounds identification. Fallback on Voice configuration for CTS.
+     */
+    private boolean isUiSoundsStreamType(int aliasStreamType) {
+        return mUseVolumeGroupAliases
+                ? STREAM_VOLUME_ALIAS_VOICE[aliasStreamType]
+                        == STREAM_VOLUME_ALIAS_VOICE[AudioSystem.STREAM_SYSTEM]
+                : aliasStreamType == mStreamVolumeAlias[AudioSystem.STREAM_SYSTEM];
     }
 
     /** @see AudioManager#setMicrophoneMute(boolean) */
