@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90fcf874_7193b8e0",
+        "filename": "tests/net/common/java/android/net/UidRangeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-25T08:07:15Z",
+      "side": 1,
+      "message": "Also add @DevSdkIgnoreRule to ignore until R: these two tests won\u0027t pass on R",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 9
+      },
+      "revId": "acf80fd84da4a8e07972bcbcc6a16490e3db7960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad2bda91_17cce824",
+        "filename": "tests/net/common/java/android/net/UidRangeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-25T08:07:15Z",
+      "side": 1,
+      "message": "Can you try with just users 0 and 1 (consecutive users) ? SYSTEM\u003d0 and MIN_SECONDARY_USER_ID\u003d10, so there is a bunch of UIDs in between",
+      "range": {
+        "startLine": 96,
+        "startChar": 70,
+        "endLine": 96,
+        "endChar": 76
+      },
+      "revId": "acf80fd84da4a8e07972bcbcc6a16490e3db7960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
