@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c563429_a37a4ff7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-25T22:53:17Z",
+      "side": 1,
+      "message": "This looks like a nice cleanup.",
+      "revId": "7802c18f68a96b1d1465cea944871c4e4e120f8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdabf680_fac87c38",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-02-25T22:53:17Z",
+      "side": 1,
+      "message": "nit \"will\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "7802c18f68a96b1d1465cea944871c4e4e120f8a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
