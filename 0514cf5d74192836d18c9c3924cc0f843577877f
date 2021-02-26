@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46c340bc_0f9c1300",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:55Z",
+      "side": 1,
+      "message": "Only nits",
+      "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ab0a314_e0912091",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:55Z",
+      "side": 1,
+      "message": "Catching Exception is not generally good practice ; PS4 used to only catch RemoteException. Is there a particular reason you wanted to hide all other unexpected exceptions ?",
+      "range": {
+        "startLine": 91,
+        "startChar": 17,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04e394c9_561b9d8a",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:55Z",
+      "side": 1,
+      "message": "Supernit : given the catch{} block above doesn\u0027t return and falls back to l.95 (and l.117 follows that pattern), I think this one should do the same.",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "152b8cf0_1f05ecc1",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:55Z",
+      "side": 1,
+      "message": "Unfortunately the framework teams forbids usage of the stream API in framework code 😞",
+      "range": {
+        "startLine": 132,
+        "startChar": 30,
+        "endLine": 132,
+        "endChar": 36
+      },
+      "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
