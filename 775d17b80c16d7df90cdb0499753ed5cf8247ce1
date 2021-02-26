@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbf2aaff_68e18b70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-26T08:42:01Z",
+      "side": 1,
+      "message": "LGTM but see questions about the API.",
+      "revId": "775d17b80c16d7df90cdb0499753ed5cf8247ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03666887_32d07ebe",
+        "filename": "core/api/current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 25032,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-26T08:42:01Z",
+      "side": 1,
+      "message": "I\u0027m not sure we should make this nonnull and final. I think there is also a use case to identify an Ethernet network by MAC address instead of by interface name. For example, in the auto use case, ethernet configuration is done by either interface name or MAC address.\n\nSo the specifier might have a MacAddress object as well in the future. If changing from nonnull to nullable is a breaking change, then we may not be able to make that change.\n\nOne option would be to add the MAC address now in this CL (but perhaps not populate it). That said, there are probably concerns on access to the MAC address by unprivileged apps, so perhaps there are questions that would need to be answered before we can add such a field.\n\nMaybe we can say that an empty interface name field will match everything? Or maybe we can throw IllegalArgumentException if the user passes an empty string, and then later on if we add the MAC address, we can have a constructor that sets both string and MAC address, and allows passing in an empty string?",
+      "range": {
+        "startLine": 25032,
+        "startChar": 10,
+        "endLine": 25032,
+        "endChar": 18
+      },
+      "revId": "775d17b80c16d7df90cdb0499753ed5cf8247ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "502a8834_e213027e",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-26T08:42:01Z",
+      "side": 1,
+      "message": "eth42",
+      "range": {
+        "startLine": 214,
+        "startChar": 67,
+        "endLine": 214,
+        "endChar": 72
+      },
+      "revId": "775d17b80c16d7df90cdb0499753ed5cf8247ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34e5a892_0719d50b",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-26T08:42:01Z",
+      "side": 1,
+      "message": "eth0",
+      "range": {
+        "startLine": 674,
+        "startChar": 66,
+        "endLine": 674,
+        "endChar": 71
+      },
+      "revId": "775d17b80c16d7df90cdb0499753ed5cf8247ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6c35618_2593d041",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-26T08:42:01Z",
+      "side": 1,
+      "message": "testtap3",
+      "range": {
+        "startLine": 683,
+        "startChar": 46,
+        "endLine": 683,
+        "endChar": 51
+      },
+      "revId": "775d17b80c16d7df90cdb0499753ed5cf8247ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a059575_87ae8e08",
+        "filename": "tests/net/java/com/android/server/connectivity/MultipathPolicyTrackerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-02-26T08:42:01Z",
+      "side": 1,
+      "message": "eth234",
+      "range": {
+        "startLine": 243,
+        "startChar": 67,
+        "endLine": 243,
+        "endChar": 70
+      },
+      "revId": "775d17b80c16d7df90cdb0499753ed5cf8247ce1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
