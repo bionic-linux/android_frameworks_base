@@ -137,6 +137,37 @@ public class VcnTest {
     }
 
     @Test
+    public void testConfigUpdateRestartsGatewayConnections() {
+        final NetworkRequestListener requestListener = verifyAndGetRequestListener();
+        startVcnGatewayWithCapabilities(requestListener, TEST_CAPS[0]);
+
+        final Set<VcnGatewayConnection> gatewayConnections = mVcn.getVcnGatewayConnections();
+        assertFalse(gatewayConnections.isEmpty());
+        verify(mDeps)
+                .newVcnGatewayConnection(
+                        eq(mVcnContext),
+                        eq(TEST_SUB_GROUP),
+                        eq(mSubscriptionSnapshot),
+                        any(),
+                        mGatewayStatusCallbackCaptor.capture());
+
+        mVcn.updateConfig(mConfig);
+        mTestLooper.dispatchAll();
+
+        // Verify GatewayConnections are restarted
+        for (final VcnGatewayConnection gateway : gatewayConnections) {
+            verify(gateway).teardownAsynchronously();
+        }
+        verify(mDeps, times(2))
+                .newVcnGatewayConnection(
+                        eq(mVcnContext),
+                        eq(TEST_SUB_GROUP),
+                        eq(mSubscriptionSnapshot),
+                        any(),
+                        mGatewayStatusCallbackCaptor.capture());
+    }
+
+    @Test
     public void testSubscriptionSnapshotUpdatesVcnGatewayConnections() {
         final NetworkRequestListener requestListener = verifyAndGetRequestListener();
         startVcnGatewayWithCapabilities(requestListener, TEST_CAPS[0]);
