@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9087bc4_7b2d2d32",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-26T17:05:38Z",
+      "side": 1,
+      "message": "This is for bug to bug compatibility. I decided to just return booleans or in this case something or null, because this is what the calling code can deal with.",
+      "parentUuid": "9ab0a314_e0912091",
+      "range": {
+        "startLine": 91,
+        "startChar": 17,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04e394c9_561b9d8a",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-26T09:15:55Z",
       "side": 1,
       "message": "Supernit : given the catch{} block above doesn\u0027t return and falls back to l.95 (and l.117 follows that pattern), I think this one should do the same.",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 24
+      },
+      "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9eebcd3_6b171a16",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-26T17:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04e394c9_561b9d8a",
       "range": {
         "startLine": 93,
         "startChar": 12,
@@ -101,6 +149,30 @@
       "side": 1,
       "message": "Some usages have leaked in over time, but you\u0027re right that we\u0027ve tried our best to avoid any new usages of the streams APIs; they can look deceivingly simple on the surface but end up being quite expensive under the hood.\n\nThat being said, how often is this method going to be called?  Is it in a warm code-path, or is it called only once/hour, etc?",
       "parentUuid": "152b8cf0_1f05ecc1",
+      "range": {
+        "startLine": 132,
+        "startChar": 30,
+        "endLine": 132,
+        "endChar": 36
+      },
+      "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42fc3884_a7233a30",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-26T17:05:38Z",
+      "side": 1,
+      "message": "I think it is mostly called by the UI for listing the existing entries to the user. And I noticed that the UI is actually polling this function around every second or so to keep up to date.\n\nDone",
+      "parentUuid": "1cc60fec_5cd2cd4e",
       "range": {
         "startLine": 132,
         "startChar": 30,
