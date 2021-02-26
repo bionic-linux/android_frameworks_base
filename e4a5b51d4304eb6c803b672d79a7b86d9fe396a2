@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2df35c77_947cdf01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-02-26T21:24:06Z",
+      "side": 1,
+      "message": "Hi Radhika, let me know if you think this will capture the video downgrade issues we discussed.  Dialer appears only to care that there was a media failure of some kind which caused the downgrade.  I was thinking the modem would then just trigger a session event to indicate there was a media failure and then report the downgrade to audio using the normal path (ImsStreamMediaProfile).",
+      "revId": "e4a5b51d4304eb6c803b672d79a7b86d9fe396a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
