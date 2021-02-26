@@ -22,6 +22,29 @@
       },
       "revId": "cd0b0e74b8b3a854f78e2b107e6eef16696f9f1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93dbbbb8_ff880b17",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-26T19:06:31Z",
+      "side": 1,
+      "message": "Is this necessary to verify? It seems like this verifies that the VcnNetworkPolicyListener is fired, but that\u0027s tested in testVcnCallbackOnEnteredSafeMode()",
+      "range": {
+        "startLine": 792,
+        "startChar": 8,
+        "endLine": 792,
+        "endChar": 25
+      },
+      "revId": "cd0b0e74b8b3a854f78e2b107e6eef16696f9f1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
