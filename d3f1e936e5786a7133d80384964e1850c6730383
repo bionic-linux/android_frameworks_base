@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "208004bf_89ea83c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:26Z",
+      "side": 1,
+      "message": "Only nits I guess, most operative comment is about the generic Exception catch",
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7130c972_68b127a0",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:26Z",
+      "side": 1,
+      "message": "It\u0027s imported, does this need to be fully qualified ?",
+      "range": {
+        "startLine": 447,
+        "startChar": 18,
+        "endLine": 447,
+        "endChar": 40
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5bdac88_3c3bbc41",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:26Z",
+      "side": 1,
+      "message": "Do we want to have a constant for this, given that it\u0027s common to both this file and Vpn.java and presumably at least needs to match ?",
+      "range": {
+        "startLine": 448,
+        "startChar": 56,
+        "endLine": 448,
+        "endChar": 71
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2d4b973_f2ae7375",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2040,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:26Z",
+      "side": 1,
+      "message": "go/avoidwe",
+      "range": {
+        "startLine": 2040,
+        "startChar": 43,
+        "endLine": 2040,
+        "endChar": 45
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2d0e304_276fc498",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2055,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:26Z",
+      "side": 1,
+      "message": "It may be nice to have a small comment here to explain that this is the UID that the native daemons are running as, since this is whom we\u0027re trying to grant acces to here.",
+      "range": {
+        "startLine": 2055,
+        "startChar": 58,
+        "endLine": 2055,
+        "endChar": 65
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c03f63d_8fd3275d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:26Z",
+      "side": 1,
+      "message": "nit : double space",
+      "range": {
+        "startLine": 2100,
+        "startChar": 40,
+        "endLine": 2100,
+        "endChar": 42
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca2a1e5d_4c4e19c8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2114,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:26Z",
+      "side": 1,
+      "message": "Can we be a little bit more specific than this ? Catching Exception like this makes this difficult to refactor later because the next maintainer has no idea what to watch for.",
+      "range": {
+        "startLine": 2114,
+        "startChar": 17,
+        "endLine": 2114,
+        "endChar": 26
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d6a7636_006c3f9b",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-02-26T09:15:26Z",
+      "side": 1,
+      "message": "nit : will fit on one line",
+      "range": {
+        "startLine": 2116,
+        "startChar": 20,
+        "endLine": 2116,
+        "endChar": 23
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
