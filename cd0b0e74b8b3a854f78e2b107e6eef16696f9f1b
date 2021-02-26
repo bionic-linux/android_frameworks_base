@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e507e4e_e629fdb1",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-26T18:51:00Z",
+      "side": 1,
+      "message": "Are these also triggered on config changes + VCN start/stop? Perhaps in a different CL that i\u0027m not seeing?",
+      "range": {
+        "startLine": 788,
+        "startChar": 0,
+        "endLine": 792,
+        "endChar": 66
+      },
+      "revId": "cd0b0e74b8b3a854f78e2b107e6eef16696f9f1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
