@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "df39dd7e_9d65ff6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-26T03:20:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f2a398_dc5f51f2",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a07d5f90_17292a54",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -541,6 +565,30 @@
       "side": 1,
       "message": "Keystore.put() turns all errors into false, which the VPN config dialog ignores. get() turns all errors into null.\n\nThe error message is a copy paste error. I recycled this from the backend busy exception from keystore 2 which has a limited number of operation slots. This is not something that can occur in this context. The only time an exception like this is thrown is in case of an unexpected error such as IPC/Binder or file system errors.\n\nRight now the behavior is identical to the old interface only that actual error conditions are thrown as runtime exceptions. I can silence them and mimic the old behavior.\n\nLet me know what you prefer.",
       "parentUuid": "2ef85c2c_8c0a4977",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "f251a80c12d0d2ec4808618c3988ec664f0480a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a101d7ab_0b1e4985",
+        "filename": "keystore/java/android/security/LegacyVpnStoreException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-02-26T03:20:32Z",
+      "side": 1,
+      "message": "I have removed this exception now. This will behave more like the old interface. Logging on error and returning false or null on errors.",
+      "parentUuid": "ceb6500d_73d8bab5",
       "range": {
         "startLine": 29,
         "startChar": 11,
