@@ -871,16 +871,10 @@ public abstract class InCallService extends Service {
              * Callback originates from
              * {@link Connection.VideoProvider#handleCallSessionEvent(int)}.
              *
-             * @param event The event.  Valid values are:
-             *      {@link Connection.VideoProvider#SESSION_EVENT_RX_PAUSE},
-             *      {@link Connection.VideoProvider#SESSION_EVENT_RX_RESUME},
-             *      {@link Connection.VideoProvider#SESSION_EVENT_TX_START},
-             *      {@link Connection.VideoProvider#SESSION_EVENT_TX_STOP},
-             *      {@link Connection.VideoProvider#SESSION_EVENT_CAMERA_FAILURE},
-             *      {@link Connection.VideoProvider#SESSION_EVENT_CAMERA_READY},
-             *      {@link Connection.VideoProvider#SESSION_EVENT_CAMERA_PERMISSION_ERROR}.
+             * @param event The event.
              */
-            public abstract void onCallSessionEvent(int event);
+            public abstract void onCallSessionEvent(
+                    @Connection.VideoProvider.SessionEvent int event);
 
             /**
              * Handles a change to the video dimensions from the peer device. This could happen if,

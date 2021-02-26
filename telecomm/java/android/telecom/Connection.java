@@ -1341,6 +1341,38 @@ public abstract class Connection extends Conferenceable {
         public static final int SESSION_EVENT_CAMERA_PERMISSION_ERROR = 7;
 
         /**
+         * Session event raised by the {@link VideoProvider} when the video component of a call can
+         * no longer be sustained due to a media failure.  This can occur either if there is not
+         * enough bandwidth available to sustain the video connection or if packet loss has reached
+         * a level which is no longer suitable for video calling.
+         * <p>
+         * The {@link VideoProvider} should send this event using
+         * {@link #handleCallSessionEvent(int)} prior to changing the video state of the call which
+         * gets reported to the dialer app (via {@link Connection#setVideoState(int)}) to
+         * {@link VideoProfile#STATE_AUDIO_ONLY}.
+         * <p>
+         * The dialer app receives notification of this event via
+         * {@link android.telecom.InCallService.VideoCall.Callback#onCallSessionEvent(int)}.
+         */
+        public static final int SESSION_EVENT_MEDIA_FAILURE = 8;
+
+        /** @hide */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef(prefix = { "SESSION_EVENT_" },
+                value = {
+                SESSION_EVENT_RX_PAUSE,
+                SESSION_EVENT_RX_RESUME,
+                SESSION_EVENT_TX_START,
+                SESSION_EVENT_TX_STOP,
+                SESSION_EVENT_CAMERA_FAILURE,
+                SESSION_EVENT_CAMERA_READY,
+                SESSION_EVENT_CAMERA_PERMISSION_ERROR,
+                SESSION_EVENT_MEDIA_FAILURE
+        })
+        public @interface SessionEvent {}
+
+
+        /**
          * Session modify request was successful.
          * @see #receiveSessionModifyResponse(int, VideoProfile, VideoProfile)
          */
@@ -1821,15 +1853,9 @@ public abstract class Connection extends Conferenceable {
          * Received by the {@link InCallService} via
          * {@link InCallService.VideoCall.Callback#onCallSessionEvent(int)}.
          *
-         * @param event The event.  Valid values are: {@link VideoProvider#SESSION_EVENT_RX_PAUSE},
-         *      {@link VideoProvider#SESSION_EVENT_RX_RESUME},
-         *      {@link VideoProvider#SESSION_EVENT_TX_START},
-         *      {@link VideoProvider#SESSION_EVENT_TX_STOP},
-         *      {@link VideoProvider#SESSION_EVENT_CAMERA_FAILURE},
-         *      {@link VideoProvider#SESSION_EVENT_CAMERA_READY},
-         *      {@link VideoProvider#SESSION_EVENT_CAMERA_FAILURE}.
+         * @param event The event.
          */
-        public void handleCallSessionEvent(int event) {
+        public void handleCallSessionEvent(@SessionEvent int event) {
             if (mVideoCallbacks != null) {
                 for (IVideoCallback callback : mVideoCallbacks.values()) {
                     try {
