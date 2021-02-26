@@ -72,6 +72,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "72202975_fec2451e",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-02-26T08:44:02Z",
+      "side": 1,
+      "message": "Or you could have a \"Inet4Address linkAddress \u003d null\" variable declared just after creating the builder, use this in the loop, and when existing the loop just call staticIpConfigurationBuilder.setIpAddress(linkAddress) once.",
+      "parentUuid": "71869685_cba50ea8",
+      "range": {
+        "startLine": 296,
+        "startChar": 36,
+        "endLine": 296,
+        "endChar": 80
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "67f0a898_4bc0945d",
         "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
         "patchSetId": 1
