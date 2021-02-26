@@ -85,6 +85,30 @@
       },
       "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cc60fec_5cd2cd4e",
+        "filename": "keystore/java/android/security/LegacyVpnProfileStore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-02-26T16:35:52Z",
+      "side": 1,
+      "message": "Some usages have leaked in over time, but you\u0027re right that we\u0027ve tried our best to avoid any new usages of the streams APIs; they can look deceivingly simple on the surface but end up being quite expensive under the hood.\n\nThat being said, how often is this method going to be called?  Is it in a warm code-path, or is it called only once/hour, etc?",
+      "parentUuid": "152b8cf0_1f05ecc1",
+      "range": {
+        "startLine": 132,
+        "startChar": 30,
+        "endLine": 132,
+        "endChar": 36
+      },
+      "revId": "0514cf5d74192836d18c9c3924cc0f843577877f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
