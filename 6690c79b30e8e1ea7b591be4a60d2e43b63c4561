@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30af312f_a215927c",
+        "filename": "tests/vcn/java/android/net/vcn/persistablebundleutils/SaProposalUtilsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-02-27T01:25:40Z",
+      "side": 1,
+      "message": "Ditto, suggest adding multiple to make sure we serialize and deserialize multilpe",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 70
+      },
+      "revId": "6690c79b30e8e1ea7b591be4a60d2e43b63c4561",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
