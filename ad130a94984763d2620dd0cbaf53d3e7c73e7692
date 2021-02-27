@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5615d9cd_7b57e8f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-02-27T01:27:55Z",
+      "side": 1,
+      "message": "This commit handles IkeAuthConfig in a different way from the way we did in IPsec module.",
+      "revId": "ad130a94984763d2620dd0cbaf53d3e7c73e7692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
