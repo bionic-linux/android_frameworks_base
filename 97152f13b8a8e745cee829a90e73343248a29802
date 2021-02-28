@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2fcbe5a_d2e1b8f5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 14356,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-02-28T23:57:22Z",
+      "side": 1,
+      "message": "Guessing this was on accident",
+      "range": {
+        "startLine": 14356,
+        "startChar": 31,
+        "endLine": 14356,
+        "endChar": 65
+      },
+      "revId": "97152f13b8a8e745cee829a90e73343248a29802",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
