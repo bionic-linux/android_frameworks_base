@@ -14408,11 +14408,21 @@ public class TelephonyManager {
     public static final String CAPABILITY_ALLOWED_NETWORK_TYPES_USED =
             "CAPABILITY_ALLOWED_NETWORK_TYPES_USED";
 
+    /**
+     * Indicates whether {@link #sendThermalMitigationRequest} is supported. See comments on
+     * {@link #sendThermalMitigationRequest} for more information.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String CAPABILITY_THERMAL_MITIGATION =  "CAPABILITY_THERMAL_MITIGATION";
+
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef(prefix = "CAPABILITY_", value = {
             CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE,
             CAPABILITY_ALLOWED_NETWORK_TYPES_USED,
+            CAPABILITY_THERMAL_MITIGATION,
     })
     public @interface RadioInterfaceCapability {}
 
@@ -14490,6 +14500,14 @@ public class TelephonyManager {
     public static final int THERMAL_MITIGATION_RESULT_UNKNOWN_ERROR = 4;
 
     /**
+     * Indicates that the modem does not support any thermal mitigation actions.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int THERMAL_MITIGATION_RESULT_NOT_SUPPORTED = 5;
+
+    /**
      * Thermal mitigation request to control functionalities at modem. Thermal mitigation is done
      * per-subscription. Caller must be sure to bind the TelephonyManager instance to subId by
      * calling {@link #createForSubscriptionId(int)} if they want thermal mitigation on a specific
@@ -14522,6 +14540,10 @@ public class TelephonyManager {
      * and can be used at any time during data throttling to hold onto the current level of data
      * throttling.
      *
+     * <p> If {@link android.telephony.TelephonyManager#isRadioInterfaceCapabilitySupported}
+     * ({@link #CAPABILITY_THERMAL_MITIGATION}) returns false, then {@link
+     * #THERMAL_MITIGATION_RESULT_NOT_SUPPORTED will be returned.} </p>
+     *
      * @param thermalMitigationRequest Thermal mitigation request. See {@link
      * ThermalMitigationRequest} for details.
      *
@@ -14532,6 +14554,9 @@ public class TelephonyManager {
      */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
+    @RequiresFeature(
+            enforcement = "android.telephony.TelephonyManager#isRadioInterfaceCapabilitySupported",
+            value = TelephonyManager.CAPABILITY_THERMAL_MITIGATION)
     @ThermalMitigationResult
     public int sendThermalMitigationRequest(
             @NonNull ThermalMitigationRequest thermalMitigationRequest) {
