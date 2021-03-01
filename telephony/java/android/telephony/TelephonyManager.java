@@ -14408,11 +14408,22 @@ public class TelephonyManager {
     public static final String CAPABILITY_ALLOWED_NETWORK_TYPES_USED =
             "CAPABILITY_ALLOWED_NETWORK_TYPES_USED";
 
+    /**
+     * Indicates whether a data throttling request sent with {@link #sendThermalMitigationRequest}
+     * is supported. See comments on {@link #sendThermalMitigationRequest} for more information.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING =
+            "CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING";
+
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef(prefix = "CAPABILITY_", value = {
             CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE,
             CAPABILITY_ALLOWED_NETWORK_TYPES_USED,
+            CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING,
     })
     public @interface RadioInterfaceCapability {}
 
@@ -14490,6 +14501,14 @@ public class TelephonyManager {
     public static final int THERMAL_MITIGATION_RESULT_UNKNOWN_ERROR = 4;
 
     /**
+     * Indicates that the modem does not support the requested action.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final int THERMAL_MITIGATION_RESULT_NOT_SUPPORTED = 5;
+
+    /**
      * Thermal mitigation request to control functionalities at modem. Thermal mitigation is done
      * per-subscription. Caller must be sure to bind the TelephonyManager instance to subId by
      * calling {@link #createForSubscriptionId(int)} if they want thermal mitigation on a specific
@@ -14521,6 +14540,18 @@ public class TelephonyManager {
      * radio off. {@link DataThrottlingRequest#DATA_THROTTLING_ACTION_HOLD} is not part of the order
      * and can be used at any time during data throttling to hold onto the current level of data
      * throttling.
+     *
+     * <p> If {@link android.telephony.TelephonyManager#isRadioInterfaceCapabilitySupported}({@link
+     * #CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING}) returns false, then sending a {@link
+     * DataThrottlingRequest#DATA_THROTTLING_ACTION_HOLD}, {@link
+     * DataThrottlingRequest#DATA_THROTTLING_ACTION_THROTTLE_SECONDARY_CARRIER}, or {@link
+     * DataThrottlingRequest#DATA_THROTTLING_ACTION_THROTTLE_PRIMARY_CARRIER} will result in {@link
+     * #THERMAL_MITIGATION_RESULT_NOT_SUPPORTED} being returned. However, on devices that do not
+     * support data throttling, {@link
+     * DataThrottlingRequest#DATA_THROTTLING_ACTION_NO_DATA_THROTTLING} can still be requested in
+     * order to undo the mitigations above it (i.e {@link
+     * ThermalMitigationRequest#THERMAL_MITIGATION_ACTION_VOICE_ONLY} and/or {@link
+     * ThermalMitigationRequest#THERMAL_MITIGATION_ACTION_RADIO_OFF}).
      *
      * @param thermalMitigationRequest Thermal mitigation request. See {@link
      * ThermalMitigationRequest} for details.

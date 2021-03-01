@@ -659,6 +659,7 @@ public class Annotation {
         TelephonyManager.THERMAL_MITIGATION_RESULT_SUCCESS,
         TelephonyManager.THERMAL_MITIGATION_RESULT_MODEM_ERROR,
         TelephonyManager.THERMAL_MITIGATION_RESULT_INVALID_STATE,
-        TelephonyManager.THERMAL_MITIGATION_RESULT_UNKNOWN_ERROR})
+        TelephonyManager.THERMAL_MITIGATION_RESULT_UNKNOWN_ERROR,
+        TelephonyManager.THERMAL_MITIGATION_RESULT_NOT_SUPPORTED})
     public @interface ThermalMitigationResult {}
 }
