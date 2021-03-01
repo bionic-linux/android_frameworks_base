@@ -16,6 +16,8 @@
 
 package com.android.server;
 
+import static android.net.vcn.VcnManager.VCN_STATUS_CODE_ACTIVE;
+import static android.net.vcn.VcnManager.VCN_STATUS_CODE_INACTIVE;
 import static android.net.vcn.VcnManager.VCN_STATUS_CODE_SAFE_MODE;
 
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
@@ -37,6 +39,7 @@ import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
 import android.net.vcn.VcnConfig;
 import android.net.vcn.VcnManager;
 import android.net.vcn.VcnManager.VcnErrorCode;
+import android.net.vcn.VcnManager.VcnStatusCode;
 import android.net.vcn.VcnUnderlyingNetworkPolicy;
 import android.net.wifi.WifiInfo;
 import android.os.Binder;
@@ -445,12 +448,24 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         // Now that the VCN is removed, notify all registered listeners to refresh their
         // UnderlyingNetworkPolicy.
         notifyAllPolicyListenersLocked();
+        notifyAllPermissionedStatusCallbacksLocked(uuidToTeardown, VCN_STATUS_CODE_INACTIVE);
     }
 
     @GuardedBy("mLock")
     private void notifyAllPolicyListenersLocked() {
         for (final PolicyListenerBinderDeath policyListener : mRegisteredPolicyListeners.values()) {
             Binder.withCleanCallingIdentity(() -> policyListener.mListener.onPolicyChanged());
+        }
+    }
+
+    @GuardedBy("mLock")
+    private void notifyAllPermissionedStatusCallbacksLocked(
+            @NonNull ParcelUuid subGroup, @VcnStatusCode int statusCode) {
+        for (final VcnStatusCallbackInfo cbInfo : mRegisteredStatusCallbacks.values()) {
+            if (isCallbackPermissioned(cbInfo, subGroup)) {
+                Binder.withCleanCallingIdentity(
+                        () -> cbInfo.mCallback.onVcnStatusChanged(statusCode));
+            }
         }
     }
 
@@ -470,6 +485,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         // Now that a new VCN has started, notify all registered listeners to refresh their
         // UnderlyingNetworkPolicy.
         notifyAllPolicyListenersLocked();
+        notifyAllPermissionedStatusCallbacksLocked(subscriptionGroup, VCN_STATUS_CODE_ACTIVE);
     }
 
     @GuardedBy("mLock")
@@ -478,7 +494,15 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         Slog.v(TAG, "Starting or updating VCN config for subGrp: " + subscriptionGroup);
 
         if (mVcns.containsKey(subscriptionGroup)) {
-            mVcns.get(subscriptionGroup).updateConfig(config);
+            final Vcn vcn = mVcns.get(subscriptionGroup);
+            final boolean isActive = vcn.isActive();
+            vcn.updateConfig(config);
+
+            // Only notify VcnStatusCallbacks if this VCN was previously in Safe Mode
+            if (!isActive) {
+                notifyAllPermissionedStatusCallbacksLocked(
+                        subscriptionGroup, VCN_STATUS_CODE_ACTIVE);
+            }
         } else {
             startVcnLocked(subscriptionGroup, config);
         }
@@ -857,16 +881,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 }
 
                 notifyAllPolicyListenersLocked();
-
-                // Notify all registered StatusCallbacks for this subGroup
-                for (VcnStatusCallbackInfo cbInfo : mRegisteredStatusCallbacks.values()) {
-                    if (isCallbackPermissioned(cbInfo, mSubGroup)) {
-                        Binder.withCleanCallingIdentity(
-                                () ->
-                                        cbInfo.mCallback.onVcnStatusChanged(
-                                                VCN_STATUS_CODE_SAFE_MODE));
-                    }
-                }
+                notifyAllPermissionedStatusCallbacksLocked(mSubGroup, VCN_STATUS_CODE_SAFE_MODE);
             }
         }
 
