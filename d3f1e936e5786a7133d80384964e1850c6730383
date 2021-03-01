@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "347fdf52_5437598a",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-01T02:10:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9197b2d_b0b53c34",
+      "range": {
+        "startLine": 447,
+        "startChar": 18,
+        "endLine": 447,
+        "endChar": 40
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5bdac88_3c3bbc41",
@@ -102,6 +126,30 @@
       "side": 1,
       "message": "It needs to be exactly \"AndroidKeyStore\". Other strings would not work.\n\nDone",
       "parentUuid": "a5bdac88_3c3bbc41",
+      "range": {
+        "startLine": 448,
+        "startChar": 56,
+        "endLine": 448,
+        "endChar": 71
+      },
+      "revId": "d3f1e936e5786a7133d80384964e1850c6730383",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b1b979c_84ef344e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-01T02:10:57Z",
+      "side": 1,
+      "message": "That\u0027s fine, but it should still be a static final String somewhere shouldn\u0027t it ?",
+      "parentUuid": "e0cfd8ff_c6926575",
       "range": {
         "startLine": 448,
         "startChar": 56,
