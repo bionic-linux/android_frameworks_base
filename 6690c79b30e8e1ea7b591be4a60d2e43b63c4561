@@ -22,6 +22,30 @@
       },
       "revId": "6690c79b30e8e1ea7b591be4a60d2e43b63c4561",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63a546d6_4b2a8259",
+        "filename": "tests/vcn/java/android/net/vcn/persistablebundleutils/SaProposalUtilsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-03-01T19:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30af312f_a215927c",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 70
+      },
+      "revId": "6690c79b30e8e1ea7b591be4a60d2e43b63c4561",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
