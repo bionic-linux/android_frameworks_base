@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d0bf876_46d611d7",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-01T21:55:48Z",
+      "side": 1,
+      "message": "Added in aosp/1612061 but still needs testing (hadn\u0027t had time to spin the CL previously)",
+      "parentUuid": "8e507e4e_e629fdb1",
+      "range": {
+        "startLine": 788,
+        "startChar": 0,
+        "endLine": 792,
+        "endChar": 66
+      },
+      "revId": "cd0b0e74b8b3a854f78e2b107e6eef16696f9f1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93dbbbb8_ff880b17",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-26T19:06:31Z",
       "side": 1,
       "message": "Is this necessary to verify? It seems like this verifies that the VcnNetworkPolicyListener is fired, but that\u0027s tested in testVcnCallbackOnEnteredSafeMode()",
+      "range": {
+        "startLine": 792,
+        "startChar": 8,
+        "endLine": 792,
+        "endChar": 25
+      },
+      "revId": "cd0b0e74b8b3a854f78e2b107e6eef16696f9f1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fba45276_b5b6ab89",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-01T21:55:48Z",
+      "side": 1,
+      "message": "it\u0027s not necessary to verify the policy listener is fired, but all of the logic (except verifying the listener) is needed to simulate a VCN entering safemode for these tests.\n\nRenamed to \"triggerVcnSafeMode\" and moved verify(listener) to its respective test.",
+      "parentUuid": "93dbbbb8_ff880b17",
       "range": {
         "startLine": 792,
         "startChar": 8,
