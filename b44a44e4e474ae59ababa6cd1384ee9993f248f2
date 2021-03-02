@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b385d9be_0878a6bc",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-03-02T21:04:27Z",
+      "side": 1,
+      "message": "Can we just have one version getApnTypeString? I don\u0027t think we use unknown anywhere except the debug message.",
+      "range": {
+        "startLine": 1501,
+        "startChar": 0,
+        "endLine": 1509,
+        "endChar": 5
+      },
+      "revId": "b44a44e4e474ae59ababa6cd1384ee9993f248f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eea3575a_420a86e7",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-03-02T21:04:27Z",
+      "side": 1,
+      "message": "We typically just use getApnTypesBitmaskFromString in all places.",
+      "range": {
+        "startLine": 1520,
+        "startChar": 42,
+        "endLine": 1520,
+        "endChar": 55
+      },
+      "revId": "b44a44e4e474ae59ababa6cd1384ee9993f248f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
