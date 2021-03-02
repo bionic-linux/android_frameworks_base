@@ -39,6 +39,30 @@
       },
       "revId": "ed49f42a13db550fe88a778f74d71b43a11c3bdd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57eb7ba9_bb265e56",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T12:11:27Z",
+      "side": 1,
+      "message": "Yes, for more detail please refer to\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/java/com/android/server/SystemServer.java;l\u003d1629?q\u003dSystemServer\u0026ss\u003dandroid",
+      "parentUuid": "416339aa_b1eab460",
+      "range": {
+        "startLine": 1057,
+        "startChar": 8,
+        "endLine": 1057,
+        "endChar": 77
+      },
+      "revId": "ed49f42a13db550fe88a778f74d71b43a11c3bdd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
