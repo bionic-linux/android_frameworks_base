@@ -16,6 +16,29 @@
       "message": "I\u0027m adding a new replacement API for onUidRulesChanged() callback that will allow clients to know the reasoning for why an uid is blocked and will also allow us to simplify the logic internally in NPMS. This is WIP but wanted to get feedback on the API. Please take a look and let me know if you have any suggestions/concerns.",
       "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b09f15fd_09268b31",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-02T07:20:13Z",
+      "side": 1,
+      "message": "Actually I realized it\u0027s better to pass blocked status too (in addition to blockedReason). That way, we don\u0027t have to expose isUidBlocked() anymore. I\u0027ll update this.",
+      "range": {
+        "startLine": 817,
+        "startChar": 20,
+        "endLine": 817,
+        "endChar": 45
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
