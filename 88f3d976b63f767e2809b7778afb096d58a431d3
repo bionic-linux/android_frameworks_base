@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a061d4a6_68d62233",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-02T06:48:53Z",
+      "side": 1,
+      "message": "I\u0027m adding a new replacement API for onUidRulesChanged() callback that will allow clients to know the reasoning for why an uid is blocked and will also allow us to simplify the logic internally in NPMS. This is WIP but wanted to get feedback on the API. Please take a look and let me know if you have any suggestions/concerns.",
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
