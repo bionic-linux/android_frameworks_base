@@ -297,6 +297,16 @@ public final class TvInputManagerService extends SystemService {
                     updateServiceConnectionLocked(component, userId);
                 } else {
                     inputList.addAll(serviceState.hardwareInputMap.values());
+
+                    if (updatedPackages != null) {
+                        for (String updatedPackage : updatedPackages) {
+                            if (component.getPackageName().equals(updatedPackage)) {
+                                //Package was updated, we need to update the hardware list.
+                                updateServiceConnectionLocked(component, userId);
+                                break;
+                            }
+                        }
+                    }
                 }
             } else {
                 try {
@@ -591,14 +601,9 @@ public final class TvInputManagerService extends SystemService {
             shouldBind = !serviceState.sessionTokens.isEmpty();
         }
 
-        if (serviceState.service == null && shouldBind) {
+        if (!serviceState.bound && shouldBind) {
             // This means that the service is not yet connected but its state indicates that we
             // have pending requests. Then, connect the service.
-            if (serviceState.bound) {
-                // We have already bound to the service so we don't try to bind again until after we
-                // unbind later on.
-                return;
-            }
             if (DEBUG) {
                 Slog.d(TAG, "bindServiceAsUser(service=" + component + ", userId=" + userId + ")");
             }
@@ -608,8 +613,8 @@ public final class TvInputManagerService extends SystemService {
                     i, serviceState.connection,
                     Context.BIND_AUTO_CREATE | Context.BIND_FOREGROUND_SERVICE_WHILE_AWAKE,
                     new UserHandle(userId));
-        } else if (serviceState.service != null && !shouldBind) {
-            // This means that the service is already connected but its state indicates that we have
+        } else if (serviceState.bound && !shouldBind) {
+            // This means that the service is already bound but its state indicates that we have
             // nothing to do with it. Then, disconnect the service.
             if (DEBUG) {
                 Slog.d(TAG, "unbindService(service=" + component + ")");
@@ -674,6 +679,7 @@ public final class TvInputManagerService extends SystemService {
 
     private void sendSessionTokenToClientLocked(ITvInputClient client, String inputId,
             IBinder sessionToken, InputChannel channel, int seq) {
+
         try {
             client.onSessionCreated(inputId, sessionToken, channel, seq);
         } catch (RemoteException e) {
@@ -2497,11 +2503,30 @@ public final class TvInputManagerService extends SystemService {
                 ServiceState serviceState = userState.serviceStateMap.get(mComponent);
                 if (serviceState != null) {
                     serviceState.reconnecting = true;
-                    serviceState.bound = false;
                     serviceState.service = null;
                     serviceState.callback = null;
 
                     abortPendingCreateSessionRequestsLocked(serviceState, null, mUserId);
+                }
+            }
+        }
+
+        @Override
+        public void onBindingDied(ComponentName name) {
+            if (DEBUG) {
+                Slog.d(TAG, "onBindingDied(component=" + name + ", connection="
+                        + System.identityHashCode(this) + ")");
+            }
+            if (!mComponent.equals(name)) {
+                throw new IllegalArgumentException("Mismatched ComponentName: "
+                        + mComponent + " (expected), " + name + " (actual).");
+            }
+            synchronized (mLock) {
+                UserState userState = getOrCreateUserStateLocked(mUserId);
+                ServiceState serviceState = userState.serviceStateMap.get(mComponent);
+                if (serviceState != null) {
+                    serviceState.bound = false;
+                    mContext.unbindService(serviceState.connection);
                 }
             }
         }
