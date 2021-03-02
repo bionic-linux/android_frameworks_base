@@ -14878,7 +14878,8 @@ public class TelephonyManager {
     public static final int PREPARE_UNATTENDED_REBOOT_PIN_REQUIRED = 1;
 
     /**
-     * The unattended reboot was not prepared due to generic error.
+     * The unattended reboot was not prepared due to generic error. After this error, the client
+     * that manages the unattended reboot should not try to invoke the API again.
      * @hide
      */
     @SystemApi
