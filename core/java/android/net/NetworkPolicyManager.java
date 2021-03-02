@@ -23,6 +23,7 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
+import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.TestApi;
 import android.app.ActivityManager;
@@ -44,6 +45,8 @@ import android.util.DebugUtils;
 import android.util.Pair;
 import android.util.Range;
 
+import com.android.internal.util.function.pooled.PooledLambda;
+
 import com.google.android.collect.Sets;
 
 import java.lang.annotation.Retention;
@@ -53,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
 
 /**
  * Manager for creating and modifying network policy rules.
@@ -60,6 +64,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @hide
  */
 @TestApi
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 @SystemService(Context.NETWORK_POLICY_SERVICE)
 public class NetworkPolicyManager {
 
@@ -198,12 +203,66 @@ public class NetworkPolicyManager {
     })
     public @interface SubscriptionOverrideMask {}
 
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_REASON_NONE = 0;
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_REASON_BATTERY_SAVER = 1 << 0;
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_REASON_DOZE = 1 << 1;
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_REASON_APP_STANDBY = 1 << 2;
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_REASON_RESTRICTED_MODE = 1 << 3;
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_METERED_REASON_DATA_SAVER = 1 << 16;
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_METERED_REASON_USER_RESTRICTED = 1 << 17;
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static final int BLOCKED_METERED_REASON_ADMIN_DISABLED = 1 << 18;
+
+    /** @hide */
+    public static final int BLOCKED_METERED_REASON_MASK = 0xffff0000;
+
+    /** @hide */
+    public static final int ALLOWED_REASON_NONE = 0;
+    /** @hide */
+    public static final int ALLOWED_REASON_FOREGROUND = 1 << 0;
+    /** @hide */
+    public static final int ALLOWED_REASON_POWER_SAVE_ALLOWLIST = 1 << 1;
+    /** @hide */
+    public static final int ALLOWED_REASON_RESTRICTED_MODE_EXEMPTED = 1 << 2;
+    /** @hide */
+    public static final int ALLOWED_METERED_REASON_FOREGROUND = 1 << 16;
+    /** @hide */
+    public static final int ALLOWED_METERED_REASON_USER_EXEMPTED = 1 << 17;
+
+    /** @hide */
+    public static final int ALLOWED_METERED_REASON_MASK = 0xffff0000;
+
+    /**
+     * @hide
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(flag = true, prefix = {"BLOCKED_"}, value = {
+    })
+    public @interface BlockedReason {}
+
     private final Context mContext;
     @UnsupportedAppUsage
     private INetworkPolicyManager mService;
 
     private final Map<SubscriptionCallback, SubscriptionCallbackProxy>
-            mCallbackMap = new ConcurrentHashMap<>();
+            mSubscriptionCallbackMap = new ConcurrentHashMap<>();
+    private final Map<NetworkPolicyCallback, NetworkPolicyCallbackProxy>
+            mNetworkPolicyCallbackMap = new ConcurrentHashMap<>();
 
     /** @hide */
     public NetworkPolicyManager(Context context, INetworkPolicyManager service) {
@@ -318,7 +377,7 @@ public class NetworkPolicyManager {
         }
 
         final SubscriptionCallbackProxy callbackProxy = new SubscriptionCallbackProxy(callback);
-        if (null != mCallbackMap.putIfAbsent(callback, callbackProxy)) {
+        if (null != mSubscriptionCallbackMap.putIfAbsent(callback, callbackProxy)) {
             throw new IllegalArgumentException("Callback is already registered.");
         }
         registerListener(callbackProxy);
@@ -331,7 +390,7 @@ public class NetworkPolicyManager {
             throw new NullPointerException("Callback cannot be null.");
         }
 
-        final SubscriptionCallbackProxy callbackProxy = mCallbackMap.remove(callback);
+        final SubscriptionCallbackProxy callbackProxy = mSubscriptionCallbackMap.remove(callback);
         if (callbackProxy == null) return;
 
         unregisterListener(callbackProxy);
@@ -690,6 +749,114 @@ public class NetworkPolicyManager {
     }
 
     /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static boolean isUidBlocked(@BlockedReason int blockedReason, boolean meteredNetwork) {
+        if (blockedReason == BLOCKED_REASON_NONE) {
+            return false;
+        }
+        final int blockedOnAllNetworksReason = (blockedReason & ~BLOCKED_METERED_REASON_MASK);
+        if (blockedOnAllNetworksReason != BLOCKED_REASON_NONE) {
+            return true;
+        }
+        if (meteredNetwork) {
+            return isUidBlockedByMeteredRestrictions(blockedReason);
+        }
+        return false;
+    }
+
+    /** @hide */
+    public static boolean isUidBlockedByMeteredRestrictions(@BlockedReason int blockedReason) {
+        if (blockedReason == BLOCKED_REASON_NONE) {
+            return false;
+        }
+        final int blockedOnMeteredNetworkReason = (blockedReason & BLOCKED_METERED_REASON_MASK);
+        return (blockedOnMeteredNetworkReason != BLOCKED_REASON_NONE);
+    }
+
+    /** @hide */
+    public static String blockedReasonToString(@BlockedReason int blockedReason) {
+        return DebugUtils.flagsToString(NetworkPolicyManager.class, "BLOCKED_", blockedReason);
+    }
+
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
+    public void registerNetworkPolicyCallback(@Nullable Executor executor,
+            @NonNull NetworkPolicyCallback callback) {
+        if (callback == null) {
+            throw new NullPointerException("Callback cannot be null.");
+        }
+
+        final NetworkPolicyCallbackProxy callbackProxy = new NetworkPolicyCallbackProxy(
+                executor, callback);
+        if (null != mNetworkPolicyCallbackMap.putIfAbsent(callback, callbackProxy)) {
+            throw new IllegalArgumentException("Callback is already registered.");
+        }
+        registerListener(callbackProxy);
+    }
+
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @RequiresPermission(android.Manifest.permission.OBSERVE_NETWORK_POLICY)
+    public void unregisterNetworkPolicyCallback(@NonNull NetworkPolicyCallback callback) {
+        if (callback == null) {
+            throw new NullPointerException("Callback cannot be null.");
+        }
+
+        final NetworkPolicyCallbackProxy callbackProxy = mNetworkPolicyCallbackMap.remove(callback);
+        if (callbackProxy == null) return;
+
+        unregisterListener(callbackProxy);
+    }
+
+    /** @hide */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static class NetworkPolicyCallback {
+        /** @hide */
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public void onUidBlockedStatusChanged(int uid, @BlockedReason int blockedReason) {}
+
+        /** @hide */
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        public void onUidBlockedReasonChanged(int uid, @BlockedReason int blockedReason) {}
+    }
+
+    /** @hide */
+    public static class NetworkPolicyCallbackProxy extends Listener {
+        private final Executor mExecutor;
+        private final NetworkPolicyCallback mCallback;
+
+        NetworkPolicyCallbackProxy(@Nullable Executor executor,
+                @NonNull NetworkPolicyCallback callback) {
+            mExecutor = executor;
+            mCallback = callback;
+        }
+
+        @Override
+        public void onBlockedReasonChanged(int uid, @BlockedReason int oldBlockedReason,
+                @BlockedReason int newBlockedReason) {
+            if (isUidBlocked(oldBlockedReason, false) != isUidBlocked(newBlockedReason, false)
+                    || isUidBlocked(newBlockedReason, true)
+                            != isUidBlocked(newBlockedReason, true)) {
+                if (mExecutor == null) {
+                    mCallback.onUidBlockedStatusChanged(uid, newBlockedReason);
+                } else {
+                    mExecutor.execute(PooledLambda.obtainRunnable(
+                            mCallback::onUidBlockedStatusChanged, uid, newBlockedReason));
+                }
+            }
+            if (oldBlockedReason  != newBlockedReason) {
+                if (mExecutor == null) {
+                    mCallback.onUidBlockedReasonChanged(uid, newBlockedReason);
+                } else {
+                    mExecutor.execute(PooledLambda.obtainRunnable(
+                            mCallback::onUidBlockedReasonChanged, uid, newBlockedReason));
+                }
+            }
+        }
+    }
+
+    /** @hide */
     public static class SubscriptionCallback {
         /**
          * Notify clients of a new override about a given subscription.
@@ -743,5 +910,7 @@ public class NetworkPolicyManager {
         @Override public void onSubscriptionOverride(int subId, int overrideMask,
                 int overrideValue, int[] networkTypes) { }
         @Override public void onSubscriptionPlansChanged(int subId, SubscriptionPlan[] plans) { }
+        @Override public void onBlockedReasonChanged(int uid,
+                int oldBlockedReason, int newBlockedReason) { }
     }
 }
