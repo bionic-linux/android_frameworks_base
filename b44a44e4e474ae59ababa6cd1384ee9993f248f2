@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fe8522a8_c2b0c00b",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-03-02T21:40:28Z",
+      "side": 1,
+      "message": "APN type should not be unknown any time. If anyone uses unknown in the configuration, that should be treated as a bug. When I added that unknown in 2018, it was purely for debugging purposes, I never intended to make it as a type to use. I think we should clean it up in the following CLs.",
+      "parentUuid": "13062475_afd92f22",
+      "range": {
+        "startLine": 1501,
+        "startChar": 0,
+        "endLine": 1509,
+        "endChar": 5
+      },
+      "revId": "b44a44e4e474ae59ababa6cd1384ee9993f248f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eea3575a_420a86e7",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 1
