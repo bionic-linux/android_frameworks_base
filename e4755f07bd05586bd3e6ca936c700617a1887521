@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d27e3066_3e3ed8ab",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-02T06:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "984b81b9_47bbfd80",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 87
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78941d20_0326fdd1",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-25T11:08:23Z",
       "side": 1,
       "message": "I expect this might end up becoming system API, in which case we probably want to have this take a Set\u003cRange\u003cInteger\u003e\u003e instead of a Set\u003cUidRange\u003e.",
+      "range": {
+        "startLine": 231,
+        "startChar": 35,
+        "endLine": 231,
+        "endChar": 43
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64c6ac8d_9ca72572",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-02T06:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78941d20_0326fdd1",
       "range": {
         "startLine": 231,
         "startChar": 35,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97fd814e_c48fda44",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6731,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-02T06:40:36Z",
+      "side": 1,
+      "message": "It is used in updateUids in l.6740 and 6741. The input nc will be null if the network report disconnected. updateNetworkInfo will set a null nc in newNc.\n\nMy previous thought is to handle the logic into this helper method. But I think it\u0027s fine to have this method takes @NonNull and leave the check in the caller.\n\nYes, nc.mUids can be null. I update this to @Nullable.",
+      "parentUuid": "30c490c2_fc72ee3e",
+      "range": {
+        "startLine": 6731,
+        "startChar": 8,
+        "endLine": 6731,
+        "endChar": 48
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cce00f5_320b39ea",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-02-25T11:08:23Z",
       "side": 1,
       "message": "Why do this extra copy? convertFromIntRanges already returns a new object, doesn\u0027t it?",
+      "range": {
+        "startLine": 6734,
+        "startChar": 0,
+        "endLine": 6735,
+        "endChar": 60
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80b0ec90_b4888ccd",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6735,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-02T06:40:36Z",
+      "side": 1,
+      "message": "Not really. UidRange.convertFromIntRanges() is @Nullable. That\u0027s why I do so. Removed since this method is updated to @Nullable.",
+      "parentUuid": "3cce00f5_320b39ea",
       "range": {
         "startLine": 6734,
         "startChar": 0,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a16ae83_fabe6930",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 9106,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-02T06:40:36Z",
+      "side": 1,
+      "message": "Sorry, I had updated nc.getUids() to @NonNull previously. It changed its behavior. That\u0027s why I updated it. \n\nUpdate it back.",
+      "parentUuid": "b4939d6c_4f548e8b",
+      "range": {
+        "startLine": 9106,
+        "startChar": 27,
+        "endLine": 9106,
+        "endChar": 64
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f600eae8_d836ce45",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-02-25T11:08:23Z",
       "side": 1,
       "message": "This will fit on the previous line and make the CL easier to review. Also everywhere else.",
+      "range": {
+        "startLine": 414,
+        "startChar": 24,
+        "endLine": 414,
+        "endChar": 82
+      },
+      "revId": "e4755f07bd05586bd3e6ca936c700617a1887521",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "253681fc_cc86a57a",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-02T06:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f600eae8_d836ce45",
       "range": {
         "startLine": 414,
         "startChar": 24,
