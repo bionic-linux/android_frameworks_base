@@ -117,6 +117,30 @@
       },
       "revId": "b44a44e4e474ae59ababa6cd1384ee9993f248f2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7652f4c8_1d7a94da",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-03-02T21:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a6f9e87_a2b1e0a5",
+      "range": {
+        "startLine": 1520,
+        "startChar": 42,
+        "endLine": 1520,
+        "endChar": 55
+      },
+      "revId": "b44a44e4e474ae59ababa6cd1384ee9993f248f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
