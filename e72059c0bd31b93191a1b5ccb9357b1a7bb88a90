@@ -22,6 +22,30 @@
       },
       "revId": "e72059c0bd31b93191a1b5ccb9357b1a7bb88a90",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81666263_780a257f",
+        "filename": "core/jni/com_android_internal_os_Zygote.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1404253
+      },
+      "writtenOn": "2021-03-02T16:37:23Z",
+      "side": 1,
+      "message": "follow-up CL to fix the gaps go/aog/1605514",
+      "parentUuid": "7adbded3_58c15334",
+      "range": {
+        "startLine": 802,
+        "startChar": 2,
+        "endLine": 802,
+        "endChar": 60
+      },
+      "revId": "e72059c0bd31b93191a1b5ccb9357b1a7bb88a90",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
