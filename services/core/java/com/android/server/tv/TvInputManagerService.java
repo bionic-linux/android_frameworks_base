@@ -404,7 +404,7 @@ public final class TvInputManagerService extends SystemService {
                 }
 
                 for (Iterator<ComponentName> it = userState.serviceStateMap.keySet().iterator();
-                    it.hasNext(); ) {
+                        it.hasNext(); ) {
                     ComponentName component = it.next();
                     ServiceState serviceState = userState.serviceStateMap.get(component);
                     if (serviceState != null && serviceState.sessionTokens.isEmpty()) {
@@ -561,7 +561,7 @@ public final class TvInputManagerService extends SystemService {
     }
 
     private int resolveCallingUserId(int callingPid, int callingUid, int requestedUserId,
-            String methodName) {
+                                     String methodName) {
         return ActivityManager.handleIncomingUser(callingPid, callingUid, requestedUserId, false,
                 false, methodName, null);
     }
@@ -591,14 +591,9 @@ public final class TvInputManagerService extends SystemService {
             shouldBind = !serviceState.sessionTokens.isEmpty();
         }
 
-        if (serviceState.service == null && shouldBind) {
+        if (!serviceState.bound && shouldBind) {
             // This means that the service is not yet connected but its state indicates that we
             // have pending requests. Then, connect the service.
-            if (serviceState.bound) {
-                // We have already bound to the service so we don't try to bind again until after we
-                // unbind later on.
-                return;
-            }
             if (DEBUG) {
                 Slog.d(TAG, "bindServiceAsUser(service=" + component + ", userId=" + userId + ")");
             }
@@ -608,8 +603,8 @@ public final class TvInputManagerService extends SystemService {
                     i, serviceState.connection,
                     Context.BIND_AUTO_CREATE | Context.BIND_FOREGROUND_SERVICE_WHILE_AWAKE,
                     new UserHandle(userId));
-        } else if (serviceState.service != null && !shouldBind) {
-            // This means that the service is already connected but its state indicates that we have
+        } else if ((serviceState.bound && !shouldBind)) {
+            // This means that the service is already bound but its state indicates that we have
             // nothing to do with it. Then, disconnect the service.
             if (DEBUG) {
                 Slog.d(TAG, "unbindService(service=" + component + ")");
@@ -620,7 +615,7 @@ public final class TvInputManagerService extends SystemService {
     }
 
     private void abortPendingCreateSessionRequestsLocked(ServiceState serviceState,
-            String inputId, int userId) {
+                                                         String inputId, int userId) {
         // Let clients know the create session requests are failed.
         UserState userState = getOrCreateUserStateLocked(userId);
         List<SessionState> sessionsToAbort = new ArrayList<>();
@@ -640,7 +635,7 @@ public final class TvInputManagerService extends SystemService {
     }
 
     private boolean createSessionInternalLocked(ITvInputService service, IBinder sessionToken,
-            int userId) {
+                                                int userId) {
         UserState userState = getOrCreateUserStateLocked(userId);
         SessionState sessionState = userState.sessionStateMap.get(sessionToken);
         if (DEBUG) {
@@ -673,7 +668,8 @@ public final class TvInputManagerService extends SystemService {
     }
 
     private void sendSessionTokenToClientLocked(ITvInputClient client, String inputId,
-            IBinder sessionToken, InputChannel channel, int seq) {
+                                                IBinder sessionToken, InputChannel channel,
+                                                int seq) {
         try {
             client.onSessionCreated(inputId, sessionToken, channel, seq);
         } catch (RemoteException e) {
@@ -810,7 +806,7 @@ public final class TvInputManagerService extends SystemService {
     }
 
     private void notifyInputStateChangedLocked(UserState userState, String inputId,
-            int state, ITvInputManagerCallback targetCallback) {
+                                               int state, ITvInputManagerCallback targetCallback) {
         if (DEBUG) {
             Slog.d(TAG, "notifyInputStateChangedLocked(inputId=" + inputId
                     + ", state=" + state + ")");
@@ -918,8 +914,8 @@ public final class TvInputManagerService extends SystemService {
             String callingPackageName = getCallingPackageName();
             if (!TextUtils.equals(inputInfoPackageName, callingPackageName)
                     && mContext.checkCallingPermission(
-                            android.Manifest.permission.WRITE_SECURE_SETTINGS)
-                                    != PackageManager.PERMISSION_GRANTED) {
+                    android.Manifest.permission.WRITE_SECURE_SETTINGS)
+                    != PackageManager.PERMISSION_GRANTED) {
                 // Only the app owning the input and system settings are allowed to update info.
                 throw new IllegalArgumentException("calling package " + callingPackageName
                         + " is not allowed to change TvInputInfo for " + inputInfoPackageName);
@@ -1172,7 +1168,7 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public void createSession(final ITvInputClient client, final String inputId,
-                boolean isRecordingSession, int seq, int userId) {
+                                  boolean isRecordingSession, int seq, int userId) {
             final int callingUid = Binder.getCallingUid();
             final int callingPid = Binder.getCallingPid();
             final int resolvedUserId = resolveCallingUserId(callingPid, callingUid,
@@ -1328,7 +1324,7 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public void dispatchSurfaceChanged(IBinder sessionToken, int format, int width,
-                int height, int userId) {
+                                           int height, int userId) {
             final int callingUid = Binder.getCallingUid();
             final int resolvedUserId = resolveCallingUserId(Binder.getCallingPid(), callingUid,
                     userId, "dispatchSurfaceChanged");
@@ -1372,7 +1368,7 @@ public final class TvInputManagerService extends SystemService {
                             // off to prevent that the volume is controlled in the both side.
                             getSessionLocked(sessionState.hardwareSessionToken,
                                     Process.SYSTEM_UID, resolvedUserId).setVolume((volume > 0.0f)
-                                            ? REMOTE_VOLUME_ON : REMOTE_VOLUME_OFF);
+                                    ? REMOTE_VOLUME_ON : REMOTE_VOLUME_OFF);
                         }
                     } catch (RemoteException | SessionNotFoundException e) {
                         Slog.e(TAG, "error in setVolume", e);
@@ -1487,7 +1483,7 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public void sendAppPrivateCommand(IBinder sessionToken, String command, Bundle data,
-                int userId) {
+                                          int userId) {
             final int callingUid = Binder.getCallingUid();
             final int resolvedUserId = resolveCallingUserId(Binder.getCallingPid(), callingUid,
                     userId, "sendAppPrivateCommand");
@@ -1508,7 +1504,7 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public void createOverlayView(IBinder sessionToken, IBinder windowToken, Rect frame,
-                int userId) {
+                                      int userId) {
             final int callingUid = Binder.getCallingUid();
             final int resolvedUserId = resolveCallingUserId(Binder.getCallingPid(), callingUid,
                     userId, "createOverlayView");
@@ -1648,7 +1644,7 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public void timeShiftSetPlaybackParams(IBinder sessionToken, PlaybackParams params,
-                int userId) {
+                                               int userId) {
             final int callingUid = Binder.getCallingUid();
             final int resolvedUserId = resolveCallingUserId(Binder.getCallingPid(), callingUid,
                     userId, "timeShiftSetPlaybackParams");
@@ -1669,7 +1665,7 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public void timeShiftEnablePositionTracking(IBinder sessionToken, boolean enable,
-                int userId) {
+                                                    int userId) {
             final int callingUid = Binder.getCallingUid();
             final int resolvedUserId = resolveCallingUserId(Binder.getCallingPid(), callingUid,
                     userId, "timeShiftEnablePositionTracking");
@@ -1690,7 +1686,7 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public void startRecording(IBinder sessionToken, @Nullable Uri programUri,
-                @Nullable Bundle params, int userId) {
+                                   @Nullable Bundle params, int userId) {
             final int callingUid = Binder.getCallingUid();
             final int resolvedUserId = resolveCallingUserId(Binder.getCallingPid(), callingUid,
                     userId, "startRecording");
@@ -1785,9 +1781,12 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public ITvInputHardware acquireTvInputHardware(int deviceId,
-                ITvInputHardwareCallback callback, TvInputInfo info, int userId,
-                String tvInputSessionId,
-                @TvInputService.PriorityHintUseCaseType int priorityHint) throws RemoteException {
+                                                       ITvInputHardwareCallback callback,
+                                                       TvInputInfo info, int userId,
+                                                       String tvInputSessionId,
+                                                       @TvInputService.PriorityHintUseCaseType
+                                                                       int priorityHint)
+                throws RemoteException {
             if (mContext.checkCallingPermission(android.Manifest.permission.TV_INPUT_HARDWARE)
                     != PackageManager.PERMISSION_GRANTED) {
                 return null;
@@ -1882,7 +1881,8 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public ParcelFileDescriptor openDvbDevice(DvbDeviceInfo info,
-                @TvInputManager.DvbDeviceType int deviceType)  throws RemoteException {
+                                                  @TvInputManager.DvbDeviceType int deviceType)
+                throws RemoteException {
             if (mContext.checkCallingPermission(android.Manifest.permission.DVB_DEVICE)
                     != PackageManager.PERMISSION_GRANTED) {
                 throw new SecurityException("Requires DVB_DEVICE permission");
@@ -1922,17 +1922,17 @@ public final class TvInputManagerService extends SystemService {
                 switch (deviceType) {
                     case TvInputManager.DVB_DEVICE_DEMUX:
                         deviceFileName = String.format(dvbDeviceFound
-                                ? "/dev/dvb/adapter%d/demux%d" : "/dev/dvb%d.demux%d",
+                                        ? "/dev/dvb/adapter%d/demux%d" : "/dev/dvb%d.demux%d",
                                 info.getAdapterId(), info.getDeviceId());
                         break;
                     case TvInputManager.DVB_DEVICE_DVR:
                         deviceFileName = String.format(dvbDeviceFound
-                                ? "/dev/dvb/adapter%d/dvr%d" : "/dev/dvb%d.dvr%d",
+                                        ? "/dev/dvb/adapter%d/dvr%d" : "/dev/dvb%d.dvr%d",
                                 info.getAdapterId(), info.getDeviceId());
                         break;
                     case TvInputManager.DVB_DEVICE_FRONTEND:
                         deviceFileName = String.format(dvbDeviceFound
-                                ? "/dev/dvb/adapter%d/frontend%d" : "/dev/dvb%d.frontend%d",
+                                        ? "/dev/dvb/adapter%d/frontend%d" : "/dev/dvb%d.frontend%d",
                                 info.getAdapterId(), info.getDeviceId());
                         break;
                     default:
@@ -1973,7 +1973,7 @@ public final class TvInputManagerService extends SystemService {
 
         @Override
         public boolean captureFrame(String inputId, Surface surface, TvStreamConfig config,
-                int userId)
+                                    int userId)
                 throws RemoteException {
             ensureCaptureTvInputPermission();
 
@@ -2036,8 +2036,8 @@ public final class TvInputManagerService extends SystemService {
 
         private void ensureCaptureTvInputPermission() {
             if (mContext.checkCallingPermission(
-                android.Manifest.permission.CAPTURE_TV_INPUT)
-                != PackageManager.PERMISSION_GRANTED) {
+                    android.Manifest.permission.CAPTURE_TV_INPUT)
+                    != PackageManager.PERMISSION_GRANTED) {
                 throw new SecurityException("Requires CAPTURE_TV_INPUT permission");
             }
         }
@@ -2049,11 +2049,11 @@ public final class TvInputManagerService extends SystemService {
             final long identity = Binder.clearCallingIdentity();
             final int callingUid = Binder.getCallingUid();
             final int resolvedUserId = resolveCallingUserId(Binder.getCallingPid(), callingUid,
-                userId, "requestChannelBrowsable");
+                    userId, "requestChannelBrowsable");
             try {
                 Intent intent = new Intent(TvContract.ACTION_CHANNEL_BROWSABLE_REQUESTED);
                 List<ResolveInfo> list = getContext().getPackageManager()
-                    .queryBroadcastReceivers(intent, 0);
+                        .queryBroadcastReceivers(intent, 0);
                 if (list != null) {
                     for (ResolveInfo info : list) {
                         String receiverPackageName = info.activityInfo.packageName;
@@ -2098,12 +2098,12 @@ public final class TvInputManagerService extends SystemService {
         @Override
         public void addHardwareDevice(int deviceId) {
             TvInputHardwareInfo info = new TvInputHardwareInfo.Builder()
-                        .deviceId(deviceId)
-                        .type(TvInputHardwareInfo.TV_INPUT_TYPE_HDMI)
-                        .audioType(DEVICE_NONE)
-                        .audioAddress("0")
-                        .hdmiPortId(0)
-                        .build();
+                    .deviceId(deviceId)
+                    .type(TvInputHardwareInfo.TV_INPUT_TYPE_HDMI)
+                    .audioType(DEVICE_NONE)
+                    .audioAddress("0")
+                    .hdmiPortId(0)
+                    .build();
             mTvInputHardwareManager.onDeviceAvailable(info, null);
             return;
         }
@@ -2385,8 +2385,8 @@ public final class TvInputManagerService extends SystemService {
         private IBinder hardwareSessionToken;
 
         private SessionState(IBinder sessionToken, String inputId, ComponentName componentName,
-                boolean isRecordingSession, ITvInputClient client, int seq, int callingUid,
-                int callingPid, int userId, String sessionId) {
+                             boolean isRecordingSession, ITvInputClient client, int seq,
+                             int callingUid, int callingPid, int userId, String sessionId) {
             this.sessionToken = sessionToken;
             this.inputId = inputId;
             this.componentName = componentName;
@@ -2497,11 +2497,30 @@ public final class TvInputManagerService extends SystemService {
                 ServiceState serviceState = userState.serviceStateMap.get(mComponent);
                 if (serviceState != null) {
                     serviceState.reconnecting = true;
-                    serviceState.bound = false;
                     serviceState.service = null;
                     serviceState.callback = null;
 
                     abortPendingCreateSessionRequestsLocked(serviceState, null, mUserId);
+                }
+            }
+        }
+
+        @Override
+        public void onBindingDied(ComponentName name) {
+            if (DEBUG) {
+                Slog.d(TAG, "onBindingDied(component=" + name + ", connection="
+                        + System.identityHashCode(this) + ")");
+            }
+            if (!mComponent.equals(name)) {
+                throw new IllegalArgumentException("Mismatched ComponentName: "
+                        + mComponent + " (expected), " + name + " (actual).");
+            }
+            synchronized (mLock) {
+                UserState userState = getOrCreateUserStateLocked(mUserId);
+                ServiceState serviceState = userState.serviceStateMap.get(mComponent);
+                if (serviceState != null) {
+                    serviceState.bound = false;
+                    mContext.unbindService(serviceState.connection);
                 }
             }
         }
