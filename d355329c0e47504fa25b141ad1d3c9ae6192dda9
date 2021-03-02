@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db106312_87a8b18c",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T10:01:48Z",
+      "side": 1,
+      "message": "Done in previous patch.",
+      "parentUuid": "6436ff81_30c9fec5",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "d355329c0e47504fa25b141ad1d3c9ae6192dda9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "124df34a_05583e63",
@@ -77,6 +101,54 @@
       "writtenOn": "2021-02-12T02:58:41Z",
       "side": 1,
       "message": "Please add javadocs for all fields.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "d355329c0e47504fa25b141ad1d3c9ae6192dda9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd87f822_47247f9c",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T10:01:48Z",
+      "side": 1,
+      "message": "Done in previous patch.",
+      "parentUuid": "124df34a_05583e63",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "d355329c0e47504fa25b141ad1d3c9ae6192dda9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf47562_4755e0a2",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T10:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3d820cd_053adf6c",
       "range": {
         "startLine": 36,
         "startChar": 0,
