@@ -225,7 +225,11 @@ public class Vcn extends Handler {
 
         mConfig = config;
 
-        // TODO: Reevaluate active VcnGatewayConnection(s)
+        if (!mIsActive.getAndSet(true)) {
+            // If this VCN was not previously active, it is exiting Safe Mode. Re-register the
+            // request listener to get NetworkRequests again.
+            mVcnContext.getVcnNetworkProvider().registerListener(mRequestListener);
+        }
     }
 
     private void handleTeardown() {
@@ -240,6 +244,8 @@ public class Vcn extends Handler {
 
     private void handleEnterSafeMode() {
         handleTeardown();
+
+        mVcnGatewayConnections.clear();
 
         mVcnCallback.onEnteredSafeMode();
     }
