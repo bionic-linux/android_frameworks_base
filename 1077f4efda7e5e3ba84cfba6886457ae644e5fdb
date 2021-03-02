@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa77733b_648339ce",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T15:05:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "56581662_116c81cb",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 63
+      },
+      "revId": "1077f4efda7e5e3ba84cfba6886457ae644e5fdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dcec17d_e633a6b1",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-02T13:03:29Z",
       "side": 1,
       "message": "Sorry for missing this earlier, but could you put the Network object first?\n\ngo/android-api-guidelines#distinctive-params-first\n\nwould be good to reorder the class members too.\n\nIt would also be good to put the NC before the LP, but that doesn\u0027t matter so much.",
+      "range": {
+        "startLine": 61,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 87
+      },
+      "revId": "1077f4efda7e5e3ba84cfba6886457ae644e5fdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db60d797_73db3334",
+        "filename": "core/java/android/net/NetworkStateSnapshot.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-02T15:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dcec17d_e633a6b1",
       "range": {
         "startLine": 61,
         "startChar": 32,
