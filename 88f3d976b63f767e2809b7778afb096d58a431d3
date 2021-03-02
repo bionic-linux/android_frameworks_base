@@ -20,6 +20,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "648fb511_482e893f",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-02T14:48:24Z",
+      "side": 1,
+      "message": "This is appropriate for what we have today but is not very extensible if the block reasons become dependent on other different characteristics of the network. Options include :\n- Take a NetworkCapabilities object\n- Take an array of NET_CAPABILITY_*\n- Take a custom bitmask, that in S would only declared METERED\n\nI am also happy if we want to just keep the boolean because we don\u0027t expect to extend this any time soon – and we decide to deprecate this in the future if we find that we need to add arguments.",
+      "range": {
+        "startLine": 753,
+        "startChar": 81,
+        "endLine": 753,
+        "endChar": 95
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05fc4f77_495b845c",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-02T14:48:24Z",
+      "side": 1,
+      "message": "Generally we\u0027ll need to define the guarantees of calls upon registration. Callers won\u0027t know what is the current state for any given UID until they receive the first call, which means, I guess, that registering needs to trigger sending the full list of association uid → blocked reason.\n\n(maybe you already planned to do that)",
+      "range": {
+        "startLine": 784,
+        "startChar": 16,
+        "endLine": 784,
+        "endChar": 45
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b09f15fd_09268b31",
         "filename": "core/java/android/net/NetworkPolicyManager.java",
         "patchSetId": 3
@@ -31,6 +77,53 @@
       "writtenOn": "2021-03-02T07:20:13Z",
       "side": 1,
       "message": "Actually I realized it\u0027s better to pass blocked status too (in addition to blockedReason). That way, we don\u0027t have to expose isUidBlocked() anymore. I\u0027ll update this.",
+      "range": {
+        "startLine": 817,
+        "startChar": 20,
+        "endLine": 817,
+        "endChar": 45
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9c70fd0_594a3181",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-02T14:48:24Z",
+      "side": 1,
+      "message": "bikeshedding on the name : This is a bitmask of reasons, so maybe we want a name like \"policy\" or even just \"blockedReasons\".",
+      "range": {
+        "startLine": 817,
+        "startChar": 74,
+        "endLine": 817,
+        "endChar": 87
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fd9aac2_49a54090",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-02T14:48:24Z",
+      "side": 1,
+      "message": "In principle yes, but how do you handle the meteredness then ? I\u0027m not sure it\u0027s a great idea to pass one boolean for \"blockedIfMetered\" and one for \"blockedIfNotMetered\".",
+      "parentUuid": "b09f15fd_09268b31",
       "range": {
         "startLine": 817,
         "startChar": 20,
