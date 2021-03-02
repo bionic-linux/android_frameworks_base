@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "13062475_afd92f22",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-03-02T21:19:39Z",
+      "side": 1,
+      "message": "ApnSettingsUtil#isMeteredType checks a carrier config string against the return value of this method, so some carrier might have \"Unknown\" in there. Also this makes it into ApnContext.mApnType, and that\u0027s used in a lot of places in DcTracker where the value of unknown might matter",
+      "parentUuid": "b385d9be_0878a6bc",
+      "range": {
+        "startLine": 1501,
+        "startChar": 0,
+        "endLine": 1509,
+        "endChar": 5
+      },
+      "revId": "b44a44e4e474ae59ababa6cd1384ee9993f248f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eea3575a_420a86e7",
         "filename": "telephony/java/android/telephony/data/ApnSetting.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-02T21:04:27Z",
       "side": 1,
       "message": "We typically just use getApnTypesBitmaskFromString in all places.",
+      "range": {
+        "startLine": 1520,
+        "startChar": 42,
+        "endLine": 1520,
+        "endChar": 55
+      },
+      "revId": "b44a44e4e474ae59ababa6cd1384ee9993f248f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a6f9e87_a2b1e0a5",
+        "filename": "telephony/java/android/telephony/data/ApnSetting.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1520,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-03-02T21:19:39Z",
+      "side": 1,
+      "message": "This was added for API completeness\u0027s sake. getApnTypesBitmaskFromString isn\u0027t suitable for exposing as an API since having a comma-separated list of strings would be an awkward surface compared to either taking a List\u003cString\u003e or having this method to get the ints one-by-one so apps can OR them together as needed",
+      "parentUuid": "eea3575a_420a86e7",
       "range": {
         "startLine": 1520,
         "startChar": 42,
