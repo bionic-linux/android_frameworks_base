@@ -55,6 +55,22 @@ import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkPolicy.LIMIT_DISABLED;
 import static android.net.NetworkPolicy.SNOOZE_NEVER;
 import static android.net.NetworkPolicy.WARNING_DISABLED;
+import static android.net.NetworkPolicyManager.ALLOWED_METERED_REASON_FOREGROUND;
+import static android.net.NetworkPolicyManager.ALLOWED_METERED_REASON_MASK;
+import static android.net.NetworkPolicyManager.ALLOWED_METERED_REASON_USER_EXEMPTED;
+import static android.net.NetworkPolicyManager.ALLOWED_REASON_FOREGROUND;
+import static android.net.NetworkPolicyManager.ALLOWED_REASON_NONE;
+import static android.net.NetworkPolicyManager.ALLOWED_REASON_POWER_SAVE_ALLOWLIST;
+import static android.net.NetworkPolicyManager.ALLOWED_REASON_RESTRICTED_MODE_EXEMPTED;
+import static android.net.NetworkPolicyManager.BLOCKED_METERED_REASON_ADMIN_DISABLED;
+import static android.net.NetworkPolicyManager.BLOCKED_METERED_REASON_DATA_SAVER;
+import static android.net.NetworkPolicyManager.BLOCKED_METERED_REASON_MASK;
+import static android.net.NetworkPolicyManager.BLOCKED_METERED_REASON_USER_RESTRICTED;
+import static android.net.NetworkPolicyManager.BLOCKED_REASON_APP_STANDBY;
+import static android.net.NetworkPolicyManager.BLOCKED_REASON_BATTERY_SAVER;
+import static android.net.NetworkPolicyManager.BLOCKED_REASON_DOZE;
+import static android.net.NetworkPolicyManager.BLOCKED_REASON_NONE;
+import static android.net.NetworkPolicyManager.BLOCKED_REASON_RESTRICTED_MODE;
 import static android.net.NetworkPolicyManager.EXTRA_NETWORK_TEMPLATE;
 import static android.net.NetworkPolicyManager.FIREWALL_RULE_DEFAULT;
 import static android.net.NetworkPolicyManager.MASK_ALL_NETWORKS;
@@ -414,6 +430,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static final int MSG_SET_NETWORK_TEMPLATE_ENABLED = 18;
     private static final int MSG_SUBSCRIPTION_PLANS_CHANGED = 19;
     private static final int MSG_STATS_PROVIDER_LIMIT_REACHED = 20;
+    private static final int MSG_BLOCKED_REASON_CHANGED = 21;
 
     private static final int UID_MSG_STATE_CHANGED = 100;
     private static final int UID_MSG_GONE = 101;
@@ -560,7 +577,10 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
     /** Foreground at UID granularity. */
     @GuardedBy("mUidRulesFirstLock")
-    final SparseArray<UidState> mUidState = new SparseArray<UidState>();
+    private final SparseArray<UidState> mUidState = new SparseArray<>();
+
+    @GuardedBy("mUidRulesFirstLock")
+    private final SparseArray<UidBlockedState> mUidBlockedState = new SparseArray<>();
 
     /** Map from network ID to last observed meteredness state */
     @GuardedBy("mNetworkPoliciesSecondLock")
@@ -3931,6 +3951,26 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 mUidRules.put(uid, newUidRule);
                 mHandler.obtainMessage(MSG_RULES_CHANGED, uid, newUidRule).sendToTarget();
             }
+
+            UidBlockedState uidBlockedState = mUidBlockedState.get(uid);
+            if (uidBlockedState == null) {
+                uidBlockedState = new UidBlockedState();
+                mUidBlockedState.put(uid, uidBlockedState);
+            }
+            final int oldBlockedReason = uidBlockedState.blockedReason;
+            if (mRestrictedNetworkingMode) {
+                if (hasRestrictedModeAccess(uid)) {
+                    uidBlockedState.blockedReason &= ~BLOCKED_REASON_RESTRICTED_MODE;
+                    uidBlockedState.allowedReason |= ALLOWED_REASON_RESTRICTED_MODE_EXEMPTED;
+                } else {
+                    uidBlockedState.blockedReason |= BLOCKED_REASON_RESTRICTED_MODE;
+                    uidBlockedState.allowedReason &= ALLOWED_REASON_RESTRICTED_MODE_EXEMPTED;
+                }
+            }
+            if (oldBlockedReason != uidBlockedState.blockedReason) {
+                mHandler.obtainMessage(MSG_BLOCKED_REASON_CHANGED,
+                        uid, uidBlockedState.blockedReason, oldBlockedReason).sendToTarget();
+            }
         });
         if (mRestrictedNetworkingMode) {
             // firewall rules only need to be set when this mode is being enabled.
@@ -3950,6 +3990,26 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         if (hasUidRuleChanged) {
             mUidRules.put(uid, newUidRule);
             mHandler.obtainMessage(MSG_RULES_CHANGED, uid, newUidRule).sendToTarget();
+        }
+
+        UidBlockedState uidBlockedState = mUidBlockedState.get(uid);
+        if (uidBlockedState == null) {
+            uidBlockedState = new UidBlockedState();
+            mUidBlockedState.put(uid, uidBlockedState);
+        }
+        final int oldBlockedReason = uidBlockedState.blockedReason;
+        if (mRestrictedNetworkingMode) {
+            if (hasRestrictedModeAccess(uid)) {
+                uidBlockedState.blockedReason &= ~BLOCKED_REASON_RESTRICTED_MODE;
+                uidBlockedState.allowedReason |= ALLOWED_REASON_RESTRICTED_MODE_EXEMPTED;
+            } else {
+                uidBlockedState.blockedReason |= BLOCKED_REASON_RESTRICTED_MODE;
+                uidBlockedState.allowedReason &= ALLOWED_REASON_RESTRICTED_MODE_EXEMPTED;
+            }
+        }
+        if (oldBlockedReason != uidBlockedState.blockedReason) {
+            mHandler.obtainMessage(MSG_BLOCKED_REASON_CHANGED,
+                    uid, uidBlockedState.blockedReason, oldBlockedReason).sendToTarget();
         }
 
         // if restricted networking mode is on, and the app has an access exemption, the uid rule
@@ -4531,6 +4591,13 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         final int oldUidRules = mUidRules.get(uid, RULE_NONE);
         final boolean isForeground = isUidForegroundOnRestrictBackgroundUL(uid);
         final boolean isRestrictedByAdmin = isRestrictedByAdminUL(uid);
+        UidBlockedState uidBlockedState = mUidBlockedState.get(uid);
+        if (uidBlockedState == null) {
+            uidBlockedState = new UidBlockedState();
+            mUidBlockedState.put(uid, uidBlockedState);
+        }
+        int newBlockedReason = BLOCKED_REASON_NONE;
+        int newAllowedReason = ALLOWED_REASON_NONE;
 
         final boolean isDenied = (uidPolicy & POLICY_REJECT_METERED_BACKGROUND) != 0;
         final boolean isAllowed = (uidPolicy & POLICY_ALLOW_METERED_BACKGROUND) != 0;
@@ -4541,6 +4608,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         // First step: define the new rule based on user restrictions and foreground state.
         if (isRestrictedByAdmin) {
             newUidRules |= RULE_REJECT_METERED;
+            newBlockedReason |= BLOCKED_METERED_REASON_ADMIN_DISABLED;
         } else if (isForeground) {
             if (isDenied || (mRestrictBackground && !isAllowed)) {
                 newUidRules |= RULE_TEMPORARY_ALLOW_METERED;
@@ -4550,8 +4618,30 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         } else {
             if (isDenied) {
                 newUidRules |= RULE_REJECT_METERED;
+                newBlockedReason |= BLOCKED_METERED_REASON_USER_RESTRICTED;
             } else if (mRestrictBackground && isAllowed) {
                 newUidRules |= RULE_ALLOW_METERED;
+                newAllowedReason |= ALLOWED_METERED_REASON_USER_EXEMPTED;
+            }
+        }
+
+        if (isRestrictedByAdmin) {
+            newBlockedReason |= BLOCKED_METERED_REASON_ADMIN_DISABLED;
+        }
+        if (mRestrictBackground) {
+            if (isForeground) {
+                newAllowedReason |= ALLOWED_METERED_REASON_FOREGROUND;
+            } else if (isAllowed) {
+                newAllowedReason |= ALLOWED_METERED_REASON_USER_EXEMPTED;
+            } else {
+                newBlockedReason |= BLOCKED_METERED_REASON_DATA_SAVER;
+            }
+        }
+        if (isDenied) {
+            if (isForeground) {
+                newAllowedReason |= ALLOWED_METERED_REASON_FOREGROUND;
+            } else {
+                newBlockedReason |= BLOCKED_METERED_REASON_USER_RESTRICTED;
             }
         }
 
@@ -4626,6 +4716,16 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
             // Dispatch changed rule to existing listeners.
             mHandler.obtainMessage(MSG_RULES_CHANGED, uid, newUidRules).sendToTarget();
+
+            final int oldBlockedReason = uidBlockedState.blockedReason;
+            uidBlockedState.blockedReason = (uidBlockedState.blockedReason
+                    & ~BLOCKED_METERED_REASON_MASK) | newBlockedReason;
+            uidBlockedState.allowedReason = (uidBlockedState.allowedReason
+                    & ~ALLOWED_METERED_REASON_MASK) | newAllowedReason;
+            if (oldBlockedReason != uidBlockedState.blockedReason) {
+                mHandler.obtainMessage(MSG_BLOCKED_REASON_CHANGED,
+                        uid, uidBlockedState.blockedReason, oldBlockedReason).sendToTarget();
+            }
         }
     }
 
@@ -4700,6 +4800,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         // Copy existing uid rules and clear ALL_NETWORK rules.
         int newUidRules = oldUidRules & (~MASK_ALL_NETWORKS);
 
+        UidBlockedState uidBlockedState = mUidBlockedState.get(uid);
+        if (uidBlockedState == null) {
+            uidBlockedState = new UidBlockedState();
+            mUidBlockedState.put(uid, uidBlockedState);
+        }
+        int newBlockedReason = BLOCKED_REASON_NONE;
+        int newAllowedReason = ALLOWED_REASON_NONE;
+
         // First step: define the new rule based on user restrictions and foreground state.
 
         // NOTE: if statements below could be inlined, but it's easier to understand the logic
@@ -4710,6 +4818,37 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             }
         } else if (restrictMode) {
             newUidRules |= isWhitelisted ? RULE_ALLOW_ALL : RULE_REJECT_ALL;
+        }
+
+        if (mRestrictPower) {
+            if (isForeground) {
+                newAllowedReason |= ALLOWED_REASON_FOREGROUND;
+            } else if (isWhitelistedFromPowerSaveUL(uid, false)) {
+                newAllowedReason |= ALLOWED_REASON_POWER_SAVE_ALLOWLIST;
+            } else {
+                newBlockedReason |= BLOCKED_REASON_BATTERY_SAVER;
+            }
+        }
+        if (mDeviceIdleMode) {
+            if (isForeground) {
+                newAllowedReason |= ALLOWED_REASON_FOREGROUND;
+            } else if (isWhitelistedFromPowerSaveUL(uid, true)) {
+                newAllowedReason |= ALLOWED_REASON_POWER_SAVE_ALLOWLIST;
+            } else {
+                newBlockedReason |= BLOCKED_REASON_DOZE;
+            }
+        }
+        if (isUidIdle) {
+            if (isForeground) {
+                newAllowedReason |= ALLOWED_REASON_FOREGROUND;
+            } else if (isWhitelistedFromPowerSaveUL(uid, false)) {
+                newAllowedReason |= ALLOWED_REASON_POWER_SAVE_ALLOWLIST;
+            } else {
+                newBlockedReason |= BLOCKED_REASON_APP_STANDBY;
+            }
+        }
+        if ((uidBlockedState.blockedReason & BLOCKED_REASON_RESTRICTED_MODE) != 0) {
+            newBlockedReason |= BLOCKED_REASON_RESTRICTED_MODE;
         }
 
         if (LOGV) {
@@ -4741,6 +4880,16 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                         + ", oldRule=" + uidRulesToString(oldUidRules));
             }
             mHandler.obtainMessage(MSG_RULES_CHANGED, uid, newUidRules).sendToTarget();
+        }
+
+        final int oldBlockedReason = uidBlockedState.blockedReason;
+        uidBlockedState.blockedReason = (uidBlockedState.blockedReason
+                & BLOCKED_METERED_REASON_MASK) | newBlockedReason;
+        uidBlockedState.allowedReason = (uidBlockedState.allowedReason
+                & ALLOWED_METERED_REASON_MASK) | newAllowedReason;
+        if (oldBlockedReason != uidBlockedState.blockedReason) {
+            mHandler.obtainMessage(MSG_BLOCKED_REASON_CHANGED,
+                    uid, uidBlockedState.blockedReason, oldBlockedReason).sendToTarget();
         }
 
         return newUidRules;
@@ -4825,6 +4974,16 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         if (listener != null) {
             try {
                 listener.onSubscriptionPlansChanged(subId, plans);
+            } catch (RemoteException ignored) {
+            }
+        }
+    }
+
+    private void dispatchBlockedReasonChanged(INetworkPolicyListener listener, int uid,
+            int oldBlockedReason, int newBlockedReason) {
+        if (listener != null) {
+            try {
+                listener.onBlockedReasonChanged(uid, oldBlockedReason, newBlockedReason);
             } catch (RemoteException ignored) {
             }
         }
@@ -4979,6 +5138,19 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                     for (int i = 0; i < length; i++) {
                         final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);
                         dispatchSubscriptionPlansChanged(listener, subId, plans);
+                    }
+                    mListeners.finishBroadcast();
+                    return true;
+                }
+                case MSG_BLOCKED_REASON_CHANGED: {
+                    final int uid = msg.arg1;
+                    final int newBlockedReason = msg.arg2;
+                    final int oldBlockedReason = (int) msg.obj;
+                    final int length = mListeners.beginBroadcast();
+                    for (int i = 0; i < length; i++) {
+                        final INetworkPolicyListener listener = mListeners.getBroadcastItem(i);
+                        dispatchBlockedReasonChanged(listener, uid,
+                                oldBlockedReason, newBlockedReason);
                     }
                     mListeners.finishBroadcast();
                     return true;
@@ -5717,6 +5889,16 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static boolean getBooleanDefeatingNullable(@Nullable PersistableBundle bundle,
             String key, boolean defaultValue) {
         return (bundle != null) ? bundle.getBoolean(key, defaultValue) : defaultValue;
+    }
+
+    private class UidBlockedState {
+        public int blockedReason;
+        public int allowedReason;
+
+        UidBlockedState() {
+            blockedReason = NetworkPolicyManager.BLOCKED_REASON_NONE;
+            allowedReason = NetworkPolicyManager.ALLOWED_REASON_NONE;
+        }
     }
 
     private class NotificationId {
