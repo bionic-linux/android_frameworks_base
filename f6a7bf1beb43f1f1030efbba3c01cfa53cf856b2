@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46e8456c_71c16519",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-03-02T05:19:08Z",
+      "side": 1,
+      "message": "should this be DEVICE_TYPE_WATCH instead?",
+      "range": {
+        "startLine": 607,
+        "startChar": 31,
+        "endLine": 607,
+        "endChar": 50
+      },
+      "revId": "f6a7bf1beb43f1f1030efbba3c01cfa53cf856b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaeae1a7_fc84544e",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-03-02T05:19:08Z",
+      "side": 1,
+      "message": "what\u0027s an untethered headset? (true wireless? just wireless?)",
+      "range": {
+        "startLine": 615,
+        "startChar": 31,
+        "endLine": 615,
+        "endChar": 61
+      },
+      "revId": "f6a7bf1beb43f1f1030efbba3c01cfa53cf856b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
