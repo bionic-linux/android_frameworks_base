@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "614fe937_9fd6da2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-03-03T16:45:50Z",
+      "side": 1,
+      "message": "Thanks",
+      "revId": "76ccffb4e2d5d641de6cbb9a33b2debf8042b97e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "903141cf_70e2d445",
@@ -36,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "937feb90_ec035532",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-03-03T16:45:50Z",
+      "side": 1,
+      "message": "Those are only in internal AFAIK",
+      "parentUuid": "6870a66b_7a2e1a1b",
+      "revId": "76ccffb4e2d5d641de6cbb9a33b2debf8042b97e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7306f05b_f1d17602",
@@ -49,6 +84,24 @@
       "writtenOn": "2021-03-03T16:34:57Z",
       "side": 1,
       "message": "Actually I\u0027m not sure statsd should be in this list. They\u0027re not in the SYSTEMSERVERCLASSPATH as far as I can tell",
+      "revId": "76ccffb4e2d5d641de6cbb9a33b2debf8042b97e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a8ea811_e4831e4d",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-03-03T16:45:50Z",
+      "side": 1,
+      "message": "statsd sources are included in the current monolithic merged stubs rule. They don\u0027t export any APIs, so I\u0027m unsure if they need to be added. But if they *do* need to be added, I\u0027d rather this change be merged before the ones you mentioned above.",
+      "parentUuid": "7306f05b_f1d17602",
       "revId": "76ccffb4e2d5d641de6cbb9a33b2debf8042b97e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
