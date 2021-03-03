@@ -4991,21 +4991,6 @@ public class ConnectivityManager {
     }
 
     /**
-     * Listener for {@link #setOemNetworkPreference(OemNetworkPreferences, Executor,
-     * OnSetOemNetworkPreferenceListener)}.
-     * @hide
-     */
-    // TODO : remove this in favor of a vanilla runnable to follow API guidance to use
-    // functional interfaces when they are appropriate.
-    @SystemApi
-    public interface OnSetOemNetworkPreferenceListener {
-        /**
-         * Called when setOemNetworkPreference() successfully completes.
-         */
-        void onComplete();
-    }
-
-    /**
      * Used by automotive devices to set the network preferences used to direct traffic at an
      * application level as per the given OemNetworkPreferences. An example use-case would be an
      * automotive OEM wanting to provide connectivity for applications critical to the usage of a
@@ -5027,16 +5012,16 @@ public class ConnectivityManager {
     @RequiresPermission(android.Manifest.permission.CONTROL_OEM_PAID_NETWORK_PREFERENCE)
     public void setOemNetworkPreference(@NonNull final OemNetworkPreferences preference,
             @Nullable @CallbackExecutor final Executor executor,
-            @Nullable final OnSetOemNetworkPreferenceListener listener) {
+            @Nullable final Runnable listener) {
         Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
         if (null != listener) {
             Objects.requireNonNull(executor, "Executor must be non-null");
         }
-        final IOnSetOemNetworkPreferenceListener listenerInternal = listener == null ? null :
-                new IOnSetOemNetworkPreferenceListener.Stub() {
+        final IOnCompleteListener listenerInternal = listener == null ? null :
+                new IOnCompleteListener.Stub() {
                     @Override
                     public void onComplete() {
-                        executor.execute(listener::onComplete);
+                        executor.execute(listener::run);
                     }
         };
 
@@ -5062,7 +5047,7 @@ public class ConnectivityManager {
      * @throws SecurityException if missing the appropriate permissions.
      * @hide
      */
-    // TODO : @SystemApi
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_STACK)
     public void setNetworkPreferenceForUser(@NonNull final UserHandle profile,
             @UserPreference final int preference,

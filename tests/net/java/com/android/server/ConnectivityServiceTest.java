@@ -183,7 +183,7 @@ import android.net.INetd;
 import android.net.INetworkMonitor;
 import android.net.INetworkMonitorCallbacks;
 import android.net.INetworkPolicyListener;
-import android.net.IOnSetOemNetworkPreferenceListener;
+import android.net.IOnCompleteListener;
 import android.net.IQosCallback;
 import android.net.InetAddresses;
 import android.net.InterfaceConfigurationParcel;
@@ -9961,7 +9961,7 @@ public class ConnectivityServiceTest {
         oemPrefListener.expectOnComplete();
     }
 
-    private static class TestOemListenerCallback implements IOnSetOemNetworkPreferenceListener {
+    private static class TestOemListenerCallback implements IOnCompleteListener {
         final CompletableFuture<Object> mDone = new CompletableFuture<>();
 
         @Override
