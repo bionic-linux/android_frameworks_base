@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f91e202_a82df703",
+        "filename": "packages/Connectivity/framework/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-03T22:18:19Z",
+      "side": 1,
+      "message": "I\u0027m always a fan of code reuse, that said, a potential downside on this is that this will couple these two APIs. That might be ok since they are quite similar however will be very difficult to manage if we ever want to have a divergence in behavior between the two.\n\nI would typically rather suffer small code duplication if it meant uncoupled, public facing APIs however I\u0027ll defer to you on this one.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 279
+      },
+      "revId": "d66953d66e96991e4107e0345c58560edd74d94a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
