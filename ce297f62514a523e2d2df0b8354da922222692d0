@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eedaa01d_479fef5e",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-03T20:29:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99fbf22e_5f0aba69",
+      "range": {
+        "startLine": 793,
+        "startChar": 18,
+        "endLine": 793,
+        "endChar": 22
+      },
+      "revId": "ce297f62514a523e2d2df0b8354da922222692d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e89cb9ac_62c682cf",

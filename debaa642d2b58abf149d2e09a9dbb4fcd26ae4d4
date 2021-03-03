@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d38bb89f_34d426d4",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-03T20:29:36Z",
+      "side": 1,
+      "message": "We should document why TEST_PACKAGE cannot just be used directly.",
+      "range": {
+        "startLine": 881,
+        "startChar": 59,
+        "endLine": 881,
+        "endChar": 60
+      },
+      "revId": "debaa642d2b58abf149d2e09a9dbb4fcd26ae4d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
