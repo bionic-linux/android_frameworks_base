@@ -4964,19 +4964,6 @@ public class ConnectivityManager {
     }
 
     /**
-     * Listener for {@link #setOemNetworkPreference(OemNetworkPreferences, Executor,
-     * OnSetOemNetworkPreferenceListener)}.
-     * @hide
-     */
-    @SystemApi
-    public interface OnSetOemNetworkPreferenceListener {
-        /**
-         * Called when setOemNetworkPreference() successfully completes.
-         */
-        void onComplete();
-    }
-
-    /**
      * Listener for operations that can complete.
      *
      * This is used for APIs that should notify their user of completion like
@@ -4984,7 +4971,7 @@ public class ConnectivityManager {
      *
      * @hide
      */
-    // TODO : @SystemApi, and replace OnSetOemNetworkPreferenceListener with this.
+    @SystemApi
     public interface OnCompleteListener {
         /**
          * Called when the operation successfully completes.
@@ -5014,13 +5001,13 @@ public class ConnectivityManager {
     @RequiresPermission(android.Manifest.permission.CONTROL_OEM_PAID_NETWORK_PREFERENCE)
     public void setOemNetworkPreference(@NonNull final OemNetworkPreferences preference,
             @Nullable @CallbackExecutor final Executor executor,
-            @Nullable final OnSetOemNetworkPreferenceListener listener) {
+            @Nullable final OnCompleteListener listener) {
         Objects.requireNonNull(preference, "OemNetworkPreferences must be non-null");
         if (null != listener) {
             Objects.requireNonNull(executor, "Executor must be non-null");
         }
-        final IOnSetOemNetworkPreferenceListener listenerInternal = listener == null ? null :
-                new IOnSetOemNetworkPreferenceListener.Stub() {
+        final IOnCompleteListener listenerInternal = listener == null ? null :
+                new IOnCompleteListener.Stub() {
                     @Override
                     public void onComplete() {
                         executor.execute(listener::onComplete);
@@ -5050,7 +5037,7 @@ public class ConnectivityManager {
      * @throws SecurityException if missing the appropriate permissions.
      * @hide
      */
-    // TODO : @SystemApi
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.NETWORK_STACK)
     public void setNetworkPreferenceForUser(@NonNull final UserHandle profile, final int capability,
             @Nullable @CallbackExecutor final Executor executor,
