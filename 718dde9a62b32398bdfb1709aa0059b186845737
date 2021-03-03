@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42c98fe2_8d0dc620",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-03T22:13:58Z",
+      "side": 0,
+      "message": "accidentally duplicated in aosp/1589135 - remove as this doesn\u0027t actually test anything",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 5
+      },
+      "revId": "718dde9a62b32398bdfb1709aa0059b186845737",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
