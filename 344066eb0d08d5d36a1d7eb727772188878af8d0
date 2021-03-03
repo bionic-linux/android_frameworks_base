@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ef54b66_ed7f06db",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4988,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:46:50Z",
+      "side": 1,
+      "message": "Do you need to say \"this.\" here ?",
+      "range": {
+        "startLine": 4988,
+        "startChar": 44,
+        "endLine": 4988,
+        "endChar": 48
+      },
+      "revId": "344066eb0d08d5d36a1d7eb727772188878af8d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98643c7c_a64951d5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4988,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-03T10:46:50Z",
+      "side": 1,
+      "message": "final (here and on the int below)",
+      "range": {
+        "startLine": 4988,
+        "startChar": 8,
+        "endLine": 4988,
+        "endChar": 24
+      },
+      "revId": "344066eb0d08d5d36a1d7eb727772188878af8d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
