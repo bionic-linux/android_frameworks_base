@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4095eaa_3028d0ac",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T08:13:14Z",
+      "side": 1,
+      "message": "This is an important change, but it\u0027s unrelated to the rest of the CL, and the commit message of this CL does not mention it. Suggest moving the permission changes to another CL, so they can be justified (and, if necessary, reverted) separately.",
+      "range": {
+        "startLine": 769,
+        "startChar": 8,
+        "endLine": 769,
+        "endChar": 64
+      },
+      "revId": "41a603e9f1e2719aea1cbdb7d566a5e50a38c57f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
