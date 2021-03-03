@@ -176,6 +176,24 @@
       "parentUuid": "9b772d21_1ec8d8ab",
       "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "419197bf_6038a188",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-03-03T15:19:38Z",
+      "side": 1,
+      "message": "Sorry on 12, typo",
+      "parentUuid": "e31bc0fe_c10df7c1",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
