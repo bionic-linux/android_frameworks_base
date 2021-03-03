@@ -323,6 +323,7 @@ genrule {
 genrule {
     name: "services-system-server-current.txt",
     srcs: [
+        ":service-statsd{.system-server.api.txt}",
         ":service-permission{.system-server.api.txt}",
         ":non-updatable-system-server-current.txt",
     ],
