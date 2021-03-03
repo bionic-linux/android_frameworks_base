@@ -19,6 +19,7 @@ package android.net;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.Size;
 import android.annotation.SystemApi;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -30,7 +31,10 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -203,6 +207,7 @@ public final class IpPrefix implements Parcelable {
      * @param otherPrefix the prefix to test
      * @hide
      */
+    @SystemApi
     public boolean containsPrefix(@NonNull IpPrefix otherPrefix) {
         if (otherPrefix.getPrefixLength() < prefixLength) return false;
         final byte[] otherAddress = otherPrefix.getRawAddress();
@@ -300,4 +305,78 @@ public final class IpPrefix implements Parcelable {
                     return new IpPrefix[size];
                 }
             };
+
+    /**
+     * Returns the collection of prefixes that comprise the result of subtracting {@code other}
+     * prefix from this prefix.
+     *
+     * <p>For example, for the prefix 0.0.0.0/0, subtracting the prefix 0.0.0.0/4 will return the
+     * prefixes that combined make up the difference:
+     *
+     * <ul>
+     *   <li>128.0.0.0/1
+     *   <li>64.0.0.0/2
+     *   <li>32.0.0.0/3
+     *   <li>16.0.0.0/4
+     * </ul>
+     *
+     * @hide
+     */
+    @SystemApi
+    @NonNull
+    public Collection<IpPrefix> subtractPrefix(@NonNull IpPrefix other) {
+        if (!this.containsPrefix(other)) {
+            return Collections.emptyList();
+        }
+
+        // If this contains "other", size of subtraction result list is equal to difference in
+        // prefix lengths.
+        Collection<IpPrefix> result = new ArrayList<>(other.getPrefixLength() - getPrefixLength());
+
+        IpPrefix current = this;
+        while (!current.equals(other)) {
+            // Split current prefix until we find the exact match for "other"
+            for (IpPrefix subprefix: getSubsetPrefixes(current)) {
+                if (subprefix.containsPrefix(other)) {
+                    // Only one of subprefixes can contain "other"
+                    current = subprefix;
+                } else {
+                    // Subprefix that doesn't contain "other" is part of the result
+                    result.add(subprefix);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Returns the two prefixes that comprise the given prefix.
+     *
+     * <p>For example, for the prefix 192.0.2.0/24, this will return the two prefixes that combined
+     * make up the current prefix:
+     *
+     * <ul>
+     *   <li>192.0.2.0/25
+     *   <li>192.0.2.128/25
+     * </ul>
+     *
+     * @hide
+     */
+    @SystemApi
+    @Size(2)
+    @NonNull
+    public static Collection<IpPrefix> getSubsetPrefixes(@NonNull IpPrefix prefix) {
+        final Collection<IpPrefix> result = new ArrayList<>(2);
+
+        final int currentPrefixLen = prefix.getPrefixLength();
+        result.add(new IpPrefix(prefix.getAddress(), currentPrefixLen + 1));
+
+        final byte[] other = prefix.getRawAddress();
+        other[currentPrefixLen / 8] =
+                (byte) (other[currentPrefixLen / 8] ^ (0x80 >> (currentPrefixLen % 8)));
+        result.add(new IpPrefix(other, currentPrefixLen + 1));
+
+        return result;
+    }
 }
