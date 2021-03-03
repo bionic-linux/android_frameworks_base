@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008618468",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1614522?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "faa373d3_6173dd47",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-03T14:48:11Z",
+      "side": 1,
+      "message": "Change must include a \"Tag:\" stanza. Valid tags are #compatibility #stability #security #feature #floss #gd-refactor #refactor",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "0347bbd94d418a1dc0db4bda0db893b86e8817d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008618468",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1614522?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "09088c6a_013c86c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-03T14:48:11Z",
+      "side": 1,
+      "message": "\"m ds-docs-java\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 20
+      },
+      "revId": "0347bbd94d418a1dc0db4bda0db893b86e8817d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
