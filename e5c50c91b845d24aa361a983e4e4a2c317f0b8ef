@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8601af11_a446562b",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-03T20:12:59Z",
+      "side": 1,
+      "message": "Nit: this and the triggerSubscriptionTrackerCbAndGetSnapshot() can probably be extracted to a \"setPrivileged(boolean)\" method.\n\nProbably as a follow-up though.",
+      "range": {
+        "startLine": 879,
+        "startChar": 0,
+        "endLine": 886,
+        "endChar": 95
+      },
+      "revId": "e5c50c91b845d24aa361a983e4e4a2c317f0b8ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
