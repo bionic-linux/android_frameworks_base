@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5326721_e1174879",
+        "filename": "packages/Connectivity/framework/src/android/net/UidRange.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "Right now this takes a collection, not a set.\n\nThat means that this conversion loses information: for example, if I have [(1, 10), (100-200), (1, 10)], then calling this method on it will return [(1, 10), (100-200)] which is not the same.\n\nIs that actually what you want this method to do? If not, then this should take a Set instead.",
+      "range": {
+        "startLine": 156,
+        "startChar": 18,
+        "endLine": 156,
+        "endChar": 21
+      },
+      "revId": "62863a0df19701fa0221e54e33419fc4b6428d57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c7c7d0b_430cfb34",
+        "filename": "packages/Connectivity/framework/src/android/net/UidRange.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "This could just be called fromIntRanges.",
+      "range": {
+        "startLine": 159,
+        "startChar": 37,
+        "endLine": 159,
+        "endChar": 57
+      },
+      "revId": "62863a0df19701fa0221e54e33419fc4b6428d57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ff16be8_82c4e06e",
+        "filename": "packages/Connectivity/framework/src/android/net/UidRange.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 171,
+        "startChar": 18,
+        "endLine": 171,
+        "endChar": 21
+      },
+      "revId": "62863a0df19701fa0221e54e33419fc4b6428d57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "907b8533_d9fe63da",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6865,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "singleUidRange?",
+      "range": {
+        "startLine": 6865,
+        "startChar": 29,
+        "endLine": 6865,
+        "endChar": 40
+      },
+      "revId": "62863a0df19701fa0221e54e33419fc4b6428d57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d94652a2_679b927f",
+        "filename": "tests/net/java/com/android/server/connectivity/VpnTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "Why do you need this method? Is it just to make the code shorter?\n\nBut if so, consider: this is VpnTest, and if someone reading this code sees Vpn.someMethod(), then they will understand that someMethod is being tested. If you call this just uidRangeForUser, then they might think it\u0027s just a utility function that does not impact the Vpn class that is being tested. Would recommend just using Vpn.createUidRangeForUser.\n\nIf on the other hand the intent of this method is *not* to test Vpn.createUidRangeForUser, and you\u0027re just using it as a utility function locally, then... the correctness of test code should not depend on production code and you might want to reimplement the method here in the test.",
+      "range": {
+        "startLine": 269,
+        "startChar": 34,
+        "endLine": 269,
+        "endChar": 49
+      },
+      "revId": "62863a0df19701fa0221e54e33419fc4b6428d57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

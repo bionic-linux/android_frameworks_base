@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9865073_bbe351f8",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "No need to keep this comment, the defensive copy is right here.",
+      "range": {
+        "startLine": 155,
+        "startChar": 69,
+        "endLine": 155,
+        "endChar": 96
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9755a10_6663954d",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "Optional: you could also simply do:\n\n    mUids \u003d new ArraySet\u003c\u003e(1);\n    mUids.add(new UidRange(uid, uid));\n\nIt\u0027s simpler and faster than calling setUids, but less consistent. Up to you.",
+      "range": {
+        "startLine": 1438,
+        "startChar": 0,
+        "endLine": 1440,
+        "endChar": 26
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "980a9b1a_5cfd527c",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "@Nullable Set",
+      "range": {
+        "startLine": 1449,
+        "startChar": 48,
+        "endLine": 1449,
+        "endChar": 51
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bca0e83_890cf0e9",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "You don\u0027t need this check, convertToIntRanges will do it for you.",
+      "range": {
+        "startLine": 1460,
+        "startChar": 0,
+        "endLine": 1460,
+        "endChar": 39
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "246bc3e0_aed81929",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "@Nullable Set",
+      "range": {
+        "startLine": 279,
+        "startChar": 31,
+        "endLine": 279,
+        "endChar": 34
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8979bcaf_f230819e",
+        "filename": "packages/Connectivity/framework/src/android/net/UidRange.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "Nit: will this fit on the previous line?",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f90a687_c873781a",
+        "filename": "packages/Connectivity/framework/src/android/net/UidRange.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "This could just be called toIntRanges.",
+      "range": {
+        "startLine": 175,
+        "startChar": 43,
+        "endLine": 175,
+        "endChar": 61
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e8e450b_19bf849e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6758,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "This seems superfluous.\n\nnc already internally has a Set\u003cUidRange\u003e. getUids() will convert it to a Set\u003cRange\u003cInteger\u003e\u003e, and then convertFromUidRanges will convert that back to a Set\u003cUidRange\u003e.\n\nInstead of doing this double conversion, why not just add an @hide method to NetworkCapabilities that returns a copy of the actual Set\u003cUidRange\u003e? You could call it getUidRanges or something.",
+      "range": {
+        "startLine": 6755,
+        "startChar": 0,
+        "endLine": 6758,
+        "endChar": 5
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89d5f95c_54e6954e",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T17:17:56Z",
+      "side": 1,
+      "message": "Could you add some test coverage here to check that setUids(null) causes the object to match all UIDs? (If we already have such coverage, no need to add it of course. I didn\u0027t see any, but I might have missed it.)",
+      "range": {
+        "startLine": 296,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 5
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
