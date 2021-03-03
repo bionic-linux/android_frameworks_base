@@ -22,6 +22,30 @@
       },
       "revId": "debaa642d2b58abf149d2e09a9dbb4fcd26ae4d4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a927249_1faf2382",
+        "filename": "tests/vcn/java/com/android/server/VcnManagementServiceTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-03T21:44:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d38bb89f_34d426d4",
+      "range": {
+        "startLine": 881,
+        "startChar": 59,
+        "endLine": 881,
+        "endChar": 60
+      },
+      "revId": "debaa642d2b58abf149d2e09a9dbb4fcd26ae4d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
