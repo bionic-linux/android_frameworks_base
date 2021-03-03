@@ -158,6 +158,24 @@
       "parentUuid": "c6699eb5_77934a70",
       "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e31bc0fe_c10df7c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-03-03T11:03:49Z",
+      "side": 1,
+      "message": "I tried on 11 and indeed it doesn\u0027t crash, as far as I can tell ActivityTaskManager is still using the Singleton but is blocked somehow. Maybe the singleton layout changed itself\nI\u0027ll try digging in the preview.",
+      "parentUuid": "9b772d21_1ec8d8ab",
+      "revId": "c705cc13f1d0ae510367af26761c4268835c53c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
