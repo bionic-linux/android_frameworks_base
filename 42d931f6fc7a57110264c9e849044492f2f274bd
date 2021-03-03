@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "955ddc00_d4b06091",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T06:44:50Z",
+      "side": 1,
+      "message": "LGTM to merge as is since this is treehugged, but please do attempt to apply the inline comments, hopefully they\u0027ll simplify the code a bit.",
+      "revId": "42d931f6fc7a57110264c9e849044492f2f274bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d9a03ca_34bf1e77",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 5479,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T06:44:50Z",
+      "side": 1,
+      "message": "Nit: if it doesn\u0027t cause too much churn or line wrapping, would rename to expectNotifyNetworkStatus. Rationale: expectNetworkStatus could be read to mean \"expect that the current status of a network is xyz\". expectNotifyNetworkStatus suggests that we\u0027re expecting a method call, or at least expecting a notification, or in general, we\u0027re expecting some action to have been performed.",
+      "range": {
+        "startLine": 5479,
+        "startChar": 17,
+        "endLine": 5479,
+        "endChar": 36
+      },
+      "revId": "42d931f6fc7a57110264c9e849044492f2f274bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37c815c9_f6c5950b",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 5491,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T06:44:50Z",
+      "side": 1,
+      "message": "Any reason to continue to cast this to an array? List\u003cUnderlyingNetworkInfo\u003e should have the same or better methods available to it that UnderlyingNetworkInfo[] has.\n\nKeeping it as a Collection or List may even allow you to use some existing assertSameElements helper method somewhere that takes a collection, and you might be able to delete assertSameElementsNoDuplicates (which isn\u0027t great, and which ideally shouldn\u0027t exist). Even if this isn\u0027t possible, if this is the only caller of assertSameElementsNoDuplicates, you could convert that to taking a List\u003cT\u003e.",
+      "range": {
+        "startLine": 5491,
+        "startChar": 50,
+        "endLine": 5491,
+        "endChar": 78
+      },
+      "revId": "42d931f6fc7a57110264c9e849044492f2f274bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bb83cb5_eedf5f60",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 5505,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T06:44:50Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 5505,
+        "startChar": 17,
+        "endLine": 5505,
+        "endChar": 36
+      },
+      "revId": "42d931f6fc7a57110264c9e849044492f2f274bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58826b69_5ca40662",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 5515,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-03T06:44:50Z",
+      "side": 1,
+      "message": "Does this need to be a Network[]? Could it just be a List\u003cNetwork\u003e ? That\u0027s what notifyNetworkStatus takes. Making it a List\u003cNetwork\u003e might simplify the code.",
+      "range": {
+        "startLine": 5515,
+        "startChar": 8,
+        "endLine": 5515,
+        "endChar": 82
+      },
+      "revId": "42d931f6fc7a57110264c9e849044492f2f274bd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
