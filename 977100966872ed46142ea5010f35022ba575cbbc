@@ -33,6 +33,23 @@
       "message": "Hi Sudheer/Amith,\nI\u0027m about to change NPMS \u003c-\u003e ConnectivityService interface with multiple CLs.\nThus, I found the merge conflict in master due to this CL.\nI\u0027ll suggest to merge this soon to prevent any further conflict.\nIt is LGTM since this is a cherry-pick from ag/13608074.",
       "revId": "977100966872ed46142ea5010f35022ba575cbbc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed42f4a6_062de0c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T02:41:15Z",
+      "side": 1,
+      "message": "Identical to ag/13608074 which is already approved and merged.",
+      "revId": "977100966872ed46142ea5010f35022ba575cbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
