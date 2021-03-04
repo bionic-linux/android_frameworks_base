@@ -43,7 +43,6 @@ import android.os.UserHandle;
 
 import com.android.internal.net.NetworkUtilsInternal;
 import com.android.internal.net.VpnConfig;
-import com.android.net.module.util.NetUtils;
 
 import java.net.DatagramSocket;
 import java.net.Inet4Address;
@@ -970,7 +969,7 @@ public class VpnService extends Service {
         @Nullable
         public ParcelFileDescriptor establish() {
             mConfig.addresses = mAddresses;
-            mConfig.routes = NetUtils.toUnicastRoutes(mRoutes);
+            mConfig.routes = mRoutes;
 
             try {
                 return getService().establishVpn(mConfig);
