@@ -1,0 +1,368 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "67cfb1ab_eda18e00",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 20
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2c00c1b5_f7e8e567",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 8
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "765735f6_3046542d",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 285,
+        "startChar": 74,
+        "endLine": 285,
+        "endChar": 75
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0b61b8ea_cc9c9a9a",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "172f8935_20fd0eed",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 304,
+        "startChar": 78,
+        "endLine": 304,
+        "endChar": 79
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "665791fd_b7b8fdb3",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c69c542e_668ac2cf",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 329,
+        "startChar": 78,
+        "endLine": 329,
+        "endChar": 79
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ce56c3e7_000ffb36",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b88b7387_c7ab2497",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 376,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "86fc707b_1e991ef5",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 401,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3f0e2d37_875dbae0",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 434,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5394020c_0fc205d8",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 512,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "41e15a1f_e7bed0ac",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 516,
+        "startChar": 0,
+        "endLine": 516,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664835",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/42202?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ecac55fc_fab14ba2",
+        "filename": "voip/java/com/android/server/sip/SipHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:11Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 550,
+        "startChar": 0,
+        "endLine": 550,
+        "endChar": 12
+      },
+      "revId": "65b6f95643571edbd377bbfda8276e5a0945b7af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
