@@ -46,6 +46,7 @@ import com.android.server.wm.SurfaceAnimator.OnAnimationFinishedCallback;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Helper class to run app animations in a remote process.
@@ -57,7 +58,7 @@ class RemoteAnimationController implements DeathRecipient {
 
     private final WindowManagerService mService;
     private final RemoteAnimationAdapter mRemoteAnimationAdapter;
-    private final ArrayList<RemoteAnimationRecord> mPendingAnimations = new ArrayList<>();
+    private final List<RemoteAnimationRecord> mPendingAnimations = Collections.synchronizedList(new ArrayList<>());
     private final ArrayList<WallpaperAnimationAdapter> mPendingWallpaperAnimations =
             new ArrayList<>();
     private final Rect mTmpRect = new Rect();
