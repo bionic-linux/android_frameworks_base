@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665119",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/180400?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "ed17589a_45c1e753",
+          "description": "Change to \"media/java/android/media/AudioFormat.java\"",
+          "replacements": [
+            {
+              "path": "media/java/android/media/AudioFormat.java",
+              "range": {
+                "startLine": 256,
+                "startChar": 4,
+                "endLine": 256,
+                "endChar": 9
+              },
+              "replacement": " */"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6c5a2051_b315bdc8",
+        "filename": "media/java/android/media/AudioFormat.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:49Z",
+      "side": 1,
+      "message": "Common typo found: \" * */\" -- should it be \" */\"?\nMalformatted comment.\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 9
+      },
+      "revId": "88e71cc711cadfca320096d1afc8b63b5dccb9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
