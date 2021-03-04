@@ -104,6 +104,24 @@
       "parentUuid": "7306f05b_f1d17602",
       "revId": "76ccffb4e2d5d641de6cbb9a33b2debf8042b97e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66d0ee46_0ef73455",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-03-04T10:03:41Z",
+      "side": 1,
+      "message": "ok, I think it makes sense that we make this match the system server classpath jars. On that basis, maybe we only need the internal CL to add the ones mentioned above",
+      "parentUuid": "4a8ea811_e4831e4d",
+      "revId": "76ccffb4e2d5d641de6cbb9a33b2debf8042b97e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
