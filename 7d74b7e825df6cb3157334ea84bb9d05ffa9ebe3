@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4015fca9_e621f01e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T11:11:00Z",
+      "side": 1,
+      "message": "module-lib",
+      "range": {
+        "startLine": 10,
+        "startChar": 30,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "7d74b7e825df6cb3157334ea84bb9d05ffa9ebe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9298a8fe_bbb81026",
+        "filename": "core/java/android/net/EthernetNetworkSpecifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T11:11:00Z",
+      "side": 1,
+      "message": "Nit: interfaceName",
+      "range": {
+        "startLine": 45,
+        "startChar": 52,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "7d74b7e825df6cb3157334ea84bb9d05ffa9ebe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91cbcbd9_392a7a9b",
+        "filename": "core/java/android/net/EthernetNetworkSpecifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T11:11:00Z",
+      "side": 1,
+      "message": "No need to specify \"this\".",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "7d74b7e825df6cb3157334ea84bb9d05ffa9ebe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a812649_79006da1",
+        "filename": "core/java/android/net/EthernetNetworkSpecifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T11:11:00Z",
+      "side": 1,
+      "message": "I thought we had decided that in the future we might support specifying via other means (e.g., MAC address), in which case this would become @Nullable.\n\nI would probably this @Nullable and, to help clarify to API council why the getter is @Nullable but the constructor takes @NonNull, add a comment explaining that it is @Nullable because in the future we want to be able to construct a specifier based only on data other than the interface name.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 12
+      },
+      "revId": "7d74b7e825df6cb3157334ea84bb9d05ffa9ebe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ba918e0_db6483ef",
+        "filename": "core/java/android/net/EthernetNetworkSpecifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T11:11:00Z",
+      "side": 1,
+      "message": "Nit: consider:\n\n    \"EthernetNetworkSpecifier(\" + mInterfaceName + \")\"\n\nso folks don\u0027t think this is just a string.",
+      "range": {
+        "startLine": 73,
+        "startChar": 15,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "7d74b7e825df6cb3157334ea84bb9d05ffa9ebe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99820cd0_12a6b425",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T11:11:00Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 385,
+        "startChar": 21,
+        "endLine": 385,
+        "endChar": 43
+      },
+      "revId": "7d74b7e825df6cb3157334ea84bb9d05ffa9ebe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf900c6e_ce7a32c1",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T11:11:00Z",
+      "side": 1,
+      "message": "This looks quite weird. How about:\n\n    if (TextUtils.isEmpty(networkSpecifier)) {\n        return null;\n    } else if (mNetworkCapabilities.hasTransport(TRANSPORT_TEST)) {\n        return new TestNetworkSpecifier(networkSpecifier);\n    } else {\n        return new EthernetNetworkSpecifier(networkSpecifier));\n    }",
+      "range": {
+        "startLine": 388,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 74
+      },
+      "revId": "7d74b7e825df6cb3157334ea84bb9d05ffa9ebe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0e5d59_badc4768",
+        "filename": "packages/Connectivity/framework/src/android/net/TestNetworkSpecifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-04T11:11:00Z",
+      "side": 1,
+      "message": "unneeded",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 13
+      },
+      "revId": "7d74b7e825df6cb3157334ea84bb9d05ffa9ebe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
