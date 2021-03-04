@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "525fab76_25cbf246",
+        "filename": "core/java/android/net/vcn/persistablebundleutils/IkeSessionParamsUtils.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-03-04T21:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55e042bb_dd60b25c",
+      "range": {
+        "startLine": 162,
+        "startChar": 43,
+        "endLine": 162,
+        "endChar": 52
+      },
+      "revId": "30b02c1ad85536bdc8ba8a55d2e5184b827beb5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f35420f8_0cf7f3ba",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-04T02:00:54Z",
       "side": 1,
       "message": "Hmm, from my reading of the code, this should fail; we set NATT_KEEPALIVE_DELAY_SEC_KEY in a persistable bundle, but never seem to read a value using that key?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 53
+      },
+      "revId": "30b02c1ad85536bdc8ba8a55d2e5184b827beb5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d6e2d46_d9aa545d",
+        "filename": "tests/vcn/java/android/net/vcn/persistablebundleutils/IkeSessionParamsUtilsTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-03-04T21:00:37Z",
+      "side": 1,
+      "message": "Yeah we forgot to add nattKeepaliveDeley in IkeSessionParams#hashCode and IkeSessionParams#equals. Fixed that in aosp/1619621",
+      "parentUuid": "f35420f8_0cf7f3ba",
       "range": {
         "startLine": 79,
         "startChar": 8,
