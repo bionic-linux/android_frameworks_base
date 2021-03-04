@@ -1,0 +1,229 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665110",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/32820?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2f7a6638_9f1dc888",
+        "filename": "services/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:47Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 307,
+        "startChar": 69,
+        "endLine": 307,
+        "endChar": 70
+      },
+      "revId": "8c617af78eb088ba5da033d68f450e1b60204555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665110",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/32820?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e05beed0_37dc79ac",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:47Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "8c617af78eb088ba5da033d68f450e1b60204555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665110",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/32820?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "87d09bd0_793bfe2c",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:47Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 4
+      },
+      "revId": "8c617af78eb088ba5da033d68f450e1b60204555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665110",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/32820?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "69cc4896_b4f8cba6",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:47Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 4
+      },
+      "revId": "8c617af78eb088ba5da033d68f450e1b60204555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665110",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/32820?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ff43faec_b9966636",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:47Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 4
+      },
+      "revId": "8c617af78eb088ba5da033d68f450e1b60204555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665110",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/32820?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3c22ff6b_cb14fee7",
+        "filename": "telephony/java/android/telephony/PreciseCallState.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:47Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 4
+      },
+      "revId": "8c617af78eb088ba5da033d68f450e1b60204555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665109",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/32820?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "d46be842_c23d6b53",
+          "description": "Change to \"telephony/java/android/telephony/TelephonyManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/TelephonyManager.java",
+              "range": {
+                "startLine": 1217,
+                "startChar": 7,
+                "endLine": 1217,
+                "endChar": 14
+              },
+              "replacement": "occurred"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "196c3f12_66da21dd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:47Z",
+      "side": 1,
+      "message": "Common typo found: \"occured\" -- should it be \"occurred\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1217,
+        "startChar": 7,
+        "endLine": 1217,
+        "endChar": 14
+      },
+      "revId": "8c617af78eb088ba5da033d68f450e1b60204555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665110",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/32820?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0bbeddf8_ff24f4e8",
+        "filename": "telephony/java/com/android/internal/telephony/ITelephonyRegistry.aidl",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:47Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 32,
+        "startChar": 65,
+        "endLine": 32,
+        "endChar": 66
+      },
+      "revId": "8c617af78eb088ba5da033d68f450e1b60204555",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
