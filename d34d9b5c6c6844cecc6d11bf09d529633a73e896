@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665653",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/339904?revision\u003d5",
+      "fixSuggestions": [
+        {
+          "fixId": "8c79068d_562505c0",
+          "description": "Change to \"telephony/java/android/telephony/CellInfo.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CellInfo.java",
+              "range": {
+                "startLine": 113,
+                "startChar": 17,
+                "endLine": 113,
+                "endChar": 26
+              },
+              "replacement": "overridden"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ad0de8f6_11be0888",
+        "filename": "telephony/java/android/telephony/CellInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:27:44Z",
+      "side": 1,
+      "message": "Common typo found: \"overriden\" -- should it be \"overridden\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 113,
+        "startChar": 17,
+        "endLine": 113,
+        "endChar": 26
+      },
+      "revId": "d34d9b5c6c6844cecc6d11bf09d529633a73e896",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
