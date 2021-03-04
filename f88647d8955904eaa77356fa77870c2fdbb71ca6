@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664991",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/35501?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6adeb8a9_78b7f5de",
+        "filename": "core/java/android/preference/PreferenceActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:53Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1048,
+        "startChar": 0,
+        "endLine": 1048,
+        "endChar": 102
+      },
+      "revId": "f88647d8955904eaa77356fa77870c2fdbb71ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664991",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/35501?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "44cb6787_b7a0381c",
+        "filename": "core/java/android/preference/PreferenceActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:53Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1053,
+        "startChar": 6,
+        "endLine": 1053,
+        "endChar": 7
+      },
+      "revId": "f88647d8955904eaa77356fa77870c2fdbb71ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008664991",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/35501?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c16865c1_67695b3a",
+        "filename": "core/java/android/preference/PreferenceActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:23:53Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1327,
+        "startChar": 0,
+        "endLine": 1327,
+        "endChar": 101
+      },
+      "revId": "f88647d8955904eaa77356fa77870c2fdbb71ca6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
