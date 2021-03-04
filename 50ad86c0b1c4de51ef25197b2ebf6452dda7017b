@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665263",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/169203?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4e0b7165_5b81f6cd",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2946,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:25:46Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 2946,
+        "startChar": 0,
+        "endLine": 2946,
+        "endChar": 105
+      },
+      "revId": "50ad86c0b1c4de51ef25197b2ebf6452dda7017b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665263",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/169203?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4a893753_be23e0e1",
+        "filename": "core/java/android/app/admin/DevicePolicyManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2948,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:25:46Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 2948,
+        "startChar": 0,
+        "endLine": 2948,
+        "endChar": 103
+      },
+      "revId": "50ad86c0b1c4de51ef25197b2ebf6452dda7017b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
