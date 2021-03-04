@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17596249_f8b44190",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "e9865073_bbe351f8",
+      "range": {
+        "startLine": 155,
+        "startChar": 69,
+        "endLine": 155,
+        "endChar": 96
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9755a10_6663954d",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-03T17:17:56Z",
       "side": 1,
       "message": "Optional: you could also simply do:\n\n    mUids \u003d new ArraySet\u003c\u003e(1);\n    mUids.add(new UidRange(uid, uid));\n\nIt\u0027s simpler and faster than calling setUids, but less consistent. Up to you.",
+      "range": {
+        "startLine": 1438,
+        "startChar": 0,
+        "endLine": 1440,
+        "endChar": 26
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13763a2b_c26ab8ef",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9755a10_6663954d",
       "range": {
         "startLine": 1438,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e5cedaa_ebf39c09",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "980a9b1a_5cfd527c",
+      "range": {
+        "startLine": 1449,
+        "startChar": 48,
+        "endLine": 1449,
+        "endChar": 51
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bca0e83_890cf0e9",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-03T17:17:56Z",
       "side": 1,
       "message": "You don\u0027t need this check, convertToIntRanges will do it for you.",
+      "range": {
+        "startLine": 1460,
+        "startChar": 0,
+        "endLine": 1460,
+        "endChar": 39
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b70eb72_d71764b4",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bca0e83_890cf0e9",
       "range": {
         "startLine": 1460,
         "startChar": 0,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83b12dd4_dca9b296",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "246bc3e0_aed81929",
+      "range": {
+        "startLine": 279,
+        "startChar": 31,
+        "endLine": 279,
+        "endChar": 34
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8979bcaf_f230819e",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-03-03T17:17:56Z",
       "side": 1,
       "message": "Nit: will this fit on the previous line?",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 51
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64842da0_3253c39f",
+        "filename": "packages/Connectivity/framework/src/android/net/UidRange.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8979bcaf_f230819e",
       "range": {
         "startLine": 161,
         "startChar": 12,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3308198b_61251e5f",
+        "filename": "packages/Connectivity/framework/src/android/net/UidRange.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f90a687_c873781a",
+      "range": {
+        "startLine": 175,
+        "startChar": 43,
+        "endLine": 175,
+        "endChar": 61
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e8e450b_19bf849e",
@@ -185,6 +353,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51c8abe7_0542a3a5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 6758,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e8e450b_19bf849e",
+      "range": {
+        "startLine": 6755,
+        "startChar": 0,
+        "endLine": 6758,
+        "endChar": 5
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89d5f95c_54e6954e",
@@ -198,6 +390,30 @@
       "writtenOn": "2021-03-03T17:17:56Z",
       "side": 1,
       "message": "Could you add some test coverage here to check that setUids(null) causes the object to match all UIDs? (If we already have such coverage, no need to add it of course. I didn\u0027t see any, but I might have missed it.)",
+      "range": {
+        "startLine": 296,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 5
+      },
+      "revId": "62fc7757f2934a02990a9074bd5db6c24491b9d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cabc533b_2d89aa35",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-04T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89d5f95c_54e6954e",
       "range": {
         "startLine": 296,
         "startChar": 4,
