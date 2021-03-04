@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666022",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/695503?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "59dfbc74_0a39eaef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:29:13Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "ffde9e95547061cb47bceceba6080675d2ded90f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666022",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/695503?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0131bbdf_bafe3e81",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:29:13Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 194,
+        "startChar": 64,
+        "endLine": 194,
+        "endChar": 67
+      },
+      "revId": "ffde9e95547061cb47bceceba6080675d2ded90f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008666022",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/695503?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5df6e1bc_750f502b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4998,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:29:13Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 4998,
+        "startChar": 18,
+        "endLine": 4998,
+        "endChar": 30
+      },
+      "revId": "ffde9e95547061cb47bceceba6080675d2ded90f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
