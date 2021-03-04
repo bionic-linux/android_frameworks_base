@@ -121,7 +121,7 @@ public class IpSecAlgorithmTest {
 
     @Test
     public void testValidationForAlgosAddedInS() throws Exception {
-        if (Build.VERSION.FIRST_SDK_INT <= Build.VERSION_CODES.R) {
+        if (Build.VERSION.FIRST_SDK_INT < Build.VERSION_CODES.S) {
             return;
         }
 
