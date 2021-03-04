@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008668989",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1605518?revision\u003d5",
+      "fixSuggestions": [
+        {
+          "fixId": "4e221430_4c95e983",
+          "description": "Change to \"services/core/java/com/android/server/notification/PreferencesHelper.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+              "range": {
+                "startLine": 837,
+                "startChar": 77,
+                "endLine": 837,
+                "endChar": 85
+              },
+              "replacement": "guarantee"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "2027d967_a64d4157",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T15:44:32Z",
+      "side": 1,
+      "message": "Common typo found: \"garantee\" -- should it be \"guarantee\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 837,
+        "startChar": 77,
+        "endLine": 837,
+        "endChar": 85
+      },
+      "revId": "4315eb603ca47bf614661146ba5dc97ddd4e02a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
