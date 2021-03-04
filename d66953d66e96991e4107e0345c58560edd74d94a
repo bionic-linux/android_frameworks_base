@@ -22,6 +22,30 @@
       },
       "revId": "d66953d66e96991e4107e0345c58560edd74d94a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "369baf65_5d5104bf",
+        "filename": "packages/Connectivity/framework/api/system-current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-04T12:15:31Z",
+      "side": 1,
+      "message": "Yeah I was wondering the same thing.\n\nIn practice it was pointed out to me that API guidelines say that we should go with the java functional interfaces instead of implementing our own whenever possible (API council guideline 6.5), so the right thing to do here according to the guidelines is to switch to a Runnable for both of these methods. So I did that.\n\nNote that the only real case I can think of for extension is the case where one of these APIs start needing to return asynchronous errors. Then we\u0027ll need to change the type of the argument. But note that even if we had the error callback today, any implementation of the S API could not have any handling of the errors, because S defines no errors. Therefore, any implementation of an ulterior API that defines errors would require update of the users, which means it\u0027s fine (and indeed, better) to deprecate this method and have the implementations explicitly switch to the new one – at least they\u0027ll get a warning when they upgrade their minimum SDK.",
+      "parentUuid": "4f91e202_a82df703",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 279
+      },
+      "revId": "d66953d66e96991e4107e0345c58560edd74d94a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
