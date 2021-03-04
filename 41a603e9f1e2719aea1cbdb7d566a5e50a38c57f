@@ -22,6 +22,30 @@
       },
       "revId": "41a603e9f1e2719aea1cbdb7d566a5e50a38c57f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd7b07ea_dcbcd574",
+        "filename": "services/core/java/com/android/server/am/BatteryStatsService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-04T08:45:33Z",
+      "side": 1,
+      "message": "Done, add aosp/1618839 for permission.",
+      "parentUuid": "f4095eaa_3028d0ac",
+      "range": {
+        "startLine": 769,
+        "startChar": 8,
+        "endLine": 769,
+        "endChar": 64
+      },
+      "revId": "41a603e9f1e2719aea1cbdb7d566a5e50a38c57f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
