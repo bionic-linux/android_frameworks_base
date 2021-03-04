@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bffc26f_3c35a44f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-04T10:01:01Z",
+      "side": 1,
+      "message": "This also needs to be removed, but I think it can only be done after cherry-picking ag/13749983 to AOSP",
+      "range": {
+        "startLine": 1040,
+        "startChar": 0,
+        "endLine": 1042,
+        "endChar": 9
+      },
+      "revId": "dcbfe5654f222c21998cccfbd79f030a4c0b80d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
