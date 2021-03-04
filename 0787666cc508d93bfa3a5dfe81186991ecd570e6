@@ -1,0 +1,125 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665069",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/177314?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e2f12540_145d015c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:35Z",
+      "side": 1,
+      "message": "Change must include a \"Sponsor:\" stanza indicating who at Google has personally signed up to take responsibility in case of any potential fallout.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "0787666cc508d93bfa3a5dfe81186991ecd570e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665069",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/177314?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "26d07f3b_7789b26a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:35Z",
+      "side": 1,
+      "message": "Must include a \"Test:\" stanza indicating how you tested this change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "0787666cc508d93bfa3a5dfe81186991ecd570e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665069",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/177314?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e9e84d25_220f7444",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:35Z",
+      "side": 1,
+      "message": "Change must include a \"Tag:\" stanza. Valid tags are #compatibility #stability #security #feature #floss #gd-refactor #refactor",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "0787666cc508d93bfa3a5dfe81186991ecd570e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008665068",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/177314?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "4c1eb0ff_645e4309",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothDevice.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothDevice.java",
+              "range": {
+                "startLine": 1152,
+                "startChar": 15,
+                "endLine": 1152,
+                "endChar": 20
+              },
+              "replacement": "false"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6c899083_5bf65764",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-04T13:24:35Z",
+      "side": 1,
+      "message": "Common typo found: \"flase\" -- should it be \"false\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1152,
+        "startChar": 15,
+        "endLine": 1152,
+        "endChar": 20
+      },
+      "revId": "0787666cc508d93bfa3a5dfe81186991ecd570e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
