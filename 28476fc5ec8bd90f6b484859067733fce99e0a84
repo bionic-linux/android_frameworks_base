@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5854d5bd_fcdf5da4",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-04T05:32:47Z",
+      "side": 1,
+      "message": "oops - done",
+      "parentUuid": "4ec7a2ad_20758f1a",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 89
+      },
+      "revId": "28476fc5ec8bd90f6b484859067733fce99e0a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61639622_f85c481d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85493938_ee761ea5",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-04T05:32:47Z",
+      "side": 1,
+      "message": "filed b/181815405 to track this",
+      "parentUuid": "61639622_f85c481d",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 58
+      },
+      "revId": "28476fc5ec8bd90f6b484859067733fce99e0a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7121b0ed_591c0526",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-03-04T00:14:00Z",
       "side": 1,
       "message": "Are we expecting that it restarts gateway connections? that seems expected, no?\n\nMaybe pass a set of requests back from the VcnNetworkProvider?",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 62
+      },
+      "revId": "28476fc5ec8bd90f6b484859067733fce99e0a84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cdf3508_622ce441",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-04T05:32:47Z",
+      "side": 1,
+      "message": "Added mocking to pass requests on registering + verify the connections reestablished\n\n(initially didn\u0027t test as it seemed redundant to verifying that VcnNetworkProvider provides requests on registering a listener)",
+      "parentUuid": "7121b0ed_591c0526",
       "range": {
         "startLine": 255,
         "startChar": 0,

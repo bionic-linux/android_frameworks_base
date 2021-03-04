@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "431eb3da_bcc6183f",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-04T05:32:47Z",
+      "side": 1,
+      "message": "took me way too long to realize testUpdateConfigExitsSafeMode() was failing because this ordering didn\u0027t match the ordered output from VcnGatewayConnectionConfig#getExposedCapabilities :|",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 70
+      },
+      "revId": "ef6d17fbab82ce928b8512f7808923cb8bada60c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
