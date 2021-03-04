@@ -16,6 +16,213 @@
       "message": "@Beverly Tai : I tried to implement a clean fix for multi user and when granted the bypass dnd rights from shell command line with associated permission (AudioManager CTS).\nAs we are in CTS certification, and before being tempted to bypass the test, we wanted to run and pass it at any cost.\nCould you prioritize the review of this change please? Many thanks in advance",
       "revId": "86add9864747e88ae449329d72b3245d3d34749d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d724cdc7_0c5c4c67",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "please leave a comment that this is set when notification access is granted or when a notification channel is created (ie: createNotificationChannel and setNotificationPolicyAccessGrantedForUser)",
+      "range": {
+        "startLine": 260,
+        "startChar": 48,
+        "endLine": 260,
+        "endChar": 72
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7053c46c_31c55999",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "minor: update comment to be more clear (ie: \"set allowedToBypassDnd here since PackagePreference may not have been created before this method call\")",
+      "range": {
+        "startLine": 830,
+        "startChar": 12,
+        "endLine": 830,
+        "endChar": 97
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfb7f7bd_705dd834",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "bypass",
+      "range": {
+        "startLine": 1607,
+        "startChar": 76,
+        "endLine": 1607,
+        "endChar": 83
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79b198cd_6238461c",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "minor: please rename to something like \"isPackagedAllowedToBypassDnd\" or \"canPackageBypassDnd\"",
+      "range": {
+        "startLine": 1609,
+        "startChar": 20,
+        "endLine": 1609,
+        "endChar": 54
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "406686d9_cb9c6438",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "minor: rename to something like isPackagedAllowedToBypassDnd / canBypassDnd",
+      "range": {
+        "startLine": 1610,
+        "startChar": 61,
+        "endLine": 1610,
+        "endChar": 80
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ff75ef5_78f147b1",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "minor: rename to something like setPackageAllowedToBypassDnd or setCanPackageBypassDnd",
+      "range": {
+        "startLine": 1622,
+        "startChar": 9,
+        "endLine": 1622,
+        "endChar": 38
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ad2a19a_058334ea",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "(same as other renaming comments)",
+      "range": {
+        "startLine": 1622,
+        "startChar": 79,
+        "endLine": 1622,
+        "endChar": 96
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cba07ea2_a4a9a279",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "please make consistent with other prints that check the default and then use the actual variable (ie: r.allowedBypassingDnd) in the print - similar to showBadge below",
+      "range": {
+        "startLine": 1902,
+        "startChar": 15,
+        "endLine": 1904,
+        "endChar": 17
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b838705_14fe6d0e",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1278152
+      },
+      "writtenOn": "2021-03-04T14:58:39Z",
+      "side": 1,
+      "message": "(same as other renaming comments)",
+      "range": {
+        "startLine": 2422,
+        "startChar": 16,
+        "endLine": 2422,
+        "endChar": 35
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
