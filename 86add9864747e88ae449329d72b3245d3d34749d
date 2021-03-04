@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f36ec095_81e48557",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d724cdc7_0c5c4c67",
+      "range": {
+        "startLine": 260,
+        "startChar": 48,
+        "endLine": 260,
+        "endChar": 72
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7053c46c_31c55999",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-04T14:58:39Z",
       "side": 1,
       "message": "minor: update comment to be more clear (ie: \"set allowedToBypassDnd here since PackagePreference may not have been created before this method call\")",
+      "range": {
+        "startLine": 830,
+        "startChar": 12,
+        "endLine": 830,
+        "endChar": 97
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a178cc87_93abdf73",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7053c46c_31c55999",
       "range": {
         "startLine": 830,
         "startChar": 12,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e16aa67e_c7343449",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb7f7bd_705dd834",
+      "range": {
+        "startLine": 1607,
+        "startChar": 76,
+        "endLine": 1607,
+        "endChar": 83
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79b198cd_6238461c",
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd8c6619_87f19e8a",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b198cd_6238461c",
+      "range": {
+        "startLine": 1609,
+        "startChar": 20,
+        "endLine": 1609,
+        "endChar": 54
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "406686d9_cb9c6438",
@@ -123,6 +219,30 @@
       "writtenOn": "2021-03-04T14:58:39Z",
       "side": 1,
       "message": "minor: rename to something like isPackagedAllowedToBypassDnd / canBypassDnd",
+      "range": {
+        "startLine": 1610,
+        "startChar": 61,
+        "endLine": 1610,
+        "endChar": 80
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e65bb8b_df68e3b0",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406686d9_cb9c6438",
       "range": {
         "startLine": 1610,
         "startChar": 61,
@@ -179,6 +299,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0e1e018_61db89dc",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ff75ef5_78f147b1",
+      "range": {
+        "startLine": 1622,
+        "startChar": 9,
+        "endLine": 1622,
+        "endChar": 38
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38966c28_48403b22",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad2a19a_058334ea",
+      "range": {
+        "startLine": 1622,
+        "startChar": 79,
+        "endLine": 1622,
+        "endChar": 96
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cba07ea2_a4a9a279",
@@ -202,6 +370,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28443bfa_e70ce191",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba07ea2_a4a9a279",
+      "range": {
+        "startLine": 1902,
+        "startChar": 15,
+        "endLine": 1904,
+        "endChar": 17
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b838705_14fe6d0e",
@@ -215,6 +407,30 @@
       "writtenOn": "2021-03-04T14:58:39Z",
       "side": 1,
       "message": "(same as other renaming comments)",
+      "range": {
+        "startLine": 2422,
+        "startChar": 16,
+        "endLine": 2422,
+        "endChar": 35
+      },
+      "revId": "86add9864747e88ae449329d72b3245d3d34749d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2be4c7b_ec21df7b",
+        "filename": "services/core/java/com/android/server/notification/PreferencesHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-04T15:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b838705_14fe6d0e",
       "range": {
         "startLine": 2422,
         "startChar": 16,
