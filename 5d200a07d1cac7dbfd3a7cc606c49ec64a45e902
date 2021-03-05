@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac2b551_bbd2a261",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-05T09:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef8cc76f_881e90cc",
+      "range": {
+        "startLine": 12,
+        "startChar": 55,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "532b24be_7779963e",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "106f3a86_ed173d7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-05T09:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "532b24be_7779963e",
+      "range": {
+        "startLine": 16,
+        "startChar": 64,
+        "endLine": 16,
+        "endChar": 66
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33a23f7a_c1389879",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-02-25T12:18:52Z",
       "side": 1,
       "message": "Maybe add spaces here?",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13ce0ec1_22e53d08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-05T09:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a23f7a_c1389879",
       "range": {
         "startLine": 22,
         "startChar": 0,
@@ -123,6 +195,30 @@
       "writtenOn": "2021-02-25T12:18:52Z",
       "side": 1,
       "message": "wildcard?",
+      "range": {
+        "startLine": 2375,
+        "startChar": 85,
+        "endLine": 2375,
+        "endChar": 89
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68dd11ed_d156531e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2375,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-05T09:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39467c30_d6bb2023",
       "range": {
         "startLine": 2375,
         "startChar": 85,
