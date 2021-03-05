@@ -221,4 +221,6 @@ interface IConnectivityManager
             in IOnCompleteListener listener);
 
     int getRestrictBackgroundStatusByCaller();
+
+    void setLingerTimer(in Network network, long newDelayMs);
 }

@@ -593,6 +593,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private static final int EVENT_UID_BLOCKED_REASON_CHANGED = 51;
 
     /**
+     * Set the linger timer for a given network.
+     * arg1 = the linger timer duration, in milliseconds
+     * obj = the network for which to set the linger timer
+     */
+    private static final int EVENT_UPDATE_LINGER_TIMER = 52;
+
+    /**
      * Argument for {@link #EVENT_PROVISIONING_NOTIFICATION} to indicate that the notification
      * should be shown.
      */
@@ -1324,7 +1331,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 new NetworkInfo(TYPE_NONE, 0, "", ""),
                 new LinkProperties(), new NetworkCapabilities(),
                 new NetworkScore.Builder().setLegacyInt(0).build(), mContext, null,
-                new NetworkAgentConfig(), this, null, null, 0, INVALID_UID, mQosCallbackTracker,
+                new NetworkAgentConfig(), this, null, null, 0, INVALID_UID, mLingerDelayMs,
+                mQosCallbackTracker,
                 mDeps);
     }
 
@@ -4662,6 +4670,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 case EVENT_REPORT_NETWORK_ACTIVITY:
                     mNetworkActivityTracker.handleReportNetworkActivity();
                     break;
+                case EVENT_UPDATE_LINGER_TIMER:
+                    final NetworkAgentInfo nai = getNetworkAgentInfoForNetwork((Network) msg.obj);
+                    handleUpdateLingerTimer(nai, msg.arg1);
             }
         }
     }
@@ -6323,7 +6334,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkAgentInfo nai = new NetworkAgentInfo(na,
                 new Network(mNetIdManager.reserveNetId()), new NetworkInfo(networkInfo), lp, nc,
                 currentScore, mContext, mTrackerHandler, new NetworkAgentConfig(networkAgentConfig),
-                this, mNetd, mDnsResolver, providerId, uid, mQosCallbackTracker, mDeps);
+                this, mNetd, mDnsResolver, providerId, uid, mLingerDelayMs,
+                mQosCallbackTracker, mDeps);
 
         // Make sure the LinkProperties and NetworkCapabilities reflect what the agent info says.
         processCapabilitiesFromAgent(nai, nc);
@@ -7112,6 +7124,23 @@ public class ConnectivityService extends IConnectivityManager.Stub
         // TODO: eliminate this defensive copy after confirming that updateLinkProperties does not
         // modify its oldLp parameter.
         updateLinkProperties(nai, newLp, new LinkProperties(nai.linkProperties));
+    }
+
+    @Override
+    public void setLingerTimer(@NonNull final Network network, final long newDelay) {
+        Objects.requireNonNull(network);
+        if (newDelay < 0) {
+            throw new IllegalArgumentException("Delay must be > 0");
+        }
+        if (newDelay > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Delay must be < " + Integer.MAX_VALUE);
+        }
+        enforceNetworkFactoryPermission();
+        mHandler.obtainMessage(EVENT_UPDATE_LINGER_TIMER, (int) newDelay, 0 /* unused */, network);
+    }
+
+    private void handleUpdateLingerTimer(@NonNull final NetworkAgentInfo nai, final int newDelay) {
+        nai.setLingerTimer(newDelay);
     }
 
     private void sendUpdatedScoreToFactories(NetworkAgentInfo nai) {
