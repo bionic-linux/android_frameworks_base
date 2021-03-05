@@ -16154,24 +16154,29 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             int profileUserId, boolean unlocked) {
         final boolean suspendedExplicitly;
         final boolean suspendedByTimeout;
+        final ActiveAdmin profileOwner;
+        final int deadlineState;
         synchronized (getLockObject()) {
-            final ActiveAdmin profileOwner = getProfileOwnerAdminLocked(profileUserId);
+            profileOwner = getProfileOwnerAdminLocked(profileUserId);
             if (profileOwner != null) {
-                final int deadlineState =
+                deadlineState =
                         updateProfileOffDeadlineLocked(profileUserId, profileOwner, unlocked);
                 suspendedExplicitly = profileOwner.mSuspendPersonalApps;
                 suspendedByTimeout = deadlineState == PROFILE_OFF_DEADLINE_REACHED;
                 Slog.d(LOG_TAG, String.format(
                         "Personal apps suspended explicitly: %b, deadline state: %d",
                         suspendedExplicitly, deadlineState));
-                final int notificationState =
-                        unlocked ? PROFILE_OFF_DEADLINE_DEFAULT : deadlineState;
-                updateProfileOffDeadlineNotificationLocked(
-                        profileUserId, profileOwner, notificationState);
             } else {
                 suspendedExplicitly = false;
                 suspendedByTimeout = false;
+                deadlineState = PROFILE_OFF_DEADLINE_DEFAULT;
             }
+        }
+        if (profileOwner != null) {
+            final int notificationState =
+                    unlocked ? PROFILE_OFF_DEADLINE_DEFAULT : deadlineState;
+            updateProfileOffDeadlineNotification(
+                    profileUserId, profileOwner, notificationState);
         }
 
         final int parentUserId = getProfileParentId(profileUserId);
@@ -16294,62 +16299,68 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         });
     }
 
-    @GuardedBy("getLockObject()")
-    private void updateProfileOffDeadlineNotificationLocked(
+    private void updateProfileOffDeadlineNotification(
             int profileUserId, ActiveAdmin profileOwner, int notificationState) {
         if (notificationState == PROFILE_OFF_DEADLINE_DEFAULT) {
             mInjector.getNotificationManager().cancel(SystemMessage.NOTE_PERSONAL_APPS_SUSPENDED);
             return;
         }
+        final Notification notification;
 
-        final Intent intent = new Intent(ACTION_TURN_PROFILE_ON_NOTIFICATION);
-        intent.setPackage(mContext.getPackageName());
-        intent.putExtra(Intent.EXTRA_USER_HANDLE, profileUserId);
+        synchronized (getLockObject()) {
+            final Intent intent = new Intent(ACTION_TURN_PROFILE_ON_NOTIFICATION);
+            intent.setPackage(mContext.getPackageName());
+            intent.putExtra(Intent.EXTRA_USER_HANDLE, profileUserId);
 
-        final PendingIntent pendingIntent = mInjector.pendingIntentGetBroadcast(mContext,
-                0 /* requestCode */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            final PendingIntent pendingIntent = mInjector.pendingIntentGetBroadcast(mContext,
+                    0 /* requestCode */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        final String buttonText =
-                mContext.getString(R.string.personal_apps_suspended_turn_profile_on);
-        final Notification.Action turnProfileOnButton =
-                new Notification.Action.Builder(null /* icon */, buttonText, pendingIntent).build();
+            final String buttonText =
+                    mContext.getString(R.string.personal_apps_suspended_turn_profile_on);
+            final Notification.Action turnProfileOnButton =
+                    new Notification.Action.Builder(null /* icon */, buttonText, pendingIntent).build();
 
-        final String text;
-        final boolean ongoing;
-        if (notificationState == PROFILE_OFF_DEADLINE_WARNING) {
-            // Round to the closest integer number of days.
-            final int maxDays = (int)
-                    ((profileOwner.mProfileMaximumTimeOffMillis + MS_PER_DAY / 2) / MS_PER_DAY);
-            final String date = DateUtils.formatDateTime(
-                    mContext, profileOwner.mProfileOffDeadline, DateUtils.FORMAT_SHOW_DATE);
-            final String time = DateUtils.formatDateTime(
-                    mContext, profileOwner.mProfileOffDeadline, DateUtils.FORMAT_SHOW_TIME);
-            text = mContext.getString(
-                    R.string.personal_apps_suspension_soon_text, date, time, maxDays);
-            ongoing = false;
-        } else {
-            text = mContext.getString(R.string.personal_apps_suspension_text);
-            ongoing = true;
+            final String text;
+            final boolean ongoing;
+
+
+            if (notificationState == PROFILE_OFF_DEADLINE_WARNING) {
+                // Round to the closest integer number of days.
+                final int maxDays = (int)
+                        ((profileOwner.mProfileMaximumTimeOffMillis + MS_PER_DAY / 2) / MS_PER_DAY);
+                final String date = DateUtils.formatDateTime(
+                        mContext, profileOwner.mProfileOffDeadline, DateUtils.FORMAT_SHOW_DATE);
+                final String time = DateUtils.formatDateTime(
+                        mContext, profileOwner.mProfileOffDeadline, DateUtils.FORMAT_SHOW_TIME);
+                text = mContext.getString(
+                        R.string.personal_apps_suspension_soon_text, date, time, maxDays);
+                ongoing = false;
+            } else {
+                text = mContext.getString(R.string.personal_apps_suspension_text);
+                ongoing = true;
+            }
+
+
+            final int color = mContext.getColor(R.color.personal_apps_suspension_notification_color);
+            final Bundle extras = new Bundle();
+            // TODO: Create a separate string for this.
+            extras.putString(Notification.EXTRA_SUBSTITUTE_APP_NAME,
+                    mContext.getString(R.string.notification_work_profile_content_description));
+
+            notification =
+                    new Notification.Builder(mContext, SystemNotificationChannels.DEVICE_ADMIN)
+                            .setSmallIcon(R.drawable.ic_corp_badge_no_background)
+                            .setOngoing(ongoing)
+                            .setAutoCancel(false)
+                            .setContentTitle(mContext.getString(
+                                    R.string.personal_apps_suspension_title))
+                            .setContentText(text)
+                            .setStyle(new Notification.BigTextStyle().bigText(text))
+                            .setColor(color)
+                            .addAction(turnProfileOnButton)
+                            .addExtras(extras)
+                            .build();
         }
-        final int color = mContext.getColor(R.color.personal_apps_suspension_notification_color);
-        final Bundle extras = new Bundle();
-        // TODO: Create a separate string for this.
-        extras.putString(Notification.EXTRA_SUBSTITUTE_APP_NAME,
-                mContext.getString(R.string.notification_work_profile_content_description));
-
-        final Notification notification =
-                new Notification.Builder(mContext, SystemNotificationChannels.DEVICE_ADMIN)
-                        .setSmallIcon(R.drawable.ic_corp_badge_no_background)
-                        .setOngoing(ongoing)
-                        .setAutoCancel(false)
-                        .setContentTitle(mContext.getString(
-                                R.string.personal_apps_suspension_title))
-                        .setContentText(text)
-                        .setStyle(new Notification.BigTextStyle().bigText(text))
-                        .setColor(color)
-                        .addAction(turnProfileOnButton)
-                        .addExtras(extras)
-                        .build();
         mInjector.getNotificationManager().notify(
                 SystemMessage.NOTE_PERSONAL_APPS_SUSPENDED, notification);
     }
