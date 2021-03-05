@@ -58,6 +58,7 @@ import com.android.internal.util.WakeupMessage;
 import com.android.server.ConnectivityService;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -277,6 +278,9 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
      */
     public static final int ARG_AGENT_SUCCESS = 1;
 
+    // How long this network should linger for.
+    private long mLingerDelay;
+
     // All inactivity timers for this network, sorted by expiry time. A timer is added whenever
     // a request is moved to a network with a better score, regardless of whether the network is or
     // was lingering or not. An inactivity timer is also added when a network connects
@@ -345,7 +349,8 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
             @NonNull NetworkScore score, Context context,
             Handler handler, NetworkAgentConfig config, ConnectivityService connService, INetd netd,
             IDnsResolver dnsResolver, int factorySerialNumber, int creatorUid,
-            QosCallbackTracker qosCallbackTracker, ConnectivityService.Dependencies deps) {
+            final long lingerDelay, QosCallbackTracker qosCallbackTracker,
+            ConnectivityService.Dependencies deps) {
         Objects.requireNonNull(net);
         Objects.requireNonNull(info);
         Objects.requireNonNull(lp);
@@ -366,6 +371,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         mHandler = handler;
         this.factorySerialNumber = factorySerialNumber;
         this.creatorUid = creatorUid;
+        mLingerDelay = lingerDelay;
         mQosCallbackTracker = qosCallbackTracker;
     }
 
@@ -652,6 +658,12 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         public void sendQosCallbackError(final int qosCallbackId,
                 @QosCallbackException.ExceptionType final int exceptionType) {
             mQosCallbackTracker.sendEventQosCallbackError(qosCallbackId, exceptionType);
+        }
+
+        @Override
+        public void sendLingerTimer(final int newDelayMs) {
+            mHandler.obtainMessage(NetworkAgent.EVENT_LINGER_TIMER_CHANGED,
+                    new Pair<>(NetworkAgentInfo.this, newDelayMs)).sendToTarget();
         }
     }
 
@@ -965,6 +977,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
         }
 
         if (newExpiry > 0) {
+            // If the newExpiry timestamp is in the past, the wakeup message will fire immediately.
             mInactivityMessage = new WakeupMessage(
                     mContext, mHandler,
                     "NETWORK_LINGER_COMPLETE." + network.getNetId() /* cmdName */,
@@ -991,6 +1004,32 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
 
     public boolean isLingering() {
         return mInactive && !isNascent();
+    }
+
+    /**
+     * Set the linger timer for this NAI.
+     * @param newDelayMs The new linger timer, in milliseconds
+     */
+    public void setLingerTimer(final long newDelayMs) {
+        final long diff = newDelayMs - mLingerDelay;
+        final ArrayList<InactivityTimer> newTimers = new ArrayList<>();
+        for (final InactivityTimer timer : mInactivityTimers) {
+            if (timer.requestId == NetworkRequest.REQUEST_ID_NONE) {
+                // Don't touch nascent timer, re-add as is.
+                newTimers.add(timer);
+            } else {
+                newTimers.add(new InactivityTimer(timer.requestId, timer.expiryMs + diff));
+            }
+        }
+        mInactivityTimers.clear();
+        mInactivityTimers.addAll(newTimers);
+        updateInactivityTimer();
+        mLingerDelay = newDelayMs;
+    }
+
+    /** Get the linger timer for this NAI. */
+    public long getLingerTimer() {
+        return mLingerDelay;
     }
 
     /**

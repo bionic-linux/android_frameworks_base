@@ -197,7 +197,6 @@ public abstract class NetworkAgent {
      */
     public static final int CMD_REPORT_NETWORK_STATUS = BASE + 7;
 
-
     /**
      * Network validation suceeded.
      * Corresponds to {@link NetworkCapabilities.NET_CAPABILITY_VALIDATED}.
@@ -361,6 +360,15 @@ public abstract class NetworkAgent {
      * @hide
      */
     public static final int CMD_UNREGISTER_QOS_CALLBACK = BASE + 21;
+
+    /**
+     * Sent by the NetworkAgent to ConnectivityService to set the linger timer for a this network
+     * agent.
+     * arg1 = the linger timer duration, in milliseconds
+     *
+     * @hide
+     */
+    public static final int EVENT_LINGER_TIMER_CHANGED = BASE + 22;
 
     private static NetworkInfo getLegacyNetworkInfo(final NetworkAgentConfig config) {
         // The subtype can be changed with (TODO) setLegacySubtype, but it starts
@@ -1205,6 +1213,18 @@ public abstract class NetworkAgent {
     public final void sendQosCallbackError(final int qosCallbackId,
             @QosCallbackException.ExceptionType final int exceptionType) {
         queueOrSendMessage(ra -> ra.sendQosCallbackError(qosCallbackId, exceptionType));
+    }
+
+    /**
+     * Set the linger timer for this network agent.
+     * @param newDelayMs the delay between the moment the network becomes unneeded and the
+     *                   moment the network is disconnected or moved into the background
+     */
+    public void setLingerTimer(final int newDelayMs) {
+        if (newDelayMs < 0) {
+            throw new IllegalArgumentException("Delay must be > 0");
+        }
+        queueOrSendMessage(ra -> ra.sendLingerTimer(newDelayMs));
     }
 
 
