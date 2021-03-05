@@ -817,6 +817,10 @@ final class LocalDisplayAdapter extends DisplayAdapter {
             // operations that may block for a while when setting display power mode.
             SurfaceControl.setDesiredDisplayConfigSpecs(displayToken, configSpecs);
             final int activePhysIndex = SurfaceControl.getActiveConfig(displayToken);
+            if (activePhysIndex < 0) {
+                Slog.w(TAG,"Ignoring request for invalid physics index " + activePhysIndex);
+                return;
+            }
             synchronized (getSyncRoot()) {
                 if (updateActiveModeLocked(activePhysIndex)) {
                     updateDeviceInfoLocked();
