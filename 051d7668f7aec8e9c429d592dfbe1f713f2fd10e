@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c5642b7_faac315e",
+        "filename": "keystore/java/android/security/keystore2/KeyStoreCryptoOperationUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1678423
+      },
+      "writtenOn": "2021-03-05T01:30:59Z",
+      "side": 1,
+      "message": "Whether or not it\u0027s fine to silence this completely, depends on the answer to the questions at https://android-review.googlesource.com/c/platform/system/security/+/1619943/1/keystore2/src/operation.rs#813",
+      "range": {
+        "startLine": 189,
+        "startChar": 16,
+        "endLine": 189,
+        "endChar": 75
+      },
+      "revId": "051d7668f7aec8e9c429d592dfbe1f713f2fd10e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
