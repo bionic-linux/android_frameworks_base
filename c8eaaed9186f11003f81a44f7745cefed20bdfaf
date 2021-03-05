@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da8be7ff_c5d2587d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2021-03-05T17:55:01Z",
+      "side": 1,
+      "message": "This looks fine; however, I am honestly not sure if we take external API contributions. I\u0027ll check in with API Council.",
+      "revId": "c8eaaed9186f11003f81a44f7745cefed20bdfaf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
