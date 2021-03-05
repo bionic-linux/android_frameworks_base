@@ -16172,24 +16172,30 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             int profileUserId, boolean unlocked) {
         final boolean suspendedExplicitly;
         final boolean suspendedByTimeout;
+        final ActiveAdmin profileOwner;
+        final int deadlineState;
         synchronized (getLockObject()) {
-            final ActiveAdmin profileOwner = getProfileOwnerAdminLocked(profileUserId);
+            profileOwner = getProfileOwnerAdminLocked(profileUserId);
             if (profileOwner != null) {
-                final int deadlineState =
+                deadlineState =
                         updateProfileOffDeadlineLocked(profileUserId, profileOwner, unlocked);
                 suspendedExplicitly = profileOwner.mSuspendPersonalApps;
                 suspendedByTimeout = deadlineState == PROFILE_OFF_DEADLINE_REACHED;
                 Slog.d(LOG_TAG, String.format(
                         "Personal apps suspended explicitly: %b, deadline state: %d",
                         suspendedExplicitly, deadlineState));
-                final int notificationState =
-                        unlocked ? PROFILE_OFF_DEADLINE_DEFAULT : deadlineState;
-                updateProfileOffDeadlineNotificationLocked(
-                        profileUserId, profileOwner, notificationState);
             } else {
                 suspendedExplicitly = false;
                 suspendedByTimeout = false;
+                deadlineState = PROFILE_OFF_DEADLINE_DEFAULT;
             }
+        }
+        if (profileOwner != null) {
+            final int notificationState =
+                    unlocked ? PROFILE_OFF_DEADLINE_DEFAULT : deadlineState;
+            updateProfileOffDeadlineNotification(
+                    profileUserId, profileOwner.mProfileMaximumTimeOffMillis,
+                    profileOwner.mProfileOffDeadline, notificationState);
         }
 
         final int parentUserId = getProfileParentId(profileUserId);
@@ -16312,9 +16318,9 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         });
     }
 
-    @GuardedBy("getLockObject()")
-    private void updateProfileOffDeadlineNotificationLocked(
-            int profileUserId, ActiveAdmin profileOwner, int notificationState) {
+    private void updateProfileOffDeadlineNotification(
+            int profileUserId, long profileMaximumTimeOffMillis,
+            long profileOffDeadline, int notificationState) {
         if (notificationState == PROFILE_OFF_DEADLINE_DEFAULT) {
             mInjector.getNotificationManager().cancel(SystemMessage.NOTE_PERSONAL_APPS_SUSPENDED);
             return;
@@ -16334,14 +16340,16 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
 
         final String text;
         final boolean ongoing;
+
+
         if (notificationState == PROFILE_OFF_DEADLINE_WARNING) {
             // Round to the closest integer number of days.
             final int maxDays = (int)
-                    ((profileOwner.mProfileMaximumTimeOffMillis + MS_PER_DAY / 2) / MS_PER_DAY);
+                    ((profileMaximumTimeOffMillis + MS_PER_DAY / 2) / MS_PER_DAY);
             final String date = DateUtils.formatDateTime(
-                    mContext, profileOwner.mProfileOffDeadline, DateUtils.FORMAT_SHOW_DATE);
+                    mContext, profileOffDeadline, DateUtils.FORMAT_SHOW_DATE);
             final String time = DateUtils.formatDateTime(
-                    mContext, profileOwner.mProfileOffDeadline, DateUtils.FORMAT_SHOW_TIME);
+                    mContext, profileOffDeadline, DateUtils.FORMAT_SHOW_TIME);
             text = mContext.getString(
                     R.string.personal_apps_suspension_soon_text, date, time, maxDays);
             ongoing = false;
@@ -16349,6 +16357,8 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
             text = mContext.getString(R.string.personal_apps_suspension_text);
             ongoing = true;
         }
+
+
         final int color = mContext.getColor(R.color.personal_apps_suspension_notification_color);
         final Bundle extras = new Bundle();
         // TODO: Create a separate string for this.
@@ -16368,6 +16378,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
                         .addAction(turnProfileOnButton)
                         .addExtras(extras)
                         .build();
+
         mInjector.getNotificationManager().notify(
                 SystemMessage.NOTE_PERSONAL_APPS_SUSPENDED, notification);
     }
