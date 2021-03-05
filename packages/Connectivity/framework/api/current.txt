@@ -102,6 +102,7 @@ package android.net {
     method public void requestNetwork(@NonNull android.net.NetworkRequest, @NonNull android.net.ConnectivityManager.NetworkCallback, int);
     method public void requestNetwork(@NonNull android.net.NetworkRequest, @NonNull android.net.ConnectivityManager.NetworkCallback, @NonNull android.os.Handler, int);
     method public void requestNetwork(@NonNull android.net.NetworkRequest, @NonNull android.app.PendingIntent);
+    method @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK, android.Manifest.permission.NETWORK_FACTORY}) public void setLingerTimer(@NonNull android.net.Network, long);
     method @Deprecated public void setNetworkPreference(int);
     method @Deprecated public static boolean setProcessDefaultNetwork(@Nullable android.net.Network);
     method public void unregisterNetworkCallback(@NonNull android.net.ConnectivityManager.NetworkCallback);

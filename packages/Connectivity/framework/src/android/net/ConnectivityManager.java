@@ -5036,4 +5036,23 @@ public class ConnectivityManager {
             throw e.rethrowFromSystemServer();
         }
     }
+
+    /**
+     * Set the linger timer for a network.
+     * @param network the network to set the linger timer for
+     * @param newDelayMs the delay between the moment the network becomes unneeded and the
+     *                   moment the network is disconnected or moved into the background
+     */
+    // TODO : @SystemApi
+    @RequiresPermission(anyOf = {
+            NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
+            android.Manifest.permission.NETWORK_STACK,
+            android.Manifest.permission.NETWORK_FACTORY})
+    public void setLingerTimer(@NonNull final Network network, final long newDelayMs) {
+        try {
+            mService.setLingerTimer(network, newDelayMs);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }

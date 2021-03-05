@@ -215,4 +215,6 @@ interface IConnectivityManager
 
     void setOemNetworkPreference(in OemNetworkPreferences preference,
             in IOnSetOemNetworkPreferenceListener listener);
+
+    void setLingerTimer(in Network network, long newDelayMs);
 }
