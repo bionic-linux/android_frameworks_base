@@ -106,15 +106,6 @@ public class CarrierConfigManager {
      */
     public static final int USSD_OVER_IMS_ONLY       = 3;
 
-    /** @hide */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef(prefix = { "CARRIER_NR_AVAILABILITY_" }, value = {
-            CARRIER_NR_AVAILABILITY_NONE,
-            CARRIER_NR_AVAILABILITY_NSA,
-            CARRIER_NR_AVAILABILITY_SA,
-    })
-    public @interface DeviceNrCapability {}
-
     /**
      * Indicates CARRIER_NR_AVAILABILITY_NONE determine that the carrier does not enable 5G NR.
      */
