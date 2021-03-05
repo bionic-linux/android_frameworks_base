@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008705407",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1620623?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7c580c1e_8ba72753",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16321,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-05T09:37:47Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 16321,
+        "startChar": 0,
+        "endLine": 16321,
+        "endChar": 104
+      },
+      "revId": "6f283469645cb5cc20b80fa5d09de2ceb44c71ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000008705407",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1620623?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bb4d398c_d182320f",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16344,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-05T09:37:47Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 16344,
+        "startChar": 0,
+        "endLine": 16344,
+        "endChar": 101
+      },
+      "revId": "6f283469645cb5cc20b80fa5d09de2ceb44c71ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
