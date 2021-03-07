@@ -122,6 +122,24 @@
       "parentUuid": "4a8ea811_e4831e4d",
       "revId": "76ccffb4e2d5d641de6cbb9a33b2debf8042b97e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "317f4578_395fa765",
+        "filename": "api/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2021-03-07T08:39:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure how much this matters here, but we moved ourselves off of the SYSTEMSEVERCLASSPATH in ag/10045445 and dynamically loaded service-statsd instead when starting system server services. Reasons why are discussed in in the cl. I think there were plans to do this for all mainline system server jars, but it never ended up happening.",
+      "parentUuid": "66d0ee46_0ef73455",
+      "revId": "76ccffb4e2d5d641de6cbb9a33b2debf8042b97e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
