@@ -34,6 +34,24 @@
       "parentUuid": "51b3f239_7af750bb",
       "revId": "ccfd51a15d4086046ecce029190788db6c49a7bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95f4a9ba_57b72ac9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2021-03-08T17:52:33Z",
+      "side": 1,
+      "message": "Yes, the AIDL interface android.os.IPermissionController isn\u0027t related to our PermissionController APK, but a strange hybrid of package, permission and app op methods, and its implementation lives in ActivityManagerService.PermissionController.\n\nhttp://cs/android/frameworks/base/core/java/android/os/IPermissionController.aidl\n\nhttp://cs/android/frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java;l\u003d5233\n\nSince this isn\u0027t Mainline code, I think adding a rust binding for the existing C++ interface is fine.",
+      "parentUuid": "34dec238_57c7d384",
+      "revId": "ccfd51a15d4086046ecce029190788db6c49a7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
