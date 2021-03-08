@@ -774,6 +774,7 @@ public class AudioDeviceInventory {
                         AudioSystem.AUDIO_FORMAT_DEFAULT);
                 // always remove even if disconnection failed
                 mConnectedDevices.remove(deviceKey);
+                mDeviceBroker.postAccessoryPlugOut(device);
                 mmi.set(MediaMetrics.Property.STATE, MediaMetrics.Value.CONNECTED).record();
                 return true;
             }
@@ -1027,6 +1028,7 @@ public class AudioDeviceInventory {
                     "A2DP device addr=" + address + " made unavailable")).printLog(TAG));
         }
         mApmConnectedDevices.remove(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
+        mDeviceBroker.postAccessoryPlugOut(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
         // Remove A2DP routes as well
         setCurrentAudioRouteNameIfPossible(null, true /*fromA2dp*/);
         mmi.record();
@@ -1105,6 +1107,7 @@ public class AudioDeviceInventory {
                 AudioSystem.AUDIO_FORMAT_DEFAULT);
         mConnectedDevices.remove(
                 DeviceInfo.makeDeviceListKey(AudioSystem.DEVICE_OUT_HEARING_AID, address));
+        mDeviceBroker.postAccessoryPlugOut(AudioSystem.DEVICE_OUT_HEARING_AID);
         // Remove Hearing Aid routes as well
         setCurrentAudioRouteNameIfPossible(null, false /*fromA2dp*/);
         new MediaMetrics.Item(mMetricsId + "makeHearingAidDeviceUnavailable")
