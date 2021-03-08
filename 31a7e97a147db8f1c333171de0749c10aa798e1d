@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "585040e9_a4126cfd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328424
+      },
+      "writtenOn": "2021-03-08T06:33:21Z",
+      "side": 1,
+      "message": "Hi Daren,\nCan you amend string concat to arguments formatting per Nick\u0027s comment?",
+      "revId": "31a7e97a147db8f1c333171de0749c10aa798e1d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
