@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbe8c22e_5c98b82b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2021-03-08T16:11:02Z",
+      "side": 1,
+      "message": "Hi, thanks for the patch! We\u0027ve already addressed this issue in our internal branch.  Keun-young, not sure what the procedure is for auto OEMs, can you share the patch?",
+      "revId": "3f8b2c2f4077187ca6efd2f713c30c5aa4202309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
