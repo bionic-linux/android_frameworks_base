@@ -298,6 +298,7 @@ public class AudioService extends IAudioService.Stub
     private static final int MSG_BROADCAST_MICROPHONE_MUTE = 30;
     private static final int MSG_CHECK_MODE_FOR_UID = 31;
     private static final int MSG_REINIT_VOLUMES = 32;
+    private static final int MSG_RESTORE_PREVIOUS_DEVICE_MEDIA_MUTE_STATE = 33;
     // start of messages handled under wakelock
     //   these messages can only be queued, i.e. sent with queueMsgUnderWakeLock(),
     //   and not with sendMsg(..., ..., SENDMSG_QUEUE, ...)
@@ -306,6 +307,9 @@ public class AudioService extends IAudioService.Stub
 
     // retry delay in case of failure to indicate system ready to AudioFlinger
     private static final int INDICATE_SYSTEM_READY_RETRY_DELAY_MS = 1000;
+
+    // previous device mute state
+    private boolean mIsPreviousDeviceMediaMuted = false;
 
     /** @see AudioSystemThread */
     private AudioSystemThread mAudioSystemThread;
@@ -5562,7 +5566,7 @@ public class AudioService extends IAudioService.Stub
             Log.i(TAG, String.format("onAccessoryPlugMediaUnmute newDevice=%d [%s]",
                     newDevice, AudioSystem.getOutputDeviceName(newDevice)));
         }
-
+        mIsPreviousDeviceMediaMuted = mStreamStates[AudioSystem.STREAM_MUSIC].mIsMuted;
         if (mNm.getZenMode() != Settings.Global.ZEN_MODE_NO_INTERRUPTIONS
                 && !isStreamMutedByRingerOrZenMode(AudioSystem.STREAM_MUSIC)
                 && DEVICE_MEDIA_UNMUTED_ON_PLUG_SET.contains(newDevice)
@@ -5574,6 +5578,19 @@ public class AudioService extends IAudioService.Stub
                         newDevice, AudioSystem.getOutputDeviceName(newDevice)));
             }
             mStreamStates[AudioSystem.STREAM_MUSIC].mute(false);
+        }
+    }
+
+    /*package*/ void postAccessoryPlugOut(int oldDevice) {
+        sendMsg(mAudioHandler, MSG_RESTORE_PREVIOUS_DEVICE_MEDIA_MUTE_STATE, SENDMSG_QUEUE,
+                oldDevice, 0, null, 0);
+    }
+
+    private void onRestorePreviousDeviceMuteState(int oldDevice) {
+        if (mNm.getZenMode() != Settings.Global.ZEN_MODE_NO_INTERRUPTIONS
+                && !isStreamMutedByRingerOrZenMode(AudioSystem.STREAM_MUSIC)
+                && DEVICE_MEDIA_UNMUTED_ON_PLUG_SET.contains(oldDevice)) {
+            mStreamStates[AudioSystem.STREAM_MUSIC].mute(mIsPreviousDeviceMediaMuted);
         }
     }
 
@@ -6767,6 +6784,10 @@ public class AudioService extends IAudioService.Stub
 
                 case MSG_ACCESSORY_PLUG_MEDIA_UNMUTE:
                     onAccessoryPlugMediaUnmute(msg.arg1);
+                    break;
+
+                case MSG_RESTORE_PREVIOUS_DEVICE_MEDIA_MUTE_STATE:
+                    onRestorePreviousDeviceMuteState(msg.arg1);
                     break;
 
                 case MSG_PERSIST_MUSIC_ACTIVE_MS:
