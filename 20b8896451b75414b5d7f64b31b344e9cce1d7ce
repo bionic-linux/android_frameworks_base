@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f88675c8_e1d7328e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5293,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-08T10:23:56Z",
+      "side": 1,
+      "message": "That was also my first reflex. It doesn\u0027t work because getActiveRequest() will return a request from the old list. This code needs to set as the active request the one with the highest priority from the new list.\n\nInstead I could have called indexOf(getActiveRequest()) and use the same index in the new list. That would be faster, but would also implicitly depend on the list of new requests corresponding one-to-one with the list of passed requests, which is always true today but I don\u0027t think is part of the contract of this constructor.",
+      "parentUuid": "5b2cdfef_91115f4c",
+      "range": {
+        "startLine": 5283,
+        "startChar": 12,
+        "endLine": 5293,
+        "endChar": 17
+      },
+      "revId": "20b8896451b75414b5d7f64b31b344e9cce1d7ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45d11587_b9b592cf",
@@ -60,6 +84,24 @@
       "writtenOn": "2021-03-05T15:13:51Z",
       "side": 1,
       "message": "Comment?\n\n    // default NCs will be unregistered in tearDown",
+      "revId": "20b8896451b75414b5d7f64b31b344e9cce1d7ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e8ba914_05d6e4a6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10683,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-08T10:23:56Z",
+      "side": 1,
+      "message": "Done.\n\nChanged from \"NCs\" to \"callbacks\" because in our code base NC rather consistently stands for NetworkCapabilities.",
+      "parentUuid": "45d11587_b9b592cf",
       "revId": "20b8896451b75414b5d7f64b31b344e9cce1d7ce",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
