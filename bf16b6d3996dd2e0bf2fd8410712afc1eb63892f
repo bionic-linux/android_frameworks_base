@@ -22,6 +22,30 @@
       },
       "revId": "bf16b6d3996dd2e0bf2fd8410712afc1eb63892f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a61f1800_262888af",
+        "filename": "tests/net/java/android/net/IpSecAlgorithmTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-03-08T18:10:30Z",
+      "side": 0,
+      "message": "Talked offline\nThe real problem is the implementation and the test code are not consistent.\nWe still want cuttlefish to run. Thus before S is finalized, we will keep using BUILD_VERSIONS.R to gate the code and test",
+      "parentUuid": "11a37b98_58abe616",
+      "range": {
+        "startLine": 124,
+        "startChar": 63,
+        "endLine": 124,
+        "endChar": 64
+      },
+      "revId": "bf16b6d3996dd2e0bf2fd8410712afc1eb63892f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
