@@ -755,8 +755,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
     //---------------------------------------------------------------------
     // Communication with (to) AudioService
     //TODO check whether the AudioService methods are candidates to move here
-    /*package*/ void postAccessoryPlugMediaUnmute(int device) {
-        mAudioService.postAccessoryPlugMediaUnmute(device);
+
+    /*package*/ void postCheckMediaMuteOnAccessoryConnectionStateChange(int state,int device) {
+        mAudioService.postCheckMediaMuteOnAccessoryConnectionStateChange(state,device);
     }
 
     /*package*/ int getVssVolumeForDevice(int streamType, int device) {
