@@ -16,6 +16,24 @@
       "message": "Hmm, does the implementation of this AIDL live inside a Mainline module boundary, or is it implemented as a bundled part of the OS?  (I don\u0027t think we\u0027re allowing raw AIDL connections out to Mainline modules, which is why I\u0027m double-checking where the AIDL implementation lives.)\n",
       "revId": "ccfd51a15d4086046ecce029190788db6c49a7bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34dec238_57c7d384",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1363994
+      },
+      "writtenOn": "2021-03-08T14:35:40Z",
+      "side": 1,
+      "message": "Thanks for taking a look at this, Jeff :-)\n\nI\u0027m not sure whether this was a question for me or for the PermissionController folks. In my (admittedly very limited) understanding of Mainline modules, this interface only exists as a core platform API, and does not live inside a Mainline module boundary.\n\nErik, Hai, Nate, can one of you chime in to confirm or deny my assumption?",
+      "parentUuid": "51b3f239_7af750bb",
+      "revId": "ccfd51a15d4086046ecce029190788db6c49a7bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
