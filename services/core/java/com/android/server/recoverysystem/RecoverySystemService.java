@@ -27,6 +27,7 @@ import android.hardware.boot.V1_0.IBootControl;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.IRecoverySystem;
 import android.os.IRecoverySystemProgressListener;
 import android.os.PowerManager;
@@ -53,6 +54,7 @@ import libcore.io.IoUtils;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -88,10 +90,11 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
 
     private static final int SOCKET_CONNECTION_MAX_RETRY = 30;
 
-    static final String REQUEST_LSKF_TIMESTAMP_PREF_SUFFIX = "_REQUEST_LSKF_TIMESTAMP";
-    static final String LSKF_CAPTURED_TIMESTAMP_PREF_SUFFIX = "_LSKF_CAPTURED_TIMESTAMP";
-    static final String REQUEST_LSKF_COUNT_PREF_SUFFIX = "_REQUEST_LSKF_COUNT";
-    static final String LSKF_CAPTURED_COUNT_PREF_SUFFIX = "_LSKF_CAPTURED_COUNT";
+    static final String REQUEST_LSKF_TIMESTAMP_PREF_SUFFIX = "_request_lskf_timestamp";
+    static final String REQUEST_LSKF_COUNT_PREF_SUFFIX = "_request_lskf_count";
+
+    static final String LSKF_CAPTURED_TIMESTAMP_PREF = "lskf_captured_timestamp";
+    static final String LSKF_CAPTURED_COUNT_PREF = "lskf_captured_count";
 
     private final Injector mInjector;
     private final Context mContext;
@@ -131,18 +134,20 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     /**
      * The action to perform upon new resume on reboot prepare request for a given client.
      */
-    @IntDef({ ROR_NEED_PREPARATION,
+    @IntDef({ROR_NEED_PREPARATION,
             ROR_SKIP_PREPARATION_AND_NOTIFY,
-            ROR_SKIP_PREPARATION_NOT_NOTIFY })
-    private @interface ResumeOnRebootActionsOnRequest {}
+            ROR_SKIP_PREPARATION_NOT_NOTIFY})
+    private @interface ResumeOnRebootActionsOnRequest {
+    }
 
     /**
      * The action to perform upon resume on reboot clear request for a given client.
      */
-    @IntDef({ ROR_NOT_REQUESTED,
+    @IntDef({ROR_NOT_REQUESTED,
             ROR_REQUESTED_NEED_CLEAR,
             ROR_REQUESTED_SKIP_CLEAR})
-    private @interface ResumeOnRebootActionsOnClear {}
+    private @interface ResumeOnRebootActionsOnClear {
+    }
 
     /**
      * The error code for reboots initiated by resume on reboot clients.
@@ -154,23 +159,60 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
     private static final int REBOOT_ERROR_SLOT_MISMATCH = 4;
     private static final int REBOOT_ERROR_ARM_REBOOT_ESCROW_FAILURE = 5;
 
-    @IntDef({ REBOOT_ERROR_NONE,
+    @IntDef({REBOOT_ERROR_NONE,
             REBOOT_ERROR_UNKOWN,
             REBOOT_ERROR_INVALID_PACKAGE_NAME,
             REBOOT_ERROR_LSKF_NOT_CAPTURED,
             REBOOT_ERROR_SLOT_MISMATCH,
             REBOOT_ERROR_ARM_REBOOT_ESCROW_FAILURE})
-    private @interface ResumeOnRebootRebootErrorCode {}
+    private @interface ResumeOnRebootRebootErrorCode {
+    }
+
+    public static class PreferencesManager {
+        private static final String METRICS_DIR = "recovery_system";
+        private static final String METRICS_PREFS_FILE = "RecoverySystemMetricsPrefs.xml";
+
+        protected final SharedPreferences mSharedPreferences;
+        private final File mMetricsPrefsFile;
+
+        PreferencesManager(Context context) {
+            File prefsDir = new File(Environment.getDataSystemCeDirectory(USER_SYSTEM),
+                    METRICS_DIR);
+            mMetricsPrefsFile = new File(prefsDir, METRICS_PREFS_FILE);
+            mSharedPreferences = context.getSharedPreferences(mMetricsPrefsFile, 0);
+        }
+
+        public long getLong(String key, long defaultValue) {
+            return mSharedPreferences.getLong(key, defaultValue);
+        }
+
+        public int getInt(String key, int defaultValue) {
+            return mSharedPreferences.getInt(key, defaultValue);
+        }
+
+        public void putLong(String key, long value) {
+            mSharedPreferences.edit().putLong(key, value).commit();
+        }
+
+        public void putInt(String key, int value) {
+            mSharedPreferences.edit().putInt(key, value).commit();
+        }
+
+        public void deletePrefsFile() {
+            if (!mMetricsPrefsFile.delete()) {
+                Slog.w(TAG, "Failed to delete metrics prefs");
+            }
+        }
+    }
+
 
     static class Injector {
         protected final Context mContext;
-        protected final SharedPreferences mSharedPrefs;
-
-        private static final String METRICS_PREFS = "RECOVERY_SYSTEM_METRICS_PREFS";
+        protected final PreferencesManager mPrefs;
 
         Injector(Context context) {
             mContext = context;
-            mSharedPrefs = context.getSharedPreferences(METRICS_PREFS, 0);
+            mPrefs = new PreferencesManager(context);
         }
 
         public Context getContext() {
@@ -241,17 +283,17 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
             try {
                 return mContext.getPackageManager().getPackageUidAsUser(packageName, USER_SYSTEM);
             } catch (PackageManager.NameNotFoundException e) {
-                Slog.w(TAG, "Failed to find uid for " + packageName, e);
+                Slog.w(TAG, "Failed to find uid for " + packageName);
             }
             return -1;
         }
 
-        public SharedPreferences getMetricsPrefs() {
-            return mSharedPrefs;
+        public PreferencesManager getMetricsPrefs() {
+            return mPrefs;
         }
 
-        public void deleteMetricsPrefs() {
-            mContext.deleteSharedPreferences(METRICS_PREFS);
+        public long getCurrentTimeMillis() {
+            return System.currentTimeMillis();
         }
 
         public void reportRebootEscrowPreparationMetrics(int uid,
@@ -432,7 +474,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.RECOVERY)
                 != PackageManager.PERMISSION_GRANTED
                 && mContext.checkCallingOrSelfPermission(android.Manifest.permission.REBOOT)
-                        != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
             throw new SecurityException("Caller must have " + android.Manifest.permission.RECOVERY
                     + " or " + android.Manifest.permission.REBOOT + " for resume on reboot.");
         }
@@ -446,11 +488,11 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         }
 
         // Save the timestamp and request count for new ror request
-        SharedPreferences prefs = mInjector.getMetricsPrefs();
-        prefs.edit().putLong(packageName + REQUEST_LSKF_TIMESTAMP_PREF_SUFFIX,
-                System.currentTimeMillis()).commit();
+        PreferencesManager prefs = mInjector.getMetricsPrefs();
+        prefs.putLong(packageName + REQUEST_LSKF_TIMESTAMP_PREF_SUFFIX,
+                mInjector.getCurrentTimeMillis());
         int oldCount = prefs.getInt(packageName + REQUEST_LSKF_COUNT_PREF_SUFFIX, 0);
-        prefs.edit().putInt(packageName + REQUEST_LSKF_COUNT_PREF_SUFFIX, oldCount + 1).commit();
+        prefs.putInt(packageName + REQUEST_LSKF_COUNT_PREF_SUFFIX, oldCount + 1);
 
         mInjector.reportRebootEscrowPreparationMetrics(uid, requestResult, pendingRequestCount);
     }
@@ -515,26 +557,24 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
             preparedClients = new ArrayList<>(mCallerPreparedForReboot);
         }
 
-        long currentTimestamp = System.currentTimeMillis();
+        // Save the timestamp & lskf capture count for lskf capture
+        long currentTimestamp = mInjector.getCurrentTimeMillis();
+        PreferencesManager prefs = mInjector.getMetricsPrefs();
+        prefs.putLong(LSKF_CAPTURED_TIMESTAMP_PREF, currentTimestamp);
+        int oldCount = prefs.getInt(LSKF_CAPTURED_COUNT_PREF, 0);
+        prefs.putInt(LSKF_CAPTURED_COUNT_PREF, oldCount + 1);
+
         for (String packageName : preparedClients) {
             int uid = mInjector.getUidFromPackageName(packageName);
 
-            // Save the timestamp & lskf capture count for lskf capture
-            SharedPreferences prefs = mInjector.getMetricsPrefs();
-            prefs.edit().putLong(packageName + LSKF_CAPTURED_TIMESTAMP_PREF_SUFFIX,
-                    currentTimestamp).commit();
-            int oldCount = prefs.getInt(packageName + LSKF_CAPTURED_COUNT_PREF_SUFFIX, 0);
-            prefs.edit().putInt(packageName + LSKF_CAPTURED_TIMESTAMP_PREF_SUFFIX, oldCount + 1)
-                    .commit();
-
             long duration = -1;
-            long requestLskfTimestamp = mInjector.getMetricsPrefs().getLong(
+            long requestLskfTimestamp = prefs.getLong(
                     packageName + REQUEST_LSKF_TIMESTAMP_PREF_SUFFIX, -1);
             if (requestLskfTimestamp != -1 && currentTimestamp > requestLskfTimestamp) {
                 duration = currentTimestamp - requestLskfTimestamp;
             }
-            Slog.i(TAG, "Reporting lskf captured, lskf takes " + (int) duration / 1000
-                    + " seconds");
+            Slog.i(TAG, String.format("Reporting lskf captured, lskf capture takes %d seconds for"
+                    + " package %s", (int) duration / 1000, packageName));
             mInjector.reportRebootEscrowLskfCapturedMetrics(uid, preparedClients.size(),
                     (int) duration / 1000);
         }
@@ -701,18 +741,16 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
             preparedClientCount = mCallerPreparedForReboot.size();
         }
 
-        long currentTimestamp = System.currentTimeMillis();
+        long currentTimestamp = mInjector.getCurrentTimeMillis();
         long duration = -1;
-        long lskfCapturedTimestamp = mInjector.getMetricsPrefs().getLong(
-                packageName + LSKF_CAPTURED_TIMESTAMP_PREF_SUFFIX, -1);
+        PreferencesManager prefs = mInjector.getMetricsPrefs();
+        long lskfCapturedTimestamp = prefs.getLong(LSKF_CAPTURED_TIMESTAMP_PREF, -1);
         if (lskfCapturedTimestamp != -1 && currentTimestamp > lskfCapturedTimestamp) {
             duration = currentTimestamp - lskfCapturedTimestamp;
         }
 
-        int requestCount = mInjector.getMetricsPrefs().getInt(
-                packageName + REQUEST_LSKF_COUNT_PREF_SUFFIX, -1);
-        int lskfCapturedCount = mInjector.getMetricsPrefs().getInt(
-                packageName + LSKF_CAPTURED_COUNT_PREF_SUFFIX, -1);
+        int requestCount = prefs.getInt(packageName + REQUEST_LSKF_COUNT_PREF_SUFFIX, -1);
+        int lskfCapturedCount = prefs.getInt(LSKF_CAPTURED_COUNT_PREF, -1);
 
         Slog.i(TAG, String.format("Reporting reboot with lskf, package name %s, client count %d,"
                         + " request count %d, lskf captured count %d, duration since lskf captured"
@@ -732,7 +770,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
         }
 
         // Clear the metrics prefs after a successful RoR reboot.
-        mInjector.deleteMetricsPrefs();
+        mInjector.getMetricsPrefs().deletePrefsFile();
 
         PowerManager pm = mInjector.getPowerManager();
         pm.reboot(reason);
@@ -922,6 +960,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
 
         /**
          * Reads the status from the uncrypt service which is usually represented as a percentage.
+         *
          * @return an integer representing the percentage completed
          * @throws IOException if there was an error reading the socket
          */
@@ -931,6 +970,7 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
 
         /**
          * Sends a confirmation to the uncrypt service.
+         *
          * @throws IOException if there was an error writing to the socket
          */
         public void sendAck() throws IOException {
