@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "debec889_8bf0c1f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-03-08T13:22:27Z",
+      "side": 1,
+      "message": "this looks prone to race condition: for instance music can be muted just after the device is unplugged but before the message requesting unmute is processed.\nAlso mute state should be tracked per device and not globally (mIsPreviousDeviceMediaMuted) to support insertion of several wired headsets (USB + 3.5mm) and removal of one. probably need a map \u003cdeviceKey, boolean\u003e for the mute state with a key like DeviceInfo.makeDeviceListKey(device, address) or store the mute state in AudioDEviceInventory.mConnectedDevices",
+      "revId": "6f00ac2c0ed5064e53cb7dfd2394bda1ee29b448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
