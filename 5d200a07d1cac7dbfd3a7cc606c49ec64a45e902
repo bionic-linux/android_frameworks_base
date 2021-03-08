@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4cd3ac6_68788243",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-03-08T08:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef8cc76f_881e90cc",
+      "range": {
+        "startLine": 12,
+        "startChar": 55,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "532b24be_7779963e",
@@ -82,6 +106,30 @@
         "id": 1306837
       },
       "writtenOn": "2021-03-05T09:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "532b24be_7779963e",
+      "range": {
+        "startLine": 16,
+        "startChar": 64,
+        "endLine": 16,
+        "endChar": 66
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68690691_e964a558",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-03-08T08:16:30Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "532b24be_7779963e",
@@ -144,6 +192,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "10eab9b2_e94d274a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-03-08T08:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a23f7a_c1389879",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "228cc3e0_b819d998",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -172,6 +244,30 @@
       "writtenOn": "2021-02-25T12:18:52Z",
       "side": 1,
       "message": "Not sure if the wording could be reused.\nFor example the EN texts are:\n\"Mobile data limit reached\"\n\"Data paused for the rest of your cycle\"\nIIUC this is not mobile data only now.",
+      "range": {
+        "startLine": 1459,
+        "startChar": 53,
+        "endLine": 1459,
+        "endChar": 82
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5f666f7_a1307a10",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-03-08T08:16:30Z",
+      "side": 1,
+      "message": "Yes, I checked with UI designer.\nBecause the Settings still show \"mobile\" detail page when device is connected to merged carrier wifi network.\nThus it is fine to use the same wording.",
+      "parentUuid": "777be7ac_19c73aaf",
       "range": {
         "startLine": 1459,
         "startChar": 53,
@@ -216,6 +312,30 @@
         "id": 1306837
       },
       "writtenOn": "2021-03-05T09:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39467c30_d6bb2023",
+      "range": {
+        "startLine": 2375,
+        "startChar": 85,
+        "endLine": 2375,
+        "endChar": 89
+      },
+      "revId": "5d200a07d1cac7dbfd3a7cc606c49ec64a45e902",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc7f74fe_eede9085",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2375,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-03-08T08:16:30Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "39467c30_d6bb2023",
