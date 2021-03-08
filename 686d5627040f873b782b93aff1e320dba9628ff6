@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1e07fe4_5921c578",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-08T08:14:26Z",
+      "side": 1,
+      "message": "\u003e Patch Set 6: Code-Review+2\n\u003e \n\u003e By voting Code-Review+2 the following files are now code-owner approved by Beverly Tai:\n\u003e * services/core/java/com/android/server/notification/NotificationManagerService.java\n\u003e * services/core/java/com/android/server/notification/PreferencesHelper.java\n\u003e \n\n@Beverly\nI try to figure out where are the regressions, but as I do not have access to googleplex, it is not easy...\nCould you point me on the failure so that i can speed up resolution? Many thank in advance!",
+      "revId": "686d5627040f873b782b93aff1e320dba9628ff6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
