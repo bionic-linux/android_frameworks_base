@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d78e818b_fdbe2e45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-08T14:43:22Z",
+      "side": 1,
+      "message": "@Berverly: I considered the problem on a different angle and became aware it was just a matter of user.\nFollowing user change is the easiest solution. Parameter userId of syncChannelsBypassingDnd could even be removed.\ngetAppsBypassingDndCount will not be misaligned anymore also.",
+      "revId": "a3b4ae2faafb2248189ae0660320197ba2448b2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
