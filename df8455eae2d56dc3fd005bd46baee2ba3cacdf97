@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "862c1675_a1eab896",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-08T22:28:49Z",
+      "side": 1,
+      "message": "overriding presubmit - patchset 7 passed TH but the Presubmit-Verified bit was not set on the CL.",
+      "revId": "df8455eae2d56dc3fd005bd46baee2ba3cacdf97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
