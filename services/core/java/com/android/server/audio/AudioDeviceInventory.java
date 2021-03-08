@@ -765,7 +765,8 @@ public class AudioDeviceInventory {
                 }
                 mConnectedDevices.put(deviceKey, new DeviceInfo(
                         device, deviceName, address, AudioSystem.AUDIO_FORMAT_DEFAULT));
-                mDeviceBroker.postAccessoryPlugMediaUnmute(device);
+                mDeviceBroker.postCheckMediaMuteOnAccessoryConnectionStateChange(
+                        AudioSystem.DEVICE_STATE_AVAILABLE, device);
                 mmi.set(MediaMetrics.Property.STATE, MediaMetrics.Value.CONNECTED).record();
                 return true;
             } else if (!connect && isConnected) {
@@ -774,6 +775,8 @@ public class AudioDeviceInventory {
                         AudioSystem.AUDIO_FORMAT_DEFAULT);
                 // always remove even if disconnection failed
                 mConnectedDevices.remove(deviceKey);
+                mDeviceBroker.postCheckMediaMuteOnAccessoryConnectionStateChange(
+                        AudioSystem.DEVICE_STATE_UNAVAILABLE,device);
                 mmi.set(MediaMetrics.Property.STATE, MediaMetrics.Value.CONNECTED).record();
                 return true;
             }
@@ -982,7 +985,8 @@ public class AudioDeviceInventory {
         // calling AudioSystem
         mApmConnectedDevices.put(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP, diKey);
 
-        mDeviceBroker.postAccessoryPlugMediaUnmute(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
+        mDeviceBroker.postCheckMediaMuteOnAccessoryConnectionStateChange(
+                AudioSystem.DEVICE_STATE_AVAILABLE,AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
         setCurrentAudioRouteNameIfPossible(name, true /*fromA2dp*/);
     }
 
@@ -1027,6 +1031,8 @@ public class AudioDeviceInventory {
                     "A2DP device addr=" + address + " made unavailable")).printLog(TAG));
         }
         mApmConnectedDevices.remove(AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
+        mDeviceBroker.postCheckMediaMuteOnAccessoryConnectionStateChange(
+                AudioSystem.DEVICE_STATE_UNAVAILABLE,AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP);
         // Remove A2DP routes as well
         setCurrentAudioRouteNameIfPossible(null, true /*fromA2dp*/);
         mmi.record();
@@ -1084,7 +1090,8 @@ public class AudioDeviceInventory {
                 DeviceInfo.makeDeviceListKey(AudioSystem.DEVICE_OUT_HEARING_AID, address),
                 new DeviceInfo(AudioSystem.DEVICE_OUT_HEARING_AID, name,
                         address, AudioSystem.AUDIO_FORMAT_DEFAULT));
-        mDeviceBroker.postAccessoryPlugMediaUnmute(AudioSystem.DEVICE_OUT_HEARING_AID);
+        mDeviceBroker.postCheckMediaMuteOnAccessoryConnectionStateChange(
+                AudioSystem.DEVICE_STATE_AVAILABLE,AudioSystem.DEVICE_OUT_HEARING_AID);
         mDeviceBroker.postApplyVolumeOnDevice(streamType,
                 AudioSystem.DEVICE_OUT_HEARING_AID, "makeHearingAidDeviceAvailable");
         setCurrentAudioRouteNameIfPossible(name, false /*fromA2dp*/);
@@ -1105,6 +1112,8 @@ public class AudioDeviceInventory {
                 AudioSystem.AUDIO_FORMAT_DEFAULT);
         mConnectedDevices.remove(
                 DeviceInfo.makeDeviceListKey(AudioSystem.DEVICE_OUT_HEARING_AID, address));
+        mDeviceBroker.postCheckMediaMuteOnAccessoryConnectionStateChange(
+                AudioSystem.DEVICE_STATE_UNAVAILABLE,AudioSystem.DEVICE_OUT_HEARING_AID);
         // Remove Hearing Aid routes as well
         setCurrentAudioRouteNameIfPossible(null, false /*fromA2dp*/);
         new MediaMetrics.Item(mMetricsId + "makeHearingAidDeviceUnavailable")
