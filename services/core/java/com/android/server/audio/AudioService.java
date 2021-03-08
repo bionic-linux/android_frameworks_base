@@ -298,6 +298,7 @@ public class AudioService extends IAudioService.Stub
     private static final int MSG_BROADCAST_MICROPHONE_MUTE = 30;
     private static final int MSG_CHECK_MODE_FOR_UID = 31;
     private static final int MSG_REINIT_VOLUMES = 32;
+    private static final int MSG_RESTORE_DEVICE_MEDIA_MUTE_STATE = 33;
     // start of messages handled under wakelock
     //   these messages can only be queued, i.e. sent with queueMsgUnderWakeLock(),
     //   and not with sendMsg(..., ..., SENDMSG_QUEUE, ...)
@@ -5577,6 +5578,30 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+    /*package*/ void postAccessoryPlugOut(int oldDevice) {
+        sendMsg(mAudioHandler, MSG_RESTORE_DEVICE_MEDIA_MUTE_STATE, SENDMSG_QUEUE,
+                oldDevice, 0, null, 0);
+    }
+
+    @GuardedBy("VolumeStreamState.class")
+    private void onRestoreDeviceMuteState(int oldDevice) {
+        if (DEBUG_VOL) {
+            Log.i(TAG, String.format("onRestoreDeviceMuteState oldDevice=%d", oldDevice));
+        }
+        if (mNm.getZenMode() != Settings.Global.ZEN_MODE_NO_INTERRUPTIONS
+                && !isStreamMutedByRingerOrZenMode(AudioSystem.STREAM_MUSIC)
+                && DEVICE_MEDIA_UNMUTED_ON_PLUG_SET.contains(oldDevice)) {
+            int device = getDeviceForStream(AudioSystem.STREAM_MUSIC);
+            int muted = mStreamStates[AudioSystem.STREAM_MUSIC].mMusicMuteDeviceMap.get(device);
+            if (DEBUG_VOL) {
+                Log.i(TAG, String.format("onRestoreDeviceMuteState  device=%d [muted = %s]",
+                        device, muted));
+            }
+            mStreamStates[AudioSystem.STREAM_MUSIC].mute(muted == 1);
+
+        }
+    }
+
     /**
      * See AudioManager.hasHapticChannels(Uri).
      */
@@ -5941,6 +5966,7 @@ public class AudioService extends IAudioService.Stub
         private boolean mIsMutedInternally;
         private String mVolumeIndexSettingName;
         private int mObservedDevices;
+        private final SparseIntArray mMusicMuteDeviceMap = new SparseIntArray(4);
 
         private final SparseIntArray mIndexMap = new SparseIntArray(8) {
             @Override
@@ -6342,6 +6368,11 @@ public class AudioService extends IAudioService.Stub
                     changed = true;
                     mIsMuted = state;
 
+                    if (mStreamType == AudioSystem.STREAM_MUSIC) {
+                        int currentDevice = getDeviceForStream(mStreamType);
+                        mMusicMuteDeviceMap.put(currentDevice, mIsMuted ? 1 : 0);
+                    }
+
                     // Set the new mute volume. This propagates the values to
                     // the audio system, otherwise the volume won't be changed
                     // at the lower level.
@@ -6457,6 +6488,17 @@ public class AudioService extends IAudioService.Stub
                 pw.print(index);
             }
             pw.println();
+
+            if (mStreamType == AudioSystem.STREAM_MUSIC) {
+                pw.print("   mMusicMuteDeviceMap: ");
+                for (int i = 0; i < mMusicMuteDeviceMap.size(); i++) {
+                    final int device = mMusicMuteDeviceMap.keyAt(i);
+                    final int muted = mMusicMuteDeviceMap.valueAt(i);
+                    pw.print(" (device=" + device + " muted=" + (muted == 1) + ")");
+                }
+                pw.println();
+            }
+
             pw.print("   Devices: ");
             final int devices = getDevicesForStream(mStreamType);
             int device, i = 0, n = 0;
@@ -6767,6 +6809,10 @@ public class AudioService extends IAudioService.Stub
 
                 case MSG_ACCESSORY_PLUG_MEDIA_UNMUTE:
                     onAccessoryPlugMediaUnmute(msg.arg1);
+                    break;
+
+                case MSG_RESTORE_DEVICE_MEDIA_MUTE_STATE:
+                    onRestoreDeviceMuteState(msg.arg1);
                     break;
 
                 case MSG_PERSIST_MUSIC_ACTIVE_MS:

@@ -759,6 +759,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
         mAudioService.postAccessoryPlugMediaUnmute(device);
     }
 
+    /*package*/ void postAccessoryPlugOut(int oldDevice) {
+        mAudioService.postAccessoryPlugOut(oldDevice);
+    }
+
     /*package*/ int getVssVolumeForDevice(int streamType, int device) {
         return mAudioService.getVssVolumeForDevice(streamType, device);
     }
