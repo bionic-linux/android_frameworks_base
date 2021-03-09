@@ -50,6 +50,23 @@
       "message": "Anyone have thoughts on this change?",
       "revId": "25cc4e04cb4755c7785226563ae75992dc664bd4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d253921_696f8e05",
+        "filename": "core/java/com/android/internal/app/procstats/DurationsTable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-03-09T19:10:43Z",
+      "side": 1,
+      "message": "I\u0027m not objecting this. But the cause of this could be due to that somehow the Service was stopped without \"start\", and the ServiceRecord.lastActivity is 0, which results in a negative duration. Patching this file could cover up the problems in the Service side though.",
+      "revId": "25cc4e04cb4755c7785226563ae75992dc664bd4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
