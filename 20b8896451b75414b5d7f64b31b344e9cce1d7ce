@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "971445cd_893366ea",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5293,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:00:00Z",
+      "side": 1,
+      "message": "I\u0027m afraid this also doesn\u0027t work, because you may have apps that are tracked but not changed. For example if the API is called to add a new app, a callback for an app that used to be in the list (and still is) would now fail getting the CAPABILITIES updates.\n\nEven if it worked (I think it could be made to work with some more complex legwork to determine if the callback is going to track something *else*), I also like the solution in this patch a little bit better because it actually removes the discrepancy that we had. This is the right thing to do in terms of object management ; we thought we could get away without it, but it\u0027s still correct, and if we avoided it someone may rightfully expect the active request is always correctly set – which would be true in all except this case.\n\nI tried to clarify the code with some comments. Please let me know what you think.",
+      "parentUuid": "02a241f6_ac0babaf",
+      "range": {
+        "startLine": 5283,
+        "startChar": 12,
+        "endLine": 5293,
+        "endChar": 17
+      },
+      "revId": "20b8896451b75414b5d7f64b31b344e9cce1d7ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "35c5413d_06a556c3",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -108,6 +132,30 @@
       "writtenOn": "2021-03-09T03:39:38Z",
       "side": 1,
       "message": "Maybe here or around here, you could change this if statement to support this or the like?\n\n    // Add a currently tracked nri if it is not going to be tracked anymore.\n    if (isPerAppTrackedNri(nri) \u0026\u0026 !isNriGoingToBeTracked) {\n        defaultCallbackRequests.add(nri);\n        continue;\n    }",
+      "range": {
+        "startLine": 9135,
+        "startChar": 12,
+        "endLine": 9135,
+        "endChar": 42
+      },
+      "revId": "20b8896451b75414b5d7f64b31b344e9cce1d7ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94049df8_098e2659",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9135,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-09T12:00:00Z",
+      "side": 1,
+      "message": "Replied above.",
+      "parentUuid": "35c5413d_06a556c3",
       "range": {
         "startLine": 9135,
         "startChar": 12,
