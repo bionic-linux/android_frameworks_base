@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73c51826_07914666",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-09T23:25:53Z",
+      "side": 1,
+      "message": "nit: can you elaborate a bit on what the \u0027correct\u0027 network is from a vcn perspective? (I\u0027m thinking this is obvious to us now but may be helpful for others from a maintainability perspective)",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "033a4308cedac48e4598e5ec843012c591a0feed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65abafeb_dffda357",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-09T23:25:53Z",
+      "side": 1,
+      "message": "lgtm with minor nit",
+      "revId": "033a4308cedac48e4598e5ec843012c591a0feed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
