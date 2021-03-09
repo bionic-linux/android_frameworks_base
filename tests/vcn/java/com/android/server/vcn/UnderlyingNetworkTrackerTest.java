@@ -127,7 +127,6 @@ public class UnderlyingNetworkTrackerTest {
                         mVcnContext,
                         SUB_GROUP,
                         mSubscriptionSnapshot,
-                        new int[] {NetworkCapabilities.NET_CAPABILITY_INTERNET},
                         mNetworkTrackerCb);
     }
 

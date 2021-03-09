@@ -40,11 +40,9 @@ public class VcnGatewayConnectionConfigTest {
             new int[] {
                 NetworkCapabilities.NET_CAPABILITY_INTERNET, NetworkCapabilities.NET_CAPABILITY_MMS
             };
-    public static final int[] UNDERLYING_CAPS = new int[] {NetworkCapabilities.NET_CAPABILITY_DUN};
 
     static {
         Arrays.sort(EXPOSED_CAPS);
-        Arrays.sort(UNDERLYING_CAPS);
     }
 
     public static final long[] RETRY_INTERVALS_MS =
@@ -79,10 +77,6 @@ public class VcnGatewayConnectionConfigTest {
             builder.addExposedCapability(caps);
         }
 
-        for (int caps : UNDERLYING_CAPS) {
-            builder.addRequiredUnderlyingCapability(caps);
-        }
-
         return builder.build();
     }
 
@@ -99,9 +93,7 @@ public class VcnGatewayConnectionConfigTest {
     @Test
     public void testBuilderRequiresNonEmptyExposedCaps() {
         try {
-            newBuilder()
-                    .addRequiredUnderlyingCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                    .build();
+            newBuilder().build();
 
             fail("Expected exception due to invalid exposed capabilities");
         } catch (IllegalArgumentException e) {
@@ -142,10 +134,6 @@ public class VcnGatewayConnectionConfigTest {
         int[] exposedCaps = config.getExposedCapabilities();
         Arrays.sort(exposedCaps);
         assertArrayEquals(EXPOSED_CAPS, exposedCaps);
-
-        int[] underlyingCaps = config.getRequiredUnderlyingCapabilities();
-        Arrays.sort(underlyingCaps);
-        assertArrayEquals(UNDERLYING_CAPS, underlyingCaps);
 
         assertEquals(CONTROL_PLANE_CONFIG, config.getControlPlaneConfig());
         assertFalse(CONTROL_PLANE_CONFIG == config.getControlPlaneConfig());
