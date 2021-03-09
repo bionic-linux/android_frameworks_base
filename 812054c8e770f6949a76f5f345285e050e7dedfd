@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "21a00a7d_1d163396",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14418,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-03-09T18:41:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09c0710_72e54759",
+      "range": {
+        "startLine": 14418,
+        "startChar": 31,
+        "endLine": 14418,
+        "endChar": 70
+      },
+      "revId": "812054c8e770f6949a76f5f345285e050e7dedfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d28e403_2bfd8e3f",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-08T22:07:44Z",
       "side": 1,
       "message": "Doesn\u0027t the capability checking associated with the RequiresFeature tag allow one to check if it is supported?  It seems like we could just throw if it\u0027s not supported instead.  The capability stuff checks that already.",
+      "range": {
+        "startLine": 14509,
+        "startChar": 26,
+        "endLine": 14509,
+        "endChar": 46
+      },
+      "revId": "812054c8e770f6949a76f5f345285e050e7dedfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11548b41_b73fbc41",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14509,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-03-09T18:41:55Z",
+      "side": 1,
+      "message": "the RequiresFeature flag is simply only used for lint checking during dev. i.e It will warn the developer to check for the capability if this method is called blindly. \n\n\nHow is throwing any different/better than what we do here?",
+      "parentUuid": "1d28e403_2bfd8e3f",
       "range": {
         "startLine": 14509,
         "startChar": 26,
