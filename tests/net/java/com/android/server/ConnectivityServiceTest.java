@@ -11273,6 +11273,29 @@ public class ConnectivityServiceTest {
         // Other callbacks will be unregistered by tearDown()
     }
 
+    @Test
+    public void testProfilePreferenceRemovedUponUserRemoved() throws Exception {
+        final InOrder inOrder = inOrder(mMockNetd);
+        final UserHandle testHandle = setupPreferenceForUserTest();
+
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+
+        final TestOnCompleteListener listener = new TestOnCompleteListener();
+        mCm.setNetworkPreferenceForUser(testHandle, USER_PREFERENCE_ENTERPRISE,
+                r -> r.run(), listener);
+        listener.expectOnComplete();
+        inOrder.verify(mMockNetd).networkAddUidRanges(mCellNetworkAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+
+        final Intent removedIntent = new Intent(ACTION_USER_REMOVED);
+        removedIntent.putExtra(Intent.EXTRA_USER, testHandle);
+        processBroadcast(removedIntent);
+
+        inOrder.verify(mMockNetd).networkRemoveUidRanges(mCellNetworkAgent.getNetwork().netId,
+                uidRangeFor(testHandle));
+    }
+
     /**
      * Make sure that OEM preference and per-profile preference can't be used at the same
      * time and throw ISE if tried
