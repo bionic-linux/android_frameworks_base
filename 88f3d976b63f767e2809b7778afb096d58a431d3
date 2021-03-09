@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b40524c8_ae48f17b",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-09T23:19:24Z",
+      "side": 1,
+      "message": "I agree with that in general but in this case, unless we are anticipating using some other characteristics of the network, we might be just adding complexity. Even in the future, if we need to add another API which supports taking other capabilities, I think this will still be a convenient overload to have.",
+      "parentUuid": "648fb511_482e893f",
+      "range": {
+        "startLine": 753,
+        "startChar": 81,
+        "endLine": 753,
+        "endChar": 95
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "05fc4f77_495b845c",
         "filename": "core/java/android/net/NetworkPolicyManager.java",
         "patchSetId": 3
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-02T14:48:24Z",
       "side": 1,
       "message": "Generally we\u0027ll need to define the guarantees of calls upon registration. Callers won\u0027t know what is the current state for any given UID until they receive the first call, which means, I guess, that registering needs to trigger sending the full list of association uid → blocked reason.\n\n(maybe you already planned to do that)",
+      "range": {
+        "startLine": 784,
+        "startChar": 16,
+        "endLine": 784,
+        "endChar": 45
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dbaa26f_bca08851",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-09T23:19:24Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a good point. Right now, we don\u0027t send any callbacks for newly registered listeners. I think we can provide that guarantee for these new methods. I have added a TODO for now. I can take care of that in a follow-up.",
+      "parentUuid": "05fc4f77_495b845c",
       "range": {
         "startLine": 784,
         "startChar": 16,
@@ -129,6 +177,54 @@
         "startChar": 20,
         "endLine": 817,
         "endChar": 45
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a0e1b29_cbb8e345",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-09T23:19:24Z",
+      "side": 1,
+      "message": "Actually I was changing it to take \"blocked\" and \"blockedOnMetered\" but yeah, looking back, I think the previous design was better.",
+      "parentUuid": "1fd9aac2_49a54090",
+      "range": {
+        "startLine": 817,
+        "startChar": 20,
+        "endLine": 817,
+        "endChar": 45
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa5db686_d781a1fb",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-09T23:19:24Z",
+      "side": 1,
+      "message": "We already use \"policy\" internally to refer to whether an app should be allowed to access metered data in the background (http://cs/android/frameworks/base/core/java/android/net/NetworkPolicyManager.java?l\u003d71\u0026rcl\u003d67ade1cf0424c52b3634a7bc1a3264d00ec65166). I was worried this might cause some confusion.",
+      "parentUuid": "a9c70fd0_594a3181",
+      "range": {
+        "startLine": 817,
+        "startChar": 74,
+        "endLine": 817,
+        "endChar": 87
       },
       "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
