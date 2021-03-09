@@ -24,6 +24,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1621990e_e24fb2d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2021-03-09T06:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bc575be_2cf4435b",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "9483f2b9b12ea0397161a895fea312dc9c3af1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "011f3ee6_74f5f27e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2021-03-09T06:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bc575be_2cf4435b",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "9483f2b9b12ea0397161a895fea312dc9c3af1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cc30760_6446a5b5",
@@ -47,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "452374dd_304ea13a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2021-03-09T06:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cc30760_6446a5b5",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "9483f2b9b12ea0397161a895fea312dc9c3af1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "921b7686_48259f43",
@@ -60,6 +132,30 @@
       "writtenOn": "2021-02-23T14:50:30Z",
       "side": 1,
       "message": "*AsUser commands are being deprecated. Instead do:\n\n mContext.createContextAsUser(UserHandle.of(userId), /* flags */ 0)\n         .getPackageManager().getResourcesForApplication(packageToLoad);",
+      "range": {
+        "startLine": 312,
+        "startChar": 18,
+        "endLine": 312,
+        "endChar": 77
+      },
+      "revId": "9483f2b9b12ea0397161a895fea312dc9c3af1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e631538f_f17ea9f6",
+        "filename": "services/core/java/com/android/server/om/OverlayManagerShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1632623
+      },
+      "writtenOn": "2021-03-09T06:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921b7686_48259f43",
       "range": {
         "startLine": 312,
         "startChar": 18,
