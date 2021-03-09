@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e13412b2_6ef2b9ec",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5293,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-09T19:08:08Z",
+      "side": 1,
+      "message": "Ok, SGTM. Comments look good. Only nit is that I would abstract this into a new method but only a nit.",
+      "parentUuid": "971445cd_893366ea",
+      "range": {
+        "startLine": 5283,
+        "startChar": 12,
+        "endLine": 5293,
+        "endChar": 17
+      },
+      "revId": "20b8896451b75414b5d7f64b31b344e9cce1d7ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35c5413d_06a556c3",
