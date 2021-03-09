@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4411fc8_f19f93a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-03-09T00:26:01Z",
+      "side": 1,
+      "message": "lgtm - can we add testing for ConnectingState to verify that the session params has the right Network set?",
+      "revId": "f7d4ab93c13da4def9d0e7962504a42bfc040dc4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
