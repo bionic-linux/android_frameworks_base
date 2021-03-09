@@ -485,7 +485,7 @@ public class RebootEscrowManagerTests {
         // pretend reboot happens here
         when(mInjected.getBootCount()).thenReturn(1);
         ArgumentCaptor<Boolean> metricsSuccessCaptor = ArgumentCaptor.forClass(Boolean.class);
-        doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
+        //doNothing().when(mInjected).reportMetric(metricsSuccessCaptor.capture());
 
         when(mServiceConnection.unwrap(any(), anyLong()))
                 .thenThrow(new IOException())
