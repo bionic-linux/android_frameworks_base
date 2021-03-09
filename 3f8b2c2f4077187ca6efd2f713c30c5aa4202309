@@ -16,6 +16,24 @@
       "message": "Hi, thanks for the patch! We\u0027ve already addressed this issue in our internal branch.  Keun-young, not sure what the procedure is for auto OEMs, can you share the patch?",
       "revId": "3f8b2c2f4077187ca6efd2f713c30c5aa4202309",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bff89b1d_51a230ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-03-09T14:49:37Z",
+      "side": 1,
+      "message": "Hi Martijn, thank you for the reply and the provided information! We don\u0027t need the patch from your internal branch now and it\u0027s OK to wait until it will be available via AOSP. It is enough to know that this issue is handled and will be fixed in future AOSP versions. Thanks again!",
+      "parentUuid": "dbe8c22e_5c98b82b",
+      "revId": "3f8b2c2f4077187ca6efd2f713c30c5aa4202309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
