@@ -4813,11 +4813,11 @@ public class ConnectivityManager {
      */
     @SystemApi
     public void registerQosCallback(@NonNull final QosSocketInfo socketInfo,
-            @NonNull final QosCallback callback,
-            @CallbackExecutor @NonNull final Executor executor) {
+            @CallbackExecutor @NonNull final Executor executor,
+            @NonNull final QosCallback callback) {
         Objects.requireNonNull(socketInfo, "socketInfo must be non-null");
-        Objects.requireNonNull(callback, "callback must be non-null");
         Objects.requireNonNull(executor, "executor must be non-null");
+        Objects.requireNonNull(callback, "callback must be non-null");
 
         try {
             synchronized (mQosCallbackConnections) {
