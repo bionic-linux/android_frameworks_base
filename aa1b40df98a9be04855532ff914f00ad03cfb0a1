@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ac47418_398bdd51",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T14:13:07Z",
+      "side": 1,
+      "message": "I suspect that what this means is that snoozing a limit notification doesn\u0027t cancel the limit, so the system will still block traffic when the limit is reached.",
+      "parentUuid": "355fc49f_0651d004",
+      "range": {
+        "startLine": 1921,
+        "startChar": 48,
+        "endLine": 1921,
+        "endChar": 78
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f0e120cb_93450439",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 2
@@ -152,6 +176,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1ae75f34_9bebf243",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4698,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T14:13:07Z",
+      "side": 1,
+      "message": "Suggest not changing that in this CL and perhaps adding a TODO.",
+      "parentUuid": "ada60af5_768bbaee",
+      "range": {
+        "startLine": 4698,
+        "startChar": 20,
+        "endLine": 4698,
+        "endChar": 52
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6fe1e7c9_573984fd",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 2
@@ -198,6 +246,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2fc41ce_2dc7baf2",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4856,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T14:13:07Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "6c01deab_94df5170",
+      "range": {
+        "startLine": 4856,
+        "startChar": 12,
+        "endLine": 4856,
+        "endChar": 65
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71f346e0_d7e5169d",
         "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 2
@@ -209,6 +281,30 @@
       "writtenOn": "2020-10-29T05:30:39Z",
       "side": 1,
       "message": "Can you exercise the new code ? This looks like it can fail in a number of ways without failing the test.",
+      "range": {
+        "startLine": 1810,
+        "startChar": 84,
+        "endLine": 1810,
+        "endChar": 93
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ba15dc_f4529c1f",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T14:13:07Z",
+      "side": 1,
+      "message": "+1, need tests before this code can be merged.",
+      "parentUuid": "71f346e0_d7e5169d",
       "range": {
         "startLine": 1810,
         "startChar": 84,

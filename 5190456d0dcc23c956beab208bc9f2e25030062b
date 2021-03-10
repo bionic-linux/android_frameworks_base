@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e97eb47_26724fd4",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-10T14:13:07Z",
+      "side": 0,
+      "message": "I find it hard to understand this CL because the refactoring and the addition of the limit are rolled into one CL (and because the code has too many levels of nesting already). Think you could first split off a small CL that does a no-op refactoring of the code, and then add a limit in its own CL?",
+      "range": {
+        "startLine": 2017,
+        "startChar": 0,
+        "endLine": 2018,
+        "endChar": 38
+      },
+      "revId": "5190456d0dcc23c956beab208bc9f2e25030062b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
