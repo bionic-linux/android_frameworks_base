@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8e05a9f_ba0670a5",
+        "filename": "core/tests/coretests/src/com/android/internal/os/LooperStatsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1241761
+      },
+      "writtenOn": "2021-03-10T07:29:20Z",
+      "side": 1,
+      "message": "There is a very high chance this name will change again (reording of lambdas, choice of naming scheme etc). Could the inspection of this compiler synthetic be removed from the test? If not, maybe it should rather check that the name contains \"Lambda\"?",
+      "revId": "247ee6295709cee435257be205e3a5c9ed197ede",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
