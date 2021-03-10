@@ -16,6 +16,23 @@
       "message": "I’m looking for a review/code owner for a pull request I uploaded last week. I’m struggling to find a resource explaining the etiquette for requesting reviews, so I’m hoping that I\u0027m using the \"Suggest Owners\" feature as intended. My sincerest apologies if Gerrit notifies project owners of all open PRs - it is not my intention to expedite an automated process.\n\nTo summarise the issue: a TV input hardware binding does not rebind/reconnect after a package containing a hardware binding is updated. This issue exists in every single set-top box that I’ve seen delivered where I’m located in the Nordics. It seems that vendors are generally reluctant to change framework file. The common suggestion to fix the issue from the one I’m working with is to schedule reboots after package updates. This PR intends to fix the root cause of the issue in order to avoid the suggested scheduled/ad-hoc system reboots.",
       "revId": "e0414f42f3cfcd094d12f1e4b20a8e64487a731c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b02dc9a8_cfb6fad3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1862360
+      },
+      "writtenOn": "2021-03-10T16:03:51Z",
+      "side": 1,
+      "message": "I’m looking for a review/code owner for a pull request I uploaded last week. I’m struggling to find a resource explaining the etiquette for requesting reviews, so I’m hoping that I\u0027m using the \"Suggest Owners\" feature as intended. My sincerest apologies if Gerrit notifies project owners of all open PRs - it is not my intention to expedite an automated process.\n\nTo summarise the issue: a TV input hardware binding does not rebind/reconnect after a package containing a hardware binding is updated. This issue exists in every single set-top box that I’ve seen delivered where I’m located in the Nordics. It seems that vendors are generally reluctant to change framework file. The common suggestion to fix the issue from the one I’m working with is to schedule reboots after package updates. This PR intends to fix the root cause of the issue in order to avoid the suggested scheduled/ad-hoc system reboots.",
+      "revId": "e0414f42f3cfcd094d12f1e4b20a8e64487a731c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
