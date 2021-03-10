@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14509e52_e1f0ce28",
+        "filename": "tests/net/java/com/android/server/connectivity/Nat464XlatTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-10T08:20:12Z",
+      "side": 1,
+      "message": "See comment on aosp/1501983 about possible refactoring of the 2 branches, but no need to spend time on this",
+      "range": {
+        "startLine": 520,
+        "startChar": 10,
+        "endLine": 520,
+        "endChar": 14
+      },
+      "revId": "30919babbcbdd9ead055315c6d653d4fe41f2556",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
