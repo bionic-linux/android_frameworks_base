@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c54f739_9b1ae272",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T15:16:45Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "f056c8e8d9fb9d0877460909852dffab04224eb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebc7f60e_1d77ce18",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5074,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T15:16:45Z",
+      "side": 1,
+      "message": "This should be module-lib, right? Not standard SystemApi?",
+      "range": {
+        "startLine": 5074,
+        "startChar": 5,
+        "endLine": 5074,
+        "endChar": 14
+      },
+      "revId": "f056c8e8d9fb9d0877460909852dffab04224eb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
