@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d642b2d6_598a88f2",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5050,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-11T16:48:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eabd6604_bb2fc9b1",
+      "range": {
+        "startLine": 5050,
+        "startChar": 32,
+        "endLine": 5050,
+        "endChar": 34
+      },
+      "revId": "cc01e34b4a8fb6c775ae75674f435927d5233608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbde83f1_b9ac9dbb",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-11T10:37:32Z",
       "side": 1,
       "message": "I think this would be clearer as:\n\n  int i \u003d netIdRange.getLower(); i \u003c\u003d netIdRange.getUpper(); i++)\n     assertEquals(i, ...)",
+      "range": {
+        "startLine": 654,
+        "startChar": 13,
+        "endLine": 654,
+        "endChar": 79
+      },
+      "revId": "cc01e34b4a8fb6c775ae75674f435927d5233608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0c2745a_b976a65f",
+        "filename": "tests/net/java/com/android/server/IpSecServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-11T16:48:52Z",
+      "side": 1,
+      "message": "I agree with you.\nUpdated.",
+      "parentUuid": "bbde83f1_b9ac9dbb",
       "range": {
         "startLine": 654,
         "startChar": 13,
