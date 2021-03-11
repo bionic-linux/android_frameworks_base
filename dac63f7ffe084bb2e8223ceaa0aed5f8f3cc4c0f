@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74973888_2d9599f2",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-03-11T22:05:26Z",
+      "side": 1,
+      "message": "Some small grammar/spelling issues here, perhaps:\n\nSome carriers using ACS (auto configuration server) may send a carrier-specific pre-provisioning configuration XML if the user has not been provisioned for RCS services yet. When this provisioning XML is received, the framework will move into a \"not provisioned\" state for RCS. In order for provisioning to proceed, the application must parse this configuration XML and perform the carrier specific opt-in flow for RCS services. if the user accepts, {@link #triggerAutoConfiguration} must be called in order for the device to move out of this state and try to fetch the RCS provisioning information.\n\nCan you update ImsConfigImplBase as well?",
+      "range": {
+        "startLine": 1052,
+        "startChar": 11,
+        "endLine": 1052,
+        "endChar": 14
+      },
+      "revId": "dac63f7ffe084bb2e8223ceaa0aed5f8f3cc4c0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
