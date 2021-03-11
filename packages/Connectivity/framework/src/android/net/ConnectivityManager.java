@@ -1410,9 +1410,13 @@ public class ConnectivityManager {
      * {@link NetworkCapabilities#getTransportInfo()}. Some transport info instances like
      * {@link android.net.wifi.WifiInfo} contain location sensitive information. Retrieving
      * this location sensitive information (subject to app's location permissions) will be
-     * noted by system. To include any location sensitive data in {@link TransportInfo},
-     * use a {@link NetworkCallback} with
-     * {@link NetworkCallback#FLAG_INCLUDE_LOCATION_INFO} flag.
+     * noted by system.
+     * <p>
+     * To include location sensitive data in {@link TransportInfo}, use either:
+     * <li> A {@link NetworkCallback} with {@link NetworkCallback#FLAG_INCLUDE_LOCATION_INFO} flag,
+     * OR </li>.
+     * <li> {@link #getNetworkCapabilitiesWithLocationInfo(Network)}</li>
+     * </p>
      *
      * @param network The {@link Network} object identifying the network in question.
      * @return The {@link NetworkCapabilities} for the network, or {@code null}.
@@ -1422,7 +1426,38 @@ public class ConnectivityManager {
     public NetworkCapabilities getNetworkCapabilities(@Nullable Network network) {
         try {
             return mService.getNetworkCapabilities(
-                    network, mContext.getOpPackageName(), getAttributionTag());
+                    network, false /* includeLocationInfo */,
+                    mContext.getOpPackageName(), getAttributionTag());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Get the {@link NetworkCapabilities} for the given {@link Network}.  This
+     * will return {@code null} if the network is unknown.
+     *
+     * This will include any location sensitive data in {@link TransportInfo} embedded in
+     * {@link NetworkCapabilities#getTransportInfo()}. Some transport info instances like
+     * {@link android.net.wifi.WifiInfo} contain location sensitive information. Retrieving
+     * this location sensitive information (subject to app's location permissions) will be
+     * noted by system.
+     * To avoid location sensitive data in {@link TransportInfo}, use either:
+     * <li> A {@link NetworkCallback} without {@link NetworkCallback#FLAG_INCLUDE_LOCATION_INFO}
+     * flag, OR </li>.
+     * <li> {@link #getNetworkCapabilities(Network)}</li>
+     * </p>
+     *
+     * @param network The {@link Network} object identifying the network in question.
+     * @return The {@link NetworkCapabilities} for the network, or {@code null}.
+     */
+    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
+    @Nullable
+    public NetworkCapabilities getNetworkCapabilitiesWithLocationInfo(@Nullable Network network) {
+        try {
+            return mService.getNetworkCapabilities(
+                    network, true /* includeLocationInfo */,
+                    mContext.getOpPackageName(), getAttributionTag());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

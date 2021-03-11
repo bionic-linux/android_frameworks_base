@@ -110,6 +110,7 @@ import static com.android.testutils.MiscAsserts.assertEmpty;
 import static com.android.testutils.MiscAsserts.assertLength;
 import static com.android.testutils.MiscAsserts.assertRunsInAtMost;
 import static com.android.testutils.MiscAsserts.assertThrows;
+import static com.android.testutils.ParcelUtils.parcelingRoundTrip;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -2425,6 +2426,45 @@ public class ConnectivityServiceTest {
         NetworkCapabilities nc = mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork());
         assertEquals(originalOwnerUid, nc.getOwnerUid());
         assertTrue(nc.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
+    }
+
+    @Test
+    public void testVerifyLocationDataIsIncludedInGetNetworkCapsWithLocationInfo()
+            throws Exception {
+        when(mPackageManager.getTargetSdkVersion(anyString())).thenReturn(Build.VERSION_CODES.S);
+        final int ownerUid = Process.myUid();
+        final WifiInfo wifiInfo = new WifiInfo.Builder()
+                .setSsid("sssid1234".getBytes())
+                .setBssid("00:11:22:33:44:55")
+                .build();
+        final NetworkCapabilities ncTemplate =
+                new NetworkCapabilities()
+                        .addTransportType(TRANSPORT_WIFI)
+                        .setTransportInfo(wifiInfo)
+                        .setOwnerUid(ownerUid);
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI, new LinkProperties(),
+                ncTemplate);
+        mWiFiNetworkAgent.connect(false);
+
+        final WifiInfo sanitizedWifiInfo = new WifiInfo.Builder()
+                .setSsid(new byte[0])
+                .setBssid(WifiInfo.DEFAULT_MAC_ADDRESS)
+                .build();
+
+        // Existing getNetworkCapabilities() call.
+        final NetworkCapabilities ncWithoutLocationInfo =
+                // Parcel the nc to ensure the location sensitive data is stripped out.
+                parcelingRoundTrip(mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork()));
+        assertEquals(INVALID_UID, ncWithoutLocationInfo.getOwnerUid());
+        assertEquals(sanitizedWifiInfo, ncWithoutLocationInfo.getTransportInfo());
+
+        // New getNetworkCapabilitiesWithLocationInfo() call.
+        final NetworkCapabilities ncWithLocationInfo =
+                // Parcel the nc to ensure the location sensitive data is stripped out.
+                parcelingRoundTrip(mCm.getNetworkCapabilitiesWithLocationInfo(
+                        mWiFiNetworkAgent.getNetwork()));
+        assertEquals(ownerUid, ncWithLocationInfo.getOwnerUid());
+        assertEquals(wifiInfo, ncWithLocationInfo.getTransportInfo());
     }
 
     @Test

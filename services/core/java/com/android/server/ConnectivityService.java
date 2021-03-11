@@ -1821,13 +1821,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkCapabilities getNetworkCapabilities(Network network, String callingPackageName,
-            @Nullable String callingAttributionTag) {
+    public NetworkCapabilities getNetworkCapabilities(Network network, boolean includeLocationInfo,
+            String callingPackageName, @Nullable String callingAttributionTag) {
         mAppOpsManager.checkPackage(mDeps.getCallingUid(), callingPackageName);
         enforceAccessPermission();
         return createWithLocationInfoSanitizedIfNecessaryWhenParceled(
-                getNetworkCapabilitiesInternal(network),
-                false /* includeLocationSensitiveInfo */,
+                getNetworkCapabilitiesInternal(network), includeLocationInfo,
                 mDeps.getCallingUid(), callingPackageName, callingAttributionTag);
     }
 
