@@ -39562,8 +39562,8 @@ package android.telephony {
   }
 
   public final class CellInfoNr extends android.telephony.CellInfo {
-    method @NonNull public android.telephony.CellIdentity getCellIdentity();
-    method @NonNull public android.telephony.CellSignalStrength getCellSignalStrength();
+    method @NonNull @dalvik.annotation.codegen.CovariantReturnType(returnType=CellIdentityNr.class, presentAfter=29) public android.telephony.CellIdentity getCellIdentity();
+    method @NonNull @dalvik.annotation.codegen.CovariantReturnType(returnType=CellSignalStrengthNr.class, presentAfter=29) public android.telephony.CellSignalStrength getCellSignalStrength();
     method public void writeToParcel(android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.telephony.CellInfoNr> CREATOR;
   }
