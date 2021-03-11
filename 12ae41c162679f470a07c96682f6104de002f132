@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dda6939_007ab720",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1733820
+      },
+      "writtenOn": "2021-03-11T23:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50e9fceb_2b4a0180",
+      "range": {
+        "startLine": 1057,
+        "startChar": 70,
+        "endLine": 1057,
+        "endChar": 94
+      },
+      "revId": "12ae41c162679f470a07c96682f6104de002f132",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af825566_4f11e3be",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-11T23:21:42Z",
       "side": 1,
       "message": "This was written from the perspective of the application, would it be possible to reword from the perspective of the ACS client?",
+      "range": {
+        "startLine": 555,
+        "startChar": 10,
+        "endLine": 562,
+        "endChar": 40
+      },
+      "revId": "12ae41c162679f470a07c96682f6104de002f132",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5977d7f_cf31e0ba",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsConfigImplBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1733820
+      },
+      "writtenOn": "2021-03-11T23:30:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af825566_4f11e3be",
       "range": {
         "startLine": 555,
         "startChar": 10,
