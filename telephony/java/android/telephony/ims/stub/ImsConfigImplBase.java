@@ -542,10 +542,37 @@ public class ImsConfigImplBase {
         }
         mRcsCallbacks.broadcastAction(c -> {
             try {
-                //TODO compressed by default?
                 c.onAutoConfigurationErrorReceived(errorCode, errorString);
             } catch (RemoteException e) {
                 Log.w(TAG, "dead binder in notifyAutoConfigurationErrorReceived, skipping.");
+            }
+        });
+    }
+
+    /**
+     * Notifies application that pre-provisionging config is received.
+     *
+     * <p>Some carriers using ACS (auto configuration server) may send a carrier-specific
+     * pre-provisioning configuration XML if the user has not been provisioned for RCS
+     * services yet. When this provisioning XML is received, the framework will move
+     * into a "not provisioned" state for RCS. In order for provisioning to proceed,
+     * the application must parse this configuration XML and perform the carrier specific
+     * opt-in flow for RCS services. If the user accepts, {@link #triggerAutoConfiguration}
+     * must be called in order for the device to move out of this state and try to fetch
+     * the RCS provisioning information.
+     *
+     * @param configXml the pre-provisioning config in carrier specified format.
+     */
+    public final void notifyPreProvisioningReceived(@NonNull byte[] configXml) {
+        // can be null in testing
+        if (mRcsCallbacks == null) {
+            return;
+        }
+        mRcsCallbacks.broadcastAction(c -> {
+            try {
+                c.onPreProvisioningReceived(configXml);
+            } catch (RemoteException e) {
+                Log.w(TAG, "dead binder in notifyPreProvisioningReceived, skipping.");
             }
         });
     }
