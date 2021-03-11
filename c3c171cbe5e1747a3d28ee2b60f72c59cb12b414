@@ -33,6 +33,23 @@
       "message": "Also adding ogunwale@ as an OWNERS, which means you should be able to approve OWNERS changes.\n\nThis change relates to a system server service so \"frameworks\" is perhaps a better fit than joeo@, but it\u0027s not clear right now if gerrit will accept ogunwale@ as an owner. See http://b/182464652",
       "revId": "c3c171cbe5e1747a3d28ee2b60f72c59cb12b414",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63fefd34_033f3c68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-03-11T15:18:38Z",
+      "side": 1,
+      "message": "Removed Wale by mistake. ",
+      "revId": "c3c171cbe5e1747a3d28ee2b60f72c59cb12b414",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
