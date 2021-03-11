@@ -2416,6 +2416,45 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+    public void testVerifyLocationDataIsIncludedInGetNetworkCapsWithLocationInfo()
+            throws Exception {
+        when(mPackageManager.getTargetSdkVersion(anyString())).thenReturn(Build.VERSION_CODES.S);
+        final int ownerUid = Process.myUid();
+        final WifiInfo wifiInfo = new WifiInfo.Builder()
+                .setSsid("sssid1234".getBytes())
+                .setBssid("00:11:22:33:44:55")
+                .build();
+        final NetworkCapabilities ncTemplate =
+                new NetworkCapabilities()
+                        .addTransportType(TRANSPORT_WIFI)
+                        .setTransportInfo(wifiInfo)
+                        .setOwnerUid(ownerUid);
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI, new LinkProperties(),
+                ncTemplate);
+        mWiFiNetworkAgent.connect(false);
+
+        final WifiInfo sanitizedWifiInfo = new WifiInfo.Builder()
+                .setSsid(new byte[0])
+                .setBssid(WifiInfo.DEFAULT_MAC_ADDRESS)
+                .build();
+
+        // Existing getNetworkCapabilities() call.
+        final NetworkCapabilities ncWithoutLocationInfo =
+                // Parcel the nc to ensure the location sensitive data is stripped out.
+                parcelingRoundTrip(mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork()));
+        assertEquals(INVALID_UID, ncWithoutLocationInfo.getOwnerUid());
+        assertEquals(sanitizedWifiInfo, ncWithoutLocationInfo.getTransportInfo());
+
+        // New getNetworkCapabilitiesWithLocationInfo() call.
+        final NetworkCapabilities ncWithLocationInfo =
+                // Parcel the nc to ensure the location sensitive data is stripped out.
+                parcelingRoundTrip(mCm.getNetworkCapabilitiesWithLocationInfo(
+                        mWiFiNetworkAgent.getNetwork()));
+        assertEquals(ownerUid, ncWithLocationInfo.getOwnerUid());
+        assertEquals(wifiInfo, ncWithLocationInfo.getTransportInfo());
+    }
+
+    @Test
     public void testMultipleLingering() throws Exception {
         // This test would be flaky with the default 120ms timer: that is short enough that
         // lingered networks are torn down before assertions can be run. We don't want to mock the
