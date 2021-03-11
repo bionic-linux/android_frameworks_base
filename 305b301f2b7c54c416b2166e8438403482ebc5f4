@@ -16,6 +16,23 @@
       "message": "Identical to PS2, carrying forward +2.",
       "revId": "305b301f2b7c54c416b2166e8438403482ebc5f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ab4538b_31e42a01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-11T12:22:22Z",
+      "side": 1,
+      "message": "mts/networking/gce-unittests-r-build-module-on-qt-platform is broken at HEAD. b/182426606",
+      "revId": "305b301f2b7c54c416b2166e8438403482ebc5f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
