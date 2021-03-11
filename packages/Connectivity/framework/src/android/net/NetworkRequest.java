@@ -282,6 +282,8 @@ public class NetworkRequest implements Parcelable {
          * @return The builder to facilitate chaining.
          * @hide
          */
+        @SystemApi
+        @NonNull
         public Builder setUids(@Nullable Set<Range<Integer>> uids) {
             mNetworkCapabilities.setUids(uids);
             return this;
