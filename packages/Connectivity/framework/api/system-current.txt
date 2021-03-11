@@ -318,6 +318,7 @@ package android.net {
 
   public static class NetworkRequest.Builder {
     method @NonNull @RequiresPermission(android.Manifest.permission.NETWORK_SIGNAL_STRENGTH_WAKEUP) public android.net.NetworkRequest.Builder setSignalStrength(int);
+    method @NonNull public android.net.NetworkRequest.Builder setUids(@Nullable java.util.Set<android.util.Range<java.lang.Integer>>);
   }
 
   public abstract class QosCallback {
