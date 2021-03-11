@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0734222_7022d27d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-11T22:26:45Z",
+      "side": 1,
+      "message": "I also think about removing the prefs at read reboot time. Or maybe I should do the same thing as locksettings, by checking Settings.Global.BOOT_COUNT. And invalidate all prefs if that exceeds a max tolerance \n\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/locksettings/RebootEscrowManager.java?l\u003d198\n\n",
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
