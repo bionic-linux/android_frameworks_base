@@ -112,6 +112,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4942146b_58cf79f3",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-11T07:06:47Z",
+      "side": 1,
+      "message": "Ack. Suggest filing a bug, because CS will just assume unblocked until it receives a call for any given UID.",
+      "parentUuid": "6dbaa26f_bca08851",
+      "range": {
+        "startLine": 784,
+        "startChar": 16,
+        "endLine": 784,
+        "endChar": 45
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b09f15fd_09268b31",
