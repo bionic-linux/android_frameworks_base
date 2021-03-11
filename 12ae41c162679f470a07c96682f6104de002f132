@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50e9fceb_2b4a0180",
+        "filename": "telephony/java/android/telephony/ims/ProvisioningManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-03-11T23:21:42Z",
+      "side": 1,
+      "message": "Sorry, just realized that is the wrong API, should be triggerRcsReconfiguration",
+      "range": {
+        "startLine": 1057,
+        "startChar": 70,
+        "endLine": 1057,
+        "endChar": 94
+      },
+      "revId": "12ae41c162679f470a07c96682f6104de002f132",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af825566_4f11e3be",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsConfigImplBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-03-11T23:21:42Z",
+      "side": 1,
+      "message": "This was written from the perspective of the application, would it be possible to reword from the perspective of the ACS client?",
+      "range": {
+        "startLine": 555,
+        "startChar": 10,
+        "endLine": 562,
+        "endChar": 40
+      },
+      "revId": "12ae41c162679f470a07c96682f6104de002f132",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
