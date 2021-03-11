@@ -462,6 +462,7 @@ public class NetworkRequest implements Parcelable {
          * @hide
          */
         @NonNull
+        @SystemApi
         public Builder setSubIds(@NonNull Set<Integer> subIds) {
             mNetworkCapabilities.setSubIds(subIds);
             return this;

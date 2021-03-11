@@ -2277,6 +2277,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @hide
      */
     @NonNull
+    @SystemApi
     public NetworkCapabilities setSubIds(@NonNull Set<Integer> subIds) {
         mSubIds = new ArraySet(Objects.requireNonNull(subIds));
         return this;
@@ -2288,6 +2289,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @return
      */
     @NonNull
+    @SystemApi
     public Set<Integer> getSubIds() {
         return new ArraySet<>(mSubIds);
     }
@@ -2641,6 +2643,7 @@ public final class NetworkCapabilities implements Parcelable {
          * @hide
          */
         @NonNull
+        @SystemApi
         public Builder setSubIds(@NonNull final Set<Integer> subIds) {
             mCaps.setSubIds(subIds);
             return this;
