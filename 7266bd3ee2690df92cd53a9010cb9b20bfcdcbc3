@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4f032a9_62fbc28a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-11T06:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6f9849_a0d1ec2a",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "7266bd3ee2690df92cd53a9010cb9b20bfcdcbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54b737c4_efc9ee9f",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-11T05:38:25Z",
       "side": 1,
       "message": "Also explain why it is useless (or unused)",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "7266bd3ee2690df92cd53a9010cb9b20bfcdcbc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b2e3df8_69e6fe0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-11T06:40:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54b737c4_efc9ee9f",
       "range": {
         "startLine": 10,
         "startChar": 4,
