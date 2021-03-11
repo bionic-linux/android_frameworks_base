@@ -16,25 +16,47 @@
 
 package com.android.server.connectivity;
 
+import static android.net.NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_PARTIAL_CONNECTIVITY;
+import static android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_VPN;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.provider.Settings.Global.NETWORK_AVOID_BAD_WIFI;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.Network;
+import android.net.NetworkAgentConfig;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.NetworkSpecifier;
+import android.net.NetworkStack;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
@@ -44,8 +66,11 @@ import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
 
-public class NetworkNotificationManager {
+import com.google.common.base.Objects;
 
+import java.util.Random;
+
+public class NetworkNotificationManager {
 
     public static enum NotificationType {
         LOST_INTERNET(SystemMessage.NOTE_NETWORK_LOST_INTERNET),
@@ -69,7 +94,37 @@ public class NetworkNotificationManager {
         public static NotificationType getFromId(int id) {
             return Holder.sIdToTypeMap.get(id);
         }
-    };
+    }
+
+    static class TrackedNetwork {
+        @Nullable
+        LinkProperties linkProperties;
+        @Nullable
+        NetworkCapabilities networkCapabilities;
+        @Nullable
+        NotificationType currentNotification;
+        @NonNull
+        final Network network;
+        @NonNull
+        final NetworkAgentConfig networkAgentConfig;
+
+        boolean lastValidated = false;
+        boolean everValidated = false;
+        boolean everCaptivePortalDetected = false;
+        boolean validationTimedOut = false;
+        boolean hasShownDnsBroken = false;
+        boolean acceptUnvalidated;
+        boolean acceptPartial;
+
+        TrackedNetwork(Network network, NetworkAgentConfig config) {
+            this.network = network;
+            networkAgentConfig = config;
+            acceptUnvalidated = config.isUnvalidatedConnectivityAcceptable();
+            acceptPartial = config.isPartialConnectivityAcceptable();
+        }
+    }
+
+    private final ArrayMap<Network, TrackedNetwork> mTrackedNetworks = new ArrayMap<>();
 
     private static final String TAG = NetworkNotificationManager.class.getSimpleName();
     private static final boolean DBG = true;
@@ -82,33 +137,360 @@ public class NetworkNotificationManager {
 
     // The context is for the current user (system server)
     private final Context mContext;
+    private final HandlerThread mThread;
     private final TelephonyManager mTelephonyManager;
+    private final ConnectivityManager mCm;
+    private final LingerMonitor mLingerMonitor;
+    private final PortalNotificationIntentReceiver mPortalIntentReceiver;
+    private final NotificationNetworkCallback mAllNetworksWatcher;
+    private final NotificationDefaultNetworkCallback mDefaultNetworkWatcher;
     // The notification manager is created from a context for User.ALL, so notifications
     // will be sent to all users.
     private final NotificationManager mNotificationManager;
     // Tracks the types of notifications managed by this instance, from creation to cancellation.
     private final SparseIntArray mNotificationTypeMap;
 
-    public NetworkNotificationManager(@NonNull final Context c, @NonNull final TelephonyManager t) {
+    private Handler mHandler;
+
+    public NetworkNotificationManager(@NonNull final Context c) {
+        this(c, new HandlerThread(NetworkNotificationManager.class.getSimpleName()));
+    }
+
+    @VisibleForTesting
+    public NetworkNotificationManager(@NonNull final Context c, @NonNull HandlerThread thread) {
         mContext = c;
-        mTelephonyManager = t;
+        mTelephonyManager = c.getSystemService(TelephonyManager.class);
+        mCm = c.getSystemService(ConnectivityManager.class);
+        mAllNetworksWatcher = new NotificationNetworkCallback();
+        mDefaultNetworkWatcher = new NotificationDefaultNetworkCallback();
+        mLingerMonitor = new LingerMonitor(c, this);
+        mPortalIntentReceiver = new PortalNotificationIntentReceiver();
+        mThread = thread;
         mNotificationManager =
                 (NotificationManager) c.createContextAsUser(UserHandle.ALL, 0 /* flags */)
                         .getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationTypeMap = new SparseIntArray();
     }
 
+    public void start() {
+        mThread.start();
+        mHandler = new Handler(mThread.getLooper());
+        mPortalIntentReceiver.register();
+        // TODO: check each notification to adjust the request
+        mCm.registerNetworkCallback(new NetworkRequest.Builder().build(),
+                new NotificationNetworkCallback(), mHandler);
+        mCm.registerDefaultNetworkCallback(new NotificationDefaultNetworkCallback(), mHandler);
+    }
+
+    private class NotificationNetworkCallback extends ConnectivityManager.NetworkCallback {
+        @Override
+        public void onCapabilitiesChanged(@NonNull Network network,
+                @NonNull NetworkCapabilities networkCapabilities) {
+            final TrackedNetwork trackedNetwork = mTrackedNetworks.get(network);
+            if (trackedNetwork == null) return;
+            trackedNetwork.networkCapabilities = networkCapabilities;
+
+            updateNotifications(trackedNetwork);
+        }
+
+        @Override
+        public void onLinkPropertiesChanged(@NonNull Network network,
+                @NonNull LinkProperties linkProperties) {
+            final TrackedNetwork trackedNetwork = mTrackedNetworks.get(network);
+            if (trackedNetwork == null) return;
+            trackedNetwork.linkProperties = linkProperties;
+
+            updateNotifications(trackedNetwork);
+        }
+
+        @Override
+        public void onLosing(@NonNull Network network, int maxMsToLive) {
+            // onLost for the default network is sent before onLosing in the network callback, so
+            // this should now be the last default network
+            if (!network.equals(mDefaultNetworkWatcher.mLastDefaultNetwork)) return;
+
+            final TrackedNetwork lastDefault = mTrackedNetworks.get(network);
+            if (lastDefault == null || lastDefault.networkCapabilities == null
+                    || lastDefault.linkProperties == null) {
+                return;
+            }
+
+            final TrackedNetwork newDefault = mDefaultNetworkWatcher.mDefaultNetwork == null
+                    ? null
+                    : mTrackedNetworks.get(mDefaultNetworkWatcher.mDefaultNetwork);
+            if (newDefault != null && (newDefault.linkProperties == null
+                    || newDefault.networkCapabilities == null)) {
+                return;
+            }
+
+            mLingerMonitor.noteLingerDefaultNetwork(lastDefault, newDefault);
+            updateNotifications(lastDefault);
+        }
+    }
+
+    private class NotificationDefaultNetworkCallback extends ConnectivityManager.NetworkCallback {
+        @Nullable
+        private Network mLastDefaultNetwork;
+        @Nullable
+        private Network mDefaultNetwork;
+
+        @Override
+        public void onAvailable(@NonNull Network network) {
+            mDefaultNetwork = network;
+        }
+
+        @Override
+        public void onLost(@NonNull Network network) {
+            // On network switch, onLost is called before onAvailable, which is called before
+            // onLosing for the lingered network
+            mLastDefaultNetwork = mDefaultNetwork;
+            mDefaultNetwork = null;
+        }
+    }
+
+    // TODO: make module API
+    public void notifyNetworkConnected(@NonNull Network network,
+            @NonNull NetworkAgentConfig config) {
+        final TrackedNetwork oldConfig = mTrackedNetworks.put(network, new TrackedNetwork(network,
+                config));
+        if (oldConfig != null) {
+            Log.wtf(TAG, "Network connected twice: " + network);
+        }
+    }
+
+    // TODO: make module API
+    public void notifyNetworkDisconnected(@NonNull Network network) {
+        mLingerMonitor.noteDisconnect(network);
+        if (mTrackedNetworks.remove(network) != null) {
+            clearNotification(network.getNetId());
+        }
+    }
+
+    // TODO: make module API
+    public void notifyValidationTimedOut(@NonNull Network network) {
+        final TrackedNetwork trackedNetwork = mTrackedNetworks.get(network);
+        if (trackedNetwork == null) return;
+        trackedNetwork.validationTimedOut = true;
+
+        updateNotifications(trackedNetwork);
+    }
+
+    // TODO: make module API
+    public void notifyUnvalidatedConnectivityAcceptable(@NonNull Network network,
+            boolean acceptable) {
+        final TrackedNetwork trackedNetwork = mTrackedNetworks.get(network);
+        if (trackedNetwork == null) return;
+        trackedNetwork.acceptUnvalidated = acceptable;
+
+        updateNotifications(trackedNetwork);
+    }
+
+    public void notifyPartialConnectivityAcceptable(@NonNull Network network, boolean acceptable) {
+        final TrackedNetwork trackedNetwork = mTrackedNetworks.get(network);
+        if (trackedNetwork == null) return;
+        trackedNetwork.acceptPartial = acceptable;
+
+        updateNotifications(trackedNetwork);
+    }
+
+    private void updateNotifications(@NonNull TrackedNetwork tn) {
+        if (tn.linkProperties == null || tn.networkCapabilities == null) return;
+
+        final boolean validated = tn.networkCapabilities.hasCapability(NET_CAPABILITY_VALIDATED);
+        final boolean wasValidated = tn.lastValidated;
+        tn.lastValidated = validated;
+        if (validated) {
+            tn.everValidated = true;
+            tn.validationTimedOut = false;
+        }
+        final boolean portal = tn.networkCapabilities.hasCapability(NET_CAPABILITY_CAPTIVE_PORTAL);
+        tn.everCaptivePortalDetected |= portal;
+
+        final NotificationType nextNotification;
+        if (tn.networkAgentConfig.isProvisioningNotificationEnabled()
+                && tn.networkCapabilities.hasCapability(NET_CAPABILITY_CAPTIVE_PORTAL)) {
+            nextNotification = NotificationType.SIGN_IN;
+        } else if (tn.networkCapabilities.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY)
+                && shouldPromptUnvalidated(tn)) {
+            nextNotification = NotificationType.PARTIAL_CONNECTIVITY;
+        } else if (!tn.hasShownDnsBroken && tn.networkCapabilities.isPrivateDnsBroken()) {
+            nextNotification = NotificationType.PRIVATE_DNS_BROKEN;
+            tn.hasShownDnsBroken = true;
+        } else if (tn.validationTimedOut && shouldPromptUnvalidated(tn)) {
+            nextNotification = NotificationType.NO_INTERNET;
+        } else if (mLingerMonitor.shouldNotify(tn.network)) {
+            nextNotification = NotificationType.NETWORK_SWITCH;
+        } else if (wasValidated && !validated && tn.networkCapabilities.hasTransport(TRANSPORT_WIFI)
+                && shouldNotifyWifiUnvalidated()) {
+            nextNotification = NotificationType.LOST_INTERNET;
+        } else {
+            nextNotification = null;
+        }
+
+        if (Objects.equal(nextNotification, tn.currentNotification)) return;
+        if (nextNotification == null) {
+            clearNotification(tn.network.getNetId());
+            tn.currentNotification = null;
+            return;
+        }
+
+        final TrackedNetwork switchToNetwork = nextNotification == NotificationType.NETWORK_SWITCH
+                && mDefaultNetworkWatcher.mDefaultNetwork != null
+                ? mTrackedNetworks.get(mDefaultNetworkWatcher.mDefaultNetwork) : null;
+        final PendingIntent intent = getIntent(nextNotification, tn);
+        showNotification(tn.network.getNetId(), nextNotification, tn, switchToNetwork,
+                intent, shouldNotifyHighPriority(nextNotification, tn));
+        tn.currentNotification = nextNotification;
+    }
+
+    private boolean shouldNotifyHighPriority(@NonNull NotificationType type,
+            @NonNull TrackedNetwork network) {
+        switch (type) {
+            case PARTIAL_CONNECTIVITY:
+            case SIGN_IN:
+                return network.networkAgentConfig.isExplicitlySelected();
+            case NO_INTERNET:
+            case PRIVATE_DNS_BROKEN:
+            case LOST_INTERNET:
+            case NETWORK_SWITCH:
+            default:
+                return true;
+        }
+    }
+
+    private PendingIntent getIntent(@NonNull NotificationType type,
+            @NonNull TrackedNetwork network) {
+        if (type == NotificationType.SIGN_IN) {
+            return mPortalIntentReceiver.getPendingIntent(network.network);
+        } else if (type == NotificationType.NETWORK_SWITCH) {
+            return mLingerMonitor.createNotificationIntent();
+        }
+
+        final String action;
+        switch (type) {
+            case NO_INTERNET:
+                action = ConnectivityManager.ACTION_PROMPT_UNVALIDATED;
+                break;
+            case PRIVATE_DNS_BROKEN:
+                action = Settings.ACTION_WIRELESS_SETTINGS;
+                break;
+            case LOST_INTERNET:
+                action = ConnectivityManager.ACTION_PROMPT_LOST_VALIDATION;
+                break;
+            case PARTIAL_CONNECTIVITY:
+                action = ConnectivityManager.ACTION_PROMPT_PARTIAL_CONNECTIVITY;
+                break;
+            default:
+                return null;
+        }
+
+        final Intent intent = new Intent(action);
+        if (type != NotificationType.PRIVATE_DNS_BROKEN) {
+            intent.setData(Uri.fromParts("netId", Integer.toString(network.network.getNetId()),
+                    null));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // Some OEMs have their own Settings package. Thus, need to get the current using
+            // Settings package name instead of just use default name "com.android.settings".
+            final String settingsPkgName = getSettingsPackageName(mContext.getPackageManager());
+            intent.setClassName(settingsPkgName,
+                    settingsPkgName + ".wifi.WifiNoInternetDialog");
+        }
+
+        return PendingIntent.getActivity(
+                mContext.createContextAsUser(UserHandle.CURRENT, 0 /* flags */),
+                0 /* requestCode */,
+                intent,
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+    }
+
+    // TODO: This method is copied from TetheringNotificationUpdater. Should have a utility class to
+    // unify the method.
+    private static @NonNull String getSettingsPackageName(@NonNull final PackageManager pm) {
+        final Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+        final ComponentName settingsComponent = settingsIntent.resolveActivity(pm);
+        return settingsComponent != null
+                ? settingsComponent.getPackageName() : "com.android.settings";
+    }
+
+    private class PortalNotificationIntentReceiver extends BroadcastReceiver {
+        private static final String ACTION = "com.android.connectivity.notification.portalapp";
+
+        public void register() {
+            mContext.registerReceiver(this, new IntentFilter(ACTION),
+                    NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, mHandler);
+        }
+
+        public PendingIntent getPendingIntent(@NonNull Network network) {
+            final Intent intent = new Intent(ACTION);
+            intent.setClass(mContext, PortalNotificationIntentReceiver.class);
+            intent.setIdentifier(String.valueOf(network.getNetworkHandle()));
+            intent.putExtra(ConnectivityManager.EXTRA_NETWORK, network);
+            return PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!intent.getAction().equals(ACTION)) return;
+            final Network network = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK);
+            if (network == null) return;
+
+            final TrackedNetwork trackedNetwork = mTrackedNetworks.get(network);
+            if (trackedNetwork == null
+                    || trackedNetwork.currentNotification != NotificationType.SIGN_IN) {
+                return;
+            }
+            mCm.startCaptivePortalApp(network);
+        }
+    }
+
+    /**
+     * Whether to display a notification when wifi becomes unvalidated.
+     */
+    private boolean shouldNotifyWifiUnvalidated() {
+        return !mCm.shouldAvoidBadWifi() && Settings.Global.getString(
+                mContext.getContentResolver(), NETWORK_AVOID_BAD_WIFI) == null;
+    }
+
+    private static boolean shouldPromptUnvalidated(@NonNull TrackedNetwork tn) {
+        // Don't prompt if the network is validated, and don't prompt on captive portals
+        // because we're already prompting the user to sign in.
+        if (tn.everValidated || tn.everCaptivePortalDetected) {
+            return false;
+        }
+
+        // If a network has partial connectivity, always prompt unless the user has already accepted
+        // partial connectivity and selected don't ask again. This ensures that if the device
+        // automatically connects to a network that has partial Internet access, the user will
+        // always be able to use it, either because they've already chosen "don't ask again" or
+        // because we have prompt them.
+        if (tn.networkCapabilities.hasCapability(NET_CAPABILITY_PARTIAL_CONNECTIVITY)
+                && !tn.networkAgentConfig.acceptPartialConnectivity) {
+            return true;
+        }
+
+        // If a network has no Internet access, only prompt if the network was explicitly selected
+        // and if the user has not already told us to use the network regardless of whether it
+        // validated or not.
+        if (tn.networkAgentConfig.explicitlySelected
+                && !tn.networkAgentConfig.acceptUnvalidated) {
+            return true;
+        }
+
+        return false;
+    }
+
     @VisibleForTesting
-    protected static int approximateTransportType(NetworkAgentInfo nai) {
-        return nai.isVPN() ? TRANSPORT_VPN : getFirstTransportType(nai);
+    protected static int approximateTransportType(TrackedNetwork network) {
+        return network.networkCapabilities.hasTransport(TRANSPORT_VPN)
+                ? TRANSPORT_VPN : getFirstTransportType(network);
     }
 
     // TODO: deal more gracefully with multi-transport networks.
-    private static int getFirstTransportType(NetworkAgentInfo nai) {
+    private static int getFirstTransportType(TrackedNetwork network) {
         // TODO: The range is wrong, the safer and correct way is to change the range from
         // MIN_TRANSPORT to MAX_TRANSPORT.
         for (int i = 0; i < 64; i++) {
-            if (nai.networkCapabilities.hasTransport(i)) return i;
+            if (network.networkCapabilities.hasTransport(i)) return i;
         }
         return -1;
     }
@@ -144,32 +526,34 @@ public class NetworkNotificationManager {
      *         between show and hide calls.  We use the NetID value but for legacy callers
      *         we concatenate the range of types with the range of NetIDs.
      * @param notifyType the type of the notification.
-     * @param nai the network with which the notification is associated. For a SIGN_IN, NO_INTERNET,
-     *         or LOST_INTERNET notification, this is the network we're connecting to. For a
-     *         NETWORK_SWITCH notification it's the network that we switched from. When this network
-     *         disconnects the notification is removed.
-     * @param switchToNai for a NETWORK_SWITCH notification, the network we are switching to. Null
-     *         in all other cases. Only used to determine the text of the notification.
+     * @param network the network with which the notification is associated. For a SIGN_IN,
+     *         NO_INTERNET, or LOST_INTERNET notification, this is the network we're connecting to.
+     *         For a NETWORK_SWITCH notification it's the network that we switched from. When this
+     *         network disconnects the notification is removed.
+     * @param switchToNetwork for a NETWORK_SWITCH notification, the network we are switching to.
+     *         Null in all other cases. Only used to determine the text of the notification.
      */
-    public void showNotification(int id, NotificationType notifyType, NetworkAgentInfo nai,
-            NetworkAgentInfo switchToNai, PendingIntent intent, boolean highPriority) {
+    public void showNotification(int id, NotificationType notifyType, TrackedNetwork network,
+            TrackedNetwork switchToNetwork, PendingIntent intent, boolean highPriority) {
         final String tag = tagFor(id);
         final int eventId = notifyType.eventId;
         final int transportType;
         final String name;
-        if (nai != null) {
-            transportType = approximateTransportType(nai);
-            final String extraInfo = nai.networkInfo.getExtraInfo();
-            if (nai.linkProperties != null && nai.linkProperties.getCaptivePortalData() != null
-                    && !TextUtils.isEmpty(nai.linkProperties.getCaptivePortalData()
+        if (network != null) {
+            transportType = approximateTransportType(network);
+            if (network.linkProperties != null && network.linkProperties.getCaptivePortalData() != null
+                    && !TextUtils.isEmpty(network.linkProperties.getCaptivePortalData()
                     .getVenueFriendlyName())) {
-                name = nai.linkProperties.getCaptivePortalData().getVenueFriendlyName();
+                name = network.linkProperties.getCaptivePortalData().getVenueFriendlyName();
             } else {
-                name = TextUtils.isEmpty(extraInfo)
-                        ? WifiInfo.sanitizeSsid(nai.networkCapabilities.getSsid()) : extraInfo;
+                final NetworkInfo info = mContext.getSystemService(ConnectivityManager.class)
+                        .getNetworkInfo(network.network);
+                name = info == null || TextUtils.isEmpty(info.getExtraInfo())
+                        ? WifiInfo.sanitizeSsid(network.networkCapabilities.getSsid())
+                        : info.getExtraInfo();
             }
             // Only notify for Internet-capable networks.
-            if (!nai.networkCapabilities.hasCapability(NET_CAPABILITY_INTERNET)) return;
+            if (!network.networkCapabilities.hasCapability(NET_CAPABILITY_INTERNET)) return;
         } else {
             // Legacy notifications.
             transportType = TRANSPORT_CELLULAR;
@@ -228,7 +612,7 @@ public class NetworkNotificationManager {
                     title = r.getString(R.string.network_available_sign_in, 0);
                     // TODO: Change this to pull from NetworkInfo once a printable
                     // name has been added to it
-                    NetworkSpecifier specifier = nai.networkCapabilities.getNetworkSpecifier();
+                    NetworkSpecifier specifier = network.networkCapabilities.getNetworkSpecifier();
                     int subId = SubscriptionManager.DEFAULT_SUBSCRIPTION_ID;
                     if (specifier instanceof TelephonyNetworkSpecifier) {
                         subId = ((TelephonyNetworkSpecifier) specifier).getSubscriptionId();
@@ -244,7 +628,7 @@ public class NetworkNotificationManager {
             }
         } else if (notifyType == NotificationType.NETWORK_SWITCH) {
             String fromTransport = getTransportName(transportType);
-            String toTransport = getTransportName(approximateTransportType(switchToNai));
+            String toTransport = getTransportName(approximateTransportType(switchToNetwork));
             title = r.getString(R.string.network_switch_metered, toTransport);
             details = r.getString(R.string.network_switch_metered_detail, toTransport,
                     fromTransport);
@@ -350,9 +734,9 @@ public class NetworkNotificationManager {
         }
     }
 
-    public void showToast(NetworkAgentInfo fromNai, NetworkAgentInfo toNai) {
-        String fromTransport = getTransportName(approximateTransportType(fromNai));
-        String toTransport = getTransportName(approximateTransportType(toNai));
+    public void showToast(TrackedNetwork fromNetwork, TrackedNetwork toNetwork) {
+        String fromTransport = getTransportName(approximateTransportType(fromNetwork));
+        String toTransport = getTransportName(approximateTransportType(toNetwork));
         String text = mContext.getResources().getString(
                 R.string.network_switch_metered_toast, fromTransport, toTransport);
         Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();

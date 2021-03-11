@@ -635,7 +635,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
     private KeepaliveTracker mKeepaliveTracker;
     private QosCallbackTracker mQosCallbackTracker;
     private NetworkNotificationManager mNotifier;
-    private LingerMonitor mLingerMonitor;
 
     // sequence number of NetworkRequests
     private int mNextNetworkRequestId = NetworkRequest.FIRST_REQUEST_ID;
@@ -1213,16 +1212,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         registerSettingsCallbacks();
 
         mKeepaliveTracker = new KeepaliveTracker(mContext, mHandler);
-        mNotifier = new NetworkNotificationManager(mContext, mTelephonyManager);
         mQosCallbackTracker = new QosCallbackTracker(mHandler, mNetworkRequestCounter);
-
-        final int dailyLimit = Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.NETWORK_SWITCH_NOTIFICATION_DAILY_LIMIT,
-                LingerMonitor.DEFAULT_NOTIFICATION_DAILY_LIMIT);
-        final long rateLimit = Settings.Global.getLong(mContext.getContentResolver(),
-                Settings.Global.NETWORK_SWITCH_NOTIFICATION_RATE_LIMIT_MILLIS,
-                LingerMonitor.DEFAULT_NOTIFICATION_RATE_LIMIT_MILLIS);
-        mLingerMonitor = new LingerMonitor(mContext, mNotifier, dailyLimit, rateLimit);
 
         mMultinetworkPolicyTracker = mDeps.makeMultinetworkPolicyTracker(
                 mContext, mHandler, () -> rematchForAvoidBadWifiUpdate());
@@ -3029,22 +3019,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                         }
                         updateCapabilitiesForNetwork(nai);
                     }
-                    if (!visible) {
-                        // Only clear SIGN_IN and NETWORK_SWITCH notifications here, or else other
-                        // notifications belong to the same network may be cleared unexpectedly.
-                        mNotifier.clearNotification(netId, NotificationType.SIGN_IN);
-                        mNotifier.clearNotification(netId, NotificationType.NETWORK_SWITCH);
-                    } else {
-                        if (nai == null) {
-                            loge("EVENT_PROVISIONING_NOTIFICATION from unknown NetworkMonitor");
-                            break;
-                        }
-                        if (!nai.networkAgentConfig.provisioningNotificationDisabled) {
-                            mNotifier.showNotification(netId, NotificationType.SIGN_IN, nai, null,
-                                    (PendingIntent) msg.obj,
-                                    nai.networkAgentConfig.explicitlySelected);
-                        }
-                    }
                     break;
                 }
                 case EVENT_PRIVATE_DNS_CONFIG_RESOLVED: {
@@ -3554,7 +3528,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         //  Find out why, fix the rematch code, and delete this.
         mLegacyTypeTracker.remove(nai, wasDefault);
         rematchAllNetworksAndRequests();
-        mLingerMonitor.noteDisconnect(nai);
         if (nai.created) {
             // Tell netd to clean up the configuration for this network
             // (routing rules, DNS, etc).
@@ -4237,15 +4210,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
         pw.decreaseIndent();
     }
 
-    // TODO: This method is copied from TetheringNotificationUpdater. Should have a utility class to
-    // unify the method.
-    private static @NonNull String getSettingsPackageName(@NonNull final PackageManager pm) {
-        final Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
-        final ComponentName settingsComponent = settingsIntent.resolveActivity(pm);
-        return settingsComponent != null
-                ? settingsComponent.getPackageName() : "com.android.settings";
-    }
-
     private void showNetworkNotification(NetworkAgentInfo nai, NotificationType type) {
         final String action;
         final boolean highPriority;
@@ -4295,33 +4259,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mNotifier.showNotification(
                 nai.network.getNetId(), type, nai, null, pendingIntent, highPriority);
-    }
-
-    private boolean shouldPromptUnvalidated(NetworkAgentInfo nai) {
-        // Don't prompt if the network is validated, and don't prompt on captive portals
-        // because we're already prompting the user to sign in.
-        if (nai.everValidated || nai.everCaptivePortalDetected) {
-            return false;
-        }
-
-        // If a network has partial connectivity, always prompt unless the user has already accepted
-        // partial connectivity and selected don't ask again. This ensures that if the device
-        // automatically connects to a network that has partial Internet access, the user will
-        // always be able to use it, either because they've already chosen "don't ask again" or
-        // because we have prompt them.
-        if (nai.partialConnectivity && !nai.networkAgentConfig.acceptPartialConnectivity) {
-            return true;
-        }
-
-        // If a network has no Internet access, only prompt if the network was explicitly selected
-        // and if the user has not already told us to use the network regardless of whether it
-        // validated or not.
-        if (nai.networkAgentConfig.explicitlySelected
-                && !nai.networkAgentConfig.acceptUnvalidated) {
-            return true;
-        }
-
-        return false;
     }
 
     private void handlePromptUnvalidated(Network network) {
@@ -7151,9 +7088,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         makeDefaultNetwork(newDefaultNetwork);
 
-        if (oldDefaultNetwork != null) {
-            mLingerMonitor.noteLingerDefaultNetwork(oldDefaultNetwork, newDefaultNetwork);
-        }
         mNetworkActivityTracker.updateDataActivityTracking(newDefaultNetwork, oldDefaultNetwork);
         handleApplyDefaultProxy(null != newDefaultNetwork
                 ? newDefaultNetwork.linkProperties.getHttpProxy() : null);

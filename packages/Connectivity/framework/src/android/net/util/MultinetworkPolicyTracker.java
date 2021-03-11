@@ -168,13 +168,6 @@ public class MultinetworkPolicyTracker {
         return SubscriptionManager.getResourcesForSubId(mContext, mActiveSubId);
     }
 
-    /**
-     * Whether we should display a notification when wifi becomes unvalidated.
-     */
-    public boolean shouldNotifyWifiUnvalidated() {
-        return configRestrictsAvoidBadWifi() && getAvoidBadWifiSetting() == null;
-    }
-
     public String getAvoidBadWifiSetting() {
         return Settings.Global.getString(mResolver, NETWORK_AVOID_BAD_WIFI);
     }

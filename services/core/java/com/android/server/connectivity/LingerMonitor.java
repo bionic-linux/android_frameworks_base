@@ -24,9 +24,11 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -37,17 +39,20 @@ import android.util.SparseIntArray;
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.MessageUtils;
-import com.android.server.connectivity.NetworkNotificationManager.NotificationType;
+import com.android.server.connectivity.NetworkNotificationManager.TrackedNetwork;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
 /**
- * Class that monitors default network linger events and possibly notifies the user of network
- * switches.
+ * Class that monitors default network linger events and is used as utility for
+ * NetworkNotificationManager to determine whether the user should be notified.
  *
- * This class is not thread-safe and all its methods must be called on the ConnectivityService
- * handler thread.
+ * TODO: refactor inside NetworkNotificationManager by moving the logic to decide whether a
+ * notification should be shown to the corresponding NetworkNotificationManager logic.
+ *
+ * This class is not thread-safe and all its methods must be called on the
+ * NetworkNotificationManager handler thread.
  */
 public class LingerMonitor {
 
@@ -80,11 +85,23 @@ public class LingerMonitor {
     private long mLastNotificationMillis;
     private int mNotificationCounter;
 
-    /** Current notifications. Maps the netId we switched away from to the netId we switched to. */
+    /**
+     * Current notifications that NetworkNotificationManager should show. Maps the netId we switched
+     * away from to the netId we switched to. */
     private final SparseIntArray mNotifications = new SparseIntArray();
 
     /** Whether we ever notified that we switched away from a particular network. */
     private final SparseBooleanArray mEverNotified = new SparseBooleanArray();
+
+    public LingerMonitor(Context context, NetworkNotificationManager notifier) {
+        this(context, notifier,
+                Settings.Global.getInt(context.getContentResolver(),
+                        Settings.Global.NETWORK_SWITCH_NOTIFICATION_DAILY_LIMIT,
+                        LingerMonitor.DEFAULT_NOTIFICATION_DAILY_LIMIT) /* dailyLimit */,
+                Settings.Global.getLong(context.getContentResolver(),
+                        Settings.Global.NETWORK_SWITCH_NOTIFICATION_RATE_LIMIT_MILLIS,
+                        LingerMonitor.DEFAULT_NOTIFICATION_RATE_LIMIT_MILLIS) /* rateLimitMs */);
+    }
 
     public LingerMonitor(Context context, NetworkNotificationManager notifier,
             int dailyLimit, long rateLimitMillis) {
@@ -108,25 +125,25 @@ public class LingerMonitor {
         return nameToNumber;
     }
 
-    private static boolean hasTransport(NetworkAgentInfo nai, int transport) {
-        return nai.networkCapabilities.hasTransport(transport);
+    private static boolean hasTransport(TrackedNetwork network, int transport) {
+        return network.networkCapabilities.hasTransport(transport);
     }
 
-    private int getNotificationSource(NetworkAgentInfo toNai) {
+    private int getNotificationSource(Network network) {
         for (int i = 0; i < mNotifications.size(); i++) {
-            if (mNotifications.valueAt(i) == toNai.network.getNetId()) {
+            if (mNotifications.valueAt(i) == network.getNetId()) {
                 return mNotifications.keyAt(i);
             }
         }
         return NETID_UNSET;
     }
 
-    private boolean everNotified(NetworkAgentInfo nai) {
-        return mEverNotified.get(nai.network.getNetId(), false);
+    private boolean everNotified(TrackedNetwork network) {
+        return mEverNotified.get(network.network.getNetId(), false);
     }
 
     @VisibleForTesting
-    public boolean isNotificationEnabled(NetworkAgentInfo fromNai, NetworkAgentInfo toNai) {
+    public boolean isNotificationEnabled(TrackedNetwork fromNetwork, TrackedNetwork toNetwork) {
         // TODO: Evaluate moving to CarrierConfigManager.
         String[] notifySwitches =
                 mContext.getResources().getStringArray(R.array.config_networkNotifySwitches);
@@ -144,17 +161,12 @@ public class LingerMonitor {
             }
             int fromTransport = TRANSPORT_NAMES.get("TRANSPORT_" + transports[0]);
             int toTransport = TRANSPORT_NAMES.get("TRANSPORT_" + transports[1]);
-            if (hasTransport(fromNai, fromTransport) && hasTransport(toNai, toTransport)) {
+            if (hasTransport(fromNetwork, fromTransport) && hasTransport(toNetwork, toTransport)) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    private void showNotification(NetworkAgentInfo fromNai, NetworkAgentInfo toNai) {
-        mNotifier.showNotification(fromNai.network.getNetId(), NotificationType.NETWORK_SWITCH,
-                fromNai, toNai, createNotificationIntent(), true);
     }
 
     @VisibleForTesting
@@ -167,17 +179,16 @@ public class LingerMonitor {
     }
 
     // Removes any notification that was put up as a result of switching to nai.
-    private void maybeStopNotifying(NetworkAgentInfo nai) {
-        int fromNetId = getNotificationSource(nai);
+    private void maybeStopNotifying(Network network) {
+        int fromNetId = getNotificationSource(network);
         if (fromNetId != NETID_UNSET) {
             mNotifications.delete(fromNetId);
-            mNotifier.clearNotification(fromNetId);
             // Toasts can't be deleted.
         }
     }
 
     // Notify the user of a network switch using a notification or a toast.
-    private void notify(NetworkAgentInfo fromNai, NetworkAgentInfo toNai, boolean forceToast) {
+    private void notify(TrackedNetwork fromNetwork, TrackedNetwork toNetwork, boolean forceToast) {
         int notifyType =
                 mContext.getResources().getInteger(R.integer.config_networkNotifySwitchType);
         if (notifyType == NOTIFY_TYPE_NOTIFICATION && forceToast) {
@@ -192,10 +203,10 @@ public class LingerMonitor {
             case NOTIFY_TYPE_NONE:
                 return;
             case NOTIFY_TYPE_NOTIFICATION:
-                showNotification(fromNai, toNai);
+                mNotifications.put(fromNetwork.network.getNetId(), toNetwork.network.getNetId());
                 break;
             case NOTIFY_TYPE_TOAST:
-                mNotifier.showToast(fromNai, toNai);
+                mNotifier.showToast(fromNetwork, toNetwork);
                 break;
             default:
                 Log.e(TAG, "Unknown notify type " + notifyType);
@@ -203,44 +214,47 @@ public class LingerMonitor {
         }
 
         if (DBG) {
-            Log.d(TAG, "Notifying switch from=" + fromNai.toShortString()
-                    + " to=" + toNai.toShortString()
+            Log.d(TAG, "Notifying switch from=" + fromNetwork.network
+                    + " to=" + toNetwork.network
                     + " type=" + sNotifyTypeNames.get(notifyType, "unknown(" + notifyType + ")"));
         }
 
-        mNotifications.put(fromNai.network.getNetId(), toNai.network.getNetId());
-        mEverNotified.put(fromNai.network.getNetId(), true);
+        mEverNotified.put(fromNetwork.network.getNetId(), true);
     }
 
     /**
-     * Put up or dismiss a notification or toast for of a change in the default network if needed.
+     * Called by NetworkNotificationManager when the default network is lingered.
+     * NetworkNotificationManager should then call {@link #shouldNotify} to determine whether a
+     * notification should be shown.
      *
      * Putting up a notification when switching from no network to some network is not supported
      * and as such this method can't be called with a null |fromNai|. It can be called with a
      * null |toNai| if there isn't a default network any more.
      *
-     * @param fromNai switching from this NAI
-     * @param toNai switching to this NAI
+     * @param fromNetwork switching from this network
+     * @param toNetwork switching to this network
      */
     // The default network changed from fromNai to toNai due to a change in score.
-    public void noteLingerDefaultNetwork(@NonNull final NetworkAgentInfo fromNai,
-            @Nullable final NetworkAgentInfo toNai) {
+    public void noteLingerDefaultNetwork(
+            @NonNull final TrackedNetwork fromNetwork,
+            @Nullable final TrackedNetwork toNetwork) {
         if (VDBG) {
-            Log.d(TAG, "noteLingerDefaultNetwork from=" + fromNai.toShortString()
-                    + " everValidated=" + fromNai.everValidated
-                    + " lastValidated=" + fromNai.lastValidated
-                    + " to=" + toNai.toShortString());
+            Log.d(TAG, "noteLingerDefaultNetwork from=" + fromNetwork.network
+                    + " everValidated=" + fromNetwork.everValidated
+                    + " lastValidated=" + fromNetwork.networkCapabilities.hasCapability(
+                            NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                    + " to=" + (toNetwork == null ? "null" : toNetwork.network));
         }
 
         // If we are currently notifying the user because the device switched to fromNai, now that
         // we are switching away from it we should remove the notification. This includes the case
         // where we switch back to toNai because its score improved again (e.g., because it regained
         // Internet access).
-        maybeStopNotifying(fromNai);
+        maybeStopNotifying(fromNetwork.network);
 
         // If the network was simply lost (either because it disconnected or because it stopped
         // being the default with no replacement), then don't show a notification.
-        if (null == toNai) return;
+        if (null == toNetwork) return;
 
         // If this network never validated, don't notify. Otherwise, we could do things like:
         //
@@ -251,7 +265,7 @@ public class LingerMonitor {
         // 1. User connects to wireless printer.
         // 2. User turns on cellular data.
         // 3. We show a notification.
-        if (!fromNai.everValidated) return;
+        if (!fromNetwork.everValidated) return;
 
         // If this network is a captive portal, don't notify. This cannot happen on initial connect
         // to a captive portal, because the everValidated check above will fail. However, it can
@@ -267,14 +281,14 @@ public class LingerMonitor {
         // unvalidated (causing a switch) before asking it to show the sign in notification. In this
         // case, the toast won't show and we'll only display the sign in notification. This is the
         // best we can do at this time.
-        boolean forceToast = fromNai.networkCapabilities.hasCapability(
+        boolean forceToast = fromNetwork.networkCapabilities.hasCapability(
                 NetworkCapabilities.NET_CAPABILITY_CAPTIVE_PORTAL);
 
         // Only show the notification once, in order to avoid irritating the user every time.
         // TODO: should we do this?
-        if (everNotified(fromNai)) {
+        if (everNotified(fromNetwork)) {
             if (VDBG) {
-                Log.d(TAG, "Not notifying handover from " + fromNai.toShortString()
+                Log.d(TAG, "Not notifying handover from " + fromNetwork.network
                         + ", already notified");
             }
             return;
@@ -284,21 +298,30 @@ public class LingerMonitor {
         // because its score changed.
         // TODO: instead of just skipping notification, keep a note of it, and show it if it becomes
         // unvalidated.
-        if (fromNai.lastValidated) return;
+        if (fromNetwork.networkCapabilities.hasCapability(
+                NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
+            return;
+        }
 
-        if (!isNotificationEnabled(fromNai, toNai)) return;
+        if (!isNotificationEnabled(fromNetwork, toNetwork)) return;
 
         final long now = SystemClock.elapsedRealtime();
         if (isRateLimited(now) || isAboveDailyLimit(now)) return;
 
-        notify(fromNai, toNai, forceToast);
+        notify(fromNetwork, toNetwork, forceToast);
     }
 
-    public void noteDisconnect(NetworkAgentInfo nai) {
-        mNotifications.delete(nai.network.getNetId());
-        mEverNotified.delete(nai.network.getNetId());
-        maybeStopNotifying(nai);
-        // No need to cancel notifications on nai: NetworkMonitor does that on disconnect.
+    /**
+     * Indicates whether a linger notification should be shown for the specified network.
+     */
+    public boolean shouldNotify(@NonNull Network network) {
+        return mNotifications.get(network.getNetId(), -1) != -1;
+    }
+
+    public void noteDisconnect(Network network) {
+        mNotifications.delete(network.getNetId());
+        mEverNotified.delete(network.getNetId());
+        maybeStopNotifying(network);
     }
 
     private boolean isRateLimited(long now) {
