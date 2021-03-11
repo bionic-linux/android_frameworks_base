@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fcf467f_a3c061af",
+        "filename": "telephony/java/android/telephony/ims/stub/ImsConfigImplBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-03-11T23:55:21Z",
+      "side": 1,
+      "message": "nit:spelling",
+      "range": {
+        "startLine": 553,
+        "startChar": 37,
+        "endLine": 553,
+        "endChar": 50
+      },
+      "revId": "0843b423cf7683168a04c2ad082b2fa51764beb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
