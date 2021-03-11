@@ -78,6 +78,7 @@ package android.net {
     method @Nullable @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public android.net.LinkProperties getLinkProperties(@Nullable android.net.Network);
     method @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public int getMultipathPreference(@Nullable android.net.Network);
     method @Nullable @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public android.net.NetworkCapabilities getNetworkCapabilities(@Nullable android.net.Network);
+    method @Nullable @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public android.net.NetworkCapabilities getNetworkCapabilitiesWithLocationInfo(@Nullable android.net.Network);
     method @Deprecated @Nullable @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public android.net.NetworkInfo getNetworkInfo(int);
     method @Deprecated @Nullable @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public android.net.NetworkInfo getNetworkInfo(@Nullable android.net.Network);
     method @Deprecated @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) public int getNetworkPreference();

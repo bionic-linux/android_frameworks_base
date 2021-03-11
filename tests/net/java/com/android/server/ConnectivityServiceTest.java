@@ -2453,7 +2453,7 @@ public class ConnectivityServiceTest {
     }
 
     @Test
-    public void testVerifyLocationDataIsNotIncludedWhenInclFlagNotSet() throws  Exception {
+    public void testVerifyLocationDataIsNotIncludedWhenInclFlagNotSet() throws Exception {
         final TestNetworkCallback wifiNetworkCallack = new TestNetworkCallback();
         final int ownerUid = Process.myUid();
         final WifiInfo wifiInfo = new WifiInfo.Builder()
@@ -2471,7 +2471,7 @@ public class ConnectivityServiceTest {
     }
 
     @Test
-    public void testVerifyLocationDataIsIncludedWhenInclFlagSet() throws  Exception {
+    public void testVerifyLocationDataIsIncludedWhenInclFlagSet() throws Exception {
         final TestNetworkCallback wifiNetworkCallack =
                 new TestNetworkCallback(NetworkCallback.FLAG_INCLUDE_LOCATION_INFO);
         final int ownerUid = Process.myUid();
@@ -2483,7 +2483,45 @@ public class ConnectivityServiceTest {
         // & the caller holds NETWORK_STACK permission.
         verifyNetworkCallbackLocationDataInclusionUsingWifiInfoAndOwnerUidInNetCaps(
                 wifiNetworkCallack, ownerUid, wifiInfo, ownerUid, wifiInfo);
+    }
 
+    @Test
+    public void testVerifyLocationDataIsIncludedInGetNetworkCapsWithLocationInfo()
+            throws Exception {
+        when(mPackageManager.getTargetSdkVersion(anyString())).thenReturn(Build.VERSION_CODES.S);
+        final int ownerUid = Process.myUid();
+        final WifiInfo wifiInfo = new WifiInfo.Builder()
+                .setSsid("sssid1234".getBytes())
+                .setBssid("00:11:22:33:44:55")
+                .build();
+        final NetworkCapabilities ncTemplate =
+                new NetworkCapabilities()
+                        .addTransportType(TRANSPORT_WIFI)
+                        .setTransportInfo(wifiInfo)
+                        .setOwnerUid(ownerUid);
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI, new LinkProperties(),
+                ncTemplate);
+        mWiFiNetworkAgent.connect(false);
+
+        final WifiInfo sanitizedWifiInfo = new WifiInfo.Builder()
+                .setSsid(new byte[0])
+                .setBssid(WifiInfo.DEFAULT_MAC_ADDRESS)
+                .build();
+
+        // Existing getNetworkCapabilities() call.
+        final NetworkCapabilities ncWithoutLocationInfo =
+                // Parcel the nc to ensure the location sensitive data is stripped out.
+                parcelingRoundTrip(mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork()));
+        assertEquals(INVALID_UID, ncWithoutLocationInfo.getOwnerUid());
+        assertEquals(sanitizedWifiInfo, ncWithoutLocationInfo.getTransportInfo());
+
+        // New getNetworkCapabilitiesWithLocationInfo() call.
+        final NetworkCapabilities ncWithLocationInfo =
+                // Parcel the nc to ensure the location sensitive data is stripped out.
+                parcelingRoundTrip(mCm.getNetworkCapabilitiesWithLocationInfo(
+                        mWiFiNetworkAgent.getNetwork()));
+        assertEquals(ownerUid, ncWithLocationInfo.getOwnerUid());
+        assertEquals(wifiInfo, ncWithLocationInfo.getTransportInfo());
     }
 
     @Test
