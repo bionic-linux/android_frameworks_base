@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22eac31c_d6ea0b17",
+        "filename": "packages/Connectivity/framework/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T15:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de7c9b6d_f8ce8603",
+      "range": {
+        "startLine": 271,
+        "startChar": 4,
+        "endLine": 271,
+        "endChar": 72
+      },
+      "revId": "fe6003a0cbc782542b02c3d8b77948ee6186bdbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2cd3d1a9_27cebdd5",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51f7547f_cedf4707",
+        "filename": "packages/Connectivity/framework/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T15:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cd3d1a9_27cebdd5",
+      "range": {
+        "startLine": 275,
+        "startChar": 59,
+        "endLine": 275,
+        "endChar": 68
+      },
+      "revId": "fe6003a0cbc782542b02c3d8b77948ee6186bdbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d9f27bb_1eb22ab2",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-03-11T14:32:49Z",
       "side": 1,
       "message": "This should also be public.",
+      "range": {
+        "startLine": 324,
+        "startChar": 62,
+        "endLine": 324,
+        "endChar": 71
+      },
+      "revId": "fe6003a0cbc782542b02c3d8b77948ee6186bdbd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e837d873_4a4be3d4",
+        "filename": "packages/Connectivity/framework/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T15:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d9f27bb_1eb22ab2",
       "range": {
         "startLine": 324,
         "startChar": 62,
