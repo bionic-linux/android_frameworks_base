@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45188cad_bdd6edee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-11T06:40:11Z",
+      "side": 1,
+      "message": "Carrying over +2 from internal branch: clean cherry-pick",
+      "revId": "88dc35e18d33913db718cfed37884f9ab06e4ef7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
