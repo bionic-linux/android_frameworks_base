@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ade827ba_1f1cc9d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-03-11T14:53:48Z",
+      "side": 1,
+      "message": "Joe, please would you be able to use your OWNERS rights here?\n\nPulled out from internal change http://ag/13787669 because OWNERS files are mastered there.",
+      "revId": "c3c171cbe5e1747a3d28ee2b60f72c59cb12b414",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
