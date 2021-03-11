@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b950efe5_f3c87566",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b2148e_d381c947",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 17
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee5268e6_1e814be6",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-10T10:11:08Z",
       "side": 1,
       "message": "Looks like this is currently @hide @UnsupportedAppUsage. We could:\n1. Upload a CL to make it systemapi.\n2. Use something else, such as:\n    writeIntArray(mSubIds.toArray(new Integer[0]));\nand\n    mSubIds \u003d new ArraySet\u003c\u003e(in.createIntArray());",
+      "range": {
+        "startLine": 1836,
+        "startChar": 13,
+        "endLine": 1836,
+        "endChar": 26
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "888c17ef_ad7506a5",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1836,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Yes and no.\nWe\u0027ll need to convert between ArraySet\u003cInteger\u003e and int[].\nJava is not friendly about this convertion.\nSee if the new patchset works for you.",
+      "parentUuid": "ee5268e6_1e814be6",
       "range": {
         "startLine": 1836,
         "startChar": 13,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51a3c6f5_82fa221b",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aec9d5fa_c1e0a08e",
+      "range": {
+        "startLine": 1860,
+        "startChar": 55,
+        "endLine": 1860,
+        "endChar": 68
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec722bb0_940a0a46",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-10T10:11:08Z",
       "side": 1,
       "message": "mSubIds is @NonNull, right? Should this say \"mSubIds.size() \u003e 0\"?",
+      "range": {
+        "startLine": 1948,
+        "startChar": 12,
+        "endLine": 1948,
+        "endChar": 27
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2bb4239_7752ec9c",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec722bb0_940a0a46",
       "range": {
         "startLine": 1948,
         "startChar": 12,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fa05e6b_1f1035b4",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20495069_049939f7",
+      "range": {
+        "startLine": 2278,
+        "startChar": 12,
+        "endLine": 2278,
+        "endChar": 43
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3c50cc8_a56f704b",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-03-10T10:11:08Z",
       "side": 1,
       "message": "Should this return a defensive copy?",
+      "range": {
+        "startLine": 2290,
+        "startChar": 15,
+        "endLine": 2290,
+        "endChar": 22
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6ef60cd_c7113d1c",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2290,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c50cc8_a56f704b",
       "range": {
         "startLine": 2290,
         "startChar": 15,
@@ -162,6 +306,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c43f885a_c79f33c1",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba087583_dd2a271c",
+      "range": {
+        "startLine": 2306,
+        "startChar": 71,
+        "endLine": 2306,
+        "endChar": 82
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce2916a9_4fbe86b9",
@@ -185,6 +353,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af3fd401_8968716c",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2319,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce2916a9_4fbe86b9",
+      "range": {
+        "startLine": 2319,
+        "startChar": 76,
+        "endLine": 2319,
+        "endChar": 79
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52c3d893_6bbc3857",
@@ -198,6 +390,30 @@
       "writtenOn": "2021-03-10T10:11:08Z",
       "side": 1,
       "message": "A network will satisfy this request only if it matches one of the subIds in this set.\nAn empty set matches all networks, including those without a subId.",
+      "range": {
+        "startLine": 457,
+        "startChar": 0,
+        "endLine": 459,
+        "endChar": 85
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c654d51_e04b3a93",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52c3d893_6bbc3857",
       "range": {
         "startLine": 457,
         "startChar": 0,
@@ -233,6 +449,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "daaf99ab_c559b1bd",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "1. Not sure about mainline-prod.\nBut I saw LinkPropertiesTest in this folder still use lp.setNat64Prefix.\nIs that going to be a problem?\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/tests/net/common/java/android/net/LinkPropertiesTest.java;l\u003d156?q\u003dsetNat64Prefix\u0026ss\u003dandroid\u0026start\u003d1\n\n2. Cannot build that into api shims untill this is @SystemApi.\nSo it seems we can only do that in follow-up CL?\nSee aosp/1628400 and aosp/1628480",
+      "parentUuid": "2bda0f6e_c4a5f3b0",
+      "range": {
+        "startLine": 307,
+        "startChar": 19,
+        "endLine": 307,
+        "endChar": 28
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "58dc011e_8d7e7686",
         "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
         "patchSetId": 5
@@ -244,6 +484,30 @@
       "writtenOn": "2021-03-10T10:11:08Z",
       "side": 1,
       "message": "After this, can we also check that if two ncs are the same except for the subIds, that equals() returns false? Something like:\n\n    assertTrue(nc1.equals(nc2));\n    nc2.setSubIds(Set.of(TEST_SUBID3, TEST_SUBID2))\n    assertFalse(nc1.equals(nc2));\n\nI would have expected there to be a testEquals() method in this test that checks this sort of thing, but there isn\u0027t one. Should there be a testEqualsSubIds() method in this test?",
+      "range": {
+        "startLine": 792,
+        "startChar": 12,
+        "endLine": 792,
+        "endChar": 35
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0deda19_1c85c62f",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58dc011e_8d7e7686",
       "range": {
         "startLine": 792,
         "startChar": 12,
@@ -277,6 +541,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb573069_869c8b49",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fc39cef_43e777b8",
+      "range": {
+        "startLine": 884,
+        "startChar": 24,
+        "endLine": 884,
+        "endChar": 54
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9068555c_12764142",
@@ -290,6 +578,30 @@
       "writtenOn": "2021-03-10T10:11:08Z",
       "side": 1,
       "message": "Factor out to a method? Perhaps:\n\n    private NetworkCapabilities capsWithSubIds(int... subIds) {\n\nThat would also ensure we don\u0027t forget to set NET_CAPABILITY_NOT_VCN_MANAGED.",
+      "range": {
+        "startLine": 886,
+        "startChar": 0,
+        "endLine": 888,
+        "endChar": 64
+      },
+      "revId": "e21f818edb48ee05552a0c4b542eb359166a1b8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d96fff4_6b5af0d9",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T12:34:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9068555c_12764142",
       "range": {
         "startLine": 886,
         "startChar": 0,
