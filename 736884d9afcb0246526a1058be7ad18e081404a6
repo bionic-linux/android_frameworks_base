@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "522cd658_06f4ad42",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T15:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67adc5f2_523a9425",
+      "range": {
+        "startLine": 1861,
+        "startChar": 0,
+        "endLine": 1863,
+        "endChar": 17
+      },
+      "revId": "736884d9afcb0246526a1058be7ad18e081404a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d34205e_71ee8e9d",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-11T14:22:43Z",
       "side": 1,
       "message": "Nit: I don\u0027t think this extra sentence is needed. The method allows the caller to pass int the set. If the caller wants an empty set, then they can just pass in an empty set :-)",
+      "range": {
+        "startLine": 2274,
+        "startChar": 80,
+        "endLine": 2275,
+        "endChar": 16
+      },
+      "revId": "736884d9afcb0246526a1058be7ad18e081404a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f106b50_1ba055a4",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 2275,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T15:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d34205e_71ee8e9d",
       "range": {
         "startLine": 2274,
         "startChar": 80,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa9fb189_995548a3",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T15:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50af1707_430e54d0",
+      "range": {
+        "startLine": 460,
+        "startChar": 44,
+        "endLine": 460,
+        "endChar": 58
+      },
+      "revId": "736884d9afcb0246526a1058be7ad18e081404a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "693e4bee_2e7336f0",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-11T14:22:43Z",
       "side": 1,
       "message": "Per discussion, you\u0027re right that this is not necessary.",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "736884d9afcb0246526a1058be7ad18e081404a6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91169ca6_035f8978",
+        "filename": "tests/net/common/Android.bp",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-11T15:04:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "693e4bee_2e7336f0",
       "range": {
         "startLine": 32,
         "startChar": 9,
