@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0013742f_614bb1b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-03-11T03:35:02Z",
+      "side": 1,
+      "message": "yes I know.But it is hard to update mConnectedDevices mute state,and mConnectedDevices could not record speaker or earpiece state.\nSo I think VolumeStreamState.class can record mute state will be better.\ni have update this CL.Using mMusicMuteDeviceMap record device mute state in VolumeStreamState",
+      "revId": "50fd41fd3ab45748ab81926352f6936dcc1f587f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
