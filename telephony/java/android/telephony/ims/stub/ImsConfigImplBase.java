@@ -542,10 +542,34 @@ public class ImsConfigImplBase {
         }
         mRcsCallbacks.broadcastAction(c -> {
             try {
-                //TODO compressed by default?
                 c.onAutoConfigurationErrorReceived(errorCode, errorString);
             } catch (RemoteException e) {
                 Log.w(TAG, "dead binder in notifyAutoConfigurationErrorReceived, skipping.");
+            }
+        });
+    }
+
+    /**
+     * Notifies application that pre-provisionging config is received.
+     *
+     * For the first time provisioning, some ACS(auto configuration server) may
+     * send a pre-provisioning config which includes the characteristics used for
+     * the first time provisinonining. In this case, the application should parse
+     * the config and apply those parameters in the config for the provisioning
+     * as needed.
+     *
+     * @param configXml the pre-provisioning config in carrier specified format.
+     */
+    public final void notifyPreProvisioningReceived(@NonNull byte[] configXml) {
+        // can be null in testing
+        if (mRcsCallbacks == null) {
+            return;
+        }
+        mRcsCallbacks.broadcastAction(c -> {
+            try {
+                c.onPreProvisioningReceived(configXml);
+            } catch (RemoteException e) {
+                Log.w(TAG, "dead binder in notifyPreProvisioningReceived, skipping.");
             }
         });
     }

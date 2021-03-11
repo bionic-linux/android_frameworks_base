@@ -993,6 +993,16 @@ public class ProvisioningManager {
                 }
             }
 
+            @Override
+            public void onPreProvisioningReceived(byte[] configXml) {
+                final long identity = Binder.clearCallingIdentity();
+                try {
+                    mExecutor.execute(() -> mLocalCallback.onPreProvisioningReceived(configXml));
+                } finally {
+                    Binder.restoreCallingIdentity(identity);
+                }
+            }
+
             private void setExecutor(Executor executor) {
                 mExecutor = executor;
             }
@@ -1005,7 +1015,7 @@ public class ProvisioningManager {
          * due to various triggers defined in GSMA RCC.14 for ACS(auto configuration
          * server) or other operator defined triggers. If RCS provisioning is already
          * completed at the time of callback registration, then this method shall be
-         * invoked with the current configuration
+         * invoked with the current configuration.
          * @param configXml The RCS configuration XML received by OTA. It is defined
          * by GSMA RCC.07.
          */
@@ -1037,6 +1047,17 @@ public class ProvisioningManager {
          * invoked after the subscription has become inactive
          */
         public void onRemoved() {}
+
+        /**
+         * For the first time provisioning, some ACS(auto configuration server) may
+         * send a pre-provisioning config which includes the characteristics used for
+         * the first time provisinonining. In this case, the application should parse
+         * the config and apply those parameters in the config for the provisioning
+         * as needed.
+         *
+         * @param configXml the pre-provisioning config in carrier specified format.
+         */
+        public void onPreProvisioningReceived(@NonNull byte[] configXml) {}
 
         /**@hide*/
         public final IRcsConfigCallback getBinder() {
