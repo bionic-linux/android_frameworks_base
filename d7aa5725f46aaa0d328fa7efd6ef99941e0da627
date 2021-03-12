@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9259a054_8cdd9d40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-12T19:53:58Z",
+      "side": 1,
+      "message": "I thought we had agreed to expose these as SystemApi and revisit in 2 weeks? Cody took the meeting notes.\n\nhttps://docs.google.com/document/d/1jjS-Y37Ic2TDnfCyiC64R0WKjw28daQU7I1cOKnJgTQ/edit\n\nAs it stands with this being public, something is broken. We either have to have inconsistent behavior OR we can\u0027t soft-start. Both are problems.",
+      "revId": "d7aa5725f46aaa0d328fa7efd6ef99941e0da627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
