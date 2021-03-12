@@ -14408,11 +14408,23 @@ public class TelephonyManager {
     public static final String CAPABILITY_ALLOWED_NETWORK_TYPES_USED =
             "CAPABILITY_ALLOWED_NETWORK_TYPES_USED";
 
+    /**
+     * Indicates whether {@link #setNrDualConnectivityState()} and
+     * {@link #isNrDualConnectivityEnabled()} ()} are available.  See comments
+     * on respective methods for more information.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String CAPABILITY_NR_DUAL_CONNECTIVITY_CONFIGURATION_AVAILABLE =
+            "CAPABILITY_NR_DUAL_CONNECTIVITY_CONFIGURATION_AVAILABLE";
+
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef(prefix = "CAPABILITY_", value = {
             CAPABILITY_SECONDARY_LINK_BANDWIDTH_VISIBLE,
             CAPABILITY_ALLOWED_NETWORK_TYPES_USED,
+            CAPABILITY_NR_DUAL_CONNECTIVITY_CONFIGURATION_AVAILABLE
     })
     public @interface RadioInterfaceCapability {}
 
