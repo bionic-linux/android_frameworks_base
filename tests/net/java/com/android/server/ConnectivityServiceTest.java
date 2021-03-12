@@ -110,6 +110,7 @@ import static com.android.testutils.MiscAsserts.assertEmpty;
 import static com.android.testutils.MiscAsserts.assertLength;
 import static com.android.testutils.MiscAsserts.assertRunsInAtMost;
 import static com.android.testutils.MiscAsserts.assertThrows;
+import static com.android.testutils.ParcelUtils.parcelingRoundTrip;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -2181,6 +2182,10 @@ public class ConnectivityServiceTest {
             super(TEST_CALLBACK_TIMEOUT_MS);
         }
 
+        TestNetworkCallback(@NetworkCallback.Flag int flags) {
+            super(TEST_CALLBACK_TIMEOUT_MS, flags);
+        }
+
         @Override
         public void assertNoCallback() {
             // TODO: better support this use case in TestableNetworkCallback
@@ -2413,6 +2418,71 @@ public class ConnectivityServiceTest {
         NetworkCapabilities nc = mCm.getNetworkCapabilities(mWiFiNetworkAgent.getNetwork());
         assertEquals(originalOwnerUid, nc.getOwnerUid());
         assertTrue(nc.hasCapability(NET_CAPABILITY_NOT_CONGESTED));
+    }
+
+    private void verifyNetworkCallbackLocationDataInclusionUsingWifiInfoAndOwnerUidInNetCaps(
+            @NonNull TestNetworkCallback wifiNetworkCallback, int actualOwnerUid,
+            @NonNull WifiInfo actualWifiInfo, int expectedOwnerUid,
+            @NonNull WifiInfo expectedWifiInfo) throws Exception {
+        when(mPackageManager.getTargetSdkVersion(anyString())).thenReturn(Build.VERSION_CODES.S);
+        final NetworkCapabilities ncTemplate =
+                new NetworkCapabilities()
+                        .addTransportType(TRANSPORT_WIFI)
+                        .setOwnerUid(actualOwnerUid);
+
+        final NetworkRequest wifiRequest = new NetworkRequest.Builder()
+                .addTransportType(TRANSPORT_WIFI).build();
+        mCm.registerNetworkCallback(wifiRequest, wifiNetworkCallback);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI, new LinkProperties(),
+                ncTemplate);
+        mWiFiNetworkAgent.connect(false);
+
+        wifiNetworkCallback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+
+        // Send network capabilities update with WifiInfo to trigger capabilities changed callback.
+        mWiFiNetworkAgent.setNetworkCapabilities(ncTemplate.setTransportInfo(actualWifiInfo), true);
+
+        wifiNetworkCallback.expectCapabilitiesThat(mWiFiNetworkAgent,
+                nc -> {
+                    // Parcel the nc to ensure the location sensitive data is stripped out.
+                    NetworkCapabilities ncParceled = parcelingRoundTrip(nc);
+                    return Objects.equals(expectedOwnerUid, ncParceled.getOwnerUid())
+                            && Objects.equals(expectedWifiInfo, ncParceled.getTransportInfo());
+                });
+    }
+
+    @Test
+    public void testVerifyLocationDataIsNotIncludedWhenInclFlagNotSet() throws Exception {
+        final TestNetworkCallback wifiNetworkCallack = new TestNetworkCallback();
+        final int ownerUid = Process.myUid();
+        final WifiInfo wifiInfo = new WifiInfo.Builder()
+                .setSsid("sssid1234".getBytes())
+                .setBssid("00:11:22:33:44:55")
+                .build();
+        final WifiInfo sanitizedWifiInfo = new WifiInfo.Builder()
+                .setSsid(new byte[0])
+                .setBssid(WifiInfo.DEFAULT_MAC_ADDRESS)
+                .build();
+        // Should not expect location data since the callback does not set the flag for including
+        // location data.
+        verifyNetworkCallbackLocationDataInclusionUsingWifiInfoAndOwnerUidInNetCaps(
+                wifiNetworkCallack, ownerUid, wifiInfo, INVALID_UID, sanitizedWifiInfo);
+    }
+
+    @Test
+    public void testVerifyLocationDataIsIncludedWhenInclFlagSet() throws Exception {
+        final TestNetworkCallback wifiNetworkCallack =
+                new TestNetworkCallback(NetworkCallback.FLAG_INCLUDE_LOCATION_INFO);
+        final int ownerUid = Process.myUid();
+        final WifiInfo wifiInfo = new WifiInfo.Builder()
+                .setSsid("sssid1234".getBytes())
+                .setBssid("00:11:22:33:44:55")
+                .build();
+        // Expect location data since the callback sets the flag for including location data
+        // & the caller holds NETWORK_STACK permission.
+        verifyNetworkCallbackLocationDataInclusionUsingWifiInfoAndOwnerUidInNetCaps(
+                wifiNetworkCallack, ownerUid, wifiInfo, ownerUid, wifiInfo);
     }
 
     @Test
