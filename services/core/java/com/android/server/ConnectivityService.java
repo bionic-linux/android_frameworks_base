@@ -5539,7 +5539,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 enforceMeteredApnPolicy(networkCapabilities);
                 break;
             case TRACK_BEST:
-                throw new UnsupportedOperationException("Not implemented yet");
+                enforceAccessPermission();
+                networkCapabilities = new NetworkCapabilities(networkCapabilities);
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported request type " + reqType);
         }
@@ -5547,11 +5549,17 @@ public class ConnectivityService extends IConnectivityManager.Stub
         ensureSufficientPermissionsForRequest(networkCapabilities,
                 Binder.getCallingPid(), callingUid, callingPackageName);
 
-        // Set the UID range for this request to the single UID of the requester, or to an empty
-        // set of UIDs if the caller has the appropriate permission and UIDs have not been set.
+        // Enforce FOREGROUND if the caller does not have permission to use background network.
+        if (reqType == NetworkRequest.Type.TRACK_BEST) {
+            restrictBackgroundRequestForCaller(networkCapabilities);
+        }
+
+        // Set the UID range for this request to the single UID of the requester, unless the
+        // requester has the permission to specify other UIDs.
         // This will overwrite any allowed UIDs in the requested capabilities. Though there
         // are no visible methods to set the UIDs, an app could use reflection to try and get
         // networks for other apps so it's essential that the UIDs are overwritten.
+        // Also set the requester UID and package name in the request.
         restrictRequestUidsForCallerAndSetRequestorInfo(networkCapabilities,
                 callingUid, callingPackageName);
 

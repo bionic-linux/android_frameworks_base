@@ -717,6 +717,7 @@ public class NetworkAgentInfo implements Comparable<NetworkAgentInfo> {
                 break;
 
             case LISTEN:
+            case TRACK_BEST:
             case TRACK_DEFAULT:
             case TRACK_SYSTEM_DEFAULT:
                 break;
