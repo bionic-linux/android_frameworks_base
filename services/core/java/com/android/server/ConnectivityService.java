@@ -5412,7 +5412,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     + mNetworkRequestForCallback.requestId
                     + " " + mRequests
                     + (mPendingIntent == null ? "" : " to trigger " + mPendingIntent)
-                    + "callback flags: " + mCallbackFlags;
+                    + " callback flags: " + mCallbackFlags;
         }
     }
 

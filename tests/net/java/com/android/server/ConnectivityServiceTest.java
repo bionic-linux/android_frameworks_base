@@ -8817,7 +8817,7 @@ public class ConnectivityServiceTest {
 
         final int expectedOwnerUidWithoutIncludeFlag =
                 shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag
-                        ? Process.myUid() : INVALID_UID;
+                        ? myUid : INVALID_UID;
         assertEquals(expectedOwnerUidWithoutIncludeFlag, getOwnerUidNetCapsPermission(
                 myUid, myUid, false /* includeLocationSensitiveInfo */));
 
@@ -8836,22 +8836,26 @@ public class ConnectivityServiceTest {
 
     }
 
+    private void verifyOwnerUidAndWifiInfoNetCapsPermissionPreS() {
+        verifyOwnerUidAndWifiInfoNetCapsPermission(
+                // Ensure that owner uid is included even if the request asks to remove it since
+                // the app has necessary permissions and targetSdk < S.
+                true, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
+                true, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
+                // Ensure that location info is removed if the request asks to remove it even if the
+                // app has necessary permissions.
+                false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
+                true /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
+        );
+    }
+
     @Test
-    public void testCreateWithLocationInfoSanitizedWithFineLocationAfterQ()
+    public void testCreateWithLocationInfoSanitizedWithFineLocationAfterQPreS()
             throws Exception {
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
-        verifyOwnerUidAndWifiInfoNetCapsPermission(
-                // Ensure that we include owner uid even if the request asks to remove it since the
-                // app has necessary permissions and targetSdk < S.
-                true, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
-                true, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
-                false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
-                // Ensure that we remove location info if the request asks to remove it even if the
-                // app has necessary permissions.
-                true /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
-        );
+        verifyOwnerUidAndWifiInfoNetCapsPermissionPreS();
     }
 
     @Test
@@ -8860,16 +8864,7 @@ public class ConnectivityServiceTest {
         setupLocationPermissions(Build.VERSION_CODES.R, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
-        verifyOwnerUidAndWifiInfoNetCapsPermission(
-                // Ensure that we include owner uid even if the request asks to remove it since the
-                // app has necessary permissions and targetSdk < S.
-                true, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
-                true, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
-                false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
-                // Ensure that we remove location info if the request asks to remove it even if the
-                // app has necessary permissions.
-                true /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
-        );
+        verifyOwnerUidAndWifiInfoNetCapsPermissionPreS();
     }
 
     @Test
@@ -8880,13 +8875,13 @@ public class ConnectivityServiceTest {
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
         verifyOwnerUidAndWifiInfoNetCapsPermission(
-                // Ensure that we owner UID if the request asks us to remove it even if the app
-                // has necessary permissions since targetSdk >= S.
+                // Ensure that the owner UID is removed if the request asks us to remove it even
+                // if the app has necessary permissions since targetSdk >= S.
                 false, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
                 true, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
-                false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
-                // Ensure that we remove location info if the request asks to remove it even if the
+                // Ensure that location info is removed if the request asks to remove it even if the
                 // app has necessary permissions.
+                false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
                 true /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
         );
     }
@@ -8897,15 +8892,15 @@ public class ConnectivityServiceTest {
         setupLocationPermissions(Build.VERSION_CODES.P, true, AppOpsManager.OPSTR_COARSE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
 
+        verifyOwnerUidAndWifiInfoNetCapsPermissionPreS();
+    }
+
+    private void verifyOwnerUidAndWifiInfoNetCapsNotIncluded() {
         verifyOwnerUidAndWifiInfoNetCapsPermission(
-                // Ensure that we owner UID if the request asks us to remove it even if the app
-                // has necessary permissions since targetSdk >= S.
-                true, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
-                true, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
+                false, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
+                false, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
                 false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
-                // Ensure that we remove location info if the request asks to remove it even if the
-                // app has necessary permissions.
-                true /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
+                false /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
         );
     }
 
@@ -8915,12 +8910,7 @@ public class ConnectivityServiceTest {
         setupLocationPermissions(Build.VERSION_CODES.Q, false, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
-        verifyOwnerUidAndWifiInfoNetCapsPermission(
-                false, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
-                false, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
-                false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
-                false /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
-        );
+        verifyOwnerUidAndWifiInfoNetCapsNotIncluded();
     }
 
     @Test
@@ -8942,26 +8932,36 @@ public class ConnectivityServiceTest {
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_COARSE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
 
-        verifyOwnerUidAndWifiInfoNetCapsPermission(
-                false, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
-                false, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
-                false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
-                false /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
-        );
+        verifyOwnerUidAndWifiInfoNetCapsNotIncluded();
     }
 
     @Test
-    public void testCreateWithLocationInfoSanitizedWithoutLocationPermission()
+    public void testCreateWithLocationInfoSanitizedWithCoarseLocationAfterS()
+            throws Exception {
+        // Test that not having fine location permission leads to sanitization.
+        setupLocationPermissions(Build.VERSION_CODES.S, true, AppOpsManager.OPSTR_COARSE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        verifyOwnerUidAndWifiInfoNetCapsNotIncluded();
+    }
+
+
+    @Test
+    public void testCreateWithLocationInfoSanitizedWithoutLocationPermissionAfterQ()
             throws Exception {
         // Test that not having fine location permission leads to sanitization.
         setupLocationPermissions(Build.VERSION_CODES.Q, true, null /* op */, null /* perm */);
 
-        verifyOwnerUidAndWifiInfoNetCapsPermission(
-                false, /* shouldInclLocationSensitiveOwnerUidWithoutIncludeFlag */
-                false, /* shouldInclLocationSensitiveOwnerUidWithIncludeFlag */
-                false, /* shouldInclLocationSensitiveWifiInfoWithoutIncludeFlag */
-                false /* shouldInclLocationSensitiveWifiInfoWithIncludeFlag */
-        );
+        verifyOwnerUidAndWifiInfoNetCapsNotIncluded();
+    }
+
+    @Test
+    public void testCreateWithLocationInfoSanitizedWithoutLocationPermissionAfterS()
+            throws Exception {
+        // Test that not having fine location permission leads to sanitization.
+        setupLocationPermissions(Build.VERSION_CODES.S, true, null /* op */, null /* perm */);
+
+        verifyOwnerUidAndWifiInfoNetCapsNotIncluded();
     }
 
     private void setupConnectionOwnerUid(int vpnOwnerUid, @VpnManager.VpnType int vpnType)
