@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4eca8be_89977bd8",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5045,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-12T02:44:15Z",
+      "side": 1,
+      "message": "Nit : given that we usually think of netIds as integers going 1~100 and 101~65535, I think this would in fact be better expressed in decimal, or at least have comments saying // 0xFC00 \u003d 64512\n\nLikewise on the RANGE constant below",
+      "range": {
+        "startLine": 5045,
+        "startChar": 52,
+        "endLine": 5045,
+        "endChar": 58
+      },
+      "revId": "21d01e8d4513259125013f4997c247a253db3219",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
