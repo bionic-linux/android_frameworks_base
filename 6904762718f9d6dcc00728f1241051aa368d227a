@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec5e15fd_78bb7b71",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14413,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-03-12T18:07:55Z",
+      "side": 1,
+      "message": "The documentation of these 2 methods needs to be updated. And also add RequiresFeature annotation to them.",
+      "range": {
+        "startLine": 14412,
+        "startChar": 25,
+        "endLine": 14413,
+        "endChar": 49
+      },
+      "revId": "6904762718f9d6dcc00728f1241051aa368d227a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
