@@ -5539,13 +5539,19 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 enforceMeteredApnPolicy(networkCapabilities);
                 break;
             case TRACK_BEST:
-                throw new UnsupportedOperationException("Not implemented yet");
+                enforceAccessPermission();
+                break;
             default:
                 throw new IllegalArgumentException("Unsupported request type " + reqType);
         }
         ensureRequestableCapabilities(networkCapabilities);
         ensureSufficientPermissionsForRequest(networkCapabilities,
                 Binder.getCallingPid(), callingUid, callingPackageName);
+
+        // Enforce FOREGROUND if the caller does not have permission to use background network.
+        if (reqType == NetworkRequest.Type.TRACK_BEST) {
+            restrictBackgroundRequestForCaller(networkCapabilities);
+        }
 
         // Set the UID range for this request to the single UID of the requester, or to an empty
         // set of UIDs if the caller has the appropriate permission and UIDs have not been set.
