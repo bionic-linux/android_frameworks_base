@@ -46,6 +46,30 @@
       },
       "revId": "657829530aa7f8077d32c0ecc53e8f104792cf55",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97900903_6101313f",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14568,
+      "author": {
+        "id": 1606087
+      },
+      "writtenOn": "2021-03-12T18:35:14Z",
+      "side": 1,
+      "message": "Agreed with Amit.  @RequiresFeature should be on the actual methods that aren\u0027t supported.",
+      "parentUuid": "9f02b2c8_5585b502",
+      "range": {
+        "startLine": 14566,
+        "startChar": 4,
+        "endLine": 14568,
+        "endChar": 83
+      },
+      "revId": "657829530aa7f8077d32c0ecc53e8f104792cf55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
