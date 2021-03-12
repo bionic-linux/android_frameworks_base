@@ -5649,7 +5649,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkRequest requestNetwork(NetworkCapabilities networkCapabilities,
+    public NetworkRequest requestNetwork(int asUid, NetworkCapabilities networkCapabilities,
             int reqTypeInt, Messenger messenger, int timeoutMs, IBinder binder,
             int legacyType, int callbackFlags, @NonNull String callingPackageName,
             @Nullable String callingAttributionTag) {
@@ -5669,11 +5669,18 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         switch (reqType) {
             case TRACK_DEFAULT:
+                // Privileged callers can track the default network of another UID.
+                if (asUid != callingUid) {
+                    enforceSettingsPermission();
+                } else {
+                    enforceAccessPermission();
+                }
+
                 // If the request type is TRACK_DEFAULT, the passed {@code networkCapabilities}
-                // is unused and will be replaced by ones appropriate for the caller.
-                // This allows callers to keep track of the default network for their app.
+                // is unused and will be replaced by ones appropriate for the UID (usually, the
+                // calling app). This allows callers to keep track of the default network.
                 networkCapabilities = copyDefaultNetworkCapabilitiesForUid(
-                        defaultNc, callingUid, callingPackageName);
+                        defaultNc, asUid, callingUid, callingPackageName);
                 enforceAccessPermission();
                 break;
             case TRACK_SYSTEM_DEFAULT:
@@ -5725,7 +5732,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final NetworkRequest networkRequest = new NetworkRequest(networkCapabilities, legacyType,
                 nextNetworkRequestId(), reqType);
         final NetworkRequestInfo nri = getNriToRegister(
-                callingUid, networkRequest, messenger, binder, callbackFlags,
+                asUid, networkRequest, messenger, binder, callbackFlags,
                 callingAttributionTag);
         if (DBG) log("requestNetwork for " + nri);
 
@@ -6122,7 +6129,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         final List<NetworkRequest> requests = new ArrayList<>();
         for (final NetworkRequest nr : requestsToCopy) {
             requests.add(new NetworkRequest(copyDefaultNetworkCapabilitiesForUid(
-                            nr.networkCapabilities, requestorUid, requestorPackageName),
+                            nr.networkCapabilities, asUid, requestorUid, requestorPackageName),
                     nr.legacyType, nextNetworkRequestId(), nr.type));
         }
         return requests;
@@ -6130,7 +6137,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     @NonNull
     private NetworkCapabilities copyDefaultNetworkCapabilitiesForUid(
-            @NonNull final NetworkCapabilities netCapToCopy, final int requestorUid,
+            @NonNull final NetworkCapabilities netCapToCopy, int asUid, final int requestorUid,
             @NonNull final String requestorPackageName) {
         // These capabilities are for a TRACK_DEFAULT callback, so:
         // 1. Remove NET_CAPABILITY_VPN, because it's (currently!) the only difference between
@@ -6140,7 +6147,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
         //    not do this in the case of a privileged application.
         final NetworkCapabilities netCap = new NetworkCapabilities(netCapToCopy);
         netCap.removeCapability(NET_CAPABILITY_NOT_VPN);
-        netCap.setSingleUid(requestorUid);
+        netCap.setSingleUid(asUid);
         restrictRequestUidsForCallerAndSetRequestorInfo(
                 netCap, requestorUid, requestorPackageName);
         return netCap;
