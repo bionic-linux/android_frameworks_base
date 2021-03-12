@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5649d12_1e0ae2ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-12T19:08:12Z",
+      "side": 1,
+      "message": "jchalard@/lorenzo@: I know we discussed this previously \u0026 rejected the idea of a new synchronous API. But, I have a had a couple of queries already requesting for a synchronous API. So, adding this for your consideration.",
+      "revId": "fd37bdd244ffd0d4eae521ed0e357b2b2e3584ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
