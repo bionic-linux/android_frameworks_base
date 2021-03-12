@@ -5510,7 +5510,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     }
 
     @Override
-    public NetworkRequest requestNetwork(NetworkCapabilities networkCapabilities,
+    public NetworkRequest requestNetwork(int asUid, NetworkCapabilities networkCapabilities,
             int reqTypeInt, Messenger messenger, int timeoutMs, IBinder binder,
             int legacyType, int callbackFlags, @NonNull String callingPackageName,
             @Nullable String callingAttributionTag) {
@@ -5530,9 +5530,16 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
         switch (reqType) {
             case TRACK_DEFAULT:
+                // Privileged callers can track the default network of another UID.
+                if (asUid != callingUid) {
+                    enforceSettingsPermission();
+                } else {
+                    enforceAccessPermission();
+                }
+
                 // If the request type is TRACK_DEFAULT, the passed {@code networkCapabilities}
-                // is unused and will be replaced by ones appropriate for the caller.
-                // This allows callers to keep track of the default network for their app.
+                // is unused and will be replaced by ones appropriate for the UID (usually, the
+                // calling app). This allows callers to keep track of the default network.
                 networkCapabilities = copyDefaultNetworkCapabilitiesForUid(
                         defaultNc, callingUid, callingPackageName);
                 enforceAccessPermission();
