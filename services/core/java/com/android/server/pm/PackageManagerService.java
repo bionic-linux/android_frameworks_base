@@ -10139,8 +10139,6 @@ public class PackageManagerService extends IPackageManager.Stub
         mDexManager.reconcileSecondaryDexFiles(packageName);
     }
 
-    // TODO(calin): this is only needed for BackgroundDexOptService. Find a cleaner way to inject
-    // a reference there.
     /*package*/ DexManager getDexManager() {
         return mDexManager;
     }
@@ -25212,6 +25210,11 @@ public class PackageManagerService extends IPackageManager.Stub
         @Override
         public boolean isSuspendingAnyPackages(String suspendingPackage, int userId) {
             return PackageManagerService.this.isSuspendingAnyPackages(suspendingPackage, userId);
+        }
+
+        @Override
+        public DexManager getDexManager() {
+            return PackageManagerService.this.getDexManager();
         }
     }
 

@@ -27,6 +27,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.intThat;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 import android.app.IActivityManager;
@@ -35,6 +36,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManagerInternal;
 import android.content.pm.ParceledListSlice;
 import android.content.pm.UserInfo;
 import android.net.Uri;
@@ -46,13 +48,16 @@ import androidx.test.filters.SmallTest;
 
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
+import com.android.server.pm.PackageSetting;
+import com.android.server.pm.PackageSettingBuilder;
+import com.android.server.pm.dex.DexManager;
+import com.android.server.pm.parsing.pkg.PackageImpl;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -78,6 +83,8 @@ public final class AppHibernationServiceTest {
     private Context mContext;
     @Mock
     private IPackageManager mIPackageManager;
+    @Mock
+    private PackageManagerInternal mPackageManagerInternal;
     @Mock
     private IActivityManager mIActivityManager;
     @Mock
@@ -109,6 +116,7 @@ public final class AppHibernationServiceTest {
         packages.add(makePackageInfo(PACKAGE_NAME_1));
         doReturn(new ParceledListSlice<>(packages)).when(mIPackageManager).getInstalledPackages(
                 intThat(arg -> (arg & MATCH_ANY_USER) != 0), anyInt());
+        setUpPackage(PACKAGE_NAME_1);
         mAppHibernationService.onBootPhase(SystemService.PHASE_BOOT_COMPLETED);
 
         UserInfo userInfo = addUser(USER_ID_1);
@@ -201,6 +209,18 @@ public final class AppHibernationServiceTest {
         return userInfo;
     }
 
+    private void setUpPackage(String packageName) {
+        PackageImpl pkgImpl = new PackageImpl(packageName, "baseCodePath", "codePath",
+                null /* manifestArray */, false /* isCoreApp */);
+        doReturn(pkgImpl).when(mPackageManagerInternal).getPackage(packageName);
+        PackageSetting pkgSetting = new PackageSettingBuilder()
+                .setPackage(pkgImpl)
+                .setName(packageName)
+                .setCodePath("codePath")
+                .build();
+        doReturn(pkgSetting).when(mPackageManagerInternal).getPackageSetting(packageName);
+    }
+
     private static PackageInfo makePackageInfo(String packageName) {
         PackageInfo pkg = new PackageInfo();
         pkg.packageName = packageName;
@@ -230,18 +250,28 @@ public final class AppHibernationServiceTest {
         }
 
         @Override
+        public PackageManagerInternal getPackageManagerInternal() {
+            return mPackageManagerInternal;
+        }
+
+        @Override
         public UserManager getUserManager() {
             return mUserManager;
         }
 
         @Override
+        public DexManager getDexManager() {
+            return mock(DexManager.class);
+        }
+
+        @Override
         public HibernationStateDiskStore<GlobalLevelState> getGlobalLevelDiskStore() {
-            return Mockito.mock(HibernationStateDiskStore.class);
+            return mock(HibernationStateDiskStore.class);
         }
 
         @Override
         public HibernationStateDiskStore<UserLevelState> getUserLevelDiskStore(int userId) {
-            return Mockito.mock(HibernationStateDiskStore.class);
+            return mock(HibernationStateDiskStore.class);
         }
     }
 }

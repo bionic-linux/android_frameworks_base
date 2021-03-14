@@ -39,6 +39,7 @@ import android.util.SparseArray;
 
 import com.android.server.pm.PackageList;
 import com.android.server.pm.PackageSetting;
+import com.android.server.pm.dex.DexManager;
 import com.android.server.pm.parsing.pkg.AndroidPackage;
 
 import java.io.IOException;
@@ -999,4 +1000,11 @@ public abstract class PackageManagerInternal {
      * Returns {@code true} if the package is suspending any packages for the user.
      */
     public abstract boolean isSuspendingAnyPackages(String suspendingPackage, int userId);
+
+    /**
+     * Returns the {@link DexManager} for dex file manipulation.
+     *
+     * @return the dex manager used by package manager
+     */
+    public abstract DexManager getDexManager();
 }

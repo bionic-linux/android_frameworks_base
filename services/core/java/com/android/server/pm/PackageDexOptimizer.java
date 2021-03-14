@@ -51,8 +51,8 @@ import android.os.FileUtils;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
-import android.os.UserHandle;
 import android.os.Trace;
+import android.os.UserHandle;
 import android.os.WorkSource;
 import android.os.storage.StorageManager;
 import android.util.Log;
@@ -61,6 +61,9 @@ import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.server.LocalServices;
+import com.android.server.apphibernation.AppHibernationManagerInternal;
+import com.android.server.apphibernation.AppHibernationService;
 import com.android.server.pm.Installer.InstallerException;
 import com.android.server.pm.dex.ArtManagerService;
 import com.android.server.pm.dex.ArtStatsLogUtils;
@@ -125,6 +128,14 @@ public class PackageDexOptimizer {
         // Note that the system package is marked as having no code, however we can
         // still optimize it via dexoptSystemServerPath.
         if (!PLATFORM_PACKAGE_NAME.equals(pkg.getPackageName()) && !pkg.isHasCode()) {
+            return false;
+        }
+
+        // Do not optimize packages that are hibernating as they aren't being actively used.
+        AppHibernationManagerInternal appHibernationManager =
+                LocalServices.getService(AppHibernationManagerInternal.class);
+        if (AppHibernationService.isAppHibernationEnabled()
+                && appHibernationManager.isHibernatingGlobally(pkg.getPackageName())) {
             return false;
         }
 
