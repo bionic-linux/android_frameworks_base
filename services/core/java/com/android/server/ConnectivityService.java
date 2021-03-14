@@ -1281,14 +1281,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mPermissionMonitor = new PermissionMonitor(mContext, mNetd);
 
+        mUserAllContext = mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */);
         // Listen for user add/removes to inform PermissionMonitor.
         // Should run on mHandler to avoid any races.
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_USER_ADDED);
-        intentFilter.addAction(Intent.ACTION_USER_REMOVED);
+        final IntentFilter userIntentFilter = new IntentFilter();
+        userIntentFilter.addAction(Intent.ACTION_USER_ADDED);
+        userIntentFilter.addAction(Intent.ACTION_USER_REMOVED);
+        mUserAllContext.registerReceiver(mUserIntentReceiver, userIntentFilter,
+                null /* broadcastPermission */, mHandler);
 
-        mUserAllContext = mContext.createContextAsUser(UserHandle.ALL, 0 /* flags */);
-        mUserAllContext.registerReceiver(mIntentReceiver, intentFilter,
+        // Listen to package add/removes for netd
+        final IntentFilter packageIntentFilter = new IntentFilter();
+        packageIntentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        packageIntentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        packageIntentFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
+        packageIntentFilter.addDataScheme("package");
+        mUserAllContext.registerReceiver(mPackageIntentReceiver, packageIntentFilter,
                 null /* broadcastPermission */, mHandler);
 
         mNetworkActivityTracker = new LegacyNetworkActivityTracker(mContext, mHandler, mNetd);
@@ -5307,14 +5315,14 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private void onUserAdded(UserHandle user) {
+    private void onUserAdded(@NonNull final UserHandle user) {
         mPermissionMonitor.onUserAdded(user);
         if (mOemNetworkPreferences.getNetworkPreferences().size() > 0) {
             handleSetOemNetworkPreference(mOemNetworkPreferences, null);
         }
     }
 
-    private void onUserRemoved(UserHandle user) {
+    private void onUserRemoved(@NonNull final UserHandle user) {
         mPermissionMonitor.onUserRemoved(user);
         // If there was a network preference for this user, remove it.
         handleSetProfileNetworkPreference(new ProfileNetworkPreferences.Preference(user, null),
@@ -5324,7 +5332,13 @@ public class ConnectivityService extends IConnectivityManager.Stub
         }
     }
 
-    private BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+    private void onPackageChanged(@NonNull final String packageName) {
+        if (isMappedInOemNetworkPreference(packageName)) {
+            handleSetOemNetworkPreference(mOemNetworkPreferences, null);
+        }
+    }
+
+    private final BroadcastReceiver mUserIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             ensureRunningOnConnectivityServiceThread();
@@ -5343,6 +5357,22 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 onUserRemoved(user);
             }  else {
                 Log.wtf(TAG, "received unexpected intent: " + action);
+            }
+        }
+    };
+
+    private final BroadcastReceiver mPackageIntentReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ensureRunningOnConnectivityServiceThread();
+            switch(intent.getAction()) {
+                case Intent.ACTION_PACKAGE_ADDED:
+                case Intent.ACTION_PACKAGE_REMOVED:
+                case Intent.ACTION_PACKAGE_REPLACED:
+                    onPackageChanged(intent.getData().getSchemeSpecificPart());
+                    break;
+                default:
+                    Log.wtf(TAG, "received unexpected intent: " + intent.getAction());
             }
         }
     };
@@ -6150,6 +6180,15 @@ public class ConnectivityService extends IConnectivityManager.Stub
     @NonNull
     private ProfileNetworkPreferences mProfileNetworkPreferences = new ProfileNetworkPreferences();
 
+    /**
+     * Determine whether a given package has a mapping in the current OemNetworkPreferences.
+     * @param packageName the package name to check existence of a mapping for.
+     * @return true if a mapping exists, false otherwise
+     */
+    private boolean isMappedInOemNetworkPreference(@NonNull final String packageName) {
+        return mOemNetworkPreferences.getNetworkPreferences().containsKey(packageName);
+    }
+
     // The always-on request for an Internet-capable network that apps without a specific default
     // fall back to.
     @VisibleForTesting
@@ -6170,7 +6209,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
      * @return the NetworkRequestInfo tracking the given uid.
      */
     @NonNull
-    private NetworkRequestInfo getDefaultRequestTrackingUid(@NonNull final int uid) {
+    private NetworkRequestInfo getDefaultRequestTrackingUid(final int uid) {
         for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
             if (nri == mDefaultRequest) {
                 continue;
@@ -9583,7 +9622,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                 new OemNetworkRequestFactory().createNrisFromOemNetworkPreferences(preference);
         replaceDefaultNetworkRequestsForPreference(nris);
         mOemNetworkPreferences = preference;
-        // TODO http://b/176496396 persist data to shared preferences.
 
         if (null != listener) {
             try {
@@ -9740,7 +9778,6 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     // packages are sent on a network preference as the system will watch for
                     // package installations associated with this network preference and update
                     // accordingly. This is done so as to minimize race conditions on app install.
-                    // TODO b/177092163 add app install watching.
                     continue;
                 }
             }
