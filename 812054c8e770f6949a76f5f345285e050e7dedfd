@@ -93,6 +93,30 @@
       },
       "revId": "812054c8e770f6949a76f5f345285e050e7dedfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c5c3bea_fec00b62",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14509,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-15T15:36:55Z",
+      "side": 1,
+      "message": "Given the fact that part of this functionality is gated on a capability, wouldn\u0027t the developer write:\n\nif (telephonyManager.isRadioInterfaceCapabilitySupported(CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING) {\n  telephonyManager.sendThermalMitigationRequest(... DATA_THROTTLING_ACTION_THROTTLE_SECONDARY_CARRIER ... );\n}\n\nSo they should never see THERMAL_MITIGATION_RESULT_NOT_SUPPORTED if they\u0027re using the API as per documentation.  \n\nHence IllegalArgumentException would be a reasonable throw.  Otherwise I am not sure I see any real value in isRadioInterfaceCapabilitySupported/CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING.  My understanding was that this was to remove the details of what a radio does/doesn\u0027t support from the individual APIs.",
+      "parentUuid": "11548b41_b73fbc41",
+      "range": {
+        "startLine": 14509,
+        "startChar": 26,
+        "endLine": 14509,
+        "endChar": 46
+      },
+      "revId": "812054c8e770f6949a76f5f345285e050e7dedfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
