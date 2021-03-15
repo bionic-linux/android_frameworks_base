@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ca2ae68_85834e01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-15T15:25:17Z",
+      "side": 1,
+      "message": "It looks like there is very little code in this CL to implement the special new behaviour. Can you explain why this works? \n\nIs it because:\n- It\u0027s not sent to the factories, because it\u0027s not a request\n- It\u0027s not attached to multiple requests, because it\u0027s not a listen\n?\n\nOr is it because it\u0027s basically the same as TRACK_DEFAULT (not sent to factories, only matches one network)?\n\nI guess the two reasons might be the same.",
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78fd616a_f75f6796",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5543,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-15T15:25:17Z",
+      "side": 1,
+      "message": "Do you need a defensive copy here? All the other codepaths seem to make one.\n\nIn most cases the NetworkCapabilities object will be a fresh copy created from a parcel. But if the caller is in the same process (i.e., the system server) then it will be the original object, and a defensve copy is needed to ensure that the caller cannot mutate it after the request is filed.",
+      "range": {
+        "startLine": 5543,
+        "startChar": 16,
+        "endLine": 5543,
+        "endChar": 21
+      },
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfd49124_bf492627",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5557,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-15T15:25:17Z",
+      "side": 1,
+      "message": "Looks like this comment is incorrect. Given that you\u0027re touching code right next to it, can you fix it? Should say something like:\n\n        // Set the UID range for this request to the single UID of the requester, unless the\n        // requester has the permission to specify other UIDs.",
+      "range": {
+        "startLine": 5556,
+        "startChar": 80,
+        "endLine": 5557,
+        "endChar": 94
+      },
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af8bd3d3_49b4a90a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5560,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-15T15:25:17Z",
+      "side": 1,
+      "message": "// Also set the requestor UID and package name in the request.",
+      "range": {
+        "startLine": 5560,
+        "startChar": 82,
+        "endLine": 5560,
+        "endChar": 83
+      },
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
