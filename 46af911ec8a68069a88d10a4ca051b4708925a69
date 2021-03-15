@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "595b912a_97267204",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-15T23:07:06Z",
+      "side": 1,
+      "message": "I\u0027m honestly not a fan of catch-all buckets but I guess it does address the feedback requested.",
+      "revId": "46af911ec8a68069a88d10a4ca051b4708925a69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

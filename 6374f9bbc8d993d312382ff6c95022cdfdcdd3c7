@@ -94,6 +94,30 @@
       },
       "revId": "6374f9bbc8d993d312382ff6c95022cdfdcdd3c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6e761ff_f9887f34",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14881,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-15T23:07:06Z",
+      "side": 1,
+      "message": "go/android-api-guidelines#return-error\n\nAPI guidelines specifically call out that we shouldn\u0027t be using big \u0027ol catch buckets.  However, I guess this does address the specific feedback which was asked for.",
+      "parentUuid": "af96a290_e5374904",
+      "range": {
+        "startLine": 14881,
+        "startChar": 53,
+        "endLine": 14881,
+        "endChar": 67
+      },
+      "revId": "6374f9bbc8d993d312382ff6c95022cdfdcdd3c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
