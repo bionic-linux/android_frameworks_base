@@ -16,6 +16,24 @@
       "message": "Is there a reason these changes are in their own CL instead of being part of aosp/1598773? It seems better to put them in that CL.",
       "revId": "407fdf411a08f98334869af0ad8015b2fdb7d4e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e6b4ec6_0c2a3c37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-15T01:38:49Z",
+      "side": 1,
+      "message": "I separate it becuase this commit has to be the same topic with the others but aosp/1598773 does not. Sure, I will put them together.",
+      "parentUuid": "25f291c4_d9d5d13b",
+      "revId": "407fdf411a08f98334869af0ad8015b2fdb7d4e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
