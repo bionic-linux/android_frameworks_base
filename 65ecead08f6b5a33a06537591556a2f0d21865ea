@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8347b80f_1fbb29b3",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-15T12:53:52Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f5f42141_04de5d7a",
+      "range": {
+        "startLine": 970,
+        "startChar": 4,
+        "endLine": 970,
+        "endChar": 24
+      },
+      "revId": "65ecead08f6b5a33a06537591556a2f0d21865ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5b7809f_b84f242d",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-11T15:16:45Z",
       "side": 0,
       "message": "Per other comment, this should be _DEFAULT, not _SYSTEM_DEFAULT. If you don\u0027t like PREFERENCE_DEFAULT, it could be PREFERENCE_NONE maybe?",
+      "range": {
+        "startLine": 971,
+        "startChar": 54,
+        "endLine": 971,
+        "endChar": 69
+      },
+      "revId": "65ecead08f6b5a33a06537591556a2f0d21865ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa7393ea_ed25b061",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-15T12:53:52Z",
+      "side": 0,
+      "message": "DEFAULT is fine, I had simply missed it. Done.",
+      "parentUuid": "c5b7809f_b84f242d",
       "range": {
         "startLine": 971,
         "startChar": 54,

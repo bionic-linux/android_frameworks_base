@@ -39,6 +39,30 @@
       },
       "revId": "f056c8e8d9fb9d0877460909852dffab04224eb6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eef3178_5001284b",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5074,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-15T12:53:52Z",
+      "side": 1,
+      "message": "Done. In fact this could even be client \u003d SYSTEM_SERVER... but then I wouldn\u0027t know how to CTS test it.",
+      "parentUuid": "ebc7f60e_1d77ce18",
+      "range": {
+        "startLine": 5074,
+        "startChar": 5,
+        "endLine": 5074,
+        "endChar": 14
+      },
+      "revId": "f056c8e8d9fb9d0877460909852dffab04224eb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
