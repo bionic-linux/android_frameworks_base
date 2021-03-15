@@ -117,6 +117,30 @@
       },
       "revId": "812054c8e770f6949a76f5f345285e050e7dedfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52d5436b_aa5ff144",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 14509,
+      "author": {
+        "id": 1707895
+      },
+      "writtenOn": "2021-03-15T17:38:35Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Updated the code and documentation to reflect this",
+      "parentUuid": "1c5c3bea_fec00b62",
+      "range": {
+        "startLine": 14509,
+        "startChar": 26,
+        "endLine": 14509,
+        "endChar": 46
+      },
+      "revId": "812054c8e770f6949a76f5f345285e050e7dedfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
