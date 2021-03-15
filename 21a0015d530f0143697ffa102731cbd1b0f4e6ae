@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b099843_289f017f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-15T07:40:42Z",
+      "side": 1,
+      "message": "Only file changed since patchset 1 (what was originally merged) is ConnectivityManager.\nThis was reverted because aosp/1595396 was merged in the meantime with an additional usage of Preconditions",
+      "revId": "21a0015d530f0143697ffa102731cbd1b0f4e6ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
