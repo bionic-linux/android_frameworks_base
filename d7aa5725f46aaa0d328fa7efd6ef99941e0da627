@@ -16,6 +16,24 @@
       "message": "I thought we had agreed to expose these as SystemApi and revisit in 2 weeks? Cody took the meeting notes.\n\nhttps://docs.google.com/document/d/1jjS-Y37Ic2TDnfCyiC64R0WKjw28daQU7I1cOKnJgTQ/edit\n\nAs it stands with this being public, something is broken. We either have to have inconsistent behavior OR we can\u0027t soft-start. Both are problems.",
       "revId": "d7aa5725f46aaa0d328fa7efd6ef99941e0da627",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bc40420_88cdde02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-15T07:49:41Z",
+      "side": 1,
+      "message": "Yes, sorry, I forgot that I had approved the CL already. In order to avoid more API churn, I\u0027d say: let\u0027s file a bug triaged for S to figure out what to do, and for now let\u0027s pick something that works (e.g., just have the VCN network not expose a subId).",
+      "parentUuid": "9259a054_8cdd9d40",
+      "revId": "d7aa5725f46aaa0d328fa7efd6ef99941e0da627",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
