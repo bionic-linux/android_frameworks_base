@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72e739f4_47158177",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-15T15:27:49Z",
+      "side": 1,
+      "message": "Since this CL is treehugged, feel free to address comments in a follow-up.",
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78fd616a_f75f6796",
