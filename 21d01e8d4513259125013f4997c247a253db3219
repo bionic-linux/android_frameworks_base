@@ -22,6 +22,30 @@
       },
       "revId": "21d01e8d4513259125013f4997c247a253db3219",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0344b78_c5e9bdb3",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5045,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-15T09:50:33Z",
+      "side": 1,
+      "message": "ok, I\u0027ll add comments in follow-up commit.\nThanks!",
+      "parentUuid": "a4eca8be_89977bd8",
+      "range": {
+        "startLine": 5045,
+        "startChar": 52,
+        "endLine": 5045,
+        "endChar": 58
+      },
+      "revId": "21d01e8d4513259125013f4997c247a253db3219",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
