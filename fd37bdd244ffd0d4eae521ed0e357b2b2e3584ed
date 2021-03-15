@@ -16,6 +16,23 @@
       "message": "jchalard@/lorenzo@: I know we discussed this previously \u0026 rejected the idea of a new synchronous API. But, I have a had a couple of queries already requesting for a synchronous API. So, adding this for your consideration.",
       "revId": "fd37bdd244ffd0d4eae521ed0e357b2b2e3584ed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5b41723_2c31b15a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-03-15T21:05:22Z",
+      "side": 1,
+      "message": "Gentle ping for review!",
+      "revId": "fd37bdd244ffd0d4eae521ed0e357b2b2e3584ed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
