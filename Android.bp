@@ -671,7 +671,6 @@ gensrcs {
 
     srcs: [
         ":ipconnectivity-proto-src",
-        ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
         "libs/incident/**/*.proto",
     ],
@@ -698,7 +697,6 @@ gensrcs {
 
     srcs: [
         ":ipconnectivity-proto-src",
-        ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
         "libs/incident/**/*.proto",
     ],
@@ -814,7 +812,6 @@ java_library_host {
     name: "platformprotos",
     srcs: [
         ":ipconnectivity-proto-src",
-        ":libstats_atom_enum_protos",
         ":libstats_internal_protos",
         "cmds/am/proto/instrumentation_data.proto",
         "cmds/statsd/src/**/*.proto",
@@ -848,7 +845,6 @@ java_library {
     sdk_version: "9",
     srcs: [
         ":ipconnectivity-proto-src",
-        ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
         "libs/incident/proto/android/os/**/*.proto",
     ],
@@ -864,7 +860,6 @@ java_library {
 
     srcs: [
         ":ipconnectivity-proto-src",
-        ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
         "libs/incident/proto/android/os/**/*.proto",
     ],
@@ -885,9 +880,7 @@ cc_defaults {
 
     proto: {
         export_proto_headers: true,
-        include_dirs: [
-            "external/protobuf/src",
-        ],
+        include_dirs: ["external/protobuf/src"],
     },
 
     cflags: [
@@ -898,7 +891,6 @@ cc_defaults {
 
     srcs: [
         ":ipconnectivity-proto-src",
-        ":libstats_atom_enum_protos",
         "core/proto/**/*.proto",
     ],
 }
