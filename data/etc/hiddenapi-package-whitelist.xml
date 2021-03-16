@@ -61,6 +61,20 @@ Do NOT include any apps that are updatable via Play Store!
   <hidden-api-whitelisted-app package="com.android.terminal" />
   <hidden-api-whitelisted-app package="com.android.wallpaper" />
   <hidden-api-whitelisted-app package="jp.co.omronsoft.openwnn" />
-  <!-- TODO: Remove NetworkStack whitelisting -->
+  <!--
+    ~ Networking mainline modules running in the network_stack process.
+    ~ Most of these are already APK-in-APEX, and should thus already be exempt
+    ~ from hiddenapi protection, but networkstack is not. List all of them here,
+    ~ so that regardless of which package is started first, hiddenapi
+    ~ enforcement is disable for the process.
+    ~ TODO: migrate to APK-in-APEX and delete this.
+    -->
+  <hidden-api-whitelisted-app package="com.android.cellbroadcastreceiver" />
+  <hidden-api-whitelisted-app package="com.android.cellbroadcastservice" />
   <hidden-api-whitelisted-app package="com.android.networkstack" />
+  <hidden-api-whitelisted-app package="com.android.tethering" />
+  <hidden-api-whitelisted-app package="com.google.android.cellbroadcastreceiver" />
+  <hidden-api-whitelisted-app package="com.google.android.cellbroadcastservice" />
+  <hidden-api-whitelisted-app package="com.google.android.networkstack" />
+  <hidden-api-whitelisted-app package="com.google.android.tethering" />
 </config>
