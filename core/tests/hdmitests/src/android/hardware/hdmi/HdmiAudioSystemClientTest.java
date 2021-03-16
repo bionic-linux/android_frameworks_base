@@ -335,7 +335,7 @@ public class HdmiAudioSystemClientTest {
         }
 
         @Override
-        public void setSystemAudioModeOnForAudioOnlySource() {
+        public void setSystemAudioModeForAudioSource(boolean state, IHdmiControlCallback callback) {
         }
 
         @Override

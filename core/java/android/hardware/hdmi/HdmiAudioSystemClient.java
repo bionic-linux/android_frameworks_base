@@ -136,7 +136,9 @@ public final class HdmiAudioSystemClient extends HdmiClient {
     }
 
     /**
-     * Set System Audio Mode on/off with audio system device.
+     * Set System Audio Mode on/off with audio system device, this method is called to broadcast
+     * a setSystemAudioMode on message to the HDMI CEC system without querying Active Source or
+     * TV supporting System Audio Control or not.
      *
      * @param state true to set System Audio Mode on. False to set off.
      * @param callback callback offer the setting result.
@@ -145,23 +147,19 @@ public final class HdmiAudioSystemClient extends HdmiClient {
      */
     // TODO(b/110094868): unhide and add @SystemApi for Q
     public void setSystemAudioMode(boolean state, @NonNull SetSystemAudioModeCallback callback) {
-        // TODO(amyjojo): implement this when needed.
+        try {
+            mService.setSystemAudioModeForAudioSource(state, getCallbackWrapper(callback));
+        } catch (RemoteException e) {
+            Log.e(TAG, "Failed to set System Audio Mode");
+        }
     }
 
-    /**
-     * When device is switching to an audio only source, this method is called to broadcast
-     * a setSystemAudioMode on message to the HDMI CEC system without querying Active Source or
-     * TV supporting System Audio Control or not. This is to get volume control passthrough
-     * from STB even if TV does not support it.
-     *
-     * @hide
-     */
-    // TODO(b/110094868): unhide and add @SystemApi for Q
-    public void setSystemAudioModeOnForAudioOnlySource() {
-        try {
-            mService.setSystemAudioModeOnForAudioOnlySource();
-        } catch (RemoteException e) {
-            Log.d(TAG, "Failed to set System Audio Mode on for Audio Only source");
-        }
+    private IHdmiControlCallback getCallbackWrapper(final SetSystemAudioModeCallback callback) {
+        return new IHdmiControlCallback.Stub() {
+            @Override
+            public void onComplete(int result) {
+                callback.onComplete(result);
+            }
+        };
     }
 }
