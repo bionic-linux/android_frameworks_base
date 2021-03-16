@@ -227,6 +227,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0a7e485_e3411ffa",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5548,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-16T17:35:40Z",
+      "side": 1,
+      "message": "Given that this new request type is listen-only (ie, non-refcounting), can we allow non-requestable capabilities to be matched against?",
+      "range": {
+        "startLine": 5548,
+        "startChar": 8,
+        "endLine": 5548,
+        "endChar": 37
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9c6fc3c7_777d8014",
         "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
         "patchSetId": 2
