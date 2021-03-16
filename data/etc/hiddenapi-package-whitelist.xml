@@ -36,12 +36,15 @@ Do NOT include any apps that are updatable via Play Store!
   <hidden-api-whitelisted-app package="com.android.car.messenger" />
   <hidden-api-whitelisted-app package="com.android.car.overview" />
   <hidden-api-whitelisted-app package="com.android.car.stream" />
+  <hidden-api-whitelisted-app package="com.android.cellbroadcastreceiver" />
+  <hidden-api-whitelisted-app package="com.android.cellbroadcastservice" />
   <hidden-api-whitelisted-app package="com.android.companiondevicemanager" />
   <hidden-api-whitelisted-app package="com.android.dreams.basic" />
   <hidden-api-whitelisted-app package="com.android.gallery" />
   <hidden-api-whitelisted-app package="com.android.launcher3" />
   <hidden-api-whitelisted-app package="com.android.mtp" />
   <hidden-api-whitelisted-app package="com.android.musicfx" />
+  <hidden-api-whitelisted-app package="com.android.networkstack" />
   <hidden-api-whitelisted-app package="com.android.permissioncontroller" />
   <hidden-api-whitelisted-app package="com.android.printservice.recommendation" />
   <hidden-api-whitelisted-app package="com.android.printspooler" />
@@ -60,7 +63,10 @@ Do NOT include any apps that are updatable via Play Store!
   <hidden-api-whitelisted-app package="com.android.systemui.plugins" />
   <hidden-api-whitelisted-app package="com.android.terminal" />
   <hidden-api-whitelisted-app package="com.android.wallpaper" />
+  <hidden-api-whitelisted-app package="com.android.tethering" />
+  <hidden-api-whitelisted-app package="com.google.android.cellbroadcastreceiver" />
+  <hidden-api-whitelisted-app package="com.google.android.cellbroadcastservice" />
+  <hidden-api-whitelisted-app package="com.google.android.networkstack" />
+  <hidden-api-whitelisted-app package="com.google.android.tethering" />
   <hidden-api-whitelisted-app package="jp.co.omronsoft.openwnn" />
-  <!-- TODO: Remove NetworkStack whitelisting -->
-  <hidden-api-whitelisted-app package="com.android.networkstack" />
 </config>
