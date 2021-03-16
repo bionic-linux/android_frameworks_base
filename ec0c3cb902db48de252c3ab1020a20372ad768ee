@@ -467,6 +467,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8c73b86_bbfe7380",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T21:01:52Z",
+      "side": 1,
+      "message": "Hm, I updated the javadoc to indicate that a callback could replace a previously registered callback. Let me know if this addresses the concern.",
+      "parentUuid": "eac7ff9b_1349d93b",
+      "range": {
+        "startLine": 871,
+        "startChar": 58,
+        "endLine": 871,
+        "endChar": 66
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "543df4a6_a0f6880c",
         "filename": "core/java/android/net/NetworkPolicyManager.java",
         "patchSetId": 7
