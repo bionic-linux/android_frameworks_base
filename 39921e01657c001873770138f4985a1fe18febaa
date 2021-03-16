@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3897b9c3_aba87d7e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T13:48:50Z",
+      "side": 1,
+      "message": "See the other comment below.",
+      "parentUuid": "1a03ddcd_529d643c",
+      "range": {
+        "startLine": 3657,
+        "startChar": 0,
+        "endLine": 3657,
+        "endChar": 37
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3840451_b34ff674",
@@ -41,6 +65,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0280861_35244cdf",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3744,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T13:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3840451_b34ff674",
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd4ad3de_ce6d320f",
@@ -54,6 +96,30 @@
       "writtenOn": "2021-03-16T07:35:58Z",
       "side": 1,
       "message": "This will handle the signal strengths, so it goes together with the comment above",
+      "range": {
+        "startLine": 3860,
+        "startChar": 20,
+        "endLine": 3860,
+        "endChar": 28
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "636aad85_45787b85",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3860,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T13:48:50Z",
+      "side": 1,
+      "message": "TL;DR\n  Nice catch, but request to address this in a follow-up, since\n  1. IIUC the behavior for REQUEST or other types is already Buggy, it added when network connected but not removed when request is removed.\n  2. It requires greater refactoring that involves behavior change that is also related to other request types.\n  3. It lacks of test coverage.\n \nFor 1, Since the threshold for a REQUEST is sent to all possible agents comes after it. \n(See updateNetworkInfo -\u003e updateSignalStrengthThresholds -\u003e getSignalStrengthThresholds).\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/ConnectivityService.java;l\u003d7826;drc\u003dmaster?ss\u003dandroid\u0026q\u003dupdateSignalStrengthThresholds\nWhere it collects all mNetworkRequests that MIGHT be satisfied by the agent and send all thresholds to it.\nWhen a REQUEST is being removed, threshold for this request should actually be removed from several agents, since multiple agents might contain the threshold of the request.\n\nFor 2, it is unlikely to me goes into removeListenRequestFromNetworks is a good thing since it\u0027s for handling the requests that don\u0027t have satisfier.\nSince our new request has a satisfier, but it is not actually something should be done in removeSatisfiedNetworkRequestFromNetwork for a specific agent,\nthus, I think we need a greater refactoring for this that includes the fix for REQUEST, e.g.\n   1. create updateSignalStrengthThresholdsForNetworks(reason, req)\n   2. calls it when adding/removing a request regardless of type, instead of doing this in removeListenRequestFromNetworks.\n   3. updateSignalStrengthThresholds(nai) when network connected.\n   4. when disconnecting, do nothing since it doesn\u0027t matter anyway.\n\nFor 3, android.net.cts.NetworkAgentTest#testSignalStrengthThresholds should be modified to include a case where a request is removed and verify the corresponding threshold is also being removed.",
+      "parentUuid": "cd4ad3de_ce6d320f",
       "range": {
         "startLine": 3860,
         "startChar": 20,
@@ -87,6 +153,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec71b002_4d118a6b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5541,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T13:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06b2c951_2528fb32",
+      "range": {
+        "startLine": 5541,
+        "startChar": 17,
+        "endLine": 5541,
+        "endChar": 27
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c6fc3c7_777d8014",
@@ -100,6 +190,30 @@
       "writtenOn": "2021-03-16T07:35:58Z",
       "side": 1,
       "message": "Add comment : expecting the default request though it doesn\u0027t match the filter, because all requests are sent to all factories",
+      "range": {
+        "startLine": 11140,
+        "startChar": 24,
+        "endLine": 11140,
+        "endChar": 40
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d87cf0_8b350dbc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11140,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T13:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c6fc3c7_777d8014",
       "range": {
         "startLine": 11140,
         "startChar": 24,
@@ -133,6 +247,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52dbafcc_9174f9cd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11142,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T13:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f872bde_c1a46d30",
+      "range": {
+        "startLine": 11142,
+        "startChar": 12,
+        "endLine": 11142,
+        "endChar": 23
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05ea4e4f_007b06df",
@@ -156,6 +294,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2c67ef0_74f3c5ae",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11191,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T13:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ea4e4f_007b06df",
+      "range": {
+        "startLine": 11191,
+        "startChar": 40,
+        "endLine": 11191,
+        "endChar": 59
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "594bd8e6_abdd9f05",
@@ -169,6 +331,30 @@
       "writtenOn": "2021-03-16T07:35:58Z",
       "side": 1,
       "message": "This is a good base test, but I think we need to add a test with more restrictive filters than just the default NetworkRequest.build().",
+      "range": {
+        "startLine": 11203,
+        "startChar": 3,
+        "endLine": 11203,
+        "endChar": 5
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c18ddc7_9149c48a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11203,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T13:48:50Z",
+      "side": 1,
+      "message": "Done.\nBut I cannot find a case which makes that very useful,\nsince we didn\u0027t change how the requests are being satisfied.\n\nSee if it works for you.\nReopen if you have any specific idea in mind.",
+      "parentUuid": "594bd8e6_abdd9f05",
       "range": {
         "startLine": 11203,
         "startChar": 3,
