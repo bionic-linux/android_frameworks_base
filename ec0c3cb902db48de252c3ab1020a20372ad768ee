@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31109551_46941bf8",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1cc7a9de_c07028e6",
+      "range": {
+        "startLine": 216,
+        "startChar": 82,
+        "endLine": 216,
+        "endChar": 87
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6147b581_1fad05e7",
@@ -196,6 +220,30 @@
       "side": 1,
       "message": "DeviceIdleController  which manages the doze restrictions uses \"allowlist\", so I\u0027d like to keep this consistent with that since NPMS will be receiving the exemptions from that.",
       "parentUuid": "15854446_ae434732",
+      "range": {
+        "startLine": 288,
+        "startChar": 54,
+        "endLine": 288,
+        "endChar": 63
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66ff5a04_d4f3a575",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "309afb85_0efbe6d3",
       "range": {
         "startLine": 288,
         "startChar": 54,
@@ -395,6 +443,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eac7ff9b_1349d93b",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:37:13Z",
+      "side": 1,
+      "message": "Yes, but using put() has the same consequences in fact ; the callback needs to implement a sensible equals() method.",
+      "parentUuid": "e7aec278_96bd2f1c",
+      "range": {
+        "startLine": 871,
+        "startChar": 58,
+        "endLine": 871,
+        "endChar": 66
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "543df4a6_a0f6880c",
         "filename": "core/java/android/net/NetworkPolicyManager.java",
         "patchSetId": 7
@@ -430,6 +502,30 @@
       "side": 1,
       "message": "The intention was that if a client is only interested in the edges, it doesn\u0027t have to know anything about blocked reasons or how to interpret those but yeah, as we discussed, client can technically derive the blocked status information themselves. I removed the onUidBlockedStatusChanged callback for now. If we think it would be convenient for clients to have this, we can always add it later but it certainly not necessary right now.",
       "parentUuid": "543df4a6_a0f6880c",
+      "range": {
+        "startLine": 912,
+        "startChar": 0,
+        "endLine": 912,
+        "endChar": 93
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4238f68_7ef088b3",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "32e39535_aea6a146",
       "range": {
         "startLine": 912,
         "startChar": 0,
@@ -665,6 +761,30 @@
       "side": 1,
       "message": "Hmm no, it\u0027s possible that uid rules didn\u0027t change but we still need to do this.",
       "parentUuid": "5405bac1_264bc845",
+      "range": {
+        "startLine": 3948,
+        "startChar": 12,
+        "endLine": 3948,
+        "endChar": 51
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69c198cc_d465a723",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3948,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "297d83cb_18638772",
       "range": {
         "startLine": 3948,
         "startChar": 12,

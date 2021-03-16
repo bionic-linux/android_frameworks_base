@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89760bf1_b65bf59d",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:37:13Z",
+      "side": 1,
+      "message": "Fair enough. Let\u0027s go with this now.",
+      "parentUuid": "b40524c8_ae48f17b",
+      "range": {
+        "startLine": 753,
+        "startChar": 81,
+        "endLine": 753,
+        "endChar": 95
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05fc4f77_495b845c",
@@ -249,6 +273,54 @@
         "startChar": 74,
         "endLine": 817,
         "endChar": 87
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2c5d44a_c5f0928b",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa5db686_d781a1fb",
+      "range": {
+        "startLine": 817,
+        "startChar": 74,
+        "endLine": 817,
+        "endChar": 87
+      },
+      "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "124db3ed_2673d6a9",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T08:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a0e1b29_cbb8e345",
+      "range": {
+        "startLine": 817,
+        "startChar": 20,
+        "endLine": 817,
+        "endChar": 45
       },
       "revId": "88f3d976b63f767e2809b7778afb096d58a431d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
