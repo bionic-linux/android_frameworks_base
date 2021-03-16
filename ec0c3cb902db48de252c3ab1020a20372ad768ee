@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1cc7a9de_c07028e6",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Sorry, poor choice of words. Network will definitely be blocked if this flag is set. I updated the comment to reflect this. Please take a look and let me know if it still doesn\u0027t convey the message correctly.",
+      "parentUuid": "fd88c571_41f1f0ea",
+      "range": {
+        "startLine": 216,
+        "startChar": 82,
+        "endLine": 216,
+        "endChar": 87
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6147b581_1fad05e7",
         "filename": "core/java/android/net/NetworkPolicyManager.java",
         "patchSetId": 7
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "nit : being blocked ?",
+      "range": {
+        "startLine": 217,
+        "startChar": 36,
+        "endLine": 217,
+        "endChar": 43
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41f21a27_d0e5d414",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6147b581_1fad05e7",
       "range": {
         "startLine": 217,
         "startChar": 36,
@@ -77,6 +125,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "Can you have some doc on what the ALLOWED_ constants mean ? Maybe you don\u0027t need to add doc for each, but at least the function these constants serve.",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 281,
+        "endChar": 16
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b1f5960_8888bea5",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e997b6dd_be818f42",
       "range": {
         "startLine": 280,
         "startChar": 0,
@@ -112,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "309afb85_0efbe6d3",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "DeviceIdleController  which manages the doze restrictions uses \"allowlist\", so I\u0027d like to keep this consistent with that since NPMS will be receiving the exemptions from that.",
+      "parentUuid": "15854446_ae434732",
+      "range": {
+        "startLine": 288,
+        "startChar": 54,
+        "endLine": 288,
+        "endChar": 63
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "703decd6_d8ceac5c",
         "filename": "core/java/android/net/NetworkPolicyManager.java",
         "patchSetId": 7
@@ -123,6 +219,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "I think you do need to list them here",
+      "range": {
+        "startLine": 304,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 6
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "196a9e5e_b9436cfa",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "703decd6_d8ceac5c",
       "range": {
         "startLine": 304,
         "startChar": 4,
@@ -146,6 +266,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "Nit : one would have to remember adding to this doc when adding a reason, which no tools will help them do. Suggest instead referencing the intdef, or simply saying \"a combination of the BLOCKED_REASON_* and/or BLOCKED_METERED_REASON_* constants\".",
+      "range": {
+        "startLine": 805,
+        "startChar": 0,
+        "endLine": 813,
+        "endChar": 66
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4e475e_716783ac",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f649b685_d992cd0f",
       "range": {
         "startLine": 805,
         "startChar": 0,
@@ -227,6 +371,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e7aec278_96bd2f1c",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Actually, thinking about this again, I didn\u0027t feel this is necessary. So, removed this check.",
+      "parentUuid": "1374876c_f79615ce",
+      "range": {
+        "startLine": 871,
+        "startChar": 58,
+        "endLine": 871,
+        "endChar": 66
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "543df4a6_a0f6880c",
         "filename": "core/java/android/net/NetworkPolicyManager.java",
         "patchSetId": 7
@@ -238,6 +406,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "From the documentation I struggle to figure out why we need both Status and Reason. It sounds to me like just Reason is enough – IIUC you will *always* call Reason when Status changes (even if the converse is not true).\n\nIf you want to avoid synchronous calls to isUidBlocked in response to onUidBlockedReasonChanged, maybe you can just add a boolean to onUidBlockedReasonChanged instead of having this different callback. If the client is interested in edges that change the blocked status, they can easily figure that out themselves from the arguments.",
+      "range": {
+        "startLine": 912,
+        "startChar": 0,
+        "endLine": 912,
+        "endChar": 93
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32e39535_aea6a146",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "The intention was that if a client is only interested in the edges, it doesn\u0027t have to know anything about blocked reasons or how to interpret those but yeah, as we discussed, client can technically derive the blocked status information themselves. I removed the onUidBlockedStatusChanged callback for now. If we think it would be convenient for clients to have this, we can always add it later but it certainly not necessary right now.",
+      "parentUuid": "543df4a6_a0f6880c",
       "range": {
         "startLine": 912,
         "startChar": 0,
@@ -273,6 +465,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d2571428_2e67833b",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Good catch, thanks!",
+      "parentUuid": "68fbc5ed_530c0944",
+      "range": {
+        "startLine": 958,
+        "startChar": 57,
+        "endLine": 958,
+        "endChar": 65
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4cfec662_d0da0f94",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 7
@@ -284,6 +500,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "Sorry if this is going to be a bit annoying, but considering that CS has isUidBlockedByVpn, I think it should use this as fully qualified rather than importing it so that it can highlight the difference.\n\nIf this was kotlin you could just import as some other name, but in Java you can\u0027t",
+      "range": {
+        "startLine": 58,
+        "startChar": 47,
+        "endLine": 58,
+        "endChar": 59
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a87dab60_09bce578",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cfec662_d0da0f94",
       "range": {
         "startLine": 58,
         "startChar": 47,
@@ -319,6 +559,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a1725cc2_4ec8877d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eac18ae_96a71711",
+      "range": {
+        "startLine": 314,
+        "startChar": 27,
+        "endLine": 314,
+        "endChar": 45
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "935ba441_98be8e90",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 7
@@ -330,6 +594,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "Nit : we find it useful to document on the message what arguments it carries. Considering none of the other messages do that maybe it\u0027s not good here, but I still thought I\u0027d put it out there",
+      "range": {
+        "startLine": 434,
+        "startChar": 29,
+        "endLine": 434,
+        "endChar": 55
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2309ccab_d4185f9d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Added a doc for this and a TODO for other messages for now.",
+      "parentUuid": "935ba441_98be8e90",
       "range": {
         "startLine": 434,
         "startChar": 29,
@@ -365,6 +653,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "297d83cb_18638772",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3948,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Hmm no, it\u0027s possible that uid rules didn\u0027t change but we still need to do this.",
+      "parentUuid": "5405bac1_264bc845",
+      "range": {
+        "startLine": 3948,
+        "startChar": 12,
+        "endLine": 3948,
+        "endChar": 51
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f84b2d69_435a4f1f",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 7
@@ -376,6 +688,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "Can this even happen ? I think it\u0027s checked pretty early on.",
+      "range": {
+        "startLine": 4945,
+        "startChar": 8,
+        "endLine": 4945,
+        "endChar": 31
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e249c87d_ba824e44",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4945,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f84b2d69_435a4f1f",
       "range": {
         "startLine": 4945,
         "startChar": 8,
@@ -409,6 +745,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbc753b7_a02563da",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5861,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Yeah, looks like this would be easier to follow. Updated it, thanks!",
+      "parentUuid": "b14b6a5b_814f1684",
+      "range": {
+        "startLine": 5861,
+        "startChar": 13,
+        "endLine": 5861,
+        "endChar": 42
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c527f04e_7df2549a",
@@ -432,6 +792,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9b120fc_1ae68150",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5879,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c527f04e_7df2549a",
+      "range": {
+        "startLine": 5879,
+        "startChar": 44,
+        "endLine": 5879,
+        "endChar": 55
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cf7cf7c_f895f179",
@@ -445,6 +829,30 @@
       "writtenOn": "2021-03-11T07:06:47Z",
       "side": 1,
       "message": "Suggest naming this \"setBlockedStatusChanged\" rather than \"invoke\" (similar to before)\n\nRationale : a setter is commonly understood to possibly have side effects like reaching out to the observers. A method called \"invoke\" doesn\u0027t look like it will have side effects on a member.",
+      "range": {
+        "startLine": 1356,
+        "startChar": 17,
+        "endLine": 1356,
+        "endChar": 45
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bde951e4_17282dcc",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-16T05:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cf7cf7c_f895f179",
       "range": {
         "startLine": 1356,
         "startChar": 17,
