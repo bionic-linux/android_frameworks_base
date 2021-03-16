@@ -130,6 +130,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb6c12d2_6f466018",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3860,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T14:05:25Z",
+      "side": 1,
+      "message": "Ack. It\u0027s already broken, and your change doesn\u0027t make it worse. You don\u0027t have to do this personally, or even in S, as it\u0027s not a regression.\n\nPlease just file a bug with all your findings so we don\u0027t lose the results of your investigation.",
+      "parentUuid": "636aad85_45787b85",
+      "range": {
+        "startLine": 3860,
+        "startChar": 20,
+        "endLine": 3860,
+        "endChar": 28
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06b2c951_2528fb32",
@@ -355,6 +379,30 @@
       "side": 1,
       "message": "Done.\nBut I cannot find a case which makes that very useful,\nsince we didn\u0027t change how the requests are being satisfied.\n\nSee if it works for you.\nReopen if you have any specific idea in mind.",
       "parentUuid": "594bd8e6_abdd9f05",
+      "range": {
+        "startLine": 11203,
+        "startChar": 3,
+        "endLine": 11203,
+        "endChar": 5
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2823bc15_98f245cd",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11203,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T14:05:25Z",
+      "side": 1,
+      "message": "Yeah I would like to see positive and negative tests involving 2 networks.\n\n• Connect wifi with TRUSTED\n• See onAvailable\n• Connect cell\n• No callback\n• Add TRUSTED to cell\n• No callback\n• Remove TRUSTED from cell\n• No callback\n• Adjust wifi score -50\n• No callback\n• Add TRUSTED to cell\n• See onAvailable(cell)\n• Remove TRUSTED from cell\n• See onAvailable(wifi)\n• Add TRUSTED to cell\n• See onAvailable(cell)\n• Adjust wifi score +50\n• See onAvailable(wifi)\n• Disconnect wifi\n• See onLost(wifi)\n• See onAvailable(cell)\n• Disconnect cell\n• See onLost\n\nYou can do this in a followup.",
+      "parentUuid": "4c18ddc7_9149c48a",
       "range": {
         "startLine": 11203,
         "startChar": 3,
