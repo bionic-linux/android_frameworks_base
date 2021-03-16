@@ -156,6 +156,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0cfb173_7fba921a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3860,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T15:55:23Z",
+      "side": 1,
+      "message": "Ah, the original code is not Buggy since we don\u0027t allow request with signal strength, see ensureRequestableCapabilities.\nAs for LISTEN_FOR_BEST, do we want to allow request with signal strength and other non-requestable capabilities? If yes, then we\u0027ll need bigger fix for this, e.g. redirect binder call to listenForNetwork to adapt checks for LISTEN.\n\nBut anyway I think this is not necessary be fixed before IC, right?",
+      "parentUuid": "bb6c12d2_6f466018",
+      "range": {
+        "startLine": 3860,
+        "startChar": 20,
+        "endLine": 3860,
+        "endChar": 28
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06b2c951_2528fb32",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 2
