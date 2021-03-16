@@ -171,9 +171,7 @@ public final class PreciseDataConnectionState implements Parcelable {
      * {@link AccessNetworkConstants#TRANSPORT_TYPE_WLAN} and
      * {@link AccessNetworkConstants#TRANSPORT_TYPE_WWAN}
      *
-     * @hide
      */
-    @SystemApi
     public int getId() {
         return mId;
     }
