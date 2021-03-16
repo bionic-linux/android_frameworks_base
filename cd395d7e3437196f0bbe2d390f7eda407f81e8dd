@@ -22,6 +22,30 @@
       },
       "revId": "cd395d7e3437196f0bbe2d390f7eda407f81e8dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "300f7f54_9e217d08",
+        "filename": "data/etc/hiddenapi-package-whitelist.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-03-16T16:15:52Z",
+      "side": 1,
+      "message": "so maybe the correct fix for this bug for the build to set `aapt.usesNonSdkApis` for any app that specifies `sdk_version: \"module_current\"`\n\nLorenzo, you wanna give that a shot?",
+      "parentUuid": "79502627_16b46f66",
+      "range": {
+        "startLine": 74,
+        "startChar": 38,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "cd395d7e3437196f0bbe2d390f7eda407f81e8dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
