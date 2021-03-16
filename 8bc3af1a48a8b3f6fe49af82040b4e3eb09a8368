@@ -16,6 +16,24 @@
       "message": "\u003e Patch Set 11: Code-Review+2\n\u003e \n\u003e By voting Code-Review+2 the following files are now code-owner approved by Beverly Tai:\n\u003e * services/core/java/com/android/server/notification/PreferencesHelper.java\n\u003e \n\nI am blindly trying to find out which tests are failing. CTS? unit?\n\nI became aware that NotificationManagerServiceTest are failing when launched on user driver.\nThey pass if run with \"--user 0\".\n\nI made a CL not to hardcode the context user id running the test.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1623839\n\nIn the end, if it fixes TreeHugger checks, it can be squashed with this CL\n\n",
       "revId": "8bc3af1a48a8b3f6fe49af82040b4e3eb09a8368",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a16a40f8_4ae70496",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-03-16T14:34:55Z",
+      "side": 1,
+      "message": "@Beverly: heads-up for this CL. \nDoes the 10 failures matches the failure I encountered and fixed in this CL:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1623839/1\n\nIf yes, I will squash, otherwise, I d like to understand and fix the regression to have this CL merged. \n\nMany thanks in advance",
+      "parentUuid": "02b433c9_e021c35d",
+      "revId": "8bc3af1a48a8b3f6fe49af82040b4e3eb09a8368",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
