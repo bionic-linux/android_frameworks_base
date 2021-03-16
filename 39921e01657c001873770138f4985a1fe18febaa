@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a03ddcd_529d643c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T07:35:58Z",
+      "side": 1,
+      "message": "I think this should also be triggered by your new request type. In fact I don\u0027t understand why it\u0027s not triggered by the REQUEST types.",
+      "range": {
+        "startLine": 3657,
+        "startChar": 0,
+        "endLine": 3657,
+        "endChar": 37
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3840451_b34ff674",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3744,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T07:35:58Z",
+      "side": 1,
+      "message": "In this function your new type needs to be handled like a listen.",
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd4ad3de_ce6d320f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3860,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T07:35:58Z",
+      "side": 1,
+      "message": "This will handle the signal strengths, so it goes together with the comment above",
+      "range": {
+        "startLine": 3860,
+        "startChar": 20,
+        "endLine": 3860,
+        "endChar": 28
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06b2c951_2528fb32",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5541,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T07:35:58Z",
+      "side": 1,
+      "message": "LISTEN_FOR_BEST ?",
+      "range": {
+        "startLine": 5541,
+        "startChar": 17,
+        "endLine": 5541,
+        "endChar": 27
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c6fc3c7_777d8014",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11140,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T07:35:58Z",
+      "side": 1,
+      "message": "Add comment : expecting the default request though it doesn\u0027t match the filter, because all requests are sent to all factories",
+      "range": {
+        "startLine": 11140,
+        "startChar": 24,
+        "endLine": 11140,
+        "endChar": 40
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f872bde_c1a46d30",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11142,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T07:35:58Z",
+      "side": 1,
+      "message": "Comment : default request doesn\u0027t match the filter (no INTERNET cap)",
+      "range": {
+        "startLine": 11142,
+        "startChar": 12,
+        "endLine": 11142,
+        "endChar": 23
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05ea4e4f_007b06df",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11191,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T07:35:58Z",
+      "side": 1,
+      "message": "SUPL is requestable, so you shouldn\u0027t try to add it. Instead suggest adding TEMP_NOT_METERED",
+      "range": {
+        "startLine": 11191,
+        "startChar": 40,
+        "endLine": 11191,
+        "endChar": 59
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "594bd8e6_abdd9f05",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11203,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T07:35:58Z",
+      "side": 1,
+      "message": "This is a good base test, but I think we need to add a test with more restrictive filters than just the default NetworkRequest.build().",
+      "range": {
+        "startLine": 11203,
+        "startChar": 3,
+        "endLine": 11203,
+        "endChar": 5
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
