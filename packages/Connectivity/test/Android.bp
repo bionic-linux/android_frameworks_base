@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2019 The Android Open Source Project
+// Copyright (C) 2021 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
 // limitations under the License.
 //
 
-// Tests in this folder are included both in unit tests and CTS.
-// They must be fast and stable, and exercise public or test APIs.
 package {
     // See: http://go/android-license-faq
     // A large-scale-change added 'default_applicable_licenses' to import
@@ -25,21 +23,19 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
-java_library {
-    name: "FrameworksNetCommonTests",
-    defaults: ["framework-connectivity-test-defaults"],
-    srcs: ["java/**/*.java", "java/**/*.kt"],
-    static_libs: [
-        "androidx.core_core",
-        "androidx.test.rules",
-        "junit",
-        "mockito-target-minus-junit4",
-        "modules-utils-build",
-        "net-tests-utils",
-        "net-utils-framework-common",
-        "platform-test-annotations",
-    ],
+// defaults for tests that need to build against framework-wifi's @hide APIs
+java_defaults {
+    name: "framework-connectivity-test-defaults",
+    sdk_version: "core_platform", // tests can use @CorePlatformApi's
     libs: [
-        "android.test.base.stubs",
+        // order matters: classes in framework-connectivity are resolved before framework,
+        // meaning @hide APIs in framework-connectivity are resolved before @SystemApi
+        // stubs in framework
+        "framework-connectivity.impl",
+        "framework",
+
+        // if sdk_version="" this gets automatically included, but here we need to add manually.
+        "framework-res",
     ],
+    // TODO: add visibility to restrict tests that use this configuration
 }
