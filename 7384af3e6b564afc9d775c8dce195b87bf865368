@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c11987c_3ff2a5ba",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5127,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-16T12:38:01Z",
+      "side": 1,
+      "message": "Same comment as on CP",
+      "range": {
+        "startLine": 5127,
+        "startChar": 22,
+        "endLine": 5127,
+        "endChar": 91
+      },
+      "revId": "7384af3e6b564afc9d775c8dce195b87bf865368",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
