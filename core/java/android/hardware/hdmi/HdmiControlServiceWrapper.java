@@ -278,8 +278,8 @@ public final class HdmiControlServiceWrapper {
         }
 
         @Override
-        public void setSystemAudioModeOnForAudioOnlySource() {
-            HdmiControlServiceWrapper.this.setSystemAudioModeOnForAudioOnlySource();
+        public void setSystemAudioModeForAudioSource(boolean state, IHdmiControlCallback callback) {
+            HdmiControlServiceWrapper.this.setSystemAudioModeForAudioSource(state, callback);
         }
 
         @Override
@@ -457,7 +457,7 @@ public final class HdmiControlServiceWrapper {
     public void reportAudioStatus(int deviceType, int volume, int maxVolume, boolean isMute) {}
 
     /** @hide */
-    public void setSystemAudioModeOnForAudioOnlySource() {}
+    public void setSystemAudioModeForAudioSource(boolean state, IHdmiControlCallback callback) {}
 
     /** @hide */
     public void addHdmiCecVolumeControlFeatureListener(
