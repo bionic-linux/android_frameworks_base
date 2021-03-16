@@ -1,0 +1,134 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009022803",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1612823?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3faddbab_9fd8e74b",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4135,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T05:56:50Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 4135,
+        "startChar": 14,
+        "endLine": 4135,
+        "endChar": 23
+      },
+      "revId": "e710ab27c4d18ff2e34f44441315ba4c3d030e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009022803",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1612823?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cd6155f2_a2f7b341",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4145,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T05:56:50Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 4145,
+        "startChar": 22,
+        "endLine": 4145,
+        "endChar": 31
+      },
+      "revId": "e710ab27c4d18ff2e34f44441315ba4c3d030e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009022803",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1612823?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6fc76f98_c57fa254",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4147,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T05:56:50Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 4147,
+        "startChar": 25,
+        "endLine": 4147,
+        "endChar": 34
+      },
+      "revId": "e710ab27c4d18ff2e34f44441315ba4c3d030e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009022803",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1612823?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1262133b_dc10fac4",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4817,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T05:56:50Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 4817,
+        "startChar": 32,
+        "endLine": 4817,
+        "endChar": 41
+      },
+      "revId": "e710ab27c4d18ff2e34f44441315ba4c3d030e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009022803",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1612823?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e2bec17e_47e3920f",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4819,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-16T05:56:50Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 4819,
+        "startChar": 32,
+        "endLine": 4819,
+        "endChar": 41
+      },
+      "revId": "e710ab27c4d18ff2e34f44441315ba4c3d030e3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
