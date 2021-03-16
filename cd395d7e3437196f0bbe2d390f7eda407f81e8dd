@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79502627_16b46f66",
+        "filename": "data/etc/hiddenapi-package-whitelist.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-03-16T16:09:18Z",
+      "side": 1,
+      "message": "as discussed on chat: we should probably use android:usesNonSdkApi in the manifest instead. That allows the config to live in the apex rather than in the core, so is more scalable and future proof.\n\nThis is done automatically by the build system for APKs that specify Platform_apis\u003dtrue:\nhttps://cs.android.com/android/platform/superproject/+/master:build/soong/java/app.go;l\u003d383;drc\u003d0aba252e157457143b455511f1f811107015c3c1\n\nWe should probably actually just do the same for all APKs that link against MODULE_LIBRARIES APIs, since they are considered hidden at runtime.",
+      "range": {
+        "startLine": 74,
+        "startChar": 38,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "cd395d7e3437196f0bbe2d390f7eda407f81e8dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

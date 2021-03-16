@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64c46188_f94505d3",
+        "filename": "data/etc/hiddenapi-package-whitelist.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1010681
+      },
+      "writtenOn": "2021-03-16T16:09:18Z",
+      "side": 1,
+      "message": "We should verify; are we certain apk-in-apex\u0027es are not needed here?\n\n(FWIW: even APKs in the nonupdatable system image need to be listed here, or spefify usesNonSdkApis in their manifest, in order to access hidden APIs)",
+      "parentUuid": "d9f2fb6a_7be271cf",
+      "revId": "40e2627640a87aba5d5203f36bcc7d42b53fd2a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0741f7ab_c119cd52",
         "filename": "data/etc/hiddenapi-package-whitelist.xml",
         "patchSetId": 4
