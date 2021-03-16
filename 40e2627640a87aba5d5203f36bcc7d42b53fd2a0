@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6db566ed_4714c0bc",
+        "filename": "data/etc/hiddenapi-package-whitelist.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-16T15:27:00Z",
+      "side": 1,
+      "message": "CBR is already an APK-in-APEX, isn\u0027t it?",
+      "parentUuid": "1471d464_ded71cc2",
+      "revId": "40e2627640a87aba5d5203f36bcc7d42b53fd2a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0741f7ab_c119cd52",
         "filename": "data/etc/hiddenapi-package-whitelist.xml",
         "patchSetId": 4
