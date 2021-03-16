@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b74c3c5d_910d33bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T01:53:04Z",
+      "side": 1,
+      "message": "Yes your understanding is correct.\n1. handleRegisterNetworkRequest, rematchNetworksAndRequests: no change, since the \"request\" will be automatically processed for non-listen.\n2. applyNetworkReassignment, sendUpdatedScoreToFactories: No change since non-request will not be sent to factories.\n\nYes it is similar to TRACK_DEFAULT which will go through rematch process as requests but will not be sent to facotry. But since the content of TRACK_DEFAULT is replaced so it is slightly different.\n\nCover message updated.",
+      "parentUuid": "8ca2ae68_85834e01",
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "72e739f4_47158177",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -58,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e59d286c_62b1ffe4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5543,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T01:53:04Z",
+      "side": 1,
+      "message": "Done, thanks for explanation.",
+      "parentUuid": "78fd616a_f75f6796",
+      "range": {
+        "startLine": 5543,
+        "startChar": 16,
+        "endLine": 5543,
+        "endChar": 21
+      },
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfd49124_bf492627",
@@ -81,6 +123,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95998ff5_d31a00e9",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5557,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T01:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfd49124_bf492627",
+      "range": {
+        "startLine": 5556,
+        "startChar": 80,
+        "endLine": 5557,
+        "endChar": 94
+      },
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af8bd3d3_49b4a90a",
@@ -94,6 +160,30 @@
       "writtenOn": "2021-03-15T15:25:17Z",
       "side": 1,
       "message": "// Also set the requestor UID and package name in the request.",
+      "range": {
+        "startLine": 5560,
+        "startChar": 82,
+        "endLine": 5560,
+        "endChar": 83
+      },
+      "revId": "3be17ec61ea4cff437936f7dcd5efe683c926328",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb6d51a0_ae90fbad",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5560,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-16T01:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af8bd3d3_49b4a90a",
       "range": {
         "startLine": 5560,
         "startChar": 82,
