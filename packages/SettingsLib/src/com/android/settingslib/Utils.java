@@ -435,8 +435,7 @@ public class Utils {
     }
 
     public static boolean isWifiOnly(Context context) {
-        return !context.getSystemService(ConnectivityManager.class)
-                .isNetworkSupported(ConnectivityManager.TYPE_MOBILE);
+        return !context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
     }
 
     /** Returns if the automatic storage management feature is turned on or not. **/
