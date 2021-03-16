@@ -2275,26 +2275,29 @@ public class HdmiControlService extends SystemService {
         }
 
         @Override
-        public void setSystemAudioModeOnForAudioOnlySource() {
+        public void setSystemAudioModeForAudioSource(boolean state, IHdmiControlCallback callback) {
             enforceAccessPermission();
             runOnServiceThread(new Runnable() {
                 @Override
                 public void run() {
                     if (!isAudioSystemDevice()) {
-                        Slog.e(TAG, "Not an audio system device. Won't set system audio mode on");
+                        Slog.e(TAG, "Not an audio system device. Won't set system audio mode");
+                        invokeCallback(callback, HdmiControlManager.RESULT_SOURCE_NOT_AVAILABLE);
                         return;
                     }
                     if (audioSystem() == null) {
                         Slog.e(TAG, "Audio System local device is not registered");
+                        invokeCallback(callback, HdmiControlManager.RESULT_SOURCE_NOT_AVAILABLE);
                         return;
                     }
-                    if (!audioSystem().checkSupportAndSetSystemAudioMode(true)) {
+                    if (!audioSystem().checkSupportAndSetSystemAudioMode(state)) {
                         Slog.e(TAG, "System Audio Mode is not supported.");
+                        invokeCallback(callback, HdmiControlManager.RESULT_COMMUNICATION_FAILED);
                         return;
                     }
-                    sendCecCommand(
-                            HdmiCecMessageBuilder.buildSetSystemAudioMode(
-                                    audioSystem().mAddress, Constants.ADDR_BROADCAST, true));
+                    sendCecCommand(HdmiCecMessageBuilder.buildSetSystemAudioMode(
+                            audioSystem().mAddress, Constants.ADDR_BROADCAST, state));
+                    invokeCallback(callback, HdmiControlManager.RESULT_SUCCESS);
                 }
             });
         }
