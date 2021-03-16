@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9f2fb6a_7be271cf",
+        "filename": "data/etc/hiddenapi-package-whitelist.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-03-16T15:28:22Z",
+      "side": 1,
+      "message": "I see. Maybe not needed at all in that case?",
+      "parentUuid": "6db566ed_4714c0bc",
+      "revId": "40e2627640a87aba5d5203f36bcc7d42b53fd2a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0741f7ab_c119cd52",
         "filename": "data/etc/hiddenapi-package-whitelist.xml",
         "patchSetId": 4
