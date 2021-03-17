@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "363744c4_5fbfd12d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:25:19Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed in a follow-up. Given that the follow-up will only move two constants from system to module-lib, it should take very little API council time.",
+      "revId": "0176e8905280e7347cf9cfcf95c03c892c194dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d839bf7a_383d95f7",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T05:25:19Z",
+      "side": 1,
+      "message": "These should have the same level of visibility as setProfileNetworkPreference, which is module-lib.",
+      "range": {
+        "startLine": 979,
+        "startChar": 4,
+        "endLine": 979,
+        "endChar": 14
+      },
+      "revId": "0176e8905280e7347cf9cfcf95c03c892c194dd8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
