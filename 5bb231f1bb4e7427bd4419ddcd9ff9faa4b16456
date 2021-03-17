@@ -62,6 +62,30 @@
       },
       "revId": "5bb231f1bb4e7427bd4419ddcd9ff9faa4b16456",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b1fab73_24eeb32c",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTestable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-17T20:12:57Z",
+      "side": 1,
+      "message": "Oh, it\u0027s implemented in the follow up: aosp/1622203",
+      "parentUuid": "cecc7f45_91485204",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 24
+      },
+      "revId": "5bb231f1bb4e7427bd4419ddcd9ff9faa4b16456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
