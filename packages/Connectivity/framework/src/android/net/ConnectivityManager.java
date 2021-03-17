@@ -4785,7 +4785,7 @@ public class ConnectivityManager {
      */
     public @RestrictBackgroundStatus int getRestrictBackgroundStatus() {
         try {
-            return getNetworkPolicyManager().getRestrictBackgroundByCaller();
+            return mService.getRestrictBackgroundStatus();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

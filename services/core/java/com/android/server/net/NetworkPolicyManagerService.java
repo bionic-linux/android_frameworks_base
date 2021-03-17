@@ -16,7 +16,6 @@
 
 package com.android.server.net;
 
-import static android.Manifest.permission.ACCESS_NETWORK_STATE;
 import static android.Manifest.permission.CONNECTIVITY_INTERNAL;
 import static android.Manifest.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS;
 import static android.Manifest.permission.MANAGE_NETWORK_POLICY;
@@ -155,6 +154,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.ConnectivityManager.RestrictBackgroundStatus;
 import android.net.IConnectivityManager;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
@@ -245,6 +245,7 @@ import com.android.internal.util.StatLogger;
 import com.android.internal.util.XmlUtils;
 import com.android.net.module.util.NetworkIdentityUtils;
 import com.android.server.EventLogTags;
+import com.android.server.LocalManagerRegistry;
 import com.android.server.LocalServices;
 import com.android.server.ServiceThread;
 import com.android.server.SystemConfig;
@@ -707,8 +708,12 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         mAppOps = context.getSystemService(AppOpsManager.class);
         mMultipathPolicyTracker = new MultipathPolicyTracker(mContext, mHandler);
         // Expose private service for system components to use.
+        final NetworkPolicyManagerInternal networkPolicyManagerInternal =
+                new NetworkPolicyManagerInternalImpl();
         LocalServices.addService(NetworkPolicyManagerInternal.class,
-                new NetworkPolicyManagerInternalImpl());
+                networkPolicyManagerInternal);
+        LocalManagerRegistry.addManager(NetworkPolicyManagerLocal.class,
+                (NetworkPolicyManagerLocal) networkPolicyManagerInternal);
     }
 
     public void bindConnectivityManager() {
@@ -3078,11 +3083,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 .sendToTarget();
     }
 
-    @Override
-    public int getRestrictBackgroundByCaller() {
-        mContext.enforceCallingOrSelfPermission(ACCESS_NETWORK_STATE, TAG);
-        final int uid = Binder.getCallingUid();
-
+    @RestrictBackgroundStatus
+    private int getRestrictBackground(int uid) {
         synchronized (mUidRulesFirstLock) {
             // Must clear identity because getUidPolicy() is restricted to system.
             final long token = Binder.clearCallingIdentity();
@@ -5499,7 +5501,13 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         return blocked;
     }
 
-    private class NetworkPolicyManagerInternalImpl extends NetworkPolicyManagerInternal {
+    private class NetworkPolicyManagerInternalImpl extends NetworkPolicyManagerInternal
+            implements NetworkPolicyManagerLocal {
+        @Override
+        @RestrictBackgroundStatus
+        public int getRestrictBackgroundStatus(int uid) {
+            return NetworkPolicyManagerService.this.getRestrictBackground(uid);
+        }
 
         @Override
         public void resetUserState(int userId) {
