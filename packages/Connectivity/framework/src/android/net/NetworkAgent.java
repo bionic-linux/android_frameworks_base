@@ -364,7 +364,8 @@ public abstract class NetworkAgent {
     private static NetworkInfo getLegacyNetworkInfo(final NetworkAgentConfig config) {
         // The subtype can be changed with (TODO) setLegacySubtype, but it starts
         // with 0 (TelephonyManager.NETWORK_TYPE_UNKNOWN) and an empty description.
-        final NetworkInfo ni = new NetworkInfo(config.legacyType, 0, config.legacyTypeName, "");
+        final NetworkInfo ni = new NetworkInfo(config.legacyType, config.legacySubType,
+                config.legacyTypeName, config.legacySubTypeName);
         ni.setIsAvailable(true);
         ni.setDetailedState(NetworkInfo.DetailedState.CONNECTING, null /* reason */,
                 config.getLegacyExtraInfo());

@@ -258,6 +258,9 @@ package android.net {
     ctor public NetworkAgentConfig.Builder();
     method @NonNull public android.net.NetworkAgentConfig build();
     method @NonNull public android.net.NetworkAgentConfig.Builder setExplicitlySelected(boolean);
+    method @NonNull public android.net.NetworkAgentConfig.Builder setLegacyExtraInfo(@NonNull String);
+    method @NonNull public android.net.NetworkAgentConfig.Builder setLegacySubType(int);
+    method @NonNull public android.net.NetworkAgentConfig.Builder setLegacySubTypeName(@NonNull String);
     method @NonNull public android.net.NetworkAgentConfig.Builder setLegacyType(int);
     method @NonNull public android.net.NetworkAgentConfig.Builder setLegacyTypeName(@NonNull String);
     method @NonNull public android.net.NetworkAgentConfig.Builder setPartialConnectivityAcceptable(boolean);
