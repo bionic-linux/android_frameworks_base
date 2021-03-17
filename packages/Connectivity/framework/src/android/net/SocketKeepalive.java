@@ -62,6 +62,7 @@ public abstract class SocketKeepalive implements AutoCloseable {
     public static final int SUCCESS = 0;
 
     /** @hide */
+    @SystemApi
     public static final int NO_KEEPALIVE = -1;
 
     /** @hide */
@@ -94,13 +95,18 @@ public abstract class SocketKeepalive implements AutoCloseable {
 
     /** The device does not support this request. */
     public static final int ERROR_UNSUPPORTED = -30;
-    /** @hide TODO: delete when telephony code has been updated. */
-    public static final int ERROR_HARDWARE_UNSUPPORTED = ERROR_UNSUPPORTED;
     /** The hardware returned an error. */
     public static final int ERROR_HARDWARE_ERROR = -31;
     /** The limitation of resource is reached. */
     public static final int ERROR_INSUFFICIENT_RESOURCES = -32;
 
+    /**
+     * It should never be sent to apps, and please treat it like STOP_REASON_UNINITIALIZED in
+     * cleanupStoppedKeepalive and throw..
+     * @hide
+     */
+    @SystemApi
+    public static final int ERROR_NO_SUCH_SLOT = -33;
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
