@@ -19,11 +19,12 @@ package android.net.util;
 import android.annotation.NonNull;
 import android.content.Context;
 import android.content.res.Resources;
+import android.net.ConnectivityResources;
 import android.net.NetworkCapabilities;
 import android.text.TextUtils;
 import android.util.AndroidRuntimeException;
 
-import com.android.internal.R;
+import com.android.connectivity.resources.R;
 
 /**
  * Collection of utilities for socket keepalive offload.
@@ -52,7 +53,7 @@ public final class KeepaliveUtils {
     public static int[] getSupportedKeepalives(@NonNull Context context) {
         String[] res = null;
         try {
-            res = context.getResources().getStringArray(
+            res = new ConnectivityResources(context).get().getStringArray(
                     R.array.config_networkSupportedKeepaliveCount);
         } catch (Resources.NotFoundException unused) {
         }
