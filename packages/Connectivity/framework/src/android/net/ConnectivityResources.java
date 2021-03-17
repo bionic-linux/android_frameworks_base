@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.connectivity;
+package android.net;
 
 import static android.content.pm.PackageManager.MATCH_SYSTEM_ONLY;
 
@@ -27,13 +27,12 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.android.server.ConnectivityService;
-
 import java.util.List;
 
 /**
- * Utility to obtain the {@link ConnectivityService} {@link Resources}, in the
+ * Utility to obtain the {@link com.android.server.ConnectivityService} {@link Resources}, in the
  * ServiceConnectivityResources APK.
+ * @hide
  */
 public class ConnectivityResources {
     private static final String RESOURCES_APK_INTENT =
@@ -44,18 +43,18 @@ public class ConnectivityResources {
     private final Context mContext;
 
     @Nullable
-    private Resources mResources = null;
+    private Context mResourcesContext = null;
 
     public ConnectivityResources(Context context) {
         mContext = context;
     }
 
     /**
-     * Get the {@link Resources} of the ServiceConnectivityResources APK.
+     * Get the {@link Context} of the resources package.
      */
-    public synchronized Resources get() {
-        if (mResources != null) {
-            return mResources;
+    public synchronized Context getResourcesContext() {
+        if (mResourcesContext != null) {
+            return mResourcesContext;
         }
 
         final List<ResolveInfo> pkgs = mContext.getPackageManager()
@@ -77,7 +76,14 @@ public class ConnectivityResources {
             throw new IllegalStateException("Resolved package not found", e);
         }
 
-        mResources = pkgContext.getResources();
-        return mResources;
+        mResourcesContext = pkgContext;
+        return pkgContext;
+    }
+
+    /**
+     * Get the {@link Resources} of the ServiceConnectivityResources APK.
+     */
+    public Resources get() {
+        return getResourcesContext().getResources();
     }
 }
