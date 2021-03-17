@@ -656,6 +656,7 @@ java_library {
     static_libs: [
         "app-compat-annotations",
         "framework-minus-apex",
+        "framework-connectivity.impl",
         "framework-updatable-stubs-module_libs_api",
     ],
     sdk_version: "core_platform",
