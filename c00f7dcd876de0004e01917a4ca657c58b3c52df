@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009079605",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1641905?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ea157880_41ca4e1e",
+        "filename": "packages/Connectivity/framework/src/android/net/apf/ApfCapabilities.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-17T16:56:29Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 158,
+        "startChar": 65,
+        "endLine": 158,
+        "endChar": 74
+      },
+      "revId": "c00f7dcd876de0004e01917a4ca657c58b3c52df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
