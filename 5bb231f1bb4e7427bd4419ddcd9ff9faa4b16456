@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d54b44a_d6513701",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T20:08:06Z",
+      "side": 1,
+      "message": "Not too familiar with framework code, so I\u0027ll +1.",
+      "revId": "5bb231f1bb4e7427bd4419ddcd9ff9faa4b16456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "003efe27_ff022558",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T20:08:06Z",
+      "side": 1,
+      "message": "nit: add space, similar to @IntDef above, especially since there\u0027s a space before ROR_NOT_REQUESTED. Same on line 156.",
+      "range": {
+        "startLine": 138,
+        "startChar": 36,
+        "endLine": 138,
+        "endChar": 37
+      },
+      "revId": "5bb231f1bb4e7427bd4419ddcd9ff9faa4b16456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cecc7f45_91485204",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTestable.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T20:08:06Z",
+      "side": 1,
+      "message": "Doesn\u0027t this make it impossible to test metrics are correclty recorded for multi-client RoR, since all the clients will end up having the same uid? If it\u0027s too much work to implement otherwise, then it\u0027s fine since the UID seems to be only used for metric reporting purposes, it doesn\u0027t affect the main functionality.",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 24
+      },
+      "revId": "5bb231f1bb4e7427bd4419ddcd9ff9faa4b16456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
