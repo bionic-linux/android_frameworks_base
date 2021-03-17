@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f71c390_4c04f6fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T14:23:39Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "9ec53e44f3f4bd2face4751184bad4abf42a331d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7341bbc_814360b2",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T14:23:39Z",
+      "side": 1,
+      "message": "I think you can drop this @RequiresPermission annotation since module-lib APIs implicitly have permission checks.",
+      "range": {
+        "startLine": 1486,
+        "startChar": 4,
+        "endLine": 1486,
+        "endChar": 69
+      },
+      "revId": "9ec53e44f3f4bd2face4751184bad4abf42a331d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2daf36a_46366340",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2681,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T14:23:39Z",
+      "side": 1,
+      "message": "Ditto, I think you can drop this @RequiresPermission.",
+      "range": {
+        "startLine": 2681,
+        "startChar": 8,
+        "endLine": 2681,
+        "endChar": 72
+      },
+      "revId": "9ec53e44f3f4bd2face4751184bad4abf42a331d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
