@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "767f6215_6cfad9d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-17T08:47:10Z",
+      "side": 1,
+      "message": "Rebased conflits in ConnectivityService: just imports",
+      "revId": "e1d34fcc7fb0e16d5bef47bc2aa11402d52fcc6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
