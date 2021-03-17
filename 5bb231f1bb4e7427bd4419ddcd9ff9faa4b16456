@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4be8d09_8c48d638",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T20:30:11Z",
+      "side": 1,
+      "message": "nvm, I realized, that the space was removed in aosp/1622203",
+      "parentUuid": "003efe27_ff022558",
+      "range": {
+        "startLine": 138,
+        "startChar": 36,
+        "endLine": 138,
+        "endChar": 37
+      },
+      "revId": "5bb231f1bb4e7427bd4419ddcd9ff9faa4b16456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cecc7f45_91485204",
