@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f41bf03_847c5c94",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3761,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T06:11:54Z",
+      "side": 1,
+      "message": "Was this a bug in the code I reviewed? If so, what was the bug? Was a test added to cover it?",
+      "range": {
+        "startLine": 3760,
+        "startChar": 0,
+        "endLine": 3761,
+        "endChar": 61
+      },
+      "revId": "dbf52a28343ad6e7710f4159660531bdd1c86e66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cea8cd2d_2b0661da",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3767,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T06:11:54Z",
+      "side": 1,
+      "message": "Should isListen() return true for LISTEN_FOR_BEST as well?",
+      "range": {
+        "startLine": 3767,
+        "startChar": 16,
+        "endLine": 3767,
+        "endChar": 56
+      },
+      "revId": "dbf52a28343ad6e7710f4159660531bdd1c86e66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
