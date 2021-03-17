@@ -61,7 +61,11 @@ public abstract class SocketKeepalive implements AutoCloseable {
     @SystemApi
     public static final int SUCCESS = 0;
 
-    /** @hide */
+    /**
+     * No keepalive.
+     * @hide
+     */
+    @SystemApi
     public static final int NO_KEEPALIVE = -1;
 
     /** @hide */
