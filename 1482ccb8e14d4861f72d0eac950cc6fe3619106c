@@ -34,6 +34,236 @@
       "parentUuid": "d0734222_7022d27d",
       "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5365ece_595416cf",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "Can the result of the commit be handled in the case of an error, or is ignoring the error here acceptable for the purposes of metrics?",
+      "range": {
+        "startLine": 197,
+        "startChar": 58,
+        "endLine": 197,
+        "endChar": 64
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35855c8f_b6e2950d",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "This might be vulnerable to race conditions, especially if getInt and putInt are backed by IO operations. Same for lines 569-570.",
+      "range": {
+        "startLine": 498,
+        "startChar": 8,
+        "endLine": 499,
+        "endChar": 81
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77650625_66f1f265",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "Getting the timestamp at the beginning of the function might be more accurate, especially since a lock is being waited for above.",
+      "range": {
+        "startLine": 565,
+        "startChar": 8,
+        "endLine": 566,
+        "endChar": 65
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69df9bd9_f9e80448",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "A few suggestions:\n - Should add time unit to the variable name for clarity.\n - This field is only ever used for seconds and as an integer, so I would suggest making it an integer seconds field to begin with and adjust the difference math below accordingly.\n\nSame for lines 751-767.",
+      "range": {
+        "startLine": 575,
+        "startChar": 17,
+        "endLine": 575,
+        "endChar": 25
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bf32cb6_604e0102",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "Would it be better to not coerce negative timestamps to -1 here and instead filter them out when processing the metrics on servers? Same for lines 754-755.",
+      "range": {
+        "startLine": 578,
+        "startChar": 46,
+        "endLine": 578,
+        "endChar": 85
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73f496cd_39ceb52e",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "Possibly add a few lines testing the case where the timestamp stored in mSharedPreferences \u003e current time returned by the injector.",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 35
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03293355_df36370b",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "Since multiple keys for longs are present (one for request timestamp and one for lskf capture timestamp), I would recommend checking verifying the parameter. Same for similar \"when\" mocks. (Unless you meant for the same value to be returned for both timestamps, in which case, feel free to ignore this comment).",
+      "range": {
+        "startLine": 254,
+        "startChar": 40,
+        "endLine": 254,
+        "endChar": 51
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e7e0961_1da28756",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "nit: add explanatory comment (/* duration */) similar to line 258. Same below, thanks.",
+      "range": {
+        "startLine": 374,
+        "startChar": 30,
+        "endLine": 374,
+        "endChar": 36
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4975ddad_1832badf",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "What\u0027s the reasoning behind changing this to anyInt(). Only FAKE_OTA_PACKAGE_NAME is still registered for RoR at this point, so it should remain eq(1).",
+      "range": {
+        "startLine": 450,
+        "startChar": 42,
+        "endLine": 450,
+        "endChar": 50
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6d9b8bd_f02e13a7",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTestable.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-17T22:47:48Z",
+      "side": 1,
+      "message": "It may be a better design to make this value settable from tests (and initialize it to 100_000 in the setup portion of the test).",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 9
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
