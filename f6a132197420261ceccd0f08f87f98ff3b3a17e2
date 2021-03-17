@@ -22,6 +22,30 @@
       },
       "revId": "f6a132197420261ceccd0f08f87f98ff3b3a17e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7bc0047_03f15f35",
+        "filename": "services/core/java/com/android/server/policy/LegacyGlobalActions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T06:26:54Z",
+      "side": 1,
+      "message": "Yes, but if you look how mHasTelephony is used in this patch it\u0027s about airplane mode. Airplane mode depends on the radio existing, not on it being data-capable ; in other words, even if the radio is not data capable, airplane mode should still turn the radio off. This is why I built it like this and this is why I think this is the better replacement.\n\nThoughts ?",
+      "parentUuid": "99fa37bf_4adbdbd9",
+      "range": {
+        "startLine": 141,
+        "startChar": 16,
+        "endLine": 141,
+        "endChar": 95
+      },
+      "revId": "f6a132197420261ceccd0f08f87f98ff3b3a17e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
