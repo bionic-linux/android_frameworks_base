@@ -611,7 +611,7 @@ public final class NetworkCapabilities implements Parcelable {
      * @return an array of capability values for this instance.
      * @hide
      */
-    @UnsupportedAppUsage
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public @NetCapability int[] getCapabilities() {
         return NetworkCapabilitiesUtils.unpackBits(mNetworkCapabilities);
     }
