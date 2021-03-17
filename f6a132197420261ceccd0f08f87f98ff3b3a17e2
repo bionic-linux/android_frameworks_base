@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99fa37bf_4adbdbd9",
+        "filename": "services/core/java/com/android/server/policy/LegacyGlobalActions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-17T00:17:11Z",
+      "side": 1,
+      "message": "This is slightly different because a device that does calls only without internet has that feature I think\nI think TelephonyManager.isDataCapable is the exact replacement; it\u0027s actually what I\u0027m basing aosp/1639708 on to determine whether TYPE_MOBILE should be supported.",
+      "range": {
+        "startLine": 141,
+        "startChar": 16,
+        "endLine": 141,
+        "endChar": 95
+      },
+      "revId": "f6a132197420261ceccd0f08f87f98ff3b3a17e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
