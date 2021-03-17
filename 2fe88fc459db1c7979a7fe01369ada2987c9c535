@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7b37424_660f0dc7",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-17T01:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "837c4075_1923e4fc",
+      "range": {
+        "startLine": 658,
+        "startChar": 0,
+        "endLine": 658,
+        "endChar": 1
+      },
+      "revId": "2fe88fc459db1c7979a7fe01369ada2987c9c535",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66866e63_b3572e24",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-16T07:08:52Z",
       "side": 1,
       "message": "what is this for? not for this commit?",
+      "range": {
+        "startLine": 658,
+        "startChar": 1,
+        "endLine": 659,
+        "endChar": 34
+      },
+      "revId": "2fe88fc459db1c7979a7fe01369ada2987c9c535",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e69a4fc_dec51533",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-03-17T01:32:58Z",
+      "side": 1,
+      "message": "err oops, this should not be here - removed",
+      "parentUuid": "66866e63_b3572e24",
       "range": {
         "startLine": 658,
         "startChar": 1,
