@@ -248,6 +248,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68a6a6ee_514dac28",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5548,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-17T06:55:56Z",
+      "side": 1,
+      "message": "Will address in follow-up CLs.",
+      "parentUuid": "a0a7e485_e3411ffa",
+      "range": {
+        "startLine": 5548,
+        "startChar": 8,
+        "endLine": 5548,
+        "endChar": 37
+      },
+      "revId": "39921e01657c001873770138f4985a1fe18febaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c6fc3c7_777d8014",

@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0649a3f_e3f11f1a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3761,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-17T06:55:56Z",
+      "side": 1,
+      "message": "It\u0027s from Jean\u0027s review comment at patch 2.\nWhere we think the function is used by unneeded and LISTEN_FOR_BEST shouldn\u0027t affect return value of undeeded() just like other listens.\nWill try to come up with test in follow-up CL.",
+      "parentUuid": "8f41bf03_847c5c94",
+      "range": {
+        "startLine": 3760,
+        "startChar": 0,
+        "endLine": 3761,
+        "endChar": 61
+      },
+      "revId": "dbf52a28343ad6e7710f4159660531bdd1c86e66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cea8cd2d_2b0661da",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-17T06:11:54Z",
       "side": 1,
       "message": "Should isListen() return true for LISTEN_FOR_BEST as well?",
+      "range": {
+        "startLine": 3767,
+        "startChar": 16,
+        "endLine": 3767,
+        "endChar": 56
+      },
+      "revId": "dbf52a28343ad6e7710f4159660531bdd1c86e66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91b2f946_51500937",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3767,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-17T06:55:56Z",
+      "side": 1,
+      "message": "I prefer no because many of our implementation is differ from LISTEN and that requires isListen() to work in current way , e.g.\n 1. rematching logic\n 2. broadcasting logic\nThat\u0027s why I originally named it TRACK_BEST to prevent confusion.\nSince from implementation detail this is more like REQUEST.\nBut from user perspective this is more like LISTEN.\nWDYT?",
+      "parentUuid": "cea8cd2d_2b0661da",
       "range": {
         "startLine": 3767,
         "startChar": 16,
