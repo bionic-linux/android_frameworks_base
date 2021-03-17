@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c85a14b6_c1a7ac77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2021-03-17T07:16:38Z",
+      "side": 1,
+      "message": "Add Bonian as a reviwer",
+      "revId": "780c75dcd39ff4bfe326ff1d408dfd1a05d216cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0af628ef_d1843912",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/net/DataUsageController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1429802
+      },
+      "writtenOn": "2021-03-17T07:16:38Z",
+      "side": 1,
+      "message": "remove space",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 5
+      },
+      "revId": "780c75dcd39ff4bfe326ff1d408dfd1a05d216cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
