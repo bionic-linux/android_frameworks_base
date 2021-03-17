@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb20baa0_10371aa9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-17T00:19:15Z",
+      "side": 1,
+      "message": "Looks like https://r.android.com/1633519 is waiting to be merged into internal branch, hence the merge conflicts.",
+      "revId": "79d199140641635f8d33f38aaec09cc3f30a3b6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
