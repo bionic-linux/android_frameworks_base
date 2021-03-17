@@ -29,6 +29,7 @@ import java.util.Set;
  *
  * @hide Only for use within the system server.
  */
+// TODO: Merge this into NetworkPolicyManagerLocal
 public abstract class NetworkPolicyManagerInternal {
 
     /**

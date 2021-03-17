@@ -292,6 +292,7 @@ import com.android.server.connectivity.Vpn;
 import com.android.server.connectivity.VpnProfileStore;
 import com.android.server.net.NetworkPinner;
 import com.android.server.net.NetworkPolicyManagerInternal;
+import com.android.server.net.NetworkPolicyManagerLocal;
 import com.android.testutils.ExceptionUtils;
 import com.android.testutils.HandlerUtils;
 import com.android.testutils.RecorderCallback.CallbackEntry;
@@ -1519,6 +1520,9 @@ public class ConnectivityServiceTest {
         LocalServices.removeServiceForTest(NetworkPolicyManagerInternal.class);
         LocalServices.addService(
                 NetworkPolicyManagerInternal.class, mock(NetworkPolicyManagerInternal.class));
+        LocalManagerRegistry.removeManager(NetworkPolicyManagerLocal.class);
+        LocalManagerRegistry.addManager(NetworkPolicyManagerLocal.class,
+                mock(NetworkPolicyManagerLocal.class));
 
         mAlarmManagerThread = new HandlerThread("TestAlarmManager");
         mAlarmManagerThread.start();

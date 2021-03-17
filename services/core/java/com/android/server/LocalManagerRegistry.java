@@ -70,4 +70,16 @@ public final class LocalManagerRegistry {
             sManagers.put(managerClass, manager);
         }
     }
+
+    /**
+     * Removes a manager class from the registry.
+     *
+     * @param managerClass the class to be removed.
+     */
+    public static <T> void removeManager(@NonNull Class<T> managerClass) {
+        Objects.requireNonNull(managerClass, "managerClass");
+        synchronized (sManagers) {
+            sManagers.remove(managerClass);
+        }
+    }
 }

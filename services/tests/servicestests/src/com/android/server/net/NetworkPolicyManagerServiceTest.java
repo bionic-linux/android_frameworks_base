@@ -152,6 +152,7 @@ import androidx.test.runner.AndroidJUnit4;
 import com.android.internal.util.test.BroadcastInterceptingContext;
 import com.android.internal.util.test.BroadcastInterceptingContext.FutureIntent;
 import com.android.server.DeviceIdleInternal;
+import com.android.server.LocalManagerRegistry;
 import com.android.server.LocalServices;
 import com.android.server.usage.AppStandbyInternal;
 
@@ -458,6 +459,7 @@ public class NetworkPolicyManagerServiceTest {
     public void unregisterLocalServices() throws Exception {
         // Registered by NetworkPolicyManagerService's constructor.
         LocalServices.removeServiceForTest(NetworkPolicyManagerInternal.class);
+        LocalManagerRegistry.removeManager(NetworkPolicyManagerLocal.class);
 
         // Added in registerLocalServices()
         LocalServices.removeServiceForTest(ActivityManagerInternal.class);

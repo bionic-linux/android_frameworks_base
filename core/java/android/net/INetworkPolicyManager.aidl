@@ -56,13 +56,6 @@ interface INetworkPolicyManager {
     @UnsupportedAppUsage
     boolean getRestrictBackground();
 
-    /** Gets the restrict background status based on the caller's UID:
-        1 - disabled
-        2 - whitelisted
-        3 - enabled
-    */
-    int getRestrictBackgroundByCaller();
-
     void setDeviceIdleMode(boolean enabled);
     void setWifiMeteredOverride(String networkId, int meteredOverride);
 

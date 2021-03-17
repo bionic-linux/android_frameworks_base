@@ -106,6 +106,7 @@ import android.net.ConnectivityDiagnosticsManager.ConnectivityReport;
 import android.net.ConnectivityDiagnosticsManager.DataStallReport;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
+import android.net.ConnectivityManager.RestrictBackgroundStatus;
 import android.net.ConnectivitySettingsManager;
 import android.net.DataStallReportParcelable;
 import android.net.DnsResolverServiceManager;
@@ -237,7 +238,7 @@ import com.android.server.connectivity.PermissionMonitor;
 import com.android.server.connectivity.ProfileNetworkPreferences;
 import com.android.server.connectivity.ProxyTracker;
 import com.android.server.connectivity.QosCallbackTracker;
-import com.android.server.net.NetworkPolicyManagerInternal;
+import com.android.server.net.NetworkPolicyManagerLocal;
 
 import libcore.io.IoUtils;
 
@@ -352,7 +353,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     protected INetd mNetd;
     private NetworkStatsManager mStatsManager;
     private NetworkPolicyManager mPolicyManager;
-    private NetworkPolicyManagerInternal mPolicyManagerInternal;
+    private NetworkPolicyManagerLocal mPolicyManagerLocal;
     private final NetdCallback mNetdCallback;
 
     /**
@@ -1242,9 +1243,9 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
         mStatsManager = mContext.getSystemService(NetworkStatsManager.class);
         mPolicyManager = mContext.getSystemService(NetworkPolicyManager.class);
-        mPolicyManagerInternal = Objects.requireNonNull(
-                LocalServices.getService(NetworkPolicyManagerInternal.class),
-                "missing NetworkPolicyManagerInternal");
+        mPolicyManagerLocal = Objects.requireNonNull(
+                LocalManagerRegistry.getManager(NetworkPolicyManagerLocal.class),
+                "missing NetworkPolicyManagerLocal");
         mDnsResolver = Objects.requireNonNull(dnsresolver, "missing IDnsResolver");
         mProxyTracker = mDeps.makeProxyTracker(mContext, mHandler);
 
@@ -9350,6 +9351,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
         validateOemNetworkPreferences(preference);
         mHandler.sendMessage(mHandler.obtainMessage(EVENT_SET_OEM_NETWORK_PREFERENCE,
                 new Pair<>(preference, listener)));
+    }
+
+    /**
+     * Determines if the calling application is subject to metered network restrictions while
+     * running on background.
+     *
+     * @return {@link ConnectivityManager#RESTRICT_BACKGROUND_STATUS_DISABLED},
+     * {@link ConnectivityManager#RESTRICT_BACKGROUND_STATUS_ENABLED},
+     * or {@link ConnectivityManager#RESTRICT_BACKGROUND_STATUS_WHITELISTED}
+     */
+    @Override
+    @RestrictBackgroundStatus
+    public int getRestrictBackgroundStatus() {
+        enforceAccessPermission();
+        return mPolicyManagerLocal.getRestrictBackgroundStatus(mDeps.getCallingUid());
     }
 
     private void validateOemNetworkPreferences(@NonNull OemNetworkPreferences preference) {

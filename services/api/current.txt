@@ -49,6 +49,7 @@ package com.android.server {
   public final class LocalManagerRegistry {
     method public static <T> void addManager(@NonNull Class<T>, @NonNull T);
     method @Nullable public static <T> T getManager(@NonNull Class<T>);
+    method public static <T> void removeManager(@NonNull Class<T>);
   }
 
   public abstract class SystemService {
