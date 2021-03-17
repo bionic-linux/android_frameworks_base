@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a37a46a2_e09cac28",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5085,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T03:22:40Z",
+      "side": 1,
+      "message": "No I\u0027m pretty convinced this can\u0027t happen.",
+      "parentUuid": "9e7eeac4_471d291c",
+      "range": {
+        "startLine": 5085,
+        "startChar": 8,
+        "endLine": 5085,
+        "endChar": 41
+      },
+      "revId": "234ca221a7b9a196bfc96377ec2021dbe3056c65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d23f986_ede36617",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-09T14:22:08Z",
       "side": 1,
       "message": "Is it better if we only check this when the preference is not for clean up?\nIf so we won\u0027t have this log printed for this case.",
+      "range": {
+        "startLine": 9179,
+        "startChar": 10,
+        "endLine": 9179,
+        "endChar": 12
+      },
+      "revId": "234ca221a7b9a196bfc96377ec2021dbe3056c65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba7469d3_e9a3e280",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9179,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-17T03:22:40Z",
+      "side": 1,
+      "message": "I think this is completely inconsequential but slightly annoying to do (we\u0027d have to pass a new argument.)\nThe extra log you are speaking about only happens when a work profile is removed on a car. This is such a rare event that I even wonder if it ever happened once on the entire fleet.",
+      "parentUuid": "4d23f986_ede36617",
       "range": {
         "startLine": 9179,
         "startChar": 10,
