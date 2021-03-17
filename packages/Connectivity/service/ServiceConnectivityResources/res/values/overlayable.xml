@@ -21,6 +21,10 @@
             <item type="string" name="config_networkCaptivePortalServerUrl"/>
             <item type="integer" name="config_networkTransitionTimeout"/>
             <item type="array" name="config_wakeonlan_supported_interfaces"/>
+            <item type="bool" name="config_apfDrop802_3Frames"/>
+            <item type="array" name="config_apfEthTypeDenyList"/>
+            <item type="integer" name="config_networkMeteredMultipathPreference"/>
+            <item type="integer" name="config_networkAvoidBadWifi"/>
 
         </policy>
     </overlayable>
