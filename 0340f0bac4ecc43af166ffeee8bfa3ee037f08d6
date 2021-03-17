@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd046f2_1a6cf7f9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T06:34:42Z",
+      "side": 1,
+      "message": "LGTM assuming comment addressed. Addressing in a separate CL is fine.",
+      "revId": "0340f0bac4ecc43af166ffeee8bfa3ee037f08d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7ddfad0_9a3a639c",
+        "filename": "tests/net/common/java/android/net/NetworkCapabilitiesTest.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-17T06:34:42Z",
+      "side": 1,
+      "message": "Why else if? Shouldn\u0027t this code run on S as well?",
+      "range": {
+        "startLine": 331,
+        "startChar": 10,
+        "endLine": 334,
+        "endChar": 9
+      },
+      "revId": "0340f0bac4ecc43af166ffeee8bfa3ee037f08d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
