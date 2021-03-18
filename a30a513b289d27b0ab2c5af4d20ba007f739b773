@@ -3,6 +3,92 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c41e9c55_c6347aae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T11:01:34Z",
+      "side": 1,
+      "message": "system",
+      "range": {
+        "startLine": 10,
+        "startChar": 58,
+        "endLine": 10,
+        "endChar": 63
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a72cd805_ac4d8a94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T11:01:34Z",
+      "side": 1,
+      "message": "Not finished but there are some comments.",
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcf4b493_0a5efe7d",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3680,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T11:01:34Z",
+      "side": 1,
+      "message": "asUid?\nPeople without context might think why don\u0027t we just get uid from binder.\nNo strong opinion.",
+      "range": {
+        "startLine": 3680,
+        "startChar": 53,
+        "endLine": 3680,
+        "endChar": 56
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ad162f_eda62acd",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3730,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T11:01:34Z",
+      "side": 1,
+      "message": "1. reqType the same as above?\n\n2. I don\u0027t think this refactor function is useful unless we are planning to migrate callers to it.\nIf yes, maybe add a todo?\n\nNo strong opinion.",
+      "range": {
+        "startLine": 3730,
+        "startChar": 32,
+        "endLine": 3730,
+        "endChar": 36
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4b147269_e5025987",
         "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
         "patchSetId": 1
@@ -19,6 +105,52 @@
         "startChar": 5,
         "endLine": 4236,
         "endChar": 6
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c98c28e_fb0b829c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5537,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T11:01:34Z",
+      "side": 1,
+      "message": "This is already done at l.5545?",
+      "range": {
+        "startLine": 5537,
+        "startChar": 20,
+        "endLine": 5537,
+        "endChar": 46
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8540c24a_95e9d178",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5544,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T11:01:34Z",
+      "side": 1,
+      "message": "Should we use asUid here?",
+      "range": {
+        "startLine": 5544,
+        "startChar": 35,
+        "endLine": 5544,
+        "endChar": 45
       },
       "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
