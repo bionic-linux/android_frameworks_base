@@ -308,6 +308,25 @@ public final class PhysicalChannelConfig implements Parcelable {
         }
     }
 
+    /**
+     * Return a copy of the PhysicalChannelConfig object with physical cell id cleared.
+     *
+     * @hide
+     */
+    public PhysicalChannelConfig clearPhysicalCellId() {
+        return new PhysicalChannelConfig.Builder()
+                .setNetworkType(getNetworkType())
+                .setFrequencyRange(getFrequencyRange())
+                .setDownlinkChannelNumber(getDownlinkChannelNumber())
+                .setUplinkChannelNumber(getUplinkChannelNumber())
+                .setCellBandwidthDownlinkKhz(getCellBandwidthDownlinkKhz())
+                .setCellBandwidthUplinkKhz(getCellBandwidthUplinkKhz())
+                .setCellConnectionStatus(getConnectionStatus())
+                .setContextIds(getContextIds())
+                .setBand(getBand())
+                .build();
+    }
+
     private void setDownlinkFrequency() {
         switch (mNetworkType) {
             case TelephonyManager.NETWORK_TYPE_NR:

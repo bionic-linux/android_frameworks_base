@@ -1151,7 +1151,9 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                         TelephonyCallback.EVENT_PHYSICAL_CHANNEL_CONFIG_CHANGED)) {
                     try {
                         r.callback.onPhysicalChannelConfigChanged(
-                                mPhysicalChannelConfigs);
+                                shouldSanitizeLocationForPhysicalChannelConfig(r)
+                                        ? getLocationSanitizedConfigs(
+                                        mPhysicalChannelConfigs) : mPhysicalChannelConfigs);
                     } catch (RemoteException ex) {
                         remove(r.binder);
                     }
@@ -2349,8 +2351,10 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             return;
         }
 
+        List<PhysicalChannelConfig> sanitizedConfigs = getLocationSanitizedConfigs(configs);
         if (VDBG) {
-            log("notifyPhysicalChannelConfig: subId=" + subId + " configs=" + configs);
+            log("notifyPhysicalChannelConfig: subId=" + subId + " configs=" + configs
+                    + " sanitizedConfigs=" + sanitizedConfigs);
         }
 
         synchronized (mRecords) {
@@ -2363,11 +2367,13 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             && idMatch(r.subId, subId, phoneId)) {
                         try {
                             if (DBG_LOC) {
-                                log("notifyPhysicalChannelConfig: "
-                                        + "mPhysicalChannelConfigs="
-                                        + configs + " r=" + r);
+                                log("notifyPhysicalChannelConfig: mPhysicalChannelConfigs=" + (
+                                        shouldSanitizeLocationForPhysicalChannelConfig(r)
+                                                ? sanitizedConfigs : configs) + " r=" + r);
                             }
-                            r.callback.onPhysicalChannelConfigChanged(configs);
+                            r.callback.onPhysicalChannelConfigChanged(
+                                    shouldSanitizeLocationForPhysicalChannelConfig(r)
+                                            ? sanitizedConfigs : configs);
                         } catch (RemoteException ex) {
                             mRemoveList.add(r.binder);
                         }
@@ -2376,6 +2382,22 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             }
             handleRemoveListLocked();
         }
+    }
+
+    private static boolean shouldSanitizeLocationForPhysicalChannelConfig(Record record) {
+        return record.callerUid != Process.PHONE_UID && record.callerUid != Process.SYSTEM_UID;
+    }
+
+    /**
+     * Return a copy of the PhysicalChannelConfig list but with location info removed.
+     */
+    private static List<PhysicalChannelConfig> getLocationSanitizedConfigs(
+            List<PhysicalChannelConfig> configs) {
+        List<PhysicalChannelConfig> sanitizedConfigs = new ArrayList<>(configs.size());
+        for (PhysicalChannelConfig config : configs) {
+            sanitizedConfigs.add(config.clearPhysicalCellId());
+        }
+        return sanitizedConfigs;
     }
 
     /**
