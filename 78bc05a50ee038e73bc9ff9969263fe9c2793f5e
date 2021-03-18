@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "980806cf_f96a1566",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4395,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T03:00:24Z",
+      "side": 1,
+      "message": "I think this is incorrect, the actual permission check is:\n\n    @Override\n    public void setAcceptUnvalidated(Network network, boolean accept, boolean always) {\n        enforceNetworkStackSettingsOrSetup();",
+      "range": {
+        "startLine": 4395,
+        "startChar": 24,
+        "endLine": 4395,
+        "endChar": 68
+      },
+      "revId": "78bc05a50ee038e73bc9ff9969263fe9c2793f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e724b1f1_82181976",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4419,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T03:00:24Z",
+      "side": 1,
+      "message": "Fix permission annotation:\n\n    @Override\n    public void setAcceptPartialConnectivity(Network network, boolean accept, boolean always) {\n        enforceNetworkStackSettingsOrSetup();",
+      "range": {
+        "startLine": 4419,
+        "startChar": 4,
+        "endLine": 4419,
+        "endChar": 66
+      },
+      "revId": "78bc05a50ee038e73bc9ff9969263fe9c2793f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f08cd9e5_975d4d71",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4440,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T03:00:24Z",
+      "side": 1,
+      "message": "Fix permission annotation:\n\n    @Override\n    public void setAvoidUnvalidated(Network network) {\n        enforceNetworkStackSettingsOrSetup();",
+      "range": {
+        "startLine": 4440,
+        "startChar": 4,
+        "endLine": 4440,
+        "endChar": 69
+      },
+      "revId": "78bc05a50ee038e73bc9ff9969263fe9c2793f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6549acb_cd12cb92",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4572,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T03:00:24Z",
+      "side": 1,
+      "message": "This actually does:\n\n    @Override\n    public void factoryReset() {\n        enforceSettingsPermission();\n\nwhich is:\n\n    private void enforceSettingsPermission() {\n        enforceAnyPermissionOf(\n                android.Manifest.permission.NETWORK_SETTINGS,\n                NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK);\n    }",
+      "range": {
+        "startLine": 4572,
+        "startChar": 4,
+        "endLine": 4572,
+        "endChar": 69
+      },
+      "revId": "78bc05a50ee038e73bc9ff9969263fe9c2793f5e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

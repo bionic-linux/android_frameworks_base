@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7017936_b6805052",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T03:00:24Z",
+      "side": 1,
+      "message": "Exposing these APIs LGTM but let\u0027s make sure the permission annotations are correct.",
+      "revId": "d7054f9ba0701af094c25c49f31ef9ac737f36c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
