@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b82f49e_3b133971",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T05:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c16ed505_20c7e8e3",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 48
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f285cd61_b07fb05d",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-18T00:18:50Z",
       "side": 1,
       "message": "nit:\n```\nreturn other ?\n    SystemProperties.get(OTHER_VBMETA_DIGEST_PROP_NAME):\n    SystemProperties.get(VBMETA_DIGEST_PROP_NAME);\n```",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 65
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e20a6089_aa7c73e7",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T05:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f285cd61_b07fb05d",
       "range": {
         "startLine": 254,
         "startChar": 12,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01afad31_369a1ce5",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T05:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f195b872_f95a2aa1",
+      "range": {
+        "startLine": 411,
+        "startChar": 38,
+        "endLine": 411,
+        "endChar": 52
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b70f364b_d99614f5",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-18T00:18:50Z",
       "side": 1,
       "message": "If possible, could you refactor this into the Injector, similar to what you did in aosp/1622203, to make the duration fields of the reported metrics more testable.",
+      "range": {
+        "startLine": 412,
+        "startChar": 25,
+        "endLine": 412,
+        "endChar": 51
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a6fe66c_557ee6da",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T05:45:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b70f364b_d99614f5",
       "range": {
         "startLine": 412,
         "startChar": 25,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba80bd0a_dccacab1",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T05:45:08Z",
+      "side": 1,
+      "message": "Done. Though this one is single threaded and I don\u0027t use an atomic variable.",
+      "parentUuid": "08eba9f9_a391bce3",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 416,
+        "endChar": 53
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "87176bd3_771df345",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-03-18T00:18:50Z",
       "side": 1,
       "message": "If this hardcoded value will be replaced by a computed one in a follow-up change, could you link that change to this one in the relation-chain.",
+      "range": {
+        "startLine": 419,
+        "startChar": 61,
+        "endLine": 419,
+        "endChar": 63
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5465b31_b3d2ef2e",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T05:45:08Z",
+      "side": 1,
+      "message": "Added a todo.",
+      "parentUuid": "87176bd3_771df345",
       "range": {
         "startLine": 419,
         "startChar": 61,
