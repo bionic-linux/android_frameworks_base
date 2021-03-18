@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c16ed505_20c7e8e3",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-18T00:18:50Z",
+      "side": 1,
+      "message": "nits (see aosp/1622203 for similar definitions):\n - place value definitions before the @IntDef\n - each entry of the @IntDef on a new line.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 48
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f285cd61_b07fb05d",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-18T00:18:50Z",
+      "side": 1,
+      "message": "nit:\n```\nreturn other ?\n    SystemProperties.get(OTHER_VBMETA_DIGEST_PROP_NAME):\n    SystemProperties.get(VBMETA_DIGEST_PROP_NAME);\n```",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 257,
+        "endChar": 65
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f195b872_f95a2aa1",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-18T00:18:50Z",
+      "side": 1,
+      "message": "There isn\u0027t a check here to ensure current timestamp \u003e armedTimestamp (similar to the one done when calculating the duration between lskf request to capture time). This is based on the assumption that adjusting the system clock is much harder to do in the time between escrow arming (immediately before reboot) to restoration completion, correct? If that assumption doesn\u0027t hold well, maybe a similar check might be needed here.",
+      "range": {
+        "startLine": 411,
+        "startChar": 38,
+        "endLine": 411,
+        "endChar": 52
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b70f364b_d99614f5",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-18T00:18:50Z",
+      "side": 1,
+      "message": "If possible, could you refactor this into the Injector, similar to what you did in aosp/1622203, to make the duration fields of the reported metrics more testable.",
+      "range": {
+        "startLine": 412,
+        "startChar": 25,
+        "endLine": 412,
+        "endChar": 51
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08eba9f9_a391bce3",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-18T00:18:50Z",
+      "side": 1,
+      "message": "Could you add a quick comment on the rationale behind setting mLoadEscrowDataErrorcode to ERROR_UNKNOWN here and then setting it back to ERROR_NONE a few lines down?\n\nI\u0027m guessing it\u0027s because the value of ERROR_UNKNOWN only needed for metric reporting and we want the rest of the logic to behave as if there\u0027s no error even if it success \u003d\u003d false? In that case, it may be a better idea to use a local variable to do this instead of flip-flopping the instance field (eg. what if another thread is reading the value of mLoadEscrowDataErrorCode while the flip flop is happening?).",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 416,
+        "endChar": 53
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87176bd3_771df345",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-18T00:18:50Z",
+      "side": 1,
+      "message": "If this hardcoded value will be replaced by a computed one in a follow-up change, could you link that change to this one in the relation-chain.",
+      "range": {
+        "startLine": 419,
+        "startChar": 61,
+        "endLine": 419,
+        "endChar": 63
+      },
+      "revId": "63c963515c72732ce5c43f69c2cd98df4f87043d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
