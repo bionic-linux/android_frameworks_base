@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d97fdcd_fdba54e5",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2389,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-03-18T21:34:58Z",
+      "side": 1,
+      "message": "+1, similar to UiccCardInfo#getUnprivileged, SubInfo#clearIccId, etc. Either return a copy with the info removed or just null out a particular field without constructing a new instance depending on where this value needs to end up.",
+      "parentUuid": "cce09b2c_57216286",
+      "range": {
+        "startLine": 2389,
+        "startChar": 41,
+        "endLine": 2389,
+        "endChar": 61
+      },
+      "revId": "19964554fd49fc1f6ed4899c0aef22b20465c2b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "92f03534_02008d61",
         "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
         "patchSetId": 2
