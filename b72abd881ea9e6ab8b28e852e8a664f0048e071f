@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "689d5d8f_dc9230fc",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-03-18T23:54:26Z",
+      "side": 1,
+      "message": "Is there any way we could test the reported value of this ? Maybe even reading this field after reportMetricOnRestoreComplete in test ?",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 77
+      },
+      "revId": "b72abd881ea9e6ab8b28e852e8a664f0048e071f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
