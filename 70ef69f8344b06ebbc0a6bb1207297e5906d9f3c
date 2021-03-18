@@ -16,6 +16,24 @@
       "message": "Just reverting this won\u0027t be enough.  There are annotations in frameworks/base/core/jni/com_android_internal_os_ZygoteCommandBuffer.cpp as well now.\n\nDo you intend to submit this or just use it for discussion?",
       "revId": "70ef69f8344b06ebbc0a6bb1207297e5906d9f3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03ff93d8_5134c5a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-03-18T19:59:33Z",
+      "side": 1,
+      "message": "see https://issuetracker.google.com/183024045 for more detail.",
+      "parentUuid": "4a3a73e1_353d4929",
+      "revId": "70ef69f8344b06ebbc0a6bb1207297e5906d9f3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
