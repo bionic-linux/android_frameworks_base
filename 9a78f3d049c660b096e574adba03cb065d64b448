@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "890eac16_d1145f73",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5968,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:10Z",
+      "side": 0,
+      "message": "Oops, thanks for the fix",
+      "range": {
+        "startLine": 5968,
+        "startChar": 0,
+        "endLine": 5968,
+        "endChar": 42
+      },
+      "revId": "9a78f3d049c660b096e574adba03cb065d64b448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

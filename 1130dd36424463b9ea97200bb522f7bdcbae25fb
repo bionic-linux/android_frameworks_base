@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d739322a_c9986b66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:10Z",
+      "side": 1,
+      "message": "LGTM.\n\nWe may need to inform the JobScheduler folks that as a system server component, they will receive unredacted objects and as such are responsible to redact them if not appropriate to send. But IIUC the JS API, the only thing the app gets when the job runs is a ref to the Network, so then it will do the queries with its own identity.\n\nI wonder if there might be an attack here where you could set the SSID in the WifiNetworkSpecifier in the request passed to JobInfo.Builder, where JobScheduler would call you when the SSID matches although location is off. That being said, it seems you may already be able to do this by simply registering for the callback yourself – you would not see the SSID in the objects passed by the server, but you might be able to register for a specifier that matches only one and deduce that it was that SSID. I sent chat to Roshan to see if we already have some protection against this. If we do but it\u0027s not effective in the JS case, then we may need to do something to prevent this in JS. It\u0027s worse in the JS case because that will actually start your app, so you might be able to run when in a specific location even if location is off if my concerns are realized.\nIn any case, that\u0027s not for this code to do – JS should be responsible for sanitizing its own outputs.",
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44a4a381_0ee15f9c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5581,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:10Z",
+      "side": 1,
+      "message": "Does this build ? This won\u0027t be declared until the next patch.\n\n(maybe that\u0027s fine and you plan to check them in together anyway)",
+      "range": {
+        "startLine": 5581,
+        "startChar": 16,
+        "endLine": 5581,
+        "endChar": 21
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d832e81d_6997933e",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5609,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:10Z",
+      "side": 1,
+      "message": "Can you add @param for your new arg ?",
+      "range": {
+        "startLine": 5609,
+        "startChar": 8,
+        "endLine": 5609,
+        "endChar": 13
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b26598c9_f4b58159",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5946,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:10Z",
+      "side": 1,
+      "message": "Likewise, and below",
+      "range": {
+        "startLine": 5946,
+        "startChar": 8,
+        "endLine": 5946,
+        "endChar": 13
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed90d447_62c70406",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5967,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:10Z",
+      "side": 1,
+      "message": "Do you need to pass this argument if you\u0027re not using it ?",
+      "range": {
+        "startLine": 5967,
+        "startChar": 64,
+        "endLine": 5967,
+        "endChar": 80
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e87abff7_6a081d87",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9263,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:10Z",
+      "side": 1,
+      "message": "Hopefully that\u0027s just callbackRequest.mUid. This is set by restrictRequestUidsForCallerAndSetRequestorInfo in requestNetwork(), immediately before the NRI is created which will also call mDeps.getCallingUid() to fill in mUid.",
+      "range": {
+        "startLine": 9263,
+        "startChar": 28,
+        "endLine": 9263,
+        "endChar": 40
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "296d38d0_e4c230ee",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9368,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:10Z",
+      "side": 1,
+      "message": "Not sure that\u0027s useful ; this method is always called on the handler thread, so it\u0027s always the system server.",
+      "range": {
+        "startLine": 9368,
+        "startChar": 42,
+        "endLine": 9368,
+        "endChar": 63
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
