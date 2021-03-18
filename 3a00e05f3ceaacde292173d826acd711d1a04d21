@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "372b24cb_7bcc5292",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-03-18T01:03:14Z",
+      "side": 1,
+      "message": "Have to expose DexManager to AppHibernationService to use the API Calin has built out. Todd, does this API change seem reasonable for package manager?",
+      "revId": "3a00e05f3ceaacde292173d826acd711d1a04d21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
