@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73474c62_ab31e31e",
+        "filename": "services/core/java/com/android/server/apphibernation/AppHibernationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-03-18T20:00:26Z",
+      "side": 1,
+      "message": "I\u0027d like to keep it this way for testing purposes / make clear what the dependencies are.",
+      "parentUuid": "394bb42a_67626bd7",
+      "range": {
+        "startLine": 351,
+        "startChar": 8,
+        "endLine": 351,
+        "endChar": 19
+      },
+      "revId": "3a00e05f3ceaacde292173d826acd711d1a04d21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "485fc7f9_83860db3",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-18T01:14:08Z",
       "side": 1,
       "message": "I\u0027d like to avoid polluting this class even more. Could you move this in PMS#getOptimizablePacakges()? (https://source.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/pm/PackageManagerService.java;l\u003d10061)\n\nI think that\u0027s a better place to separate the hibernation from the actual optimizations.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "3a00e05f3ceaacde292173d826acd711d1a04d21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c837961b_d1f964f0",
+        "filename": "services/core/java/com/android/server/pm/PackageDexOptimizer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1293785
+      },
+      "writtenOn": "2021-03-18T20:00:26Z",
+      "side": 1,
+      "message": "Done in ag/13921062",
+      "parentUuid": "485fc7f9_83860db3",
       "range": {
         "startLine": 134,
         "startChar": 0,
