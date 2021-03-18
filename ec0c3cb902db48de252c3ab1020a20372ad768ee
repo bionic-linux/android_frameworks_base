@@ -513,6 +513,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6585db2c_8e52f99d",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-18T15:29:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a12bb34f_0817bb47",
+      "range": {
+        "startLine": 871,
+        "startChar": 58,
+        "endLine": 871,
+        "endChar": 66
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "543df4a6_a0f6880c",
@@ -621,6 +645,30 @@
       "side": 1,
       "message": "Good catch, thanks!",
       "parentUuid": "68fbc5ed_530c0944",
+      "range": {
+        "startLine": 958,
+        "startChar": 57,
+        "endLine": 958,
+        "endChar": 65
+      },
+      "revId": "ec0c3cb902db48de252c3ab1020a20372ad768ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6763094d_8e71aedb",
+        "filename": "core/java/android/net/NetworkPolicyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-18T15:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2571428_2e67833b",
       "range": {
         "startLine": 958,
         "startChar": 57,
