@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fe3e960_52fc3a42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T09:32:30Z",
+      "side": 1,
+      "message": "LGTM.\n\nWe may need to inform the JobScheduler folks that as a system server component, they will receive unredacted objects and as such are responsible to redact them if not appropriate to send. But IIUC the JS API, the only thing the app gets when the job runs is a ref to the Network, so then it will do the queries with its own identity.\n\nI wonder if there might be an attack here where you could set the SSID in the WifiNetworkSpecifier in the request passed to JobInfo.Builder, where JobScheduler would call you when the SSID matches although location is off. That being said, it seems you may already be able to do this by simply registering for the callback yourself – you would not see the SSID in the objects passed by the server, but you might be able to register for a specifier that matches only one and deduce that it was that SSID. I sent chat to Roshan to see if we already have some protection against this. If we do but it\u0027s not effective in the JS case, then we may need to do something to prevent this in JS. It\u0027s worse in the JS case because that will actually start your app, so you might be able to run when in a specific location even if location is off if my concerns are realized.\nIn any case, that\u0027s not for this code to do – JS should be responsible for sanitizing its own outputs.",
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44a4a381_0ee15f9c",
