@@ -112,6 +112,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e62ebbf6_526a53ea",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4292,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T12:43:16Z",
+      "side": 1,
+      "message": "Stupid question: Don\u0027t have much context about this one, but given that System UID is just one special case of UIDs. I\u0027m curious about if this can be replaced by \n\nsendRequestForNetwork(1000, networkCallback, TRACK_DEFAULT, cbHandler);\n\nor \n  redirect registerDefaultNetworkCallbackAsUid(uid \u003d1000) to sendRequestForNetwork(null, networkCallback, 0, TRACK_SYSTEM_DEFAULT, TYPE_NONE, cbHandler);\n\nIf yes maybe we don\u0027t even need this API?",
+      "range": {
+        "startLine": 4291,
+        "startChar": 9,
+        "endLine": 4292,
+        "endChar": 60
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8bc08ca_98beab7a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5534,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T12:43:16Z",
+      "side": 1,
+      "message": "Do we need any validation of this uid since this is filled by user?",
+      "range": {
+        "startLine": 5534,
+        "startChar": 20,
+        "endLine": 5534,
+        "endChar": 25
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3c98c28e_fb0b829c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -179,6 +225,53 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "1de4f027_15105c0c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7585,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T12:43:16Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "c1f0d89c_25cf2980",
+      "range": {
+        "startLine": 7585,
+        "startChar": 30,
+        "endLine": 7585,
+        "endChar": 67
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c40987d2_a62682b6",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10110,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T12:43:16Z",
+      "side": 1,
+      "message": "Maybe not for this CL, should we put it into this function given that it is also one of the default callbacks?",
+      "range": {
+        "startLine": 10110,
+        "startChar": 17,
+        "endLine": 10110,
+        "endChar": 47
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "04f1bcac_16a8a2ad",
@@ -197,6 +290,29 @@
         "startChar": 8,
         "endLine": 10291,
         "endChar": 36
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "983e07cd_5d32faf7",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10417,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T12:43:16Z",
+      "side": 1,
+      "message": "Nit: period.",
+      "range": {
+        "startLine": 10417,
+        "startChar": 96,
+        "endLine": 10417,
+        "endChar": 97
       },
       "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
