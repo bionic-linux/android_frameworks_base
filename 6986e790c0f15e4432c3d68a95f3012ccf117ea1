@@ -51,6 +51,23 @@
       "parentUuid": "191a7596_0f665c67",
       "revId": "6986e790c0f15e4432c3d68a95f3012ccf117ea1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8e58000_73b5bdad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1352498
+      },
+      "writtenOn": "2021-03-18T02:46:08Z",
+      "side": 1,
+      "message": "java.lang.AssertionError: expected: NetworkStats: elapsedRealtime\u003d0\njava.lang.AssertionError: expected: NetworkStats: elapsedRealtime\u003d0\n  [0] iface\u003dvt_data0 uid\u003d-1 set\u003dFOREGROUND tag\u003d0x0 metered\u003dYES roaming\u003dNO defaultNetwork\u003dYES rxBytes\u003d25 rxPackets\u003d0 txBytes\u003d25 txPackets\u003d0 operations\u003d0\n but was: NetworkStats: elapsedRealtime\u003d2458391\n  [0] iface\u003dvt_data00 uid\u003d-1 set\u003dFOREGROUND tag\u003d0x0 metered\u003dYES roaming\u003dNO defaultNetwork\u003dYES rxBytes\u003d25 rxPackets\u003d0 txBytes\u003d25 txPackets\u003d0 operations\u003d0\n\n\tat org.junit.Assert.fail(Assert.java:89)\n\tat kotlin.test.junit.JUnitAsserter.fail(JUnitSupport.kt:56)\n\tat kotlin.test.Asserter$DefaultImpls.assertTrue(Assertions.kt:226)\n\tat kotlin.test.junit.JUnitAsserter.assertTrue(JUnitSupport.kt:30)\n\tat kotlin.test.Asserter$DefaultImpls.assertTrue(Assertions.kt:236)\n\tat kotlin.test.junit.JUnitAsserter.assertTrue(JUnitSupport.kt:30)\n\tat kotlin.test.AssertionsKt__AssertionsKt.assertTrue(Assertions.kt:40)\n\tat kotlin.test.AssertionsKt.assertTrue(Unknown Source:1)\n\tat com.android.testutils.NetworkStatsUtilsKt.assertNetworkStatsEquals(NetworkStatsUtils.kt:68)\n\tat com.android.testutils.NetworkStatsUtilsKt.assertNetworkStatsEquals$default(NetworkStatsUtils.kt:63)\n\tat com.android.testutils.NetworkStatsUtilsKt.assertNetworkStatsEquals(Unknown Source:13)\n\tat com.android.internal.telephony.imsphone.ImsPhoneCallTrackerTest.assertVtDataUsageUpdated(ImsPhoneCallTrackerTest.java:1383)\n\tat com.android.internal.telephony.imsphone.ImsPhoneCallTrackerTest.testVtDataUsageProvider(ImsPhoneCallTrackerTest.java:1156)",
+      "revId": "6986e790c0f15e4432c3d68a95f3012ccf117ea1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
