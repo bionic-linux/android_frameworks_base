@@ -2353,6 +2353,8 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             log("notifyPhysicalChannelConfig: subId=" + subId + " configs=" + configs);
         }
 
+        List<PhysicalChannelConfig> sanitizedConfigs = getLocationSanitizedConfigs(configs);
+
         synchronized (mRecords) {
             int phoneId = SubscriptionManager.getPhoneId(subId);
             if (validatePhoneId(phoneId)) {
@@ -2365,9 +2367,11 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                             if (DBG_LOC) {
                                 log("notifyPhysicalChannelConfig: "
                                         + "mPhysicalChannelConfigs="
-                                        + configs + " r=" + r);
+                                        + (shouldSanitizeLocation(r) ? sanitizedConfigs : configs)
+                                        + " r=" + r);
                             }
-                            r.callback.onPhysicalChannelConfigChanged(configs);
+                            r.callback.onPhysicalChannelConfigChanged(
+                                    shouldSanitizeLocation(r) ? sanitizedConfigs : configs);
                         } catch (RemoteException ex) {
                             mRemoveList.add(r.binder);
                         }
@@ -2376,6 +2380,36 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
             }
             handleRemoveListLocked();
         }
+    }
+
+    /**
+     * Remove all the location info from the PhysicalChannelConfig object.
+     */
+    private static PhysicalChannelConfig sanitizeLocationInfo(PhysicalChannelConfig config) {
+        return new PhysicalChannelConfig.Builder()
+                .setNetworkType(config.getNetworkType())
+                .setFrequencyRange(config.getFrequencyRange())
+                .setDownlinkChannelNumber(config.getDownlinkChannelNumber())
+                .setUplinkChannelNumber(config.getUplinkChannelNumber())
+                .setCellBandwidthDownlinkKhz(config.getCellBandwidthDownlinkKhz())
+                .setCellBandwidthUplinkKhz(config.getCellBandwidthUplinkKhz())
+                .setCellConnectionStatus(config.getConnectionStatus())
+                .setContextIds(config.getContextIds())
+                .setBand(config.getBand())
+                .build();
+    }
+
+    private static boolean shouldSanitizeLocation(Record record) {
+        return record.callerUid != Process.PHONE_UID && record.callerUid != Process.SYSTEM_UID;
+    }
+
+    private static List<PhysicalChannelConfig> getLocationSanitizedConfigs(
+            List<PhysicalChannelConfig> configs) {
+        List<PhysicalChannelConfig> sanitizedConfigs = new ArrayList<>(configs.size());
+        for (PhysicalChannelConfig config : configs) {
+            sanitizedConfigs.add(sanitizeLocationInfo(config));
+        }
+        return sanitizedConfigs;
     }
 
     /**
