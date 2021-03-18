@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f07ed68_41f6094f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-18T08:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9312d944_69288d28",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9f80653_f0cca7d4",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-18T05:49:05Z",
       "side": 1,
       "message": "Also explain why this is the right solution to the problem",
+      "range": {
+        "startLine": 11,
+        "startChar": 38,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe2f4ba5_6909d268",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-18T08:54:30Z",
+      "side": 1,
+      "message": "Done, message is refined. Please take a look.",
+      "parentUuid": "b9f80653_f0cca7d4",
       "range": {
         "startLine": 11,
         "startChar": 38,
@@ -94,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e3cf0d4_f7949b9b",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-18T08:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72202975_fec2451e",
+      "range": {
+        "startLine": 296,
+        "startChar": 36,
+        "endLine": 296,
+        "endChar": 80
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67f0a898_4bc0945d",
@@ -107,6 +179,30 @@
       "writtenOn": "2021-02-18T05:49:05Z",
       "side": 1,
       "message": "Same as above: this won\u0027t be non-null since it is never set in the loop",
+      "range": {
+        "startLine": 307,
+        "startChar": 58,
+        "endLine": 307,
+        "endChar": 68
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe120824_7b859ad4",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-18T08:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f0a898_4bc0945d",
       "range": {
         "startLine": 307,
         "startChar": 58,
@@ -140,6 +236,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "456a8fc6_09854a44",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-18T08:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "972ee477_72a7cbe7",
+      "range": {
+        "startLine": 324,
+        "startChar": 62,
+        "endLine": 324,
+        "endChar": 72
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69c5c9e2_6577ab58",
@@ -153,6 +273,30 @@
       "writtenOn": "2021-02-18T05:49:05Z",
       "side": 1,
       "message": "Instead of mutating the configuration, these should be added to the builder.\nCan you remove staticIpConfiguration completely in this loop ?",
+      "range": {
+        "startLine": 331,
+        "startChar": 50,
+        "endLine": 331,
+        "endChar": 63
+      },
+      "revId": "782544d8d15826ede3bef4b6d64582b187337a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec306f63_f2d8e813",
+        "filename": "services/core/java/com/android/server/net/IpConfigStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-03-18T08:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c5c9e2_6577ab58",
       "range": {
         "startLine": 331,
         "startChar": 50,
