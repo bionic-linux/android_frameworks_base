@@ -540,6 +540,23 @@ public final class PhysicalChannelConfig implements Parcelable {
             mBand = BAND_UNKNOWN;
         }
 
+        /**
+         * Builder object constructed from existing PhysicalChannelConfig object.
+         * @hide
+         */
+        public Builder(PhysicalChannelConfig config) {
+            mNetworkType = config.getNetworkType();
+            mFrequencyRange = config.getFrequencyRange();
+            mDownlinkChannelNumber = config.getDownlinkChannelNumber();
+            mUplinkChannelNumber = config.getUplinkChannelNumber();
+            mCellBandwidthDownlinkKhz = config.getCellBandwidthDownlinkKhz();
+            mCellBandwidthUplinkKhz = config.getCellBandwidthUplinkKhz();
+            mCellConnectionStatus = config.getConnectionStatus();
+            mContextIds = Arrays.copyOf(config.getContextIds(), config.getContextIds().length);
+            mPhysicalCellId = config.getPhysicalCellId();
+            mBand = config.getBand();
+        }
+
         public PhysicalChannelConfig build() {
             return new PhysicalChannelConfig(this);
         }
