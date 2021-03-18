@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd1d12be_73cf1fca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-03-18T16:37:29Z",
+      "side": 1,
+      "message": "Abandon the solution in aosp/1640974 which will remove location info for PCC for any registrant.\nThis solution will check calling UID and only redact the location info if neither PHONE nor SYSTEM.",
+      "revId": "19964554fd49fc1f6ed4899c0aef22b20465c2b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
