@@ -59,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "010546d1_563ca2af",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "yeah, I think we can ignore these errors.",
+      "parentUuid": "a5365ece_595416cf",
+      "range": {
+        "startLine": 197,
+        "startChar": 58,
+        "endLine": 197,
+        "endChar": 64
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35855c8f_b6e2950d",
@@ -72,6 +96,30 @@
       "writtenOn": "2021-03-17T22:47:48Z",
       "side": 1,
       "message": "This might be vulnerable to race conditions, especially if getInt and putInt are backed by IO operations. Same for lines 569-570.",
+      "range": {
+        "startLine": 498,
+        "startChar": 8,
+        "endLine": 499,
+        "endChar": 81
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42df48e8_cbbd4e55",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "Ack. At first I think these keys are specific to each client. But not hurt to warp them in synced block.\n\nNote race condition can still happen between different access to mCallerPreparedForReboot. But it should be rare so I don\u0027t handle it for metrics purpose.",
+      "parentUuid": "35855c8f_b6e2950d",
       "range": {
         "startLine": 498,
         "startChar": 8,
@@ -105,6 +153,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c0e496c_e4032f6f",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77650625_66f1f265",
+      "range": {
+        "startLine": 565,
+        "startChar": 8,
+        "endLine": 566,
+        "endChar": 65
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69df9bd9_f9e80448",
@@ -118,6 +190,30 @@
       "writtenOn": "2021-03-17T22:47:48Z",
       "side": 1,
       "message": "A few suggestions:\n - Should add time unit to the variable name for clarity.\n - This field is only ever used for seconds and as an integer, so I would suggest making it an integer seconds field to begin with and adjust the difference math below accordingly.\n\nSame for lines 751-767.",
+      "range": {
+        "startLine": 575,
+        "startChar": 17,
+        "endLine": 575,
+        "endChar": 25
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f875d637_c885056f",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69df9bd9_f9e80448",
       "range": {
         "startLine": 575,
         "startChar": 17,
@@ -151,6 +247,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44a93eb0_34ebccc1",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t make a difference though? I simply use -1 to represent invalid data here.",
+      "parentUuid": "3bf32cb6_604e0102",
+      "range": {
+        "startLine": 578,
+        "startChar": 46,
+        "endLine": 578,
+        "endChar": 85
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73f496cd_39ceb52e",
@@ -164,6 +284,30 @@
       "writtenOn": "2021-03-17T22:47:48Z",
       "side": 1,
       "message": "Possibly add a few lines testing the case where the timestamp stored in mSharedPreferences \u003e current time returned by the injector.",
+      "range": {
+        "startLine": 249,
+        "startChar": 16,
+        "endLine": 249,
+        "endChar": 35
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8c79617_40a1281b",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73f496cd_39ceb52e",
       "range": {
         "startLine": 249,
         "startChar": 16,
@@ -197,6 +341,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54ffdea8_77f882fa",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "Done. we won\u0027t return lskf capture timestamp though.",
+      "parentUuid": "03293355_df36370b",
+      "range": {
+        "startLine": 254,
+        "startChar": 40,
+        "endLine": 254,
+        "endChar": 51
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e7e0961_1da28756",
@@ -220,6 +388,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c3dc7da_21b1b21a",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e7e0961_1da28756",
+      "range": {
+        "startLine": 374,
+        "startChar": 30,
+        "endLine": 374,
+        "endChar": 36
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4975ddad_1832badf",
@@ -233,6 +425,30 @@
       "writtenOn": "2021-03-17T22:47:48Z",
       "side": 1,
       "message": "What\u0027s the reasoning behind changing this to anyInt(). Only FAKE_OTA_PACKAGE_NAME is still registered for RoR at this point, so it should remain eq(1).",
+      "range": {
+        "startLine": 450,
+        "startChar": 42,
+        "endLine": 450,
+        "endChar": 50
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0684fa0f_fd026e03",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-18T07:04:38Z",
+      "side": 1,
+      "message": "it\u0027s actually request count, where we don\u0027t set the mock value",
+      "parentUuid": "4975ddad_1832badf",
       "range": {
         "startLine": 450,
         "startChar": 42,
