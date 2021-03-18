@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b147269_e5025987",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4236,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T08:26:08Z",
+      "side": 1,
+      "message": "@param uid",
+      "range": {
+        "startLine": 4236,
+        "startChar": 5,
+        "endLine": 4236,
+        "endChar": 6
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1f0d89c_25cf2980",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7585,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T08:26:08Z",
+      "side": 1,
+      "message": "I don\u0027t understand why that\u0027s correct. The VPN doesn\u0027t apply to VPN_UID and the default network for VPN_UID is supposed to still be WiFi (see l.7587 making sure of that). I would have expected assertNoCallback.",
+      "range": {
+        "startLine": 7585,
+        "startChar": 30,
+        "endLine": 7585,
+        "endChar": 67
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04f1bcac_16a8a2ad",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10291,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-18T08:26:08Z",
+      "side": 1,
+      "message": "Nit : it\u0027s probably a good idea to have a helper like\n\n  void withPermissionGranted(String permission, Runnable r) {\n    if (mServiceContext.checkCallingOrSelfPermission(permission) \u003d\u003d GRANTED) {\n      r.run();\n      return;\n    }\n    try {\n      setPermission(permission, PERMISSION_GRANTED);\n      r.run();\n    } finally {\n      setPermission(permission, PERMISSION_DENIED);\n    }\n  }\n\n\nMaybe not for this patch",
+      "range": {
+        "startLine": 10290,
+        "startChar": 8,
+        "endLine": 10291,
+        "endChar": 36
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
