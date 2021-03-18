@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e32c3036_24ba9586",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5240,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-18T09:58:03Z",
+      "side": 1,
+      "message": "nit: This is scary.\nIIUC for everyone that trying to use mUid to develop new features they need to clearly know what\u0027s their differences.\nMaybe move some comments to mUid and getUids?",
+      "range": {
+        "startLine": 5237,
+        "startChar": 6,
+        "endLine": 5240,
+        "endChar": 57
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44a4a381_0ee15f9c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
