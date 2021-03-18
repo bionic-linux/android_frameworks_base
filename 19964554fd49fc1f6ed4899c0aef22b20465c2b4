@@ -16,6 +16,52 @@
       "message": "Abandon the solution in aosp/1640974 which will remove location info for PCC for any registrant.\nThis solution will check calling UID and only redact the location info if neither PHONE nor SYSTEM.",
       "revId": "19964554fd49fc1f6ed4899c0aef22b20465c2b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cce09b2c_57216286",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2389,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-18T18:16:22Z",
+      "side": 1,
+      "message": "Would it be preferable for this to be an instance method on the PhysicalChannelConfig object?",
+      "range": {
+        "startLine": 2389,
+        "startChar": 41,
+        "endLine": 2389,
+        "endChar": 61
+      },
+      "revId": "19964554fd49fc1f6ed4899c0aef22b20465c2b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92f03534_02008d61",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2403,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-18T18:16:22Z",
+      "side": 1,
+      "message": "Suggest to scope this narrowly. There are other methods that sanitize location based on permissions-based criteria already. :-)\n\nThe reason that we don\u0027t want to use checkListenerPermission() in this release is to avoid the current mess around location attribution where there\u0027s no way for callers to avoid the attribution.",
+      "range": {
+        "startLine": 2403,
+        "startChar": 27,
+        "endLine": 2403,
+        "endChar": 49
+      },
+      "revId": "19964554fd49fc1f6ed4899c0aef22b20465c2b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
