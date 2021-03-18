@@ -16,6 +16,24 @@
       "message": "How about we override getCallerUid in CS to throw UnsupportedOperationException(\"Please call mDeps.getCallerUid() instead\") ?",
       "revId": "9a78f3d049c660b096e574adba03cb065d64b448",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "679e5ca2_b1fb13b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-18T07:56:04Z",
+      "side": 1,
+      "message": "I tried this but it\u0027s not possible because Binder.getCallingUid is static and final.",
+      "parentUuid": "3eec3ddb_6a49ac13",
+      "revId": "9a78f3d049c660b096e574adba03cb065d64b448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
