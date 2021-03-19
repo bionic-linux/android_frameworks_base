@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2994349a_b6724830",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T21:45:22Z",
+      "side": 1,
+      "message": "Talked a bit about this offline. This makes sense, but could use a comment on how the below keys are used to persist the metadata values so that they can be used for comparison after boot when these properties are not all accessible.",
+      "parentUuid": "5b7af95e_e8457b9b",
+      "range": {
+        "startLine": 80,
+        "startChar": 68,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "b72abd881ea9e6ab8b28e852e8a664f0048e071f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "689d5d8f_dc9230fc",
         "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
         "patchSetId": 8
