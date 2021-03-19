@@ -70,6 +70,30 @@
       },
       "revId": "b72abd881ea9e6ab8b28e852e8a664f0048e071f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2326e573_d1fdb1aa",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T00:17:16Z",
+      "side": 1,
+      "message": "let me add a new test.. I think we can construct a failure case and match the exact error_code in reportMetrics. Will do in a followup",
+      "parentUuid": "f2cf16bb_342b1544",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 77
+      },
+      "revId": "b72abd881ea9e6ab8b28e852e8a664f0048e071f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
