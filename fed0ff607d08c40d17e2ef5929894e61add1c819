@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cce21e93_0b57692b",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "No it doesn\u0027t matter here (nor does it matter in CM, but it\u0027s nicer if someone does it). What\u0027s important is the service side (you need to throw in the binder thread, otherwise it\u0027s the system server that will crash), and I didn\u0027t have that. Fixed.",
+      "parentUuid": "bdf9f72d_12f7b69f",
+      "range": {
+        "startLine": 277,
+        "startChar": 48,
+        "endLine": 277,
+        "endChar": 56
+      },
+      "revId": "fed0ff607d08c40d17e2ef5929894e61add1c819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72bd1922_41c824d6",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-02-25T08:01:09Z",
       "side": 1,
       "message": "final?",
+      "range": {
+        "startLine": 59,
+        "startChar": 11,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "fed0ff607d08c40d17e2ef5929894e61add1c819",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25452942_bc132ade",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72bd1922_41c824d6",
       "range": {
         "startLine": 59,
         "startChar": 11,

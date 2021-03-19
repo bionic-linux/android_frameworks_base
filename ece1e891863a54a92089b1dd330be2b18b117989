@@ -22,6 +22,30 @@
       },
       "revId": "ece1e891863a54a92089b1dd330be2b18b117989",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19c04577_2953964a",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4163,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 0,
+      "message": "Because the new code never sends the same request again. A request is needed or unneeded. The old code used to send the request over and over again whenever there was an update of the score, so that the filtering could happen again on the other side.",
+      "parentUuid": "add2558e_495efa1b",
+      "range": {
+        "startLine": 4163,
+        "startChar": 12,
+        "endLine": 4163,
+        "endChar": 45
+      },
+      "revId": "ece1e891863a54a92089b1dd330be2b18b117989",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

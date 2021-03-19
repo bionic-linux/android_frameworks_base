@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "703ff0c5_382e9560",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 3647,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Yes. It means the rematch has taken place, but this request did not change satisfiers (from the original null). Reworded.",
+      "parentUuid": "f647e1fa_6bfc0192",
+      "range": {
+        "startLine": 3647,
+        "startChar": 25,
+        "endLine": 3647,
+        "endChar": 46
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e2538a9_3c0f7853",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-02-25T08:01:09Z",
       "side": 1,
       "message": "Question: Why we don\u0027t need to send requests here?\nIIUC this is becaue it will be done when registerNetworkOffer?",
+      "range": {
+        "startLine": 5695,
+        "startChar": 4,
+        "endLine": 5695,
+        "endChar": 5
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7756d7e_731834cc",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5695,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Correct. Providers, by themselves, don\u0027t receive requests. It\u0027s offers that do, therefore there is nothing to do when registering a new provider until they actually register an offer.",
+      "parentUuid": "8e2538a9_3c0f7853",
       "range": {
         "startLine": 5695,
         "startChar": 4,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9807c1f_3cd0c65b",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 6128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "No. Who gets offers is never affected by what other offers are outstanding. It\u0027s only what networks is currently satisfying what request.\n\nIt\u0027s simple really : an offer is needed for a request iff NetworkRanker#mightBeat the satisfier for that request.\n\nUpdated the cover comment to clarify this.",
+      "parentUuid": "c057088e_9d6e8bee",
+      "range": {
+        "startLine": 6128,
+        "startChar": 4,
+        "endLine": 6128,
+        "endChar": 5
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93607261_61ffc5c6",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-02-25T08:01:09Z",
       "side": 1,
       "message": "IIUC this is not only for new network?\nThis function iterate through mNetworkOffers and requests, right?\nIf so maybe we need a different name?\ne.g. dispatchRequest or something else?",
+      "range": {
+        "startLine": 7559,
+        "startChar": 17,
+        "endLine": 7559,
+        "endChar": 37
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ea5bc6e_17d1895a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7559,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "No, it will issue new needs. It\u0027s not a need for a new network. For example, an old network satisfying a request might have degraded, causing some offer to be able to beat it. In this case, the satisfier hasn\u0027t changed, but there is still a new need.\n\nThere is a fundamental ambiguity in English there, I don\u0027t think we can make it a lot clearer. Renamed to \"issueNetworkNeeds\" as after all we never issue old needs, and clarified by adding comments.",
+      "parentUuid": "93607261_61ffc5c6",
       "range": {
         "startLine": 7559,
         "startChar": 17,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dbcc481_21000d6d",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7591,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Renamed to informOffer. The job of this function is to tell the offer about the new situation. Update, notify or inform are the only real one-verb synonyms I think. Notify (and dispatch) imply this will necessarily happen, while update and inform don\u0027t ; additionally \"dispatch\" is not accurate because offers are not dispatched, they are notified about the new state.",
+      "parentUuid": "59423ffa_ca14816b",
+      "range": {
+        "startLine": 7591,
+        "startChar": 17,
+        "endLine": 7591,
+        "endChar": 28
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d2034a7_6d001660",
@@ -150,6 +270,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14155fc9_a1dc312f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7612,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "NetworkProviderTests has coverage of the whole thing, but it doesn\u0027t make arrays of requests. ConnectivityServiceTests indirectly tests arrays of requests, but it doesn\u0027t test the provider side of it.\n\nAdded a fairly comprehensive test to ConnectivityServiceTest, but there are many possible cases so it\u0027s difficult to cover everything. I guess we\u0027ll add coverage as we find bugs that were not covered.",
+      "parentUuid": "7d2034a7_6d001660",
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7feeb95b_e1778677",
@@ -163,6 +301,30 @@
       "writtenOn": "2021-02-25T10:59:01Z",
       "side": 1,
       "message": "nit: Now I know could and might has different meaning. \nBut it takes me a while to understand.\nSince they can be both used to express possibility, e.g.\nThis (could|might) be my train.\n\nThus. this (could|might) confuse non-native english speakers.\nI think maybe name it more straightforward would be clearer.\nE.g. oldNeeded/newNeeded, oldBeat/newBeat\n\nNo strong opinion.",
+      "range": {
+        "startLine": 7627,
+        "startChar": 26,
+        "endLine": 7627,
+        "endChar": 35
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1935f76a_bb687ab7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7627,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "I think this is confusing even for native speakers but I had trouble finding a better name. I thought that oldMightBeat was inaccurate because it\u0027s not just whether it used to \"mightBeat\".\n\nBut now I think it\u0027s better if it\u0027s a little bit inaccurate and easier to understand that it\u0027s really the previous value versus the new one, so renamed to oldMightBeat and newMightBeat.",
+      "parentUuid": "7feeb95b_e1778677",
       "range": {
         "startLine": 7627,
         "startChar": 26,
@@ -196,6 +358,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41c2d13d_5adf10c6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 7629,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "No unfortunately there is also mRequests.\n\nI generally like your idea, but I don\u0027t like too much the idea of passing both the ranker and the requests (if it was just the ranker I\u0027d agree). While the ranker is completely stateless, mRequests can only be touched on the handler, so if we did that all callers would have to ensureRunningOnConnectivityServiceThread.\n\nConsidering I added an extensive test for this function in ConnectivityService, I think we\u0027re good.",
+      "parentUuid": "816001b5_fc1a95ab",
+      "range": {
+        "startLine": 7629,
+        "startChar": 23,
+        "endLine": 7629,
+        "endChar": 37
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f4f08d6_453370e7",
@@ -209,6 +395,30 @@
       "writtenOn": "2021-02-25T10:59:01Z",
       "side": 1,
       "message": "I think this might need test, but not necessary in this CL:\n  1. onOfferNeeded(req） -\u003e assertTrue(neededFor(req))\n  2. null cap -\u003e assertTrue(canSatisfy(any req))",
+      "range": {
+        "startLine": 114,
+        "startChar": 15,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a422381b_11b08873",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f4f08d6_453370e7",
       "range": {
         "startLine": 114,
         "startChar": 15,
@@ -242,6 +452,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "763c3001_c6a4cc88",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the same as the old behavior.",
+      "parentUuid": "36980bb3_ce9da1fd",
+      "range": {
+        "startLine": 79,
+        "startChar": 57,
+        "endLine": 79,
+        "endChar": 80
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a076bcbc_3f12bc3d",
@@ -255,6 +489,30 @@
       "writtenOn": "2021-02-25T08:01:09Z",
       "side": 1,
       "message": "Question: the equals here implies the challenger might beat the champion with the same score, right?\nIf so, is it possible that A beats B, then B beats A and cause a loop?",
+      "range": {
+        "startLine": 85,
+        "startChar": 45,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "063ee334_1572d55f",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkRanker.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "No. This is used to tell whether the factory should be told about this request, to know if it *might* beat. It\u0027s not used to know if it beats. This patch doesn\u0027t change the ranking.\n\nLikewise, this behavior is required because existing factory implementations require being told about requests they themselves satisfy.",
+      "parentUuid": "a076bcbc_3f12bc3d",
       "range": {
         "startLine": 85,
         "startChar": 45,
@@ -288,6 +546,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73922f39_60ac24d0",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2780,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "You\u0027re right it\u0027s unused. Removed.",
+      "parentUuid": "11a7f401_fb5bb1e0",
+      "range": {
+        "startLine": 2780,
+        "startChar": 20,
+        "endLine": 2780,
+        "endChar": 43
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1025a025_d31770de",
@@ -301,6 +583,30 @@
       "writtenOn": "2021-02-25T08:01:09Z",
       "side": 1,
       "message": "+ testFactory.assertRequestCountEquals(0); ?",
+      "range": {
+        "startLine": 4190,
+        "startChar": 12,
+        "endLine": 4190,
+        "endChar": 23
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de81c736_19d2359e",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1025a025_d31770de",
       "range": {
         "startLine": 4190,
         "startChar": 12,
@@ -334,6 +640,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51ab8e26_aa21ba91",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4211,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da0b6c4_b914bef6",
+      "range": {
+        "startLine": 4211,
+        "startChar": 12,
+        "endLine": 4211,
+        "endChar": 42
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d22e9dff_794b9ad3",
@@ -347,6 +677,30 @@
       "writtenOn": "2021-02-25T10:59:01Z",
       "side": 1,
       "message": "Question: Why move terminate outside finally?\nIIRC this is for aosp/1531798.\nIs that no going to happen again?",
+      "range": {
+        "startLine": 4261,
+        "startChar": 8,
+        "endLine": 4261,
+        "endChar": 32
+      },
+      "revId": "d9842b4acb1e65887d4788d4ee6e5bb8af202f48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7c91816_a1e49c8d",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 4261,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T14:17:28Z",
+      "side": 1,
+      "message": "Reverted.",
+      "parentUuid": "d22e9dff_794b9ad3",
       "range": {
         "startLine": 4261,
         "startChar": 8,
