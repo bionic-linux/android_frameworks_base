@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5b7af95e_e8457b9b",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T05:36:36Z",
+      "side": 1,
+      "message": "So ro.boot.vbmeta.digest is the vb digest of the current slot (slot a), it\u0027s always available.\n\nota.other.vbmeta_digest is the digest of slot b, it\u0027s only available after an OTA installs, but not yet reboots.\n\nAfter reboot, we expect to find ro.boot.vbmeta.digest \u003d\u003d stored ota.other.vbmeta_digest (slot b)\n\nOr ro.boot.vbmeta.digest \u003d\u003d stored ro.boot.vbmeta_digest (OTA failed and we falls back to slot a)\n\n\nIt\u0027s a different story for mainline update, b/c it won\u0027t change the slot.",
+      "parentUuid": "170c9081_6c06e8dc",
+      "range": {
+        "startLine": 80,
+        "startChar": 68,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "b72abd881ea9e6ab8b28e852e8a664f0048e071f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "689d5d8f_dc9230fc",
         "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
         "patchSetId": 8
@@ -109,6 +133,30 @@
       "side": 1,
       "message": "let me add a new test.. I think we can construct a failure case and match the exact error_code in reportMetrics. Will do in a followup",
       "parentUuid": "f2cf16bb_342b1544",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 77
+      },
+      "revId": "b72abd881ea9e6ab8b28e852e8a664f0048e071f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ea6947c_8c328a96",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T05:36:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2326e573_d1fdb1aa",
       "range": {
         "startLine": 127,
         "startChar": 0,
