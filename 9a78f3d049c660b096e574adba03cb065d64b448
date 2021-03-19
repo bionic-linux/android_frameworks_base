@@ -45,6 +45,30 @@
       },
       "revId": "9a78f3d049c660b096e574adba03cb065d64b448",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db5fa2a9_99eada85",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5968,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T07:00:07Z",
+      "side": 0,
+      "message": "In NetworkCapabilities, requestorUid is :\n• For NCs in NetworkRequests, the UID of the app that filed the request or the UID on behalf on which it\u0027s filed. I don\u0027t think it can ever differ from mUid on the NRI.\n• For NCs describing Networks, the UID of the app that caused this network to exist. This is used for example for WiFi p2p networks, and is different from the owner UID in that being the requestor doesn\u0027t give you any particular power on that network.\n\n\nAs for removing the line, it\u0027s because it\u0027s useless – setUids() below resets the UIDs anyway. But after discussing with Lorenzo yesterday and testing, we found out that it\u0027s in fact the next line that\u0027s wrong. We should probably in fact keep setSingleUid and remove setUids(empty).",
+      "parentUuid": "b9febd5d_967b3f31",
+      "range": {
+        "startLine": 5968,
+        "startChar": 8,
+        "endLine": 5968,
+        "endChar": 41
+      },
+      "revId": "9a78f3d049c660b096e574adba03cb065d64b448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
