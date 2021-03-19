@@ -22,6 +22,30 @@
       },
       "revId": "5dde862bf86618853294df539cf821fe18a5064d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ee27cc7_8899a6a9",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-19T16:48:35Z",
+      "side": 1,
+      "message": "While it\u0027s not necessarily a baseline for \"best practice\", there is a pattern established in CellIdentity. At least it\u0027s prior art to which we can look.",
+      "parentUuid": "cc49c4e7_27314717",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 25
+      },
+      "revId": "5dde862bf86618853294df539cf821fe18a5064d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
