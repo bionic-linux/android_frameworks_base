@@ -67,9 +67,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 
 /**
  * Represents the local device Bluetooth adapter. The {@link BluetoothAdapter}
@@ -3011,6 +3013,101 @@ public final class BluetoothAdapter {
             Log.e(TAG, "", e);
         }
         return false;
+    }
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef(prefix = { "OOB_ERROR_" }, value = {
+        OOB_ERROR_UNKNOWN,
+        OOB_ERROR_ANOTHER_ACTIVE_REQUEST,
+        OOB_ERROR_ADAPTER_DISABLED
+    })
+    public @interface OobError {}
+
+    /** @hide */
+    @SystemApi
+    public static final int OOB_ERROR_UNKNOWN = 0;
+    /** @hide */
+    @SystemApi
+    public static final int OOB_ERROR_ANOTHER_ACTIVE_REQUEST = 1;
+    /** @hide */
+    @SystemApi
+    public static final int OOB_ERROR_ADAPTER_DISABLED = 2;
+
+    /** @hide */
+    @SystemApi
+    public interface IOobDataCallback {
+        /** @hide */
+        @SystemApi
+        void onOobDataReceived(int transport, @Nullable OobData oobData);
+
+        /** @hide */
+        @SystemApi
+        void onError(@OobError int errorCode);
+    }
+
+    /** @hide */
+    public class WrappedOobDataCallback extends IBluetoothOobDataCallback.Stub {
+        private final IOobDataCallback mCallback;
+        WrappedOobDataCallback(@NonNull IOobDataCallback callback) {
+            Preconditions.checkNotNull(callback);
+            mCallback = callback;
+        }
+        /** @hide */
+        public void onOobDataReceived(int transport, OobData oobData) {
+            mCallback.onOobDataReceived(transport, oobData);
+        }
+        /** @hide */
+        public void onError(@OobError int errorCode) {
+            mCallback.onError(errorCode);
+        }
+    }
+
+    /**
+     * Fetches a secret data value that can be used for a secure and simple pairing experience.
+     *
+     * <p>This is the Local Out of Band data the comes from the
+     *
+     * <p>This secret is the local Out of Band data.  This data is used to securely and quickly
+     * pair two devices with minimal user interaction.
+     *
+     * <p>For example, this secret can be transferred to a remote device out of band (meaning any
+     * other way besides using bluetooth).  Once the remote device finds this device using the
+     * information given in the data, such as the PUBLIC ADDRESS, the remote device could then
+     * connect to this device using this secret when the pairing sequenece asks for the secret.
+     * This device will respond by automatically accepting the pairing due to the secret being so
+     * trustworthy.
+     *
+     * @param transport - provide type of transport (e.g. LE or Classic).
+     * @param callback - target object to receive the {@link OobData} value.
+     *
+     * @return <code>true</code> if the request is successful.
+     *
+     * @throws NullPointerException if callback is null.
+     * @throws IllegalArgumentException if the transport is not valid.
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)
+    public void getLocalOobData(int transport, @NonNull IOobDataCallback callback) {
+        if (transport < BluetoothDevice.TRANSPORT_BREDR || transport > BluetoothDevice.TRANSPORT_LE)
+            {
+            throw new IllegalArgumentException("Invalid transport '" + transport + "'!");
+        }
+        Preconditions.checkNotNull(callback);
+        if (!isEnabled()) {
+            if (DBG) {
+                Log.d(TAG, "getLocalOobData(): Adapter isn't enabled!");
+            }
+            callback.onError(OOB_ERROR_ADAPTER_DISABLED);
+        } else {
+            try {
+                mService.getLocalOobData(transport, new WrappedOobDataCallback(callback));
+            } catch (RemoteException e) {
+                Log.e(TAG, "", e);
+            }
+        }
     }
 
     /**
