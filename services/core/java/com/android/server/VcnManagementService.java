@@ -36,7 +36,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
-import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
@@ -717,19 +716,23 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         });
     }
 
-    private int getSubIdForNetworkCapabilities(@NonNull NetworkCapabilities networkCapabilities) {
-        if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                && networkCapabilities.getNetworkSpecifier() instanceof TelephonyNetworkSpecifier) {
-            TelephonyNetworkSpecifier telephonyNetworkSpecifier =
-                    (TelephonyNetworkSpecifier) networkCapabilities.getNetworkSpecifier();
-            return telephonyNetworkSpecifier.getSubscriptionId();
-        } else if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                && networkCapabilities.getTransportInfo() instanceof WifiInfo) {
-            WifiInfo wifiInfo = (WifiInfo) networkCapabilities.getTransportInfo();
-            return mDeps.getSubIdForWifiInfo(wifiInfo);
+    private ParcelUuid getSubGroupForNetworkCapabilities(
+            @NonNull NetworkCapabilities networkCapabilities) {
+        ParcelUuid subGrp = null;
+        synchronized (mLock) {
+            // If multiple subscription IDs exist, they MUST all point to the same subscription
+            // group. Otherwise undefined behavior may occur.
+            for (int subId : networkCapabilities.getSubIds()) {
+                // Verify that all subscriptions point to the same group
+                if (subGrp != null && !subGrp.equals(mLastSnapshot.getGroupForSubId(subId))) {
+                    Slog.wtf(TAG, "Got multiple subscription groups for a single network");
+                }
+
+                subGrp = mLastSnapshot.getGroupForSubId(subId);
+            }
         }
 
-        return SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+        return subGrp;
     }
 
     /**
@@ -754,23 +757,19 @@ public class VcnManagementService extends IVcnManagementService.Stub {
             // mutates
             final NetworkCapabilities ncCopy = new NetworkCapabilities(networkCapabilities);
 
-            final int subId = getSubIdForNetworkCapabilities(ncCopy);
+            final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
             boolean isVcnManagedNetwork = false;
             boolean isRestrictedCarrierWifi = false;
-            if (subId != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
-                synchronized (mLock) {
-                    ParcelUuid subGroup = mLastSnapshot.getGroupForSubId(subId);
+            synchronized (mLock) {
+                final Vcn vcn = mVcns.get(subGrp);
+                if (vcn != null) {
+                    if (vcn.isActive()) {
+                        isVcnManagedNetwork = true;
+                    }
 
-                    final Vcn vcn = mVcns.get(subGroup);
-                    if (vcn != null) {
-                        if (vcn.isActive()) {
-                            isVcnManagedNetwork = true;
-                        }
-
-                        if (ncCopy.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                            // Carrier WiFi always restricted if VCN exists (even in safe mode).
-                            isRestrictedCarrierWifi = true;
-                        }
+                    if (ncCopy.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        // Carrier WiFi always restricted if VCN exists (even in safe mode).
+                        isRestrictedCarrierWifi = true;
                     }
                 }
             }
