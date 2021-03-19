@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bae07045_94ffadc6",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-19T14:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6452534_2f1b5291",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "1018b220c7e7fa7013e9a44843f26e02aa62f79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "845cd740_5f08ccbd",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-19T13:40:49Z",
       "side": 1,
       "message": "This is no longer used, can you take this opportunity to remove this constant please ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 75
+      },
+      "revId": "1018b220c7e7fa7013e9a44843f26e02aa62f79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "333af92d_821cb5bb",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-19T14:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "845cd740_5f08ccbd",
       "range": {
         "startLine": 101,
         "startChar": 0,
