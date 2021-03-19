@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c5357c8_7f711545",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T22:53:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b7af95e_e8457b9b",
+      "range": {
+        "startLine": 80,
+        "startChar": 68,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "b72abd881ea9e6ab8b28e852e8a664f0048e071f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "689d5d8f_dc9230fc",
@@ -204,6 +228,30 @@
       "writtenOn": "2021-03-19T05:13:46Z",
       "side": 1,
       "message": "Not sure this line has any effect ultimately since line 353 is the only call to getAndClearRebootEscrowKey. When null is returned from here, mLoadEscrowDataErrorCode is immediately set to ERROR_LOAD_ESCROW_KEY afterwards in 361, effectively masking this error code. No logging or metric reporting makes use of mLoadEscrowDataErrorCode in between these two places where it\u0027s set.",
+      "range": {
+        "startLine": 458,
+        "startChar": 12,
+        "endLine": 458,
+        "endChar": 57
+      },
+      "revId": "b72abd881ea9e6ab8b28e852e8a664f0048e071f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1abd2ec5_d863ef76",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T22:53:17Z",
+      "side": 1,
+      "message": "good point. Added a new function to only set the errorCode if unset.",
+      "parentUuid": "0cf8ef9f_21cc9925",
       "range": {
         "startLine": 458,
         "startChar": 12,
