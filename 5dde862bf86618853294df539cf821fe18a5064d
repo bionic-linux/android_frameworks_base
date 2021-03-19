@@ -46,6 +46,30 @@
       },
       "revId": "5dde862bf86618853294df539cf821fe18a5064d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24cf90e8_cc1ac92b",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-03-19T19:13:05Z",
+      "side": 1,
+      "message": "We want to a copy of the object, with two reasons:\n1. The sanitized config list will be a copy list of original configs which should not be polluted.\n2. PhysicalChannelConfig is designed as an effective immutable class. We don\u0027t want to break it.\n\nMost other class use ctor with train parameters to construct the new object. But since we already have builder, it is really not a choice.\n\nHunter\u0027s idea for the copy ctor Builder(config) is great. It almost keep all current benefit. We don\u0027t even need to introduce clearPhysicalCellId, since the Builder has setXXX methods already.\n\nThanks",
+      "parentUuid": "9ee27cc7_8899a6a9",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 25
+      },
+      "revId": "5dde862bf86618853294df539cf821fe18a5064d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
