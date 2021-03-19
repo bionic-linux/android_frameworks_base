@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a08601b4_2bd1e661",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-03-19T19:22:09Z",
+      "side": 1,
+      "message": "Nathan, opinions on having this here vs. in a PhysicalChannelConfig#sanitizeLocationInfo method?\n\nCellIdentity has the method in its own class.",
+      "range": {
+        "startLine": 2420,
+        "startChar": 33,
+        "endLine": 2421,
+        "endChar": 54
+      },
+      "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
