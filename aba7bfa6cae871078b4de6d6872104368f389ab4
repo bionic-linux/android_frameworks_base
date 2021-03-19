@@ -22,6 +22,30 @@
       },
       "revId": "aba7bfa6cae871078b4de6d6872104368f389ab4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1e03f12_1fbff055",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-19T12:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "302137f6_1b45d73d",
+      "range": {
+        "startLine": 365,
+        "startChar": 0,
+        "endLine": 366,
+        "endChar": 83
+      },
+      "revId": "aba7bfa6cae871078b4de6d6872104368f389ab4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
