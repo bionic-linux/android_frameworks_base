@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc49c4e7_27314717",
+        "filename": "telephony/java/android/telephony/PhysicalChannelConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-03-19T01:44:22Z",
+      "side": 1,
+      "message": "This is fairly far away from the ctor and builder and it\u0027s trying to copy every single field manually. I\u0027d imagine it\u0027ll be pretty easy for somebody to add a new field to the builder and instance variables but forget to copy it here, particularly since this may or may not be used when returning values to apps.\n\nA couple options we could do to avoid that:\n1. Instead of returning a copy, just set mPhysicalCellId \u003d PHYSICAL_CELL_ID_UNKNOWN on this instance, make this method void\n2. If we can\u0027t edit this exact instance and must make a copy, add an @hide Builder(PhysicalChannelConfig) copy ctor to the builder, then add a Builder#clearPhysicalCellId method. Then this method can just be `return new Builder(this).clearPhysicalCellId().build()`.",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 25
+      },
+      "revId": "5dde862bf86618853294df539cf821fe18a5064d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
