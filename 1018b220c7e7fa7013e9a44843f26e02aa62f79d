@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6452534_2f1b5291",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T13:40:49Z",
+      "side": 1,
+      "message": "This is used in DataConnection to signify that there was no such slot. It can only happen when there is a programming error. I think usage of this in DataConnection is incorrect.\n\nInstead of exposing this, can you make a new error constant, ERROR_NO_SUCH_SLOT, that would be @SystemApi and use it in DataConnection ? Document that it should never be sent to apps, and please treat it like STOP_REASON_UNINITIALIZED in cleanupStoppedKeepalive and throw.",
+      "range": {
+        "startLine": 69,
+        "startChar": 28,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "1018b220c7e7fa7013e9a44843f26e02aa62f79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "845cd740_5f08ccbd",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-19T13:40:49Z",
+      "side": 1,
+      "message": "This is no longer used, can you take this opportunity to remove this constant please ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 75
+      },
+      "revId": "1018b220c7e7fa7013e9a44843f26e02aa62f79d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
