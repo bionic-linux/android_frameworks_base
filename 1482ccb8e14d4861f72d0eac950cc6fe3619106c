@@ -85,6 +85,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "250b918c_05bc41ed",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T21:23:35Z",
+      "side": 1,
+      "message": "The reason I raised this issue is that I don\u0027t see where else an IO error related the to the SharedPreference file would surface to begin with. Eg: in the case that \"RecoverySystemMetricsPrefs.xml\" fails to be opened, does this class just fail silently (nothing is written to disk but no failure is logged either).",
+      "parentUuid": "010546d1_563ca2af",
+      "range": {
+        "startLine": 197,
+        "startChar": 58,
+        "endLine": 197,
+        "endChar": 64
+      },
+      "revId": "1482ccb8e14d4861f72d0eac950cc6fe3619106c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "35855c8f_b6e2950d",
         "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
         "patchSetId": 5

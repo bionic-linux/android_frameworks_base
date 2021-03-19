@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c211f6a9_423330f9",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T21:23:35Z",
+      "side": 1,
+      "message": "seconds",
+      "range": {
+        "startLine": 767,
+        "startChar": 70,
+        "endLine": 767,
+        "endChar": 78
+      },
+      "revId": "f84b380c8c2a783479aba8de2389043c459e037f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
