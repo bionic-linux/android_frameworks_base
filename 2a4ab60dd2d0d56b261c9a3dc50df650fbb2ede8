@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2e168dc_3e9b446c",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T02:24:36Z",
+      "side": 1,
+      "message": "I don\u0027t think the synchronized here will solve the issue of race conditions, since it\u0027s a get___() then a subsequent set___() that is the issue. But I realize data race issues might not be likely in the first place, so maybe these \"synchronized\" tags aren\u0027t necessary at all. More on that in the comment below.",
+      "range": {
+        "startLine": 186,
+        "startChar": 15,
+        "endLine": 186,
+        "endChar": 27
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37298193_f7a65d38",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T02:24:36Z",
+      "side": 1,
+      "message": "This version is still not thread safe since the read and the write are only individually atomic but this whole increment operation isn\u0027t. The intention of the original comment was to wrap these two lines in a synchronized block or create a new (synchronized) method in SharedPreferences that does this increment atomically. \n\nHowever, you pointed out that data races for these counters are not likely to happen since the key is unique to each package, and I assume it\u0027s implied that it\u0027s unlikely to have 2 concurrent callers from the same package, so I think I think this block is fine.",
+      "range": {
+        "startLine": 498,
+        "startChar": 8,
+        "endLine": 499,
+        "endChar": 81
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38a4a225_b9b9a98b",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T02:24:36Z",
+      "side": 1,
+      "message": "This is counter increment is actually more vulnerable to race conditions than the one in reportMetricsOnRequestLskf since it is the same key across all callers, but if it\u0027s unlikely for onPreparedForReboot to be called by two clients concurrently, then this is a non-issue.",
+      "range": {
+        "startLine": 570,
+        "startChar": 8,
+        "endLine": 571,
+        "endChar": 61
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c93587b_579778de",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T02:24:36Z",
+      "side": 1,
+      "message": "Similar suggestions (to line 576):\n - Should add time unit to the variable name for clarity.\n - This field is only ever used for seconds and as an integer, so I would suggest making it an integer seconds field to begin with and adjust the difference math below accordingly.",
+      "range": {
+        "startLine": 752,
+        "startChar": 13,
+        "endLine": 752,
+        "endChar": 21
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16bdf20e_63ec8332",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T02:24:36Z",
+      "side": 1,
+      "message": "At this point, the number of requests should be known, so it would be better to keep use a specific check, like eq(2).",
+      "range": {
+        "startLine": 457,
+        "startChar": 42,
+        "endLine": 457,
+        "endChar": 51
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "213510e3_eba05982",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1783615
+      },
+      "writtenOn": "2021-03-19T02:24:36Z",
+      "side": 1,
+      "message": "Also use a specific check if possible. Does the value of this depend on testing environment that is not within the control of this test?",
+      "range": {
+        "startLine": 458,
+        "startChar": 16,
+        "endLine": 458,
+        "endChar": 28
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
