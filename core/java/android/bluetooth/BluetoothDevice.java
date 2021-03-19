@@ -1063,6 +1063,10 @@ public final class BluetoothDevice implements Parcelable {
         public void onBrEdrDown() {
             if (DBG) Log.d(TAG, "onBrEdrDown: reached BLE ON state");
         }
+
+        public void onOobDataReceived(int transport, OobData oobData) {
+            if (DBG) Log.d(TAG, "onOobDataReceived: got data");
+        }
     };
 
     /**

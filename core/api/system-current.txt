@@ -1481,6 +1481,7 @@ package android.bluetooth {
     method public boolean enableBLE();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean enableNoAutoConnect();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public long getDiscoveryEndMillis();
+    method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public void getLocalOobData(int, @NonNull android.bluetooth.BluetoothAdapter.IOobDataCallback);
     method public boolean isBleScanAlwaysAvailable();
     method public boolean isLeEnabled();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED) public boolean removeActiveDevice(int);
@@ -1491,6 +1492,14 @@ package android.bluetooth {
     field public static final int ACTIVE_DEVICE_ALL = 2; // 0x2
     field public static final int ACTIVE_DEVICE_AUDIO = 0; // 0x0
     field public static final int ACTIVE_DEVICE_PHONE_CALL = 1; // 0x1
+    field public static final int OOB_ERROR_ADAPTER_DISABLED = 2; // 0x2
+    field public static final int OOB_ERROR_ANOTHER_ACTIVE_REQUEST = 1; // 0x1
+    field public static final int OOB_ERROR_UNKOWN = 0; // 0x0
+  }
+
+  public static interface BluetoothAdapter.IOobDataCallback {
+    method public void onError(int);
+    method public void onOobDataReceived(int, @Nullable android.bluetooth.OobData);
   }
 
   public static interface BluetoothAdapter.OnMetadataChangedListener {
