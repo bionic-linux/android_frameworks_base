@@ -36,7 +36,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.NetworkCapabilities;
-import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.IVcnManagementService;
 import android.net.vcn.IVcnStatusCallback;
 import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
@@ -716,15 +715,10 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     }
 
     private int getSubIdForNetworkCapabilities(@NonNull NetworkCapabilities networkCapabilities) {
-        if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                && networkCapabilities.getNetworkSpecifier() instanceof TelephonyNetworkSpecifier) {
-            TelephonyNetworkSpecifier telephonyNetworkSpecifier =
-                    (TelephonyNetworkSpecifier) networkCapabilities.getNetworkSpecifier();
-            return telephonyNetworkSpecifier.getSubscriptionId();
-        } else if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
-                && networkCapabilities.getTransportInfo() instanceof WifiInfo) {
-            WifiInfo wifiInfo = (WifiInfo) networkCapabilities.getTransportInfo();
-            return mDeps.getSubIdForWifiInfo(wifiInfo);
+        if (!networkCapabilities.getSubIds().isEmpty()) {
+            // Get any in subId list; if more than one exists, they should be in the same
+            // subscription group anyways.
+            return networkCapabilities.getSubIds().iterator().next();
         }
 
         return SubscriptionManager.INVALID_SUBSCRIPTION_ID;
