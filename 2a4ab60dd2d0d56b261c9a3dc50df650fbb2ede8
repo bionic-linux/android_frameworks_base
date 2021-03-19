@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b2e5777_3dec710d",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T06:13:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2e168dc_3e9b446c",
+      "range": {
+        "startLine": 186,
+        "startChar": 15,
+        "endLine": 186,
+        "endChar": 27
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "37298193_f7a65d38",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-19T02:24:36Z",
       "side": 1,
       "message": "This version is still not thread safe since the read and the write are only individually atomic but this whole increment operation isn\u0027t. The intention of the original comment was to wrap these two lines in a synchronized block or create a new (synchronized) method in SharedPreferences that does this increment atomically. \n\nHowever, you pointed out that data races for these counters are not likely to happen since the key is unique to each package, and I assume it\u0027s implied that it\u0027s unlikely to have 2 concurrent callers from the same package, so I think I think this block is fine.",
+      "range": {
+        "startLine": 498,
+        "startChar": 8,
+        "endLine": 499,
+        "endChar": 81
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42e9da9e_75370908",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T06:13:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "37298193_f7a65d38",
       "range": {
         "startLine": 498,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dff1d40_07811db3",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T06:13:10Z",
+      "side": 1,
+      "message": "Done, add a sync function to increment the counter. \n\nI also think we should clear these counters at reboot.... Maybe I will copy gmscore\u0027s reboot detect logic here.",
+      "parentUuid": "38a4a225_b9b9a98b",
+      "range": {
+        "startLine": 570,
+        "startChar": 8,
+        "endLine": 571,
+        "endChar": 61
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c93587b_579778de",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-19T02:24:36Z",
       "side": 1,
       "message": "Similar suggestions (to line 576):\n - Should add time unit to the variable name for clarity.\n - This field is only ever used for seconds and as an integer, so I would suggest making it an integer seconds field to begin with and adjust the difference math below accordingly.",
+      "range": {
+        "startLine": 752,
+        "startChar": 13,
+        "endLine": 752,
+        "endChar": 21
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "397799de_68b07ae5",
+        "filename": "services/core/java/com/android/server/recoverysystem/RecoverySystemService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T06:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c93587b_579778de",
       "range": {
         "startLine": 752,
         "startChar": 13,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa68f7ae_a497e7f2",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T06:13:10Z",
+      "side": 1,
+      "message": "Oh, it\u0027s because I used a mock shared prefs, so the value here is the default 0 (not very useful)",
+      "parentUuid": "16bdf20e_63ec8332",
+      "range": {
+        "startLine": 457,
+        "startChar": 42,
+        "endLine": 457,
+        "endChar": 51
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "213510e3_eba05982",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-03-19T02:24:36Z",
       "side": 1,
       "message": "Also use a specific check if possible. Does the value of this depend on testing environment that is not within the control of this test?",
+      "range": {
+        "startLine": 458,
+        "startChar": 16,
+        "endLine": 458,
+        "endChar": 28
+      },
+      "revId": "2a4ab60dd2d0d56b261c9a3dc50df650fbb2ede8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "819d7007_d0a06d13",
+        "filename": "services/tests/servicestests/src/com/android/server/recoverysystem/RecoverySystemServiceTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-19T06:13:10Z",
+      "side": 1,
+      "message": "It\u0027s server based. Since it\u0027s not super important here, I didn\u0027t set up a mock.",
+      "parentUuid": "213510e3_eba05982",
       "range": {
         "startLine": 458,
         "startChar": 16,
