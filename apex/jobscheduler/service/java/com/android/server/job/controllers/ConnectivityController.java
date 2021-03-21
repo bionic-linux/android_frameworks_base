@@ -28,7 +28,6 @@ import android.net.ConnectivityManager.NetworkCallback;
 import android.net.INetworkPolicyListener;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
 import android.net.NetworkPolicyManager;
 import android.net.NetworkRequest;
 import android.os.Handler;
@@ -462,10 +461,8 @@ public final class ConnectivityController extends RestrictingController implemen
         // TODO: consider matching against non-active networks
 
         final boolean ignoreBlocked = (jobStatus.getFlags() & JobInfo.FLAG_WILL_BE_FOREGROUND) != 0;
-        final NetworkInfo info = mConnManager.getNetworkInfoForUid(network,
-                jobStatus.getSourceUid(), ignoreBlocked);
 
-        final boolean connected = (info != null) && info.isConnected();
+        final boolean connected = (getNetworkCapabilities(network) != null);
         final boolean satisfied = isSatisfied(jobStatus, network, capabilities, mConstants);
 
         final boolean changed = jobStatus
