@@ -46,6 +46,30 @@
       },
       "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9144273b_71dc0746",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-03-22T19:57:28Z",
+      "side": 1,
+      "message": "ok, the security consideration is strong reason to put sanitizeLocationInfo method into PCC instead of outside.\nThanks",
+      "parentUuid": "30eb47df_72deb787",
+      "range": {
+        "startLine": 2420,
+        "startChar": 33,
+        "endLine": 2421,
+        "endChar": 54
+      },
+      "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
