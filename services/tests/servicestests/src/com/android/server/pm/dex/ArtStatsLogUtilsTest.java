@@ -67,7 +67,7 @@ public final class ArtStatsLogUtilsTest {
     public static void setUpAll() throws IOException {
         TEST_DIR = Files.createTempDirectory(null);
         DEX = Files.createFile(TEST_DIR.resolve("classes.dex"));
-        NON_DEX = Files.createFile(TEST_DIR.resolve("test.dex"));
+        NON_DEX = Files.createFile(TEST_DIR.resolve("test.txt"));
         Files.write(DEX, DEX_CONTENT);
         Files.write(NON_DEX, "empty".getBytes());
     }
@@ -239,6 +239,14 @@ public final class ArtStatsLogUtilsTest {
                 COMPILER_FILTER,
                 ArtStatsLog.ART_DATUM_REPORTED__KIND__ART_DATUM_DEX2OAT_RESULT_CODE,
                 RESULT_CODE,
+                dexMetadataType);
+        inorder.verify(mockLogger).write(
+                SESSION_ID,
+                UID,
+                COMPILATION_REASON,
+                COMPILER_FILTER,
+                ArtStatsLog.ART_DATUM_REPORTED__KIND__ART_DATUM_DEX2OAT_DEX_CODE_BYTES,
+                DEX_CONTENT.length,
                 dexMetadataType);
         inorder.verify(mockLogger).write(
                 SESSION_ID,
