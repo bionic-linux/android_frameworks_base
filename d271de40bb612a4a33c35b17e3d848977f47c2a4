@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a0a2871_11563920",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/controllers/ConnectivityController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T08:40:24Z",
+      "side": 1,
+      "message": "This value is now unused, however the associated functionality is not being taken on board.\n\nYou can know whether the UID is blocked by calling NetworkPolicyManager#isUidNetworkingBlocked. Something like :\n\n  final boolean blocked \u003d ignoreBlocked || mNetworkPolicyManager.isUidNetworkingBlocked(jobStatus.calingUid);\n  connectedAndNotBlocked \u003d !blocked \u0026\u0026 getNetworkCaps() !\u003d null",
+      "range": {
+        "startLine": 463,
+        "startChar": 8,
+        "endLine": 463,
+        "endChar": 100
+      },
+      "revId": "d271de40bb612a4a33c35b17e3d848977f47c2a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
