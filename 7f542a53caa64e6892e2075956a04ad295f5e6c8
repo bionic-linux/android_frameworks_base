@@ -22,6 +22,30 @@
       },
       "revId": "7f542a53caa64e6892e2075956a04ad295f5e6c8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72e3d26a_f9c326e5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5757,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T07:01:14Z",
+      "side": 1,
+      "message": "The intent of the next patch was to maintain requestorUid and asUid separate. One important reason for this is that requestorUid must match requestorPackageName - that is checked when delivering a callback (and when redacting networkcapabilities).\n\nI may be missing something here though. Let\u0027s chat?",
+      "parentUuid": "aea7e44a_7f46e4e7",
+      "range": {
+        "startLine": 5756,
+        "startChar": 67,
+        "endLine": 5757,
+        "endChar": 93
+      },
+      "revId": "7f542a53caa64e6892e2075956a04ad295f5e6c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
