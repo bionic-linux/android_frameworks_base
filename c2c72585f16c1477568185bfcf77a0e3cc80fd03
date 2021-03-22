@@ -22,6 +22,30 @@
       },
       "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30eb47df_72deb787",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-22T18:24:10Z",
+      "side": 1,
+      "message": "Personally I prefer having this in the PCC class since it means anywhere else that needs to sanitize location can reuse that capability; if we have to know *how* to sanitize location in multiple places, that seems more likely to lead to a security bug in the future. I thought I had left a comment about this already.",
+      "parentUuid": "a08601b4_2bd1e661",
+      "range": {
+        "startLine": 2420,
+        "startChar": 33,
+        "endLine": 2421,
+        "endChar": 54
+      },
+      "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
