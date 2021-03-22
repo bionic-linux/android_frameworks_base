@@ -45,6 +45,29 @@
       },
       "revId": "a3d14561d5178d452ad0a7624b5fbb2e678aa4b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de21616d_a52d5f04",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 9583,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T09:15:46Z",
+      "side": 1,
+      "message": "I don\u0027t mind this because it should be always the more correct version, but I thought the conclusion was that request.getRequestorUid() was what we wanted here because it will be INVALID_UID in the relevant case.\n\nI\u0027m happy either way, and it won\u0027t matter much",
+      "range": {
+        "startLine": 9583,
+        "startChar": 29,
+        "endLine": 9583,
+        "endChar": 47
+      },
+      "revId": "a3d14561d5178d452ad0a7624b5fbb2e678aa4b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
