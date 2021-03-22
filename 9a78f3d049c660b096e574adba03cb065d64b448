@@ -69,6 +69,54 @@
       },
       "revId": "9a78f3d049c660b096e574adba03cb065d64b448",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83edfaf8_e65c8139",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5968,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "890eac16_d1145f73",
+      "range": {
+        "startLine": 5968,
+        "startChar": 0,
+        "endLine": 5968,
+        "endChar": 42
+      },
+      "revId": "9a78f3d049c660b096e574adba03cb065d64b448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae29d8dc_def612d6",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5968,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 0,
+      "message": "This part of the change was moved to aosp/1646972 where it should be easier to review and understand.",
+      "parentUuid": "db5fa2a9_99eada85",
+      "range": {
+        "startLine": 5968,
+        "startChar": 8,
+        "endLine": 5968,
+        "endChar": 41
+      },
+      "revId": "9a78f3d049c660b096e574adba03cb065d64b448",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

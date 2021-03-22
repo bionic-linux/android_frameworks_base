@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df4b1250_ff000595",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5240,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 1,
+      "message": "Ack. Will do that in a follow-up patch if that\u0027s OK. Can you suggest something we could say, and where?",
+      "parentUuid": "e32c3036_24ba9586",
+      "range": {
+        "startLine": 5237,
+        "startChar": 6,
+        "endLine": 5240,
+        "endChar": 57
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44a4a381_0ee15f9c",
         "filename": "services/core/java/com/android/server/ConnectivityService.java",
         "patchSetId": 1
@@ -71,6 +95,30 @@
       "writtenOn": "2021-03-18T09:32:10Z",
       "side": 1,
       "message": "Does this build ? This won\u0027t be declared until the next patch.\n\n(maybe that\u0027s fine and you plan to check them in together anyway)",
+      "range": {
+        "startLine": 5581,
+        "startChar": 16,
+        "endLine": 5581,
+        "endChar": 21
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b475634c_3cadfb95",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5581,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44a4a381_0ee15f9c",
       "range": {
         "startLine": 5581,
         "startChar": 16,
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a51c3d82_0861baeb",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5609,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d832e81d_6997933e",
+      "range": {
+        "startLine": 5609,
+        "startChar": 8,
+        "endLine": 5609,
+        "endChar": 13
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b26598c9_f4b58159",
@@ -117,6 +189,30 @@
       "writtenOn": "2021-03-18T09:32:10Z",
       "side": 1,
       "message": "Likewise, and below",
+      "range": {
+        "startLine": 5946,
+        "startChar": 8,
+        "endLine": 5946,
+        "endChar": 13
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2d9c83f_e33e3e21",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5946,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b26598c9_f4b58159",
       "range": {
         "startLine": 5946,
         "startChar": 8,
@@ -150,6 +246,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "603e9ce2_27f5af74",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5967,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed90d447_62c70406",
+      "range": {
+        "startLine": 5967,
+        "startChar": 64,
+        "endLine": 5967,
+        "endChar": 80
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e87abff7_6a081d87",
@@ -173,6 +293,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7309ed76_79662a54",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9263,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 1,
+      "message": "Given that the existing code sets requestorPackageName by looking at callbackRequest.mRequests.get(0), it seems better to use that for everything. Done.",
+      "parentUuid": "e87abff7_6a081d87",
+      "range": {
+        "startLine": 9263,
+        "startChar": 28,
+        "endLine": 9263,
+        "endChar": 40
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "296d38d0_e4c230ee",
@@ -186,6 +330,30 @@
       "writtenOn": "2021-03-18T09:32:10Z",
       "side": 1,
       "message": "Not sure that\u0027s useful ; this method is always called on the handler thread, so it\u0027s always the system server.",
+      "range": {
+        "startLine": 9368,
+        "startChar": 42,
+        "endLine": 9368,
+        "endChar": 63
+      },
+      "revId": "1130dd36424463b9ea97200bb522f7bdcbae25fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "848bda9a_2f7e535c",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9368,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T06:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296d38d0_e4c230ee",
       "range": {
         "startLine": 9368,
         "startChar": 42,
