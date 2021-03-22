@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab618256_6dd06ec1",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-03-22T23:35:58Z",
+      "side": 1,
+      "message": "Can you add tests for the vbmeta digest status code ?",
+      "range": {
+        "startLine": 392,
+        "startChar": 0,
+        "endLine": 419,
+        "endChar": 5
+      },
+      "revId": "aec4f406dfe00f1c456db4fc3bba55628fda0b26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df3c5354_db46bcdb",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-03-22T23:35:58Z",
+      "side": 1,
+      "message": "no need since the inner function doesn\u0027t set the error code ?",
+      "range": {
+        "startLine": 435,
+        "startChar": 24,
+        "endLine": 435,
+        "endChar": 62
+      },
+      "revId": "aec4f406dfe00f1c456db4fc3bba55628fda0b26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
