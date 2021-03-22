@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aea7e44a_7f46e4e7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5757,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T06:45:32Z",
+      "side": 1,
+      "message": "Really ? I don\u0027t think it should be – I think both should point to the effective app.\n\nIn requests really this is used by WiFi P2P, and I guess you can\u0027t really use that code path when requesting on behalf of an app. But if you could, requestorUid should definitely be the app on behalf of which the request is called.\n\nUnless the next patch (which implements the \"file on behalf\" part) updates this comment, I think the comment will become incorrect. If it doesn\u0027t, then I think the behavior will be incorrect, even if at this point there will probably be no user-visible impact.\n\nThe same applies on methods below.",
+      "range": {
+        "startLine": 5756,
+        "startChar": 67,
+        "endLine": 5757,
+        "endChar": 93
+      },
+      "revId": "7f542a53caa64e6892e2075956a04ad295f5e6c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
