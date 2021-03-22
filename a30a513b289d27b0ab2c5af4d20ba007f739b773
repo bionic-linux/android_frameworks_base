@@ -156,6 +156,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "982a9c05_81ca183a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5534,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T08:11:45Z",
+      "side": 1,
+      "message": "What validation would we want to perform? I don\u0027t think we need to do it for security purposes, since we know the caller is privileged. I also don\u0027t know if there is a way to ensure that a UID is valid.",
+      "parentUuid": "b8bc08ca_98beab7a",
+      "range": {
+        "startLine": 5534,
+        "startChar": 20,
+        "endLine": 5534,
+        "endChar": 25
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c98c28e_fb0b829c",
@@ -179,6 +203,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1f5c62a_9cf96e12",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5537,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T08:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c98c28e_fb0b829c",
+      "range": {
+        "startLine": 5537,
+        "startChar": 20,
+        "endLine": 5537,
+        "endChar": 46
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8540c24a_95e9d178",
@@ -192,6 +240,30 @@
       "writtenOn": "2021-03-18T11:01:34Z",
       "side": 1,
       "message": "Should we use asUid here?",
+      "range": {
+        "startLine": 5544,
+        "startChar": 35,
+        "endLine": 5544,
+        "endChar": 45
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b54155db_9e73e0a0",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5544,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T08:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8540c24a_95e9d178",
       "range": {
         "startLine": 5544,
         "startChar": 35,
