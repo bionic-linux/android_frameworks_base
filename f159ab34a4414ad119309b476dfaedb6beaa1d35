@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a72421ae_a4c94200",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-22T06:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67e08afb_a1330619",
+      "range": {
+        "startLine": 58,
+        "startChar": 72,
+        "endLine": 58,
+        "endChar": 84
+      },
+      "revId": "f159ab34a4414ad119309b476dfaedb6beaa1d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3447c057_2a912c07",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5b5e8d0_289f3d63",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-22T06:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3447c057_2a912c07",
+      "range": {
+        "startLine": 58,
+        "startChar": 86,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "f159ab34a4414ad119309b476dfaedb6beaa1d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da6a02a2_18edb1aa",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-03-22T02:56:46Z",
       "side": 1,
       "message": "s/The Binder is Died/The binder died/",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "f159ab34a4414ad119309b476dfaedb6beaa1d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4a998cb_183591b8",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-22T06:25:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6a02a2_18edb1aa",
       "range": {
         "startLine": 80,
         "startChar": 7,
