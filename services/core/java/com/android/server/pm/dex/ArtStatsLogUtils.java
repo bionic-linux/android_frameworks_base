@@ -146,9 +146,64 @@ public class ArtStatsLogUtils {
                 uid,
                 compilationReason,
                 compilerFilter,
+                ArtStatsLog.ART_DATUM_REPORTED__KIND__ART_DATUM_DEX2OAT_DEX_CODE_BYTES,
+                getDexBytes(path),
+                dexMetadataType);
+        logger.write(
+                sessionId,
+                uid,
+                compilationReason,
+                compilerFilter,
                 ArtStatsLog.ART_DATUM_REPORTED__KIND__ART_DATUM_DEX2OAT_TOTAL_TIME,
                 compileTime,
                 dexMetadataType);
+    }
+
+    private static long getDexBytes(String apkPath) {
+        StrictJarFile jarFile = null;
+        long dexBytes = 0;
+        try {
+            jarFile = new StrictJarFile(apkPath,
+                    /*verify=*/ false,
+                    /*signatureSchemeRollbackProtectionsEnforced=*/ false);
+            Iterator<ZipEntry> it = jarFile.iterator();
+            while (it.hasNext()) {
+                ZipEntry entry = it.next();
+                if (isClassesDexFile(entry.getName())) {
+                    dexBytes += entry.getSize();
+                }
+            }
+            return dexBytes;
+        } catch (IOException ignore) {
+            Slog.e(TAG, "Error when parsing APK " + apkPath);
+            return -1L;
+        } finally {
+            try {
+                if (jarFile != null) {
+                    jarFile.close();
+                }
+            } catch (IOException ignore) {
+            }
+        }
+    }
+
+    /** Checks if the filename is a classes dex (e.g. classes.dex, classes1.dex) */
+    private static boolean isClassesDexFile(String filename) {
+      String prefix = "classes";
+      String suffix = ".dex";
+      if (!filename.startsWith(prefix)) {
+        return false;
+      }
+      if (!filename.endsWith(suffix)) {
+        return false;
+      }
+
+      for (int i = prefix.length(); i < filename.length() - suffix.length(); i++) {
+        if (!Character.isDigit(filename.charAt(i))) {
+          return false;
+        }
+      }
+      return true;
     }
 
     private static int getDexMetadataType(String dexMetadataPath) {
