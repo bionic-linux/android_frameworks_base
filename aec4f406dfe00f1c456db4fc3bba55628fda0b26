@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b09d363_e5ccdeb9",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-22T23:41:44Z",
+      "side": 1,
+      "message": "It\u0027s checked in loadRebootEscrowDataIfAvailable_OTAFromBeforeArmedStatus_SuccessMetrics (L628)",
+      "parentUuid": "ab618256_6dd06ec1",
+      "range": {
+        "startLine": 392,
+        "startChar": 0,
+        "endLine": 419,
+        "endChar": 5
+      },
+      "revId": "aec4f406dfe00f1c456db4fc3bba55628fda0b26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df3c5354_db46bcdb",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-22T23:35:58Z",
       "side": 1,
       "message": "no need since the inner function doesn\u0027t set the error code ?",
+      "range": {
+        "startLine": 435,
+        "startChar": 24,
+        "endLine": 435,
+        "endChar": 62
+      },
+      "revId": "aec4f406dfe00f1c456db4fc3bba55628fda0b26",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc0a6820_62a30f73",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-22T23:41:44Z",
+      "side": 1,
+      "message": "This one is the catch all case, so I leave it there.",
+      "parentUuid": "df3c5354_db46bcdb",
       "range": {
         "startLine": 435,
         "startChar": 24,
