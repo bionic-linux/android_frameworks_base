@@ -94,6 +94,30 @@
       },
       "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c360d9cc_5ca15ffb",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-03-22T23:14:49Z",
+      "side": 1,
+      "message": "The method name is perfect for what is doing here. It almost makes the javadoc redundant :-)\n\nI remembered in vague we already have a similar method doing the similar thing, but did not catch it after searching for a while. Thanks for pointing it out.",
+      "parentUuid": "86053bb4_9f79f799",
+      "range": {
+        "startLine": 2420,
+        "startChar": 33,
+        "endLine": 2421,
+        "endChar": 54
+      },
+      "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
