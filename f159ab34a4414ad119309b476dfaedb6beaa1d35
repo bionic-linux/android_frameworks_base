@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8759ba5f_40c7cc3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T02:56:46Z",
+      "side": 1,
+      "message": "Code is fine but please fix the new incorrect comments",
+      "revId": "f159ab34a4414ad119309b476dfaedb6beaa1d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67e08afb_a1330619",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T02:56:46Z",
+      "side": 1,
+      "message": "s/no any error/no error/",
+      "range": {
+        "startLine": 58,
+        "startChar": 72,
+        "endLine": 58,
+        "endChar": 84
+      },
+      "revId": "f159ab34a4414ad119309b476dfaedb6beaa1d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3447c057_2a912c07",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T02:56:46Z",
+      "side": 1,
+      "message": "Of course it does. This does propagate to apps. Most constants in this file do ; please remove the new comments that you added that these constants are internal and don\u0027t propagate : NO_KEEPALIVE, STOP_REASON_UNINITIALIZED and NO_SUCH_SLOTS are the only ones that don\u0027t propagate to apps. Everything else propagates.\n\nHonestly I think the old comments were fine.",
+      "range": {
+        "startLine": 58,
+        "startChar": 86,
+        "endLine": 59,
+        "endChar": 36
+      },
+      "revId": "f159ab34a4414ad119309b476dfaedb6beaa1d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da6a02a2_18edb1aa",
+        "filename": "packages/Connectivity/framework/src/android/net/SocketKeepalive.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T02:56:46Z",
+      "side": 1,
+      "message": "s/The Binder is Died/The binder died/",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "f159ab34a4414ad119309b476dfaedb6beaa1d35",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
