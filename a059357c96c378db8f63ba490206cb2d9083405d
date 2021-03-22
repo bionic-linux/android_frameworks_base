@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bef3fcbc_d754c5b0",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-03-22T18:35:02Z",
+      "side": 1,
+      "message": "This makes code much harder to read and understand. Is this to specifically support the use case in:\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1647333\n\nI don\u0027t see other user cases that requires this.",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "a059357c96c378db8f63ba490206cb2d9083405d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
