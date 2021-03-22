@@ -46,6 +46,30 @@
       },
       "revId": "a059357c96c378db8f63ba490206cb2d9083405d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13ff5d19_f72ad6b6",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-03-22T18:41:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the execution terminate on the first error ? Why would there be two errors triggered for a single error case ?",
+      "parentUuid": "8afaf130_edb768d0",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "a059357c96c378db8f63ba490206cb2d9083405d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
