@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6a80226_a356a284",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3698,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T09:11:07Z",
+      "side": 1,
+      "message": "I think there should be a comment on this explaining that INVALID_UID will use the UID of the caller app, because it\u0027s not super obvious. Can be done in a followup.",
+      "range": {
+        "startLine": 3698,
+        "startChar": 27,
+        "endLine": 3698,
+        "endChar": 48
+      },
+      "revId": "a3d14561d5178d452ad0a7624b5fbb2e678aa4b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbb687ec_75f9824d",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4240,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-22T09:11:07Z",
+      "side": 1,
+      "message": "Maybe you want to clarify this is the caller UID and not the passed UID here. Can be done in a followup.",
+      "range": {
+        "startLine": 4240,
+        "startChar": 74,
+        "endLine": 4240,
+        "endChar": 77
+      },
+      "revId": "a3d14561d5178d452ad0a7624b5fbb2e678aa4b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
