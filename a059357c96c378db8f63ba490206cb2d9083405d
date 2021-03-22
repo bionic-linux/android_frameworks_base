@@ -22,6 +22,30 @@
       },
       "revId": "a059357c96c378db8f63ba490206cb2d9083405d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8afaf130_edb768d0",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-22T18:38:02Z",
+      "side": 1,
+      "message": "Not really. It\u0027s trying to obtain the first error code we encountered in this cl. Otherwise, a later generic error might override the original cause.",
+      "parentUuid": "bef3fcbc_d754c5b0",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "a059357c96c378db8f63ba490206cb2d9083405d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
