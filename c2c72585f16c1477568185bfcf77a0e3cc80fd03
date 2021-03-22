@@ -70,6 +70,30 @@
       },
       "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86053bb4_9f79f799",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2421,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-22T22:58:27Z",
+      "side": 1,
+      "message": "Btw, making a new object is absolutely the right thing to do rather than mutating the original. This is what CellIdentity does today. An equivalent method that is named more clearly is in BarringInfo#createLocationInfoSanitizedCopy():\n\nhttps://source.corp.google.com/android/frameworks/base/telephony/java/android/telephony/BarringInfo.java;l\u003d325?q\u003dcreateLocationInfoSanitizedCopy\u0026ct\u003dos\u0026sq\u003dpackage:%5Eandroid$",
+      "parentUuid": "9144273b_71dc0746",
+      "range": {
+        "startLine": 2420,
+        "startChar": 33,
+        "endLine": 2421,
+        "endChar": 54
+      },
+      "revId": "c2c72585f16c1477568185bfcf77a0e3cc80fd03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
