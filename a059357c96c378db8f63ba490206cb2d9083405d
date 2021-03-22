@@ -70,6 +70,30 @@
       },
       "revId": "a059357c96c378db8f63ba490206cb2d9083405d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1571b2e_848b1715",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-03-22T18:48:06Z",
+      "side": 1,
+      "message": "For example, when we failed in an inner function, we don\u0027t return the error code but set mLoadEscrowDataErrorCode instead. Since it\u0027s for metrics purpose, I don\u0027t change the function structures.",
+      "parentUuid": "13ff5d19_f72ad6b6",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "a059357c96c378db8f63ba490206cb2d9083405d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
