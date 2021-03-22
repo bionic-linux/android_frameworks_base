@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0e96c6e4_9f7ef453",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T08:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c41e9c55_c6347aae",
+      "range": {
+        "startLine": 10,
+        "startChar": 58,
+        "endLine": 10,
+        "endChar": 63
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "a72cd805_ac4d8a94",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -417,6 +441,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89b0e0bd_4a852733",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7585,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T08:52:25Z",
+      "side": 1,
+      "message": "Good catch. That was a pre-existing bug, and it\u0027s fixed in aosp/1646972.",
+      "parentUuid": "1de4f027_15105c0c",
+      "range": {
+        "startLine": 7585,
+        "startChar": 30,
+        "endLine": 7585,
+        "endChar": 67
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c40987d2_a62682b6",
@@ -430,6 +478,30 @@
       "writtenOn": "2021-03-18T12:43:16Z",
       "side": 1,
       "message": "Maybe not for this CL, should we put it into this function given that it is also one of the default callbacks?",
+      "range": {
+        "startLine": 10110,
+        "startChar": 17,
+        "endLine": 10110,
+        "endChar": 47
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "339f46c2_29aa7756",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10110,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T08:52:25Z",
+      "side": 1,
+      "message": "Added a TODO.",
+      "parentUuid": "c40987d2_a62682b6",
       "range": {
         "startLine": 10110,
         "startChar": 17,
@@ -476,6 +548,30 @@
       "writtenOn": "2021-03-18T13:27:56Z",
       "side": 1,
       "message": "Not for this CL,\n but it confused me that we have defaultNetworkCallback and registerDefaultNetworkCallbackAsUid here.\nBut we also have many similar things in registerDefaultNetworkCallbacks().\nIs it feasible to refactor them?",
+      "range": {
+        "startLine": 10337,
+        "startChar": 8,
+        "endLine": 10337,
+        "endChar": 67
+      },
+      "revId": "a30a513b289d27b0ab2c5af4d20ba007f739b773",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f4133ea_0d76f639",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10337,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-22T08:52:25Z",
+      "side": 1,
+      "message": "Ack. I agree this is confusing. I suppose we could stop using mCm.registerDefaultNetworkCallback directly and have a wrapper to call it (e.g., registerDefaultNetworkCallbackAsTestUid).",
+      "parentUuid": "47f0d905_bdf32bf3",
       "range": {
         "startLine": 10337,
         "startChar": 8,
