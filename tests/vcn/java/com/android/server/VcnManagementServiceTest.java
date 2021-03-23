@@ -19,6 +19,8 @@ package com.android.server;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.telephony.TelephonyManager.CARRIER_PRIVILEGE_STATUS_HAS_ACCESS;
+import static android.telephony.TelephonyManager.CARRIER_PRIVILEGE_STATUS_NO_ACCESS;
 
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionTrackerCallback;
@@ -239,9 +241,14 @@ public class VcnManagementServiceTest {
         doReturn(Collections.singletonList(TEST_SUBSCRIPTION_INFO))
                 .when(mSubMgr)
                 .getSubscriptionsInGroup(any());
-        doReturn(isPrivileged)
+        doReturn(mTelMgr)
                 .when(mTelMgr)
-                .hasCarrierPrivileges(eq(TEST_SUBSCRIPTION_INFO.getSubscriptionId()));
+                .createForSubscriptionId(eq(TEST_SUBSCRIPTION_INFO.getSubscriptionId()));
+        doReturn(isPrivileged
+                        ? CARRIER_PRIVILEGE_STATUS_HAS_ACCESS
+                        : CARRIER_PRIVILEGE_STATUS_NO_ACCESS)
+                .when(mTelMgr)
+                .checkCarrierPrivilegesForPackage(eq(TEST_PACKAGE_NAME));
     }
 
     @Test
@@ -392,7 +399,7 @@ public class VcnManagementServiceTest {
         mTestLooper.moveTimeForward(
                 VcnManagementService.CARRIER_PRIVILEGES_LOST_TEARDOWN_DELAY_MS / 2);
         mTestLooper.dispatchAll();
-        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2);
+        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2, TEST_PACKAGE_NAME);
         final Vcn newInstance = startAndGetVcnInstance(TEST_UUID_2);
 
         // Verify that new instance was different, and the old one was torn down
@@ -493,7 +500,7 @@ public class VcnManagementServiceTest {
         doReturn(Process.SYSTEM_UID).when(mMockDeps).getBinderCallingUid();
 
         try {
-            mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1);
+            mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1, TEST_PACKAGE_NAME);
             fail("Expected IllegalStateException exception for system server");
         } catch (IllegalStateException expected) {
         }
@@ -506,7 +513,7 @@ public class VcnManagementServiceTest {
                 .getBinderCallingUid();
 
         try {
-            mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1);
+            mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1, TEST_PACKAGE_NAME);
             fail("Expected security exception for non system user");
         } catch (SecurityException expected) {
         }
@@ -517,15 +524,24 @@ public class VcnManagementServiceTest {
         setupMockedCarrierPrivilege(false);
 
         try {
-            mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1);
+            mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1, TEST_PACKAGE_NAME);
             fail("Expected security exception for missing carrier privileges");
         } catch (SecurityException expected) {
         }
     }
 
     @Test
+    public void testClearVcnConfigMismatchedPackages() throws Exception {
+        try {
+            mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1, "IncorrectPackage");
+            fail("Expected security exception due to mismatched packages");
+        } catch (SecurityException expected) {
+        }
+    }
+
+    @Test
     public void testClearVcnConfig() throws Exception {
-        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1);
+        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_1, TEST_PACKAGE_NAME);
         assertTrue(mVcnMgmtSvc.getConfigs().isEmpty());
         verify(mConfigReadWriteHelper).writeToDisk(any(PersistableBundle.class));
     }
@@ -536,7 +552,7 @@ public class VcnManagementServiceTest {
         mVcnMgmtSvc.registerVcnStatusCallback(TEST_UUID_2, mMockStatusCallback, TEST_PACKAGE_NAME);
         verify(mMockStatusCallback).onVcnStatusChanged(VcnManager.VCN_STATUS_CODE_ACTIVE);
 
-        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2);
+        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2, TEST_PACKAGE_NAME);
 
         verify(mMockStatusCallback).onVcnStatusChanged(VcnManager.VCN_STATUS_CODE_NOT_CONFIGURED);
     }
@@ -565,7 +581,7 @@ public class VcnManagementServiceTest {
         verify(vcnInstance).updateConfig(TEST_VCN_CONFIG);
 
         // Verify Vcn is stopped if it was already started
-        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2);
+        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2, TEST_PACKAGE_NAME);
         verify(vcnInstance).teardownAsynchronously();
     }
 
@@ -782,7 +798,7 @@ public class VcnManagementServiceTest {
         mVcnMgmtSvc.setVcnConfig(TEST_UUID_2, TEST_VCN_CONFIG, TEST_PACKAGE_NAME);
         mVcnMgmtSvc.addVcnUnderlyingNetworkPolicyListener(mMockPolicyListener);
 
-        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2);
+        mVcnMgmtSvc.clearVcnConfig(TEST_UUID_2, TEST_PACKAGE_NAME);
 
         verify(mMockPolicyListener).onPolicyChanged();
     }
