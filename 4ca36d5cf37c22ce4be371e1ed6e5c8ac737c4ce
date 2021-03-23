@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "088f6022_f2b63b79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-23T10:09:26Z",
+      "side": 1,
+      "message": "It\u0027s a cherry-pick commit.",
+      "revId": "4ca36d5cf37c22ce4be371e1ed6e5c8ac737c4ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
