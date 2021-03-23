@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ea47b74_e81bb5be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-03-23T23:10:19Z",
+      "side": 1,
+      "message": "Before/after https://imgur.com/a/nmm3o1A\nThis is the first _real_ UI change, but I guess it was just a missed copy/paste scenario",
+      "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
