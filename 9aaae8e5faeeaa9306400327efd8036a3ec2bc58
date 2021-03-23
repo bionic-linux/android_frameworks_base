@@ -105,6 +105,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ede2b04_b7ef13bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-03-23T23:56:33Z",
+      "side": 1,
+      "message": "Sampath/Michael, please open a bug for making a CTS test eventually and how to do so (even if it isn\u0027t possible now. I believe the SystemApi rules of engagement would suggest the CTS location for this test). \n\nUpdate the Commit message with the following fields\n\nTest:  New API has been tested by ... (fill this in). See also b/[bug number for Test].\nBug: [bug number for the API]\n\nPerhaps Nick or Henry have other suggestions here as I am not that familiar with TV API procedures.  Thanks!",
+      "parentUuid": "ae275559_0655131c",
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97d87ee8_ac3e979a",
