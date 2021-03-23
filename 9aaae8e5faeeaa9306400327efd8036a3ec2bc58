@@ -50,6 +50,29 @@
       "message": "Hello, do the code owners have concerns approving this change?",
       "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97d87ee8_ac3e979a",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2911,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2021-03-23T10:45:55Z",
+      "side": 1,
+      "message": "It is marked as nullable. You may want to change it to NonNull or null check.\n\nFYI, https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#prefer-nonnull-arguments",
+      "range": {
+        "startLine": 2911,
+        "startChar": 74,
+        "endLine": 2911,
+        "endChar": 80
+      },
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
