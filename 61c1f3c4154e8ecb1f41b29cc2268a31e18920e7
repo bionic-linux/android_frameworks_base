@@ -16,6 +16,23 @@
       "message": "clean cp",
       "revId": "61c1f3c4154e8ecb1f41b29cc2268a31e18920e7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68da15ce_54ad8ae9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060678
+      },
+      "writtenOn": "2021-03-23T21:34:04Z",
+      "side": 1,
+      "message": "CP; copying over +2",
+      "revId": "61c1f3c4154e8ecb1f41b29cc2268a31e18920e7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
