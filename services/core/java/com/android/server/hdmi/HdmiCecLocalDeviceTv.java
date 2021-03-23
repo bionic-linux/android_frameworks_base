@@ -563,11 +563,6 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
             handleNewDeviceAtTheTailOfActivePath(path);
         }
 
-        // Add the device ahead with default information to handle <Active Source>
-        // promptly, rather than waiting till the new device action is finished.
-        HdmiDeviceInfo deviceInfo = new HdmiDeviceInfo(address, path, getPortId(path), type,
-                Constants.UNKNOWN_VENDOR_ID, HdmiUtils.getDefaultDeviceName(address));
-        addCecDevice(deviceInfo);
         startNewDeviceAction(ActiveSource.of(address, path), type);
         return true;
     }
