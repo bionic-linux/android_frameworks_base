@@ -69,6 +69,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "473a0fb0_757b4fec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1281351
+      },
+      "writtenOn": "2021-03-23T23:13:29Z",
+      "side": 1,
+      "message": "Hi Andy,\n\nWe looked into writing a CTS test for TvInputManager.overrideAudioSinkWithDevice(). Our approach was to implement a stub HdmiTvInputService and have it call that method when the call sequence is invoked by TvView.tune() at the CTS level. However, it\u0027s not clear how we can query and verify the audio patches that are created when the correct operation happens because we have no access (that I know of) to the current audio patches that are active through the AudioManager API. Do you know of any alternative approaches we could take?\n\nThere doesn\u0027t seem to be a CTS test for the existing overrideAudioSink() method. Given the relatedness of the methods, do you think it is acceptable to leave overrideAudioSinkWithDevice() without any CTS tests?\n\nRegards, Michael",
+      "parentUuid": "eb3e19ca_25733143",
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97d87ee8_ac3e979a",
@@ -82,6 +100,30 @@
       "writtenOn": "2021-03-23T10:45:55Z",
       "side": 1,
       "message": "It is marked as nullable. You may want to change it to NonNull or null check.\n\nFYI, https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#prefer-nonnull-arguments",
+      "range": {
+        "startLine": 2911,
+        "startChar": 74,
+        "endLine": 2911,
+        "endChar": 80
+      },
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f87bd2e_aee269a4",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2911,
+      "author": {
+        "id": 1281351
+      },
+      "writtenOn": "2021-03-23T23:13:29Z",
+      "side": 1,
+      "message": "I think NonNull makes sense. I\u0027ll make this change.",
+      "parentUuid": "97d87ee8_ac3e979a",
       "range": {
         "startLine": 2911,
         "startChar": 74,
