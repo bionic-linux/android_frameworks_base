@@ -87,6 +87,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae275559_0655131c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1633017
+      },
+      "writtenOn": "2021-03-23T23:25:38Z",
+      "side": 1,
+      "message": "New API has been tested using our internal mock HAL implementation for the HDMI input. We run the CTS test \"CtsTvTestCases:BundledTvInputServiceTest#testTune\" to tune and confirm from the log that, MSD patch is created:\n\n\"APM_AudioPolicyManager: createAudioPatchInternal sink 0: id 9 role 2 type 1\n      with the id 9 referring to the BUS output device\"",
+      "parentUuid": "473a0fb0_757b4fec",
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97d87ee8_ac3e979a",
