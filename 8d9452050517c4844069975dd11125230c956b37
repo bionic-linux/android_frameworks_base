@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d12c22_ba6e6d44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-03-23T23:08:18Z",
+      "side": 1,
+      "message": "https://imgur.com/a/wKbjw0v\nBefore/after following repro in commit message",
+      "revId": "8d9452050517c4844069975dd11125230c956b37",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
