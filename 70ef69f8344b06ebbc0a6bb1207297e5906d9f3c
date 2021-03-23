@@ -34,6 +34,23 @@
       "parentUuid": "4a3a73e1_353d4929",
       "revId": "70ef69f8344b06ebbc0a6bb1207297e5906d9f3c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8aeb63c_0cf02914",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1268141
+      },
+      "writtenOn": "2021-03-23T11:22:03Z",
+      "side": 1,
+      "message": "Has the root cause been found?\nIs there any additional details of the crash you could provide in public?",
+      "revId": "70ef69f8344b06ebbc0a6bb1207297e5906d9f3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
