@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b613ef58_0b54a932",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1790000
+      },
+      "writtenOn": "2021-03-24T18:31:55Z",
+      "side": 1,
+      "message": "Hi Robert,\n\nWe are trying to add key for Service Dialing numbers in the CarrierConfigManager.\nPlease take a look at it and help us confirm what are required to get the approval.\n\nThanks,\nGyanesh",
+      "revId": "f4501d909c2d6627fe361e162d2e14efe2e65531",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
