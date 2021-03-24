@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d3cc3a6_4f7bcef1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4266,
+      "author": {
+        "id": 1121978
+      },
+      "writtenOn": "2021-03-24T18:12:17Z",
+      "side": 1,
+      "message": "maybe good to mention the cases where the array will be considered invalid?",
+      "range": {
+        "startLine": 4266,
+        "startChar": 7,
+        "endLine": 4266,
+        "endChar": 13
+      },
+      "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "767d9903_20742bc5",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4279,
+      "author": {
+        "id": 1121978
+      },
+      "writtenOn": "2021-03-24T18:12:17Z",
+      "side": 1,
+      "message": "question for @android-carrier-config-review on best practice for doing a mapping like this one. are there alternatives or is this format fine?",
+      "range": {
+        "startLine": 4279,
+        "startChar": 31,
+        "endLine": 4279,
+        "endChar": 84
+      },
+      "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
