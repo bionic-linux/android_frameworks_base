@@ -4257,6 +4257,28 @@ public class CarrierConfigManager {
      */
     public static final String KEY_HIDE_ENABLE_2G = "hide_enable_2g_bool";
 
+    /**
+     * String array containing Service Dialing Numbers (SDN) data, Service name and
+     * Service numbers, to be shown in the app.
+     * This will give flexibility to Carriers to add SDN without adding to SIM,
+     * and also Carriers can easily update the SDN via CarrierConfig app update.
+     *
+     * Format:
+     * For each SDN a pair of items will be added in the array, where first item
+     * denotes Service name and second item denotes Service number of that SDN.
+     * So, number of items in string-array is equal to twice the number of SDN
+     *
+     * Example:
+     * <string-array name="carrier_service_dialing_numbers_list" num="4">
+     *   <item value="Police"/>
+     *   <item value="123"/>
+     *   <item value="Ambulance"/>
+     *   <item value="343"/>
+     * </string-array>
+     */
+    public static final String KEY_CARRIER_SERVICE_DIALING_NUMBERS_LIST_STRING_ARRAY =
+            "carrier_service_dialing_numbers_list";
+
     /** The default value for every variable. */
     private final static PersistableBundle sDefaults;
 
@@ -4815,6 +4837,8 @@ public class CarrierConfigManager {
                 new String[]{"ia", "default", "ims", "mms", "dun", "emergency"});
         sDefaults.putBoolean(KEY_STORE_SIM_PIN_FOR_UNATTENDED_REBOOT_BOOL, true);
         sDefaults.putBoolean(KEY_HIDE_ENABLE_2G, false);
+        sDefaults.putStringArray(KEY_CARRIER_SERVICE_DIALING_NUMBERS_LIST_STRING_ARRAY,
+                new String[0]);
     }
 
     /**
