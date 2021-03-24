@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f57a73a7_1c9ef487",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2412,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-03-24T17:18:39Z",
+      "side": 1,
+      "message": "Better to use the same logic in PhoneInterfaceManager.getServiceStateForSubscriber",
+      "range": {
+        "startLine": 2411,
+        "startChar": 1,
+        "endLine": 2412,
+        "endChar": 1
+      },
+      "revId": "9332d835817a90a722326a6e8167ac953824c306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
