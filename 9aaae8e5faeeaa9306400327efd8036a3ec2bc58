@@ -123,6 +123,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02ef8bbc_8e5bd1a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1633017
+      },
+      "writtenOn": "2021-03-24T01:45:38Z",
+      "side": 1,
+      "message": "Hi Andy,\n\nI have created a bug for CTS testing here: https://issuetracker.google.com/issues/183527693\n\nUnfortunately, I see the permission issues again.\nDo you mind updating the commit message:\n\nTest: New API has been tested using our internal mock TV input HAL for\n      the HDMI TV input.\n      Run CTS test \"CtsTvTestCases:BundledTvInputServiceTest#testTune\"\n      to tune for HDMI input and invoke a createAudioPatch request in\n      TvInputHardwareManager.\n      Verify the API behavior from the following log:\n      \u003d\u003e adb logcat |\n      \u003d\u003e \"APM_AudioPolicyManager: createAudioPatchInternal sink 0: id 9\n         role 2 type 1\"\n      with the id 9 referring to the BUS output device.\nBug: b/183527693",
+      "parentUuid": "2ede2b04_b7ef13bb",
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97d87ee8_ac3e979a",
