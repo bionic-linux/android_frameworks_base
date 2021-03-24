@@ -6,6 +6,7 @@ package android.net {
   }
 
   public class ConnectivityManager {
+    method @NonNull public static String blockedReasonsToString(int);
     method @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_SETTINGS, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void factoryReset();
     method @NonNull @RequiresPermission(anyOf={android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, android.Manifest.permission.NETWORK_STACK, android.Manifest.permission.NETWORK_SETTINGS}) public java.util.List<android.net.NetworkStateSnapshot> getAllNetworkStateSnapshot();
     method @Nullable public android.net.ProxyInfo getGlobalProxy();
