@@ -82,6 +82,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7253221a_80a57bd0",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-24T09:35:20Z",
+      "side": 1,
+      "message": "No we won\u0027t block traffic if user snoozed the limit notification.\nFrom what I know it means if user snoozed a limit notification, we\u0027ll still need to put iptables rules hook to restrict app for data saver.\nPrecisely speaking it is bw_penalty_box in bw_costly_\u003ciface\u003e chain.\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:system/netd/server/BandwidthController.cpp;l\u003d483?ss\u003dandroid\u0026q\u003dsetInterfaceQuota\n\nNot sure if this is still true since I\u0027m not touching it for a long time.\nSee if the new comments work for you.",
+      "parentUuid": "4ac47418_398bdd51",
+      "range": {
+        "startLine": 1921,
+        "startChar": 48,
+        "endLine": 1921,
+        "endChar": 78
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0e120cb_93450439",
@@ -95,6 +119,30 @@
       "writtenOn": "2020-10-29T05:30:39Z",
       "side": 1,
       "message": "Do we need to honor the snooze ? Won\u0027t this result in a notification coming back every time we re-evaluate this code, once over the warning ?",
+      "range": {
+        "startLine": 1932,
+        "startChar": 37,
+        "endLine": 1932,
+        "endChar": 99
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a1dca9a_60e6b00a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1932,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-24T09:35:20Z",
+      "side": 1,
+      "message": "No we don\u0027t have snooze for warning.\nThat is only available for bytes over the limit.",
+      "parentUuid": "f0e120cb_93450439",
       "range": {
         "startLine": 1932,
         "startChar": 37,
@@ -151,6 +199,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f0da8f0_39536278",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-24T09:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f941374_6a14c100",
+      "range": {
+        "startLine": 1934,
+        "startChar": 19,
+        "endLine": 1934,
+        "endChar": 36
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3ac16f6_2b73c5b9",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-24T09:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3530c2ab_0066d903",
+      "range": {
+        "startLine": 1934,
+        "startChar": 36,
+        "endLine": 1934,
+        "endChar": 55
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ada60af5_768bbaee",
@@ -198,6 +294,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e60f9ca_fff33e0b",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4698,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-24T09:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae75f34_9bebf243",
+      "range": {
+        "startLine": 4698,
+        "startChar": 20,
+        "endLine": 4698,
+        "endChar": 52
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fe1e7c9_573984fd",
@@ -211,6 +331,30 @@
       "writtenOn": "2020-10-29T05:30:39Z",
       "side": 1,
       "message": "Please document the scheme here. It seems there are at least two special values : QUOTA_UNLIMITED and Long.MAX_VALUE. It also seems 0 is forbidden.",
+      "range": {
+        "startLine": 4838,
+        "startChar": 33,
+        "endLine": 4838,
+        "endChar": 34
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44731bd8_8f3b11f1",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4838,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-24T09:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe1e7c9_573984fd",
       "range": {
         "startLine": 4838,
         "startChar": 33,
@@ -268,6 +412,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8617a20_7b6807dd",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4856,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-24T09:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2fc41ce_2dc7baf2",
+      "range": {
+        "startLine": 4856,
+        "startChar": 12,
+        "endLine": 4856,
+        "endChar": 65
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71f346e0_d7e5169d",
@@ -305,6 +473,30 @@
       "side": 1,
       "message": "+1, need tests before this code can be merged.",
       "parentUuid": "71f346e0_d7e5169d",
+      "range": {
+        "startLine": 1810,
+        "startChar": 84,
+        "endLine": 1810,
+        "endChar": 93
+      },
+      "revId": "aa1b40df98a9be04855532ff914f00ad03cfb0a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0113704_e48cfcc3",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-24T09:35:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33ba15dc_f4529c1f",
       "range": {
         "startLine": 1810,
         "startChar": 84,
