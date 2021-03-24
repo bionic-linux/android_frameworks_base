@@ -213,6 +213,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e93581a_2148ebfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-03-24T02:38:16Z",
+      "side": 1,
+      "message": "Great, thanks.  I have updated the commit message.",
+      "parentUuid": "55839a67_dfbd3c0b",
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97d87ee8_ac3e979a",
