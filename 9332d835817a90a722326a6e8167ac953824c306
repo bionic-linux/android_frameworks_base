@@ -22,6 +22,30 @@
       },
       "revId": "9332d835817a90a722326a6e8167ac953824c306",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc5831ac_2c0cbc57",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2412,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-24T17:23:13Z",
+      "side": 1,
+      "message": "The objective here is to \"always\" redact location info. If we don\u0027t do that, then registrants will incur a \"location lookup\", which means that anybody registered for PCC is going to get blamed for a huge number of \"location\" accesses they didn\u0027t need/want. Since there is no public-facing use-case that requires the physical cell identity, we think it\u0027s better to simply not provide location-sensitive info AND to not do the permission check in S. Once Sharkey\u0027s API for \"renouncing\" permissions is ready in T, then we can expose the PCI in T.\n\n@Rambo, Jack\u0027s comment makes it obvious for me that we should have some comment/explanation of why it is this way for now. :-) @Jack, if you have concern about the idea, then let\u0027s chat. I believe what Rambo has here is aligned with what was agreed with Robert and Tyler, but we can double-check that to make sure.",
+      "parentUuid": "f57a73a7_1c9ef487",
+      "range": {
+        "startLine": 2411,
+        "startChar": 1,
+        "endLine": 2412,
+        "endChar": 1
+      },
+      "revId": "9332d835817a90a722326a6e8167ac953824c306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
