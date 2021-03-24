@@ -46,6 +46,30 @@
       },
       "revId": "9332d835817a90a722326a6e8167ac953824c306",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c86a559a_bd64adc8",
+        "filename": "services/core/java/com/android/server/TelephonyRegistry.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2412,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-03-24T18:13:26Z",
+      "side": 1,
+      "message": "That\u0027s my fault. I should add more context comment on the behavior. Sorry about that.\n\nJack, pls let me know if this idea is ok for you on S release.\nThanks",
+      "parentUuid": "dc5831ac_2c0cbc57",
+      "range": {
+        "startLine": 2411,
+        "startChar": 1,
+        "endLine": 2412,
+        "endChar": 1
+      },
+      "revId": "9332d835817a90a722326a6e8167ac953824c306",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
