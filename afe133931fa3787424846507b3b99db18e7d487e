@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009326853",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653007?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "cba4c0a4_6299f296",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4270,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-24T18:28:24Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 4270,
+        "startChar": 6,
+        "endLine": 4270,
+        "endChar": 7
+      },
+      "revId": "afe133931fa3787424846507b3b99db18e7d487e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009326853",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653007?revision\u003d8",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e4cc5f60_9103f47d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 4272,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-24T18:28:24Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 4272,
+        "startChar": 80,
+        "endLine": 4272,
+        "endChar": 81
+      },
+      "revId": "afe133931fa3787424846507b3b99db18e7d487e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
