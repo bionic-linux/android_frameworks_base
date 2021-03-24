@@ -177,6 +177,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72ce538c_613f82bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-03-24T01:56:23Z",
+      "side": 1,
+      "message": "We should have another bug filed for the API itself stating the need and the proposed solution. Essentially the content of the commit message, but more details if possible. Can you please create a new bug and send me the bug number?  Thanks.",
+      "parentUuid": "7d851c32_37863426",
+      "revId": "9aaae8e5faeeaa9306400327efd8036a3ec2bc58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97d87ee8_ac3e979a",
