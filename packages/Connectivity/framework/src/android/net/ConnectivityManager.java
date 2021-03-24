@@ -71,6 +71,7 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+import android.util.DebugUtils;
 import android.util.Log;
 import android.util.Range;
 import android.util.SparseIntArray;
@@ -926,6 +927,19 @@ public class ConnectivityManager {
             BLOCKED_METERED_REASON_ADMIN_DISABLED,
     })
     public @interface BlockedReason {}
+
+    /**
+     * Returns the {@code string} representation of {@code blockedReasons} argument.
+     *
+     * @param blockedReasons Value indicating the reasons for why the network access of an UID is
+     *                       blocked.
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @NonNull
+    public static String blockedReasonsToString(int blockedReasons) {
+        return DebugUtils.flagsToString(ConnectivityManager.class, "BLOCKED_", blockedReasons);
+    }
 
     /**
      * Set of blocked reasons that are only applicable on metered networks.
