@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c276b87_dfc203c0",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2917,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-03-24T18:49:17Z",
+      "side": 1,
+      "message": "needs @IntRange",
+      "range": {
+        "startLine": 2917,
+        "startChar": 84,
+        "endLine": 2917,
+        "endChar": 85
+      },
+      "revId": "d38f2d3afd5937f8575edf10f6b237e0ce1174a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5ee74e8_b8766f9d",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2918,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-03-24T18:49:17Z",
+      "side": 1,
+      "message": "needs @IntDef",
+      "range": {
+        "startLine": 2918,
+        "startChar": 19,
+        "endLine": 2918,
+        "endChar": 20
+      },
+      "revId": "d38f2d3afd5937f8575edf10f6b237e0ce1174a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b941a35_9b4815dd",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2918,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-03-24T18:49:17Z",
+      "side": 1,
+      "message": "needs @IntDef",
+      "range": {
+        "startLine": 2918,
+        "startChar": 36,
+        "endLine": 2918,
+        "endChar": 37
+      },
+      "revId": "d38f2d3afd5937f8575edf10f6b237e0ce1174a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
