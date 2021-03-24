@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009325161",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653007?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "41dde71a_fa367bdb",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4270,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-24T17:54:14Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 4270,
+        "startChar": 6,
+        "endLine": 4270,
+        "endChar": 7
+      },
+      "revId": "6dcdc737833a94e6bad9cd27fef0275e36ba0740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009325161",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1653007?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "460386fb_1ed812f1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4840,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-03-24T17:54:14Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 4840,
+        "startChar": 0,
+        "endLine": 4840,
+        "endChar": 104
+      },
+      "revId": "6dcdc737833a94e6bad9cd27fef0275e36ba0740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
