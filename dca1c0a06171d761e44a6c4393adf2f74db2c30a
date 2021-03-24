@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68063fe6_5fec219e",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2021-03-24T17:55:05Z",
+      "side": 1,
+      "message": "Just an fyi, this is hidden API. So we might need to copy this into mainline utils or convert to string manually.",
+      "range": {
+        "startLine": 941,
+        "startChar": 15,
+        "endLine": 941,
+        "endChar": 39
+      },
+      "revId": "dca1c0a06171d761e44a6c4393adf2f74db2c30a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
