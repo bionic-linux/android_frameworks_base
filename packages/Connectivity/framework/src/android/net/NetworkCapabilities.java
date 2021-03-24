@@ -274,6 +274,7 @@ public final class NetworkCapabilities implements Parcelable {
             NET_CAPABILITY_VEHICLE_INTERNAL,
             NET_CAPABILITY_NOT_VCN_MANAGED,
             NET_CAPABILITY_ENTERPRISE,
+            NET_CAPABILITY_HEAD_UNIT,
     })
     public @interface NetCapability { }
 
@@ -493,8 +494,13 @@ public final class NetworkCapabilities implements Parcelable {
      */
     public static final int NET_CAPABILITY_ENTERPRISE = 29;
 
+    /**
+     * Indicates that this network is connected to an automotive head unit.
+     */
+    public static final int NET_CAPABILITY_HEAD_UNIT = 30;
+
     private static final int MIN_NET_CAPABILITY = NET_CAPABILITY_MMS;
-    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_ENTERPRISE;
+    private static final int MAX_NET_CAPABILITY = NET_CAPABILITY_HEAD_UNIT;
 
     /**
      * Network capabilities that are expected to be mutable, i.e., can change while a particular
@@ -512,7 +518,8 @@ public final class NetworkCapabilities implements Parcelable {
             | (1 << NET_CAPABILITY_NOT_SUSPENDED)
             | (1 << NET_CAPABILITY_PARTIAL_CONNECTIVITY)
             | (1 << NET_CAPABILITY_TEMPORARILY_NOT_METERED)
-            | (1 << NET_CAPABILITY_NOT_VCN_MANAGED);
+            | (1 << NET_CAPABILITY_NOT_VCN_MANAGED)
+            | (1 << NET_CAPABILITY_HEAD_UNIT);
 
     /**
      * Network capabilities that are not allowed in NetworkRequests. This exists because the
@@ -897,6 +904,7 @@ public final class NetworkCapabilities implements Parcelable {
             TRANSPORT_WIFI_AWARE,
             TRANSPORT_LOWPAN,
             TRANSPORT_TEST,
+            TRANSPORT_USB,
     })
     public @interface Transport { }
 
@@ -943,10 +951,15 @@ public final class NetworkCapabilities implements Parcelable {
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     public static final int TRANSPORT_TEST = 7;
 
+    /**
+     * Indicates this network uses a USB transport.
+     */
+    public static final int TRANSPORT_USB = 8;
+
     /** @hide */
     public static final int MIN_TRANSPORT = TRANSPORT_CELLULAR;
     /** @hide */
-    public static final int MAX_TRANSPORT = TRANSPORT_TEST;
+    public static final int MAX_TRANSPORT = TRANSPORT_USB;
 
     /** @hide */
     public static boolean isValidTransport(@Transport int transportType) {
@@ -961,7 +974,8 @@ public final class NetworkCapabilities implements Parcelable {
         "VPN",
         "WIFI_AWARE",
         "LOWPAN",
-        "TEST"
+        "TEST",
+        "USB"
     };
 
     /**
@@ -2163,6 +2177,7 @@ public final class NetworkCapabilities implements Parcelable {
             case NET_CAPABILITY_VEHICLE_INTERNAL:     return "VEHICLE_INTERNAL";
             case NET_CAPABILITY_NOT_VCN_MANAGED:      return "NOT_VCN_MANAGED";
             case NET_CAPABILITY_ENTERPRISE:           return "ENTERPRISE";
+            case NET_CAPABILITY_HEAD_UNIT:            return "HEAD_UNIT";
             default:                                  return Integer.toString(capability);
         }
     }
