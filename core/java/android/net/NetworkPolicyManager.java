@@ -817,19 +817,6 @@ public class NetworkPolicyManager {
     }
 
     /**
-     * Returns the {@code string} representation of {@code blockedReasons} argument.
-     *
-     * @param blockedReasons Value indicating the reasons for why the network access of an UID is
-     *                       blocked.
-     * @hide
-     */
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
-    @NonNull
-    public static String blockedReasonsToString(int blockedReasons) {
-        return DebugUtils.flagsToString(NetworkPolicyManager.class, "BLOCKED_", blockedReasons);
-    }
-
-    /**
      * Register a {@link NetworkPolicyCallback} to listen for changes to network blocked status
      * of apps.
      *
