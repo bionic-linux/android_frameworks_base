@@ -1,0 +1,27 @@
+--- frameworks/base/core/jni/com_android_internal_os_Zygote.cpp
++++ frameworks/base/core/jni/com_android_internal_os_Zygote.cpp
+@@ -1018,24 +1018,6 @@ static void ClearUsapTable() {
+   gUsapPoolCount = 0;
+ }
+ 
+-NO_PAC_FUNC
+-static void PAuthKeyChange(JNIEnv* env) {
+-#ifdef __aarch64__
+-  unsigned long int hwcaps = getauxval(AT_HWCAP);
+-  if (hwcaps & HWCAP_PACA) {
+-#ifdef ANDROID_EXPERIMENTAL_PAC
+-    const unsigned long key_mask = PR_PAC_APIBKEY;
+-#else
+-    const unsigned long key_mask = PR_PAC_APIAKEY;
+-#endif
+-    if (prctl(PR_PAC_RESET_KEYS, key_mask, 0, 0, 0) != 0) {
+-      ALOGE("Failed to change the PAC keys: %s", strerror(errno));
+-      RuntimeAbort(env, __LINE__, "PAC key change failed.");
+-    }
+-  }
+-#endif
+-}
+-
+ // Create an app data directory over tmpfs overlayed CE / DE storage, and bind mount it
+ // from the actual app data directory in data mirror.
+ static bool createAndMountAppData(std::string_view package_name,
