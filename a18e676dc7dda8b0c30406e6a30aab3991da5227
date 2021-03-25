@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eb9e74b_c12482a0",
+        "filename": "packages/Connectivity/framework/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T07:28:09Z",
+      "side": 1,
+      "message": "Should be a method on the NetworkAgent instance whose linger timer is being set?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 250
+      },
+      "revId": "a18e676dc7dda8b0c30406e6a30aab3991da5227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81c4b45a_2df8623b",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T07:28:09Z",
+      "side": 1,
+      "message": "Consider interaction with the nascent timer.",
+      "range": {
+        "startLine": 1006,
+        "startChar": 16,
+        "endLine": 1006,
+        "endChar": 30
+      },
+      "revId": "a18e676dc7dda8b0c30406e6a30aab3991da5227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
