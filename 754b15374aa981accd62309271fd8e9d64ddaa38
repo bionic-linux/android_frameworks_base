@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8428cb8f_91c88dce",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-03-25T00:12:40Z",
+      "side": 1,
+      "message": "it didn\u0027t work if you compile a pattern outside the iteration?",
+      "range": {
+        "startLine": 191,
+        "startChar": 27,
+        "endLine": 191,
+        "endChar": 43
+      },
+      "revId": "754b15374aa981accd62309271fd8e9d64ddaa38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
