@@ -46,6 +46,30 @@
       },
       "revId": "754b15374aa981accd62309271fd8e9d64ddaa38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fa05734_c0b3fd85",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-03-25T00:37:02Z",
+      "side": 1,
+      "message": "It\u0027s not really idiomatic and seems overly complex. The matcher can also be created outside the iteration and then reset inside.\n\nPattern p \u003d...\nMatcher m \u003d p.matcher(\"\");\nfor (...) {\n m.reset(string_value)\n if (m.matches())  {...}\n}\n\nDown the road it will be hard to judge why isClassesDexFile is not simpler.",
+      "parentUuid": "b365774d_d2b05b13",
+      "range": {
+        "startLine": 191,
+        "startChar": 27,
+        "endLine": 191,
+        "endChar": 43
+      },
+      "revId": "754b15374aa981accd62309271fd8e9d64ddaa38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
