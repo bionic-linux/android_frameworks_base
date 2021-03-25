@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f59f68c4_098ff13b",
+        "filename": "packages/Connectivity/framework/src/android/net/VpnTransportInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-25T04:26:40Z",
+      "side": 1,
+      "message": "Add @Override?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2793728e_9704e478",
+        "filename": "packages/Connectivity/framework/src/android/net/VpnTransportInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-25T04:26:40Z",
+      "side": 1,
+      "message": "I think this can be nullable because if Vpn app doesn\u0027t set session, the default value of session will be null in VpnConfig.\nYou could refer to VpnService.Builder#setSession() and VpnConfig.java.",
+      "range": {
+        "startLine": 59,
+        "startChar": 38,
+        "endLine": 59,
+        "endChar": 46
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "556ae7b7_cca3baf0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-25T04:26:40Z",
+      "side": 1,
+      "message": "nit: This is in the constructor and mConfig haven\u0027t set, so I think we don\u0027t need to check whether mConfig is null or not because it\u0027s null, right?\nMaybe just assign null to it?",
+      "range": {
+        "startLine": 468,
+        "startChar": 24,
+        "endLine": 468,
+        "endChar": 66
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2999c61c_88cda1b8",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-25T04:26:40Z",
+      "side": 1,
+      "message": "This function is trying to reset the NetworkCapabilities, so if session can be nullable, I think we can just assign null for it.",
+      "range": {
+        "startLine": 533,
+        "startChar": 24,
+        "endLine": 533,
+        "endChar": 66
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c8b8fc6_a2c6e563",
+        "filename": "tests/net/java/android/net/VpnTransportInfoTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-25T04:26:40Z",
+      "side": 1,
+      "message": "nit: Maybe v1_1, v1_2...v2_1?",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
