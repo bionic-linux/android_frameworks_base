@@ -7599,6 +7599,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // all networks except in the case of an underlying network for a VCN.
             if (newSatisfier.isNascent()) {
                 newSatisfier.unlingerRequest(NetworkRequest.REQUEST_ID_NONE);
+                newSatisfier.unsetInactive();
             }
 
             // if newSatisfier is not null, then newRequest may not be null.
@@ -8007,6 +8008,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
             // But it will be removed as soon as the network satisfies a request for the first time.
             networkAgent.lingerRequest(NetworkRequest.REQUEST_ID_NONE,
                     SystemClock.elapsedRealtime(), mNascentDelayMs);
+            networkAgent.setInactive();
 
             // Consider network even though it is not yet validated.
             rematchAllNetworksAndRequests();

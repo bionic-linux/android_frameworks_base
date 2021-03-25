@@ -4325,9 +4325,8 @@ public class ConnectivityServiceTest {
             setAlwaysOnNetworks(false);
             testFactory.expectRequestRemove();
 
-            // ...  and cell data to be torn down after nascent network timeout.
-            cellNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent,
-                    mService.mNascentDelayMs + TEST_CALLBACK_TIMEOUT_MS);
+            // ...  and cell data to be torn down immediately since it is no longer nascent.
+            cellNetworkCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
             waitForIdle();
             assertLength(1, mCm.getAllNetworks());
         } finally {
