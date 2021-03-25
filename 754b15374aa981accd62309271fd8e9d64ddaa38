@@ -22,6 +22,30 @@
       },
       "revId": "754b15374aa981accd62309271fd8e9d64ddaa38",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b365774d_d2b05b13",
+        "filename": "services/core/java/com/android/server/pm/dex/ArtStatsLogUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1168158
+      },
+      "writtenOn": "2021-03-25T00:27:28Z",
+      "side": 1,
+      "message": "I am not sure. The forrest test always gets cancelled today. \n\nThe string.Matcher used before creates two instances (Pattern and Matcher). Moving pattern outside will eliminate one, but still leave another. This approach should be able to fully remove the usage of regex while keeping the check of classes dex files. Any concerns?",
+      "parentUuid": "8428cb8f_91c88dce",
+      "range": {
+        "startLine": 191,
+        "startChar": 27,
+        "endLine": 191,
+        "endChar": 43
+      },
+      "revId": "754b15374aa981accd62309271fd8e9d64ddaa38",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
