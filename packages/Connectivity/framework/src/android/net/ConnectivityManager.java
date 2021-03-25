@@ -3659,7 +3659,8 @@ public class ConnectivityManager {
         public void onBlockedStatusChanged(@NonNull Network network, boolean blocked) {}
 
         /**
-         * Called when access to the specified network is blocked or unblocked.
+         * Called when access to the specified network is blocked or unblocked, or the reason for
+         * access being blocked changes.
          *
          * If a NetworkCallback object implements this method,
          * {@link #onBlockedStatusChanged(Network, boolean)} will not be called.
