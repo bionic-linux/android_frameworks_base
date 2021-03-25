@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f461bdc_b148feb6",
+        "filename": "packages/Connectivity/framework/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T04:46:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure this can actually be @NonNull.\n\nVpnService#setSession is marked @NonNull but I don\u0027t think it enforces that the sessionId is not null. I think the legacy VPN can\u0027t ever set it to null, and this is not visible to any applications anyway.\n\nFor now, can we mark this as @Nullable?",
+      "range": {
+        "startLine": 114,
+        "startChar": 38,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f59f68c4_098ff13b",
         "filename": "packages/Connectivity/framework/src/android/net/VpnTransportInfo.java",
         "patchSetId": 1
