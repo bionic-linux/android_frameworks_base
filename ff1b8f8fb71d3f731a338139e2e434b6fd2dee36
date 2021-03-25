@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c201afdd_5abdc9d5",
+        "filename": "packages/Connectivity/framework/src/android/net/VpnTransportInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T06:17:33Z",
+      "side": 1,
+      "message": "Given that sessionId is nullable, this should be null instead of \"\".",
+      "range": {
+        "startLine": 58,
+        "startChar": 64,
+        "endLine": 58,
+        "endChar": 66
+      },
+      "revId": "ff1b8f8fb71d3f731a338139e2e434b6fd2dee36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12dd2172_aaf83e5e",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T06:17:33Z",
+      "side": 1,
+      "message": "mConfig cannot be null because otherwise the \"mConfig.allowedApplications\" 3 lines above would have thrown NPE.",
+      "range": {
+        "startLine": 1260,
+        "startChar": 16,
+        "endLine": 1260,
+        "endChar": 33
+      },
+      "revId": "ff1b8f8fb71d3f731a338139e2e434b6fd2dee36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "416c605d_9b61f24b",
+        "filename": "tests/net/java/android/net/VpnTransportInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T06:17:33Z",
+      "side": 1,
+      "message": "Check that if makeCopy(0) is called, then the sessionId is not redacted.\n\nYou probably don\u0027t need to call getApplicableRedactions here, you can simply do something like:\n\n    assertEquals(REDACT_FOR_NETWORK_SETTINGS, getApplicableRedactions());",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 75
+      },
+      "revId": "ff1b8f8fb71d3f731a338139e2e434b6fd2dee36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "004d38fc_a26bf361",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T06:17:33Z",
+      "side": 1,
+      "message": "This is guaranteed to be null. You could set it to something non-null for extra realism.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 20,
+        "endLine": 1205,
+        "endChar": 35
+      },
+      "revId": "ff1b8f8fb71d3f731a338139e2e434b6fd2dee36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
