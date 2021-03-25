@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09de49e1_a410642d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T14:33:11Z",
+      "side": 1,
+      "message": "LGTM. Feel free to address nit either in this CL (it\u0027s just one line) or in a follow-up CL.\n\nPlease remove the topic from this CL before treehugging or merging.",
+      "revId": "02a9d1941864ac9dfd7b2ec58168dca5fd6e332e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d6cb49_cb320992",
+        "filename": "tests/net/java/android/net/VpnTransportInfoTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-25T14:33:11Z",
+      "side": 1,
+      "message": "I still think it would be nice to have a test that checks that makeCopy(0) does not redact the session ID. Something like:\n\n    assertEquals(session1, v15.makeCopy(REDACT_NONE).sessionId);",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 5
+      },
+      "revId": "02a9d1941864ac9dfd7b2ec58168dca5fd6e332e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
