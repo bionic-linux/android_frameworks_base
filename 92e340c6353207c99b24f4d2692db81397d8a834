@@ -16,6 +16,23 @@
       "message": "Thanks for ironing out the API!",
       "revId": "92e340c6353207c99b24f4d2692db81397d8a834",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19615be8_ee1ceadb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2021-03-25T19:01:25Z",
+      "side": 1,
+      "message": "We don\u0027t have baseline to develop a CTS test for this new API as mentioned in http://b/183609406,\nand the CTS is required for system API.\nSo merging this CL in late stage of Android S sound risk to me.",
+      "revId": "92e340c6353207c99b24f4d2692db81397d8a834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
