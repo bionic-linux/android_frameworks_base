@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ccbe504_f2500e82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-03-25T04:40:05Z",
+      "side": 1,
+      "message": "move review to internal since conflict in NetworkCapabilities",
+      "revId": "98ee7e4023ffe532e49b5c9cd120279726257ec9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
