@@ -14443,6 +14443,15 @@ public class TelephonyManager {
     @SystemApi
     public static final String CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING =
             "CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING";
+    /**
+     * Indicates whether modem supports for returning an entire parsed SIM phonebook.
+     * This is for the purpose of  internal usage.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String CAPABILITY_SIM_PHONEBOOK_IN_MODEM =
+            "CAPABILITY_SIM_PHONEBOOK_IN_MODEM";
 
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
@@ -14451,6 +14460,7 @@ public class TelephonyManager {
             CAPABILITY_ALLOWED_NETWORK_TYPES_USED,
             CAPABILITY_NR_DUAL_CONNECTIVITY_CONFIGURATION_AVAILABLE,
             CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING,
+            CAPABILITY_SIM_PHONEBOOK_IN_MODEM
     })
     public @interface RadioInterfaceCapability {}
 
