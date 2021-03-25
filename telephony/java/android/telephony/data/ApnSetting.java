@@ -114,11 +114,15 @@ public class ApnSetting implements Parcelable {
     public static final int TYPE_MCX = ApnTypes.MCX;
     /** APN type for XCAP. */
     public static final int TYPE_XCAP = ApnTypes.XCAP;
+    /** APN type for VSIM. */
+    public static final int TYPE_VSIM = 1 << 12;  // TODO: Refer to ApnTypes.VSIM
+    /** APN type for BIP. */
+    public static final int TYPE_BIP = 1 << 13;   // TODO: Refer to ApnTypes.BIP
     /**
      * APN type for ENTERPRISE.
      * @hide
      */
-    public static final int TYPE_ENTERPRISE = TYPE_XCAP << 1;
+    public static final int TYPE_ENTERPRISE = TYPE_BIP << 1;
 
     /** @hide */
     @IntDef(flag = true, prefix = {"TYPE_"}, value = {
@@ -134,6 +138,8 @@ public class ApnSetting implements Parcelable {
             TYPE_EMERGENCY,
             TYPE_MCX,
             TYPE_XCAP,
+            TYPE_BIP,
+            TYPE_VSIM,
             TYPE_ENTERPRISE,
     })
     @Retention(RetentionPolicy.SOURCE)

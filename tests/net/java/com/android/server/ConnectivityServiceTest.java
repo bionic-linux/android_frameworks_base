@@ -2904,10 +2904,11 @@ public class ConnectivityServiceTest {
         // Verify NOT_RESTRICTED is set appropriately
         final NetworkCapabilities nc = new NetworkRequest.Builder().addCapability(capability)
                 .build().networkCapabilities;
-        if (capability == NET_CAPABILITY_CBS || capability == NET_CAPABILITY_DUN ||
-                capability == NET_CAPABILITY_EIMS || capability == NET_CAPABILITY_FOTA ||
-                capability == NET_CAPABILITY_IA || capability == NET_CAPABILITY_IMS ||
-                capability == NET_CAPABILITY_RCS || capability == NET_CAPABILITY_XCAP
+        if (capability == NET_CAPABILITY_CBS || capability == NET_CAPABILITY_DUN
+                || capability == NET_CAPABILITY_EIMS || capability == NET_CAPABILITY_FOTA
+                || capability == NET_CAPABILITY_IA || capability == NET_CAPABILITY_IMS
+                || capability == NET_CAPABILITY_RCS || capability == NET_CAPABILITY_XCAP
+                || capability == NET_CAPABILITY_BIP || capability == NET_CAPABILITY_VSIM
                 || capability == NET_CAPABILITY_ENTERPRISE) {
             assertFalse(nc.hasCapability(NET_CAPABILITY_NOT_RESTRICTED));
         } else {
@@ -3017,6 +3018,8 @@ public class ConnectivityServiceTest {
         tryNetworkFactoryRequests(NET_CAPABILITY_INTERNET);
         tryNetworkFactoryRequests(NET_CAPABILITY_TRUSTED);
         tryNetworkFactoryRequests(NET_CAPABILITY_NOT_VPN);
+        tryNetworkFactoryRequests(NET_CAPABILITY_BIP);
+        tryNetworkFactoryRequests(NET_CAPABILITY_VSIM);
         // Skipping VALIDATED and CAPTIVE_PORTAL as they're disallowed.
     }
 
