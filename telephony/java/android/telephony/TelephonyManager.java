@@ -5916,6 +5916,13 @@ public class TelephonyManager {
     };
 
     /**
+     * Used for checking if the SDK version for {@link TelephonyManager#getDataState} is above Q.
+     */
+    @ChangeId
+    @EnabledAfter(targetSdkVersion = Build.VERSION_CODES.R)
+    private static final long NULL_TELEPHONY_THROW_NO_CB = 182185642L;
+
+    /**
      * Requests all available cell information from the current subscription for observed
      * camped/registered, serving, and neighboring cells.
      *
@@ -5935,7 +5942,13 @@ public class TelephonyManager {
             @NonNull @CallbackExecutor Executor executor, @NonNull CellInfoCallback callback) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony == null) throw new IllegalStateException("Telephony is null");
+            if (telephony == null) {
+                if (Compatibility.isChangeEnabled(NULL_TELEPHONY_THROW_NO_CB)) {
+                    throw new IllegalStateException("Telephony is null");
+                } else {
+                    return;
+                }
+            }
 
             telephony.requestCellInfoUpdate(
                     getSubId(),
@@ -5992,7 +6005,14 @@ public class TelephonyManager {
             @NonNull @CallbackExecutor Executor executor, @NonNull CellInfoCallback callback) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony == null) throw new IllegalStateException("Telephony is null");
+            if (telephony == null) {
+                if (Compatibility.isChangeEnabled(NULL_TELEPHONY_THROW_NO_CB)) {
+                    throw new IllegalStateException("Telephony is null");
+                } else {
+                    return;
+                }
+            }
+
             telephony.requestCellInfoUpdateWithWorkSource(
                     getSubId(),
                     new ICellInfoCallback.Stub() {
@@ -6988,7 +7008,13 @@ public class TelephonyManager {
 
         try {
             ITelephony telephony = getITelephony();
-            if (telephony == null) throw new IllegalStateException("Telephony is null");
+            if (telephony == null) {
+                if (Compatibility.isChangeEnabled(NULL_TELEPHONY_THROW_NO_CB)) {
+                    throw new IllegalStateException("Telephony is null");
+                } else {
+                    return;
+                }
+            }
 
             telephony.requestNumberVerification(range, timeoutMillis, internalCallback,
                     getOpPackageName());
@@ -10371,6 +10397,13 @@ public class TelephonyManager {
                             Binder.withCleanCallingIdentity(() -> callback.accept(result)));
                 }
             };
+            if (telephony == null) {
+                if (Compatibility.isChangeEnabled(NULL_TELEPHONY_THROW_NO_CB)) {
+                    throw new IllegalStateException("Telephony is null");
+                } else {
+                    return;
+                }
+            }
             telephony.setSimPowerStateForSlotWithCallback(slotIndex, state, internalCallback);
         } catch (RemoteException e) {
             Log.e(TAG, "Error calling ITelephony#setSimPowerStateForSlot", e);
@@ -12805,7 +12838,12 @@ public class TelephonyManager {
         try {
             IOns iOpportunisticNetworkService = getIOns();
             if (iOpportunisticNetworkService == null) {
-                throw new IllegalStateException("Opportunistic Network Service is null");
+                if (Compatibility.isChangeEnabled(NULL_TELEPHONY_THROW_NO_CB)) {
+                    throw new IllegalStateException("Opportunistic Network Service is null");
+                } else {
+                    // Let the general remote exception handling catch this.
+                    throw new RemoteException("Null Opportunistic Network Service!");
+                }
             }
             ISetOpportunisticDataCallback callbackStub = new ISetOpportunisticDataCallback.Stub() {
                 @Override
@@ -12900,7 +12938,12 @@ public class TelephonyManager {
         try {
             IOns iOpportunisticNetworkService = getIOns();
             if (iOpportunisticNetworkService == null) {
-                throw new IllegalStateException("Opportunistic Network Service is null");
+                if (Compatibility.isChangeEnabled(NULL_TELEPHONY_THROW_NO_CB)) {
+                    throw new IllegalStateException("Opportunistic Network Service is null");
+                } else {
+                    // Let the general remote exception handling catch this.
+                    throw new RemoteException("Null Opportunistic Network Service!");
+                }
             }
 
             IUpdateAvailableNetworksCallback callbackStub =
