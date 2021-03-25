@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c16cb596_14504bf6",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-25T00:17:05Z",
+      "side": 1,
+      "message": "Tried it, it basically just ends up as two almost-identical methods that do the same thing.\n\nI think it makes it slightly harder to read because there are now two methods to delve into",
+      "parentUuid": "f9f8dd41_73487ade",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 63
+      },
+      "revId": "eb9e5ce805ff6e3a6003ed409427c7721d29a45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "02ffc8d4_d4c67ffe",
         "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-24T01:27:54Z",
       "side": 1,
       "message": "this looks like we\u0027re going to re-register network callbacks for the same subId often, right? Is it worth simply not making dupes and then de-registering them if they don\u0027t *need* to change? I\u0027m thinking difficulty of implementing this versus the possible logspam of reregistering duplicate requests or the like...",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "eb9e5ce805ff6e3a6003ed409427c7721d29a45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1532b9dc_1237b24d",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-25T00:17:05Z",
+      "side": 1,
+      "message": "This may or may not change; while the subId in the TelephonyNetworkSpecifier may not change, there is the possibility that the NetworkCapabilities\u0027 list-of-subId changes. In the interest of consistency, I\u0027d prefer just always re-registering.\n\nAt most this should cause one log line per request, and should only happen upon subscription changes.",
+      "parentUuid": "02ffc8d4_d4c67ffe",
       "range": {
         "startLine": 131,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "031319ab_e76f8521",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-25T00:17:05Z",
+      "side": 1,
+      "message": "Done. mCellBringupCallbacks is cleared in l.114",
+      "parentUuid": "3c507122_17d53308",
+      "range": {
+        "startLine": 134,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 9
+      },
+      "revId": "eb9e5ce805ff6e3a6003ed409427c7721d29a45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc2521aa_8b72160c",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "642beecc_b25946ad",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-25T00:17:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc2521aa_8b72160c",
+      "range": {
+        "startLine": 146,
+        "startChar": 12,
+        "endLine": 146,
+        "endChar": 32
+      },
+      "revId": "eb9e5ce805ff6e3a6003ed409427c7721d29a45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "513a26b7_5d55b8a6",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-03-24T01:27:54Z",
       "side": 1,
       "message": "nit getBaseNewtorkRequestBuilder()",
+      "range": {
+        "startLine": 170,
+        "startChar": 35,
+        "endLine": 170,
+        "endChar": 56
+      },
+      "revId": "eb9e5ce805ff6e3a6003ed409427c7721d29a45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3e795a2_cc3ecd1a",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-25T00:17:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "513a26b7_5d55b8a6",
       "range": {
         "startLine": 170,
         "startChar": 35,
