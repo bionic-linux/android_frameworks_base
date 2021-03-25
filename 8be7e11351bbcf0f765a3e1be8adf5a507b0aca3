@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f80f6a1d_0ae598f9",
+        "filename": "packages/Connectivity/framework/api/module-lib-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-25T05:09:10Z",
+      "side": 1,
+      "message": "Yes, after reviewing with Lucas, we can mark this as @Nullable",
+      "parentUuid": "8f461bdc_b148feb6",
+      "range": {
+        "startLine": 114,
+        "startChar": 38,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f59f68c4_098ff13b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-25T04:26:40Z",
       "side": 1,
       "message": "Add @Override?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cd3ea95_d7960bde",
+        "filename": "packages/Connectivity/framework/src/android/net/VpnTransportInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-25T05:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59f68c4_098ff13b",
       "range": {
         "startLine": 46,
         "startChar": 4,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc39b8a5_ff442944",
+        "filename": "packages/Connectivity/framework/src/android/net/VpnTransportInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-25T05:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2793728e_9704e478",
+      "range": {
+        "startLine": 59,
+        "startChar": 38,
+        "endLine": 59,
+        "endChar": 46
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "556ae7b7_cca3baf0",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-25T04:26:40Z",
       "side": 1,
       "message": "nit: This is in the constructor and mConfig haven\u0027t set, so I think we don\u0027t need to check whether mConfig is null or not because it\u0027s null, right?\nMaybe just assign null to it?",
+      "range": {
+        "startLine": 468,
+        "startChar": 24,
+        "endLine": 468,
+        "endChar": 66
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18b5552d_29509bd3",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-25T05:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556ae7b7_cca3baf0",
       "range": {
         "startLine": 468,
         "startChar": 24,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7e13901_f1ed63f1",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-25T05:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2999c61c_88cda1b8",
+      "range": {
+        "startLine": 533,
+        "startChar": 24,
+        "endLine": 533,
+        "endChar": 66
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c8b8fc6_a2c6e563",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-03-25T04:26:40Z",
       "side": 1,
       "message": "nit: Maybe v1_1, v1_2...v2_1?",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "8be7e11351bbcf0f765a3e1be8adf5a507b0aca3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2574b23_ded82115",
+        "filename": "tests/net/java/android/net/VpnTransportInfoTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-03-25T05:09:10Z",
+      "side": 1,
+      "message": "Thanks, I prefer the previous name",
+      "parentUuid": "2c8b8fc6_a2c6e563",
       "range": {
         "startLine": 46,
         "startChar": 25,
