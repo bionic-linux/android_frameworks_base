@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dba2a5e_5d3690fd",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5922,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-25T23:47:11Z",
+      "side": 1,
+      "message": "Lol, I\u0027m 2 for 2 on forgetting to update javadoc comments.",
+      "parentUuid": "35e41ae7_2946bff5",
+      "range": {
+        "startLine": 5922,
+        "startChar": 57,
+        "endLine": 5922,
+        "endChar": 58
+      },
+      "revId": "9668d745a33dc7236f815ada102b368be42e85dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9a138cc_54616ea2",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-03-25T23:11:17Z",
       "side": 1,
       "message": "You probably want the version that takes a uid: https://source.corp.google.com/android/frameworks/base/core/java/android/app/compat/CompatChanges.java;l\u003d96 so that you can check again the calling app instead of Telephony\u0027s target api version",
+      "range": {
+        "startLine": 5946,
+        "startChar": 34,
+        "endLine": 5946,
+        "endChar": 49
+      },
+      "revId": "9668d745a33dc7236f815ada102b368be42e85dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0152454c_5a1b6f16",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5946,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-25T23:47:11Z",
+      "side": 1,
+      "message": "This version (no UID) checks the current process. Since this code is TelephonyManager side, we want the current process rather than the \"calling\" process. AFAICT the UID version is for use in places like PhoneInterfaceManager.",
+      "parentUuid": "d9a138cc_54616ea2",
       "range": {
         "startLine": 5946,
         "startChar": 34,
