@@ -16,6 +16,52 @@
       "message": "The inconsistency in how this is done is based on current ToT. Once folks are OK with this CL, I\u0027ll squash onto the base, which will make it easier to see, but since the *rest* of the CL was already approved, I figured it\u0027d still be easier to see this change separately.",
       "revId": "9668d745a33dc7236f815ada102b368be42e85dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35e41ae7_2946bff5",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5922,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-03-25T23:11:17Z",
+      "side": 1,
+      "message": "Docs say Q but this is R?",
+      "range": {
+        "startLine": 5922,
+        "startChar": 57,
+        "endLine": 5922,
+        "endChar": 58
+      },
+      "revId": "9668d745a33dc7236f815ada102b368be42e85dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9a138cc_54616ea2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 5946,
+      "author": {
+        "id": 1087703
+      },
+      "writtenOn": "2021-03-25T23:11:17Z",
+      "side": 1,
+      "message": "You probably want the version that takes a uid: https://source.corp.google.com/android/frameworks/base/core/java/android/app/compat/CompatChanges.java;l\u003d96 so that you can check again the calling app instead of Telephony\u0027s target api version",
+      "range": {
+        "startLine": 5946,
+        "startChar": 34,
+        "endLine": 5946,
+        "endChar": 49
+      },
+      "revId": "9668d745a33dc7236f815ada102b368be42e85dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
