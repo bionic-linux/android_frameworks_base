@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37638e45_d81cd17c",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-03-25T11:50:51Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think \"12345\" is a good example.\nFor example, if it\u0027s a legacy VPN, mConfig.session will be the same as VpnProfile.name.\nYou could say, \"PPTP_VPN\", \"L2TP_VPN\" ... or \"MyVpn\" is even better than \"12345\".\nYou could change it in follow-up commit if you want.",
+      "range": {
+        "startLine": 1202,
+        "startChar": 31,
+        "endLine": 1202,
+        "endChar": 36
+      },
+      "revId": "db8425a6f9ebd3bd4ddb8dbca2df2eb87ea8371a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
