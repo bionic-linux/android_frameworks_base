@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70eaaeb5_c3603469",
+        "filename": "packages/Connectivity/framework/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-25T13:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eb9e74b_c12482a0",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 250
+      },
+      "revId": "a18e676dc7dda8b0c30406e6a30aab3991da5227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81c4b45a_2df8623b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-03-25T07:28:09Z",
       "side": 1,
       "message": "Consider interaction with the nascent timer.",
+      "range": {
+        "startLine": 1006,
+        "startChar": 16,
+        "endLine": 1006,
+        "endChar": 30
+      },
+      "revId": "a18e676dc7dda8b0c30406e6a30aab3991da5227",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1b49a92_acab8819",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-25T13:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81c4b45a_2df8623b",
       "range": {
         "startLine": 1006,
         "startChar": 16,

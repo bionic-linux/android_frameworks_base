@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "356b555a_aceefc5f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7135,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-25T13:03:11Z",
+      "side": 1,
+      "message": "Why don\u0027t we accept int at first place?\na int cannot be bigger than Integer.MAX_VALUE, right?\nIf so we don\u0027t event need to check.",
+      "range": {
+        "startLine": 7135,
+        "startChar": 12,
+        "endLine": 7135,
+        "endChar": 20
+      },
+      "revId": "6eb307f9f5d6889e538018cea08d42b18bef5efc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
