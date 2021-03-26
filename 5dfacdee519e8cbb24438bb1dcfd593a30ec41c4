@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffecd7d5_4f4ec140",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-26T03:25:43Z",
+      "side": 1,
+      "message": "Identical to ag/13992146 merged internally.",
+      "revId": "5dfacdee519e8cbb24438bb1dcfd593a30ec41c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
