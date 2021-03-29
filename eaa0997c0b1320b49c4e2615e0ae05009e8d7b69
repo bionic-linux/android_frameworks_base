@@ -60,6 +60,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8f4a16fd_810c78e4",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-29T06:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83ff08f_e5538892",
+      "range": {
+        "startLine": 365,
+        "startChar": 83,
+        "endLine": 365,
+        "endChar": 84
+      },
+      "revId": "eaa0997c0b1320b49c4e2615e0ae05009e8d7b69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ffcf287f_7b3c2b3a",
         "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
         "patchSetId": 3
@@ -71,6 +95,30 @@
       "writtenOn": "2021-03-25T13:32:19Z",
       "side": 1,
       "message": "Not for this patch :\nI find this fairly counter-intuitive and it doesn\u0027t seem to be documented anywhere. We should have some documentation on the field.",
+      "range": {
+        "startLine": 1017,
+        "startChar": 16,
+        "endLine": 1017,
+        "endChar": 65
+      },
+      "revId": "eaa0997c0b1320b49c4e2615e0ae05009e8d7b69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d7c3f34_16a4b149",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-29T06:52:16Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "ffcf287f_7b3c2b3a",
       "range": {
         "startLine": 1017,
         "startChar": 16,
@@ -94,6 +142,30 @@
       "writtenOn": "2021-03-25T13:32:19Z",
       "side": 1,
       "message": "Instead of exposing this I think you should have a new method\n\n  lingerRequest(int requestId, long now) {\n    lingerRequest(requestId, now, mLingerDelay);\n  }",
+      "range": {
+        "startLine": 1031,
+        "startChar": 0,
+        "endLine": 1033,
+        "endChar": 5
+      },
+      "revId": "eaa0997c0b1320b49c4e2615e0ae05009e8d7b69",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc093ea_b6990995",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkAgentInfo.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-03-29T06:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7943b5f1_563d36b1",
       "range": {
         "startLine": 1031,
         "startChar": 0,
