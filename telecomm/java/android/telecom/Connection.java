@@ -793,6 +793,13 @@ public abstract class Connection extends Conferenceable {
      */
     public static final String EXTRA_AUDIO_CODEC_BANDWIDTH_KHZ =
             "android.telecom.extra.AUDIO_CODEC_BANDWIDTH_KHZ";
+
+    /**
+     * Boolean connection extra key used to indicate if the current audio quality meets HD plus
+     * criteria for the current {@link Connection}.
+     */
+    public static final String EXTRA_AUDIO_QUALITY_HD_PLUS =
+            "android.telecom.extra.AUDIO_QUALITY_HD_PLUS";
     /**
      * Connection event used to inform Telecom that it should play the on hold tone.  This is used
      * to play a tone when the peer puts the current call on hold.  Sent to Telecom via
