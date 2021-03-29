@@ -93,6 +93,8 @@ public final class ImsStreamMediaProfile implements Parcelable {
     public int mAudioDirection;
     // Audio codec attributes
     private AudioCodecAttributes mAudioCodecAttributes;
+    //Audio quality HD Plus
+    private boolean mIsAudioQualityHdPlus = false;
 
     // Video related information
     /** @hide */
@@ -298,6 +300,20 @@ public final class ImsStreamMediaProfile implements Parcelable {
      */
     public void setAudioCodecAttributes(@NonNull AudioCodecAttributes audioCodecAttributes) {
         mAudioCodecAttributes = audioCodecAttributes;
+    }
+
+    /**
+     * Set the audio quality to the level of HD plus.
+     */
+    public void setIsAudioQualityHdPlus(boolean isHdPlus) {
+        mIsAudioQualityHdPlus = isHdPlus;
+    }
+
+    /**
+     * Determine if current audio quality reaches HD plus.
+     */
+    public boolean isAudioQualityHdPlus() {
+        return mIsAudioQualityHdPlus;
     }
 
     public int getVideoQuality() {
