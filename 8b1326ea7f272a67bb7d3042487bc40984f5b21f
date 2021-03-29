@@ -62,6 +62,30 @@
       },
       "revId": "8b1326ea7f272a67bb7d3042487bc40984f5b21f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8f138c9_f8b847cc",
+        "filename": "telephony/java/android/telephony/ims/ImsStreamMediaProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-29T16:50:52Z",
+      "side": 1,
+      "message": "Note: We also do NOT want the vendor determining something this high level.  The rest of this API works on lower level concepts, so it\u0027s not appropriate to pipe up something this high level.",
+      "parentUuid": "a6b6d17b_b8385fcc",
+      "range": {
+        "startLine": 305,
+        "startChar": 3,
+        "endLine": 317,
+        "endChar": 5
+      },
+      "revId": "8b1326ea7f272a67bb7d3042487bc40984f5b21f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
