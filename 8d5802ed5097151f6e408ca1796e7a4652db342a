@@ -68,6 +68,24 @@
       "parentUuid": "da01ec42_0908fc52",
       "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f482116c_8c51ca69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2021-03-29T18:06:52Z",
+      "side": 1,
+      "message": "Great, thanks for sharing the device specs. That device should have much more than 650dp of available width when in landscape mode. Just to confirm, when you flash the AOSP build without your change, you see the notification panel use the entire width?",
+      "parentUuid": "da91e77c_59f7839d",
+      "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
