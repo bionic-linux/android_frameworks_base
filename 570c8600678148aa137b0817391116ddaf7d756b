@@ -22,6 +22,30 @@
       },
       "revId": "570c8600678148aa137b0817391116ddaf7d756b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "864bb5f7_6a909bf7",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-03-29T23:55:28Z",
+      "side": 1,
+      "message": "Removed and updated document to ask subclasses to be immutable.\n\nThe use case of this method is to make sure when caller get a return value of calling VcnGatewayConnectionConfig.getEncryptedTunnelParams(), their modification on the return value won\u0027t affect the field stored in VcnGatewayConnectionConfig.\n\nHowever, the use case above is more like an implementation detail of VcnGatewayConnectionConfig, and it will be confusing to expose copy() as an API and might be taken as an implication that EncryptedTunnelParams can be mutable.\n\nThus I removed it from API surface.",
+      "parentUuid": "c7a9be24_dfb9a580",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "570c8600678148aa137b0817391116ddaf7d756b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
