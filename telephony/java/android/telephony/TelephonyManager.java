@@ -14500,6 +14500,16 @@ public class TelephonyManager {
     public static final String CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING =
             "CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING";
 
+    /**
+     * Indicates whether modem supports handling parsed SIM phonebook records through the RIL,
+     * both batched reads and individual writes.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static final String CAPABILITY_SIM_PHONEBOOK_IN_MODEM =
+            "CAPABILITY_SIM_PHONEBOOK_IN_MODEM";
+
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef(prefix = "CAPABILITY_", value = {
@@ -14507,6 +14517,7 @@ public class TelephonyManager {
             CAPABILITY_ALLOWED_NETWORK_TYPES_USED,
             CAPABILITY_NR_DUAL_CONNECTIVITY_CONFIGURATION_AVAILABLE,
             CAPABILITY_THERMAL_MITIGATION_DATA_THROTTLING,
+            CAPABILITY_SIM_PHONEBOOK_IN_MODEM
     })
     public @interface RadioInterfaceCapability {}
 
