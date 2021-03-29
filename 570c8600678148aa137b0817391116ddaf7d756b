@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7a9be24_dfb9a580",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-29T21:53:40Z",
+      "side": 1,
+      "message": "Is this supposed to be @hide or systemApi?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "570c8600678148aa137b0817391116ddaf7d756b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
