@@ -33,6 +33,23 @@
       "message": "bump",
       "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da01ec42_0908fc52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2021-03-29T17:45:31Z",
+      "side": 1,
+      "message": "I believe this change will override the following file, specifically designed to accommodate both quick settings and media in landscape: res/values-w650dp-land/dimens.xml. Is the tablet you are working with smaller than 650dp in landscape mode?",
+      "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
