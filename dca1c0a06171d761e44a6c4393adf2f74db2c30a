@@ -22,6 +22,30 @@
       },
       "revId": "dca1c0a06171d761e44a6c4393adf2f74db2c30a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe0c2a14_fbe18494",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivityManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-29T08:53:24Z",
+      "side": 1,
+      "message": "+1 ; I think a method in one of our static libs may be the better way to handle this.",
+      "parentUuid": "68063fe6_5fec219e",
+      "range": {
+        "startLine": 941,
+        "startChar": 15,
+        "endLine": 941,
+        "endChar": 39
+      },
+      "revId": "dca1c0a06171d761e44a6c4393adf2f74db2c30a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
