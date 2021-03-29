@@ -11556,9 +11556,11 @@ package android.telephony.ims {
     method public int getRttMode();
     method public int getVideoDirection();
     method public int getVideoQuality();
+    method public boolean isAudioQualityHdPlus();
     method public boolean isReceivingRttAudio();
     method public boolean isRttCall();
     method public void setAudioCodecAttributes(@NonNull android.telephony.ims.AudioCodecAttributes);
+    method public void setIsAudioQualityHdPlus(boolean);
     method public void setReceivingRttAudio(boolean);
     method public void setRttMode(int);
     method public void writeToParcel(android.os.Parcel, int);
