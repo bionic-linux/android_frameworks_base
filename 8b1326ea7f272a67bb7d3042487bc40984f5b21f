@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e60b202_616c3ea9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-29T16:49:37Z",
+      "side": 1,
+      "message": "See comments below; the bitrate/bandwidth and audio codec are enough to determine if a call is \"HD+\".  It is also past API complete so this cannot be included in the SC release.",
+      "revId": "8b1326ea7f272a67bb7d3042487bc40984f5b21f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b2310f4_ebc06ec0",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-29T16:49:37Z",
+      "side": 1,
+      "message": "This should not be required; the EXTRA_AUDIO_CODEC_BITRATE_KBPS, EXTRA_AUDIO_CODEC_BANDWIDTH_KHZ and EXTRA_AUDIO_CODEC provide enough information to determine if a call is HD+ by the Dialer app.",
+      "range": {
+        "startLine": 797,
+        "startChar": 4,
+        "endLine": 802,
+        "endChar": 58
+      },
+      "revId": "8b1326ea7f272a67bb7d3042487bc40984f5b21f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6b6d17b_b8385fcc",
+        "filename": "telephony/java/android/telephony/ims/ImsStreamMediaProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-29T16:49:37Z",
+      "side": 1,
+      "message": "This is not required; get/setAudioCodecAttributes above provides the bitrate and bandwidth for the Audio Codec.  \"HD+\" is an abstraction of the current audio codec and the bitrate/bandwidth.",
+      "range": {
+        "startLine": 305,
+        "startChar": 3,
+        "endLine": 317,
+        "endChar": 5
+      },
+      "revId": "8b1326ea7f272a67bb7d3042487bc40984f5b21f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
