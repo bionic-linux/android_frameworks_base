@@ -50,6 +50,24 @@
       "message": "I believe this change will override the following file, specifically designed to accommodate both quick settings and media in landscape: res/values-w650dp-land/dimens.xml. Is the tablet you are working with smaller than 650dp in landscape mode?",
       "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da91e77c_59f7839d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1090594
+      },
+      "writtenOn": "2021-03-29T17:50:07Z",
+      "side": 1,
+      "message": "Uh, I\u0027m not really sure if it\u0027s smaller than 650dp but the tablet I\u0027m testing this on is https://www.gsmarena.com/samsung_galaxy_tab_s5e-9581.php and ro.sf.lcd_density is set to 360.",
+      "parentUuid": "da01ec42_0908fc52",
+      "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
