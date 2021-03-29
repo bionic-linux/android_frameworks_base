@@ -122,6 +122,24 @@
       "parentUuid": "464f1b17_32a64d19",
       "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8732f88_b7df111f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2021-03-29T18:29:02Z",
+      "side": 1,
+      "message": "Thanks so much for the photos! At this point the extra width is intentional, as indicated in the w650dp-land/dimens file I mentioned above. The issue specifically revolves around the media player in landscape mode, and providing some extra space for it when it appears. I agree the layout is not as ideal as it could be, but for now this is working as intended.",
+      "parentUuid": "d7d72239_74dbdd2d",
+      "revId": "8d5802ed5097151f6e408ca1796e7a4652db342a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
