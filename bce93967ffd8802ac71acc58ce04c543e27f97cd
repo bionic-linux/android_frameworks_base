@@ -22,6 +22,30 @@
       },
       "revId": "bce93967ffd8802ac71acc58ce04c543e27f97cd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3484a9a9_bc1dae87",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-03-29T03:09:31Z",
+      "side": 1,
+      "message": "This method still logs the blocked status. It also happens to log the reason as well, but I think maybeLogBlockedStatusAndReasonChanged is too long.",
+      "parentUuid": "c8cb403c_368fe3c9",
+      "range": {
+        "startLine": 1554,
+        "startChar": 32,
+        "endLine": 1554,
+        "endChar": 38
+      },
+      "revId": "bce93967ffd8802ac71acc58ce04c543e27f97cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
