@@ -33,6 +33,24 @@
       "message": "We don\u0027t have baseline to develop a CTS test for this new API as mentioned in http://b/183609406,\nand the CTS is required for system API.\nSo merging this CL in late stage of Android S sound risk to me.",
       "revId": "92e340c6353207c99b24f4d2692db81397d8a834",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42fb6392_36b43c3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2021-03-30T00:20:25Z",
+      "side": 1,
+      "message": "Clarify that the risk in my previous comments is about resource arrangement for CTS in Android S.\nIf Dolby can provide the CTS for this API, the move will be much faster.",
+      "parentUuid": "19615be8_ee1ceadb",
+      "revId": "92e340c6353207c99b24f4d2692db81397d8a834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
