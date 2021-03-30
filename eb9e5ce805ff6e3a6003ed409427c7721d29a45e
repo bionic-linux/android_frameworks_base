@@ -96,6 +96,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "741a3412_938bca51",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-30T18:30:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cdbd24d7_f3ab6633",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 63
+      },
+      "revId": "eb9e5ce805ff6e3a6003ed409427c7721d29a45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02ffc8d4_d4c67ffe",
@@ -181,6 +205,30 @@
       "side": 1,
       "message": "Yep, if the snapshot doesn\u0027t change, the onNewSnapshot() isn\u0027t triggered by the TelephonySubscriptionTracker. And given that that\u0027s the root of this notification tree, we\u0027d only get a subscription change if it\u0027s a change in the snapshot",
       "parentUuid": "e7ff3f43_e23f2c74",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 76
+      },
+      "revId": "eb9e5ce805ff6e3a6003ed409427c7721d29a45e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2866b9f_db6b7705",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-30T18:30:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08a7cd63_623674f3",
       "range": {
         "startLine": 131,
         "startChar": 0,
