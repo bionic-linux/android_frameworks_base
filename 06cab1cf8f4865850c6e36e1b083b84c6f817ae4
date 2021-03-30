@@ -93,6 +93,30 @@
       },
       "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f294c56_f30acfdd",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4279,
+      "author": {
+        "id": 1790000
+      },
+      "writtenOn": "2021-03-30T02:17:23Z",
+      "side": 1,
+      "message": "It will be read in Google Contacts App. Its code is in google3\nThe implementation is currently in progress.\nHere is the link to the Design Doc: go/android-contacts-app-non-sim-sdn",
+      "parentUuid": "cb43b53a_1f89b8a6",
+      "range": {
+        "startLine": 4279,
+        "startChar": 31,
+        "endLine": 4279,
+        "endChar": 84
+      },
+      "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
