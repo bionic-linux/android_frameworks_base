@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03dc19e7_7c00c3b0",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-03-30T18:31:41Z",
+      "side": 1,
+      "message": "Still not sure why this has to be locked. Since the snapshots are immutable, and since you\u0027re not synchronizing multiple things... at this point I feel like I must be missing something obvious",
+      "range": {
+        "startLine": 723,
+        "startChar": 22,
+        "endLine": 723,
+        "endChar": 27
+      },
+      "revId": "9e9055b9a01a2eea1f90bffd0a1ca9e0e9a39b7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
