@@ -16,6 +16,29 @@
       "message": "Jean-Michel, Eric, Do you have any additional feedback on this change?",
       "revId": "e402c73e9d27779621c0ff4def1319bc02f11eaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3878991_1f2323be",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-03-30T07:30:51Z",
+      "side": 1,
+      "message": "this should be rescaled to to current stream range before comparing to min and max and assigning to default",
+      "range": {
+        "startLine": 1614,
+        "startChar": 20,
+        "endLine": 1614,
+        "endChar": 38
+      },
+      "revId": "e402c73e9d27779621c0ff4def1319bc02f11eaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
