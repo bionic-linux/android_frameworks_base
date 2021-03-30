@@ -95,6 +95,9 @@ public abstract class DataService extends Service {
     /** The reason of the data request is IWLAN handover */
     public static final int REQUEST_REASON_HANDOVER = 3;
 
+    /** The reason of the data request is data recovery */
+    public static final int REQUEST_REASON_PDP_RESET = 4;
+
     private static final int DATA_SERVICE_CREATE_DATA_SERVICE_PROVIDER                 = 1;
     private static final int DATA_SERVICE_REMOVE_DATA_SERVICE_PROVIDER                 = 2;
     private static final int DATA_SERVICE_REMOVE_ALL_DATA_SERVICE_PROVIDERS            = 3;

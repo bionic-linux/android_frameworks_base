@@ -12484,6 +12484,7 @@ package android.telephony.data {
     method @Nullable public abstract android.telephony.data.DataService.DataServiceProvider onCreateDataServiceProvider(int);
     field public static final int REQUEST_REASON_HANDOVER = 3; // 0x3
     field public static final int REQUEST_REASON_NORMAL = 1; // 0x1
+    field public static final int REQUEST_REASON_PDP_RESET = 4; // 0x4
     field public static final int REQUEST_REASON_SHUTDOWN = 2; // 0x2
     field public static final int REQUEST_REASON_UNKNOWN = 0; // 0x0
     field public static final String SERVICE_INTERFACE = "android.telephony.data.DataService";
