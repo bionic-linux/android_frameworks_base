@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2002df44_dd9592ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1209463
+      },
+      "writtenOn": "2021-03-30T21:16:45Z",
+      "side": 1,
+      "message": "Please enable autosubmit vote +1 to merge the CL. Thanks",
+      "revId": "a697673bf2be503429d7ecc786d1fee5a70c0ccb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
