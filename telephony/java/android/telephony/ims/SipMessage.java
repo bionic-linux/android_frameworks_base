@@ -200,8 +200,25 @@ public final class SipMessage implements Parcelable {
 
     /**
      * @return the UTF-8 encoded SIP message.
+     * @deprecated Use {@link #toEncodedMessage} instead
      */
+    @Deprecated
     public @NonNull byte[] getEncodedMessage() {
+        byte[] header = new StringBuilder()
+                .append(mStartLine)
+                .append(mHeaderSection)
+                .append(CRLF)
+                .toString().getBytes(UTF_8);
+        byte[] sipMessage = new byte[header.length + mContent.length];
+        System.arraycopy(header, 0, sipMessage, 0, header.length);
+        System.arraycopy(mContent, 0, sipMessage, header.length, mContent.length);
+        return sipMessage;
+    }
+
+    /**
+     * @return the UTF-8 encoded SIP message.
+     */
+    public @NonNull byte[] toEncodedMessage() {
         byte[] header = new StringBuilder()
                 .append(mStartLine)
                 .append(mHeaderSection)
