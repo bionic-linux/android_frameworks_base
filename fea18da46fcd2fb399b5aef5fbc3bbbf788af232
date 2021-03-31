@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ca40610_50b854ae",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T23:39:38Z",
+      "side": 1,
+      "message": "Nit, javadoc usually starts with the interface name:\n\nEncryptedTunnelParams represents a configuration to set up an encrypted tunnel.",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "fea18da46fcd2fb399b5aef5fbc3bbbf788af232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "661e8811_7c93abb8",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T23:39:38Z",
+      "side": 1,
+      "message": "unclear reference; \"It\" could refer to the concrete implementation or the interface.\n\nSuggest \"Subclasses should be immutable data classes containing connection, authentication and authorization parameters required...\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 82,
+        "endLine": 21,
+        "endChar": 85
+      },
+      "revId": "fea18da46fcd2fb399b5aef5fbc3bbbf788af232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "534e05f2_9c9f61d9",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T23:39:38Z",
+      "side": 1,
+      "message": "Concrete implementations for a control plane protocol should implement this interface",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "fea18da46fcd2fb399b5aef5fbc3bbbf788af232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecce9a5a_16d9777b",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-03-31T23:39:38Z",
+      "side": 1,
+      "message": "Not necessary; this is a dependency of that; referring to it makes it a cyclical reference :)",
+      "range": {
+        "startLine": 23,
+        "startChar": 45,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "fea18da46fcd2fb399b5aef5fbc3bbbf788af232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
