@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17b78c8c_ef9dfdde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1633017
+      },
+      "writtenOn": "2021-03-31T22:47:51Z",
+      "side": 1,
+      "message": "Hi Henry,\nHow much time do we have for this change with CTS testing to be considered for Android-S.\nEarlier Andy mentioned that \"we are running short on time for S\".\n\nThis may involve \n - adding/enabling a getter similar to listAudioPatches() in the AudioManager to query the active patches\n - or even safer approach where we don\u0027t expose too much of information to the apps\n\nwe are yet to understand the clean approach.\n\nThanks\nSampath",
+      "parentUuid": "42fb6392_36b43c3d",
+      "revId": "92e340c6353207c99b24f4d2692db81397d8a834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "afef5583_42dab9fa",
         "filename": "media/java/android/media/tv/TvInputManager.java",
         "patchSetId": 8
