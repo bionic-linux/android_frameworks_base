@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b380465_d64c0b05",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1014443
+      },
+      "writtenOn": "2021-03-31T08:27:50Z",
+      "side": 1,
+      "message": "Guessing there should be precisely one of these in the stream ? (i.e, not a repeated field). If not, this is a behaviour change of using the first instead of the last.",
+      "range": {
+        "startLine": 410,
+        "startChar": 24,
+        "endLine": 410,
+        "endChar": 58
+      },
+      "revId": "8129366637d1787f7bbb2fa3b07e592673026d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
