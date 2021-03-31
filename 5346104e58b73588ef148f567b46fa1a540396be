@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f5fd2d6_9a9e6d19",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5336,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-31T04:22:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabc1db6_c3215ae4",
+      "range": {
+        "startLine": 5336,
+        "startChar": 12,
+        "endLine": 5336,
+        "endChar": 42
+      },
+      "revId": "5346104e58b73588ef148f567b46fa1a540396be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fdf18ed9_df9ab8df",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "edcf4a55_bf97763a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5368,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-31T04:22:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdf18ed9_df9ab8df",
+      "range": {
+        "startLine": 5368,
+        "startChar": 18,
+        "endLine": 5368,
+        "endChar": 19
+      },
+      "revId": "5346104e58b73588ef148f567b46fa1a540396be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af7fa590_c4fa32c8",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-03-31T03:10:23Z",
       "side": 1,
       "message": "Considering that mockGetApplicationInfo calls PermissionMonitor inline with packageAdded, it would make sense to also have it send the broadcast.\n\nCan you try moving the broadcast inside mockGetApplicationInfo and see if it breaks anything ? If it breaks nothing, let\u0027s do it, otherwise let\u0027s keep what you have.",
+      "range": {
+        "startLine": 11423,
+        "startChar": 0,
+        "endLine": 11425,
+        "endChar": 38
+      },
+      "revId": "5346104e58b73588ef148f567b46fa1a540396be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a4cdf3d_9d7ab540",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11425,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2021-03-31T04:22:13Z",
+      "side": 1,
+      "message": "Gave it a shot but it broke since we need to have a onPackageAdded permission to send these broadcasts. I could add it but would rather not change the state of the test (or tests calling this helper) as much as possible.",
+      "parentUuid": "af7fa590_c4fa32c8",
       "range": {
         "startLine": 11423,
         "startChar": 0,
