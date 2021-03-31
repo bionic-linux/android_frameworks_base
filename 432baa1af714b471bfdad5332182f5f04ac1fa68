@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe00ce7d_daf8ac4d",
+        "filename": "telephony/java/android/telephony/ims/SipMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-03-31T15:44:44Z",
+      "side": 1,
+      "message": "From API review bug:\ndocumentation should specify the format of the returned byte[] and if possible reference some standard\n\nAlso:\nFor symmetry you should have a static factory method fromEncodedMessage that returns a SipMessage",
+      "range": {
+        "startLine": 218,
+        "startChar": 5,
+        "endLine": 219,
+        "endChar": 45
+      },
+      "revId": "432baa1af714b471bfdad5332182f5f04ac1fa68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
