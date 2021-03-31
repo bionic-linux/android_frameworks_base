@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dabc1db6_c3215ae4",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5336,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-31T03:10:23Z",
+      "side": 1,
+      "message": "Let\u0027s add some comment here saying that this is necessary in the case a package is added or removed, but also when it\u0027s replaced and updated to run as a new uid by its manifest rules.\n\nAlso comment that if a separate package (different from the updated one) shares the UID of one of the packages in the preferences, then it should simply share fate with the UID of that other package, which means updating the rules is never going to be needed in this case (whether it joins or leaves a UID with a preference)",
+      "range": {
+        "startLine": 5336,
+        "startChar": 12,
+        "endLine": 5336,
+        "endChar": 42
+      },
+      "revId": "5346104e58b73588ef148f567b46fa1a540396be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdf18ed9_df9ab8df",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5368,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-31T03:10:23Z",
+      "side": 1,
+      "message": "style nit : space",
+      "range": {
+        "startLine": 5368,
+        "startChar": 18,
+        "endLine": 5368,
+        "endChar": 19
+      },
+      "revId": "5346104e58b73588ef148f567b46fa1a540396be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af7fa590_c4fa32c8",
+        "filename": "tests/net/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11425,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-03-31T03:10:23Z",
+      "side": 1,
+      "message": "Considering that mockGetApplicationInfo calls PermissionMonitor inline with packageAdded, it would make sense to also have it send the broadcast.\n\nCan you try moving the broadcast inside mockGetApplicationInfo and see if it breaks anything ? If it breaks nothing, let\u0027s do it, otherwise let\u0027s keep what you have.",
+      "range": {
+        "startLine": 11423,
+        "startChar": 0,
+        "endLine": 11425,
+        "endChar": 38
+      },
+      "revId": "5346104e58b73588ef148f567b46fa1a540396be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
