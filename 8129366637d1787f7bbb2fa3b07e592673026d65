@@ -22,6 +22,30 @@
       },
       "revId": "8129366637d1787f7bbb2fa3b07e592673026d65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f9ef53b_3021041e",
+        "filename": "services/core/java/com/android/server/os/NativeTombstoneManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1079148
+      },
+      "writtenOn": "2021-03-31T08:29:45Z",
+      "side": 1,
+      "message": "That was true for process_name, the change to the proto is to replace it with command_line, which is a repeated field (of which the first element is the process name)",
+      "parentUuid": "6b380465_d64c0b05",
+      "range": {
+        "startLine": 410,
+        "startChar": 24,
+        "endLine": 410,
+        "endChar": 58
+      },
+      "revId": "8129366637d1787f7bbb2fa3b07e592673026d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
