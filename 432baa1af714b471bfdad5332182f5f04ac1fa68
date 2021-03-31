@@ -22,6 +22,30 @@
       },
       "revId": "432baa1af714b471bfdad5332182f5f04ac1fa68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26adf506_0cab0a85",
+        "filename": "telephony/java/android/telephony/ims/SipMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1373692
+      },
+      "writtenOn": "2021-03-31T16:31:36Z",
+      "side": 1,
+      "message": "1. Add more description\n2. Regarding \"fromEncodedMessage API\", I explain in https://b.corp.google.com/issues/184018068#comment2",
+      "parentUuid": "fe00ce7d_daf8ac4d",
+      "range": {
+        "startLine": 218,
+        "startChar": 5,
+        "endLine": 219,
+        "endChar": 45
+      },
+      "revId": "432baa1af714b471bfdad5332182f5f04ac1fa68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
