@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1083ac8_b3c84be3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-03-31T10:13:55Z",
+      "side": 1,
+      "message": "CP of internal CL, fixes the build",
+      "revId": "b3394bc5a257d43931c3ba126274dcb0e3b5d8e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
