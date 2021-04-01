@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "528ef787_97ed582b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2021-04-01T16:07:33Z",
+      "side": 1,
+      "message": "I feel it\u0027s too late for Android S since public API was frozen already.",
+      "parentUuid": "17b78c8c_ef9dfdde",
+      "revId": "92e340c6353207c99b24f4d2692db81397d8a834",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "afef5583_42dab9fa",
         "filename": "media/java/android/media/tv/TvInputManager.java",
         "patchSetId": 8
