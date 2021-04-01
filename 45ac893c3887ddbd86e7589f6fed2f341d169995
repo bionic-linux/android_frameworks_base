@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ffea522_43f2a9b3",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3042,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-04-01T21:25:29Z",
+      "side": 1,
+      "message": "just a suggestion:\n\nonOobData()?\n\nReceived seems to imply that we got the data from a remote device, but we actually got it from the local controller.",
+      "range": {
+        "startLine": 3042,
+        "startChar": 13,
+        "endLine": 3042,
+        "endChar": 30
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33a9029e_c2d8f2ff",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-04-01T21:25:29Z",
+      "side": 1,
+      "message": "Please add an Executor for the call back \n\n@SystemApi\n@RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)\npublic void getLocalOobData(int transport, @NonNull IOobDataCallback callback, @NonNull @CallbackExecutor Executor executor);\n\nSee example here:\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/java/android/uwb/UwbManager.java#157\n\nWhen invoking the callback, we should use Executor.execute(). \n\nIn such a way, the caller of this API can decide which thread/context to run the callback and reduce the chances for deadlock.",
+      "range": {
+        "startLine": 3093,
+        "startChar": 56,
+        "endLine": 3093,
+        "endChar": 81
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
