@@ -137,6 +137,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9efbf52d_e10e319b",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3041,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-01T21:55:14Z",
+      "side": 1,
+      "message": "Nope, in fact it will hide it from all surfaces (including @SystemApi). Should\u0027ve mentioned you should remove that as well.",
+      "parentUuid": "bae9d894_8946cc0b",
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ffea522_43f2a9b3",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 2
