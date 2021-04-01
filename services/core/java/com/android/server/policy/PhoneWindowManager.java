@@ -3637,7 +3637,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (interactive) {
                 // If the screen is awake, but the button pressed was the one that woke the device
                 // then don't pass it to the application
-                if (keyCode == mPendingWakeKey && !down) {
+                if (keyCode == mPendingWakeKey && !down
+                        && !mGlobalKeyManager.shouldHandleGlobalKey(keyCode, event) ) {
                     result = 0;
                 }
                 // Reset the pending key
