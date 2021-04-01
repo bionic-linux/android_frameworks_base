@@ -16,6 +16,23 @@
       "message": "Please enable autosubmit vote +1 to merge the CL. Thanks",
       "revId": "a697673bf2be503429d7ecc786d1fee5a70c0ccb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89f1dc9a_3de49eb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1222074
+      },
+      "writtenOn": "2021-04-01T22:33:00Z",
+      "side": 1,
+      "message": "Please set Autosubmit +1 vote for this CL",
+      "revId": "a697673bf2be503429d7ecc786d1fee5a70c0ccb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
