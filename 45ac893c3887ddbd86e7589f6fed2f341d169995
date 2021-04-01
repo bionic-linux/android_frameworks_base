@@ -1,6 +1,80 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12d19aa2_f94f8bdb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-01T21:33:14Z",
+      "side": 1,
+      "message": "Drive by review :)",
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "378cffe6_5b7e0766",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3039,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-01T21:33:14Z",
+      "side": 1,
+      "message": "nit: Don\u0027t prefix with I, just OobDataCallback\n\nSee examples in go/android-api-guidelines#callbacks",
+      "range": {
+        "startLine": 3039,
+        "startChar": 21,
+        "endLine": 3039,
+        "endChar": 37
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e5a84b4_d4e77ef9",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3040,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-01T21:33:14Z",
+      "side": 1,
+      "message": "nit: Please add docs to anything added to the API, include constants and interfaces",
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bd1337b_a0eb2288",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3041,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-01T21:33:14Z",
+      "side": 1,
+      "message": "nit: no need to specify anything within the class as @SystemApi, it implicitly takes on the API visibility of the class itself.\n\nThat is, you can just remove this and the same on onError.",
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ffea522_43f2a9b3",
@@ -37,6 +111,53 @@
       "writtenOn": "2021-04-01T21:25:29Z",
       "side": 1,
       "message": "Please add an Executor for the call back \n\n@SystemApi\n@RequiresPermission(Manifest.permission.BLUETOOTH_PRIVILEGED)\npublic void getLocalOobData(int transport, @NonNull IOobDataCallback callback, @NonNull @CallbackExecutor Executor executor);\n\nSee example here:\n\nhttps://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/java/android/uwb/UwbManager.java#157\n\nWhen invoking the callback, we should use Executor.execute(). \n\nIn such a way, the caller of this API can decide which thread/context to run the callback and reduce the chances for deadlock.",
+      "range": {
+        "startLine": 3093,
+        "startChar": 56,
+        "endLine": 3093,
+        "endChar": 81
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1d88ecc_f2a30730",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-01T21:33:14Z",
+      "side": 1,
+      "message": "nit: Could you add an @IntDef for transports as well and apply here?",
+      "range": {
+        "startLine": 3093,
+        "startChar": 32,
+        "endLine": 3093,
+        "endChar": 45
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ad2ff26_883a56bb",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-01T21:33:14Z",
+      "side": 1,
+      "message": "+1, this is also recommended in the API guideliness (go/android-api-guidelines#callbacks)",
+      "parentUuid": "33a9029e_c2d8f2ff",
       "range": {
         "startLine": 3093,
         "startChar": 56,
