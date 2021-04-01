@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2edf01a_5c3fbc1e",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3039,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-01T21:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378cffe6_5b7e0766",
+      "range": {
+        "startLine": 3039,
+        "startChar": 21,
+        "endLine": 3039,
+        "endChar": 37
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e5a84b4_d4e77ef9",
@@ -71,6 +95,24 @@
       "writtenOn": "2021-04-01T21:33:14Z",
       "side": 1,
       "message": "nit: no need to specify anything within the class as @SystemApi, it implicitly takes on the API visibility of the class itself.\n\nThat is, you can just remove this and the same on onError.",
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bae9d894_8946cc0b",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3041,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-01T21:43:43Z",
+      "side": 1,
+      "message": "Is the @hide still necessary?",
+      "parentUuid": "5bd1337b_a0eb2288",
       "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
