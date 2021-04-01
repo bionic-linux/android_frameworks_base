@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009521539",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1660001?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "069f8daa_123ac26d",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3640,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-01T08:28:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3640,
+        "startChar": 0,
+        "endLine": 3640,
+        "endChar": 119
+      },
+      "revId": "e2ce03e77a9f3e7910fe0f506b5c666de7207c22",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
