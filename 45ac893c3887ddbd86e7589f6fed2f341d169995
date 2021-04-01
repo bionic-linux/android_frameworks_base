@@ -178,6 +178,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f5dcf73_e163c005",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3042,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-04-01T22:24:26Z",
+      "side": 1,
+      "message": "or onOobDataAvailable?\n\nor given that this is in OobDataCallback -\u003e onAvailable",
+      "parentUuid": "4ffea522_43f2a9b3",
+      "range": {
+        "startLine": 3042,
+        "startChar": 13,
+        "endLine": 3042,
+        "endChar": 30
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33a9029e_c2d8f2ff",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 2
@@ -241,6 +265,29 @@
         "startChar": 56,
         "endLine": 3093,
         "endChar": 81
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af1aa56e_a762160c",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1051483
+      },
+      "writtenOn": "2021-04-01T22:24:26Z",
+      "side": 1,
+      "message": "should we name this generateLocalOobData?\n\nsince get implies a cheap operation usually, and only one can be generated at a time for pairing?",
+      "range": {
+        "startLine": 3093,
+        "startChar": 16,
+        "endLine": 3093,
+        "endChar": 31
       },
       "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
