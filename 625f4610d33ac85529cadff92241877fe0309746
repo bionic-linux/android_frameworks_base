@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009537927",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1662621?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b1efd42c_1fd8e081",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-01T21:00:08Z",
+      "side": 1,
+      "message": "\"manual\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "625f4610d33ac85529cadff92241877fe0309746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009537925",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1662621?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "82b6a27d_edbf31f8",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothAdapter.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothAdapter.java",
+              "range": {
+                "startLine": 3021,
+                "startChar": 18,
+                "endLine": 3021,
+                "endChar": 24
+              },
+              "replacement": "UNKNOWN"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0f7c3300_1264abca",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3021,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-01T21:00:08Z",
+      "side": 1,
+      "message": "Common typo found: \"UNKOWN\" -- should it be \"UNKNOWN\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3021,
+        "startChar": 18,
+        "endLine": 3021,
+        "endChar": 24
+      },
+      "revId": "625f4610d33ac85529cadff92241877fe0309746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009537925",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1662621?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "564cf135_8b5a6c11",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothAdapter.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothAdapter.java",
+              "range": {
+                "startLine": 3029,
+                "startChar": 38,
+                "endLine": 3029,
+                "endChar": 44
+              },
+              "replacement": "UNKNOWN"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1ad7f20b_ee15d8e5",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3029,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-01T21:00:08Z",
+      "side": 1,
+      "message": "Common typo found: \"UNKOWN\" -- should it be \"UNKNOWN\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3029,
+        "startChar": 38,
+        "endLine": 3029,
+        "endChar": 44
+      },
+      "revId": "625f4610d33ac85529cadff92241877fe0309746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009537929",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1662621?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "89b59d03_74b6078d",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3094,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-01T21:00:08Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3094,
+        "startChar": 0,
+        "endLine": 3094,
+        "endChar": 102
+      },
+      "revId": "625f4610d33ac85529cadff92241877fe0309746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
