@@ -1,0 +1,76 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fed60cb_49836fdd",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3021,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-01T21:03:27Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"UNKOWN\" -- should it be \"UNKNOWN\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "0f7c3300_1264abca",
+      "range": {
+        "startLine": 3021,
+        "startChar": 18,
+        "endLine": 3021,
+        "endChar": 24
+      },
+      "revId": "625f4610d33ac85529cadff92241877fe0309746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39a8a625_01bcd30c",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3029,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-01T21:03:27Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"UNKOWN\" -- should it be \"UNKNOWN\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "1ad7f20b_ee15d8e5",
+      "range": {
+        "startLine": 3029,
+        "startChar": 38,
+        "endLine": 3029,
+        "endChar": 44
+      },
+      "revId": "625f4610d33ac85529cadff92241877fe0309746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06fa769c_fbc36cac",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3094,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-01T21:03:27Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "89b59d03_74b6078d",
+      "range": {
+        "startLine": 3094,
+        "startChar": 0,
+        "endLine": 3094,
+        "endChar": 102
+      },
+      "revId": "625f4610d33ac85529cadff92241877fe0309746",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
