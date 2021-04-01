@@ -3637,7 +3637,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (interactive) {
                 // If the screen is awake, but the button pressed was the one that woke the device
                 // then don't pass it to the application
-                if (keyCode == mPendingWakeKey && !down) {
+                if (keyCode == mPendingWakeKey && !down
+                        && !mGlobalKeyManager.shouldHandleGlobalKey(keyCode, event) ) {
                     result = 0;
                 }
                 // Reset the pending key
@@ -3659,7 +3660,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 isWakeKey = false;
             }
             // Cache the wake key on down event so we can also avoid sending the up event to the app
-            if (isWakeKey && down) {
+            // Global key will also intercept if Cache global key,but we also want handle global key
+            // in app. exclude global key here
+            if (isWakeKey && down
+                    && !mGlobalKeyManager.shouldHandleGlobalKey(keyCode, event)) {
                 mPendingWakeKey = keyCode;
             }
         }
