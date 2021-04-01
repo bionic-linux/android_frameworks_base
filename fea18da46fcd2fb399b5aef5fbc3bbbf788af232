@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb62d504_f5490707",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-01T18:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca40610_50b854ae",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "fea18da46fcd2fb399b5aef5fbc3bbbf788af232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "661e8811_7c93abb8",
@@ -70,6 +94,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e76563e_f3060d97",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-01T18:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "661e8811_7c93abb8",
+      "range": {
+        "startLine": 21,
+        "startChar": 82,
+        "endLine": 21,
+        "endChar": 85
+      },
+      "revId": "fea18da46fcd2fb399b5aef5fbc3bbbf788af232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49d24fef_ae843c35",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-01T18:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "534e05f2_9c9f61d9",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "fea18da46fcd2fb399b5aef5fbc3bbbf788af232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ecce9a5a_16d9777b",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-03-31T23:39:38Z",
       "side": 1,
       "message": "Not necessary; this is a dependency of that; referring to it makes it a cyclical reference :)",
+      "range": {
+        "startLine": 23,
+        "startChar": 45,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "fea18da46fcd2fb399b5aef5fbc3bbbf788af232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a7b4575_8621d6a5",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-01T18:18:11Z",
+      "side": 1,
+      "message": "I see.",
+      "parentUuid": "ecce9a5a_16d9777b",
       "range": {
         "startLine": 23,
         "startChar": 45,
