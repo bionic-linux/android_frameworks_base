@@ -3659,7 +3659,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 isWakeKey = false;
             }
             // Cache the wake key on down event so we can also avoid sending the up event to the app
-            if (isWakeKey && down) {
+            // Exclude global keys to allow Global Key Receiver to decide global key behavior.
+            if (isWakeKey && down
+                    && !mGlobalKeyManager.shouldHandleGlobalKey(keyCode, event)) {
                 mPendingWakeKey = keyCode;
             }
         }
