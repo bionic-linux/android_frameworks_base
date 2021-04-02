@@ -117,6 +117,30 @@
       },
       "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b21f3d86_8b708547",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4279,
+      "author": {
+        "id": 1790000
+      },
+      "writtenOn": "2021-04-02T00:30:24Z",
+      "side": 1,
+      "message": "Hi Jack,\n\nHere is the change where the we read the Carrier data\n\nhttps://critique-ng.corp.google.com/cl/366346373/depot/google3/java/com/google/android/apps/contacts/sdn/SdnRepositoryImpl.kt",
+      "parentUuid": "0f294c56_f30acfdd",
+      "range": {
+        "startLine": 4279,
+        "startChar": 31,
+        "endLine": 4279,
+        "endChar": 84
+      },
+      "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
