@@ -42,6 +42,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import android.net.ConnectivityManager;
+import android.net.LinkAddress;
 import android.net.LinkProperties;
 import android.net.NetworkAgent;
 import android.net.NetworkCapabilities;
@@ -60,8 +61,12 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /** Tests for VcnGatewayConnection.ConnectedState */
@@ -169,12 +174,14 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
     }
 
     private void triggerChildOpened() {
+        triggerChildOpened(Collections.singletonList(TEST_INTERNAL_ADDR), TEST_DNS_ADDR);
+    }
+
+    private void triggerChildOpened(List<LinkAddress> internalAddresses, InetAddress dnsAddress) {
         final VcnChildSessionConfiguration mMockChildSessionConfig =
                 mock(VcnChildSessionConfiguration.class);
-        doReturn(Collections.singletonList(TEST_INTERNAL_ADDR))
-                .when(mMockChildSessionConfig)
-                .getInternalAddresses();
-        doReturn(Collections.singletonList(TEST_DNS_ADDR))
+        doReturn(internalAddresses).when(mMockChildSessionConfig).getInternalAddresses();
+        doReturn(Collections.singletonList(dnsAddress))
                 .when(mMockChildSessionConfig)
                 .getInternalDnsServers();
 
@@ -246,6 +253,61 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         triggerValidation(NetworkAgent.VALIDATION_STATUS_VALID);
         verify(mSafeModeTimeoutAlarm).cancel();
         assertFalse(mGatewayConnection.isInSafeMode());
+    }
+
+    @Test
+    public void testInternalAndDnsAddressesChanged() throws Exception {
+        final List<LinkAddress> startingInternalAddrs =
+                Arrays.asList(new LinkAddress[] {TEST_INTERNAL_ADDR, TEST_INTERNAL_ADDR_2});
+        triggerChildOpened(startingInternalAddrs, TEST_DNS_ADDR);
+        mTestLooper.dispatchAll();
+
+        for (LinkAddress addr : startingInternalAddrs) {
+            verify(mIpSecSvc)
+                    .addAddressToTunnelInterface(
+                            eq(TEST_IPSEC_TUNNEL_RESOURCE_ID), eq(addr), any());
+        }
+
+        final ArgumentCaptor<LinkProperties> lpCaptor =
+                ArgumentCaptor.forClass(LinkProperties.class);
+        verify(mDeps)
+                .newNetworkAgent(
+                        any(),
+                        any(),
+                        any(),
+                        argThat(
+                                lp ->
+                                        Objects.equals(startingInternalAddrs, lp.getLinkAddresses())
+                                                && Objects.equals(
+                                                        Collections.singletonList(TEST_DNS_ADDR),
+                                                        lp.getDnsServers())),
+                        anyInt(),
+                        any(),
+                        any(),
+                        any(),
+                        any());
+
+        // Trigger another connection event, and verify that the addresses change
+        final List<LinkAddress> newInternalAddrs =
+                Arrays.asList(new LinkAddress[] {TEST_INTERNAL_ADDR_2, TEST_INTERNAL_ADDR_3});
+        triggerChildOpened(newInternalAddrs, TEST_DNS_ADDR_2);
+        mTestLooper.dispatchAll();
+
+        // Verify addresses on tunnel network added/removed
+        for (LinkAddress addr : newInternalAddrs) {
+            verify(mIpSecSvc)
+                    .addAddressToTunnelInterface(
+                            eq(TEST_IPSEC_TUNNEL_RESOURCE_ID), eq(addr), any());
+        }
+        verify(mIpSecSvc)
+                .removeAddressFromTunnelInterface(
+                        eq(TEST_IPSEC_TUNNEL_RESOURCE_ID), eq(TEST_INTERNAL_ADDR), any());
+
+        // TODO: Also verify link properties updated and sent when sendLinkProperties is mockable
+
+        // Verify that IpSecTunnelInterface only created once
+        verify(mIpSecSvc).createTunnelInterface(any(), any(), any(), any(), any());
+        verifyNoMoreInteractions(mIpSecSvc);
     }
 
     @Test
