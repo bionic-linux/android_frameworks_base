@@ -171,6 +171,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bcb73d5_316114a4",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3038,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-04-02T20:07:23Z",
+      "side": 1,
+      "message": "Oh, so it\u0027s just if two apps request OOB data exactly at same time ?\n\nConsider this scenario:\n1. App A request OOB data, there is no pairing initiated\n2. 10 minutes later app B requests OOB data\n3. can OOB data from both app A and B be used now to create bond ? or just B ? or did B receive the OOB_ERROR_ANOTHER_ACTIVE_REQUEST ?",
+      "parentUuid": "3b7fce79_1d4cdaa5",
+      "range": {
+        "startLine": 3037,
+        "startChar": 0,
+        "endLine": 3038,
+        "endChar": 48
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3b287fc_fa50acc4",
