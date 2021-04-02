@@ -189,6 +189,30 @@
       },
       "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98d12dfe_17be85e6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4279,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-04-02T17:45:00Z",
+      "side": 1,
+      "message": "That is correct. \n\nOEMs can add the following into their config file,\n\u003c?xml version\u003d\"1.0\" encoding\u003d\"utf-8\" standalone\u003d\"yes\"?\u003e\n\u003ccarrier_config\u003e\n    \u003cstring-array name\u003d\"carrier_service_dialing_numbers_list\" num\u003d\"2\"\u003e\n        \u003citem value\u003d\"12345\"/\u003e\n        \u003citem value\u003d\"54321\"/\u003e\n    \u003c/string-array\u003e\n\u003c/carrier_config\u003e\n\nAnd you can still read it in the contacts app, as long as you provide the exact string key.\n\nKeep in mind that carrier config is technically just a string-key/value pairs container.",
+      "parentUuid": "81696071_e037c1e8",
+      "range": {
+        "startLine": 4279,
+        "startChar": 31,
+        "endLine": 4279,
+        "endChar": 84
+      },
+      "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
