@@ -100,6 +100,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55b6d60b_8d6c61cd",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3040,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T01:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e5a84b4_d4e77ef9",
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5bd1337b_a0eb2288",
@@ -153,6 +171,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "754843bd_c5660723",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3041,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T01:31:04Z",
+      "side": 1,
+      "message": "nevermind, I think it should be",
+      "parentUuid": "bae9d894_8946cc0b",
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ffea522_43f2a9b3",
@@ -189,6 +225,30 @@
       "writtenOn": "2021-04-01T22:24:26Z",
       "side": 1,
       "message": "or onOobDataAvailable?\n\nor given that this is in OobDataCallback -\u003e onAvailable",
+      "parentUuid": "4ffea522_43f2a9b3",
+      "range": {
+        "startLine": 3042,
+        "startChar": 13,
+        "endLine": 3042,
+        "endChar": 30
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fed278d_c00e7856",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3042,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T01:31:04Z",
+      "side": 1,
+      "message": "Yeah, I guess I was more thinking of received as in \"received via callback\".  onOobData is fine for me too",
       "parentUuid": "4ffea522_43f2a9b3",
       "range": {
         "startLine": 3042,
@@ -288,6 +348,78 @@
         "startChar": 16,
         "endLine": 3093,
         "endChar": 31
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "651f40b4_52a22336",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T01:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af1aa56e_a762160c",
+      "range": {
+        "startLine": 3093,
+        "startChar": 16,
+        "endLine": 3093,
+        "endChar": 31
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2164590_2d6e104e",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T01:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d88ecc_f2a30730",
+      "range": {
+        "startLine": 3093,
+        "startChar": 32,
+        "endLine": 3093,
+        "endChar": 45
+      },
+      "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16e53e97_7bb1a175",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3093,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T01:31:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad2ff26_883a56bb",
+      "range": {
+        "startLine": 3093,
+        "startChar": 56,
+        "endLine": 3093,
+        "endChar": 81
       },
       "revId": "45ac893c3887ddbd86e7589f6fed2f341d169995",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
