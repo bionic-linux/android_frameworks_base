@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac39c60a_5459b3f3",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T19:45:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca2eb13_0bad25cd",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39c81d25_08d05fd5",
@@ -54,6 +78,24 @@
       "writtenOn": "2021-04-02T19:00:02Z",
       "side": 1,
       "message": "nit: please remove extra blank line",
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84975844_e6eae861",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T19:45:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c81d25_08d05fd5",
       "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -95,6 +137,30 @@
       "side": 1,
       "message": "I think the callback is automatically removed when the OobData is returned to the caller? Maybe we should put this in the comment as well.",
       "parentUuid": "44ee6984_692053ae",
+      "range": {
+        "startLine": 3037,
+        "startChar": 0,
+        "endLine": 3038,
+        "endChar": 48
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b7fce79_1d4cdaa5",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3038,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T19:45:23Z",
+      "side": 1,
+      "message": "I see what you mean Jakub, however, Jack is also correct in that we remove the callback and call it once we get the data back.  The only way you could DoS this API would be to repeatedly call it over and over again.  And if we have a @SystemApi capable application calling this function repeatedly, I think we can work with the app team to let them know they aren\u0027t using the API properly.\n\nIf this were a 3p API then I think we would have to consider the DoS possibility a little more.\n\nAdditionally, if we were to give out multiple keys to apps we need to verify that the controller doesn\u0027t invalidate the last key when it generates a new one.",
+      "parentUuid": "deb8f28e_f5ef4bc9",
       "range": {
         "startLine": 3037,
         "startChar": 0,
@@ -176,6 +242,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea87c385_0462da1a",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3165,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T19:45:23Z",
+      "side": 1,
+      "message": "There is a tertiary option of TRANSPORT_AUTO, however, I\u0027m not sure if that is fully supported.  I think this logic makes sense if there are more than 2 items in the range.  I left it kind of open so that I can switch it to AUTO here if we decide to support AUTO in the future, but that would only work with dual mode devices I would think.  Unless we expect AUTO to determine the device type and transport somehow?",
+      "parentUuid": "edbaecdc_798927e6",
+      "range": {
+        "startLine": 3165,
+        "startChar": 12,
+        "endLine": 3165,
+        "endChar": 99
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4c8a6cb_2fb69e3c",
@@ -189,6 +279,30 @@
       "writtenOn": "2021-04-02T19:00:02Z",
       "side": 1,
       "message": "please change this into Log.w without gating on DBG since it is an error we want to surface in log all the time.",
+      "range": {
+        "startLine": 3171,
+        "startChar": 12,
+        "endLine": 3173,
+        "endChar": 13
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "059651fa_8a809328",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3173,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T19:45:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4c8a6cb_2fb69e3c",
       "range": {
         "startLine": 3171,
         "startChar": 12,
