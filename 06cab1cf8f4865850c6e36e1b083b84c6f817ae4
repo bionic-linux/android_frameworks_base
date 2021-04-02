@@ -141,6 +141,30 @@
       },
       "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94d8568c_331a529d",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 4279,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-04-02T05:49:58Z",
+      "side": 1,
+      "message": "So you are adding a Google proprietary key into the open source AOSP. That does not LGTM. \n\nMaybe you should just define the key in your proprietary code, and ask OEMs to put the config in their carrier config file, for example, Paris.",
+      "parentUuid": "b21f3d86_8b708547",
+      "range": {
+        "startLine": 4279,
+        "startChar": 31,
+        "endLine": 4279,
+        "endChar": 84
+      },
+      "revId": "06cab1cf8f4865850c6e36e1b083b84c6f817ae4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
