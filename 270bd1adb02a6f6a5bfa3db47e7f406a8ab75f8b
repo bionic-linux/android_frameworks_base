@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009546137",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1662621?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "39094b8b_0b15aff2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-02T01:31:21Z",
+      "side": 1,
+      "message": "\"manual\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "270bd1adb02a6f6a5bfa3db47e7f406a8ab75f8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009546138",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1662621?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "67e15359_7be33b67",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3177,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-02T01:31:21Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3177,
+        "startChar": 0,
+        "endLine": 3177,
+        "endChar": 105
+      },
+      "revId": "270bd1adb02a6f6a5bfa3db47e7f406a8ab75f8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
