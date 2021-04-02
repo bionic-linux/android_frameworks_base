@@ -268,6 +268,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "036f68d5_5b7ca787",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3165,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-04-02T19:52:07Z",
+      "side": 1,
+      "message": "TRANSPORT_AUTO \u003d 0;\nTRANSPORT_BREDR \u003d 1;\nTRANSPORT_LE \u003d 2;\n\nIn this case, isn\u0027t \n\nif (transport \u003c BluetoothDevice.TRANSPORT_BREDR || transport \u003e BluetoothDevice.TRANSPORT_LE)\n\nequivalent to \n\nif (transport !\u003d TRANSPORT_BREDR \u0026\u0026 transport !\u003d TRANSPORT_LE)\n\n?\n\nI like the !\u003d method as well since it is more readable that only these two values are allowed",
+      "parentUuid": "ea87c385_0462da1a",
+      "range": {
+        "startLine": 3165,
+        "startChar": 12,
+        "endLine": 3165,
+        "endChar": 99
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e4c8a6cb_2fb69e3c",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 5
