@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a58ace3f_9e7850c0",
+        "filename": "packages/WAPPushManager/src/com/android/smspush/WapPushManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-04-02T22:47:28Z",
+      "side": 1,
+      "message": "Does this replace the DB that\u0027s already present in device encrypted storage?",
+      "range": {
+        "startLine": 468,
+        "startChar": 54,
+        "endLine": 468,
+        "endChar": 70
+      },
+      "revId": "0cb370ba1ed7dfd10ac24be390700534409694da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
