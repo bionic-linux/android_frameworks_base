@@ -46,6 +46,30 @@
       },
       "revId": "3b6985258266f0b57263af3a8e3261b0d658edfc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd762ff2_82502341",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3663,
+      "author": {
+        "id": 1359573
+      },
+      "writtenOn": "2021-04-02T05:32:41Z",
+      "side": 1,
+      "message": "yes,it is ok,good advice",
+      "parentUuid": "5f17b10a_3fced087",
+      "range": {
+        "startLine": 3663,
+        "startChar": 33,
+        "endLine": 3663,
+        "endChar": 34
+      },
+      "revId": "3b6985258266f0b57263af3a8e3261b0d658edfc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
