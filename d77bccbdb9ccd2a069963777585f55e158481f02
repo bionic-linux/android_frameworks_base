@@ -20,6 +20,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ca2eb13_0bad25cd",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-04-02T19:00:02Z",
+      "side": 1,
+      "message": "nit: please remove unused import",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 49
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39c81d25_08d05fd5",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-04-02T19:00:02Z",
+      "side": 1,
+      "message": "nit: please remove extra blank line",
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "44ee6984_692053ae",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 5
@@ -31,6 +71,30 @@
       "writtenOn": "2021-04-02T09:07:27Z",
       "side": 1,
       "message": "so I can DoS the OOB pairing by obtaining OOB data at system start, and keeping it forever ?\n\nAny option for timeout, or ability for system to expropriate 3p app ?\n\n\nI think I joined review late, but why not return same OOB data to multiple apps, and later  send callback marking the data as used, so new data can be obtained ?\n\nOr have each app receive different set of OOB data, but app have to notify when it starts bonding with it\u0027s data (I\u0027m not sure if that is doable with Classic)",
+      "range": {
+        "startLine": 3037,
+        "startChar": 0,
+        "endLine": 3038,
+        "endChar": 48
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deb8f28e_f5ef4bc9",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3038,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-04-02T19:00:02Z",
+      "side": 1,
+      "message": "I think the callback is automatically removed when the OobData is returned to the caller? Maybe we should put this in the comment as well.",
+      "parentUuid": "44ee6984_692053ae",
       "range": {
         "startLine": 3037,
         "startChar": 0,
@@ -59,6 +123,53 @@
         "startChar": 12,
         "endLine": 3165,
         "endChar": 99
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edbaecdc_798927e6",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3165,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-04-02T19:00:02Z",
+      "side": 1,
+      "message": "Do you mean checking transport !\u003d TRANSPORT_BREDR \u0026\u0026 transport !\u003d TRANSPORT_LE ?",
+      "parentUuid": "a3b287fc_fa50acc4",
+      "range": {
+        "startLine": 3165,
+        "startChar": 12,
+        "endLine": 3165,
+        "endChar": 99
+      },
+      "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4c8a6cb_2fb69e3c",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3173,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-04-02T19:00:02Z",
+      "side": 1,
+      "message": "please change this into Log.w without gating on DBG since it is an error we want to surface in log all the time.",
+      "range": {
+        "startLine": 3171,
+        "startChar": 12,
+        "endLine": 3173,
+        "endChar": 13
       },
       "revId": "d77bccbdb9ccd2a069963777585f55e158481f02",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
