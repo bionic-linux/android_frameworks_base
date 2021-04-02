@@ -1,0 +1,28 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80a48ce6_48edc0ef",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3177,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-04-02T01:33:02Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "67e15359_7be33b67",
+      "range": {
+        "startLine": 3177,
+        "startChar": 0,
+        "endLine": 3177,
+        "endChar": 105
+      },
+      "revId": "270bd1adb02a6f6a5bfa3db47e7f406a8ab75f8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
