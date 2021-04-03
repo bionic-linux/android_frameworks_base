@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d8f5f42_74a50805",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-04-03T00:25:10Z",
+      "side": 1,
+      "message": "@Yan, before we bikeshed again... just a naming concern.",
+      "revId": "c90fce5a61f83e3d16c87513ed53485d929f834c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa0806e2_6a746c68",
+        "filename": "core/api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 24867,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-04-03T00:25:10Z",
+      "side": 1,
+      "message": "Maybe SecureTunnelParams? Not necessarily encrypted.",
+      "range": {
+        "startLine": 24867,
+        "startChar": 19,
+        "endLine": 24867,
+        "endChar": 28
+      },
+      "revId": "c90fce5a61f83e3d16c87513ed53485d929f834c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81da7aad_48f36338",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-04-03T00:25:10Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "c90fce5a61f83e3d16c87513ed53485d929f834c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
