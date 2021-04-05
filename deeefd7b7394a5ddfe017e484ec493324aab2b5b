@@ -1,6 +1,7 @@
 {
   "comments": [
     {
+      "unresolved": true,
       "key": {
         "uuid": "1cc39dfa_5f1837f6",
         "filename": "packages/WAPPushManager/tests/src/com/android/smspush/unitTests/WapPushTest.java",
@@ -20,8 +21,31 @@
         "endChar": 42
       },
       "revId": "deeefd7b7394a5ddfe017e484ec493324aab2b5b",
-      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889",
-      "unresolved": true
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cd44986_19034b9c",
+        "filename": "packages/WAPPushManager/tests/src/com/android/smspush/unitTests/WapPushTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-04-05T23:00:07Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "1cc39dfa_5f1837f6",
+      "range": {
+        "startLine": 563,
+        "startChar": 32,
+        "endLine": 563,
+        "endChar": 42
+      },
+      "revId": "deeefd7b7394a5ddfe017e484ec493324aab2b5b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
