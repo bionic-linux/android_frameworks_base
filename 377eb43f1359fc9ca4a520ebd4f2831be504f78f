@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d704b47c_fc019246",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-05T23:38:51Z",
+      "side": 1,
+      "message": "nit: a bit too long for 1st line - can you condense it at all?\n\nmaybe? \"Don\u0027t process dup unwanted() when unregistering NetworkAgent\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 75
+      },
+      "revId": "377eb43f1359fc9ca4a520ebd4f2831be504f78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4673d7a3_f9b9dd38",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-05T23:38:51Z",
+      "side": 1,
+      "message": "per our conversation offline, would you mind expanding a bit on this context + why we do this check given the new safe mode behavior? I think it may be helpful for maintainability",
+      "range": {
+        "startLine": 1477,
+        "startChar": 35,
+        "endLine": 1480,
+        "endChar": 49
+      },
+      "revId": "377eb43f1359fc9ca4a520ebd4f2831be504f78f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
