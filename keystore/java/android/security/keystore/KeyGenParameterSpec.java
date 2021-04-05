@@ -310,7 +310,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
     private final boolean mUserPresenceRequired;
     private final byte[] mAttestationChallenge;
     private final boolean mDevicePropertiesAttestationIncluded;
-    private final int[] mAttestationIds;
+    private final int[] mAttestationIds = new int[0];
     private final boolean mUniqueIdIncluded;
     private final boolean mUserAuthenticationValidWhileOnBody;
     private final boolean mInvalidatedByBiometricEnrollment;
@@ -779,9 +779,8 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
      * @return integer array representing the requested device IDs to attest.
      */
     @SystemApi
-    @Nullable
-    public int[] getAttestationIds() {
-        return Utils.cloneIfNotNull(mAttestationIds);
+    public @NonNull int[] getAttestationIds() {
+        return mAttestationIds.clone();
     }
 
     /**
@@ -911,7 +910,7 @@ public final class KeyGenParameterSpec implements AlgorithmParameterSpec, UserAu
         private boolean mUserPresenceRequired = false;
         private byte[] mAttestationChallenge = null;
         private boolean mDevicePropertiesAttestationIncluded = false;
-        private int[] mAttestationIds = null;
+        private int[] mAttestationIds = new int[0];
         private boolean mUniqueIdIncluded = false;
         private boolean mUserAuthenticationValidWhileOnBody;
         private boolean mInvalidatedByBiometricEnrollment = true;
