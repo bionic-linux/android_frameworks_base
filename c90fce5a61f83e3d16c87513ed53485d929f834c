@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0378e571_4ebab3b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-05T23:37:32Z",
+      "side": 1,
+      "message": "Throwing out other ideas.",
+      "revId": "c90fce5a61f83e3d16c87513ed53485d929f834c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa0806e2_6a746c68",
@@ -31,6 +48,30 @@
       "writtenOn": "2021-04-03T00:25:10Z",
       "side": 1,
       "message": "Maybe SecureTunnelParams? Not necessarily encrypted.",
+      "range": {
+        "startLine": 24867,
+        "startChar": 19,
+        "endLine": 24867,
+        "endChar": 28
+      },
+      "revId": "c90fce5a61f83e3d16c87513ed53485d929f834c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "923a0dde_6d66dc20",
+        "filename": "core/api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 24867,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-05T23:37:32Z",
+      "side": 1,
+      "message": "Entirely bikeshedding, but maybe just TunnelConnectionParams? \"Secure\" could theoretically depend on algorithms, and if someone somewhat dumbly uses only MD5 as a integrity algorithm, it is a tunnel, but possibly not secure.",
+      "parentUuid": "aa0806e2_6a746c68",
       "range": {
         "startLine": 24867,
         "startChar": 19,
