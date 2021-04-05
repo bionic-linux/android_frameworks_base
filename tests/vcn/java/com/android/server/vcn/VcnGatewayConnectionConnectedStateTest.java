@@ -315,6 +315,9 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         verifySafeModeTimeoutNotifiesCallbackAndUnregistersNetworkAgent(
                 mGatewayConnection.mConnectedState);
 
+        assertTrue(mGatewayConnection.isInSafeMode());
+        assertFalse(mGatewayConnection.isQuitting());
+
         triggerChildOpened();
         mTestLooper.dispatchAll();
 
