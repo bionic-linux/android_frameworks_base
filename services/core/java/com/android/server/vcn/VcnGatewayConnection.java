@@ -1476,9 +1476,10 @@ public class VcnGatewayConnection extends StateMachine {
                             () -> {
                                 Slog.d(TAG, "NetworkAgent was unwanted");
                                 // If network agent has already been torn down, skip sending the
-                                // disconnect. Unwanted() is always called, even when networkAgents
-                                // are unregistered in teardownNetwork(), so prevent duplicate
-                                // notifications.
+                                // disconnect. This guards against the case where unwanted() may be
+                                // called after networkAgents are unregistered in teardownNetwork(),
+                                // which may result in the entire GatewayConnection being torn down
+                                // where only the NetworkAgent was meant to be.
                                 if (mNetworkAgent != null) {
                                     teardownAsynchronously();
                                 }
