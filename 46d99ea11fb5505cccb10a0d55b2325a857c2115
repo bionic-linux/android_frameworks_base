@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e5ea676_ccf4538c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-06T09:35:22Z",
+      "side": 1,
+      "message": "This is a cherry-pick to AOSP.",
+      "revId": "46d99ea11fb5505cccb10a0d55b2325a857c2115",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
