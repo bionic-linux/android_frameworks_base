@@ -323,6 +323,62 @@ public class VcnGatewayConnectionConnectedStateTest extends VcnGatewayConnection
         assertFalse(mGatewayConnection.isInSafeMode());
     }
 
+    private Consumer<NetworkAgent> setupNetworkAndGetUnwantedCallback() {
+        triggerChildOpened();
+        mTestLooper.dispatchAll();
+
+        final ArgumentCaptor<Consumer<NetworkAgent>> unwantedCallbackCaptor =
+                ArgumentCaptor.forClass(Consumer.class);
+        verify(mDeps)
+                .newNetworkAgent(
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        anyInt(),
+                        any(),
+                        any(),
+                        unwantedCallbackCaptor.capture(),
+                        any());
+
+        return unwantedCallbackCaptor.getValue();
+    }
+
+    @Test
+    public void testUnwantedNetworkAgentTriggersTeardown() throws Exception {
+        final Consumer<NetworkAgent> unwantedCallback = setupNetworkAndGetUnwantedCallback();
+
+        unwantedCallback.accept(mNetworkAgent);
+        mTestLooper.dispatchAll();
+
+        assertTrue(mGatewayConnection.isQuitting());
+        assertEquals(mGatewayConnection.mDisconnectingState, mGatewayConnection.getCurrentState());
+    }
+
+    @Test
+    public void testUnwantedNetworkAgentWithDisconnectedNetworkAgent() throws Exception {
+        final Consumer<NetworkAgent> unwantedCallback = setupNetworkAndGetUnwantedCallback();
+
+        mGatewayConnection.setNetworkAgent(null);
+        unwantedCallback.accept(mNetworkAgent);
+        mTestLooper.dispatchAll();
+
+        assertFalse(mGatewayConnection.isQuitting());
+        assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
+    }
+
+    @Test
+    public void testUnwantedNetworkAgentWithNewNetworkAgent() throws Exception {
+        final Consumer<NetworkAgent> unwantedCallback = setupNetworkAndGetUnwantedCallback();
+
+        mGatewayConnection.setNetworkAgent(mock(NetworkAgent.class));
+        unwantedCallback.accept(mNetworkAgent);
+        mTestLooper.dispatchAll();
+
+        assertFalse(mGatewayConnection.isQuitting());
+        assertEquals(mGatewayConnection.mConnectedState, mGatewayConnection.getCurrentState());
+    }
+
     @Test
     public void testChildSessionClosedTriggersDisconnect() throws Exception {
         // Verify scheduled but not canceled when entering ConnectedState
