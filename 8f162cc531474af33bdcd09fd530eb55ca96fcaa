@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4672b60e_01a893ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-04-06T02:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f297a717_84de9415",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "8f162cc531474af33bdcd09fd530eb55ca96fcaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aed9abf_082e9cb7",
@@ -49,6 +73,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8b1d7ca4_b8800cb8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-04-06T02:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aed9abf_082e9cb7",
+      "range": {
+        "startLine": 17,
+        "startChar": 42,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "8f162cc531474af33bdcd09fd530eb55ca96fcaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5b3763fc_7d7e79e9",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -60,6 +108,24 @@
       "writtenOn": "2021-04-01T13:00:25Z",
       "side": 1,
       "message": "This is a reasonable stopgap, but we should really fix the underlying issue instead of papering over it. Can you please file a bug ?",
+      "revId": "8f162cc531474af33bdcd09fd530eb55ca96fcaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "444ae26e_95fe8b58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-04-06T02:31:14Z",
+      "side": 1,
+      "message": "In fact, we had a bug(b/143158421) for this issue which was filed by the external developer.\nThe last update is May 2020. Lorenzo said, the solution here is to make sure the network is created by netd as soon as registerNetworkAgent is called.",
+      "parentUuid": "5b3763fc_7d7e79e9",
       "revId": "8f162cc531474af33bdcd09fd530eb55ca96fcaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
