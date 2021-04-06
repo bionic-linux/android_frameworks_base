@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd5315f8_bbfb8b0c",
+        "filename": "telephony/java/android/telephony/ims/SipMessage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-06T08:24:41Z",
+      "side": 1,
+      "message": "Referencing API bug b/184018068 : what we meant was not the charset, but the format of the message. (start, then header, thet CRLF...)",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 87
+      },
+      "revId": "acc6831c93aa914a54d5381b136ed0e9f9d75369",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
