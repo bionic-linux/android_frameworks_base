@@ -39,6 +39,30 @@
       },
       "revId": "0cb370ba1ed7dfd10ac24be390700534409694da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db98ac6c_245b0ea6",
+        "filename": "packages/WAPPushManager/src/com/android/smspush/WapPushManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1237921
+      },
+      "writtenOn": "2021-04-06T12:47:23Z",
+      "side": 1,
+      "message": "Yes. this will replace the DB. However, the data will not be lost because it replace DB after back-ups the existing data to the legacy database in advance.",
+      "parentUuid": "a58ace3f_9e7850c0",
+      "range": {
+        "startLine": 468,
+        "startChar": 54,
+        "endLine": 468,
+        "endChar": 70
+      },
+      "revId": "0cb370ba1ed7dfd10ac24be390700534409694da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
