@@ -82,6 +82,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "578957aa_23396b7d",
+        "filename": "core/api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 24867,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-06T21:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "923a0dde_6d66dc20",
+      "range": {
+        "startLine": 24867,
+        "startChar": 19,
+        "endLine": 24867,
+        "endChar": 28
+      },
+      "revId": "c90fce5a61f83e3d16c87513ed53485d929f834c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa86ac28_6a5c5b08",
+        "filename": "core/api/current.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 24867,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-06T21:55:18Z",
+      "side": 1,
+      "message": "Changed to TunnelConnectionParams as per discussion with Jean",
+      "parentUuid": "923a0dde_6d66dc20",
+      "range": {
+        "startLine": 24867,
+        "startChar": 19,
+        "endLine": 24867,
+        "endChar": 28
+      },
+      "revId": "c90fce5a61f83e3d16c87513ed53485d929f834c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81da7aad_48f36338",
@@ -95,6 +143,30 @@
       "writtenOn": "2021-04-03T00:25:10Z",
       "side": 1,
       "message": "same",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "c90fce5a61f83e3d16c87513ed53485d929f834c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cea5c27_939d6765",
+        "filename": "core/java/android/net/EncryptedTunnelParams.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-06T21:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81da7aad_48f36338",
       "range": {
         "startLine": 27,
         "startChar": 17,
