@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cea64e55_60eb2e8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-04-07T02:48:29Z",
+      "side": 1,
+      "message": "Please continue review at https://googleplex-android-review.git.corp.google.com/q/topic:setLingerTimer",
+      "revId": "0ff12d50523b47a434a8c6b0aaf065bcb378d50e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
