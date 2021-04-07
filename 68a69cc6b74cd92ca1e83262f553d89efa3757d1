@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad81eac3_195abe14",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-07T09:15:37Z",
+      "side": 1,
+      "message": "Clean cherry-pick in ConnectivityManager part from internal but API rebuild needed to re-generate module-lib-current.txt",
+      "revId": "68a69cc6b74cd92ca1e83262f553d89efa3757d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
