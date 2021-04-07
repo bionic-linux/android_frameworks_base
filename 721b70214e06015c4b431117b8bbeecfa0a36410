@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36202182_fd56df44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-04-07T15:34:05Z",
+      "side": 1,
+      "message": "Since it\u0027s a requirement to not have an ARC connection with a non-adjacent device, this change makes sense; even if a physical address change will normally only happen because of a hotplug, which will already terminate the ARC connection today.",
+      "revId": "721b70214e06015c4b431117b8bbeecfa0a36410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
