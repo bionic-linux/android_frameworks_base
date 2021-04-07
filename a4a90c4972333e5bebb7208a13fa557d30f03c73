@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d56687f6_3f64d3f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-04-07T02:01:27Z",
+      "side": 1,
+      "message": "an",
+      "range": {
+        "startLine": 11,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "a4a90c4972333e5bebb7208a13fa557d30f03c73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8979f62b_bbd7f03c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-04-07T02:01:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure if OOM is a well-known abbreviation, maybe it\u0027s better to say \"out of memory\"?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 3
+      },
+      "revId": "a4a90c4972333e5bebb7208a13fa557d30f03c73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
