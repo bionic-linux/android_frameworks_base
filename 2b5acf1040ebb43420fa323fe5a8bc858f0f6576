@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d5d115b_5f56f703",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-04-07T21:20:57Z",
+      "side": 1,
+      "message": "Amith/Svetoslav, friendly ping for OR (this failed TH, but it was a race - I verified locally by c/p\u0027ing CLs to the internal branches)",
+      "revId": "2b5acf1040ebb43420fa323fe5a8bc858f0f6576",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
