@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81cff8fe_8ebc80a0",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-04-07T21:32:48Z",
+      "side": 1,
+      "message": "ack - I was thinking that the NetworkAgent being null in ActiveState didn\u0027t make sense and wanted to avoid explicitly asserting that (whoops)",
+      "parentUuid": "89c44c8a_486eeea7",
+      "range": {
+        "startLine": 367,
+        "startChar": 21,
+        "endLine": 367,
+        "endChar": 93
+      },
+      "revId": "48cc87ea9cda7c07de357332aa8311efb0a307d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aa05c79_1bff8c04",
