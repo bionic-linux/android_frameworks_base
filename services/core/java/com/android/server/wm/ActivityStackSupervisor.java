@@ -2531,6 +2531,9 @@ public class ActivityStackSupervisor implements RecentTasks.Callbacks {
                         task.getStack());
                 return ActivityManager.START_TASK_TO_FRONT;
             }
+            if (windowingMode == WINDOWING_MODE_FREEFORM) {
+                task.setBounds(activityOptions.getLaunchBounds());
+            }
             callingPackage = task.mCallingPackage;
             callingFeatureId = task.mCallingFeatureId;
             intent = task.intent;
