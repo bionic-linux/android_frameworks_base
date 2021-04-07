@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "89c44c8a_486eeea7",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-07T18:40:59Z",
+      "side": 1,
+      "message": "That\u0027s functionally the same; i\u0027ve added a comment, but storing the current state and then asserting equality actually makes it less readable; the state now comes from a different location, so it a layer of indirection.",
+      "parentUuid": "20bfa6e2_9c2b67d4",
+      "range": {
+        "startLine": 367,
+        "startChar": 21,
+        "endLine": 367,
+        "endChar": 93
+      },
+      "revId": "48cc87ea9cda7c07de357332aa8311efb0a307d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7aa05c79_1bff8c04",
         "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
         "patchSetId": 3
@@ -54,6 +78,30 @@
       "writtenOn": "2021-04-06T03:28:41Z",
       "side": 1,
       "message": "it might be good to verify that the NetworkAgent is unchanged after unwantedCallback.accept() - thoughts?",
+      "range": {
+        "startLine": 374,
+        "startChar": 43,
+        "endLine": 374,
+        "endChar": 67
+      },
+      "revId": "48cc87ea9cda7c07de357332aa8311efb0a307d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce780af9_8bf03c72",
+        "filename": "tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionConnectedStateTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-04-07T18:40:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aa05c79_1bff8c04",
       "range": {
         "startLine": 374,
         "startChar": 43,
