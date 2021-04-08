@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "239379c8_2aecd57d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-08T11:19:41Z",
+      "side": 1,
+      "message": "Generally LGTM, but should there be tests to check that the new attribute is serialized and deserialized correctly to the XML policy file? You could add a test similar to one of the many tests annotated with @NetPolicyXml.",
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6e1e56b_c3bd1462",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-08T11:19:41Z",
+      "side": 1,
+      "message": "How about notifying wifi? Is there a way to do that? Should there be a TODO here? Or maybe file a bug?",
+      "range": {
+        "startLine": 1900,
+        "startChar": 31,
+        "endLine": 1900,
+        "endChar": 32
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43eb1c3d_d5af9e83",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-08T11:19:41Z",
+      "side": 1,
+      "message": "Perhaps not for this CL, but this isn\u0027t a network template at all, right? Should it be renamed to matchRule or templateType?",
+      "range": {
+        "startLine": 2360,
+        "startChar": 28,
+        "endLine": 2360,
+        "endChar": 43
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da124b9f_24a105ac",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2410,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-08T11:19:41Z",
+      "side": 1,
+      "message": "This can\u0027t happen, can it? MATCH_CARRIER_WILDCARD was added much later than VERSION_ADDED_METERED.",
+      "range": {
+        "startLine": 2410,
+        "startChar": 37,
+        "endLine": 2410,
+        "endChar": 59
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0db05a0f_012637f6",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-08T11:19:41Z",
+      "side": 1,
+      "message": "Prefer:\n\n    if (version \u003c VERSION_SUPPORTED_CARRIER_USAGE \u0026\u0026 networkTemplate \u003d\u003d ...",
+      "range": {
+        "startLine": 2430,
+        "startChar": 0,
+        "endLine": 2431,
+        "endChar": 66
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
