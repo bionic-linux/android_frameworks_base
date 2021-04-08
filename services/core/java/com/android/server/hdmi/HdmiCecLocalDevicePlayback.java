@@ -31,6 +31,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.LocalePicker;
 import com.android.internal.app.LocalePicker.LocaleInfo;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.server.hdmi.Constants.LocalActivePort;
 import com.android.server.hdmi.HdmiAnnotations.ServiceThreadOnly;
 import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
 
@@ -60,8 +61,8 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
 
     // Local active port number used for Routing Control.
     // Default 0 means HOME is the current active path. Temp solution only.
-    // TODO(amyjojo): adding system constants for input ports to TIF mapping.
-    private int mLocalActivePath = 0;
+    @LocalActivePort
+    private int mLocalActivePath = Constants.CEC_SWITCH_HOME;
 
     // Determines what action should be taken upon receiving Routing Control messages.
     @VisibleForTesting
