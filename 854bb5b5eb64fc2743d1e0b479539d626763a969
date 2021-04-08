@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea0ac438_a54803d4",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 0,
+      "message": "Sounds like you\u0027ll have a bug if removeUidsLocked is called before any traffic happens. Imagine a scenario where the device boots but has no networking, and the user uninstalls an app.\n\nBefore :\n• Device boots, reads the latest state from the disk. NetworkStatsObservers calls recordSnapshotLocked.\n• Later, the app is removed. This code clears the UIDs from this snapshot.\n• Later, the device gets on a network and traffic is recorded with UID_REMOVED.\n\nAfter :\n• Device boots, reads the latest state from the disk. NetworkStatsObserver calls nothing.\n• The app is removed. This code clears nothing, but the latest snapshot in NetworkStatsObserver still contains the old UID.\n• Later, the device gets on a network and traffic is recorded with the old UID.\n\nPresumably you need to clean up the snapshots in the observers ?",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 9
+      },
+      "revId": "854bb5b5eb64fc2743d1e0b479539d626763a969",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

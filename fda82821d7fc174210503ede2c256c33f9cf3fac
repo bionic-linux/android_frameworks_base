@@ -1,6 +1,75 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "083bc415_8b20fda9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "I think it would help to clarify whom the user is here.",
+      "range": {
+        "startLine": 13,
+        "startChar": 41,
+        "endLine": 13,
+        "endChar": 49
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a15284a_63577efb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "minimize",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec726dce_28e8be30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "to have NSR take a diff",
+      "range": {
+        "startLine": 18,
+        "startChar": 58,
+        "endLine": 19,
+        "endChar": 36
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "d852946b_34736b15",
@@ -14,6 +83,213 @@
       "writtenOn": "2020-12-08T06:59:25Z",
       "side": 1,
       "message": "LGTM but IIRC Jean wants to take a look.",
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c7318ae_387c0d5f",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "This no longer seems relevent, can you remove this sentence ?",
+      "range": {
+        "startLine": 355,
+        "startChar": 38,
+        "endLine": 356,
+        "endChar": 91
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6933318_ebe8c5e9",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "You need to document this a lot more carefully. The intuitive thing would be that null codes for no traffic, but in reality null codes for \"unknown, waiting for bootstrap\".\n\nThere was some doc in the next file that you removed, let\u0027s have it here :\n\n  * The first snapshot is considered bootstrap, and is not counted as delta.\n\nPlease also document on the member that null means \"waiting for bootstrap snapshot\".",
+      "range": {
+        "startLine": 359,
+        "startChar": 16,
+        "endLine": 359,
+        "endChar": 22
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e5a5c70_b7d18896",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "Likewise",
+      "range": {
+        "startLine": 403,
+        "startChar": 38,
+        "endLine": 404,
+        "endChar": 32
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b1f5df4_1add43f8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "I find \"delta\" a little bit easier to understand, but I don\u0027t feel strongly.",
+      "range": {
+        "startLine": 204,
+        "startChar": 22,
+        "endLine": 204,
+        "endChar": 26
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a578927f_52c2bbb8",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsRecorder.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "Do you need this ? You\u0027ll get NPE in l.214 anyway, and it will crash the system server anyway.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 80
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abe39e9b_0fbdeddd",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "Suggest instead saying SNAPSHOT_TYPE_MAX \u003d SNAPSHOT_TYPE_DEV, it\u0027s more customary",
+      "range": {
+        "startLine": 328,
+        "startChar": 43,
+        "endLine": 328,
+        "endChar": 49
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dddb8dc7_7040a6fb",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment here saying these will be initialized in bootstrapStatsLocked.",
+      "range": {
+        "startLine": 339,
+        "startChar": 66,
+        "endLine": 339,
+        "endChar": 86
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fb71f95_7e9b9376",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "initializing with",
+      "range": {
+        "startLine": 1492,
+        "startChar": 57,
+        "endLine": 1492,
+        "endChar": 71
+      },
+      "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58b543c7_f4df6a69",
+        "filename": "services/core/java/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-08T11:08:45Z",
+      "side": 1,
+      "message": "to get",
+      "range": {
+        "startLine": 1495,
+        "startChar": 15,
+        "endLine": 1495,
+        "endChar": 18
+      },
       "revId": "fda82821d7fc174210503ede2c256c33f9cf3fac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
