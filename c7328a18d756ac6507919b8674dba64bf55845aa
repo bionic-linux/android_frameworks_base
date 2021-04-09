@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "815d8652_c4104a50",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-09T14:07:39Z",
+      "side": 1,
+      "message": "Sure, but there\u0027s a reason to tear the link down. Even if outgoing packets are blocked and incoming packets are dropped, the device can still *receive* packets. If the wifi network is metered, then the user will still be billed. That\u0027s why we notify telephony. We should at least add a TODO to do this on wifi as well.",
+      "parentUuid": "64a1d178_bed317f8",
+      "range": {
+        "startLine": 1900,
+        "startChar": 31,
+        "endLine": 1900,
+        "endChar": 32
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43eb1c3d_d5af9e83",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 10

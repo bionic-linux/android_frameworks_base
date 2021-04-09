@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fbef13a_788eb03b",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-09T14:07:39Z",
+      "side": 1,
+      "message": "\"carrier wildcard\" -\u003e \"carrier\"",
+      "range": {
+        "startLine": 2431,
+        "startChar": 73,
+        "endLine": 2431,
+        "endChar": 89
+      },
+      "revId": "a5b808abcde643c623884115b21e68a1b6191a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4932b2c4_df8f9ad3",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2432,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-09T14:07:39Z",
+      "side": 1,
+      "message": "This assumes that every carrier wants to merge data usage on mobile and wifi networks (with the same subscriber ID), and apply the same limits to both. Is that the case?",
+      "range": {
+        "startLine": 2432,
+        "startChar": 28,
+        "endLine": 2432,
+        "endChar": 56
+      },
+      "revId": "a5b808abcde643c623884115b21e68a1b6191a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58729b94_b76dc014",
+        "filename": "services/tests/servicestests/assets/NetworkPolicyManagerServiceTest/netpolicy/network-policy-with-subscriberId-match-rule-all.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-09T14:07:39Z",
+      "side": 1,
+      "message": "What does it mean to have a policy of type MATCH_CARRIER with SUBSCRIBER_ID_MATCH_RULE_ALL? Is this invalid?",
+      "range": {
+        "startLine": 3,
+        "startChar": 68,
+        "endLine": 3,
+        "endChar": 93
+      },
+      "revId": "a5b808abcde643c623884115b21e68a1b6191a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
