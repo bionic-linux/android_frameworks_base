@@ -33,6 +33,213 @@
       "message": "Hi Eric\n\n  Do you have any suggestions for this CL? I look forward to your answers .\n  thanks",
       "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b64089a1_32274bcf",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "I would prefer to group this with postAccessoryPlugMediaUnmute() method and add an argument to pass new device connection state:\n\npostCheckMediaMuteOnAccessoryConnectionStateChange(int state, int device)",
+      "range": {
+        "startLine": 762,
+        "startChar": 21,
+        "endLine": 762,
+        "endChar": 41
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92f66f42_a4e60309",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "see comment on using same message as MSG_ACCESSORY_PLUG_MEDIA_UNMUTE",
+      "range": {
+        "startLine": 301,
+        "startChar": 29,
+        "endLine": 301,
+        "endChar": 64
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0179a3e_0cf143d6",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5581,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "device",
+      "range": {
+        "startLine": 5581,
+        "startChar": 46,
+        "endLine": 5581,
+        "endChar": 55
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e949b95_36074147",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5581,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "see comment on using same message as MSG_ACCESSORY_PLUG_MEDIA_UNMUTE",
+      "range": {
+        "startLine": 5581,
+        "startChar": 21,
+        "endLine": 5581,
+        "endChar": 41
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19325caf_38f7d1bb",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5587,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "please merge with onAccessoryPlugMediaUnmute()",
+      "range": {
+        "startLine": 5587,
+        "startChar": 17,
+        "endLine": 5587,
+        "endChar": 41
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70a6a2a3_278696e2",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5595,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "call getter isMusicMutedForDevice() instead",
+      "range": {
+        "startLine": 5595,
+        "startChar": 64,
+        "endLine": 5595,
+        "endChar": 83
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ad7227f_034075ab",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5969,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "please indicate where this 4 comes from?",
+      "range": {
+        "startLine": 5969,
+        "startChar": 78,
+        "endLine": 5969,
+        "endChar": 79
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7967793_22c322da",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 5969,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "please add a getter in VolumeStreamState class for this: isMusicMutedForDevice()",
+      "range": {
+        "startLine": 5969,
+        "startChar": 0,
+        "endLine": 5969,
+        "endChar": 81
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62dca344_27cf9e1d",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6373,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-09T11:50:18Z",
+      "side": 1,
+      "message": "Better remove from map when unmuted",
+      "range": {
+        "startLine": 6373,
+        "startChar": 0,
+        "endLine": 6373,
+        "endChar": 81
+      },
+      "revId": "6ee248025012c3c324fc2efcc47e7dac1f763881",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
