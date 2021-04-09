@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae906eae_a664ca6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-09T03:47:48Z",
+      "side": 1,
+      "message": "This is a work in progress, but I wanted to get some feedback on whether this whole approach is acceptable.\n\nNIAP requires that UNLOCKED_DEVICE_REQUIRED storage be *cryptographically* protected when the device is locked - that even given full knowledge of the state of the device including all memory, TEE keys etc, the only way to find the key to unlock it involves guessing the PIN/pattern/password until you guess correctly. However, if the device might be unlocked by a biometric, we have to ensure that a biometric auth token suffices to unlock it. This is incompatible with the NIAP requirement. The solution is that when we lock the device, we record whether biometric unlock has been disabled in the DPC, and we set up the means for a biometric-based unlock only if biometric unlock is not disabled. Thus users who require full NIAP compliance can disable biometric unlock in the DPC.",
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196d7180_1a541ef0",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-09T03:47:48Z",
+      "side": 1,
+      "message": "\u003e Prefer to use mContext.getSystemService(DevicePolicyManager.class) instead to avoid the cast.\n\nPlease fix.",
+      "parentUuid": "055eb540_93e0c37a",
+      "range": {
+        "startLine": 1052,
+        "startChar": 16,
+        "endLine": 1052,
+        "endChar": 64
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
