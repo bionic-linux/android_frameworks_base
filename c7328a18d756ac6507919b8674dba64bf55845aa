@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "64a1d178_bed317f8",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-04-09T08:28:44Z",
+      "side": 1,
+      "message": "My understanding is wifi doesn\u0027t need to be notified.\nIn this case which meet the limit when connected to merged wifi.\nThe wifi L2 keep connected and the packet blocked in L3.\n\nI tested the scenario here. Reach the limitation and assume it back.\nI can use wifi normally after resume.",
+      "parentUuid": "f6e1e56b_c3bd1462",
+      "range": {
+        "startLine": 1900,
+        "startChar": 31,
+        "endLine": 1900,
+        "endChar": 32
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43eb1c3d_d5af9e83",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 10
@@ -54,6 +78,30 @@
       "writtenOn": "2021-04-08T11:19:41Z",
       "side": 1,
       "message": "Perhaps not for this CL, but this isn\u0027t a network template at all, right? Should it be renamed to matchRule or templateType?",
+      "range": {
+        "startLine": 2360,
+        "startChar": 28,
+        "endLine": 2360,
+        "endChar": 43
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05dacaba_70b7e00a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2360,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-04-09T08:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43eb1c3d_d5af9e83",
       "range": {
         "startLine": 2360,
         "startChar": 28,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "28ab9fdc_22a7d9ff",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2410,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-04-09T08:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da124b9f_24a105ac",
+      "range": {
+        "startLine": 2410,
+        "startChar": 37,
+        "endLine": 2410,
+        "endChar": 59
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0db05a0f_012637f6",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-04-08T11:19:41Z",
       "side": 1,
       "message": "Prefer:\n\n    if (version \u003c VERSION_SUPPORTED_CARRIER_USAGE \u0026\u0026 networkTemplate \u003d\u003d ...",
+      "range": {
+        "startLine": 2430,
+        "startChar": 0,
+        "endLine": 2431,
+        "endChar": 66
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e75a2175_1916c0e8",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-04-09T08:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0db05a0f_012637f6",
       "range": {
         "startLine": 2430,
         "startChar": 0,
