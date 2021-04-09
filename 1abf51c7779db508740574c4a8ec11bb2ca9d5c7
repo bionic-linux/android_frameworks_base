@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eec6147f_f83175fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1024540
+      },
+      "writtenOn": "2021-04-09T11:23:51Z",
+      "side": 1,
+      "message": "This is one of the patches mentioned in the meeting \u0027Android OS 360RA support\u0027 between Google and Sony. It would be helpful to handle the CR such as assigning appropriate reviewers.",
+      "revId": "1abf51c7779db508740574c4a8ec11bb2ca9d5c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
