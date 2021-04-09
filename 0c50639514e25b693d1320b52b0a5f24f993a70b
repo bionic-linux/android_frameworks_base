@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000009738751",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1671106?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "055eb540_93e0c37a",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-04-09T03:36:46Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(DevicePolicyManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 1052,
+        "startChar": 16,
+        "endLine": 1052,
+        "endChar": 64
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
