@@ -78,12 +78,13 @@ public class Authorization {
      * @return 0 if successful or a {@code ResponseCode}.
      */
     public static int onLockScreenEvent(@NonNull boolean locked, @NonNull int userId,
-            @Nullable byte[] syntheticPassword) {
+            @Nullable byte[] syntheticPassword, int flags) {
         try {
             if (locked) {
-                getService().onLockScreenEvent(LockScreenEvent.LOCK, userId, null);
+                getService().onLockScreenEvent(LockScreenEvent.LOCK, userId, null, flags);
             } else {
-                getService().onLockScreenEvent(LockScreenEvent.UNLOCK, userId, syntheticPassword);
+                getService().onLockScreenEvent(
+                        LockScreenEvent.UNLOCK, userId, syntheticPassword, flags);
             }
             return 0;
         } catch (RemoteException | NullPointerException e) {
