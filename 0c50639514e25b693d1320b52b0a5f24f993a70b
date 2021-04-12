@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b2b6dbfd_5b9ee977",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-12T15:21:13Z",
+      "side": 1,
+      "message": "If it changes from biometrics disabled to biometrics enabled, there\u0027s nothing we can do until the next PIN unlock - we have cryptographically disabled the ability to unlock any other way. If it changes from biometrics enabled to biometrics disabled, I\u0027m OK with saying you don\u0027t get the security benefits of this feature until the next time the device is locked.",
+      "parentUuid": "ae58571e_e3d98fe8",
+      "range": {
+        "startLine": 1054,
+        "startChar": 31,
+        "endLine": 1054,
+        "endChar": 58
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d268c5bc_b549f209",
         "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
         "patchSetId": 1
@@ -78,6 +102,30 @@
       "writtenOn": "2021-04-12T14:17:59Z",
       "side": 1,
       "message": "Probably (disabled \u0026 DevicePolicyManager.KEYGUARD_DISABLE_BIOMETRICS) !\u003d 0 because DevicePolicyManager.KEYGUARD_DISABLE_BIOMETRICS is a combination of three individual biometric types, the admin might just disable the individual biometrics type applicable to the device.",
+      "range": {
+        "startLine": 1055,
+        "startChar": 17,
+        "endLine": 1056,
+        "endChar": 70
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e04a967b_989cf289",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-12T15:21:13Z",
+      "side": 1,
+      "message": "I\u0027m OK with saying that you only get the security benefits of this feature if you explicitly set DevicePolicyManager.KEYGUARD_DISABLE_BIOMETRICS. If you set some but not all of the bits, there might be an available biometric you\u0027ve left enabled, and in that case we don\u0027t want to turn this feature on.",
+      "parentUuid": "d268c5bc_b549f209",
       "range": {
         "startLine": 1055,
         "startChar": 17,
