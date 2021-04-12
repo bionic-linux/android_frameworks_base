@@ -40,6 +40,52 @@
       },
       "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae58571e_e3d98fe8",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-12T14:17:59Z",
+      "side": 1,
+      "message": "What if this changes while the device is currently locked?",
+      "range": {
+        "startLine": 1054,
+        "startChar": 31,
+        "endLine": 1054,
+        "endChar": 58
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d268c5bc_b549f209",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-12T14:17:59Z",
+      "side": 1,
+      "message": "Probably (disabled \u0026 DevicePolicyManager.KEYGUARD_DISABLE_BIOMETRICS) !\u003d 0 because DevicePolicyManager.KEYGUARD_DISABLE_BIOMETRICS is a combination of three individual biometric types, the admin might just disable the individual biometrics type applicable to the device.",
+      "range": {
+        "startLine": 1055,
+        "startChar": 17,
+        "endLine": 1056,
+        "endChar": 70
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
