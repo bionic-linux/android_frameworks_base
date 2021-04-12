@@ -16,6 +16,29 @@
       "message": "This is one of the patches mentioned in the meeting \u0027Android OS 360RA support\u0027 between Google and Sony. It would be helpful to handle the CR such as assigning appropriate reviewers.",
       "revId": "1abf51c7779db508740574c4a8ec11bb2ca9d5c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b45bc00c_c6297ccf",
+        "filename": "media/java/android/media/AudioFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-04-12T17:29:07Z",
+      "side": 1,
+      "message": "nit, should this be hidden for now?",
+      "range": {
+        "startLine": 417,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 27
+      },
+      "revId": "1abf51c7779db508740574c4a8ec11bb2ca9d5c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
