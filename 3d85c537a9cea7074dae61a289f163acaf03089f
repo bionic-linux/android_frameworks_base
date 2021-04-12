@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0882f5f_c097fddf",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5574,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-04-12T12:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c35783f_245494e0",
+      "range": {
+        "startLine": 5574,
+        "startChar": 16,
+        "endLine": 5574,
+        "endChar": 62
+      },
+      "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16e874bb_a11551be",
@@ -71,6 +95,30 @@
       "writtenOn": "2021-04-12T09:13:34Z",
       "side": 1,
       "message": "we could use a SparseBooleanArray for clarity",
+      "range": {
+        "startLine": 5959,
+        "startChar": 22,
+        "endLine": 5959,
+        "endChar": 36
+      },
+      "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e39ba998_2bb733f9",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5959,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-04-12T12:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e874bb_a11551be",
       "range": {
         "startLine": 5959,
         "startChar": 22,
@@ -104,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4732ac57_91c739a4",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6392,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-04-12T12:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a5d387d_683a2465",
+      "range": {
+        "startLine": 6392,
+        "startChar": 0,
+        "endLine": 6392,
+        "endChar": 47
+      },
+      "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7766b7aa_ea1b549a",
@@ -117,6 +189,30 @@
       "writtenOn": "2021-04-12T09:13:34Z",
       "side": 1,
       "message": "if no device is passed as argument a better name isMutedForCurrentMusicDevice",
+      "range": {
+        "startLine": 6395,
+        "startChar": 23,
+        "endLine": 6395,
+        "endChar": 44
+      },
+      "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb2a24a3_90c7f382",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6395,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2021-04-12T12:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7766b7aa_ea1b549a",
       "range": {
         "startLine": 6395,
         "startChar": 23,
