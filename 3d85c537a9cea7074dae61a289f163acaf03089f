@@ -33,6 +33,98 @@
       "message": "fixed",
       "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c35783f_245494e0",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5574,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-12T09:13:34Z",
+      "side": 1,
+      "message": "maybe more clear with separate if() statements:\n\nif (mNm.getZenMode() \u003d\u003d Settings.Global.ZEN_MODE_NO_INTERRUPTIONS\n                || isStreamMutedByRingerOrZenMode(AudioSystem.STREAM_MUSIC)\n                || !DEVICE_MEDIA_UNMUTED_ON_PLUG_SET.contains(device)) {\n   return;\n}\n\n\nif (state \u003d\u003d AudioSystem.DEVICE_STATE_AVAILABLE) {\n  if (mStreamStates[AudioSystem.STREAM_MUSIC].mIsMuted\n        \u0026\u0026 mStreamStates[AudioSystem.STREAM_MUSIC].getIndex(device) !\u003d 0\n        \u0026\u0026 (device \u0026 AudioSystem.getDevicesForStream(AudioSystem.STREAM_MUSIC)) !\u003d 0) {\n      ...\n   }\n} else { // (state \u003d\u003d AudioSystem.DEVICE_STATE_UNAVAILABLE)\n   ...\n}",
+      "range": {
+        "startLine": 5574,
+        "startChar": 16,
+        "endLine": 5574,
+        "endChar": 62
+      },
+      "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16e874bb_a11551be",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 5959,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-12T09:13:34Z",
+      "side": 1,
+      "message": "we could use a SparseBooleanArray for clarity",
+      "range": {
+        "startLine": 5959,
+        "startChar": 22,
+        "endLine": 5959,
+        "endChar": 36
+      },
+      "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a5d387d_683a2465",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6392,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-12T09:13:34Z",
+      "side": 1,
+      "message": "update the comment",
+      "range": {
+        "startLine": 6392,
+        "startChar": 0,
+        "endLine": 6392,
+        "endChar": 47
+      },
+      "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7766b7aa_ea1b549a",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6395,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-12T09:13:34Z",
+      "side": 1,
+      "message": "if no device is passed as argument a better name isMutedForCurrentMusicDevice",
+      "range": {
+        "startLine": 6395,
+        "startChar": 23,
+        "endLine": 6395,
+        "endChar": 44
+      },
+      "revId": "3d85c537a9cea7074dae61a289f163acaf03089f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
