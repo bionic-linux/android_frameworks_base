@@ -16,6 +16,23 @@
       "message": "fixed",
       "revId": "43eaa48fc560e9314f311cce238e46efcaa488f0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "513b671b_b3959dba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-12T12:37:47Z",
+      "side": 1,
+      "message": "LGTM.\n\nOver to Jean-Michel for +2",
+      "revId": "43eaa48fc560e9314f311cce238e46efcaa488f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
