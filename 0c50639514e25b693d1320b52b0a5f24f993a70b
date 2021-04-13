@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "206b1041_d5db916a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-13T10:53:00Z",
+      "side": 1,
+      "message": "Thinking about it a bit more, why should this capability dependent on an admin policy, instead of introducing a new type of key protection? Isn\u0027t it more flexible to support two type of lockscreen-protected keys, one unlockable via biometrics, and the other only via LSKF?",
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "196d7180_1a541ef0",
@@ -89,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fbe9033_96a66855",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-13T10:53:00Z",
+      "side": 1,
+      "message": "Act, can you mention this in the javadoc of setUnlockedDeviceRequired()?",
+      "parentUuid": "b2b6dbfd_5b9ee977",
+      "range": {
+        "startLine": 1054,
+        "startChar": 31,
+        "endLine": 1054,
+        "endChar": 58
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d268c5bc_b549f209",
@@ -126,6 +167,30 @@
       "side": 1,
       "message": "I\u0027m OK with saying that you only get the security benefits of this feature if you explicitly set DevicePolicyManager.KEYGUARD_DISABLE_BIOMETRICS. If you set some but not all of the bits, there might be an available biometric you\u0027ve left enabled, and in that case we don\u0027t want to turn this feature on.",
       "parentUuid": "d268c5bc_b549f209",
+      "range": {
+        "startLine": 1055,
+        "startChar": 17,
+        "endLine": 1056,
+        "endChar": 70
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce855f2a_38625f38",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-13T10:53:00Z",
+      "side": 1,
+      "message": "OK, please document in setUnlockedDeviceRequired()\u0027s javadoc.",
+      "parentUuid": "e04a967b_989cf289",
       "range": {
         "startLine": 1055,
         "startChar": 17,
