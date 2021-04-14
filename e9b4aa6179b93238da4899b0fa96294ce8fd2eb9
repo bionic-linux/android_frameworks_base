@@ -22,6 +22,30 @@
       },
       "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b65f60d3_399c315c",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3664,
+      "author": {
+        "id": 1359573
+      },
+      "writtenOn": "2021-04-14T06:33:37Z",
+      "side": 1,
+      "message": "when in interactive, behavior is as before,\npress global key , key down and up all send to Global Key Receiver to decide what to do  \n\nwhen Non interactive \n1. if the key is not a wake key, behavior is as before,\nany key will not send to app or Global Key Receiver \n\n2. if the key is wake key but not global key , behavior is as before,\npress -\u003e wake device,  press again (now it is interactive) -\u003e send to app\n\n3. if the key is wake key , also as global key\npress -\u003e wake device, key up also send to Global Key Receiver to decide what to do \npress again (now it is interactive) -\u003e key down and up all send to Global Key Receiver to decide what to do  \n\nonly impact Global Key ,but we can decide what to do in Global Key Receiver",
+      "parentUuid": "b70f8c6d_9e465848",
+      "range": {
+        "startLine": 3664,
+        "startChar": 0,
+        "endLine": 3664,
+        "endChar": 79
+      },
+      "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
