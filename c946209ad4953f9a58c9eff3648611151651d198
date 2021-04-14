@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c04e548e_8e014097",
+        "filename": "core/tests/nfctests/AndroidTest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-14T12:04:16Z",
+      "side": 1,
+      "message": "nit: year",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "c946209ad4953f9a58c9eff3648611151651d198",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d056d42_e2891b40",
+        "filename": "core/tests/nfctests/src/android/nfc/NfcControllerAlwaysOnStateListenerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-14T12:04:16Z",
+      "side": 1,
+      "message": "nit: private\n\nDitto for mThrowRemoteException.",
+      "revId": "c946209ad4953f9a58c9eff3648611151651d198",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ebfc0b0_c55272dd",
+        "filename": "core/tests/nfctests/src/android/nfc/NfcControllerAlwaysOnStateListenerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-04-14T12:04:16Z",
+      "side": 1,
+      "message": "nit: you only ever call this with numTimes \u003d 1. Consider removing that parameter and instead passing in the boolean you expect to get better coverage of actual behavior.\n\nIf you ever need to test for more than one invocation, you can either add an overload that also takes numTimes or reset the mock between callbacks.",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 57
+      },
+      "revId": "c946209ad4953f9a58c9eff3648611151651d198",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
