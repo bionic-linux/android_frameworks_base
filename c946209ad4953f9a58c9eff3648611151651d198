@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a2ab98a_0af90f65",
+        "filename": "core/tests/nfctests/AndroidTest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-14T14:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c04e548e_8e014097",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "c946209ad4953f9a58c9eff3648611151651d198",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d056d42_e2891b40",
@@ -41,6 +65,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e55370b_be8a179c",
+        "filename": "core/tests/nfctests/src/android/nfc/NfcControllerAlwaysOnStateListenerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-14T14:48:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d056d42_e2891b40",
+      "revId": "c946209ad4953f9a58c9eff3648611151651d198",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ebfc0b0_c55272dd",
@@ -54,6 +96,30 @@
       "writtenOn": "2021-04-14T12:04:16Z",
       "side": 1,
       "message": "nit: you only ever call this with numTimes \u003d 1. Consider removing that parameter and instead passing in the boolean you expect to get better coverage of actual behavior.\n\nIf you ever need to test for more than one invocation, you can either add an overload that also takes numTimes or reset the mock between callbacks.",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 57
+      },
+      "revId": "c946209ad4953f9a58c9eff3648611151651d198",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ce69e80_6647f1a7",
+        "filename": "core/tests/nfctests/src/android/nfc/NfcControllerAlwaysOnStateListenerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-04-14T14:48:58Z",
+      "side": 1,
+      "message": "I remove the numTimes since I only need it to check for numTimes\u003d1 and cover the bollean cases in testStateChange_CorrectValue.",
+      "parentUuid": "6ebfc0b0_c55272dd",
       "range": {
         "startLine": 60,
         "startChar": 24,
