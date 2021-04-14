@@ -84,6 +84,10 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
             NetworkCapabilities ncTemplate, Context context) throws Exception {
         final int type = transportToLegacyType(transport);
         final String typeName = ConnectivityManager.getNetworkTypeName(type);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
+=======
+        mNetworkInfo = new NetworkInfo(type, 0, typeName, "Mock");
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         mNetworkCapabilities = (ncTemplate != null) ? ncTemplate : new NetworkCapabilities();
         mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_SUSPENDED);
         mNetworkCapabilities.addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);

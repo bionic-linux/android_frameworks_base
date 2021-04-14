@@ -207,6 +207,7 @@ class ConnectivityServiceIntegrationTest {
         testCallback.expectAvailableThenValidatedCallbacks(na.network, TEST_TIMEOUT_MS)
         assertEquals(2, nsInstrumentation.getRequestUrls().size)
     }
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
 
     @Test
     fun testCapportApi() {
@@ -256,3 +257,6 @@ class ConnectivityServiceIntegrationTest {
         assertFalse(nc.hasCapability(NET_CAPABILITY_VALIDATED))
     }
 }
+=======
+}
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)

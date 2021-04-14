@@ -54,7 +54,10 @@ import static android.net.ConnectivityManager.TYPE_MOBILE;
 import static android.net.ConnectivityManager.TYPE_MOBILE_FOTA;
 import static android.net.ConnectivityManager.TYPE_MOBILE_MMS;
 import static android.net.ConnectivityManager.TYPE_MOBILE_SUPL;
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
 import static android.net.ConnectivityManager.TYPE_PROXY;
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 import static android.net.ConnectivityManager.TYPE_VPN;
 import static android.net.ConnectivityManager.TYPE_WIFI;
 import static android.net.INetworkMonitor.NETWORK_VALIDATION_PROBE_DNS;
@@ -218,8 +221,11 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkFactory;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.DetailedState;
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
 import android.net.NetworkPolicyManager;
 import android.net.NetworkPolicyManager.NetworkPolicyCallback;
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 import android.net.NetworkRequest;
 import android.net.NetworkScore;
 import android.net.NetworkSpecifier;
@@ -442,12 +448,15 @@ public class ConnectivityServiceTest {
     private WrappedMultinetworkPolicyTracker mPolicyTracker;
     private HandlerThread mAlarmManagerThread;
     private TestNetIdManager mNetIdManager;
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
     private QosCallbackMockHelper mQosCallbackMockHelper;
     private QosCallbackTracker mQosCallbackTracker;
     private VpnManagerService mVpnManagerService;
     private TestNetworkCallback mDefaultNetworkCallback;
     private TestNetworkCallback mSystemDefaultNetworkCallback;
     private TestNetworkCallback mProfileDefaultNetworkCallback;
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
     // State variables required to emulate NetworkPolicyManagerService behaviour.
     private int mBlockedReasons = BLOCKED_REASON_NONE;
@@ -1166,6 +1175,12 @@ public class ConnectivityServiceTest {
         return ranges;
     }
 
+    private Set<UidRange> uidRangesForUid(int uid) {
+        final ArraySet<UidRange> ranges = new ArraySet<>();
+        ranges.add(new UidRange(uid, uid));
+        return ranges;
+    }
+
     private static Looper startHandlerThreadAndReturnLooper() {
         final HandlerThread handlerThread = new HandlerThread("MockVpnThread");
         handlerThread.start();
@@ -1179,6 +1194,7 @@ public class ConnectivityServiceTest {
         private boolean mAgentRegistered = false;
 
         private int mVpnType = VpnManager.TYPE_VPN_SERVICE;
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         private UnderlyingNetworkInfo mUnderlyingNetworkInfo;
 
         // These ConditionVariables allow tests to wait for LegacyVpnRunner to be stopped/started.
@@ -1189,8 +1205,12 @@ public class ConnectivityServiceTest {
         // extensive access into the internals of Vpn.
         private ConditionVariable mStartLegacyVpnCv = new ConditionVariable();
         private ConditionVariable mStopVpnRunnerCv = new ConditionVariable();
+=======
+        private VpnInfo mVpnInfo;
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         public MockVpn(int userId) {
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
             super(startHandlerThreadAndReturnLooper(), mServiceContext,
                     new Dependencies() {
                         @Override
@@ -1204,13 +1224,23 @@ public class ConnectivityServiceTest {
                         }
                     },
                     mNetworkManagementService, mMockNetd, userId, mVpnProfileStore);
+=======
+            super(startHandlerThreadAndReturnLooper(), mServiceContext, mNetworkManagementService,
+                    userId, mock(KeyStore.class));
+            mConfig = new VpnConfig();
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         }
 
         public void setUids(Set<UidRange> uids) {
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
             mNetworkCapabilities.setUids(UidRange.toIntRanges(uids));
             if (mAgentRegistered) {
                 mMockNetworkAgent.setNetworkCapabilities(mNetworkCapabilities, true);
             }
+=======
+            mNetworkCapabilities.setUids(uids);
+            updateCapabilitiesInternal(null /* defaultNetwork */, true);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         }
 
         public void setVpnType(int vpnType) {
@@ -1223,10 +1253,20 @@ public class ConnectivityServiceTest {
         }
 
         @Override
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         public int getActiveVpnType() {
+=======
+        public int getNetId() {
+            return (mMockNetworkAgent == null) ? NETID_UNSET : mMockNetworkAgent.getNetwork().netId;
+        }
+
+        @Override
+        public int getActiveAppVpnType() {
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
             return mVpnType;
         }
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         private LinkProperties makeLinkProperties() {
             final LinkProperties lp = new LinkProperties();
             lp.setInterfaceName(VPN_IFNAME);
@@ -1254,18 +1294,96 @@ public class ConnectivityServiceTest {
                     .networkRemoveUidRanges(eq(mMockVpn.getNetwork().getNetId()), any());
             mAgentRegistered = true;
             updateState(NetworkInfo.DetailedState.CONNECTED, "registerAgent");
+=======
+        private void registerAgent(boolean isAlwaysMetered, Set<UidRange> uids, LinkProperties lp)
+                throws Exception {
+            if (mAgentRegistered) throw new IllegalStateException("already registered");
+            setUids(uids);
+            mConfig.isMetered = isAlwaysMetered;
+            mInterface = VPN_IFNAME;
+            mMockNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_VPN, lp,
+                    mNetworkCapabilities);
+            mMockNetworkAgent.waitForIdle(TIMEOUT_MS);
+            mAgentRegistered = true;
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
             mNetworkCapabilities.set(mMockNetworkAgent.getNetworkCapabilities());
             mNetworkAgent = mMockNetworkAgent.getNetworkAgent();
         }
 
         private void registerAgent(Set<UidRange> uids) throws Exception {
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
             registerAgent(false /* isAlwaysMetered */, uids, makeLinkProperties());
+=======
+            registerAgent(false /* isAlwaysMetered */, uids, new LinkProperties());
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         }
 
         private void connect(boolean validated, boolean hasInternet, boolean isStrictMode) {
             mMockNetworkAgent.connect(validated, hasInternet, isStrictMode);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
+=======
         }
 
+        private void connect(boolean validated) {
+            mMockNetworkAgent.connect(validated);
+        }
+
+        private TestNetworkAgentWrapper getAgent() {
+            return mMockNetworkAgent;
+        }
+
+        public void establish(LinkProperties lp, int uid, Set<UidRange> ranges, boolean validated,
+                boolean hasInternet, boolean isStrictMode) throws Exception {
+            mNetworkCapabilities.setOwnerUid(uid);
+            mNetworkCapabilities.setAdministratorUids(new int[]{uid});
+            registerAgent(false, ranges, lp);
+            connect(validated, hasInternet, isStrictMode);
+            waitForIdle();
+        }
+
+        public void establish(LinkProperties lp, int uid, Set<UidRange> ranges) throws Exception {
+            establish(lp, uid, ranges, true, true, false);
+        }
+
+        public void establishForMyUid(LinkProperties lp) throws Exception {
+            final int uid = Process.myUid();
+            establish(lp, uid, uidRangesForUid(uid), true, true, false);
+        }
+
+        public void establishForMyUid(boolean validated, boolean hasInternet, boolean isStrictMode)
+                throws Exception {
+            final int uid = Process.myUid();
+            establish(new LinkProperties(), uid, uidRangesForUid(uid), validated, hasInternet,
+                    isStrictMode);
+        }
+
+        public void establishForMyUid() throws Exception {
+            establishForMyUid(new LinkProperties());
+        }
+
+        public void sendLinkProperties(LinkProperties lp) {
+            mMockNetworkAgent.sendLinkProperties(lp);
+        }
+
+        private NetworkCapabilities updateCapabilitiesInternal(Network defaultNetwork,
+                boolean sendToConnectivityService) {
+            if (!mAgentRegistered) return null;
+            super.updateCapabilities(defaultNetwork);
+            // Because super.updateCapabilities will update the capabilities of the agent but
+            // not the mock agent, the mock agent needs to know about them.
+            copyCapabilitiesToNetworkAgent(sendToConnectivityService);
+            return new NetworkCapabilities(mNetworkCapabilities);
+        }
+
+        private void copyCapabilitiesToNetworkAgent(boolean sendToConnectivityService) {
+            if (null != mMockNetworkAgent) {
+                mMockNetworkAgent.setNetworkCapabilities(mNetworkCapabilities,
+                        sendToConnectivityService);
+            }
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
+        }
+
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         private void connect(boolean validated) {
             mMockNetworkAgent.connect(validated);
         }
@@ -1305,9 +1423,15 @@ public class ConnectivityServiceTest {
 
         public void sendLinkProperties(LinkProperties lp) {
             mMockNetworkAgent.sendLinkProperties(lp);
+=======
+        @Override
+        public NetworkCapabilities updateCapabilities(Network defaultNetwork) {
+            return updateCapabilitiesInternal(defaultNetwork, false);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         }
 
         public void disconnect() {
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
             if (mMockNetworkAgent != null) {
                 mMockNetworkAgent.disconnect();
                 updateState(NetworkInfo.DetailedState.DISCONNECTED, "disconnect");
@@ -1317,6 +1441,10 @@ public class ConnectivityServiceTest {
             // Remove NET_CAPABILITY_INTERNET or MockNetworkAgent will refuse to connect later on.
             mNetworkCapabilities.removeCapability(NET_CAPABILITY_INTERNET);
             mInterface = null;
+=======
+            if (mMockNetworkAgent != null) mMockNetworkAgent.disconnect();
+            mAgentRegistered = false;
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         }
 
         @Override
@@ -1334,6 +1462,7 @@ public class ConnectivityServiceTest {
             // expectStartLegacyVpnRunner() and expectStopVpnRunnerPrivileged() back-to-back.
             mStopVpnRunnerCv = new ConditionVariable();
         }
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
 
         @Override
         public void stopVpnRunnerPrivileged() {
@@ -1408,6 +1537,8 @@ public class ConnectivityServiceTest {
         mServiceContext.sendBroadcast(intent);
         HandlerUtils.waitForIdle(mVMSHandlerThread, TIMEOUT_MS);
         waitForIdle();
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
     }
 
     private void mockVpn(int uid) {
@@ -1710,11 +1841,14 @@ public class ConnectivityServiceTest {
             mEthernetNetworkAgent.disconnect();
             mEthernetNetworkAgent = null;
         }
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
 
         if (mQosCallbackMockHelper != null) {
             mQosCallbackMockHelper.tearDown();
             mQosCallbackMockHelper = null;
         }
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         mMockVpn.disconnect();
         waitForIdle();
 
@@ -1832,6 +1966,7 @@ public class ConnectivityServiceTest {
         }
 
         public Intent expectBroadcast() throws Exception {
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
             return expectBroadcast(BROADCAST_TIMEOUT_MS);
         }
 
@@ -1840,6 +1975,16 @@ public class ConnectivityServiceTest {
             try {
                 final Intent intent = get(timeoutMs, TimeUnit.MILLISECONDS);
                 fail("Unexpected broadcast: " + intent.getAction() + " " + intent.getExtras());
+=======
+            return expectBroadcast(TIMEOUT_MS);
+        }
+
+        public void expectNoBroadcast(int timeoutMs) throws Exception {
+            waitForIdle();
+            try {
+                final Intent intent = get(timeoutMs, TimeUnit.MILLISECONDS);
+                fail("Unexpected broadcast: " + intent.getAction());
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
             } catch (TimeoutException expected) {
             } finally {
                 mServiceContext.unregisterReceiver(mReceiver);
@@ -1875,6 +2020,7 @@ public class ConnectivityServiceTest {
         return expected;
     }
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
     private boolean extraInfoInBroadcastHasExpectedNullness(NetworkInfo ni) {
         final DetailedState state = ni.getDetailedState();
         if (state == DetailedState.CONNECTED && ni.getExtraInfo() == null) return false;
@@ -1898,6 +2044,13 @@ public class ConnectivityServiceTest {
                     && state == ni.getDetailedState()
                     && extraInfoInBroadcastHasExpectedNullness(ni);
         });
+=======
+    private ExpectedBroadcast expectConnectivityAction(int type, NetworkInfo.DetailedState state) {
+        return registerConnectivityBroadcastThat(1, intent ->
+                type == intent.getIntExtra(EXTRA_NETWORK_TYPE, -1) && state.equals(
+                        ((NetworkInfo) intent.getParcelableExtra(EXTRA_NETWORK_INFO))
+                                .getDetailedState()));
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
     }
 
     @Test
@@ -4130,15 +4283,22 @@ public class ConnectivityServiceTest {
         assertEquals(null, mCm.getActiveNetwork());
 
         mMockVpn.establishForMyUid();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertUidRangesUpdatedForMyUid(true);
         defaultNetworkCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         systemDefaultCallback.assertNoCallback();
+=======
+        defaultNetworkCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         assertEquals(defaultNetworkCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
         assertEquals(null, systemDefaultCallback.getLastAvailableNetwork());
 
         mMockVpn.disconnect();
         defaultNetworkCallback.expectCallback(CallbackEntry.LOST, mMockVpn);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         systemDefaultCallback.assertNoCallback();
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         waitForIdle();
         assertEquals(null, mCm.getActiveNetwork());
     }
@@ -5802,6 +5962,7 @@ public class ConnectivityServiceTest {
         assertEquals(expectedSet, actualSet);
     }
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
     private void expectNetworkStatus(Network[] networks, String defaultIface,
             Integer vpnUid, String vpnIfname, String[] underlyingIfaces) throws Exception {
         ArgumentCaptor<List<Network>> networksCaptor = ArgumentCaptor.forClass(List.class);
@@ -5831,6 +5992,33 @@ public class ConnectivityServiceTest {
     private void expectNetworkStatus(
             Network[] networks, String defaultIface) throws Exception {
         expectNetworkStatus(networks, defaultIface, null, null, new String[0]);
+=======
+    private void expectForceUpdateIfaces(Network[] networks, String defaultIface,
+            Integer vpnUid, String vpnIfname, String[] underlyingIfaces) throws Exception {
+        ArgumentCaptor<Network[]> networksCaptor = ArgumentCaptor.forClass(Network[].class);
+        ArgumentCaptor<VpnInfo[]> vpnInfosCaptor = ArgumentCaptor.forClass(VpnInfo[].class);
+
+        verify(mStatsService, atLeastOnce()).forceUpdateIfaces(networksCaptor.capture(),
+                any(NetworkState[].class), eq(defaultIface), vpnInfosCaptor.capture());
+
+        assertSameElementsNoDuplicates(networksCaptor.getValue(), networks);
+
+        VpnInfo[] infos = vpnInfosCaptor.getValue();
+        if (vpnUid != null) {
+            assertEquals("Should have exactly one VPN:", 1, infos.length);
+            VpnInfo info = infos[0];
+            assertEquals("Unexpected VPN owner:", (int) vpnUid, info.ownerUid);
+            assertEquals("Unexpected VPN interface:", vpnIfname, info.vpnIface);
+            assertSameElementsNoDuplicates(underlyingIfaces, info.underlyingIfaces);
+        } else {
+            assertEquals(0, infos.length);
+            return;
+        }
+    }
+
+    private void expectForceUpdateIfaces(Network[] networks, String defaultIface) throws Exception {
+        expectForceUpdateIfaces(networks, defaultIface, null, null, new String[0]);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
     }
 
     @Test
@@ -5850,33 +6038,58 @@ public class ConnectivityServiceTest {
         mCellNetworkAgent.connect(false);
         mCellNetworkAgent.sendLinkProperties(cellLp);
         waitForIdle();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         expectNetworkStatus(onlyCell, MOBILE_IFNAME);
         reset(mStatsManager);
+=======
+        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
+        reset(mStatsService);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Default network switch should update ifaces.
         mWiFiNetworkAgent.connect(false);
         mWiFiNetworkAgent.sendLinkProperties(wifiLp);
         waitForIdle();
         assertEquals(wifiLp, mService.getActiveLinkProperties());
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         expectNetworkStatus(onlyWifi, WIFI_IFNAME);
         reset(mStatsManager);
+=======
+        expectForceUpdateIfaces(onlyWifi, WIFI_IFNAME);
+        reset(mStatsService);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Disconnect should update ifaces.
         mWiFiNetworkAgent.disconnect();
         waitForIdle();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         expectNetworkStatus(onlyCell, MOBILE_IFNAME);
         reset(mStatsManager);
+=======
+        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
+        reset(mStatsService);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Metered change should update ifaces
         mCellNetworkAgent.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         waitForIdle();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         expectNetworkStatus(onlyCell, MOBILE_IFNAME);
         reset(mStatsManager);
+=======
+        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
+        reset(mStatsService);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         mCellNetworkAgent.removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED);
         waitForIdle();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         expectNetworkStatus(onlyCell, MOBILE_IFNAME);
         reset(mStatsManager);
+=======
+        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
+        reset(mStatsService);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Temp metered change shouldn't update ifaces
         mCellNetworkAgent.addCapability(NET_CAPABILITY_TEMPORARILY_NOT_METERED);
@@ -5888,6 +6101,7 @@ public class ConnectivityServiceTest {
         // Roaming change should update ifaces
         mCellNetworkAgent.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING);
         waitForIdle();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         expectNetworkStatus(onlyCell, MOBILE_IFNAME);
         reset(mStatsManager);
 
@@ -6014,6 +6228,126 @@ public class ConnectivityServiceTest {
         expectNetworkStatus(wifiAndVpn, WIFI_IFNAME, Process.myUid(), VPN_IFNAME,
                 new String[]{WIFI_IFNAME});
         reset(mStatsManager);
+=======
+        expectForceUpdateIfaces(onlyCell, MOBILE_IFNAME);
+        reset(mStatsService);
+
+        // Test VPNs.
+        final LinkProperties lp = new LinkProperties();
+        lp.setInterfaceName(VPN_IFNAME);
+
+        mMockVpn.establishForMyUid(lp);
+
+        final Network[] cellAndVpn = new Network[] {
+                mCellNetworkAgent.getNetwork(), mMockVpn.getNetwork()};
+
+        // A VPN with default (null) underlying networks sets the underlying network's interfaces...
+        expectForceUpdateIfaces(cellAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+                new String[]{MOBILE_IFNAME});
+
+        // ...and updates them as the default network switches.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(false);
+        mWiFiNetworkAgent.sendLinkProperties(wifiLp);
+        final Network[] onlyNull = new Network[]{null};
+        final Network[] wifiAndVpn = new Network[] {
+                mWiFiNetworkAgent.getNetwork(), mMockVpn.getNetwork()};
+        final Network[] cellAndWifi = new Network[] {
+                mCellNetworkAgent.getNetwork(), mWiFiNetworkAgent.getNetwork()};
+        final Network[] cellNullAndWifi = new Network[] {
+                mCellNetworkAgent.getNetwork(), null, mWiFiNetworkAgent.getNetwork()};
+
+        waitForIdle();
+        assertEquals(wifiLp, mService.getActiveLinkProperties());
+        expectForceUpdateIfaces(wifiAndVpn, WIFI_IFNAME, Process.myUid(), VPN_IFNAME,
+                new String[]{WIFI_IFNAME});
+        reset(mStatsService);
+
+        // A VPN that sets its underlying networks passes the underlying interfaces, and influences
+        // the default interface sent to NetworkStatsService by virtue of applying to the system
+        // server UID (or, in this test, to the test's UID). This is the reason for sending
+        // MOBILE_IFNAME even though the default network is wifi.
+        // TODO: fix this to pass in the actual default network interface. Whether or not the VPN
+        // applies to the system server UID should not have any bearing on network stats.
+        mService.setUnderlyingNetworksForVpn(onlyCell);
+        waitForIdle();
+        expectForceUpdateIfaces(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+                new String[]{MOBILE_IFNAME});
+        reset(mStatsService);
+
+        mService.setUnderlyingNetworksForVpn(cellAndWifi);
+        waitForIdle();
+        expectForceUpdateIfaces(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+                new String[]{MOBILE_IFNAME, WIFI_IFNAME});
+        reset(mStatsService);
+
+        // Null underlying networks are ignored.
+        mService.setUnderlyingNetworksForVpn(cellNullAndWifi);
+        waitForIdle();
+        expectForceUpdateIfaces(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+                new String[]{MOBILE_IFNAME, WIFI_IFNAME});
+        reset(mStatsService);
+
+        // If an underlying network disconnects, that interface should no longer be underlying.
+        // This doesn't actually work because disconnectAndDestroyNetwork only notifies
+        // NetworkStatsService before the underlying network is actually removed. So the underlying
+        // network will only be removed if notifyIfacesChangedForNetworkStats is called again. This
+        // could result in incorrect data usage measurements if the interface used by the
+        // disconnected network is reused by a system component that does not register an agent for
+        // it (e.g., tethering).
+        mCellNetworkAgent.disconnect();
+        waitForIdle();
+        assertNull(mService.getLinkProperties(mCellNetworkAgent.getNetwork()));
+        expectForceUpdateIfaces(wifiAndVpn, MOBILE_IFNAME, Process.myUid(), VPN_IFNAME,
+                new String[]{MOBILE_IFNAME, WIFI_IFNAME});
+
+        // Confirm that we never tell NetworkStatsService that cell is no longer the underlying
+        // network for the VPN...
+        verify(mStatsService, never()).forceUpdateIfaces(any(Network[].class),
+                any(NetworkState[].class), any() /* anyString() doesn't match null */,
+                argThat(infos -> infos[0].underlyingIfaces.length == 1
+                        && WIFI_IFNAME.equals(infos[0].underlyingIfaces[0])));
+        verifyNoMoreInteractions(mStatsService);
+        reset(mStatsService);
+
+        // ... but if something else happens that causes notifyIfacesChangedForNetworkStats to be
+        // called again, it does. For example, connect Ethernet, but with a low score, such that it
+        // does not become the default network.
+        mEthernetNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_ETHERNET);
+        mEthernetNetworkAgent.adjustScore(-40);
+        mEthernetNetworkAgent.connect(false);
+        waitForIdle();
+        verify(mStatsService).forceUpdateIfaces(any(Network[].class),
+                any(NetworkState[].class), any() /* anyString() doesn't match null */,
+                argThat(vpnInfos -> vpnInfos[0].underlyingIfaces.length == 1
+                        && WIFI_IFNAME.equals(vpnInfos[0].underlyingIfaces[0])));
+        mEthernetNetworkAgent.disconnect();
+        waitForIdle();
+        reset(mStatsService);
+
+        // When a VPN declares no underlying networks (i.e., no connectivity), getAllVpnInfo
+        // does not return the VPN, so CS does not pass it to NetworkStatsService. This causes
+        // NetworkStatsFactory#adjustForTunAnd464Xlat not to attempt any VPN data migration, which
+        // is probably a performance improvement (though it's very unlikely that a VPN would declare
+        // no underlying networks).
+        // Also, for the same reason as above, the active interface passed in is null.
+        mService.setUnderlyingNetworksForVpn(new Network[0]);
+        waitForIdle();
+        expectForceUpdateIfaces(wifiAndVpn, null);
+        reset(mStatsService);
+
+        // Specifying only a null underlying network is the same as no networks.
+        mService.setUnderlyingNetworksForVpn(onlyNull);
+        waitForIdle();
+        expectForceUpdateIfaces(wifiAndVpn, null);
+        reset(mStatsService);
+
+        // Specifying networks that are all disconnected is the same as specifying no networks.
+        mService.setUnderlyingNetworksForVpn(onlyCell);
+        waitForIdle();
+        expectForceUpdateIfaces(wifiAndVpn, null);
+        reset(mStatsService);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
     }
 
     @Test
@@ -6382,6 +6716,7 @@ public class ConnectivityServiceTest {
     }
 
     @Test
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
     public void testApplyUnderlyingCapabilities() throws Exception {
         mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
         mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
@@ -6607,6 +6942,126 @@ public class ConnectivityServiceTest {
         // Unsuspend cellular and then switch back to it. The VPN remains not suspended.
         mCellNetworkAgent.resume();
         callback.assertNoCallback();
+=======
+    public void testVpnConnectDisconnectUnderlyingNetwork() throws Exception {
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        final NetworkRequest request = new NetworkRequest.Builder()
+                .removeCapability(NET_CAPABILITY_NOT_VPN).build();
+
+        mCm.registerNetworkCallback(request, callback);
+
+        // Bring up a VPN that specifies an underlying network that does not exist yet.
+        // Note: it's sort of meaningless for a VPN app to declare a network that doesn't exist yet,
+        // (and doing so is difficult without using reflection) but it's good to test that the code
+        // behaves approximately correctly.
+        mMockVpn.establishForMyUid(false, true, false);
+        final Network wifiNetwork = new Network(mNetIdManager.peekNextNetId());
+        mService.setUnderlyingNetworksForVpn(new Network[]{wifiNetwork});
+        callback.expectAvailableCallbacksUnvalidated(mMockVpn);
+        assertTrue(mCm.getNetworkCapabilities(mMockVpn.getNetwork())
+                .hasTransport(TRANSPORT_VPN));
+        assertFalse(mCm.getNetworkCapabilities(mMockVpn.getNetwork())
+                .hasTransport(TRANSPORT_WIFI));
+
+        // Make that underlying network connect, and expect to see its capabilities immediately
+        // reflected in the VPN's capabilities.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        assertEquals(wifiNetwork, mWiFiNetworkAgent.getNetwork());
+        mWiFiNetworkAgent.connect(false);
+        // TODO: the callback for the VPN happens before any callbacks are called for the wifi
+        // network that has just connected. There appear to be two issues here:
+        // 1. The VPN code will accept an underlying network as soon as getNetworkCapabilities() for
+        //    it returns non-null (which happens very early, during handleRegisterNetworkAgent).
+        //    This is not correct because that that point the network is not connected and cannot
+        //    pass any traffic.
+        // 2. When a network connects, updateNetworkInfo propagates underlying network capabilities
+        //    before rematching networks.
+        // Given that this scenario can't really happen, this is probably fine for now.
+        callback.expectCallback(CallbackEntry.NETWORK_CAPS_UPDATED, mMockVpn);
+        callback.expectAvailableCallbacksUnvalidated(mWiFiNetworkAgent);
+        assertTrue(mCm.getNetworkCapabilities(mMockVpn.getNetwork())
+                .hasTransport(TRANSPORT_VPN));
+        assertTrue(mCm.getNetworkCapabilities(mMockVpn.getNetwork())
+                .hasTransport(TRANSPORT_WIFI));
+
+        // Disconnect the network, and expect to see the VPN capabilities change accordingly.
+        mWiFiNetworkAgent.disconnect();
+        callback.expectCallback(CallbackEntry.LOST, mWiFiNetworkAgent);
+        callback.expectCapabilitiesThat(mMockVpn, (nc) ->
+                nc.getTransportTypes().length == 1 && nc.hasTransport(TRANSPORT_VPN));
+
+        mMockVpn.disconnect();
+        mCm.unregisterNetworkCallback(callback);
+    }
+
+    private void assertGetNetworkInfoOfGetActiveNetworkIsConnected(boolean expectedConnectivity) {
+        // What Chromium used to do before https://chromium-review.googlesource.com/2605304
+        assertEquals("Unexpected result for getActiveNetworkInfo(getActiveNetwork())",
+                expectedConnectivity, mCm.getNetworkInfo(mCm.getActiveNetwork()).isConnected());
+    }
+
+    @Test
+    public void testVpnUnderlyingNetworkSuspended() throws Exception {
+        final TestNetworkCallback callback = new TestNetworkCallback();
+        mCm.registerDefaultNetworkCallback(callback);
+
+        // Connect a VPN.
+        mMockVpn.establishForMyUid(false, true, false);
+        callback.expectAvailableCallbacksUnvalidated(mMockVpn);
+
+        // Connect cellular data.
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(false /* validated */);
+        callback.expectCapabilitiesThat(mMockVpn,
+                nc -> nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED)
+                        && nc.hasTransport(TRANSPORT_CELLULAR));
+        callback.assertNoCallback();
+
+        assertTrue(mCm.getNetworkCapabilities(mMockVpn.getNetwork())
+                .hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        assertNetworkInfo(TYPE_MOBILE, DetailedState.CONNECTED);
+        assertNetworkInfo(TYPE_WIFI, DetailedState.DISCONNECTED);
+        assertNetworkInfo(TYPE_VPN, DetailedState.CONNECTED);
+        assertActiveNetworkInfo(TYPE_MOBILE, DetailedState.CONNECTED);
+        assertGetNetworkInfoOfGetActiveNetworkIsConnected(true);
+
+        // Suspend the cellular network and expect the VPN to be suspended.
+        mCellNetworkAgent.suspend();
+        callback.expectCapabilitiesThat(mMockVpn,
+                nc -> !nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED)
+                        && nc.hasTransport(TRANSPORT_CELLULAR));
+        callback.expectCallback(CallbackEntry.SUSPENDED, mMockVpn);
+        callback.assertNoCallback();
+
+        assertFalse(mCm.getNetworkCapabilities(mMockVpn.getNetwork())
+                .hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        assertNetworkInfo(TYPE_MOBILE, DetailedState.SUSPENDED);
+        assertNetworkInfo(TYPE_WIFI, DetailedState.DISCONNECTED);
+        assertNetworkInfo(TYPE_VPN, DetailedState.SUSPENDED);
+        assertActiveNetworkInfo(TYPE_MOBILE, DetailedState.SUSPENDED);
+        // VPN's main underlying network is suspended, so no connectivity.
+        assertGetNetworkInfoOfGetActiveNetworkIsConnected(false);
+
+        // Switch to another network. The VPN should no longer be suspended.
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(false /* validated */);
+        callback.expectCapabilitiesThat(mMockVpn,
+                nc -> nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED)
+                        && nc.hasTransport(TRANSPORT_WIFI));
+        callback.expectCallback(CallbackEntry.RESUMED, mMockVpn);
+        callback.assertNoCallback();
+
+        assertTrue(mCm.getNetworkCapabilities(mMockVpn.getNetwork())
+                .hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
+        assertNetworkInfo(TYPE_MOBILE, DetailedState.DISCONNECTED);
+        assertNetworkInfo(TYPE_WIFI, DetailedState.CONNECTED);
+        assertNetworkInfo(TYPE_VPN, DetailedState.CONNECTED);
+        assertActiveNetworkInfo(TYPE_WIFI, DetailedState.CONNECTED);
+        assertGetNetworkInfoOfGetActiveNetworkIsConnected(true);
+
+        // Unsuspend cellular and then switch back to it. The VPN remains not suspended.
+        mCellNetworkAgent.resume();
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         mWiFiNetworkAgent.disconnect();
         callback.expectCapabilitiesThat(mMockVpn,
                 nc -> nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED)
@@ -6699,9 +7154,15 @@ public class ConnectivityServiceTest {
         vpnNetworkCallback.assertNoCallback();
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         final Set<UidRange> ranges = uidRangesForUids(uid);
         mMockVpn.registerAgent(ranges);
         mMockVpn.setUnderlyingNetworks(new Network[0]);
+=======
+        final Set<UidRange> ranges = uidRangesForUid(uid);
+        mMockVpn.registerAgent(ranges);
+        mService.setUnderlyingNetworksForVpn(new Network[0]);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // VPN networks do not satisfy the default request and are automatically validated
         // by NetworkMonitor
@@ -6716,10 +7177,14 @@ public class ConnectivityServiceTest {
         wifiNetworkCallback.assertNoCallback();
         vpnNetworkCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         systemDefaultCallback.assertNoCallback();
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
         assertEquals(mWiFiNetworkAgent.getNetwork(),
                 systemDefaultCallback.getLastAvailableNetwork());
+=======
+        assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         ranges.clear();
         mMockVpn.setUids(ranges);
@@ -6736,7 +7201,10 @@ public class ConnectivityServiceTest {
         // much, but that is the reason the test here has to check for an update to the
         // capabilities instead of the expected LOST then AVAILABLE.
         defaultCallback.expectCallback(CallbackEntry.NETWORK_CAPS_UPDATED, mMockVpn);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         systemDefaultCallback.assertNoCallback();
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         ranges.add(new UidRange(uid, uid));
         mMockVpn.setUids(ranges);
@@ -6748,7 +7216,10 @@ public class ConnectivityServiceTest {
         // TODO : Here like above, AVAILABLE would be correct, but because this can't actually
         // happen outside of the test, ConnectivityService does not rematch callbacks.
         defaultCallback.expectCallback(CallbackEntry.NETWORK_CAPS_UPDATED, mMockVpn);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         systemDefaultCallback.assertNoCallback();
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         mWiFiNetworkAgent.disconnect();
 
@@ -6766,7 +7237,10 @@ public class ConnectivityServiceTest {
         wifiNetworkCallback.assertNoCallback();
         vpnNetworkCallback.expectCallback(CallbackEntry.LOST, mMockVpn);
         defaultCallback.expectCallback(CallbackEntry.LOST, mMockVpn);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         systemDefaultCallback.assertNoCallback();
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         assertEquals(null, mCm.getActiveNetwork());
 
         mCm.unregisterNetworkCallback(genericNetworkCallback);
@@ -6791,7 +7265,10 @@ public class ConnectivityServiceTest {
 
         mMockVpn.establishForMyUid(true /* validated */, false /* hasInternet */,
                 false /* isStrictMode */);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertUidRangesUpdatedForMyUid(true);
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         defaultCallback.assertNoCallback();
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
@@ -6817,7 +7294,10 @@ public class ConnectivityServiceTest {
 
         mMockVpn.establishForMyUid(true /* validated */, true /* hasInternet */,
                 false /* isStrictMode */);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertUidRangesUpdatedForMyUid(true);
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         defaultCallback.expectAvailableThenValidatedCallbacks(mMockVpn);
         assertEquals(defaultCallback.getLastAvailableNetwork(), mCm.getActiveNetwork());
@@ -6843,7 +7323,10 @@ public class ConnectivityServiceTest {
         // Bring up a VPN that has the INTERNET capability, initially unvalidated.
         mMockVpn.establishForMyUid(false /* validated */, true /* hasInternet */,
                 false /* isStrictMode */);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertUidRangesUpdatedForMyUid(true);
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Even though the VPN is unvalidated, it becomes the default network for our app.
         callback.expectAvailableCallbacksUnvalidated(mMockVpn);
@@ -6926,6 +7409,19 @@ public class ConnectivityServiceTest {
         }
     }
 
+    private void assertDefaultNetworkCapabilities(int userId, NetworkAgentWrapper... networks) {
+        final NetworkCapabilities[] defaultCaps = mService.getDefaultNetworkCapabilitiesForUser(
+                userId, "com.android.calling.package");
+        final String defaultCapsString = Arrays.toString(defaultCaps);
+        assertEquals(defaultCapsString, defaultCaps.length, networks.length);
+        final Set<NetworkCapabilities> defaultCapsSet = new ArraySet<>(defaultCaps);
+        for (NetworkAgentWrapper network : networks) {
+            final NetworkCapabilities nc = mCm.getNetworkCapabilities(network.getNetwork());
+            final String msg = "Did not find " + nc + " in " + Arrays.toString(defaultCaps);
+            assertTrue(msg, defaultCapsSet.contains(nc));
+        }
+    }
+
     @Test
     public void testVpnSetUnderlyingNetworks() throws Exception {
         final TestNetworkCallback vpnNetworkCallback = new TestNetworkCallback();
@@ -6951,6 +7447,9 @@ public class ConnectivityServiceTest {
         // A VPN without underlying networks is not suspended.
         assertTrue(nc.hasCapability(NET_CAPABILITY_NOT_SUSPENDED));
         assertVpnTransportInfo(nc, VpnManager.TYPE_VPN_SERVICE);
+
+        final int userId = UserHandle.getUserId(Process.myUid());
+        assertDefaultNetworkCapabilities(userId /* no networks */);
 
         final int userId = UserHandle.getUserId(Process.myUid());
         assertDefaultNetworkCapabilities(userId /* no networks */);
@@ -7332,7 +7831,10 @@ public class ConnectivityServiceTest {
 
         // Connect VPN network. By default it is using current default network (Cell).
         mMockVpn.establishForMyUid();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertUidRangesUpdatedForMyUid(true);
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Ensure VPN is now the active network.
         assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
@@ -7385,7 +7887,10 @@ public class ConnectivityServiceTest {
 
         // Connect VPN network.
         mMockVpn.establishForMyUid();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertUidRangesUpdatedForMyUid(true);
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Ensure VPN is now the active network.
         assertEquals(mMockVpn.getNetwork(), mCm.getActiveNetwork());
@@ -7442,7 +7947,11 @@ public class ConnectivityServiceTest {
         assertFalse(mCm.isActiveNetworkMetered());
 
         // Connect VPN network.
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         mMockVpn.registerAgent(true /* isAlwaysMetered */, uidRangesForUids(Process.myUid()),
+=======
+        mMockVpn.registerAgent(true /* isAlwaysMetered */, uidRangesForUid(Process.myUid()),
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
                 new LinkProperties());
         mMockVpn.connect(true);
         waitForIdle();
@@ -7472,6 +7981,7 @@ public class ConnectivityServiceTest {
         assertTrue(mCm.isActiveNetworkMetered());
 
         mMockVpn.disconnect();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
     }
 
     private class DetailedBlockedStatusCallback extends TestNetworkCallback {
@@ -7486,6 +7996,8 @@ public class ConnectivityServiceTest {
         public void onBlockedStatusChanged(Network network, int blockedReasons) {
             getHistory().add(new CallbackEntry.BlockedStatusInt(network, blockedReasons));
         }
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
     }
 
     @Test
@@ -7654,9 +8166,55 @@ public class ConnectivityServiceTest {
         mCm.unregisterNetworkCallback(defaultCallback);
     }
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
     private void expectNetworkRejectNonSecureVpn(InOrder inOrder, boolean add,
             UidRangeParcel... expected) throws Exception {
         inOrder.verify(mMockNetd).networkRejectNonSecureVpn(eq(add), aryEq(expected));
+=======
+    private void checkNetworkInfo(NetworkInfo ni, int type, DetailedState state) {
+        assertNotNull(ni);
+        assertEquals(type, ni.getType());
+        assertEquals(ConnectivityManager.getNetworkTypeName(type), state, ni.getDetailedState());
+    }
+
+    private void assertActiveNetworkInfo(int type, DetailedState state) {
+        checkNetworkInfo(mCm.getActiveNetworkInfo(), type, state);
+    }
+    private void assertNetworkInfo(int type, DetailedState state) {
+        checkNetworkInfo(mCm.getNetworkInfo(type), type, state);
+    }
+
+    @Test
+    public final void testLoseTrusted() throws Exception {
+        final NetworkRequest trustedRequest = new NetworkRequest.Builder()
+                .addCapability(NET_CAPABILITY_TRUSTED)
+                .build();
+        final TestNetworkCallback trustedCallback = new TestNetworkCallback();
+        mCm.requestNetwork(trustedRequest, trustedCallback);
+
+        mCellNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_CELLULAR);
+        mCellNetworkAgent.connect(true);
+        trustedCallback.expectAvailableThenValidatedCallbacks(mCellNetworkAgent);
+        verify(mNetworkManagementService).setDefaultNetId(eq(mCellNetworkAgent.getNetwork().netId));
+        reset(mNetworkManagementService);
+
+        mWiFiNetworkAgent = new TestNetworkAgentWrapper(TRANSPORT_WIFI);
+        mWiFiNetworkAgent.connect(true);
+        trustedCallback.expectAvailableDoubleValidatedCallbacks(mWiFiNetworkAgent);
+        verify(mNetworkManagementService).setDefaultNetId(eq(mWiFiNetworkAgent.getNetwork().netId));
+        reset(mNetworkManagementService);
+
+        mWiFiNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
+        trustedCallback.expectAvailableCallbacksValidated(mCellNetworkAgent);
+        verify(mNetworkManagementService).setDefaultNetId(eq(mCellNetworkAgent.getNetwork().netId));
+        reset(mNetworkManagementService);
+
+        mCellNetworkAgent.removeCapability(NET_CAPABILITY_TRUSTED);
+        trustedCallback.expectCallback(CallbackEntry.LOST, mCellNetworkAgent);
+        verify(mNetworkManagementService).clearDefaultNetId();
+
+        mCm.unregisterNetworkCallback(trustedCallback);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
     }
 
     private void checkNetworkInfo(NetworkInfo ni, int type, DetailedState state) {
@@ -8577,8 +9135,13 @@ public class ConnectivityServiceTest {
         inOrder.verify(mMockDnsResolver).setPrefix64(netId, "");
         inOrder.verify(mMockDnsResolver).startPrefix64Discovery(netId);
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         mService.mResolverUnsolEventCallback.onNat64PrefixEvent(
                 makeNat64PrefixEvent(netId, PREFIX_OPERATION_ADDED, pref64FromDnsStr, 96));
+=======
+        mService.mNetdEventCallback.onNat64PrefixEvent(netId, true /* added */,
+                pref64FromDnsStr, 96);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         expectNat64PrefixChange(callback, mWiFiNetworkAgent, pref64FromDns);
         inOrder.verify(mMockNetd).clatdStart(iface, pref64FromDns.toString());
 
@@ -8650,8 +9213,13 @@ public class ConnectivityServiceTest {
         inOrder.verify(mMockNetd).clatdStop(iface);
         inOrder.verify(mMockDnsResolver).setPrefix64(netId, "");
         inOrder.verify(mMockDnsResolver).startPrefix64Discovery(netId);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         mService.mResolverUnsolEventCallback.onNat64PrefixEvent(
                 makeNat64PrefixEvent(netId, PREFIX_OPERATION_ADDED, pref64FromDnsStr, 96));
+=======
+        mService.mNetdEventCallback.onNat64PrefixEvent(netId, true /* added */,
+                pref64FromDnsStr, 96);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         expectNat64PrefixChange(callback, mWiFiNetworkAgent, pref64FromDns);
         inOrder.verify(mMockNetd).clatdStart(iface, pref64FromDns.toString());
         inOrder.verify(mMockDnsResolver, never()).setPrefix64(eq(netId), any());
@@ -8791,10 +9359,18 @@ public class ConnectivityServiceTest {
 
         // Disconnect wifi
         ExpectedBroadcast b = expectConnectivityAction(TYPE_WIFI, DetailedState.DISCONNECTED);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
+=======
+        reset(mNetworkManagementService);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         mWiFiNetworkAgent.disconnect();
         b.expectBroadcast();
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         verify(mMockNetd, times(1)).idletimerRemoveInterface(eq(WIFI_IFNAME), anyInt(),
                 eq(Integer.toString(TRANSPORT_WIFI)));
+=======
+        verify(mNetworkManagementService, times(1)).removeIdleTimer(eq(WIFI_IFNAME));
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Clean up
         mCm.unregisterNetworkCallback(networkCallback);
@@ -8877,7 +9453,10 @@ public class ConnectivityServiceTest {
         LinkProperties testLinkProperties = new LinkProperties();
         testLinkProperties.setHttpProxy(testProxyInfo);
         mMockVpn.establishForMyUid(testLinkProperties);
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertUidRangesUpdatedForMyUid(true);
+=======
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Test that the VPN network returns a proxy, and the WiFi does not.
         assertEquals(testProxyInfo, mService.getProxyForNetwork(mMockVpn.getNetwork()));
@@ -8913,9 +9492,14 @@ public class ConnectivityServiceTest {
         lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), null));
         lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), RTN_UNREACHABLE));
         // The uid range needs to cover the test app so the network is visible to it.
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         final Set<UidRange> vpnRange = Collections.singleton(PRIMARY_UIDRANGE);
         mMockVpn.establish(lp, VPN_UID, vpnRange);
         assertVpnUidRangesUpdated(true, vpnRange, VPN_UID);
+=======
+        final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
+        mMockVpn.establish(lp, VPN_UID, vpnRange);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // A connected VPN should have interface rules set up. There are two expected invocations,
         // one during the VPN initial connection, one during the VPN LinkProperties update.
@@ -8941,9 +9525,14 @@ public class ConnectivityServiceTest {
         lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null));
         lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), null));
         // The uid range needs to cover the test app so the network is visible to it.
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         final Set<UidRange> vpnRange = Collections.singleton(PRIMARY_UIDRANGE);
         mMockVpn.establish(lp, Process.SYSTEM_UID, vpnRange);
         assertVpnUidRangesUpdated(true, vpnRange, Process.SYSTEM_UID);
+=======
+        final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
+        mMockVpn.establish(lp, Process.SYSTEM_UID, vpnRange);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Legacy VPN should not have interface rules set up
         verify(mMockNetd, never()).firewallAddUidInterfaceRules(any(), any());
@@ -8957,9 +9546,14 @@ public class ConnectivityServiceTest {
         lp.addRoute(new RouteInfo(new IpPrefix("192.0.2.0/24"), null, "tun0"));
         lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), RTN_UNREACHABLE));
         // The uid range needs to cover the test app so the network is visible to it.
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         final Set<UidRange> vpnRange = Collections.singleton(PRIMARY_UIDRANGE);
         mMockVpn.establish(lp, Process.SYSTEM_UID, vpnRange);
         assertVpnUidRangesUpdated(true, vpnRange, Process.SYSTEM_UID);
+=======
+        final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
+        mMockVpn.establish(lp, Process.SYSTEM_UID, vpnRange);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // IPv6 unreachable route should not be misinterpreted as a default route
         verify(mMockNetd, never()).firewallAddUidInterfaceRules(any(), any());
@@ -8972,9 +9566,14 @@ public class ConnectivityServiceTest {
         lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), null));
         lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null));
         // The uid range needs to cover the test app so the network is visible to it.
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         final Set<UidRange> vpnRange = Collections.singleton(PRIMARY_UIDRANGE);
         mMockVpn.establish(lp, VPN_UID, vpnRange);
         assertVpnUidRangesUpdated(true, vpnRange, VPN_UID);
+=======
+        final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
+        mMockVpn.establish(lp, VPN_UID, vpnRange);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         // Connected VPN should have interface rules set up. There are two expected invocations,
         // one during VPN uid update, one during VPN LinkProperties update
@@ -9024,10 +9623,15 @@ public class ConnectivityServiceTest {
         lp.addRoute(new RouteInfo(new IpPrefix(Inet4Address.ANY, 0), RTN_UNREACHABLE));
         lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null));
         // The uid range needs to cover the test app so the network is visible to it.
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         final UidRange vpnRange = PRIMARY_UIDRANGE;
         final Set<UidRange> vpnRanges = Collections.singleton(vpnRange);
         mMockVpn.establish(lp, VPN_UID, vpnRanges);
         assertVpnUidRangesUpdated(true, vpnRanges, VPN_UID);
+=======
+        final UidRange vpnRange = UidRange.createForUser(VPN_USER);
+        mMockVpn.establish(lp, VPN_UID, Collections.singleton(vpnRange));
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
 
         reset(mMockNetd);
         InOrder inOrder = inOrder(mMockNetd);
@@ -9469,7 +10073,12 @@ public class ConnectivityServiceTest {
 
     private void setupConnectionOwnerUid(int vpnOwnerUid, @VpnManager.VpnType int vpnType)
             throws Exception {
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         final Set<UidRange> vpnRange = Collections.singleton(PRIMARY_UIDRANGE);
+=======
+        final Set<UidRange> vpnRange = Collections.singleton(UidRange.createForUser(VPN_USER));
+        mMockVpn.establish(new LinkProperties(), vpnOwnerUid, vpnRange);
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         mMockVpn.setVpnType(vpnType);
         mMockVpn.establish(new LinkProperties(), vpnOwnerUid, vpnRange);
         assertVpnUidRangesUpdated(true, vpnRange, vpnOwnerUid);
@@ -9539,7 +10148,12 @@ public class ConnectivityServiceTest {
         mServiceContext.setPermission(
                 NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK, PERMISSION_GRANTED);
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertEquals(42, mService.getConnectionOwnerUid(getTestConnectionInfo()));
+=======
+        // TODO: Test the returned UID
+        mService.getConnectionOwnerUid(getTestConnectionInfo());
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
     }
 
     private static PackageInfo buildPackageInfo(boolean hasSystemPermission, int uid) {
@@ -9724,16 +10338,37 @@ public class ConnectivityServiceTest {
         setupLocationPermissions(Build.VERSION_CODES.Q, true, AppOpsManager.OPSTR_FINE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION);
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertTrue(mMockVpn.setUnderlyingNetworks(new Network[] {naiWithoutUid.network}));
         waitForIdle();
+=======
+        // setUp() calls mockVpn() which adds a VPN with the Test Runner's uid. Configure it to be
+        // active
+        final VpnInfo info = new VpnInfo();
+        info.ownerUid = Process.myUid();
+        info.vpnIface = VPN_IFNAME;
+        mMockVpn.setVpnInfo(info);
+
+        mMockVpn.establishForMyUid();
+        waitForIdle();
+
+        mServiceContext.setPermission(android.Manifest.permission.NETWORK_STACK, PERMISSION_DENIED);
+
+
+        assertTrue(mService.setUnderlyingNetworksForVpn(new Network[] {network}));
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         assertTrue(
                 "Active VPN permission not applied",
                 mService.checkConnectivityDiagnosticsPermissions(
                         Process.myPid(), Process.myUid(), naiWithoutUid,
                         mContext.getOpPackageName()));
 
+<<<<<<< HEAD   (23bbd4 Merge "[RCS]Migrate from getEncodedMessage() to toEncodedMes)
         assertTrue(mMockVpn.setUnderlyingNetworks(null));
         waitForIdle();
+=======
+        assertTrue(mService.setUnderlyingNetworksForVpn(null));
+>>>>>>> BRANCH (719eec Merge cherrypicks of [13746220, 13745437] into rvc-qpr2-rele)
         assertFalse(
                 "VPN shouldn't receive callback on non-underlying network",
                 mService.checkConnectivityDiagnosticsPermissions(
