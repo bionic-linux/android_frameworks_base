@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "433ee72d_578acd26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-14T19:45:14Z",
+      "side": 1,
+      "message": "To my mind, the strength of UNLOCKED_DEVICE_REQUIRED is that the user doesn\u0027t have to think about it. If you\u0027re OK with the user sometimes needing to unlock explicitly, you might as well use an explicitly unlocked key. If you want keys that the user doesn\u0027t have to think about, but your compliance system also requires cryptographic-only unlock, disabling biometrics is the only way to achieve that. And if you have disabled biometrics anyway, you get the cryptographic security \"for free\".",
+      "parentUuid": "206b1041_d5db916a",
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "196d7180_1a541ef0",
@@ -130,6 +148,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "256d11d7_6c15e9a8",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-14T19:45:14Z",
+      "side": 1,
+      "message": "Will do!",
+      "parentUuid": "7fbe9033_96a66855",
+      "range": {
+        "startLine": 1054,
+        "startChar": 31,
+        "endLine": 1054,
+        "endChar": 58
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d268c5bc_b549f209",
@@ -191,6 +233,30 @@
       "side": 1,
       "message": "OK, please document in setUnlockedDeviceRequired()\u0027s javadoc.",
       "parentUuid": "e04a967b_989cf289",
+      "range": {
+        "startLine": 1055,
+        "startChar": 17,
+        "endLine": 1056,
+        "endChar": 70
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09b216b4_61eac2d5",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-14T19:45:14Z",
+      "side": 1,
+      "message": "Will do!",
+      "parentUuid": "ce855f2a_38625f38",
       "range": {
         "startLine": 1055,
         "startChar": 17,
