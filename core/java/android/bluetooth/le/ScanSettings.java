@@ -141,6 +141,11 @@ public final class ScanSettings implements Parcelable {
      */
     public static final int PHY_LE_ALL_SUPPORTED = 255;
 
+    /**
+     * The floor value for report delays greater than 0 in {@link Builder#setReportDelay(long)}.
+     */
+    private static final long REPORT_DELAY_FLOOR = 5000;
+
     // Bluetooth LE scan mode.
     private int mScanMode;
 
@@ -345,18 +350,25 @@ public final class ScanSettings implements Parcelable {
         }
 
         /**
-         * Set report delay timestamp for Bluetooth LE scan.
+         * Set report delay timestamp for Bluetooth LE scan. If set to 0, you will be notified of
+         * scan results immediately. If &gt; 0, scan results are queued up and delivered after the
+         * requested delay or 5000 milliseconds (whichever is higher). Note scan results may be
+         * delivered sooner if the internal buffers fill up.
          *
-         * @param reportDelayMillis Delay of report in milliseconds. Set to 0 to be notified of
-         * results immediately. Values &gt; 0 causes the scan results to be queued up and delivered
-         * after the requested delay or when the internal buffers fill up.
-         * @throws IllegalArgumentException If {@code reportDelayMillis} &lt; 0.
+         * @param reportDelayMillis         how frequently scan results should be delivered in
+         *                                  milliseconds
+         * @throws IllegalArgumentException if {@code reportDelayMillis} &lt; 0
          */
         public Builder setReportDelay(long reportDelayMillis) {
             if (reportDelayMillis < 0) {
                 throw new IllegalArgumentException("reportDelay must be > 0");
             }
-            mReportDelayMillis = reportDelayMillis;
+
+            if (reportDelayMillis > 0 && reportDelayMillis < REPORT_DELAY_FLOOR) {
+                mReportDelayMillis = REPORT_DELAY_FLOOR;
+            } else {
+                mReportDelayMillis = reportDelayMillis;
+            }
             return this;
         }
 
