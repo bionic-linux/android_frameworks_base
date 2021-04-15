@@ -39,6 +39,30 @@
       },
       "revId": "1abf51c7779db508740574c4a8ec11bb2ca9d5c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "475b9c4b_1336c7ca",
+        "filename": "media/java/android/media/AudioFormat.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1024540
+      },
+      "writtenOn": "2021-04-15T01:03:27Z",
+      "side": 1,
+      "message": "I think it should make it not hidden because app must use magic number for channel mask if it is hidden.",
+      "parentUuid": "b45bc00c_c6297ccf",
+      "range": {
+        "startLine": 417,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 27
+      },
+      "revId": "1abf51c7779db508740574c4a8ec11bb2ca9d5c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
