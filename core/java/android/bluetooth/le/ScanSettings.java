@@ -141,6 +141,11 @@ public final class ScanSettings implements Parcelable {
      */
     public static final int PHY_LE_ALL_SUPPORTED = 255;
 
+    /**
+     * The floor value for report delays greater than 0 in {@link Builder#setReportDelay(long)}.
+     */
+    private static final long REPORT_DELAY_FLOOR = 5000;
+
     // Bluetooth LE scan mode.
     private int mScanMode;
 
@@ -345,7 +350,9 @@ public final class ScanSettings implements Parcelable {
         }
 
         /**
-         * Set report delay timestamp for Bluetooth LE scan.
+         * Set report delay timestamp for Bluetooth LE scan. The report delay must either be 0 or
+         * greater than or equal to 5000 milliseconds. Any value passed in that is greater than 0
+         * and less than 5000 milliseconds will result in a report delay of 5000 milliseconds.
          *
          * @param reportDelayMillis Delay of report in milliseconds. Set to 0 to be notified of
          * results immediately. Values &gt; 0 causes the scan results to be queued up and delivered
@@ -356,7 +363,13 @@ public final class ScanSettings implements Parcelable {
             if (reportDelayMillis < 0) {
                 throw new IllegalArgumentException("reportDelay must be > 0");
             }
-            mReportDelayMillis = reportDelayMillis;
+
+            // Ensures the report delay is either 0 or at least the floor value
+            if (reportDelayMillis > 0 && reportDelayMillis < REPORT_DELAY_FLOOR) {
+                mReportDelayMillis = REPORT_DELAY_FLOOR;
+            } else {
+                mReportDelayMillis = reportDelayMillis;
+            }
             return this;
         }
 
