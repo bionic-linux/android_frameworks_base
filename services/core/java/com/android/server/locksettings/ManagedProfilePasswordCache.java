@@ -95,7 +95,7 @@ public class ManagedProfilePasswordCache {
             SecretKey key;
             try {
                 generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES,
-                        AndroidKeyStoreSpi.NAME);
+                        mKeyStore.getProvider());
                 generator.init(new KeyGenParameterSpec.Builder(
                         keyName, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
                         .setKeySize(KEY_LENGTH)

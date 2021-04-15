@@ -925,6 +925,13 @@ public abstract class KeyProperties {
     public static final int NAMESPACE_WIFI = 102;
 
     /**
+     * The namespace identifier for the LOCKSETTINGS Keystore namespace.
+     * This must be kept in sync with system/sepolicy/private/keystore2_key_contexts
+     * @hide
+     */
+    public static final int NAMESPACE_LOCKSETTINGS = 103;
+
+    /**
      * For legacy support, translate namespaces into known UIDs.
      * @hide
      */

@@ -16,8 +16,12 @@
 
 package com.android.server.locksettings;
 
+import android.security.AndroidKeyStoreMaintenance;
 import android.security.keystore.KeyProperties;
 import android.security.keystore.KeyProtection;
+import android.security.keystore2.AndroidKeyStoreLoadStoreParameter;
+import android.system.keystore2.Domain;
+import android.system.keystore2.KeyDescriptor;
 import android.util.Slog;
 
 import java.io.ByteArrayOutputStream;
@@ -125,9 +129,7 @@ public class SyntheticPasswordCrypto {
 
     public static byte[] decryptBlobV1(String keyAlias, byte[] blob, byte[] applicationId) {
         try {
-            KeyStore keyStore = KeyStore.getInstance(androidKeystoreProviderName());
-            keyStore.load(null);
-
+            KeyStore keyStore = getKeyStore();
             SecretKey decryptionKey = (SecretKey) keyStore.getKey(keyAlias, null);
             if (decryptionKey == null) {
                 throw new IllegalStateException("SP key is missing: " + keyAlias);
@@ -143,11 +145,18 @@ public class SyntheticPasswordCrypto {
     static String androidKeystoreProviderName() {
         return "AndroidKeyStore";
     }
+    static int keyNamespace() { return KeyProperties.NAMESPACE_LOCKSETTINGS; }
+
+    private static KeyStore getKeyStore()
+            throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
+        KeyStore keyStore = KeyStore.getInstance(androidKeystoreProviderName());
+        keyStore.load(new AndroidKeyStoreLoadStoreParameter(keyNamespace()));
+        return keyStore;
+    }
 
     public static byte[] decryptBlob(String keyAlias, byte[] blob, byte[] applicationId) {
         try {
-            KeyStore keyStore = KeyStore.getInstance(androidKeystoreProviderName());
-            keyStore.load(null);
+            KeyStore keyStore = getKeyStore();
 
             SecretKey decryptionKey = (SecretKey) keyStore.getKey(keyAlias, null);
             if (decryptionKey == null) {
@@ -170,12 +179,10 @@ public class SyntheticPasswordCrypto {
             KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES);
             keyGenerator.init(AES_KEY_LENGTH * 8, new SecureRandom());
             SecretKey secretKey = keyGenerator.generateKey();
-            KeyStore keyStore = KeyStore.getInstance(androidKeystoreProviderName());
-            keyStore.load(null);
+            KeyStore keyStore = getKeyStore();
             KeyProtection.Builder builder = new KeyProtection.Builder(KeyProperties.PURPOSE_DECRYPT)
                     .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                    .setCriticalToDeviceEncryption(true);
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE);
             if (sid != 0) {
                 builder.setUserAuthenticationRequired(true)
                         .setBoundToSpecificSecureUserId(sid)
@@ -200,8 +207,7 @@ public class SyntheticPasswordCrypto {
     public static void destroyBlobKey(String keyAlias) {
         KeyStore keyStore;
         try {
-            keyStore = KeyStore.getInstance(androidKeystoreProviderName());
-            keyStore.load(null);
+            keyStore = getKeyStore();
             keyStore.deleteEntry(keyAlias);
             Slog.i(TAG, "SP key deleted: " + keyAlias);
         } catch (KeyStoreException | NoSuchAlgorithmException | CertificateException
@@ -227,6 +233,29 @@ public class SyntheticPasswordCrypto {
             return digest.digest();
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException("NoSuchAlgorithmException for SHA-512", e);
+        }
+    }
+
+    static boolean migrateLockSettingsKey(String alias) {
+        final KeyDescriptor legacyKey = new KeyDescriptor();
+        legacyKey.domain = Domain.APP;
+        legacyKey.nspace = KeyProperties.NAMESPACE_APPLICATION;
+        legacyKey.alias = alias;
+
+        final KeyDescriptor newKey = new KeyDescriptor();
+        legacyKey.domain = Domain.SELINUX;
+        legacyKey.nspace = SyntheticPasswordCrypto.keyNamespace();
+        legacyKey.alias = alias;
+        int err = AndroidKeyStoreMaintenance.migrateKeyNamespace(legacyKey, newKey);
+        if (err == 0) {
+            return true;
+        } else if (err == AndroidKeyStoreMaintenance.KEY_NOT_FOUND) {
+            Slog.i(TAG, String.format("Key to migrate does not exist: %s", alias));
+            // Treat this as a success so we don't migrate again.
+            return true;
+        } else {
+            Slog.e(TAG, String.format("Failed to migrate key: %s %d", alias, err));
+            return false;
         }
     }
 }
