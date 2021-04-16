@@ -91,7 +91,6 @@ import static android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK;
 import static android.os.UserManagerInternal.OWNER_TYPE_DEVICE_OWNER;
 import static android.os.UserManagerInternal.OWNER_TYPE_PROFILE_OWNER;
 import static android.os.UserManagerInternal.OWNER_TYPE_PROFILE_OWNER_OF_ORGANIZATION_OWNED_DEVICE;
-import static android.provider.Settings.Global.PRIVATE_DNS_MODE;
 import static android.provider.Settings.Global.PRIVATE_DNS_SPECIFIER;
 import static android.provider.Telephony.Carriers.DPC_URI;
 import static android.provider.Telephony.Carriers.ENFORCE_KEY;
@@ -15566,11 +15565,12 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         return context.getResources().getString(R.string.config_managed_provisioning_package);
     }
 
-    private void putPrivateDnsSettings(@Nullable String mode, @Nullable String host) {
+    private void putPrivateDnsSettings(@ConnectivityManager.PrivateDnsMode int mode,
+            @Nullable String host) {
         // Set Private DNS settings using system permissions, as apps cannot write
         // to global settings.
         mInjector.binderWithCleanCallingIdentity(() -> {
-            mInjector.settingsGlobalPutString(PRIVATE_DNS_MODE, mode);
+            ConnectivityManager.setPrivateDnsMode(mContext, mode);
             mInjector.settingsGlobalPutString(PRIVATE_DNS_SPECIFIER, host);
         });
     }
@@ -15621,7 +15621,7 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
 
         Objects.requireNonNull(who, "ComponentName is null");
         enforceDeviceOwner(who);
-        final String currentMode = ConnectivityManager.getPrivateDnsMode(mContext);
+        final int currentMode = ConnectivityManager.getPrivateDnsMode(mContext);
         switch (currentMode) {
             case ConnectivityManager.PRIVATE_DNS_MODE_OFF:
                 return PRIVATE_DNS_MODE_OFF;

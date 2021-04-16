@@ -16,6 +16,7 @@
 
 package com.android.server.connectivity;
 
+import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_NONE;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_OFF;
 import static android.net.ConnectivityManager.PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
 import static android.net.ConnectivitySettingsManager.DNS_RESOLVER_MAX_SAMPLES;
@@ -131,11 +132,11 @@ public class DnsManager {
      * Get PrivateDnsConfig.
      */
     public static PrivateDnsConfig getPrivateDnsConfig(Context context) {
-        final String mode = ConnectivityManager.getPrivateDnsMode(context);
+        final int mode = ConnectivityManager.getPrivateDnsMode(context);
 
-        final boolean useTls = !TextUtils.isEmpty(mode) && !PRIVATE_DNS_MODE_OFF.equals(mode);
+        final boolean useTls = (mode != PRIVATE_DNS_MODE_NONE) && (mode != PRIVATE_DNS_MODE_OFF);
 
-        if (PRIVATE_DNS_MODE_PROVIDER_HOSTNAME.equals(mode)) {
+        if (PRIVATE_DNS_MODE_PROVIDER_HOSTNAME == mode) {
             final String specifier = getStringSetting(context.getContentResolver(),
                     PRIVATE_DNS_SPECIFIER);
             return new PrivateDnsConfig(specifier, null);

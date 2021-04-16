@@ -4242,9 +4242,9 @@ public class ConnectivityServiceTest {
         waitForIdle();
     }
 
-    private void setPrivateDnsSettings(String mode, String specifier) {
+    private void setPrivateDnsSettings(int mode, String specifier) {
         final ContentResolver cr = mServiceContext.getContentResolver();
-        Settings.Global.putString(cr, ConnectivitySettingsManager.PRIVATE_DNS_MODE, mode);
+        ConnectivityManager.setPrivateDnsMode(mServiceContext, mode);
         Settings.Global.putString(cr, ConnectivitySettingsManager.PRIVATE_DNS_SPECIFIER, specifier);
         mService.updatePrivateDnsSettings();
         waitForIdle();
