@@ -46,6 +46,30 @@
       },
       "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7104569b_89318551",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3664,
+      "author": {
+        "id": 1367175
+      },
+      "writtenOn": "2021-04-16T02:59:25Z",
+      "side": 1,
+      "message": "Yes, what I mean is assume we have Global keys A, B, and Netflix, they are all wake keys.\nThen we changed the behavior, send an up when press from non-interative, then maybe Netflix works fine but A, B key received the unexpected UP event without DOWN first, then some state broken.",
+      "parentUuid": "b65f60d3_399c315c",
+      "range": {
+        "startLine": 3664,
+        "startChar": 0,
+        "endLine": 3664,
+        "endChar": 79
+      },
+      "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
