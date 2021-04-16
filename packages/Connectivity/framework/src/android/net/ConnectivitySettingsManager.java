@@ -731,13 +731,14 @@ public class ConnectivitySettingsManager {
      *             constants.
      */
     public static void setPrivateDnsDefaultMode(@NonNull Context context,
-            @NonNull @PrivateDnsMode String mode) {
+            @NonNull @PrivateDnsMode int mode) {
         if (!(mode == PRIVATE_DNS_MODE_OFF
                 || mode == PRIVATE_DNS_MODE_OPPORTUNISTIC
                 || mode == PRIVATE_DNS_MODE_PROVIDER_HOSTNAME)) {
             throw new IllegalArgumentException("Invalid private dns mode");
         }
-        Settings.Global.putString(context.getContentResolver(), PRIVATE_DNS_DEFAULT_MODE, mode);
+        Settings.Global.putString(context.getContentResolver(), PRIVATE_DNS_DEFAULT_MODE,
+                ConnectivityManager.getPrivateDnsModeAsString(mode));
     }
 
     /**
