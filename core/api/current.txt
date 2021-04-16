@@ -21404,6 +21404,9 @@ package android.media {
     field public static final String KEY_MAX_PTS_GAP_TO_ENCODER = "max-pts-gap-to-encoder";
     field public static final String KEY_MAX_WIDTH = "max-width";
     field public static final String KEY_MIME = "mime";
+    field public static final String KEY_MPEGH_COMPATIBLE_SETS = "mpegh-compatible-sets";
+    field public static final String KEY_MPEGH_PROFILE_LEVEL_INDICATION = "mpegh-profile-level-indication";
+    field public static final String KEY_MPEGH_REFERENCE_CHANNEL_LAYOUT = "mpegh-reference-channel-layout";
     field public static final String KEY_OPERATING_RATE = "operating-rate";
     field public static final String KEY_OUTPUT_REORDER_DEPTH = "output-reorder-depth";
     field public static final String KEY_PCM_ENCODING = "pcm-encoding";
@@ -21434,6 +21437,8 @@ package android.media {
     field public static final String MIMETYPE_AUDIO_FLAC = "audio/flac";
     field public static final String MIMETYPE_AUDIO_G711_ALAW = "audio/g711-alaw";
     field public static final String MIMETYPE_AUDIO_G711_MLAW = "audio/g711-mlaw";
+    field public static final String MIMETYPE_AUDIO_MHA1 = "audio/mha1";
+    field public static final String MIMETYPE_AUDIO_MHM1 = "audio/mhm1";
     field public static final String MIMETYPE_AUDIO_MPEG = "audio/mpeg";
     field public static final String MIMETYPE_AUDIO_MSGSM = "audio/gsm";
     field public static final String MIMETYPE_AUDIO_OPUS = "audio/opus";
