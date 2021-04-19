@@ -22,6 +22,98 @@
       },
       "revId": "de771754e9957a0f79818200edea480de9e9a68a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a9f4c20_7a83c006",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3319,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2021-04-19T13:50:56Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 3319,
+        "startChar": 12,
+        "endLine": 3319,
+        "endChar": 23
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b5a690c_b88e5a26",
+        "filename": "services/core/java/com/android/server/locksettings/SyntheticPasswordCrypto.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2021-04-19T13:50:56Z",
+      "side": 1,
+      "message": "Here and below - make final or maybe inline altogether?",
+      "range": {
+        "startLine": 162,
+        "startChar": 21,
+        "endLine": 162,
+        "endChar": 29
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50869044_820ac44e",
+        "filename": "services/core/java/com/android/server/locksettings/SyntheticPasswordCrypto.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2021-04-19T13:50:56Z",
+      "side": 1,
+      "message": "IIUC, it can also fail if there is already a key with such name, which may happen if migration was aborted due to power cut or something like that. Should those errors also be ignored? Otherwise it will never return success on such a device.",
+      "range": {
+        "startLine": 257,
+        "startChar": 53,
+        "endLine": 257,
+        "endChar": 66
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21ea2954_9e0abc9f",
+        "filename": "services/core/java/com/android/server/locksettings/SyntheticPasswordManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1131829
+      },
+      "writtenOn": "2021-04-19T13:50:56Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 1421,
+        "startChar": 33,
+        "endLine": 1421,
+        "endChar": 43
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
