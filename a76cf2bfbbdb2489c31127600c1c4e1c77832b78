@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10c3adfd_e34fdd1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2021-04-19T00:27:28Z",
+      "side": 1,
+      "message": "It seems this is already merged in aosp/master branch. Please abandon.",
+      "revId": "a76cf2bfbbdb2489c31127600c1c4e1c77832b78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
