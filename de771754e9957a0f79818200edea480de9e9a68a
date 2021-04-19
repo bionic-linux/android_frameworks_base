@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7befc24e_9e7dece0",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-19T11:03:26Z",
+      "side": 1,
+      "message": "Revert once aosp/1676196 lands",
+      "range": {
+        "startLine": 932,
+        "startChar": 0,
+        "endLine": 932,
+        "endChar": 57
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
