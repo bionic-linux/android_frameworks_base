@@ -70,6 +70,30 @@
       },
       "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c0a70bc_08d2d9c3",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3664,
+      "author": {
+        "id": 1359573
+      },
+      "writtenOn": "2021-04-19T08:19:10Z",
+      "side": 1,
+      "message": "we need distinguish Global keys A, B, and  Global Netflix,\ncreate a special case (mGlobalKeyManager.shouldHandleWhenNonInteractive),\nhow to define this special key,\nhow about overlay in com.android.internal.R.xml.global_keys，\nadd new element",
+      "parentUuid": "7104569b_89318551",
+      "range": {
+        "startLine": 3664,
+        "startChar": 0,
+        "endLine": 3664,
+        "endChar": 79
+      },
+      "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
