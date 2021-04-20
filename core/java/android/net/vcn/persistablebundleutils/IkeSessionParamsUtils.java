@@ -78,6 +78,7 @@ public final class IkeSessionParamsUtils {
         IKE_OPTIONS.add(IkeSessionParams.IKE_OPTION_ACCEPT_ANY_REMOTE_ID);
         IKE_OPTIONS.add(IkeSessionParams.IKE_OPTION_EAP_ONLY_AUTH);
         IKE_OPTIONS.add(IkeSessionParams.IKE_OPTION_MOBIKE);
+        IKE_OPTIONS.add(IkeSessionParams.IKE_OPTION_FORCE_PORT_4500);
     }
 
     /** Serializes an IkeSessionParams to a PersistableBundle. */
