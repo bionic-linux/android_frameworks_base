@@ -60,6 +60,7 @@ public class IkeSessionParamsUtilsTest {
                 .addSaProposal(SaProposalUtilsTest.buildTestIkeSaProposal())
                 .setLocalIdentification(new IkeFqdnIdentification("client.test.android.net"))
                 .setRemoteIdentification(new IkeFqdnIdentification("server.test.android.net"))
+                .addIkeOption(IkeSessionParams.IKE_OPTION_FORCE_PORT_4500)
                 .setAuthPsk("psk".getBytes());
     }
 
