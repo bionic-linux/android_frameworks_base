@@ -33,6 +33,24 @@
       "message": "Actually I was missing most of the picture because I reviewed this CL in isolation without looking at the rest of the CLs in the topic.\n\nWhat we have checked in for S, and reviewed by API council, does have the empty superclass. Specifically:\n\n  public abstract class VcnControlPlaneConfig {\n    // Nothing\n  }\n  public final class VcnControlPlaneIkeConfig extends android.net.vcn.VcnControlPlaneConfig {\n    // Stuff specific to IKE: a constructor, etc.\n  }\n  public final class VcnGatewayConnectionConfig {\n    // Stuff specific to VCN.\n  }\n  public static final class VcnGatewayConnectionConfig.Builder {\n    ctor public VcnGatewayConnectionConfig.Builder(@NonNull String, @NonNull android.net.vcn.VcnControlPlaneConfig);\n    // Stuff specific to VCN.\n  }\n\nThis topic is making the code and API surface strictly better, by changing the above to:\n\n  public interface TunnelConnectionParams {\n    // Still nothing\n  }\n  public class IkeTunnelConnectionParams implements android.net.TunnelConnectionParams {\n    // Stuff specific to IKE: a constructor, etc.\n  }\n  public final class VcnGatewayConnectionConfig {\n    // Stuff specific to VCN.\n    method @NonNull public android.net.TunnelConnectionParams getTunnelConnectionParams();\n  }\n  public static final class VcnGatewayConnectionConfig.Builder {\n    ctor public VcnGatewayConnectionConfig.Builder(@NonNull String, @NonNull android.net.TunnelConnectionParams);\n    // Stuff specific to VCN.\n  }\n\nHowever: it looks like VcnGatewayConnectionConfig#getTunnelConnectionParams does not need to be in the public API surface. There is no equivalent method in what is checked in now for S.\n\nIf that\u0027s the case, I would suggest not having the empty superclass and just using IkeTunnelConnectionParams everywhere. Something like:\n\n  public class IkeTunnelConnectionParams {\n    // Stuff specific to IKE: a constructor, etc.\n  }\n  public final class VcnGatewayConnectionConfig {\n    // Stuff specific to VCN.\n  }\n  public static final class VcnGatewayConnectionConfig.Builder {\n    ctor public VcnGatewayConnectionConfig.Builder(@NonNull String, @NonNull android.net.IkeTunnelConnectionParams);\n    // Stuff specific to VCN.\n  }\n\nIf we do really need that getter (why?) then adding the empty superclass might be acceptable given what has been reviewed by API council already has the empty superclass.",
       "revId": "56950cbadedbe05c07cf1e95c85e702b2eac22b0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88fbeef6_634a3e44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-04-21T17:52:44Z",
+      "side": 1,
+      "message": "The main reason to expose VcnGatewayConnectionConfig#getTunnelConnectionParams is to follow the API guideline where it says \"Builder setters must have corresponding getters on the built class\".\n\nMy understanding is that for parameters passed in the Builder constructor, we should also provide getters. Let me know if this understanding is not correct.\n\nPreviously we did not expose VcnGatewayConnectionConfig#getVcnControlPlaneConfig was because I forgot to expose it.",
+      "parentUuid": "4ddff284_187d5f9c",
+      "revId": "56950cbadedbe05c07cf1e95c85e702b2eac22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
