@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "687fb57d_b9fa7450",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-04-21T11:07:06Z",
+      "side": 1,
+      "message": "constructed the",
+      "range": {
+        "startLine": 223,
+        "startChar": 29,
+        "endLine": 223,
+        "endChar": 39
+      },
+      "revId": "28a553f51c3fe0c5fa7d4221ecea9cbb49ea8d9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
