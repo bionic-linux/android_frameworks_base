@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dcb1b70_2454f404",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-21T02:27:56Z",
+      "side": 1,
+      "message": "From an API perspective I don\u0027t think it makes sense to define an empty interface with no members. The docs say that concrete implementations for a control plane protocol should implement this interface. But there is nothing to implement. Is this being added in a future CL?",
+      "revId": "56950cbadedbe05c07cf1e95c85e702b2eac22b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
