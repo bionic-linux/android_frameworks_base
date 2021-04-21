@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6afe819_1099bcd3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-04-21T11:14:32Z",
+      "side": 1,
+      "message": "Carry-forward +2 from Jean since trivial comment is addressed.",
+      "revId": "aa2d7f5355942c7c9da7df5089bdbae66d0908cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
