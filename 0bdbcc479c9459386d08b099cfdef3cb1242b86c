@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b5cc3ff_bc6a5d58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1842516
+      },
+      "writtenOn": "2021-04-21T00:56:03Z",
+      "side": 1,
+      "message": "Ran \"m api-stubs-docs-non-updatable-update-current-api\" to update current.txt per Erik\u0027s comments.",
+      "revId": "0bdbcc479c9459386d08b099cfdef3cb1242b86c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
