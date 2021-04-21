@@ -16,6 +16,23 @@
       "message": "Hi. I just wanted to fix this small grammatical error in the documentation that I found. I realize that there is likely a line length formatting issue, but I haven\u0027t contributed to AOSP before and I\u0027m not really sure how to run the formatter from the online git source editor. Please let me know if there is anything I can do to clean this up and get it submitted or if there are other places I also need to change.",
       "revId": "063e1c8f2b6bf43c49c85e667bf0870311729f40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99dd7d82_ba55a7bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2021-04-21T20:47:34Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "063e1c8f2b6bf43c49c85e667bf0870311729f40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
