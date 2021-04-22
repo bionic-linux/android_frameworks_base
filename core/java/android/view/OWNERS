@@ -65,24 +65,30 @@ per-file ContentInfo.java = file:/core/java/android/service/autofill/OWNERS
 per-file ContentInfo.java = file:/core/java/android/widget/OWNERS
 
 # WindowManager
-per-file DisplayCutout.aidl = file:/services/core/java/com/android/server/wm/OWNERS
-per-file DisplayCutout.java = file:/services/core/java/com/android/server/wm/OWNERS
+per-file Display* = set noparent
+per-file Display* = file:/services/core/java/com/android/server/wm/OWNERS
+per-file IDisplay*.aidl = set noparent
 per-file IDisplay*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
-per-file Inset*.java = file:/services/core/java/com/android/server/wm/OWNERS
-per-file Inset*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
+per-file Inset* = set noparent
+per-file Inset* = file:/services/core/java/com/android/server/wm/OWNERS
+per-file IPinnedStackListener.aidl = set noparent
 per-file IPinnedStackListener.aidl = file:/services/core/java/com/android/server/wm/OWNERS
+per-file IRecents*.aidl = set noparent
 per-file IRecents*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
+per-file IRemote*.aidl = set noparent
 per-file IRemote*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
+per-file IWindow*.aidl = set noparent
 per-file IWindow*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
-per-file RemoteAnimation*.java = file:/services/core/java/com/android/server/wm/OWNERS
-per-file RemoteAnimation*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
-per-file SurfaceControl*.java = file:/services/core/java/com/android/server/wm/OWNERS
-per-file SurfaceControl*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
-per-file SurfaceSession.java = file:/services/core/java/com/android/server/wm/OWNERS
+per-file RemoteAnimation* = set noparent
+per-file RemoteAnimation* = file:/services/core/java/com/android/server/wm/OWNERS
+per-file Surface* = set noparent
+per-file Surface* = file:/services/core/java/com/android/server/wm/OWNERS
+per-file SyncRtSurfaceTransactionApplier.java = set noparent
 per-file SyncRtSurfaceTransactionApplier.java = file:/services/core/java/com/android/server/wm/OWNERS
+per-file ViewRootInsetsControllerHost.java = set noparent
 per-file ViewRootInsetsControllerHost.java = file:/services/core/java/com/android/server/wm/OWNERS
-per-file Window*.java = file:/services/core/java/com/android/server/wm/OWNERS
-per-file Window*.aidl = file:/services/core/java/com/android/server/wm/OWNERS
+per-file Window* = set noparent
+per-file Window* = file:/services/core/java/com/android/server/wm/OWNERS
 
 # Scroll Capture
 per-file *ScrollCapture*.aidl = file:/packages/SystemUI/src/com/android/systemui/screenshot/OWNERS
