@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2645a525_36e4fe1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-04-22T06:21:22Z",
+      "side": 1,
+      "message": "LGTM even with the empty interface given that we\u0027re up against internal API freeze and we have a bug filed to fix the infrastructure limitation that prevents us from removing the empty interface.",
+      "revId": "83956e2a5d48e7859968e8d96a7d4e272072dce7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
