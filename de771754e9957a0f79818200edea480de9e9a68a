@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "360d2acf_7e295be0",
+        "filename": "keystore/java/android/security/keystore/KeyProperties.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-26T15:28:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7befc24e_9e7dece0",
+      "range": {
+        "startLine": 932,
+        "startChar": 0,
+        "endLine": 932,
+        "endChar": 57
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a9f4c20_7a83c006",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-04-19T13:50:56Z",
       "side": 1,
       "message": "nit: final",
+      "range": {
+        "startLine": 3319,
+        "startChar": 12,
+        "endLine": 3319,
+        "endChar": 23
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f892558_5969dfba",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3319,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-26T15:28:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9f4c20_7a83c006",
       "range": {
         "startLine": 3319,
         "startChar": 12,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e81182e_7996c8bb",
+        "filename": "services/core/java/com/android/server/locksettings/SyntheticPasswordCrypto.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-26T15:28:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5a690c_b88e5a26",
+      "range": {
+        "startLine": 162,
+        "startChar": 21,
+        "endLine": 162,
+        "endChar": 29
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50869044_820ac44e",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e37d7d10_92bac9c8",
+        "filename": "services/core/java/com/android/server/locksettings/SyntheticPasswordCrypto.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-26T15:28:00Z",
+      "side": 1,
+      "message": "Need to check with Janis to see if the migration is transactional. Treat the case as success for now.",
+      "parentUuid": "50869044_820ac44e",
+      "range": {
+        "startLine": 257,
+        "startChar": 53,
+        "endLine": 257,
+        "endChar": 66
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21ea2954_9e0abc9f",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-04-19T13:50:56Z",
       "side": 1,
       "message": "nit: final",
+      "range": {
+        "startLine": 1421,
+        "startChar": 33,
+        "endLine": 1421,
+        "endChar": 43
+      },
+      "revId": "de771754e9957a0f79818200edea480de9e9a68a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30a651d4_aa6a0773",
+        "filename": "services/core/java/com/android/server/locksettings/SyntheticPasswordManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-04-26T15:28:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21ea2954_9e0abc9f",
       "range": {
         "startLine": 1421,
         "startChar": 33,
