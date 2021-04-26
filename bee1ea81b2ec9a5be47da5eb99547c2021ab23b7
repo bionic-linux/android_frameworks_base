@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbbf7c9d_7a8aff7f",
+        "filename": "packages/SystemUI/src/com/android/keyguard/KeyguardDisplayManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2021-04-26T17:10:32Z",
+      "side": 1,
+      "message": "Instead of exposing the nav bar fragment -- can this file inject CommandQueue/Lazy\u003cCommandQueue\u003e (if necessary) and recompute the disabled flags directly?",
+      "range": {
+        "startLine": 238,
+        "startChar": 12,
+        "endLine": 238,
+        "endChar": 60
+      },
+      "revId": "bee1ea81b2ec9a5be47da5eb99547c2021ab23b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
