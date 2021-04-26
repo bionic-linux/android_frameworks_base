@@ -77,6 +77,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "525c17a5_49737f70",
+        "filename": "services/core/java/com/android/server/trust/TrustManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1060907
+      },
+      "writtenOn": "2021-04-26T18:04:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "196d7180_1a541ef0",
+      "range": {
+        "startLine": 1052,
+        "startChar": 16,
+        "endLine": 1052,
+        "endChar": 64
+      },
+      "revId": "0c50639514e25b693d1320b52b0a5f24f993a70b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ae58571e_e3d98fe8",
