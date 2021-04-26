@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b1fcf1e_2b3f6d22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1068404
+      },
+      "writtenOn": "2021-04-26T18:51:21Z",
+      "side": 1,
+      "message": "LGTM, though I\u0027d like to wait for the other reviewers to also chime in before submission.",
+      "revId": "8967a15cf615e2e3c4b67dd49ee940dae6324ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
