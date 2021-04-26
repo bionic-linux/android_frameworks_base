@@ -40,7 +40,12 @@ import com.android.net.module.util.ProxyUtils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.StringJoiner;
+import java.util.regex.Pattern;
 
 /**
  * A manager class for connectivity module settings.
@@ -339,6 +344,13 @@ public class ConnectivitySettingsManager {
      * @hide
      */
     public static final String MOBILE_DATA_PREFERRED_APPS = "mobile_data_preferred_apps";
+
+    /**
+     * A list of apps that should be granted netd system permission for using restricted networks.
+     *
+     * @hide
+     */
+    public static final String RESTRICTED_ALLOWED_APPS = "restricted_allowed_apps";
 
     /**
      * Get mobile data activity timeout from {@link Settings}.
@@ -925,5 +937,48 @@ public class ConnectivitySettingsManager {
      */
     public static void setMobileDataPreferredApps(@NonNull Context context, @Nullable String list) {
         Settings.Secure.putString(context.getContentResolver(), MOBILE_DATA_PREFERRED_APPS, list);
+    }
+
+    /**
+     * Get the list of apps(from {@link Settings}) that should be granted netd system permission for
+     * using restricted networks.
+     *
+     * @param context The {@link Context} to query the setting.
+     * @return A list of apps that should be granted netd system permission for using restricted
+     *         networks or null if no setting value.
+     */
+    @NonNull
+    public static Set<String> getRestrictedAllowedApps(@NonNull Context context) {
+        final String appList = Settings.Secure.getString(
+                context.getContentResolver(), RESTRICTED_ALLOWED_APPS);
+        if (TextUtils.isEmpty(appList)) {
+            return new HashSet<>();
+        }
+        return new HashSet<>(Arrays.asList(appList.split(";")));
+    }
+
+    /**
+     * Set the list of apps(from {@link Settings}) that should be granted netd system permission for
+     * using restricted networks.
+     *
+     * Note: Please refer to android developer guidelines for valid app(package name).
+     * https://developer.android.com/guide/topics/manifest/manifest-element.html#package
+     *
+     * @param context The {@link Context} to set the setting.
+     * @param list A list of apps that should be granted netd system permission for using
+     *             restricted networks.
+     */
+    public static void setRestrictedAllowedApps(@NonNull Context context,
+            @NonNull Set<String> list) {
+        final Pattern appPattern = Pattern.compile("[a-zA-Z_0-9]+([.][a-zA-Z_0-9]+)*");
+        final StringJoiner joiner = new StringJoiner(";");
+        for (String app : list) {
+            if (!appPattern.matcher(app).matches()) {
+                throw new IllegalArgumentException("Invalid app(package name)");
+            }
+            joiner.add(app);
+        }
+        Settings.Secure.putString(
+                context.getContentResolver(), RESTRICTED_ALLOWED_APPS, joiner.toString());
     }
 }
