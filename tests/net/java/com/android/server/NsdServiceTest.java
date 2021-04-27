@@ -86,23 +86,23 @@ public class NsdServiceTest {
     }
 
     @Test
-    public void testClientsCanConnectAndDisconnect() {
+    public void testClientsDoNotConnect() {
         when(mSettings.isEnabled()).thenReturn(true);
 
         NsdService service = makeService();
 
-        NsdManager client1 = connectClient(service);
-        verify(mDaemon, timeout(100).times(1)).start();
+        // Creating an NsdManager will not cause the daemon to start.
+        NsdManager client1 = createClient(service);
+        verify(mDaemon, never()).start();
 
-        NsdManager client2 = connectClient(service);
-
-        client1.disconnect();
-        client2.disconnect();
-
-        verify(mDaemon, timeout(mTimeoutMs).times(1)).stop();
+        // Creating another NsdManager will not cause the daemon to start.
+        NsdManager client2 = createClient(service);
+        verify(mDaemon, never()).start();
 
         client1.disconnect();
         client2.disconnect();
+        verify(mDaemon, never()).start();
+        verify(mDaemon, never()).stop();
     }
 
     @Test
@@ -111,16 +111,17 @@ public class NsdServiceTest {
         when(mDaemon.execute(any())).thenReturn(true);
 
         NsdService service = makeService();
-        NsdManager client = connectClient(service);
-
-        verify(mDaemon, timeout(100).times(1)).start();
+        NsdManager client = createClient(service);
+        verify(mDaemon, never()).start();
 
         NsdServiceInfo request = new NsdServiceInfo("a_name", "a_type");
         request.setPort(2201);
 
-        // Client registration request
+        // Client registration request, which makes the connection to service
+        // and results in the daemon to start.
         NsdManager.RegistrationListener listener1 = mock(NsdManager.RegistrationListener.class);
         client.registerService(request, PROTOCOL, listener1);
+        verify(mDaemon, timeout(100).times(1)).start();
         verifyDaemonCommand("register 2 a_name a_type 2201");
 
         // Client discovery request
@@ -153,7 +154,7 @@ public class NsdServiceTest {
         return service;
     }
 
-    NsdManager connectClient(NsdService service) {
+    NsdManager createClient(NsdService service) {
         return new NsdManager(mContext, service);
     }
 
