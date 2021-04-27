@@ -17,7 +17,6 @@
 package android.net.nsd;
 
 import static com.android.internal.util.Preconditions.checkArgument;
-import static com.android.internal.util.Preconditions.checkNotNull;
 import static com.android.internal.util.Preconditions.checkStringNotEmpty;
 
 import android.annotation.SdkConstant;
@@ -37,6 +36,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -158,6 +158,8 @@ public final class NsdManager {
      */
     public static final int NSD_STATE_ENABLED = 2;
 
+    private static final long CLEANUP_DELAY_MS = 3000;
+
     private static final int BASE = Protocol.BASE_NSD_MANAGER;
 
     /** @hide */
@@ -200,6 +202,9 @@ public final class NsdManager {
     public static final int RESOLVE_SERVICE_SUCCEEDED               = BASE + 20;
 
     /** @hide */
+    public static final int CONNECTION_CLEANUP                      = BASE + 21;
+
+    /** @hide */
     public static final int ENABLE                                  = BASE + 24;
     /** @hide */
     public static final int DISABLE                                 = BASE + 25;
@@ -229,6 +234,7 @@ public final class NsdManager {
         EVENT_NAMES.put(RESOLVE_SERVICE, "RESOLVE_SERVICE");
         EVENT_NAMES.put(RESOLVE_SERVICE_FAILED, "RESOLVE_SERVICE_FAILED");
         EVENT_NAMES.put(RESOLVE_SERVICE_SUCCEEDED, "RESOLVE_SERVICE_SUCCEEDED");
+        EVENT_NAMES.put(CONNECTION_CLEANUP, "CONNECTION_CLEANUP");
         EVENT_NAMES.put(ENABLE, "ENABLE");
         EVENT_NAMES.put(DISABLE, "DISABLE");
         EVENT_NAMES.put(NATIVE_DAEMON_EVENT, "NATIVE_DAEMON_EVENT");
@@ -251,11 +257,14 @@ public final class NsdManager {
     private int mListenerKey = FIRST_LISTENER_KEY;
     private final SparseArray mListenerMap = new SparseArray();
     private final SparseArray<NsdServiceInfo> mServiceMap = new SparseArray<>();
-    private final Object mMapLock = new Object();
+    private final Object mLock = new Object();
 
     private final AsyncChannel mAsyncChannel = new AsyncChannel();
     private ServiceHandler mHandler;
-    private final CountDownLatch mConnected = new CountDownLatch(1);
+    private CountDownLatch mConnected = null;
+    private boolean mIsConnected = false;
+
+    private final long mCleanupDelayMs;
 
     /**
      * Create a new Nsd instance. Applications use
@@ -266,9 +275,20 @@ public final class NsdManager {
      * is a system private class.
      */
     public NsdManager(Context context, INsdManager service) {
+        this(context, service, CLEANUP_DELAY_MS);
+    }
+
+    /**
+     * @hide
+     */
+    @VisibleForTesting
+    public NsdManager(Context context, INsdManager service, long cleanupDelayMs) {
         mService = service;
         mContext = context;
-        init();
+        mCleanupDelayMs = cleanupDelayMs;
+        HandlerThread t = new HandlerThread("NsdManager");
+        t.start();
+        mHandler = new ServiceHandler(t.getLooper());
     }
 
     /**
@@ -352,17 +372,27 @@ public final class NsdManager {
                     mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
                     return;
                 case AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED:
-                    mConnected.countDown();
+                    if (mConnected != null) {
+                        mConnected.countDown();
+                    }
                     return;
                 case AsyncChannel.CMD_CHANNEL_DISCONNECTED:
-                    Log.e(TAG, "Channel lost");
+                    Log.d(TAG, "Channel lost");
+                    return;
+                case CONNECTION_CLEANUP:
+                    synchronized (mLock) {
+                        if (mListenerMap.size() == 0) {
+                            mAsyncChannel.disconnect();
+                            mIsConnected = false;
+                        }
+                    }
                     return;
                 default:
                     break;
             }
             final Object listener;
             final NsdServiceInfo ns;
-            synchronized (mMapLock) {
+            synchronized (mLock) {
                 listener = mListenerMap.get(key);
                 ns = mServiceMap.get(key);
             }
@@ -433,6 +463,10 @@ public final class NsdManager {
         }
     }
 
+    private void sendMessageDelayed(int what, long delayMillis) {
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(what), delayMillis);
+    }
+
     private int nextListenerKey() {
         // Ensure mListenerKey >= FIRST_LISTENER_KEY;
         mListenerKey = Math.max(FIRST_LISTENER_KEY, mListenerKey + 1);
@@ -443,9 +477,15 @@ public final class NsdManager {
     private int putListener(Object listener, NsdServiceInfo s) {
         checkListener(listener);
         final int key;
-        synchronized (mMapLock) {
+        synchronized (mLock) {
             int valueIndex = mListenerMap.indexOfValue(listener);
             checkArgument(valueIndex == -1, "listener already in use");
+
+            if (mListenerMap.size() == 0 && !mIsConnected) {
+                initConnection();
+                mIsConnected = true;
+            }
+            mHandler.removeMessages(CONNECTION_CLEANUP);
             key = nextListenerKey();
             mListenerMap.put(key, listener);
             mServiceMap.put(key, s);
@@ -454,15 +494,18 @@ public final class NsdManager {
     }
 
     private void removeListener(int key) {
-        synchronized (mMapLock) {
+        synchronized (mLock) {
             mListenerMap.remove(key);
             mServiceMap.remove(key);
+            if (mListenerMap.size() == 0) {
+                sendMessageDelayed(CONNECTION_CLEANUP, mCleanupDelayMs);
+            }
         }
     }
 
     private int getListenerKey(Object listener) {
         checkListener(listener);
-        synchronized (mMapLock) {
+        synchronized (mLock) {
             int valueIndex = mListenerMap.indexOfValue(listener);
             checkArgument(valueIndex != -1, "listener not registered");
             return mListenerMap.keyAt(valueIndex);
@@ -477,19 +520,20 @@ public final class NsdManager {
     /**
      * Initialize AsyncChannel
      */
-    private void init() {
+    private void initConnection() {
         final Messenger messenger = getMessenger();
         if (messenger == null) {
             fatal("Failed to obtain service Messenger");
         }
-        HandlerThread t = new HandlerThread("NsdManager");
-        t.start();
-        mHandler = new ServiceHandler(t.getLooper());
+        if (mConnected == null) {
+            mConnected = new CountDownLatch(1);
+        }
         mAsyncChannel.connect(mContext, mHandler, messenger);
         try {
             mConnected.await();
+            mConnected = null;
         } catch (InterruptedException e) {
-            fatal("Interrupted wait at init");
+            fatal("Interrupted wait at initConnection");
         }
     }
 
@@ -641,7 +685,7 @@ public final class NsdManager {
     }
 
     private static void checkListener(Object listener) {
-        checkNotNull(listener, "listener cannot be null");
+        Objects.requireNonNull(listener, "listener cannot be null");
     }
 
     private static void checkProtocol(int protocolType) {
@@ -649,7 +693,7 @@ public final class NsdManager {
     }
 
     private static void checkServiceInfo(NsdServiceInfo serviceInfo) {
-        checkNotNull(serviceInfo, "NsdServiceInfo cannot be null");
+        Objects.requireNonNull(serviceInfo, "NsdServiceInfo cannot be null");
         checkStringNotEmpty(serviceInfo.getServiceName(), "Service name cannot be empty");
         checkStringNotEmpty(serviceInfo.getServiceType(), "Service type cannot be empty");
     }
