@@ -18,9 +18,11 @@ package android.net.nsd;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
@@ -52,6 +54,8 @@ import org.mockito.MockitoAnnotations;
 public class NsdManagerTest {
 
     static final int PROTOCOL = NsdManager.PROTOCOL_DNS_SD;
+    private static final int CLEANUP_NO_DELAY = 0;
+    private static final long CLEANUP_DELAY_MS = 500;
 
     @Mock Context mContext;
     @Mock INsdManager mService;
@@ -68,7 +72,7 @@ public class NsdManagerTest {
         mServiceHandler = spy(MockServiceHandler.create(mContext));
         when(mService.getMessenger()).thenReturn(new Messenger(mServiceHandler));
 
-        mManager = makeManager();
+        mManager = makeManager(CLEANUP_NO_DELAY);
     }
 
     @After
@@ -84,21 +88,22 @@ public class NsdManagerTest {
     @Test
     public void testResolveService() {
         NsdManager manager = mManager;
-
         NsdServiceInfo request = new NsdServiceInfo("a_name", "a_type");
         NsdServiceInfo reply = new NsdServiceInfo("resolved_name", "resolved_type");
         NsdManager.ResolveListener listener = mock(NsdManager.ResolveListener.class);
 
         manager.resolveService(request, listener);
-        int key1 = verifyRequest(NsdManager.RESOLVE_SERVICE);
+        int key1 = verifyRequestAndConnected(NsdManager.RESOLVE_SERVICE);
         int err = 33;
         sendResponse(NsdManager.RESOLVE_SERVICE_FAILED, err, key1, null);
         verify(listener, timeout(mTimeoutMs).times(1)).onResolveFailed(request, err);
+        verifyDisconnected();
 
         manager.resolveService(request, listener);
-        int key2 = verifyRequest(NsdManager.RESOLVE_SERVICE);
+        int key2 = verifyRequestAndConnected(NsdManager.RESOLVE_SERVICE);
         sendResponse(NsdManager.RESOLVE_SERVICE_SUCCEEDED, 0, key2, reply);
         verify(listener, timeout(mTimeoutMs).times(1)).onServiceResolved(reply);
+        verifyDisconnected();
     }
 
     @Test
@@ -112,7 +117,7 @@ public class NsdManagerTest {
         NsdManager.ResolveListener listener2 = mock(NsdManager.ResolveListener.class);
 
         manager.resolveService(request, listener1);
-        int key1 = verifyRequest(NsdManager.RESOLVE_SERVICE);
+        int key1 = verifyRequestAndConnected(NsdManager.RESOLVE_SERVICE);
 
         manager.resolveService(request, listener2);
         int key2 = verifyRequest(NsdManager.RESOLVE_SERVICE);
@@ -122,6 +127,7 @@ public class NsdManagerTest {
 
         verify(listener1, timeout(mTimeoutMs).times(1)).onServiceResolved(reply);
         verify(listener2, timeout(mTimeoutMs).times(1)).onServiceResolved(reply);
+        verifyDisconnected();
     }
 
     @Test
@@ -137,7 +143,7 @@ public class NsdManagerTest {
 
         // Register two services
         manager.registerService(request1, PROTOCOL, listener1);
-        int key1 = verifyRequest(NsdManager.REGISTER_SERVICE);
+        int key1 = verifyRequestAndConnected(NsdManager.REGISTER_SERVICE);
 
         manager.registerService(request2, PROTOCOL, listener2);
         int key2 = verifyRequest(NsdManager.REGISTER_SERVICE);
@@ -172,6 +178,7 @@ public class NsdManagerTest {
 
         sendResponse(NsdManager.UNREGISTER_SERVICE_FAILED, err, key2again, null);
         verify(listener2, timeout(mTimeoutMs).times(1)).onUnregistrationFailed(request2, err);
+        verifyDisconnected();
 
         // TODO: do not unregister listener until service is unregistered
         // Client retries unregistration of second request, it succeeds
@@ -195,15 +202,16 @@ public class NsdManagerTest {
 
         // Client registers for discovery, request fails
         manager.discoverServices("a_type", PROTOCOL, listener);
-        int key1 = verifyRequest(NsdManager.DISCOVER_SERVICES);
+        int key1 = verifyRequestAndConnected(NsdManager.DISCOVER_SERVICES);
 
         int err = 1;
         sendResponse(NsdManager.DISCOVER_SERVICES_FAILED, err, key1, null);
         verify(listener, timeout(mTimeoutMs).times(1)).onStartDiscoveryFailed("a_type", err);
+        verifyDisconnected();
 
         // Client retries, request succeeds
         manager.discoverServices("a_type", PROTOCOL, listener);
-        int key2 = verifyRequest(NsdManager.DISCOVER_SERVICES);
+        int key2 = verifyRequestAndConnected(NsdManager.DISCOVER_SERVICES);
 
         sendResponse(NsdManager.DISCOVER_SERVICES_STARTED, 0, key2, reply1);
         verify(listener, timeout(mTimeoutMs).times(1)).onDiscoveryStarted("a_type");
@@ -237,12 +245,12 @@ public class NsdManagerTest {
         // Notifications are not passed to the client anymore
         sendResponse(NsdManager.SERVICE_FOUND, 0, key2, reply3);
         verify(listener, timeout(mTimeoutMs).times(0)).onServiceLost(reply3);
-
+        verifyDisconnected();
 
         // Client registers for service discovery
         reset(listener);
         manager.discoverServices("a_type", PROTOCOL, listener);
-        int key3 = verifyRequest(NsdManager.DISCOVER_SERVICES);
+        int key3 = verifyRequestAndConnected(NsdManager.DISCOVER_SERVICES);
 
         sendResponse(NsdManager.DISCOVER_SERVICES_STARTED, 0, key3, reply1);
         verify(listener, timeout(mTimeoutMs).times(1)).onDiscoveryStarted("a_type");
@@ -259,6 +267,7 @@ public class NsdManagerTest {
         // New notifications are not passed to the client anymore
         sendResponse(NsdManager.SERVICE_FOUND, 0, key3, reply1);
         verify(listener, timeout(mTimeoutMs).times(0)).onServiceFound(reply1);
+        verifyDisconnected();
     }
 
     @Test
@@ -315,6 +324,21 @@ public class NsdManagerTest {
         mustFail(() -> { manager.resolveService(validService, listener3); });
     }
 
+    @Test
+    public void testCleanupDelay() {
+        NsdManager manager = makeManager(CLEANUP_DELAY_MS);
+        NsdServiceInfo request = new NsdServiceInfo("a_name", "a_type");
+        NsdServiceInfo reply = new NsdServiceInfo("resolved_name", "resolved_type");
+        NsdManager.ResolveListener listener = mock(NsdManager.ResolveListener.class);
+
+        manager.resolveService(request, listener);
+        int key1 = verifyRequestAndConnected(NsdManager.RESOLVE_SERVICE);
+        int err = 33;
+        sendResponse(NsdManager.RESOLVE_SERVICE_FAILED, err, key1, null);
+        verify(listener, timeout(mTimeoutMs).times(1)).onResolveFailed(request, err);
+        verifyDelayedDisconnected();
+    }
+
     public void mustFail(Runnable fn) {
         try {
             fn.run();
@@ -323,22 +347,56 @@ public class NsdManagerTest {
         }
     }
 
-    NsdManager makeManager() {
-        NsdManager manager = new NsdManager(mContext, mService);
-        // Acknowledge first two messages connecting the AsyncChannel.
-        verify(mServiceHandler, timeout(mTimeoutMs).times(2)).handleMessage(any());
-        reset(mServiceHandler);
-        assertNotNull(mServiceHandler.chan);
+    NsdManager makeManager(long cleanupDelayMs) {
+        NsdManager manager = new NsdManager(mContext, mService, cleanupDelayMs);
+        // Ensure no messages sent to the handler.
+        verify(mServiceHandler, never()).handleMessage(any());
+        assertNull(mServiceHandler.chan);
         return manager;
     }
 
+    int verifyRequestAndConnected(int expectedMessageType) {
+        return verifyRequest(expectedMessageType, true);
+    }
+
     int verifyRequest(int expectedMessageType) {
+        return verifyRequest(expectedMessageType, false);
+    }
+
+    int verifyRequest(int expectedMessageType, boolean firstConnected) {
         HandlerUtils.waitForIdle(mServiceHandler, mTimeoutMs);
-        verify(mServiceHandler, timeout(mTimeoutMs)).handleMessage(any());
+        // Either 2 connecting msgs + 1 expected msg or just 1 expected msg.
+        final int expectedTimes = firstConnected ? 3 : 1;
+        verify(mServiceHandler, timeout(mTimeoutMs).times(expectedTimes)).handleMessage(any());
+        assertNotNull(mServiceHandler.chan);
         reset(mServiceHandler);
-        Message received = mServiceHandler.getLastMessage();
+        final Message received = mServiceHandler.getLastMessage();
         assertEquals(NsdManager.nameOf(expectedMessageType), NsdManager.nameOf(received.what));
         return received.arg2;
+    }
+
+    void verifyDisconnected() {
+        verifyDisconnected(false);
+    }
+
+    void verifyDelayedDisconnected() {
+        verifyDisconnected(true);
+    }
+
+    void verifyDisconnected(boolean delayed) {
+        HandlerUtils.waitForIdle(mServiceHandler, mTimeoutMs);
+        if (delayed) {
+            // Expect no disconnected message within a short period of time.
+            verify(mServiceHandler, timeout(mTimeoutMs).times(0)).handleMessage(any());
+        }
+        // The expected timeout is the cleanup delay + tolerance time.
+        final long expectedDelay = delayed ? CLEANUP_DELAY_MS + mTimeoutMs : mTimeoutMs;
+        verify(mServiceHandler, timeout(expectedDelay)).handleMessage(any());
+
+        assertNotNull(mServiceHandler.chan);
+        reset(mServiceHandler);
+        final Message received = mServiceHandler.getLastMessage();
+        assertEquals(received.what, AsyncChannel.CMD_CHANNEL_DISCONNECTED);
     }
 
     void sendResponse(int replyType, int arg, int key, Object obj) {
