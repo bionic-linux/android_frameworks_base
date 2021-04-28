@@ -33,101 +33,101 @@ public:
             : mOutput(output)
             , mLevel(level)
             , mDisplayList(displayList)
-            , mIdent((level + 1) * 2, ' ') {}
+            , mIndent(level * 5, ' ') {}
 
 protected:
     void onClipRect(const SkRect& rect, SkClipOp, ClipEdgeStyle) override {
-        mOutput << mIdent << "clipRect" << std::endl;
+        mOutput << mIndent << "clipRect" << std::endl;
     }
 
     void onClipRRect(const SkRRect& rrect, SkClipOp, ClipEdgeStyle) override {
-        mOutput << mIdent << "clipRRect" << std::endl;
+        mOutput << mIndent << "clipRRect" << std::endl;
     }
 
     void onClipPath(const SkPath& path, SkClipOp, ClipEdgeStyle) override {
-        mOutput << mIdent << "clipPath" << std::endl;
+        mOutput << mIndent << "clipPath" << std::endl;
     }
 
     void onClipRegion(const SkRegion& deviceRgn, SkClipOp) override {
-        mOutput << mIdent << "clipRegion" << std::endl;
+        mOutput << mIndent << "clipRegion" << std::endl;
     }
 
-    void onDrawPaint(const SkPaint&) override { mOutput << mIdent << "drawPaint" << std::endl; }
+    void onDrawPaint(const SkPaint&) override { mOutput << mIndent << "drawPaint" << std::endl; }
 
     void onDrawPath(const SkPath&, const SkPaint&) override {
-        mOutput << mIdent << "drawPath" << std::endl;
+        mOutput << mIndent << "drawPath" << std::endl;
     }
 
     void onDrawRect(const SkRect&, const SkPaint&) override {
-        mOutput << mIdent << "drawRect" << std::endl;
+        mOutput << mIndent << "drawRect" << std::endl;
     }
 
     void onDrawRegion(const SkRegion&, const SkPaint&) override {
-        mOutput << mIdent << "drawRegion" << std::endl;
+        mOutput << mIndent << "drawRegion" << std::endl;
     }
 
     void onDrawOval(const SkRect&, const SkPaint&) override {
-        mOutput << mIdent << "drawOval" << std::endl;
+        mOutput << mIndent << "drawOval" << std::endl;
     }
 
     void onDrawArc(const SkRect&, SkScalar, SkScalar, bool, const SkPaint&) override {
-        mOutput << mIdent << "drawArc" << std::endl;
+        mOutput << mIndent << "drawArc" << std::endl;
     }
 
     void onDrawRRect(const SkRRect&, const SkPaint&) override {
-        mOutput << mIdent << "drawRRect" << std::endl;
+        mOutput << mIndent << "drawRRect" << std::endl;
     }
 
     void onDrawDRRect(const SkRRect&, const SkRRect&, const SkPaint&) override {
-        mOutput << mIdent << "drawDRRect" << std::endl;
+        mOutput << mIndent << "drawDRRect" << std::endl;
     }
 
     void onDrawTextBlob(const SkTextBlob*, SkScalar, SkScalar, const SkPaint&) override {
-        mOutput << mIdent << "drawTextBlob" << std::endl;
+        mOutput << mIndent << "drawTextBlob" << std::endl;
     }
 
     void onDrawImage(const SkImage*, SkScalar dx, SkScalar dy, const SkPaint*) override {
-        mOutput << mIdent << "drawImage" << std::endl;
+        mOutput << mIndent << "drawImage" << std::endl;
     }
 
     void onDrawImageNine(const SkImage*, const SkIRect& center, const SkRect& dst,
                          const SkPaint*) override {
-        mOutput << mIdent << "drawImageNine" << std::endl;
+        mOutput << mIndent << "drawImageNine" << std::endl;
     }
 
     void onDrawImageRect(const SkImage*, const SkRect*, const SkRect&, const SkPaint*,
                          SrcRectConstraint) override {
-        mOutput << mIdent << "drawImageRect" << std::endl;
+        mOutput << mIndent << "drawImageRect" << std::endl;
     }
 
     void onDrawImageLattice(const SkImage*, const Lattice& lattice, const SkRect& dst,
                             const SkPaint*) override {
-        mOutput << mIdent << "drawImageLattice" << std::endl;
+        mOutput << mIndent << "drawImageLattice" << std::endl;
     }
 
     void onDrawPoints(SkCanvas::PointMode, size_t, const SkPoint[], const SkPaint&) override {
-        mOutput << mIdent << "drawPoints" << std::endl;
+        mOutput << mIndent << "drawPoints" << std::endl;
     }
 
     void onDrawPicture(const SkPicture*, const SkMatrix*, const SkPaint*) override {
-        mOutput << mIdent << "drawPicture" << std::endl;
+        mOutput << mIndent << "drawPicture" << std::endl;
     }
 
     void onDrawDrawable(SkDrawable* drawable, const SkMatrix*) override {
-        mOutput << mIdent;
+        mOutput << mIndent;
         auto renderNodeDrawable = getRenderNodeDrawable(drawable);
         if (nullptr != renderNodeDrawable) {
-            mOutput << std::string(mLevel * 2, ' ') << "drawRenderNode";
+            mOutput << "drawRenderNode";
             renderNodeDrawable->getRenderNode()->output(mOutput, mLevel + 1);
             return;
         }
         auto glFunctorDrawable = getFunctorDrawable(drawable);
         if (nullptr != glFunctorDrawable) {
-            mOutput << std::string(mLevel * 2, ' ') << "drawGLFunctorDrawable" << std::endl;
+            mOutput << "drawGLFunctorDrawable" << std::endl;
             return;
         }
 
-        mOutput << std::string(mLevel * 2, ' ') << "drawDrawable" << std::endl;
+        mOutput << "drawDrawable" << std::endl;
     }
 
 private:
@@ -152,7 +152,7 @@ private:
     std::ostream& mOutput;
     int mLevel;
     SkiaDisplayList& mDisplayList;
-    std::string mIdent;
+    std::string mIndent;
 };
 
 }  // namespace skiapipeline

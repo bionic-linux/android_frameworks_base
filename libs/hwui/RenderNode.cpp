@@ -102,9 +102,9 @@ void RenderNode::output(std::ostream& output, uint32_t level) {
     properties().debugOutputProperties(output, level + 1);
 
     if (mDisplayList) {
-        mDisplayList->output(output, level);
+        mDisplayList->output(output, level + 1);
     }
-    output << std::string(level * 2, ' ') << "/RenderNode(" << getName() << " " << this << ")";
+    output << std::string(level * 5, ' ') << "/RenderNode(" << getName() << " " << this << ")";
     output << std::endl;
 }
 

@@ -107,7 +107,7 @@ static void dumpMatrix(std::ostream& output, std::string& indent, const char* la
 }
 
 void RenderProperties::debugOutputProperties(std::ostream& output, const int level) const {
-    auto indent = std::string(level * 2, ' ');
+    auto indent = std::string(level * 5 - 3, ' ');
     if (mPrimitiveFields.mLeft != 0 || mPrimitiveFields.mTop != 0) {
         output << indent << "(Translate (left, top) " << mPrimitiveFields.mLeft << ", "
                << mPrimitiveFields.mTop << ")" << std::endl;
