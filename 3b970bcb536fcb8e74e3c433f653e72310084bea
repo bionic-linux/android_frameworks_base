@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2548b10_8b81d6a7",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1810984
+      },
+      "writtenOn": "2021-04-28T07:19:06Z",
+      "side": 1,
+      "message": "nit: maybe add warning log here ?",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 74
+      },
+      "revId": "3b970bcb536fcb8e74e3c433f653e72310084bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e43859b5_38aed5b5",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1810984
+      },
+      "writtenOn": "2021-04-28T07:19:06Z",
+      "side": 1,
+      "message": "context.getPackageManager().queryBroadcastReceivers(uploadIntent, 0) \u003d\u003d null || context.getPackageManager().queryBroadcastReceivers(uploadIntent, 0).isEmpty()\n\nreference:\nhttps://developer.android.com/reference/android/content/pm/PackageManager#queryBroadcastReceivers(android.content.Intent,%20int)\nhttps://screenshot.googleplex.com/A2rk927fnqWnpCz",
+      "range": {
+        "startLine": 325,
+        "startChar": 20,
+        "endLine": 325,
+        "endChar": 96
+      },
+      "revId": "3b970bcb536fcb8e74e3c433f653e72310084bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dc8eaab_f5729d2a",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1810984
+      },
+      "writtenOn": "2021-04-28T07:19:06Z",
+      "side": 1,
+      "message": "nit: maybe add info log here ?",
+      "range": {
+        "startLine": 326,
+        "startChar": 20,
+        "endLine": 326,
+        "endChar": 69
+      },
+      "revId": "3b970bcb536fcb8e74e3c433f653e72310084bea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
