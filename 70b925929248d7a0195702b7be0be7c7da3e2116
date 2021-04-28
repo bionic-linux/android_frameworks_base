@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "963e2a20_7fe6b774",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7249,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-04-28T10:11:26Z",
+      "side": 1,
+      "message": "Should we check if the network is vpn or not? otherwise, you may send the broadcast for all networks, not only vpn. Though uids may only be used for vpn now, it may be changed in the future. Who update the design there may not update to here. We should also add a vpn network check here.",
+      "range": {
+        "startLine": 7249,
+        "startChar": 12,
+        "endLine": 7249,
+        "endChar": 13
+      },
+      "revId": "70b925929248d7a0195702b7be0be7c7da3e2116",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
