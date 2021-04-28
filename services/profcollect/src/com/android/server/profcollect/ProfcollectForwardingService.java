@@ -42,6 +42,8 @@ import com.android.server.wm.ActivityMetricsLaunchObserver;
 import com.android.server.wm.ActivityMetricsLaunchObserverRegistry;
 import com.android.server.wm.ActivityTaskManagerInternal;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -297,24 +299,20 @@ public final class ProfcollectForwardingService extends SystemService {
             return;
         }
 
-        final boolean uploadReport =
-                DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_PROFCOLLECT_NATIVE_BOOT,
-                                        "upload_report", false);
-
         new Thread(() -> {
             try {
                 String reportUuid = mIProfcollect.report();
 
-                if (!uploadReport) {
+                final int profileId = getBBProfileId();
+                String reportDir = "/data/user/" + profileId
+                        + "/com.google.android.apps.internal.betterbug/cache/";
+                String reportPath = reportDir + reportUuid + ".zip";
+
+                if (!Files.exists(Paths.get(reportDir))) {
+                    // Destination directory does not exist, abort upload.
                     return;
                 }
 
-                final int profileId = getBBProfileId();
-                mIProfcollect.copy_report_to_bb(profileId, reportUuid);
-                String reportPath =
-                        "/data/user/" + profileId
-                        + "/com.google.android.apps.internal.betterbug/cache/"
-                        + reportUuid + ".zip";
                 Intent uploadIntent =
                         new Intent("com.google.android.apps.betterbug.intent.action.UPLOAD_PROFILE")
                         .setPackage("com.google.android.apps.internal.betterbug")
@@ -323,9 +321,13 @@ public final class ProfcollectForwardingService extends SystemService {
                         .putExtra("EXTRA_PROFILE_PATH", reportPath)
                         .addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
                 Context context = getContext();
+
                 if (context.getPackageManager().queryBroadcastReceivers(uploadIntent, 0) != null) {
-                    context.sendBroadcast(uploadIntent);
+                    // No one to receive upload intent, abort upload.
+                    return;
                 }
+                mIProfcollect.copy_report_to_bb(profileId, reportUuid);
+                context.sendBroadcast(uploadIntent);
                 mIProfcollect.delete_report(reportUuid);
             } catch (RemoteException e) {
                 Log.e(LOG_TAG, e.getMessage());
