@@ -752,6 +752,7 @@ public class BtHelper {
         } else if (state == BluetoothHeadset.STATE_AUDIO_DISCONNECTED) {
             switch (mScoAudioState) {
                 case SCO_STATE_ACTIVE_INTERNAL:
+                case SCO_STATE_ACTIVE_EXTERNAL:
                     if (mBluetoothHeadset == null) {
                         if (getBluetoothHeadset()) {
                             mScoAudioState = SCO_STATE_DEACTIVATE_REQ;
