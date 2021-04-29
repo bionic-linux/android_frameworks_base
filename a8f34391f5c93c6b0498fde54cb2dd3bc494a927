@@ -16,6 +16,23 @@
       "message": "please help review it,thanks",
       "revId": "a8f34391f5c93c6b0498fde54cb2dd3bc494a927",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd0226c3_7e535dc1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-04-29T07:36:53Z",
+      "side": 1,
+      "message": "This part has been refactored in next Android release. This problem is probably fixed and this patch\nwould not apply properly.",
+      "revId": "a8f34391f5c93c6b0498fde54cb2dd3bc494a927",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
