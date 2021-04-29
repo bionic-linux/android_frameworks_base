@@ -115,6 +115,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0d8c1835_d56c4d6d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-04-29T13:23:03Z",
+      "side": 1,
+      "message": "I discussed with Etan@, we had API to disable/enable carrier-merged wifi network.\nI will fix this case in another CL#",
+      "parentUuid": "dd392618_a5bc5033",
+      "range": {
+        "startLine": 1900,
+        "startChar": 31,
+        "endLine": 1900,
+        "endChar": 32
+      },
+      "revId": "c7328a18d756ac6507919b8674dba64bf55845aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43eb1c3d_d5af9e83",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 10
