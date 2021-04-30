@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60161b95_d359c70e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1017430
+      },
+      "writtenOn": "2021-04-30T18:25:28Z",
+      "side": 1,
+      "message": "please add an additional blank line between the first and second line to fix formatting in gerrit/git, and s/zygot/zygote/",
+      "revId": "1491b6c2602f711201c7fbba09f7d1c509bbd30b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
