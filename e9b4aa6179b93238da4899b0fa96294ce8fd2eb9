@@ -118,6 +118,30 @@
       },
       "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d539fd7_4d882f5a",
+        "filename": "services/core/java/com/android/server/policy/PhoneWindowManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3664,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2021-04-30T20:05:18Z",
+      "side": 1,
+      "message": "We are working on this CL internally, by https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/14264394. In short, the new proposal is to allow the global key handler to define which keys should be forwarded when device is waked up, and the wake up info will be in the broadcast.",
+      "parentUuid": "99a15e35_574e56e3",
+      "range": {
+        "startLine": 3664,
+        "startChar": 0,
+        "endLine": 3664,
+        "endChar": 79
+      },
+      "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
