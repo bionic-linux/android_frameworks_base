@@ -50,6 +50,24 @@
       "message": "needs a bug # in the CL description",
       "revId": "21264d5be89b971bf4a72e6e02c82e4f143436d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "623e63da_cf0cc70b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651277
+      },
+      "writtenOn": "2021-04-30T17:45:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "15b4b2b8_876c8ad6",
+      "revId": "21264d5be89b971bf4a72e6e02c82e4f143436d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
