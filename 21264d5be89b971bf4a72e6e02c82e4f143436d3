@@ -33,6 +33,23 @@
       "message": "It seems I am missing code owner review. \n\nHans, please advise on who should review this. Looking at the Owners file it is unclear who should be reviewing this. Too many owners but none seem to own this.\nThanks,\nWessam",
       "revId": "21264d5be89b971bf4a72e6e02c82e4f143436d3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b4b2b8_876c8ad6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1017430
+      },
+      "writtenOn": "2021-04-30T15:27:14Z",
+      "side": 1,
+      "message": "needs a bug # in the CL description",
+      "revId": "21264d5be89b971bf4a72e6e02c82e4f143436d3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
