@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f815cfa_a5d8451b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-04-30T17:00:38Z",
+      "side": 1,
+      "message": "Clean CP from internal branches - applying +2",
+      "revId": "9ee6f302730d426b33d5f80bd1fca761af566d88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
