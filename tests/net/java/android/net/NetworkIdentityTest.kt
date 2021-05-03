@@ -16,17 +16,35 @@
 
 package android.net
 
+import android.content.Context
+import android.net.ConnectivityManager.TYPE_MOBILE
 import android.net.NetworkIdentity.OEM_NONE
 import android.net.NetworkIdentity.OEM_PAID
 import android.net.NetworkIdentity.OEM_PRIVATE
 import android.net.NetworkIdentity.getOemBitfield
+import android.telephony.TelephonyManager
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.mockito.Mockito.mock
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+
+private const val TEST_IMSI = "testimsi"
 
 @RunWith(JUnit4::class)
 class NetworkIdentityTest {
+    private val mockContext = mock(Context::class.java)
+
+    private fun buildMobileNetworkState(
+        caps: NetworkCapabilities,
+        subscriberId: String
+    ): NetworkStateSnapshot {
+        return NetworkStateSnapshot(mock(Network::class.java), caps,
+                LinkProperties(), subscriberId, TYPE_MOBILE)
+    }
+
     @Test
     fun testGetOemBitfield() {
         val oemNone = NetworkCapabilities().apply {
@@ -50,5 +68,33 @@ class NetworkIdentityTest {
         assertEquals(getOemBitfield(oemPaid), OEM_PAID)
         assertEquals(getOemBitfield(oemPrivate), OEM_PRIVATE)
         assertEquals(getOemBitfield(oemAll), OEM_PAID or OEM_PRIVATE)
+    }
+
+    @Test
+    fun testGetMetered() {
+        // Verify network is metered.
+        val netIdent1 = NetworkIdentity.buildNetworkIdentity(mockContext,
+                buildMobileNetworkState(NetworkCapabilities(), TEST_IMSI), false,
+                TelephonyManager.NETWORK_TYPE_UMTS)
+        assertTrue(netIdent1.getMetered())
+
+        // Verify network is not metered because it has NET_CAPABILITY_NOT_METERED capability.
+        val capsNotMetered = NetworkCapabilities().apply {
+            setCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED, true)
+        }
+        val netIdent2 = NetworkIdentity.buildNetworkIdentity(mockContext,
+                buildMobileNetworkState(capsNotMetered, TEST_IMSI), false,
+                TelephonyManager.NETWORK_TYPE_UMTS)
+        assertFalse(netIdent2.getMetered())
+
+        // Verify network is not metered because it has NET_CAPABILITY_TEMPORARILY_NOT_METERED
+        // capability .
+        val capsTempNotMetered = NetworkCapabilities().apply {
+            setCapability(NetworkCapabilities.NET_CAPABILITY_TEMPORARILY_NOT_METERED, true)
+        }
+        val netIdent3 = NetworkIdentity.buildNetworkIdentity(mockContext,
+                buildMobileNetworkState(capsTempNotMetered, TEST_IMSI), false,
+                TelephonyManager.NETWORK_TYPE_UMTS)
+        assertFalse(netIdent3.getMetered())
     }
 }
