@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fec7a31_8b89ebce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1877766
+      },
+      "writtenOn": "2021-05-04T14:42:17Z",
+      "side": 1,
+      "message": "Siarhei,\n\nPatch is for partner_bug 185883106 which is currently assigned to you for further review. \n\n",
+      "revId": "3fd188e63afd55f99a93dec41aac710195fa0fe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
