@@ -1926,6 +1926,10 @@
         <enum name="KEYCODE_THUMBS_UP" value="286" />
         <enum name="KEYCODE_THUMBS_DOWN" value="287" />
         <enum name="KEYCODE_PROFILE_SWITCH" value="288" />
+        <enum name="KEYCODE_SOS" value="289" />
+        <enum name="KEYCODE_PTT" value="290" />
+        <enum name="KEYCODE_RSM_EXT_A" value="291" />
+        <enum name="KEYCODE_RSM_EXT_B" value="292" />
     </attr>
 
     <!-- ***************************************************************** -->
