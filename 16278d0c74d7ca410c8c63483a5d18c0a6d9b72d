@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9a72ac8_c8aa6948",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-05-04T09:19:31Z",
+      "side": 1,
+      "message": "While testing getter is ok, but what we actually need is the actual test that count the data as non-metered if the cap is added.\nIIUC something similar to testMobileStatsByRatType is needed.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 4
+      },
+      "revId": "16278d0c74d7ca410c8c63483a5d18c0a6d9b72d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0991411e_37e5c778",
+        "filename": "tests/net/java/android/net/NetworkIdentityTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-05-04T09:19:31Z",
+      "side": 1,
+      "message": "Maybe also add test case for NET_CAP_NOT_METERED since the name of the test covered that part?",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "16278d0c74d7ca410c8c63483a5d18c0a6d9b72d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
