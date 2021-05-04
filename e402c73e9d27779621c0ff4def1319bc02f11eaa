@@ -39,6 +39,30 @@
       },
       "revId": "e402c73e9d27779621c0ff4def1319bc02f11eaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbdc742c_537b4419",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-05-04T14:16:48Z",
+      "side": 1,
+      "message": "Not rescaling the index was intended as we were expecting exact default index. However, I admit rescale makes sense also.",
+      "parentUuid": "b3878991_1f2323be",
+      "range": {
+        "startLine": 1614,
+        "startChar": 20,
+        "endLine": 1614,
+        "endChar": 38
+      },
+      "revId": "e402c73e9d27779621c0ff4def1319bc02f11eaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
