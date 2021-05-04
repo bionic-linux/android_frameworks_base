@@ -826,11 +826,32 @@ public class KeyEvent extends InputEvent implements Parcelable {
     public static final int KEYCODE_PROFILE_SWITCH = 288;
 
     /**
+     * Key code constant: SOS key
+     * @hide
+     */
+    public static final int KEYCODE_SOS = 289;
+    /**
+     * Key code constant: PTT key
+     * @hide
+     */
+    public static final int KEYCODE_PTT = 290;
+    /**
+     * Key code constant: RSM EXT A
+     * @hide
+     */
+    public static final int KEYCODE_RSM_EXT_A = 291;
+    /**
+     * Key code constant: RSM EXT B
+     * @hide
+     */
+    public static final int KEYCODE_RSM_EXT_B = 292;
+
+    /**
      * Integer value of the last KEYCODE. Increases as new keycodes are added to KeyEvent.
      * @hide
      */
     @TestApi
-    public static final int LAST_KEYCODE = KEYCODE_PROFILE_SWITCH;
+    public static final int LAST_KEYCODE = KEYCODE_RSM_EXT_B;
 
     // NOTE: If you add a new keycode here you must also add it to:
     //  isSystem()
