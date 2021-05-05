@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ed6408e_c9774f29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1877900
+      },
+      "writtenOn": "2021-05-05T04:29:20Z",
+      "side": 1,
+      "message": "605515: Make ImsService API @SystemApi | https://android-review.googlesource.com/c/platform/frameworks/base/+/605515",
+      "revId": "0e370b4a02b6687c775c002c59157f4465bb86d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
