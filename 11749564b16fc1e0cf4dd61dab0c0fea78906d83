@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "976530f2_347be74c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1842516
+      },
+      "writtenOn": "2021-05-05T17:12:30Z",
+      "side": 1,
+      "message": "Updated the Photo L media size name per our email conversation.",
+      "revId": "11749564b16fc1e0cf4dd61dab0c0fea78906d83",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
