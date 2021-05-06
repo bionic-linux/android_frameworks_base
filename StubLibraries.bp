@@ -27,18 +27,19 @@
 // Common metalava configs
 /////////////////////////////////////////////////////////////////////
 
-packages_to_document = [
-    "android",
-    "dalvik",
-    "java",
-    "javax",
-    "junit",
-    "org.apache.http",
-    "org.json",
-    "org.w3c.dom",
-    "org.xml.sax",
-    "org.xmlpull",
-]
+// This argument to metalava makes it ignore code outside these packages for its outputs
+// (stubs, api files etc).
+package_filter = "--stub-packages " +
+    "android.*:" +
+    "dalvik.*:" +
+    "java.*:" +
+    "javax.*:" +
+    "junit.*:" +
+    "org.apache.http.*:" +
+    "org.json.*:" +
+    "org.w3c.dom.*:" +
+    "org.xml.sax.*:" +
+    "org.xmlpull.*"
 
 stubs_defaults {
     name: "metalava-non-updatable-api-stubs-default",
@@ -92,7 +93,6 @@ stubs_defaults {
         "metalava-manual",
     ],
     api_levels_annotations_enabled: false,
-    filter_packages: packages_to_document,
     defaults_visibility: ["//visibility:private"],
     visibility: ["//frameworks/base/api"],
 }
@@ -104,7 +104,7 @@ stubs_defaults {
 droidstubs {
     name: "api-stubs-docs-non-updatable",
     defaults: ["metalava-non-updatable-api-stubs-default"],
-    args: metalava_framework_docs_args,
+    args: metalava_framework_docs_args + package_filter,
     check_api: {
         current: {
             api_file: "core/api/current.txt",
@@ -159,7 +159,7 @@ module_libs = " --show-annotation android.annotation.SystemApi\\(" +
 droidstubs {
     name: "system-api-stubs-docs-non-updatable",
     defaults: ["metalava-non-updatable-api-stubs-default"],
-    args: metalava_framework_docs_args + priv_apps,
+    args: metalava_framework_docs_args + package_filter + priv_apps,
     check_api: {
         current: {
             api_file: "core/api/system-current.txt",
@@ -201,7 +201,7 @@ droidstubs {
 droidstubs {
     name: "test-api-stubs-docs-non-updatable",
     defaults: ["metalava-non-updatable-api-stubs-default"],
-    args: metalava_framework_docs_args + test + priv_apps_in_stubs,
+    args: metalava_framework_docs_args + package_filter + test + priv_apps_in_stubs,
     check_api: {
         current: {
             api_file: "core/api/test-current.txt",
@@ -255,7 +255,7 @@ droidstubs {
 droidstubs {
     name: "module-lib-api-stubs-docs-non-updatable",
     defaults: ["metalava-non-updatable-api-stubs-default"],
-    args: metalava_framework_docs_args + priv_apps_in_stubs + module_libs,
+    args: metalava_framework_docs_args + package_filter + priv_apps_in_stubs + module_libs,
     check_api: {
         current: {
             api_file: "core/api/module-lib-current.txt",
