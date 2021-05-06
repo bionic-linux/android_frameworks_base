@@ -34,6 +34,24 @@
       "parentUuid": "151e1fdf_623cabcc",
       "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61d34d2d_f79bfd38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-06T11:23:14Z",
+      "side": 1,
+      "message": "correction: target name I tested is api-stubs-docs-non-updatable.\n\nGiven the diff list in the commit message of the follow-up change, it seems like there\u0027s only 20 or so classes being filtered with this logic?",
+      "parentUuid": "4726790e_e79ba080",
+      "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
