@@ -52,6 +52,24 @@
       "parentUuid": "4726790e_e79ba080",
       "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f13463e4_a84c805a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-05-06T14:39:48Z",
+      "side": 1,
+      "message": "According to [1], there are 500+ java files that are in the com.* package and thus filtered-out by filter_packages.\n\n[1] https://source.corp.google.com/search?q\u003df:%5C.java\u0026sq\u003d\u0026ss\u003dpiper%2FGoogle%2Fandroid:frameworks%2Fbase%2Fcore%2Fjava%2Fcom%2F",
+      "parentUuid": "61d34d2d_f79bfd38",
+      "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
