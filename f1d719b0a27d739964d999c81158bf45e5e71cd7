@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "220b7ffd_ac79f269",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651277
+      },
+      "writtenOn": "2021-05-06T18:39:37Z",
+      "side": 1,
+      "message": "Can I get a +2 again, I had to fix a small typo in the comment.\nThanks,\nWessam",
+      "revId": "f1d719b0a27d739964d999c81158bf45e5e71cd7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
