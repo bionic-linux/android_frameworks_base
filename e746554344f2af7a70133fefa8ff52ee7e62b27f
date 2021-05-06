@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08d4b2cb_5674e03a",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7259,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-05-06T09:38:29Z",
+      "side": 1,
+      "message": "It will return false if the ranges are not exactly the same, even if the covered UIDs are for an equivalent result. In this case, I think it\u0027s accepttable to send another broadcast since it\u0027s intended to notify receiver to update its proxy data.",
+      "range": {
+        "startLine": 7259,
+        "startChar": 70,
+        "endLine": 7259,
+        "endChar": 80
+      },
+      "revId": "e746554344f2af7a70133fefa8ff52ee7e62b27f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
