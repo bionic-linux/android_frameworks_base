@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010539116",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1563312?revision\u003d18",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a02945e2_d7f64347",
+        "filename": "services/tests/servicestests/assets/NetworkPolicyManagerServiceTest/netpolicy/network-policy-with-non-supported-carrier-usage.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-06T12:47:18Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 253
+      },
+      "revId": "1d10921030eea25d20757b1f77ef7f2b13d70e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010539116",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1563312?revision\u003d18",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ac29fb5d_2293eb7b",
+        "filename": "services/tests/servicestests/assets/NetworkPolicyManagerServiceTest/netpolicy/network-policy-with-non-supported-carrier-usage.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-06T12:47:18Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "1d10921030eea25d20757b1f77ef7f2b13d70e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010539116",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1563312?revision\u003d18",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "33d202a7_64284c9f",
+        "filename": "services/tests/servicestests/assets/NetworkPolicyManagerServiceTest/netpolicy/network-policy-with-subscriberId-match-rule-all.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-06T12:47:18Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 270
+      },
+      "revId": "1d10921030eea25d20757b1f77ef7f2b13d70e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010539116",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1563312?revision\u003d18",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f5bc5cea_97b82c10",
+        "filename": "services/tests/servicestests/assets/NetworkPolicyManagerServiceTest/netpolicy/network-policy-with-subscriberId-match-rule-all.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-06T12:47:18Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 10
+      },
+      "revId": "1d10921030eea25d20757b1f77ef7f2b13d70e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
