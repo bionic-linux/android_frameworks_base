@@ -88,6 +88,23 @@
       "parentUuid": "f13463e4_a84c805a",
       "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56e32994_e31d50e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002751
+      },
+      "writtenOn": "2021-05-06T18:10:33Z",
+      "side": 1,
+      "message": "Filtering the packages in Soong (when working correctly) would skip metalava for some frameworks/base changes, for example to frameworks/base/core/java/com/*.  `m framework` time is a very common complaint, so leaving the pre-metalava filtering and fixing it to correctly ignore all the com.* sources would have a significant impact.\n\nAs discussed in the sync, you could move filter_package support into a rule that runs before metalava using soong_zip -srcjar to create a srcjar that uses package locations, and then zip2zip to filter it.",
+      "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
