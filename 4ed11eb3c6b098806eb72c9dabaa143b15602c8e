@@ -16,6 +16,24 @@
       "message": "I am concerned about the build-time impact of this change. Can you visit b/140764681?",
       "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4726790e_e79ba080",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-06T11:18:52Z",
+      "side": 1,
+      "message": "I did some local testing of the impact and did not notice any significant diffs. The api-stubs-docs-source target takes ~1m20s with and without this change on my machine. I\u0027ll have a look at the bug though",
+      "parentUuid": "151e1fdf_623cabcc",
+      "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
