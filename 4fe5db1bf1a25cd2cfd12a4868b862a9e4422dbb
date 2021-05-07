@@ -16,6 +16,58 @@
       "message": "Paul, any ideas why making @CovariantReturnType as STABLE makes framework unable to find it? ",
       "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "814c41d1_cb8744e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-05-07T14:38:03Z",
+      "side": 1,
+      "message": "I don\u0027t think the issue is that the framework can\u0027t find it anymore I think it is that framework never needed to find it and now it does because it is in the stub library.",
+      "parentUuid": "06f92d25_740be264",
+      "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9063d02e_3c6610b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-05-07T14:38:03Z",
+      "side": 1,
+      "message": "Anton, this wasn\u0027t caused by https://r.android.com/1697265 but it feels like it might be something that could be fixed by it. Would you mind helping Nikita as you know this area much better than I do?",
+      "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d3b7419_969f55cb",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39495,
+      "author": {
+        "id": 1039338
+      },
+      "writtenOn": "2021-05-07T14:38:03Z",
+      "side": 1,
+      "message": "Usages are being added here in the public API but the annotation itself is not defined in the public API it is defined in the core platform API.\n\nI suspect that the issue is that metalava is finding this annotation on the classpath when it generates the public API and so thinks it is ok to add a reference to it into the public API.\n\nAnton did some work recently to remove --ignore-classes-on-classpath and it may be that you have just found a situation where that would be helpful.",
+      "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
