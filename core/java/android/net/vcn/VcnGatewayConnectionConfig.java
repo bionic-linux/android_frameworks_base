@@ -168,6 +168,9 @@ public final class VcnGatewayConnectionConfig {
     private static final String RETRY_INTERVAL_MS_KEY = "mRetryIntervalsMs";
     @NonNull private final long[] mRetryIntervalsMs;
 
+    private static final String IS_RESTRICTED_TO_TEST_NETWORKS_KEY = "mIsRestrictedToTestNetworks";
+    private final boolean mIsRestrictedToTestNetworks;
+
     /** Builds a VcnGatewayConnectionConfig with the specified parameters. */
     private VcnGatewayConnectionConfig(
             @NonNull String gatewayConnectionName,
@@ -175,13 +178,15 @@ public final class VcnGatewayConnectionConfig {
             @NonNull Set<Integer> exposedCapabilities,
             @NonNull Set<Integer> underlyingCapabilities,
             @NonNull long[] retryIntervalsMs,
-            @IntRange(from = MIN_MTU_V6) int maxMtu) {
+            @IntRange(from = MIN_MTU_V6) int maxMtu,
+            boolean isRestrictedToTestNetworks) {
         mGatewayConnectionName = gatewayConnectionName;
         mTunnelConnectionParams = tunnelConnectionParams;
         mExposedCapabilities = new TreeSet(exposedCapabilities);
         mUnderlyingCapabilities = new TreeSet(underlyingCapabilities);
         mRetryIntervalsMs = retryIntervalsMs;
         mMaxMtu = maxMtu;
+        mIsRestrictedToTestNetworks = isRestrictedToTestNetworks;
 
         validate();
     }
@@ -208,6 +213,7 @@ public final class VcnGatewayConnectionConfig {
                 underlyingCapsBundle, PersistableBundleUtils.INTEGER_DESERIALIZER));
         mRetryIntervalsMs = in.getLongArray(RETRY_INTERVAL_MS_KEY);
         mMaxMtu = in.getInt(MAX_MTU_KEY);
+        mIsRestrictedToTestNetworks = in.getBoolean(IS_RESTRICTED_TO_TEST_NETWORKS_KEY);
 
         validate();
     }
@@ -355,6 +361,15 @@ public final class VcnGatewayConnectionConfig {
     }
 
     /**
+     * Returns whetehr or not this VcnGatewayConnectionConfig is restricted to test networks.
+     *
+     * @hide
+     */
+    public boolean isRestrictedToTestNetworks() {
+        return mIsRestrictedToTestNetworks;
+    }
+
+    /**
      * Converts this config to a PersistableBundle.
      *
      * @hide
@@ -381,6 +396,7 @@ public final class VcnGatewayConnectionConfig {
         result.putPersistableBundle(UNDERLYING_CAPABILITIES_KEY, underlyingCapsBundle);
         result.putLongArray(RETRY_INTERVAL_MS_KEY, mRetryIntervalsMs);
         result.putInt(MAX_MTU_KEY, mMaxMtu);
+        result.putBoolean(IS_RESTRICTED_TO_TEST_NETWORKS_KEY, mIsRestrictedToTestNetworks);
 
         return result;
     }
@@ -392,7 +408,8 @@ public final class VcnGatewayConnectionConfig {
                 mExposedCapabilities,
                 mUnderlyingCapabilities,
                 Arrays.hashCode(mRetryIntervalsMs),
-                mMaxMtu);
+                mMaxMtu,
+                mIsRestrictedToTestNetworks);
     }
 
     @Override
@@ -406,7 +423,8 @@ public final class VcnGatewayConnectionConfig {
                 && mExposedCapabilities.equals(rhs.mExposedCapabilities)
                 && mUnderlyingCapabilities.equals(rhs.mUnderlyingCapabilities)
                 && Arrays.equals(mRetryIntervalsMs, rhs.mRetryIntervalsMs)
-                && mMaxMtu == rhs.mMaxMtu;
+                && mMaxMtu == rhs.mMaxMtu
+                && mIsRestrictedToTestNetworks == rhs.mIsRestrictedToTestNetworks;
     }
 
     /**
@@ -419,6 +437,7 @@ public final class VcnGatewayConnectionConfig {
         @NonNull private final Set<Integer> mUnderlyingCapabilities = new ArraySet();
         @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
         private int mMaxMtu = DEFAULT_MAX_MTU;
+        private boolean mIsRestrictedToTestNetworks = false;
 
         // TODO: (b/175829816) Consider VCN-exposed capabilities that may be transport dependent.
         //       Consider the case where the VCN might only expose MMS on WiFi, but defer to MMS
@@ -580,6 +599,21 @@ public final class VcnGatewayConnectionConfig {
         }
 
         /**
+         * Restricts this VcnGatewayConnectionConfig to matching with test networks (only).
+         *
+         * <p>This method is for testing only, and must not be used by apps. Calling {@link
+         * VcnManager#setVcnConfig(ParcelUuid, VcnConfig)} with a VcnConfig where test-network usage
+         * is enabled will require the MANAGE_TEST_NETWORKS permission.
+         *
+         * @return this {@link Builder} instance, for chaining
+         * @hide
+         */
+        public Builder restrictToTestNetworks() {
+            mIsRestrictedToTestNetworks = true;
+            return this;
+        }
+
+        /**
          * Builds and validates the VcnGatewayConnectionConfig.
          *
          * @return an immutable VcnGatewayConnectionConfig instance
@@ -592,7 +626,8 @@ public final class VcnGatewayConnectionConfig {
                     mExposedCapabilities,
                     mUnderlyingCapabilities,
                     mRetryIntervalsMs,
-                    mMaxMtu);
+                    mMaxMtu,
+                    mIsRestrictedToTestNetworks);
         }
     }
 }
