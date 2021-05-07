@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010603365",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1700306?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e4beebf7_079eceb2",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-07T22:31:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 103
+      },
+      "revId": "d615670965d78e6328f424b20e4e2ada4d2ae0b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010603365",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1700306?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "94b939e0_fb32be7b",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-07T22:31:45Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(JobScheduler.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 116,
+        "startChar": 32,
+        "endLine": 116,
+        "endChar": 72
+      },
+      "revId": "d615670965d78e6328f424b20e4e2ada4d2ae0b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
