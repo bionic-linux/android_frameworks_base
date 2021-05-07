@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5c88d08_791f0968",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-07T20:22:32Z",
+      "side": 1,
+      "message": "Suggest mIsTestModeProfile; We\u0027ll probably change other behavior other than just restricting to test networks",
+      "range": {
+        "startLine": 172,
+        "startChar": 26,
+        "endLine": 172,
+        "endChar": 53
+      },
+      "revId": "d7b49e7a2f78fb1a31a7c426c50a661dbe873725",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c213da24_38119f99",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-07T20:22:32Z",
+      "side": 1,
+      "message": "Is there any case where we\u0027ll want multiple gateway connection configs, with a mix of test mode configs and non-test-mode configs?\n\nIf not, suggest moving this to the VcnConfig",
+      "range": {
+        "startLine": 175,
+        "startChar": 12,
+        "endLine": 175,
+        "endChar": 38
+      },
+      "revId": "d7b49e7a2f78fb1a31a7c426c50a661dbe873725",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
