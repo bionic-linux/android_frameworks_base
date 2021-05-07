@@ -22,6 +22,29 @@
       },
       "revId": "e746554344f2af7a70133fefa8ff52ee7e62b27f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcd6f1db_09a42840",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7259,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-07T05:05:27Z",
+      "side": 1,
+      "message": "If prevNc is null and newNc has UIDs, the broadcast should be sent, but your code will not send it.\n\nSuggest having a helper method in NetworkCapabilities that takes 2 instances of Set\u003cUidRange\u003e that you could use here and it equalsUids().",
+      "range": {
+        "startLine": 7259,
+        "startChar": 27,
+        "endLine": 7259,
+        "endChar": 58
+      },
+      "revId": "e746554344f2af7a70133fefa8ff52ee7e62b27f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
