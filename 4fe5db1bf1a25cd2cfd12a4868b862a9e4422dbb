@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06f92d25_740be264",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373934
+      },
+      "writtenOn": "2021-05-07T14:22:35Z",
+      "side": 1,
+      "message": "Paul, any ideas why making @CovariantReturnType as STABLE makes framework unable to find it? ",
+      "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
