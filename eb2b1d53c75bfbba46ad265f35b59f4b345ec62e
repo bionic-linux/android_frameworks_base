@@ -33,6 +33,29 @@
       "message": "Hi Jeff, could you please take a quick look? Thanks.",
       "revId": "eb2b1d53c75bfbba46ad265f35b59f4b345ec62e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a89e4a2_d9fa328d",
+        "filename": "boot/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2021-05-07T14:30:39Z",
+      "side": 1,
+      "message": "Generally we\u0027re recommending teams use a single file for OWNERS control and then include it elsewhere (see the example from the build team above). Is there a file we could use here instead of having explicitly listed owners?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "eb2b1d53c75bfbba46ad265f35b59f4b345ec62e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
