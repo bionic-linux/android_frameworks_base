@@ -86,6 +86,24 @@
       "parentUuid": "8d3b7419_969f55cb",
       "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14085974_fda6c669",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39495,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-07T15:36:47Z",
+      "side": 1,
+      "message": "Can you patch r.android.com/1699727 and see if that resolves the issue?",
+      "parentUuid": "ccb553ec_453d5070",
+      "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
