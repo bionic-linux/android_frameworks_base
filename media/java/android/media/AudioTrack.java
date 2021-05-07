@@ -1723,7 +1723,7 @@ public class AudioTrack extends PlayerBase
         mChannelIndexMask = channelIndexMask;
         if (mChannelIndexMask != 0) {
             // restrictive: indexMask could allow up to AUDIO_CHANNEL_BITS_LOG2
-            final int indexMask = (1 << AudioSystem.OUT_CHANNEL_COUNT_MAX) - 1;
+            final int indexMask = (1 << AudioSystem.FCC_24) - 1;
             if ((channelIndexMask & ~indexMask) != 0) {
                 throw new IllegalArgumentException("Unsupported channel index configuration "
                         + channelIndexMask);
