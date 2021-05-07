@@ -701,7 +701,7 @@ public class VcnGatewayConnection extends StateMachine {
      * <p>Once torn down, this VcnTunnel CANNOT be started again.
      */
     public void teardownAsynchronously() {
-        Slog.d(TAG, "Triggering async teardown");
+        Slog.d(TAG, getLogPrefix() + getLogPrefix() + "Triggering async teardown");
         sendDisconnectRequestedAndAcquireWakelock(
                 DISCONNECT_REASON_TEARDOWN, true /* shouldQuit */);
 
@@ -711,7 +711,7 @@ public class VcnGatewayConnection extends StateMachine {
 
     @Override
     protected void onQuitting() {
-        Slog.d(TAG, "Quitting VcnGatewayConnection");
+        Slog.d(TAG, getLogPrefix() + "Quitting VcnGatewayConnection");
 
         // No need to call setInterfaceDown(); the IpSecInterface is being fully torn down.
         if (mTunnelIface != null) {
@@ -738,7 +738,6 @@ public class VcnGatewayConnection extends StateMachine {
      */
     public void updateSubscriptionSnapshot(@NonNull TelephonySubscriptionSnapshot snapshot) {
         Objects.requireNonNull(snapshot, "Missing snapshot");
-
         mVcnContext.ensureRunningOnLooperThread();
 
         mLastSnapshot = snapshot;
@@ -754,8 +753,11 @@ public class VcnGatewayConnection extends StateMachine {
             // TODO(b/180132994): explore safely removing this Thread check
             mVcnContext.ensureRunningOnLooperThread();
 
-            Slog.d(TAG, "Selected underlying network changed: "
-                    + (underlying == null ? null : underlying.network));
+            Slog.d(
+                    TAG,
+                    getLogPrefix()
+                            + "Selected underlying network changed: "
+                            + (underlying == null ? null : underlying.network));
 
             // TODO(b/179091925): Move the delayed-message handling to BaseState
 
@@ -783,7 +785,7 @@ public class VcnGatewayConnection extends StateMachine {
             mWakeLock.acquire();
 
             if (VDBG) {
-                Slog.v(TAG, "Wakelock acquired: " + mWakeLock);
+                Slog.v(TAG, getLogPrefix() + "Wakelock acquired: " + mWakeLock);
             }
         }
     }
@@ -794,7 +796,7 @@ public class VcnGatewayConnection extends StateMachine {
         mWakeLock.release();
 
         if (VDBG) {
-            Slog.v(TAG, "Wakelock released: " + mWakeLock);
+            Slog.v(TAG, getLogPrefix() + "Wakelock released: " + mWakeLock);
         }
     }
 
@@ -951,7 +953,9 @@ public class VcnGatewayConnection extends StateMachine {
 
     private void setTeardownTimeoutAlarm() {
         if (VDBG) {
-            Slog.v(TAG, "Setting teardown timeout alarm");
+            Slog.v(
+                    TAG,
+                    getLogPrefix() + "Setting teardown timeout alarm for token: " + mCurrentToken);
         }
 
         // Safe to assign this alarm because it is either 1) already null, or 2) already fired. In
@@ -970,7 +974,7 @@ public class VcnGatewayConnection extends StateMachine {
 
     private void cancelTeardownTimeoutAlarm() {
         if (VDBG) {
-            Slog.v(TAG, "Cancelling teardown timeout alarm");
+            Slog.v(TAG, getLogPrefix() + "Cancelling teardown timeout alarm");
         }
 
         if (mTeardownTimeoutAlarm != null) {
@@ -984,7 +988,9 @@ public class VcnGatewayConnection extends StateMachine {
 
     private void setDisconnectRequestAlarm() {
         if (VDBG) {
-            Slog.v(TAG, "Setting alarm to disconnect due to underlying network loss");
+            Slog.v(
+                    TAG,
+                    getLogPrefix() + "Setting alarm to disconnect due to underlying network loss");
         }
 
         // Only schedule a NEW alarm if none is already set.
@@ -1008,7 +1014,10 @@ public class VcnGatewayConnection extends StateMachine {
 
     private void cancelDisconnectRequestAlarm() {
         if (VDBG) {
-            Slog.v(TAG, "Cancelling alarm to disconnect due to underlying network loss");
+            Slog.v(
+                    TAG,
+                    getLogPrefix()
+                            + "Cancelling alarm to disconnect due to underlying network loss");
         }
 
         if (mDisconnectRequestAlarm != null) {
@@ -1025,7 +1034,7 @@ public class VcnGatewayConnection extends StateMachine {
 
     private void setRetryTimeoutAlarm(long delay) {
         if (VDBG) {
-            Slog.v(TAG, "Setting retry alarm");
+            Slog.v(TAG, getLogPrefix() + "Setting retry alarm for token: " + mCurrentToken);
         }
 
         // Safe to assign this alarm because it is either 1) already null, or 2) already fired. In
@@ -1040,7 +1049,7 @@ public class VcnGatewayConnection extends StateMachine {
 
     private void cancelRetryTimeoutAlarm() {
         if (VDBG) {
-            Slog.v(TAG, "Cancel retry alarm");
+            Slog.v(TAG, getLogPrefix() + "Cancel retry alarm");
         }
 
         if (mRetryTimeoutAlarm != null) {
@@ -1054,7 +1063,7 @@ public class VcnGatewayConnection extends StateMachine {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     void setSafeModeAlarm() {
         if (VDBG) {
-            Slog.v(TAG, "Setting safe mode alarm");
+            Slog.v(TAG, getLogPrefix() + "Setting safe mode alarm");
         }
 
         // Only schedule a NEW alarm if none is already set.
@@ -1072,7 +1081,7 @@ public class VcnGatewayConnection extends StateMachine {
 
     private void cancelSafeModeAlarm() {
         if (VDBG) {
-            Slog.v(TAG, "Cancel safe mode alarm");
+            Slog.v(TAG, getLogPrefix() + "Cancel safe mode alarm");
         }
 
         if (mSafeModeTimeoutAlarm != null) {
@@ -1120,15 +1129,6 @@ public class VcnGatewayConnection extends StateMachine {
         final String exceptionClass;
         final String exceptionMessage;
 
-        Slog.d(
-                TAG,
-                "Encountered error; code="
-                        + errorCode
-                        + ", exceptionClass="
-                        + exceptionClass
-                        + ", exceptionMessage="
-                        + exceptionMessage);
-
         if (isIkeAuthFailure(exception)) {
             errorCode = VCN_ERROR_CODE_CONFIG_ERROR;
             exceptionClass = exception.getClass().getName();
@@ -1147,6 +1147,15 @@ public class VcnGatewayConnection extends StateMachine {
                             + " with message: "
                             + exception.getMessage();
         }
+
+        Slog.d(
+                TAG,
+                "Encountered error; code="
+                        + errorCode
+                        + ", exceptionClass="
+                        + exceptionClass
+                        + ", exceptionMessage="
+                        + exceptionMessage);
 
         mGatewayStatusCallback.onGatewayConnectionError(
                 mConnectionConfig.getGatewayConnectionName(),
@@ -1225,7 +1234,13 @@ public class VcnGatewayConnection extends StateMachine {
         public final boolean processMessage(Message msg) {
             final int token = msg.arg1;
             if (!isValidToken(token)) {
-                Slog.v(TAG, "Message called with obsolete token: " + token + "; what: " + msg.what);
+                Slog.v(
+                        TAG,
+                        getLogPrefix()
+                                + "Message called with obsolete token: "
+                                + token
+                                + "; what: "
+                                + msg.what);
                 return HANDLED;
             }
 
@@ -1290,7 +1305,7 @@ public class VcnGatewayConnection extends StateMachine {
         protected void handleDisconnectRequested(EventDisconnectRequestedInfo info) {
             // TODO(b/180526152): notify VcnStatusCallback for Network loss
 
-            Slog.d(TAG, "Tearing down. Cause: " + info.reason);
+            Slog.d(TAG, getLogPrefix() + "Tearing down. Cause: " + info.reason);
             mIsQuitting = info.shouldQuit;
 
             teardownNetwork();
@@ -1306,7 +1321,7 @@ public class VcnGatewayConnection extends StateMachine {
 
         protected void handleSafeModeTimeoutExceeded() {
             mSafeModeTimeoutAlarm = null;
-            Slog.d(TAG, "Entering safe mode after timeout exceeded");
+            Slog.d(TAG, getLogPrefix() + "Entering safe mode after timeout exceeded");
 
             // Connectivity for this GatewayConnection is broken; tear down the Network.
             teardownNetwork();
@@ -1315,8 +1330,12 @@ public class VcnGatewayConnection extends StateMachine {
         }
 
         protected void logUnexpectedEvent(int what) {
-            Slog.d(TAG, String.format(
-                    "Unexpected event code %d in state %s", what, this.getClass().getSimpleName()));
+            Slog.d(
+                    TAG,
+                    getLogPrefix()
+                            + String.format(
+                                    "Unexpected event code %d in state %s",
+                                    what, this.getClass().getSimpleName()));
         }
 
         protected void logWtfUnknownEvent(int what) {
@@ -1607,11 +1626,14 @@ public class VcnGatewayConnection extends StateMachine {
                                 // new NetworkAgent replaces an old one before the unwanted() call
                                 // is processed.
                                 if (mNetworkAgent != agentRef) {
-                                    Slog.d(TAG, "unwanted() called on stale NetworkAgent");
+                                    Slog.d(
+                                            TAG,
+                                            getLogPrefix()
+                                                    + "unwanted() called on stale NetworkAgent");
                                     return;
                                 }
 
-                                Slog.d(TAG, "NetworkAgent was unwanted");
+                                Slog.d(TAG, getLogPrefix() + "NetworkAgent was unwanted");
                                 teardownAsynchronously();
                             } /* networkUnwantedCallback */,
                             (status) -> {
@@ -1665,7 +1687,10 @@ public class VcnGatewayConnection extends StateMachine {
                 // Transforms do not need to be persisted; the IkeSession will keep them alive
                 mIpSecManager.applyTunnelModeTransform(tunnelIface, direction, transform);
             } catch (IOException e) {
-                Slog.d(TAG, "Transform application failed for network " + token, e);
+                Slog.d(
+                        TAG,
+                        getLogPrefix() + "Transform application failed for network " + token,
+                        e);
                 sessionLost(token, e);
             }
         }
@@ -1699,7 +1724,10 @@ public class VcnGatewayConnection extends StateMachine {
                     tunnelIface.removeAddress(address.getAddress(), address.getPrefixLength());
                 }
             } catch (IOException e) {
-                Slog.d(TAG, "Adding address to tunnel failed for token " + token, e);
+                Slog.d(
+                        TAG,
+                        getLogPrefix() + "Adding address to tunnel failed for token " + token,
+                        e);
                 sessionLost(token, e);
             }
         }
@@ -1779,7 +1807,7 @@ public class VcnGatewayConnection extends StateMachine {
         }
 
         private void handleMigrationCompleted(EventMigrationCompletedInfo migrationCompletedInfo) {
-            Slog.v(TAG, "Migration completed: " + mUnderlying.network);
+            Slog.v(TAG, getLogPrefix() + "Migration completed: " + mUnderlying.network);
 
             applyTransform(
                     mCurrentToken,
@@ -1803,7 +1831,7 @@ public class VcnGatewayConnection extends StateMachine {
             mUnderlying = ((EventUnderlyingNetworkChangedInfo) msg.obj).newUnderlying;
 
             if (mUnderlying == null) {
-                Slog.v(TAG, "Underlying network lost");
+                Slog.v(TAG, getLogPrefix() + "Underlying network lost");
 
                 // Ignored for now; a new network may be coming up. If none does, the delayed
                 // NETWORK_LOST disconnect will be fired, and tear down the session + network.
@@ -1813,7 +1841,7 @@ public class VcnGatewayConnection extends StateMachine {
             // mUnderlying assumed non-null, given check above.
             // If network changed, migrate. Otherwise, update any existing networkAgent.
             if (oldUnderlying == null || !oldUnderlying.network.equals(mUnderlying.network)) {
-                Slog.v(TAG, "Migrating to new network: " + mUnderlying.network);
+                Slog.v(TAG, getLogPrefix() + "Migrating to new network: " + mUnderlying.network);
                 mIkeSession.setNetwork(mUnderlying.network);
             } else {
                 // oldUnderlying is non-null & underlying network itself has not changed
@@ -2034,25 +2062,25 @@ public class VcnGatewayConnection extends StateMachine {
 
         @Override
         public void onOpened(@NonNull IkeSessionConfiguration ikeSessionConfig) {
-            Slog.v(TAG, "IkeOpened for token " + mToken);
+            Slog.v(TAG, getLogPrefix() + "IkeOpened for token " + mToken);
             // Nothing to do here.
         }
 
         @Override
         public void onClosed() {
-            Slog.v(TAG, "IkeClosed for token " + mToken);
+            Slog.v(TAG, getLogPrefix() + "IkeClosed for token " + mToken);
             sessionClosed(mToken, null);
         }
 
         @Override
         public void onClosedExceptionally(@NonNull IkeException exception) {
-            Slog.v(TAG, "IkeClosedExceptionally for token " + mToken, exception);
+            Slog.v(TAG, getLogPrefix() + "IkeClosedExceptionally for token " + mToken, exception);
             sessionClosed(mToken, exception);
         }
 
         @Override
         public void onError(@NonNull IkeProtocolException exception) {
-            Slog.v(TAG, "IkeError for token " + mToken, exception);
+            Slog.v(TAG, getLogPrefix() + "IkeError for token " + mToken, exception);
             // Non-fatal, log and continue.
         }
     }
@@ -2069,7 +2097,7 @@ public class VcnGatewayConnection extends StateMachine {
         /** Internal proxy method for injecting of mocked ChildSessionConfiguration */
         @VisibleForTesting(visibility = Visibility.PRIVATE)
         void onOpened(@NonNull VcnChildSessionConfiguration childConfig) {
-            Slog.v(TAG, "ChildOpened for token " + mToken);
+            Slog.v(TAG, getLogPrefix() + "ChildOpened for token " + mToken);
             childOpened(mToken, childConfig);
         }
 
@@ -2080,19 +2108,25 @@ public class VcnGatewayConnection extends StateMachine {
 
         @Override
         public void onClosed() {
-            Slog.v(TAG, "ChildClosed for token " + mToken);
+            Slog.v(TAG, getLogPrefix() + "ChildClosed for token " + mToken);
             sessionLost(mToken, null);
         }
 
         @Override
         public void onClosedExceptionally(@NonNull IkeException exception) {
-            Slog.v(TAG, "ChildClosedExceptionally for token " + mToken, exception);
+            Slog.v(TAG, getLogPrefix() + "ChildClosedExceptionally for token " + mToken, exception);
             sessionLost(mToken, exception);
         }
 
         @Override
         public void onIpSecTransformCreated(@NonNull IpSecTransform transform, int direction) {
-            Slog.v(TAG, "ChildTransformCreated; Direction: " + direction + "; token " + mToken);
+            Slog.v(
+                    TAG,
+                    getLogPrefix()
+                            + "ChildTransformCreated; Direction: "
+                            + direction
+                            + "; token "
+                            + mToken);
             childTransformCreated(mToken, transform, direction);
         }
 
@@ -2100,7 +2134,7 @@ public class VcnGatewayConnection extends StateMachine {
         public void onIpSecTransformsMigrated(
                 @NonNull IpSecTransform inIpSecTransform,
                 @NonNull IpSecTransform outIpSecTransform) {
-            Slog.v(TAG, "ChildTransformsMigrated; token " + mToken);
+            Slog.v(TAG, getLogPrefix() + "ChildTransformsMigrated; token " + mToken);
             migrationCompleted(mToken, inIpSecTransform, outIpSecTransform);
         }
 
@@ -2108,8 +2142,18 @@ public class VcnGatewayConnection extends StateMachine {
         public void onIpSecTransformDeleted(@NonNull IpSecTransform transform, int direction) {
             // Nothing to be done; no references to the IpSecTransform are held, and this transform
             // will be closed by the IKE library.
-            Slog.v(TAG, "ChildTransformDeleted; Direction: " + direction + "; for token " + mToken);
+            Slog.v(
+                    TAG,
+                    getLogPrefix()
+                            + "ChildTransformDeleted; Direction: "
+                            + direction
+                            + "; for token "
+                            + mToken);
         }
+    }
+
+    private String getLogPrefix() {
+        return "[" + LogUtils.getHashedSubscriptionGroup(mSubscriptionGroup) + "]: ";
     }
 
     /**
