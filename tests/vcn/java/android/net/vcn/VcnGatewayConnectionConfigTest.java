@@ -71,7 +71,8 @@ public class VcnGatewayConnectionConfigTest {
         return buildTestConfigWithExposedCaps(EXPOSED_CAPS);
     }
 
-    private static VcnGatewayConnectionConfig.Builder newBuilder() {
+    // Public for use in VcnManagementServiceTest
+    public static VcnGatewayConnectionConfig.Builder newBuilder() {
         // Append a unique identifier to the name prefix to guarantee that all created
         // VcnGatewayConnectionConfigs have a unique name (required by VcnConfig).
         return new VcnGatewayConnectionConfig.Builder(

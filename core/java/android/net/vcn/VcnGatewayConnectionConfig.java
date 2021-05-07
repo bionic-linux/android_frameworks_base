@@ -419,6 +419,7 @@ public final class VcnGatewayConnectionConfig {
         @NonNull private final Set<Integer> mUnderlyingCapabilities = new ArraySet();
         @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
         private int mMaxMtu = DEFAULT_MAX_MTU;
+        private boolean mIsRestrictedToTestNetworks = false;
 
         // TODO: (b/175829816) Consider VCN-exposed capabilities that may be transport dependent.
         //       Consider the case where the VCN might only expose MMS on WiFi, but defer to MMS
