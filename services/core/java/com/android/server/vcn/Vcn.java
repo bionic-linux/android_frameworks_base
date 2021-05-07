@@ -305,15 +305,19 @@ public class Vcn extends Handler {
                 handleTeardown();
                 break;
             default:
-                Slog.wtf(getLogTag(), "Unknown msg.what: " + msg.what);
+                Slog.wtf(TAG, getLogPrefix() + "Unknown msg.what: " + msg.what);
         }
     }
 
     private void handleConfigUpdated(@NonNull VcnConfig config) {
         // TODO: Add a dump function in VcnConfig that omits PII. Until then, use hashCode()
         Slog.d(
-                getLogTag(),
-                "Config updated: old = " + mConfig.hashCode() + "; new = " + config.hashCode());
+                TAG,
+                getLogPrefix()
+                        + "Config updated: old = "
+                        + mConfig.hashCode()
+                        + "; new = "
+                        + config.hashCode());
 
         mConfig = config;
 
@@ -329,7 +333,9 @@ public class Vcn extends Handler {
             if (!mConfig.getGatewayConnectionConfigs().contains(gatewayConnectionConfig)) {
                 if (gatewayConnection == null) {
                     Slog.wtf(
-                            getLogTag(), "Found gatewayConnectionConfig without GatewayConnection");
+                            TAG,
+                            getLogPrefix()
+                                    + "Found gatewayConnectionConfig without GatewayConnection");
                 } else {
                     gatewayConnection.teardownAsynchronously();
                 }
@@ -342,7 +348,7 @@ public class Vcn extends Handler {
     }
 
     private void handleTeardown() {
-        Slog.d(getLogTag(), "Tearing down");
+        Slog.d(TAG, getLogPrefix() + "Tearing down");
         mVcnContext.getVcnNetworkProvider().unregisterListener(mRequestListener);
 
         for (VcnGatewayConnection gatewayConnection : mVcnGatewayConnections.values()) {
@@ -353,7 +359,7 @@ public class Vcn extends Handler {
     }
 
     private void handleSafeModeStatusChanged() {
-        Slog.d(getLogTag(), "VcnGatewayConnection safe mode status changed");
+        Slog.d(TAG, getLogPrefix() + "VcnGatewayConnection safe mode status changed");
         boolean hasSafeModeGatewayConnection = false;
 
         // If any VcnGatewayConnection is in safe mode, mark the entire VCN as being in safe mode
@@ -370,23 +376,26 @@ public class Vcn extends Handler {
         if (oldStatus != mCurrentStatus) {
             mVcnCallback.onSafeModeStatusChanged(hasSafeModeGatewayConnection);
             Slog.d(
-                    getLogTag(),
-                    "Safe mode "
+                    TAG,
+                    getLogPrefix()
+                            + "Safe mode "
                             + (mCurrentStatus == VCN_STATUS_CODE_SAFE_MODE ? "entered" : "exited"));
         }
     }
 
     private void handleNetworkRequested(@NonNull NetworkRequest request) {
         if (VDBG) {
-            Slog.v(getLogTag(), "Received request " + request);
+            Slog.v(TAG, getLogPrefix() + "Received request " + request);
         }
 
         // If preexisting VcnGatewayConnection(s) satisfy request, return
         for (VcnGatewayConnectionConfig gatewayConnectionConfig : mVcnGatewayConnections.keySet()) {
             if (isRequestSatisfiedByGatewayConnectionConfig(request, gatewayConnectionConfig)) {
                 Slog.d(
-                        getLogTag(),
-                        "Request already satisfied by existing VcnGatewayConnection: " + request);
+                        TAG,
+                        getLogPrefix()
+                                + "Request already satisfied by existing VcnGatewayConnection: "
+                                + request);
                 return;
             }
         }
@@ -396,7 +405,11 @@ public class Vcn extends Handler {
         for (VcnGatewayConnectionConfig gatewayConnectionConfig :
                 mConfig.getGatewayConnectionConfigs()) {
             if (isRequestSatisfiedByGatewayConnectionConfig(request, gatewayConnectionConfig)) {
-                Slog.d(getLogTag(), "Bringing up new VcnGatewayConnection for request " + request);
+                Slog.d(
+                        TAG,
+                        getLogPrefix()
+                                + "Bringing up new VcnGatewayConnection for request "
+                                + request);
 
                 if (getExposedCapabilitiesForMobileDataState(gatewayConnectionConfig).isEmpty()) {
                     // Skip; this network does not provide any services if mobile data is disabled.
@@ -407,8 +420,11 @@ public class Vcn extends Handler {
                 // pre-existing VcnGatewayConnections that satisfy a given request, but if state
                 // that affects the satsifying of requests changes, this is theoretically possible.
                 if (mVcnGatewayConnections.containsKey(gatewayConnectionConfig)) {
-                    Slog.wtf(getLogTag(), "Attempted to bring up VcnGatewayConnection for config "
-                            + "with existing VcnGatewayConnection");
+                    Slog.wtf(
+                            TAG,
+                            getLogPrefix()
+                                    + "Attempted to bring up VcnGatewayConnection for config "
+                                    + "with existing VcnGatewayConnection");
                     return;
                 }
 
@@ -427,7 +443,7 @@ public class Vcn extends Handler {
         }
 
         if (VDBG) {
-            Slog.v(getLogTag(), "Request could not be fulfilled by VCN: " + request);
+            Slog.v(TAG, getLogPrefix() + "Request could not be fulfilled by VCN: " + request);
         }
     }
 
@@ -445,7 +461,7 @@ public class Vcn extends Handler {
     }
 
     private void handleGatewayConnectionQuit(VcnGatewayConnectionConfig config) {
-        Slog.d(getLogTag(), "VcnGatewayConnection quit: " + config);
+        Slog.d(TAG, getLogPrefix() + "VcnGatewayConnection quit: " + config);
         mVcnGatewayConnections.remove(config);
 
         // Trigger a re-evaluation of all NetworkRequests (to make sure any that can be satisfied
@@ -481,8 +497,10 @@ public class Vcn extends Handler {
                         || exposedCaps.contains(NET_CAPABILITY_DUN)) {
                     if (gatewayConnection == null) {
                         Slog.wtf(
-                                getLogTag(),
-                                "Found gatewayConnectionConfig without GatewayConnection");
+                                TAG,
+                                getLogPrefix()
+                                        + "Found gatewayConnectionConfig without"
+                                        + " GatewayConnection");
                     } else {
                         // TODO(b/184868850): Optimize by restarting NetworkAgents without teardown.
                         gatewayConnection.teardownAsynchronously();
@@ -493,7 +511,11 @@ public class Vcn extends Handler {
             // Trigger re-evaluation of all requests; mobile data state impacts supported caps.
             mVcnContext.getVcnNetworkProvider().resendAllRequests(mRequestListener);
 
-            Slog.d(getLogTag(), "Mobile data " + (mIsMobileDataEnabled ? "enabled" : "disabled"));
+            Slog.d(
+                    TAG,
+                    getLogPrefix()
+                            + "Mobile data "
+                            + (mIsMobileDataEnabled ? "enabled" : "disabled"));
         }
     }
 
@@ -522,8 +544,8 @@ public class Vcn extends Handler {
         return request.canBeSatisfiedBy(builder.build());
     }
 
-    private String getLogTag() {
-        return TAG + " [" + mSubscriptionGroup.hashCode() + "]";
+    private String getLogPrefix() {
+        return "[" + LogUtils.getHashedSubscriptionGroup(mSubscriptionGroup) + "]: ";
     }
 
     /**
