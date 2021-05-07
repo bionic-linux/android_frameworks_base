@@ -68,6 +68,24 @@
       "message": "Usages are being added here in the public API but the annotation itself is not defined in the public API it is defined in the core platform API.\n\nI suspect that the issue is that metalava is finding this annotation on the classpath when it generates the public API and so thinks it is ok to add a reference to it into the public API.\n\nAnton did some work recently to remove --ignore-classes-on-classpath and it may be that you have just found a situation where that would be helpful.",
       "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccb553ec_453d5070",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 39495,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-07T14:56:29Z",
+      "side": 1,
+      "message": "* --ignore-classes-on-classpath was removed many months ago for the jarstubs build (the recent CL just removed it from the docs build). That flag is pretty much incompatible with modularization of the APIs I think\n\n* the annotation is here because this metalava run depends on stable.core.platform.api.stubs, so metalava has to assume it\u0027s public. It probably shouldn\u0027t depend on that lib, but IIRC it does so because of a couple of constant values not being in the public api (VmRuntime.CUR_DEVELOPMENT being one). Fixing this is probably the right \"long term\" fix but it\u0027s not immediately clear to me how to do that\n\n* the metalava default is to keep annotations that have runtime or class retention. One option would be to special-case this annotation in AnnotationItem.kt in metalava to explicitly drop it from the stubs",
+      "parentUuid": "8d3b7419_969f55cb",
+      "revId": "4fe5db1bf1a25cd2cfd12a4868b862a9e4422dbb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
