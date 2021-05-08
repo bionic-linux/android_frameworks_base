@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010605380",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1700307?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "ee797ac3_41052f60",
+          "description": "Change to \"services/core/java/com/android/server/vcn/util/LogUtils.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/vcn/util/LogUtils.java",
+              "range": {
+                "startLine": 29,
+                "startChar": 7,
+                "endLine": 29,
+                "endChar": 15
+              },
+              "replacement": "@return"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "2174f883_2951ddc5",
+        "filename": "services/core/java/com/android/server/vcn/util/LogUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-08T00:04:08Z",
+      "side": 1,
+      "message": "Common typo found: \"@returns\" -- should it be \"@return\"?\ngo/javastyle, go/jsstyle and go/tsstyle prefer @return, while go/cppstyle prefers plain English in comments\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "0c3c916c545faf420a88286efb8e1f52e7255705",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
