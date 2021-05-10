@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57858492_c4d7ae71",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-10T21:19:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e031df_b2bdeacb",
+      "range": {
+        "startLine": 314,
+        "startChar": 8,
+        "endLine": 316,
+        "endChar": 30
+      },
+      "revId": "b29fd4457fd2c45547ddca1a9148c29e5a0e2e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af7f92c8_6b32f876",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0d30937_4c7d6f72",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-10T21:19:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af7f92c8_6b32f876",
+      "range": {
+        "startLine": 704,
+        "startChar": 37,
+        "endLine": 704,
+        "endChar": 51
+      },
+      "revId": "b29fd4457fd2c45547ddca1a9148c29e5a0e2e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac1dacff_f3a29ba3",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-05-10T04:45:56Z",
       "side": 1,
       "message": "nit: @Nullable",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "b29fd4457fd2c45547ddca1a9148c29e5a0e2e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "444749cf_40a0f002",
+        "filename": "services/core/java/com/android/server/vcn/util/LogUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-10T21:19:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac1dacff_f3a29ba3",
       "range": {
         "startLine": 31,
         "startChar": 4,
