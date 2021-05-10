@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b8a6b99_1bac81fa",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivitySettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-05-10T02:26:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5dcbdeb_71348482",
+      "range": {
+        "startLine": 349,
+        "startChar": 34,
+        "endLine": 349,
+        "endChar": 39
+      },
+      "revId": "7ad4572507d16522d45335cf67846181194459ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "753c0d49_48bade5e",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-07T12:35:01Z",
       "side": 1,
       "message": "be granted",
+      "range": {
+        "startLine": 943,
+        "startChar": 63,
+        "endLine": 943,
+        "endChar": 68
+      },
+      "revId": "7ad4572507d16522d45335cf67846181194459ca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7bde9d7_6f348995",
+        "filename": "packages/Connectivity/framework/src/android/net/ConnectivitySettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-05-10T02:26:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "753c0d49_48bade5e",
       "range": {
         "startLine": 943,
         "startChar": 63,
