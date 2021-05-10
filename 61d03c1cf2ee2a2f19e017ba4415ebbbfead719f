@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a8f3337_45e05f52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-05-10T16:37:45Z",
+      "side": 1,
+      "message": "This will cover reboots, updates, OTAs etc... were the device might stay lock longer than expected.\n\nIt\u0027s an aspect we can\u0027t easily quantify with the current metrics but I think this moves in the right direction.\n\nSee my comments with brian here as well: b/179094324#21, b/179094324#23",
+      "parentUuid": "cf1f9a18_33fb9b71",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 64
+      },
+      "revId": "61d03c1cf2ee2a2f19e017ba4415ebbbfead719f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c65707a9_aabd70d1",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-10T08:08:03Z",
       "side": 1,
       "message": "Slog?",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 15
+      },
+      "revId": "61d03c1cf2ee2a2f19e017ba4415ebbbfead719f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6bf30e3_716e8958",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1022077
+      },
+      "writtenOn": "2021-05-10T16:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c65707a9_aabd70d1",
       "range": {
         "startLine": 640,
         "startChar": 12,
