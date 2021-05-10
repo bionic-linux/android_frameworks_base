@@ -105,6 +105,24 @@
       "message": "Filtering the packages in Soong (when working correctly) would skip metalava for some frameworks/base changes, for example to frameworks/base/core/java/com/*.  `m framework` time is a very common complaint, so leaving the pre-metalava filtering and fixing it to correctly ignore all the com.* sources would have a significant impact.\n\nAs discussed in the sync, you could move filter_package support into a rule that runs before metalava using soong_zip -srcjar to create a srcjar that uses package locations, and then zip2zip to filter it.",
       "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1762a4bd_04110920",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-05-10T13:59:54Z",
+      "side": 1,
+      "message": "OK, my main problem with filter_packages is that java_sdk_library uses something different, so you can end up with the .txt file saying one thing and the docs \"silently\" doing another. Given I\u0027m working on the larger problem of not feeding java_sdk_library artifacts into this rule, that problems will cease to exist.\n\nI\u0027m going with r.android.com/1700027 as a substitute. Abandoning this change",
+      "parentUuid": "56e32994_e31d50e8",
+      "revId": "4ed11eb3c6b098806eb72c9dabaa143b15602c8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
