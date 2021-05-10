@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf1f9a18_33fb9b71",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-05-10T08:08:03Z",
+      "side": 1,
+      "message": "Given the job is scheduled 10 minutes after PM starts, what does waiting for BOOT_COMPLETE provide?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 64
+      },
+      "revId": "61d03c1cf2ee2a2f19e017ba4415ebbbfead719f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c65707a9_aabd70d1",
+        "filename": "services/core/java/com/android/server/pm/BackgroundDexOptService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-05-10T08:08:03Z",
+      "side": 1,
+      "message": "Slog?",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 15
+      },
+      "revId": "61d03c1cf2ee2a2f19e017ba4415ebbbfead719f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
