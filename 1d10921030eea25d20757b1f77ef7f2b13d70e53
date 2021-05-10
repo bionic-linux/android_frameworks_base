@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c770f2a0_167ee600",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-10T08:15:48Z",
+      "side": 1,
+      "message": "Gentle ping for review.\n\nNote: The TH keep fail as b/187532801 which addressed the root cause by the kernel version.\n\nLocally with Pixel 4a can\u0027t reproduce it. i.e. The test passed locally.\n\nPlease help to review. Thanks\n",
+      "revId": "1d10921030eea25d20757b1f77ef7f2b13d70e53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
