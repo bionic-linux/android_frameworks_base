@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05204e8e_28642f8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-10T12:34:31Z",
+      "side": 1,
+      "message": "While the problem seems to be in aosp/1687885 rather than in this change, I am a bit uneasy about the fact that we have matching by remote address only. This will void the guarantees that the app actually owns the socket, because some other app can absolutely have a socket connected to the same remote address and port.\n",
+      "revId": "c223d72c842d22f4e7ae4b9aeb99632b39cb7dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dccbf4d_5be717f1",
+        "filename": "packages/Connectivity/framework/src/android/net/QosSocketInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-10T12:34:31Z",
+      "side": 1,
+      "message": "Please create a new final int instead of removing the final modifier. This makes it easier for your reviewers to check what is happening with which var.",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 11
+      },
+      "revId": "c223d72c842d22f4e7ae4b9aeb99632b39cb7dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b05e366_a2f7f010",
+        "filename": "packages/Connectivity/framework/src/android/net/QosSocketInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-10T12:34:31Z",
+      "side": 1,
+      "message": "This should warn. The return value of this is written into a @NonNull member.\n\nSince this is supposedly impossible with a local address, could you please simply move this test to l.132 so that it doesn\u0027t apply to the local address, and it\u0027s symmetric with the writing code ? You can also annotate this method with @NonNull while you\u0027re at it.",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 14
+      },
+      "revId": "c223d72c842d22f4e7ae4b9aeb99632b39cb7dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0befb56_a6ca2b7d",
+        "filename": "packages/Connectivity/framework/src/android/net/QosSocketInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-10T12:34:31Z",
+      "side": 1,
+      "message": "Please declare a new final instead",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 12
+      },
+      "revId": "c223d72c842d22f4e7ae4b9aeb99632b39cb7dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
