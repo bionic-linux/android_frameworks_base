@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87e031df_b2bdeacb",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-10T04:45:56Z",
+      "side": 1,
+      "message": "nit: it may end up being cleaner to define a logd(), logv(), etc helpers to get rid of this redundancy, such as\n\n```\nprivate void logd(String msg) {\n  Slog.d(TAG, getLogPrefix() + msg);\n}\n```",
+      "range": {
+        "startLine": 314,
+        "startChar": 8,
+        "endLine": 316,
+        "endChar": 30
+      },
+      "revId": "b29fd4457fd2c45547ddca1a9148c29e5a0e2e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af7f92c8_6b32f876",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-10T04:45:56Z",
+      "side": 1,
+      "message": "nit: dup\u0027d word",
+      "range": {
+        "startLine": 704,
+        "startChar": 37,
+        "endLine": 704,
+        "endChar": 51
+      },
+      "revId": "b29fd4457fd2c45547ddca1a9148c29e5a0e2e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac1dacff_f3a29ba3",
+        "filename": "services/core/java/com/android/server/vcn/util/LogUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-10T04:45:56Z",
+      "side": 1,
+      "message": "nit: @Nullable",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "b29fd4457fd2c45547ddca1a9148c29e5a0e2e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
