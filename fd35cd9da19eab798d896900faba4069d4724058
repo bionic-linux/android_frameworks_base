@@ -16,6 +16,167 @@
       "message": "Patch#19\nRebase becauseAPI: buildCarrierTemplate change which add metered check support.\n",
       "revId": "fd35cd9da19eab798d896900faba4069d4724058",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51848039_85a0fa6e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2437,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:59:50Z",
+      "side": 1,
+      "message": "If templateType is MATCH_CARRIER, then this template will have METERED_ALL. But no other carrier templates have METERED_ALL: they can only have METERED_NO and METERED_YES.\n\nThe rest of this CL replaces:\n    buildTemplateMobileAll(subscriberId)\n\nwith:\n    buildTemplateCarrier(subscriberId, true /* metered */)\n\n. So it sounds like there is an assumption that carrier templates will always be metered. Should this be METERED_YES, then?",
+      "range": {
+        "startLine": 2437,
+        "startChar": 56,
+        "endLine": 2437,
+        "endChar": 67
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82e1a7f3_2dbc5783",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:59:50Z",
+      "side": 1,
+      "message": "After aosp/1699687, MATCH_CARRIER templates can have METERED_NO and METERED_YES. But there is no way to save this information in the XML file, because there is no XML attribute for metered.\n\nNot sure what to do about this. It looks like the options would be:\n\n1. Add an XML attribute for the meteredness of the template, and write that attribute here (at least for MATCH_CARRIER policies).\n2. Only save templates that match metered networks and make isPersistable() return false for policies with METERED_NO.\n3. Somehow rely on the metered attribute in the *policy* (not on the template), which already exists?\n\n#2 seems simple but it could be surprising if someone later tries to save such a policy and the code does not save it. I don\u0027t know how we would do #3 or if it even makes sense. The metered boolean in the policy was deprecated by ag/2542217, which moved NetworkPolicy towards subscription plans, so maybe it doesn\u0027t make sense any more...?\n\nJunyu, any thoughts? Do you know if the metered bit in the policy is persisted to disk these days?",
+      "range": {
+        "startLine": 2639,
+        "startChar": 16,
+        "endLine": 2639,
+        "endChar": 56
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5f8480a_432a262d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 5567,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:59:50Z",
+      "side": 1,
+      "message": "Can this happen? When policies are read from disk, MATCH_MOBILE is converted to MATCH_CARRIER. So perhaps it can\u0027t happen? If it can\u0027t happen, then remove it?",
+      "range": {
+        "startLine": 5567,
+        "startChar": 59,
+        "endLine": 5567,
+        "endChar": 97
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed5730d1_9ac1084d",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:59:50Z",
+      "side": 1,
+      "message": "Why the word \"Wildcard\" here? There is no longer a buildTemplateCarrierWildcard. Should this just be \"sTemplateCarrier?",
+      "range": {
+        "startLine": 232,
+        "startChar": 51,
+        "endLine": 232,
+        "endChar": 59
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c72e33e_b512776b",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:59:50Z",
+      "side": 1,
+      "message": "This name is confusing because it suggests that the policy has carrier usage, but that the carrier usage is unsupported. I think this is a pretty normal policy though - it\u0027s just a standard policy with MATCH_MOBILE. Maybe call this \"network-policy-mobile.xml\" or something?",
+      "range": {
+        "startLine": 1978,
+        "startChar": 34,
+        "endLine": 1978,
+        "endChar": 66
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b30f2a6_e280956e",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:59:50Z",
+      "side": 1,
+      "message": "Can you also assert that this template has MATCH_CARRIER, even though the XML file specifies networkTemplate\u003d\"1\" which is MATCH_MOBILE?",
+      "range": {
+        "startLine": 1987,
+        "startChar": 4,
+        "endLine": 1987,
+        "endChar": 5
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7559d96e_f0c68c14",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:59:50Z",
+      "side": 1,
+      "message": "Maybe also assert that the policy\u0027s match rule is MATCH_WIFI?",
+      "range": {
+        "startLine": 1999,
+        "startChar": 4,
+        "endLine": 1999,
+        "endChar": 5
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
