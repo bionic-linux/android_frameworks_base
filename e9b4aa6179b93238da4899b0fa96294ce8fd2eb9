@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d3ddda0_525f72c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2021-05-11T17:08:15Z",
+      "side": 1,
+      "message": "We landed this CL on both S and R. Please AML refer to the bug and update your code accordingly.",
+      "revId": "e9b4aa6179b93238da4899b0fa96294ce8fd2eb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b70f8c6d_9e465848",
