@@ -39,6 +39,57 @@
       "message": "Leaving +2 to Jean-Michel as there is an open question for him still.\n",
       "revId": "3795895e707c5058059185036e6c952a306bda32",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62ae6e04_61fb85bb",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1463284
+      },
+      "writtenOn": "2021-05-11T13:43:46Z",
+      "side": 1,
+      "message": "FYI I think Android guidelines are to write this as \n\n// TODO(b/181140246): when ...",
+      "revId": "3795895e707c5058059185036e6c952a306bda32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cec35a32_60ea8fba",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1463284
+      },
+      "writtenOn": "2021-05-11T13:43:46Z",
+      "side": 1,
+      "message": "Nit-pick: we can move this boolean inside the if(mUseVolumeGroupAliases) as it\u0027s only used there",
+      "revId": "3795895e707c5058059185036e6c952a306bda32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef0dae12_cc2c9b6f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1463284
+      },
+      "writtenOn": "2021-05-11T13:43:46Z",
+      "side": 1,
+      "message": "Personal preference: rather than repeating this calculation twice, it might be cleaner to move it to a private helper method",
+      "revId": "3795895e707c5058059185036e6c952a306bda32",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
