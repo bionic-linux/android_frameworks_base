@@ -96,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6875c676_75f4d123",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3567,
+      "author": {
+        "id": 1002682
+      },
+      "writtenOn": "2021-05-11T00:08:49Z",
+      "side": 1,
+      "message": "getUiSoundsStreamType would have to become a @testApi to be called from CTS, but that would make sense.\n\nIn which test cases is STREAM_RING considered a UI sound?",
+      "parentUuid": "e9a26d36_0565e606",
+      "range": {
+        "startLine": 3567,
+        "startChar": 0,
+        "endLine": 3567,
+        "endChar": 3
+      },
+      "revId": "32a883a367cf9a69febb135b06c47004f40bbc65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a7c711e1_78ca5749",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 3
