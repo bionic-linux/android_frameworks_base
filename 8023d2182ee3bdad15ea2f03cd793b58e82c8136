@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bb8864c_b1e1fa22",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2021-05-11T07:29:53Z",
+      "side": 1,
+      "message": "How about using String.format to shorten the statement a bit",
+      "revId": "8023d2182ee3bdad15ea2f03cd793b58e82c8136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
