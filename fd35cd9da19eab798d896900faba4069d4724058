@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f1b21e1_17cf6b86",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2437,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-11T12:07:35Z",
+      "side": 1,
+      "message": "Added meteredness of the template save. See others thread.",
+      "parentUuid": "51848039_85a0fa6e",
+      "range": {
+        "startLine": 2437,
+        "startChar": 56,
+        "endLine": 2437,
+        "endChar": 67
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82e1a7f3_2dbc5783",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-05-11T06:59:50Z",
       "side": 1,
       "message": "After aosp/1699687, MATCH_CARRIER templates can have METERED_NO and METERED_YES. But there is no way to save this information in the XML file, because there is no XML attribute for metered.\n\nNot sure what to do about this. It looks like the options would be:\n\n1. Add an XML attribute for the meteredness of the template, and write that attribute here (at least for MATCH_CARRIER policies).\n2. Only save templates that match metered networks and make isPersistable() return false for policies with METERED_NO.\n3. Somehow rely on the metered attribute in the *policy* (not on the template), which already exists?\n\n#2 seems simple but it could be surprising if someone later tries to save such a policy and the code does not save it. I don\u0027t know how we would do #3 or if it even makes sense. The metered boolean in the policy was deprecated by ag/2542217, which moved NetworkPolicy towards subscription plans, so maybe it doesn\u0027t make sense any more...?\n\nJunyu, any thoughts? Do you know if the metered bit in the policy is persisted to disk these days?",
+      "range": {
+        "startLine": 2639,
+        "startChar": 16,
+        "endLine": 2639,
+        "endChar": 56
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a20b217_3c391445",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-11T12:07:35Z",
+      "side": 1,
+      "message": "Thanks for catching this.\n\nI suggest to take option#1. Option#2 and #3 seems more risk in the future.\nReason:\nThe different meteredness of the NetworkTemplate will cause different NetworkPolicy . I think option#2 and option#3 may more risky. As we know, the checking metered logic was implemented in matches function (for instance, matchesMobile). That is why NetworkPolicyService doesn\u0027t need to save it.\nBut I think NetworkTemplate was planned to use matchesMetered to replace doing metered check in matchesRule function. It seems to me it is necessary to store metered, otherwise it may cause confusion in the future.",
+      "parentUuid": "82e1a7f3_2dbc5783",
       "range": {
         "startLine": 2639,
         "startChar": 16,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "029852c0_25d468bf",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 5567,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-11T12:07:35Z",
+      "side": 1,
+      "message": "But it still allows to add mobile policy from API.\nIdeally the factory reset should make sure the policy off.\nBut I am ok to remove if we don\u0027t take care this scenario.",
+      "parentUuid": "b5f8480a_432a262d",
+      "range": {
+        "startLine": 5567,
+        "startChar": 59,
+        "endLine": 5567,
+        "endChar": 97
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed5730d1_9ac1084d",
         "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
         "patchSetId": 19
@@ -100,6 +172,30 @@
       "writtenOn": "2021-05-11T06:59:50Z",
       "side": 1,
       "message": "Why the word \"Wildcard\" here? There is no longer a buildTemplateCarrierWildcard. Should this just be \"sTemplateCarrier?",
+      "range": {
+        "startLine": 232,
+        "startChar": 51,
+        "endLine": 232,
+        "endChar": 59
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7744f8b0_de0591b6",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-11T12:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed5730d1_9ac1084d",
       "range": {
         "startLine": 232,
         "startChar": 51,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c8a5d1d_c37698a7",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-11T12:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c72e33e_b512776b",
+      "range": {
+        "startLine": 1978,
+        "startChar": 34,
+        "endLine": 1978,
+        "endChar": 66
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b30f2a6_e280956e",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d63a2c7_826be6d9",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-11T12:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b30f2a6_e280956e",
+      "range": {
+        "startLine": 1987,
+        "startChar": 4,
+        "endLine": 1987,
+        "endChar": 5
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7559d96e_f0c68c14",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-05-11T06:59:50Z",
       "side": 1,
       "message": "Maybe also assert that the policy\u0027s match rule is MATCH_WIFI?",
+      "range": {
+        "startLine": 1999,
+        "startChar": 4,
+        "endLine": 1999,
+        "endChar": 5
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7632a35_56ceca76",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-11T12:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7559d96e_f0c68c14",
       "range": {
         "startLine": 1999,
         "startChar": 4,
