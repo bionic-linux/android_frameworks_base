@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e7571d31_40237241",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2432,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:12:27Z",
+      "side": 1,
+      "message": "I mean: what if a carrier supports carrier wifi, but does *not* want to merge data usage from mobile and wifi networks, even if the subscriber ID is the same? Is that simply not supported?",
+      "parentUuid": "12aee229_73618577",
+      "range": {
+        "startLine": 2432,
+        "startChar": 28,
+        "endLine": 2432,
+        "endChar": 56
+      },
+      "revId": "a5b808abcde643c623884115b21e68a1b6191a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "58729b94_b76dc014",
         "filename": "services/tests/servicestests/assets/NetworkPolicyManagerServiceTest/netpolicy/network-policy-with-subscriberId-match-rule-all.xml",
         "patchSetId": 11
