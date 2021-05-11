@@ -69,6 +69,30 @@
       },
       "revId": "e746554344f2af7a70133fefa8ff52ee7e62b27f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61f98dcd_83cb48d5",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7259,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-05-11T07:50:48Z",
+      "side": 1,
+      "message": "Your new code is a little bit more complex and doesn\u0027t take the prevNc !\u003d null \u0026 newNc \u003d\u003d null into account. Granted, this never happens, but from the point of view of this method a null NC codes for null UIDs, so I still think it would be better if it worked as expected even in this case that never happens in practice.\n\nYes, you are correct on the helper function. It could take Set\u003cUidRange\u003e or it could take NetworkCapabilities, either is fine. The benefit would be to have only one place to do the same null checks, or in other words you can call it without making a null check first. It\u0027s not very important.",
+      "parentUuid": "5eb505fc_196c97e7",
+      "range": {
+        "startLine": 7259,
+        "startChar": 27,
+        "endLine": 7259,
+        "endChar": 58
+      },
+      "revId": "e746554344f2af7a70133fefa8ff52ee7e62b27f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
