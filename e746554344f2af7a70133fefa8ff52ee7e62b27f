@@ -45,6 +45,30 @@
       },
       "revId": "e746554344f2af7a70133fefa8ff52ee7e62b27f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eb505fc_196c97e7",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7259,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-11T07:08:32Z",
+      "side": 1,
+      "message": "\u003e If prevNc is null and newNc has UIDs, the broadcast should be sent, but your code will not send it.\n\nFor the case of prevNc is null, I think it means that the network is just registered. And in fact, if the proxy is set, then the proxy broadcast will be sent when the VPN is CONNECTED. (updateNetworkInfo() -\u003e updateLinkProperties() -\u003e updateProxy())\nThat\u0027s why I didn\u0027t send the proxy broadcast for the case of prevNc is null.\nBut I think it\u0027s fine to send the proxy broadcast when prevNc is null here instead of relying on outside design.\n\n\u003e Suggest having a helper method in NetworkCapabilities that takes 2 instances of Set\u003cUidRange\u003e that you could use here and it equalsUids().\n\nDo you mean have a method like:\nboolean hasSameUids(Set\u003cUidRange\u003e r1, Set\u003cUidRange\u003e r2)?\nand use it here and equalsUids()?\nDoes it mean that we will move the logic from equalsUids() to the new function?\nIf so, I\u0027d like to keep the current design because I don\u0027t see any benefit of having a new function to do this.",
+      "parentUuid": "dcd6f1db_09a42840",
+      "range": {
+        "startLine": 7259,
+        "startChar": 27,
+        "endLine": 7259,
+        "endChar": 58
+      },
+      "revId": "e746554344f2af7a70133fefa8ff52ee7e62b27f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
