@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "531642a2_401c256c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-11T04:29:23Z",
+      "side": 1,
+      "message": "Patch#19\nRebase becauseAPI: buildCarrierTemplate change which add metered check support.\n",
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
