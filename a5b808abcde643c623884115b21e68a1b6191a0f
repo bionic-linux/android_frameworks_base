@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abb6c970_c985025d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2432,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-11T06:13:45Z",
+      "side": 1,
+      "message": "If it\u0027s not supported, and that is what we want, then maybe just say so in the commit message.",
+      "parentUuid": "e7571d31_40237241",
+      "range": {
+        "startLine": 2432,
+        "startChar": 28,
+        "endLine": 2432,
+        "endChar": 56
+      },
+      "revId": "a5b808abcde643c623884115b21e68a1b6191a0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "58729b94_b76dc014",
         "filename": "services/tests/servicestests/assets/NetworkPolicyManagerServiceTest/netpolicy/network-policy-with-subscriberId-match-rule-all.xml",
         "patchSetId": 11
