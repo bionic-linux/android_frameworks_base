@@ -51,6 +51,23 @@
       "message": "BTW uploaded cl/373160145 to enable the mainline target to be built, just adding TEST_MAPPING isn\u0027t enough.",
       "revId": "e8bbec91ee7bd57963fd7507745029143bc4dcb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71dcab7b_d6cde7da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1423861
+      },
+      "writtenOn": "2021-05-12T01:48:26Z",
+      "side": 1,
+      "message": "This is a test configuration only CL, bypassing already failing IpSec test",
+      "revId": "e8bbec91ee7bd57963fd7507745029143bc4dcb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
