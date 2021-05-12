@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b86814ee_7aa8205d",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-12T00:09:26Z",
+      "side": 1,
+      "message": "Nit: Should this just be \"isInTestMode\"?",
+      "range": {
+        "startLine": 338,
+        "startChar": 24,
+        "endLine": 338,
+        "endChar": 39
+      },
+      "revId": "13214c1bbc13c313a019e2e8d478d3bd9900d671",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
