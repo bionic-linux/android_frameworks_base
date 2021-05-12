@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "227a0b4a_6ca9ddb8",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-12T00:08:13Z",
+      "side": 1,
+      "message": "Suggest just getting a new NetworkRequest.Builder(), clearing all capabilities and adding the TRANSPORT_TEST and subIds; it\u0027s a tad confusing needing to do the math of adding and removing capabilities",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 77
+      },
+      "revId": "0ec862d37dc2c5be1cbdc4170b983a74500d86d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62be4ddf_189fca47",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-12T00:08:13Z",
+      "side": 1,
+      "message": "Can we create a new VcnContext, and a new UnderlyingNetworkTracker as local variables? so we don\u0027t have to reset things?",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 23
+      },
+      "revId": "0ec862d37dc2c5be1cbdc4170b983a74500d86d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4632373d_1557a5ec",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-12T00:08:13Z",
+      "side": 1,
+      "message": "And if it\u0027s easier, feel free to just verify that this uses the test mode route selection request (i.e, omit the bringup request checks). for the purposes of test mode, that\u0027s about all we care about.\n\nThe bonus is that we also can avoid resetting the connectivityManager",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 39
+      },
+      "revId": "0ec862d37dc2c5be1cbdc4170b983a74500d86d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
