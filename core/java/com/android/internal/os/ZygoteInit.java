@@ -60,6 +60,7 @@ import com.android.internal.util.Preconditions;
 
 import dalvik.system.DexFile;
 import dalvik.system.VMRuntime;
+import dalvik.system.VMRuntime.OnHiddenApiUsedListener;
 import dalvik.system.ZygoteHooks;
 
 import libcore.io.IoUtils;
@@ -607,8 +608,8 @@ public class ZygoteInit {
      * Sets the implementation to be used for logging hidden API accesses
      * @param logger the implementation of the VMRuntime.HiddenApiUsageLogger interface
      */
-    public static void setHiddenApiUsageLogger(VMRuntime.HiddenApiUsageLogger logger) {
-        VMRuntime.getRuntime().setHiddenApiUsageLogger(logger);
+    public static void setHiddenApiUsageLogger(OnHiddenApiUsedListener logger) {
+        VMRuntime.getRuntime().setHiddenApiUsageListener(logger);
     }
 
     /**

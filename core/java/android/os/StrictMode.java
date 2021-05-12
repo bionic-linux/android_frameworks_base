@@ -2034,10 +2034,8 @@ public final class StrictMode {
 
             if ((sVmPolicy.mask & DETECT_VM_NON_SDK_API_USAGE) != 0) {
                 VMRuntime.setNonSdkApiUsageConsumer(sNonSdkApiUsageConsumer);
-                VMRuntime.setDedupeHiddenApiWarnings(false);
             } else {
                 VMRuntime.setNonSdkApiUsageConsumer(null);
-                VMRuntime.setDedupeHiddenApiWarnings(true);
             }
 
             setBlockGuardVmPolicy(sVmPolicy.mask);

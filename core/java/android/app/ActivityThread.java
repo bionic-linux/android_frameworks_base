@@ -187,6 +187,7 @@ import dalvik.system.AppSpecializationHooks;
 import dalvik.system.CloseGuard;
 import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
+import dalvik.system.VMRuntime.ProcessState;
 
 import libcore.io.ForwardingOs;
 import libcore.io.IoUtils;
@@ -3151,9 +3152,10 @@ public final class ActivityThread extends ClientTransactionHandler {
     private void updateVmProcessState(int processState) {
         // TODO: Tune this since things like gmail sync are important background but not jank
         // perceptible.
-        final int state = processState <= ActivityManager.PROCESS_STATE_IMPORTANT_FOREGROUND
-                ? VM_PROCESS_STATE_JANK_PERCEPTIBLE
-                : VM_PROCESS_STATE_JANK_IMPERCEPTIBLE;
+        final ProcessState state =
+                processState <= ActivityManager.PROCESS_STATE_IMPORTANT_FOREGROUND
+                ? ProcessState.JANK_PERCEPTIBLE
+                : ProcessState.JANK_IMPERCEPTIBLE;
         VMRuntime.getRuntime().updateProcessState(state);
     }
 
