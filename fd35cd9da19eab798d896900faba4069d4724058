@@ -138,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "592c4a65_3f8df6e9",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-12T09:12:07Z",
+      "side": 1,
+      "message": "IIUC, taking #3 means that we need to add a mapping between policy meteredness and template meteredness. But previous the template is using METERED_ALL for all of the template, it means that we need to map\nRead from old policy: (before S)\nfalse -\u003e METERED_ALL\ntrue -\u003e METERED_YES\n\nBut Is it a problem to save a new policy when caller add policy with METERED_ALL v.s  METERED_NO? It seems to me it will get confusion in the future.",
+      "parentUuid": "5d586595_aac54f0e",
+      "range": {
+        "startLine": 2639,
+        "startChar": 16,
+        "endLine": 2639,
+        "endChar": 56
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b5f8480a_432a262d",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 19
