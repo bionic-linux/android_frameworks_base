@@ -619,7 +619,7 @@ public final class ProcessStats implements Parcelable {
     public boolean evaluateSystemProperties(boolean update) {
         boolean changed = false;
         String runtime = SystemProperties.get("persist.sys.dalvik.vm.lib.2",
-                VMRuntime.getRuntime().vmLibrary());
+                VMRuntime.getRuntime().getVmLibrary());
         if (!Objects.equals(runtime, mRuntime)) {
             changed = true;
             if (update) {

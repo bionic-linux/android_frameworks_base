@@ -187,7 +187,7 @@ public final class LoadedApk {
         // 32 and 64 bit shared libraries, we might need to choose the secondary
         // depending on what the current runtime's instruction set is.
         if (info.primaryCpuAbi != null && info.secondaryCpuAbi != null) {
-            final String runtimeIsa = VMRuntime.getRuntime().vmInstructionSet();
+            final String runtimeIsa = VMRuntime.getRuntime().getVmInstructionSet();
 
             // Get the instruction set that the libraries of secondary Abi is supported.
             // In presence of a native bridge this might be different than the one secondary Abi used.

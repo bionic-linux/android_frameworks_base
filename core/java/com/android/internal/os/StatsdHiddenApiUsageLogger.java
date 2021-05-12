@@ -23,9 +23,9 @@ import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.FrameworkStatsLog;
 
-import dalvik.system.VMRuntime.HiddenApiUsageLogger;
+import dalvik.system.VMRuntime.OnHiddenApiUsedListener;
 
-class StatsdHiddenApiUsageLogger implements HiddenApiUsageLogger {
+class StatsdHiddenApiUsageLogger implements OnHiddenApiUsedListener {
 
     private final MetricsLogger mMetricsLogger = new MetricsLogger();
     private static final StatsdHiddenApiUsageLogger sInstance = new StatsdHiddenApiUsageLogger();
@@ -41,7 +41,7 @@ class StatsdHiddenApiUsageLogger implements HiddenApiUsageLogger {
         return StatsdHiddenApiUsageLogger.sInstance;
     }
 
-    public void hiddenApiUsed(int sampledValue, String packageName, String signature,
+    public void onHiddenApiUsed(int sampledValue, String packageName, String signature,
             int accessMethod, boolean accessDenied) {
         if (sampledValue < mHiddenApiAccessLogSampleRate) {
             logUsage(packageName, signature, accessMethod, accessDenied);
@@ -54,18 +54,18 @@ class StatsdHiddenApiUsageLogger implements HiddenApiUsageLogger {
 
     private void logUsage(String packageName, String signature, int accessMethod,
             boolean accessDenied) {
-        int accessMethodMetric = HiddenApiUsageLogger.ACCESS_METHOD_NONE;
+        int accessMethodMetric = OnHiddenApiUsedListener.ACCESS_METHOD_NONE;
         switch(accessMethod) {
-            case HiddenApiUsageLogger.ACCESS_METHOD_NONE:
+            case OnHiddenApiUsedListener.ACCESS_METHOD_NONE:
                 accessMethodMetric = MetricsEvent.ACCESS_METHOD_NONE;
                 break;
-            case HiddenApiUsageLogger.ACCESS_METHOD_REFLECTION:
+            case OnHiddenApiUsedListener.ACCESS_METHOD_REFLECTION:
                 accessMethodMetric = MetricsEvent.ACCESS_METHOD_REFLECTION;
                 break;
-            case HiddenApiUsageLogger.ACCESS_METHOD_JNI:
+            case OnHiddenApiUsedListener.ACCESS_METHOD_JNI:
                 accessMethodMetric = MetricsEvent.ACCESS_METHOD_JNI;
                 break;
-            case HiddenApiUsageLogger.ACCESS_METHOD_LINKING:
+            case OnHiddenApiUsedListener.ACCESS_METHOD_LINKING:
                 accessMethodMetric = MetricsEvent.ACCESS_METHOD_LINKING;
                 break;
         }
@@ -86,16 +86,16 @@ class StatsdHiddenApiUsageLogger implements HiddenApiUsageLogger {
     private void newLogUsage(String signature, int accessMethod, boolean accessDenied) {
         int accessMethodProto = FrameworkStatsLog.HIDDEN_API_USED__ACCESS_METHOD__NONE;
         switch(accessMethod) {
-            case HiddenApiUsageLogger.ACCESS_METHOD_NONE:
+            case OnHiddenApiUsedListener.ACCESS_METHOD_NONE:
                 accessMethodProto = FrameworkStatsLog.HIDDEN_API_USED__ACCESS_METHOD__NONE;
                 break;
-            case HiddenApiUsageLogger.ACCESS_METHOD_REFLECTION:
+            case OnHiddenApiUsedListener.ACCESS_METHOD_REFLECTION:
                 accessMethodProto = FrameworkStatsLog.HIDDEN_API_USED__ACCESS_METHOD__REFLECTION;
                 break;
-            case HiddenApiUsageLogger.ACCESS_METHOD_JNI:
+            case OnHiddenApiUsedListener.ACCESS_METHOD_JNI:
                 accessMethodProto = FrameworkStatsLog.HIDDEN_API_USED__ACCESS_METHOD__JNI;
                 break;
-            case HiddenApiUsageLogger.ACCESS_METHOD_LINKING:
+            case OnHiddenApiUsedListener.ACCESS_METHOD_LINKING:
                 accessMethodProto = FrameworkStatsLog.HIDDEN_API_USED__ACCESS_METHOD__LINKING;
                 break;
         }

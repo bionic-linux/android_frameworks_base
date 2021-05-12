@@ -56,7 +56,7 @@ public class SystemServerDexLoadReporter implements BaseDexClassLoader.Reporter 
             mPackageManager.notifyDexLoad(
                     PLATFORM_PACKAGE_NAME,
                     classLoaderContextMap,
-                    VMRuntime.getRuntime().vmInstructionSet());
+                    VMRuntime.getRuntime().getVmInstructionSet());
         } catch (RemoteException ignored) {
             // We're in system server, it can't happen.
         }

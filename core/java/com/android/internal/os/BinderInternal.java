@@ -175,7 +175,7 @@ public class BinderInternal {
 
     public static void forceGc(String reason) {
         EventLog.writeEvent(2741, reason);
-        VMRuntime.getRuntime().requestConcurrentGC();
+        VMRuntime.getRuntime().requestConcurrentGc();
     }
 
     static void forceBinderGc() {

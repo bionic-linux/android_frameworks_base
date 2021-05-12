@@ -133,7 +133,7 @@ public class DdmHandleHello extends ChunkHandler {
         VMRuntime vmRuntime = VMRuntime.getRuntime();
         String instructionSetDescription =
             vmRuntime.is64Bit() ? "64-bit" : "32-bit";
-        String vmInstructionSet = vmRuntime.vmInstructionSet();
+        String vmInstructionSet = vmRuntime.getVmInstructionSet();
         if (vmInstructionSet != null && vmInstructionSet.length() > 0) {
           instructionSetDescription += " (" + vmInstructionSet + ")";
         }
