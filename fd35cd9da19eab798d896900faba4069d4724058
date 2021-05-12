@@ -114,6 +114,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5d586595_aac54f0e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-05-12T08:44:24Z",
+      "side": 1,
+      "message": "I knew the meteredness is stored inside the policy instead of template.\nBut didn\u0027t know it is deprecated.\n\nIf so, it seems to me we can still use the bit in policy until it is fully deprecated, since it has convert function between subscriptionPlan.\n\nIIUC currently we have the logic inside matchesMobile to force all mobile template to match metered network. Which I think is a pretty bad design that block us from providing the functionality of query non-metered data usage (b/183776809) and we would like to address it soon.\n\nSo personally I\u0027ll vote for #3 if it is feasible.",
+      "parentUuid": "0a20b217_3c391445",
+      "range": {
+        "startLine": 2639,
+        "startChar": 16,
+        "endLine": 2639,
+        "endChar": 56
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b5f8480a_432a262d",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 19
