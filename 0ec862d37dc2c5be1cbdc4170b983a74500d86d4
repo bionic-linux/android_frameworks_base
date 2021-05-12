@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d546b9f_5b27f039",
+        "filename": "services/core/java/com/android/server/vcn/UnderlyingNetworkTracker.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-12T02:42:27Z",
+      "side": 1,
+      "message": "resolved in aosp/1704175",
+      "parentUuid": "227a0b4a_6ca9ddb8",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 77
+      },
+      "revId": "0ec862d37dc2c5be1cbdc4170b983a74500d86d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "62be4ddf_189fca47",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a32328f_0f04130b",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-12T02:42:27Z",
+      "side": 1,
+      "message": "resolved in aosp/1704175",
+      "parentUuid": "62be4ddf_189fca47",
+      "range": {
+        "startLine": 166,
+        "startChar": 8,
+        "endLine": 166,
+        "endChar": 23
+      },
+      "revId": "0ec862d37dc2c5be1cbdc4170b983a74500d86d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4632373d_1557a5ec",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-05-12T00:08:13Z",
       "side": 1,
       "message": "And if it\u0027s easier, feel free to just verify that this uses the test mode route selection request (i.e, omit the bringup request checks). for the purposes of test mode, that\u0027s about all we care about.\n\nThe bonus is that we also can avoid resetting the connectivityManager",
+      "range": {
+        "startLine": 178,
+        "startChar": 8,
+        "endLine": 178,
+        "endChar": 39
+      },
+      "revId": "0ec862d37dc2c5be1cbdc4170b983a74500d86d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "248d6f1a_c6d6d618",
+        "filename": "tests/vcn/java/com/android/server/vcn/UnderlyingNetworkTrackerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1463964
+      },
+      "writtenOn": "2021-05-12T02:42:27Z",
+      "side": 1,
+      "message": "resolved in aosp/1704175",
+      "parentUuid": "4632373d_1557a5ec",
       "range": {
         "startLine": 178,
         "startChar": 8,
