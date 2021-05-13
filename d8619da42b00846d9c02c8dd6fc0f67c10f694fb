@@ -16,6 +16,29 @@
       "message": "The new patch is to update the test due to the change of patchset3.",
       "revId": "d8619da42b00846d9c02c8dd6fc0f67c10f694fb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82a9d6b2_3781400f",
+        "filename": "services/core/java/com/android/server/ConnectivityService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7262,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-13T09:29:30Z",
+      "side": 1,
+      "message": "It looks like this will send a proxy broadcast even in the common case where there is no proxy on any network on the device. Can we avoid this?\n\nIn practice I think there are only 2 cases where this matters.\n1. One or more UIDs were not subject to the VPN, and are now subject to the VPN.\n2. One or more UIDs were subject to the VPN, and are no longer subject to the VPN.\n\nIn both cases the UIDs will be switching from a default network to the VPN, or from the VPN to a default network.\n\nIn that case you could check whether any of the default networks had a proxy that is different from the VPN proxy. If they don\u0027t, then don\u0027t send the broadcast.",
+      "range": {
+        "startLine": 7262,
+        "startChar": 12,
+        "endLine": 7262,
+        "endChar": 47
+      },
+      "revId": "d8619da42b00846d9c02c8dd6fc0f67c10f694fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
