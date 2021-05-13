@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d54c9f38_0d82b74b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-05-13T00:00:20Z",
+      "side": 1,
+      "message": "I am having multiple meetings with T-Mobile on this. I am educating them to understand this problem that will have more impact on the network rather than device. They are taking time to digest and i hope they will get back with a plan for long term solution.\n\nI also discussed the same with Robert, Amruth, Radhika and Brad. As a short term solution there are no risks with this change as this API is being opened up only on IMS interface and applications with restricted network access will have access to it.\n\nWe are doing our best effort to match filter based on the remote address to make this use case work based on the current implementation of the network infrastructure.",
+      "parentUuid": "05204e8e_28642f8f",
+      "revId": "c223d72c842d22f4e7ae4b9aeb99632b39cb7dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0dccbf4d_5be717f1",
@@ -31,6 +49,30 @@
       "writtenOn": "2021-05-10T12:34:31Z",
       "side": 1,
       "message": "Please create a new final int instead of removing the final modifier. This makes it easier for your reviewers to check what is happening with which var.",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 11
+      },
+      "revId": "c223d72c842d22f4e7ae4b9aeb99632b39cb7dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f03426ff_da65cdcb",
+        "filename": "packages/Connectivity/framework/src/android/net/QosSocketInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-05-13T00:00:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dccbf4d_5be717f1",
       "range": {
         "startLine": 128,
         "startChar": 8,
@@ -64,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f444a73c_8d984596",
+        "filename": "packages/Connectivity/framework/src/android/net/QosSocketInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-05-13T00:00:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b05e366_a2f7f010",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 136,
+        "endChar": 14
+      },
+      "revId": "c223d72c842d22f4e7ae4b9aeb99632b39cb7dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0befb56_a6ca2b7d",
@@ -77,6 +143,30 @@
       "writtenOn": "2021-05-10T12:34:31Z",
       "side": 1,
       "message": "Please declare a new final instead",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 12
+      },
+      "revId": "c223d72c842d22f4e7ae4b9aeb99632b39cb7dcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "165084a5_1afdf566",
+        "filename": "packages/Connectivity/framework/src/android/net/QosSocketInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2021-05-13T00:00:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0befb56_a6ca2b7d",
       "range": {
         "startLine": 161,
         "startChar": 8,
