@@ -22,6 +22,30 @@
       },
       "revId": "b03b55526dec110e11c43ed048ebe9f12f52dcbf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bbdde09_72799a83",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 2663,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-13T02:25:13Z",
+      "side": 1,
+      "message": "I take the option#1 on current implementation before I see your comment.\nBut I think we need to discuss with Lorenzo and make the decision.\nBooked the meeting on Friday.\nThanks",
+      "parentUuid": "5c3460ee_0d332fc0",
+      "range": {
+        "startLine": 2662,
+        "startChar": 13,
+        "endLine": 2663,
+        "endChar": 51
+      },
+      "revId": "b03b55526dec110e11c43ed048ebe9f12f52dcbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
