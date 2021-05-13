@@ -7255,6 +7255,12 @@ public class ConnectivityService extends IConnectivityManager.Stub
 
     private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
             NetworkCapabilities newNc) {
+        // Send a proxy broadcast when there is any app which is added/removed from the VPN, so
+        // that the app can update its proxy data.
+        if (nai.isVPN() && (prevNc != null && newNc != null && !prevNc.equalsUids(newNc))
+                || (prevNc == null && newNc != null && newNc.getUids() != null)) {
+            mProxyTracker.sendProxyBroadcast();
+        }
         Set<UidRange> prevRanges = null == prevNc ? null : prevNc.getUidRanges();
         Set<UidRange> newRanges = null == newNc ? null : newNc.getUidRanges();
         if (null == prevRanges) prevRanges = new ArraySet<>();

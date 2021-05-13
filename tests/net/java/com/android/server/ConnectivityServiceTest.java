@@ -473,6 +473,7 @@ public class ConnectivityServiceTest {
     @Mock VpnProfileStore mVpnProfileStore;
     @Mock SystemConfigManager mSystemConfigManager;
     @Mock Resources mResources;
+    @Mock ProxyTracker mProxyTracker;
 
     private ArgumentCaptor<ResolverParamsParcel> mResolverParamsParcelCaptor =
             ArgumentCaptor.forClass(ResolverParamsParcel.class);
@@ -1628,7 +1629,7 @@ public class ConnectivityServiceTest {
         doReturn(mNetIdManager).when(deps).makeNetIdManager();
         doReturn(mNetworkStack).when(deps).getNetworkStack();
         doReturn(mSystemProperties).when(deps).getSystemProperties();
-        doReturn(mock(ProxyTracker.class)).when(deps).makeProxyTracker(any(), any());
+        doReturn(mProxyTracker).when(deps).makeProxyTracker(any(), any());
         doReturn(true).when(deps).queryUserAccess(anyInt(), any(), any());
         doAnswer(inv -> {
             mPolicyTracker = new WrappedMultinetworkPolicyTracker(
@@ -10037,6 +10038,7 @@ public class ConnectivityServiceTest {
         Set<UidRange> vpnRanges = Collections.singleton(vpnRange);
         mMockVpn.establish(lp, VPN_UID, vpnRanges);
         assertVpnUidRangesUpdated(true, vpnRanges, VPN_UID);
+        verify(mProxyTracker, times(1)).sendProxyBroadcast();
 
         reset(mMockNetd);
         // Update to new range which is old range minus APP1, i.e. only APP2
@@ -10048,6 +10050,7 @@ public class ConnectivityServiceTest {
 
         assertVpnUidRangesUpdated(true, newRanges, VPN_UID);
         assertVpnUidRangesUpdated(false, vpnRanges, VPN_UID);
+        verify(mProxyTracker, times(2)).sendProxyBroadcast();
     }
 
     @Test
