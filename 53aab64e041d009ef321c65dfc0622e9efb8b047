@@ -229,6 +229,30 @@
       },
       "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "766d9908_b69c8196",
+        "filename": "services/core/java/com/android/server/connectivity/NetworkOffer.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-13T13:47:54Z",
+      "side": 1,
+      "message": "(updated change with clean cherry-pick of merged change: resolving)",
+      "parentUuid": "40c44dbd_eb910782",
+      "range": {
+        "startLine": 56,
+        "startChar": 28,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "53aab64e041d009ef321c65dfc0622e9efb8b047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
