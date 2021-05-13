@@ -16,6 +16,24 @@
       "message": "Thanks for the suggestion! I think that compiler optimization makes these two versions equivalent, however, so this patch is not necessary.",
       "revId": "ed084f8bf1307824c876e87879c1ebe875e8b06a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80a16522_d2cfcf31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1815899
+      },
+      "writtenOn": "2021-05-13T14:11:31Z",
+      "side": 1,
+      "message": "Ok, thanks for the info!",
+      "parentUuid": "efb0d1b6_9a51ed2f",
+      "revId": "ed084f8bf1307824c876e87879c1ebe875e8b06a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
