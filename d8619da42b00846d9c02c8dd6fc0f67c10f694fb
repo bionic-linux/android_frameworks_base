@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93168606_70b1d6ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-13T02:37:03Z",
+      "side": 1,
+      "message": "The new patch is to update the test due to the change of patchset3.",
+      "revId": "d8619da42b00846d9c02c8dd6fc0f67c10f694fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
