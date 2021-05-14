@@ -162,6 +162,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "12871d3d_3a0803bf",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-14T09:48:47Z",
+      "side": 1,
+      "message": "Update the conclusion after discussing with Junyu.\n\nWe agree to take option#1 which means thatNetworkPolicyManagementService need to store meteredness of NetworkTemplate when storing NetworkPolicy to disk.\n\nReason:\n1. If we plan to take option#3, it needs to design a mapping when metered in NetworkPolicy \u003d false.\ni.e (metered false in Networkpolicy to map METERED_ALL or METERED_NO in NetworkTemplate).\nWe discussed we can assume the previous possible policies should be METERED_ALL because the METERED_NO never store back to disk. But it means that we need to get a strange mapping,i.e. metered false in Networkpolicy to map METERED_ALL in NetworkTemplate.\n\nBut if we plan to get map as \"metered false in Networkpolicy to map METERED_NO in NetworkTemplate.\", it will break the old policy user. (It is not aosp scenario but it may happen)\n\nTo make sure backward compatible for all policies, it is more safer to store correct value in NetworkTemplate than using a strange mapping for metered in NetworkPolicy since the meteredness doesn\u0027t get the exactly mapping between NetworkPolicy and NetworkTemplate now.\n\ni.e Take option#3 is no risk for this change and it doesn\u0027t break anything in this CL#.\n\n2. Even if we consider to get correct mapping for meteredness between NetworkPolicy and NetworkTemplate. It seems that we should take meteredness to store in NetworkTemplate because it used in both function. (data usage and network policy)\n\nPS:The meteredness of NetworkTemplate was added in 2018 and it used for usage and policy function. But metered in NetworkPolicy was add in 2011 and now it was claimed @Deprecate. It seems that the right way should take the new design and drop the old design now.\n\nSee the last patch which is implementing with option#3.",
+      "parentUuid": "592c4a65_3f8df6e9",
+      "range": {
+        "startLine": 2639,
+        "startChar": 16,
+        "endLine": 2639,
+        "endChar": 56
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b5f8480a_432a262d",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 19
