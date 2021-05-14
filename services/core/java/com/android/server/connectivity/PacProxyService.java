@@ -333,6 +333,9 @@ public class PacProxyService extends IPacProxyManager.Stub {
 
             @Override
             public void onServiceConnected(ComponentName component, IBinder binder) {
+                // The service just started, so it doesn't know about any current PAC. Reset
+                // mCurrentPac.
+                mCurrentPac = null;
                 synchronized (mProxyLock) {
                     try {
                         Log.d(TAG, "Adding service " + PAC_SERVICE_NAME + " "
