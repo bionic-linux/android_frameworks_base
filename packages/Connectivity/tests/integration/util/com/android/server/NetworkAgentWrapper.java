@@ -244,6 +244,10 @@ public class NetworkAgentWrapper implements TestableNetworkCallback.HasNetwork {
         }
     }
 
+    public void setLinkProperties(LinkProperties lp) {
+        mNetworkAgent.sendLinkProperties(lp);
+    }
+
     public void connect() {
         if (!mConnected.compareAndSet(false /* expect */, true /* update */)) {
             // compareAndSet returns false when the value couldn't be updated because it did not
