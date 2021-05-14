@@ -345,6 +345,13 @@ public class PacProxyService extends IPacProxyManager.Stub {
                     if (mProxyService == null) {
                         Log.e(TAG, "No proxy service");
                     } else {
+                        // If current PAC is not null implies that PacService might exit for any
+                        // reason. The download task will early-outs without actually calling
+                        // SetCurrentProxyScript so set current PAC to PacService again when it
+                        // reconnects.
+                        if (mCurrentPac != null) {
+                            setCurrentProxyScript(mCurrentPac);
+                        }
                         mNetThreadHandler.post(mPacDownloader);
                     }
                 }
