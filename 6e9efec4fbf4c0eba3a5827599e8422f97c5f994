@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fff9e4b_aa4c8460",
+        "filename": "obex/javax/obex/ClientSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-05-15T00:50:39Z",
+      "side": 1,
+      "message": "Not sure if we need to modify this for a ClientSession end. Would the MAX_CLIENT_PACKET_SIZE be more appropriate?",
+      "revId": "6e9efec4fbf4c0eba3a5827599e8422f97c5f994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

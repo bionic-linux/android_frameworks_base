@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "026372a0_e8bef157",
+        "filename": "obex/javax/obex/ClientSession.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-05-15T00:50:39Z",
+      "side": 0,
+      "message": "Once again, would MAX_CLIENT_PACKET_SIZE be appropriate here instead of removing it?",
+      "revId": "62bc98dd5494a01c9cc1f84c358840b7bc465a11",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
