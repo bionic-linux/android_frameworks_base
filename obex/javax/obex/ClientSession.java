@@ -34,12 +34,12 @@
 
 package javax.obex;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import android.util.Log;
 
 /**
  * This class in an implementation of the OBEX ClientSession.
@@ -139,7 +139,7 @@ public final class ClientSession extends ObexSession {
 
         // Since we are not yet connected, the peer max packet size is unknown,
         // hence we are only guaranteed the server will use the first 7 bytes.
-        if ((requestPacket.length + 3) > ObexHelper.MAX_PACKET_SIZE_INT) {
+        if ((requestPacket.length + 3) > ObexHelper.MAX_OUTGOING_PACKET_SIZE) {
             throw new IOException("Packet size exceeds max packet size for connect");
         }
 
@@ -458,14 +458,6 @@ public final class ClientSession extends ObexSession {
      */
     public boolean sendRequest(int opCode, byte[] head, HeaderSet header,
             PrivateInputStream privateInput, boolean srmActive) throws IOException {
-        //check header length with local max size
-        if (head != null) {
-            if ((head.length + 3) > ObexHelper.MAX_PACKET_SIZE_INT) {
-                // TODO: This is an implementation limit - not a specification requirement.
-                throw new IOException("header too large ");
-            }
-        }
-
         boolean skipSend = false;
         boolean skipReceive = false;
         if (srmActive == true) {

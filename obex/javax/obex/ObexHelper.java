@@ -34,6 +34,8 @@
 
 package javax.obex;
 
+import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -42,8 +44,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
-import android.util.Log;
 
 /**
  * This class defines a set of helper methods for the implementation of Obex.
@@ -65,7 +65,7 @@ public final class ObexHelper {
     }
 
     /**
-     * The maximum packet size for OBEX packets that this client can handle. At
+     * The maximum size for incoming OBEX packets that this client can handle. At
      * present, this must be changed for each port. TODO: The max packet size
      * should be the Max incoming MTU minus TODO: L2CAP package headers and
      * RFCOMM package headers. TODO: Retrieve the max incoming MTU from TODO:
@@ -75,7 +75,12 @@ public final class ObexHelper {
     /*
      * android note set as 0xFFFE to match remote MPS
      */
-    public static final int MAX_PACKET_SIZE_INT = 0xFFFE;
+    public static final int MAX_INCOMING_PACKET_SIZE = 0xFFFE;
+
+    /**
+     * The maximum packet size for outgoing OBEX packets. This is equivalent to the L2CAP MTU.
+     */
+    public static final int MAX_OUTGOING_PACKET_SIZE = 1691;
 
     // The minimum allowed max packet size is 255 according to the OBEX specification
     public static final int LOWER_LIMIT_MAX_PACKET_SIZE = 255;
@@ -1069,30 +1074,31 @@ public final class ObexHelper {
      */
     public static int getMaxTxPacketSize(ObexTransport transport) {
         int size = transport.getMaxTransmitPacketSize();
-        return validateMaxPacketSize(size);
+        return validateMaxPacketSize(size, MAX_OUTGOING_PACKET_SIZE);
     }
 
     /**
      * Return the maximum allowed OBEX packet to receive - used in OBEX connect.
      * @param transport
-     * @return he maximum allowed OBEX packet to receive
+     * @return the maximum allowed OBEX packet to receive
      */
     public static int getMaxRxPacketSize(ObexTransport transport) {
         int size = transport.getMaxReceivePacketSize();
-        return validateMaxPacketSize(size);
+        return validateMaxPacketSize(size, MAX_INCOMING_PACKET_SIZE);
     }
 
-    private static int validateMaxPacketSize(int size) {
-        if(VDBG && (size > MAX_PACKET_SIZE_INT)) Log.w(TAG,
-                "The packet size supported for the connection (" + size + ") is larger"
-                + " than the configured OBEX packet size: " + MAX_PACKET_SIZE_INT);
-        if(size != -1) {
-            if(size < LOWER_LIMIT_MAX_PACKET_SIZE) {
+    private static int validateMaxPacketSize(int size, int maxSize) {
+        if (VDBG && (size > maxSize)) {
+            Log.w(TAG, "The packet size supported for the connection (" + size + ") is larger"
+                    + " than the max incoming OBEX packet size: " + maxSize);
+        }
+        if (size != -1) {
+            if (size < LOWER_LIMIT_MAX_PACKET_SIZE) {
                 throw new IllegalArgumentException(size + " is less that the lower limit: "
                         + LOWER_LIMIT_MAX_PACKET_SIZE);
             }
             return size;
         }
-        return MAX_PACKET_SIZE_INT;
+        return maxSize;
     }
 }

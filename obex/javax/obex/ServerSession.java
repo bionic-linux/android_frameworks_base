@@ -36,8 +36,8 @@ package javax.obex;
 
 import android.util.Log;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
@@ -558,8 +558,8 @@ public final class ServerSession extends ObexSession implements Runnable {
                 + " MaxLength: " + mMaxPacketLength + " flags: " + flags);
 
         // should we check it?
-        if (mMaxPacketLength > ObexHelper.MAX_PACKET_SIZE_INT) {
-            mMaxPacketLength = ObexHelper.MAX_PACKET_SIZE_INT;
+        if (mMaxPacketLength > ObexHelper.MAX_OUTGOING_PACKET_SIZE) {
+            mMaxPacketLength = ObexHelper.MAX_OUTGOING_PACKET_SIZE;
         }
 
         if(mMaxPacketLength > ObexHelper.getMaxTxPacketSize(mTransport)) {
