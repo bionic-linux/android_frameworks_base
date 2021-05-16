@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7538683_e8c9f8af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-16T14:05:23Z",
+      "side": 1,
+      "message": "The locking here is difficult to follow. In particular I think the use of mConnected without taking the lock is suspicious. I can\u0027t easily tell whether it\u0027s correct. It *might* be correct because of how all the surrounding code works, but even if it is, that isn\u0027t great because it will be very difficult for folks touching this code in the future to keep it correct.\n\nOut of curiosity: instead of doing this in the client, which has a very difficult threading model (most calls can be called on whatever thread the app wants), did you consider doing it in the service? That might be easier because everything runs on the same thread. It might be more complex to get all the state transitions right, though. I think you\u0027d basically have to start the daemon every time the first client asks the service to do something, and have the service send itself a message to stop the daemon every time removeRequestMap removes the last in-flight ID. Unfortunately you can\u0027t just start the daemon in storeRequestMap, because that is only called once the daemon has accepted a command.\n\nMaybe you could have:\n- A maybeStopDaemon methods that sends a message to the handler to stop the daemon if mIdToClientInfoMap is empty\n- A maybeStartDaemon method that starts the daemon if mIdToClientInfoMap is empty (and removes the messages to stop the daemon).\n\nThen you could call maybeStartDaemon in registerService, discoverServices, resolveService, updateService, and call maybeStopDaemon in removeRequestMap. If the existing refcounting is correct, then this should work. If it\u0027s not... I don\u0027t know what will happen.\n\nAlso, if registerService, discoverServices, resolveService, or updateService fail, then you\u0027d have to stop the daemon.\n\nNot sure whether it\u0027s better to try to fix the locking in this CL or to attempt to do this in the service. Generally speaking doing it in the service seems more appropriate than in a manager class running in application process and that can be killed at any time, but it\u0027s true that doing it in the service seems like a bigger change.",
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a2b4cc7_e8509c95",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-16T14:05:23Z",
+      "side": 1,
+      "message": "FWIW, we could use frameworks/base/core/java/com/android/internal/util/MessageUtils.java for this. Doesn\u0027t need to be in this CL.",
+      "range": {
+        "startLine": 218,
+        "startChar": 45,
+        "endLine": 218,
+        "endChar": 56
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7d95302_bc738dc1",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-16T14:05:23Z",
+      "side": 1,
+      "message": "What about threading? CountDownLatch is a synchronization primitive, so it\u0027s designed and expected to be used on multiple threads. But the mConnected member itself is not thread-safe because it\u0027s not volatile. If this member is thread-safe because it\u0027s only used under lock, then that should be stated here in a comment, or, better yet, using an @GuardedBy annotation. If it\u0027s not thread-safe, then that sounds like a bug.\n\nAlso: pre-existing, but since you\u0027re changing this code... calling this member \"mConnected\" makes it sound like it represents whether the service is connected. But it\u0027s actually a latch that tracks... well, something. Maybe call it mConnectedLatch?\n\nFWIW, there\u0027s no need to explicitly initialize to null here. That\u0027s guaranteed by the Java language spec.\n\nYou might well observe that if I had read the whole file I would have the answers to all the above questions. That is probably true. But I think it\u0027s important that someone looking at this code does not need to read the whole file in order to know these things. Also, the annotation has value in itself, because it makes it very clear to anyone touching or reviewing the code (or even to automated tools such as errorprone) that the member must never be touched without the lock.\n\nFinally - it would be good to explain what this is for and how it is used. Something like:\n\n    // Used to wait for mAsyncChannel to be connected.",
+      "range": {
+        "startLine": 264,
+        "startChar": 27,
+        "endLine": 264,
+        "endChar": 37
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "272c1bab_bd339598",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-16T14:05:23Z",
+      "side": 1,
+      "message": "Similarly: from which thread(s) is this allowed to be accessed? If it\u0027s accessed from multiple threads it should be protected by a lock (in which case, add an @GuardedBy) or, if accesses to it don\u0027t need to be ordered with accesses to anything else, it should be volatile.\n\nAlso, I think this needs a comment explaining what it\u0027s for. Soemthing like:\n\n    // True if the service is connected. The service is connected if there is at\n    // least one listener, or if the last listener was removed and a\n    // CONNECTION_CLEANUP message in the queue.",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 19
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3af44a87_8f05e23e",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-16T14:05:23Z",
+      "side": 1,
+      "message": "It doesn\u0027t look safe to access mConnected here without taking the lock. But if you do take the lock, the code will just block, because the await() is called with the lock held.\n\nNot sure what to do about this. You might need a redesign of the locking. Looking at AsyncChannel, it has a fullyConnectSync method that might help. But that might just have the same problem.",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 377,
+        "endChar": 21
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd58bb7f_c188c2be",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-16T14:05:23Z",
+      "side": 1,
+      "message": "What happens if we try to re-establish mAsyncChannel just after calling disconnect, but before CMD_CHANNEL_DISCONNECTED arrives? Is it safe to re-use an AsyncChannel like this?",
+      "range": {
+        "startLine": 379,
+        "startChar": 34,
+        "endLine": 379,
+        "endChar": 58
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db6a29c5_83399498",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-16T14:05:23Z",
+      "side": 1,
+      "message": "Pre-existing, but... do you know why the code doesn\u0027t use a \"private final Messenger mMessenger\" that is initialized in the constructor? That seems like a more usual pattern. I don\u0027t think it\u0027s necessary though, because getMessenger is basically idempotent (it just returns a new Messenger to the service\u0027s handler thread).",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 9
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08b68ffa_e44aa684",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-16T14:05:23Z",
+      "side": 1,
+      "message": "Optional: this might be clearer as IllegalStateException. I think it can be changed safely because ISE is a subclass of RuntimeException. Doesn\u0027t need to be in this CL.",
+      "range": {
+        "startLine": 542,
+        "startChar": 18,
+        "endLine": 542,
+        "endChar": 34
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
