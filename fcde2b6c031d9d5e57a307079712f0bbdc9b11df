@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a78aff26_4ee098cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-05-17T14:41:46Z",
+      "side": 1,
+      "message": "+Julia for code owner of symbols.xml",
+      "revId": "fcde2b6c031d9d5e57a307079712f0bbdc9b11df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
