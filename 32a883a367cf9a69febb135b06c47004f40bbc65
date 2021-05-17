@@ -118,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38b94be6_49450390",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3567,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2021-05-17T13:26:01Z",
+      "side": 1,
+      "message": "the tests that make the shortcut that RING is a UI Sound and thus volumeAdjustement is allowed are: (list may not be exhaustive)\n-testSetStreamVolumeInAlarmsOnlyMode\n-testSetStreamVolumeInPriorityOnlyMode\n-testSetStreamVolumeInTotalSilenceMode\n\nFor this reason, the making this API a testApi and modifying AudioManagerTest to ensure the stream is a Ui Sound (or ensuring volumeAllowedByDnd that could be also a testApi) may be a good improvement - can push to upstream separately.",
+      "parentUuid": "6875c676_75f4d123",
+      "range": {
+        "startLine": 3567,
+        "startChar": 0,
+        "endLine": 3567,
+        "endChar": 3
+      },
+      "revId": "32a883a367cf9a69febb135b06c47004f40bbc65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7c711e1_78ca5749",
