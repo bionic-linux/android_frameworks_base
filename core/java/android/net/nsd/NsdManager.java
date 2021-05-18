@@ -17,7 +17,6 @@
 package android.net.nsd;
 
 import static com.android.internal.util.Preconditions.checkArgument;
-import static com.android.internal.util.Preconditions.checkNotNull;
 import static com.android.internal.util.Preconditions.checkStringNotEmpty;
 
 import android.annotation.SdkConstant;
@@ -33,10 +32,12 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.AsyncChannel;
 import com.android.internal.util.Protocol;
 
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -158,6 +159,8 @@ public final class NsdManager {
      */
     public static final int NSD_STATE_ENABLED = 2;
 
+    private static final long CLEANUP_DELAY_MS = 3000;
+
     private static final int BASE = Protocol.BASE_NSD_MANAGER;
 
     /** @hide */
@@ -200,6 +203,9 @@ public final class NsdManager {
     public static final int RESOLVE_SERVICE_SUCCEEDED               = BASE + 20;
 
     /** @hide */
+    public static final int CONNECTION_CLEANUP                      = BASE + 21;
+
+    /** @hide */
     public static final int ENABLE                                  = BASE + 24;
     /** @hide */
     public static final int DISABLE                                 = BASE + 25;
@@ -229,6 +235,7 @@ public final class NsdManager {
         EVENT_NAMES.put(RESOLVE_SERVICE, "RESOLVE_SERVICE");
         EVENT_NAMES.put(RESOLVE_SERVICE_FAILED, "RESOLVE_SERVICE_FAILED");
         EVENT_NAMES.put(RESOLVE_SERVICE_SUCCEEDED, "RESOLVE_SERVICE_SUCCEEDED");
+        EVENT_NAMES.put(CONNECTION_CLEANUP, "CONNECTION_CLEANUP");
         EVENT_NAMES.put(ENABLE, "ENABLE");
         EVENT_NAMES.put(DISABLE, "DISABLE");
         EVENT_NAMES.put(NATIVE_DAEMON_EVENT, "NATIVE_DAEMON_EVENT");
@@ -249,13 +256,37 @@ public final class NsdManager {
     private final Context mContext;
 
     private int mListenerKey = FIRST_LISTENER_KEY;
+    @GuardedBy("mLock")
     private final SparseArray mListenerMap = new SparseArray();
     private final SparseArray<NsdServiceInfo> mServiceMap = new SparseArray<>();
-    private final Object mMapLock = new Object();
+    private final Object mLock = new Object();
 
     private final AsyncChannel mAsyncChannel = new AsyncChannel();
     private ServiceHandler mHandler;
-    private final CountDownLatch mConnected = new CountDownLatch(1);
+    // This latch will be created in maybeInitConnection() to wait
+    // for mAsyncChannel to be connected.
+    // The access sequence of this latch ensures that no parallel access occurs.
+    // It works as below,
+    // 1. App thread holds mLock and calls into maybeInitConnection(), which would
+    //    create the latch and call mAsyncChannel.connect() if mIsConnected is false.
+    //    Then app thread waits on the latch.
+    // 2. mHandler thread receives the CMD_CHANNEL_HALF_CONNECTED sent by the connect call in 1.
+    //    Then, to handle the event, mHandler thread sends CMD_CHANNEL_FULL_CONNECTION to the
+    //    remote NsdService.
+    // 3. mHandler thread receives CMD_CHANNEL_FULLY_CONNECTED sent by the remote NsdService.
+    //    Then mHandler thread countdown the latch created in 1. to notify the app thread mentioned
+    //    in 1. that the mAsyncChannel is connected.
+    // 4. The app thread mentioned in 1. recycles the latch and set mIsConnected to true.
+    private CountDownLatch mConnectedLatch;
+    // True if the service is connected. The service is connected if there is at
+    // least one listener, or if the last listener was removed and a
+    // CONNECTION_CLEANUP message in the queue.
+    @GuardedBy("mLock")
+    private boolean mIsConnected = false;
+
+    private final long mCleanupDelayMs;
+
+    private final Messenger mMessenger;
 
     /**
      * Create a new Nsd instance. Applications use
@@ -266,9 +297,24 @@ public final class NsdManager {
      * is a system private class.
      */
     public NsdManager(Context context, INsdManager service) {
+        this(context, service, CLEANUP_DELAY_MS);
+    }
+
+    /**
+     * @hide
+     */
+    @VisibleForTesting
+    public NsdManager(Context context, INsdManager service, long cleanupDelayMs) {
         mService = service;
         mContext = context;
-        init();
+        mCleanupDelayMs = cleanupDelayMs;
+        HandlerThread t = new HandlerThread("NsdManager");
+        t.start();
+        mHandler = new ServiceHandler(t.getLooper());
+        mMessenger = getMessenger();
+        if (mMessenger == null) {
+            fatal("Failed to obtain service Messenger");
+        }
     }
 
     /**
@@ -352,17 +398,36 @@ public final class NsdManager {
                     mAsyncChannel.sendMessage(AsyncChannel.CMD_CHANNEL_FULL_CONNECTION);
                     return;
                 case AsyncChannel.CMD_CHANNEL_FULLY_CONNECTED:
-                    mConnected.countDown();
+                    if (mConnectedLatch != null) {
+                        mConnectedLatch.countDown();
+                    }
                     return;
                 case AsyncChannel.CMD_CHANNEL_DISCONNECTED:
-                    Log.e(TAG, "Channel lost");
+                    Log.d(TAG, "Channel lost");
+                    return;
+                case CONNECTION_CLEANUP:
+                    synchronized (mLock) {
+                        if (mListenerMap.size() == 0) {
+                            // The mAsyncChannel.disconnect() sends CMD_CHANNEL_DISCONNECTED to its
+                            // {Src,Dst} Messenger and cleans its internal members.
+                            // The CMD_CHANNEL_DISCONNECTED is guaranteed to be the next event for
+                            // this handler.
+                            // Because mListenerMap.size() == 0 means NsdService shouldn't send
+                            // any msgs to this handler if no bugs.
+                            // Also re-establishing mAsyncChannel should be safe after mIsConnected
+                            // set to false because mIsConnected is the guarded shared state
+                            // between app threads and this handler thread.
+                            mAsyncChannel.disconnect();
+                            mIsConnected = false;
+                        }
+                    }
                     return;
                 default:
                     break;
             }
             final Object listener;
             final NsdServiceInfo ns;
-            synchronized (mMapLock) {
+            synchronized (mLock) {
                 listener = mListenerMap.get(key);
                 ns = mServiceMap.get(key);
             }
@@ -433,6 +498,10 @@ public final class NsdManager {
         }
     }
 
+    private void sendMessageDelayed(int what, long delayMillis) {
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(what), delayMillis);
+    }
+
     private int nextListenerKey() {
         // Ensure mListenerKey >= FIRST_LISTENER_KEY;
         mListenerKey = Math.max(FIRST_LISTENER_KEY, mListenerKey + 1);
@@ -443,9 +512,14 @@ public final class NsdManager {
     private int putListener(Object listener, NsdServiceInfo s) {
         checkListener(listener);
         final int key;
-        synchronized (mMapLock) {
+        synchronized (mLock) {
             int valueIndex = mListenerMap.indexOfValue(listener);
             checkArgument(valueIndex == -1, "listener already in use");
+
+            if (mListenerMap.size() == 0) {
+                maybeInitConnection();
+            }
+            mHandler.removeMessages(CONNECTION_CLEANUP);
             key = nextListenerKey();
             mListenerMap.put(key, listener);
             mServiceMap.put(key, s);
@@ -454,15 +528,18 @@ public final class NsdManager {
     }
 
     private void removeListener(int key) {
-        synchronized (mMapLock) {
+        synchronized (mLock) {
             mListenerMap.remove(key);
             mServiceMap.remove(key);
+            if (mListenerMap.size() == 0) {
+                sendMessageDelayed(CONNECTION_CLEANUP, mCleanupDelayMs);
+            }
         }
     }
 
     private int getListenerKey(Object listener) {
         checkListener(listener);
-        synchronized (mMapLock) {
+        synchronized (mLock) {
             int valueIndex = mListenerMap.indexOfValue(listener);
             checkArgument(valueIndex != -1, "listener not registered");
             return mListenerMap.keyAt(valueIndex);
@@ -477,25 +554,27 @@ public final class NsdManager {
     /**
      * Initialize AsyncChannel
      */
-    private void init() {
-        final Messenger messenger = getMessenger();
-        if (messenger == null) {
-            fatal("Failed to obtain service Messenger");
+    @GuardedBy("mLock")
+    private void maybeInitConnection() {
+        if (mIsConnected) {
+            return;
         }
-        HandlerThread t = new HandlerThread("NsdManager");
-        t.start();
-        mHandler = new ServiceHandler(t.getLooper());
-        mAsyncChannel.connect(mContext, mHandler, messenger);
+        if (mConnectedLatch == null) {
+            mConnectedLatch = new CountDownLatch(1);
+        }
+        mAsyncChannel.connect(mContext, mHandler, mMessenger);
         try {
-            mConnected.await();
+            mConnectedLatch.await();
+            mConnectedLatch = null;
+            mIsConnected = true;
         } catch (InterruptedException e) {
-            fatal("Interrupted wait at init");
+            fatal("Interrupted wait at initConnection");
         }
     }
 
     private static void fatal(String msg) {
         Log.e(TAG, msg);
-        throw new RuntimeException(msg);
+        throw new IllegalStateException(msg);
     }
 
     /**
@@ -641,7 +720,7 @@ public final class NsdManager {
     }
 
     private static void checkListener(Object listener) {
-        checkNotNull(listener, "listener cannot be null");
+        Objects.requireNonNull(listener, "listener cannot be null");
     }
 
     private static void checkProtocol(int protocolType) {
@@ -649,7 +728,7 @@ public final class NsdManager {
     }
 
     private static void checkServiceInfo(NsdServiceInfo serviceInfo) {
-        checkNotNull(serviceInfo, "NsdServiceInfo cannot be null");
+        Objects.requireNonNull(serviceInfo, "NsdServiceInfo cannot be null");
         checkStringNotEmpty(serviceInfo.getServiceName(), "Service name cannot be empty");
         checkStringNotEmpty(serviceInfo.getServiceType(), "Service type cannot be empty");
     }
