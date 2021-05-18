@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27e078eb_320518ac",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-05-18T21:32:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a2b4cc7_e8509c95",
+      "range": {
+        "startLine": 218,
+        "startChar": 45,
+        "endLine": 218,
+        "endChar": 56
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7d95302_bc738dc1",
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "12908cac_c3cb689d",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-05-18T21:32:42Z",
+      "side": 1,
+      "message": "As discussed, add more comment to clarify the usage.",
+      "parentUuid": "a7d95302_bc738dc1",
+      "range": {
+        "startLine": 264,
+        "startChar": 27,
+        "endLine": 264,
+        "endChar": 37
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "272c1bab_bd339598",
         "filename": "core/java/android/net/nsd/NsdManager.java",
         "patchSetId": 3
@@ -77,6 +125,30 @@
       "writtenOn": "2021-05-16T14:05:23Z",
       "side": 1,
       "message": "Similarly: from which thread(s) is this allowed to be accessed? If it\u0027s accessed from multiple threads it should be protected by a lock (in which case, add an @GuardedBy) or, if accesses to it don\u0027t need to be ordered with accesses to anything else, it should be volatile.\n\nAlso, I think this needs a comment explaining what it\u0027s for. Soemthing like:\n\n    // True if the service is connected. The service is connected if there is at\n    // least one listener, or if the last listener was removed and a\n    // CONNECTION_CLEANUP message in the queue.",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 19
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4457d63a_1d1fa4e5",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-05-18T21:32:42Z",
+      "side": 1,
+      "message": "Done. Add the annotation.",
+      "parentUuid": "272c1bab_bd339598",
       "range": {
         "startLine": 265,
         "startChar": 4,
@@ -112,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eca48afd_7d6ee17f",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-05-18T21:32:42Z",
+      "side": 1,
+      "message": "As discussed, add more comment to clarify all the cases,",
+      "parentUuid": "3af44a87_8f05e23e",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 377,
+        "endChar": 21
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bd58bb7f_c188c2be",
         "filename": "core/java/android/net/nsd/NsdManager.java",
         "patchSetId": 3
@@ -123,6 +219,30 @@
       "writtenOn": "2021-05-16T14:05:23Z",
       "side": 1,
       "message": "What happens if we try to re-establish mAsyncChannel just after calling disconnect, but before CMD_CHANNEL_DISCONNECTED arrives? Is it safe to re-use an AsyncChannel like this?",
+      "range": {
+        "startLine": 379,
+        "startChar": 34,
+        "endLine": 379,
+        "endChar": 58
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d976febb_d79affd9",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-05-18T21:32:42Z",
+      "side": 1,
+      "message": "Yes, it\u0027s safe.\n\nThe mAsyncChannel.disconnect() sends CMD_CHANNEL_DISCONNECTED to both {Src,Dst}Messenger and cleans its internal members.\n\nGiven that we don\u0027t handle CMD_CHANNEL_DISCONNECTED in NsdManager side,  re-establishing mAsyncChannel before CMD_CHANNEL_DISCONNECTED arrives is fine.\n\nHowever, above case should never happen because the mLock guarantee that CMD_CHANNEL_DISCONNECTED would be the next event for this handler.",
+      "parentUuid": "bd58bb7f_c188c2be",
       "range": {
         "startLine": 379,
         "startChar": 34,
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d80062_ab32ee2f",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-05-18T21:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db6a29c5_83399498",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 9
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08b68ffa_e44aa684",
@@ -169,6 +313,30 @@
       "writtenOn": "2021-05-16T14:05:23Z",
       "side": 1,
       "message": "Optional: this might be clearer as IllegalStateException. I think it can be changed safely because ISE is a subclass of RuntimeException. Doesn\u0027t need to be in this CL.",
+      "range": {
+        "startLine": 542,
+        "startChar": 18,
+        "endLine": 542,
+        "endChar": 34
+      },
+      "revId": "894859a3b3c244da28ac4a49ad640b8acd24b712",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99738315_37824711",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1337176
+      },
+      "writtenOn": "2021-05-18T21:32:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b68ffa_e44aa684",
       "range": {
         "startLine": 542,
         "startChar": 18,
