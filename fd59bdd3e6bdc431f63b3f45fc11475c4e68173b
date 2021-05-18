@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fb409e4_634e22fe",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-18T16:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3e8d656_481125e6",
+      "range": {
+        "startLine": 1574,
+        "startChar": 36,
+        "endLine": 1574,
+        "endChar": 47
+      },
+      "revId": "fd59bdd3e6bdc431f63b3f45fc11475c4e68173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ec0ae3d_88f0fe3e",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-17T13:59:26Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 1575,
+        "startChar": 36,
+        "endLine": 1575,
+        "endChar": 47
+      },
+      "revId": "fd59bdd3e6bdc431f63b3f45fc11475c4e68173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b96d40a0_9ae7e2e1",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkCapabilities.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-18T16:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ec0ae3d_88f0fe3e",
       "range": {
         "startLine": 1575,
         "startChar": 36,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de758072_0b425e65",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7378,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-18T16:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f29383ce_a9081a1b",
+      "range": {
+        "startLine": 7378,
+        "startChar": 33,
+        "endLine": 7378,
+        "endChar": 44
+      },
+      "revId": "fd59bdd3e6bdc431f63b3f45fc11475c4e68173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c05b69e6_34117724",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-05-17T13:59:26Z",
       "side": 1,
       "message": "What about per-app default networks? If you look at getDefaultNetworks() you\u0027ll see there can be different default networks for different apps.\n\nDoing a full match with all the proxies of all the default networks might be complex to write. But you could perhaps do something simple such as optimize for the common case where no network has any proxies. Something like:\n\n    private boolean isProxySetOnAnyDefaultNetwork() {\n        ensureRunningOnConnectivityServiceThread();\n        for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {\n            final NetworkAgentInfo nai \u003d nri.getSatisfier();\n            if (nai !\u003d null \u0026\u0026 nai.linkProperties.getHttpProxy() !\u003d null) {\n                return true;\n            }\n        }\n        return false;\n    }\n\n\nand then here:\n\n        // Send a proxy broadcast when there is any app which is added/removed from the VPN and the\n        // proxy of VPN is different from the proxy of default network, so that the app can update\n        // its proxy data.\n        if (nai.isVPN() \u0026\u0026 !NetworkCapabilities.hasSameUids(prevNc, newNc)\n                \u0026\u0026 (nai.linkProperties.getHttpProxy() !\u003d null ||\n                       isProxySetOnAnyDefaultNetwork()) {\n            mProxyTracker.sendProxyBroadcast();\n        }",
+      "range": {
+        "startLine": 7388,
+        "startChar": 48,
+        "endLine": 7388,
+        "endChar": 65
+      },
+      "revId": "fd59bdd3e6bdc431f63b3f45fc11475c4e68173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a6909d5_ce4576bb",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7388,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-18T16:46:09Z",
+      "side": 1,
+      "message": "Thanks for your suggestion.\nUpdated.",
+      "parentUuid": "c05b69e6_34117724",
       "range": {
         "startLine": 7388,
         "startChar": 48,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17b289a9_cf97a46e",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 7393,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-18T16:46:09Z",
+      "side": 1,
+      "message": "I created a method to send the proxy broadcast and the method will be called at the bottom of updateCapabilities(), see if it works for you.",
+      "parentUuid": "d6da0ff5_e6c2d75c",
+      "range": {
+        "startLine": 7393,
+        "startChar": 8,
+        "endLine": 7393,
+        "endChar": 9
+      },
+      "revId": "fd59bdd3e6bdc431f63b3f45fc11475c4e68173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15342a6a_4e6817f8",
@@ -139,6 +259,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d00d66a_c90c0567",
+        "filename": "packages/Connectivity/tests/integration/util/com/android/server/NetworkAgentWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-18T16:46:09Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "15342a6a_4e6817f8",
+      "range": {
+        "startLine": 247,
+        "startChar": 16,
+        "endLine": 247,
+        "endChar": 33
+      },
+      "revId": "fd59bdd3e6bdc431f63b3f45fc11475c4e68173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f19e9ce2_d4afd1c5",
@@ -152,6 +296,30 @@
       "writtenOn": "2021-05-17T13:59:26Z",
       "side": 1,
       "message": "How is this different from the sendLinkProperties in line 1318? Can you avoid adding a new method by modifying the existing one? Or even by using the existing one unmodified?",
+      "range": {
+        "startLine": 1220,
+        "startChar": 20,
+        "endLine": 1220,
+        "endChar": 37
+      },
+      "revId": "fd59bdd3e6bdc431f63b3f45fc11475c4e68173b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7411730b_c1a4b708",
+        "filename": "packages/Connectivity/tests/unit/java/com/android/server/ConnectivityServiceTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-18T16:46:09Z",
+      "side": 1,
+      "message": "Oops! I didn\u0027t find that we have already one!\nLet me remove it, thanks!",
+      "parentUuid": "f19e9ce2_d4afd1c5",
       "range": {
         "startLine": 1220,
         "startChar": 20,
