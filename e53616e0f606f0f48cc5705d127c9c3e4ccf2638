@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de7cfc05_ff11af5f",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 2448,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-05-18T12:20:58Z",
+      "side": 1,
+      "message": "+ huangaaron@\nIt seems we should be able to remove the hardcoded metered filter after this change. Please kindly follow-up.",
+      "range": {
+        "startLine": 2444,
+        "startChar": 23,
+        "endLine": 2448,
+        "endChar": 88
+      },
+      "revId": "e53616e0f606f0f48cc5705d127c9c3e4ccf2638",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

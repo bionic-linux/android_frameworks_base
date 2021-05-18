@@ -186,6 +186,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7bee529_f6ec1814",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-05-18T12:20:58Z",
+      "side": 1,
+      "message": "IIUC the latest patch is option#1?",
+      "parentUuid": "12871d3d_3a0803bf",
+      "range": {
+        "startLine": 2639,
+        "startChar": 16,
+        "endLine": 2639,
+        "endChar": 56
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b5f8480a_432a262d",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 19

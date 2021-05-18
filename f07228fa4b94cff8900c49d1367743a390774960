@@ -33,6 +33,23 @@
       "message": "Ping for review.",
       "revId": "f07228fa4b94cff8900c49d1367743a390774960",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "834ffeed_3b792b93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-05-18T12:20:58Z",
+      "side": 1,
+      "message": "LGTM but don\u0027t have confidence to +2.",
+      "revId": "f07228fa4b94cff8900c49d1367743a390774960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
