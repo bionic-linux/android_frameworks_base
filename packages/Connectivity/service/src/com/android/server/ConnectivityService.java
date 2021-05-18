@@ -5082,10 +5082,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
     // TODO: Remove usage of broadcast extras as they are deprecated and not applicable in a
     // multi-network world where an app might be bound to a non-default network.
     private void updateProxy(LinkProperties newLp, LinkProperties oldLp) {
-        ProxyInfo newProxyInfo = newLp == null ? null : newLp.getHttpProxy();
-        ProxyInfo oldProxyInfo = oldLp == null ? null : oldLp.getHttpProxy();
-
-        if (!ProxyTracker.proxyInfoEqual(newProxyInfo, oldProxyInfo)) {
+        if (hasDifferentProxy(newLp, oldLp)) {
             mProxyTracker.sendProxyBroadcast();
         }
     }
@@ -7282,6 +7279,8 @@ public class ConnectivityService extends IConnectivityManager.Stub
             mDnsManager.updateTransportsForNetwork(
                     nai.network.getNetId(), newNc.getTransportTypes());
         }
+
+        maybeSendProxyBroadcast(nai, prevNc, newNc);
     }
 
     /** Convenience method to update the capabilities for a given network. */
@@ -7368,6 +7367,37 @@ public class ConnectivityService extends IConnectivityManager.Stub
                     " on netId " + nai.network.netId + ". " + e);
         }
         maybeCloseSockets(nai, ranges, exemptUids);
+    }
+
+    /**
+     * Compare whether the proxy of the given LinkProperties are different with each other.
+     */
+    public boolean hasDifferentProxy(@Nullable LinkProperties lp1, @Nullable LinkProperties lp2) {
+        final ProxyInfo proxy1 = (lp1 == null) ? null : lp1.getHttpProxy();
+        final ProxyInfo proxy2 = (lp2 == null) ? null : lp2.getHttpProxy();
+        return !ProxyTracker.proxyInfoEqual(proxy1, proxy2);
+    }
+
+    private boolean isProxySetOnAnyDefaultNetwork() {
+        ensureRunningOnConnectivityServiceThread();
+        for (final NetworkRequestInfo nri : mDefaultNetworkRequests) {
+            final NetworkAgentInfo nai = nri.getSatisfier();
+            if (nai != null && nai.linkProperties.getHttpProxy() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void maybeSendProxyBroadcast(NetworkAgentInfo nai, NetworkCapabilities prevNc,
+            NetworkCapabilities newNc) {
+        // Send a proxy broadcast when there is any app which is added/removed from the VPN and the
+        // proxy of VPN is different from the proxy of default network, so that the app can update
+        // its proxy data.
+        if (nai.isVPN() && !NetworkCapabilities.hasSameUids(prevNc, newNc)
+                && (nai.linkProperties.getHttpProxy() != null || isProxySetOnAnyDefaultNetwork())) {
+            mProxyTracker.sendProxyBroadcast();
+        }
     }
 
     private void updateUids(NetworkAgentInfo nai, NetworkCapabilities prevNc,
