@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8850a351_d29dabf4",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8671,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-19T10:01:29Z",
+      "side": 1,
+      "message": "If this is what crashes, it should be called after clearing identity too",
+      "range": {
+        "startLine": 8671,
+        "startChar": 13,
+        "endLine": 8671,
+        "endChar": 43
+      },
+      "revId": "ca7a29fa3ba39dcf13021e003bff3d122d4d277c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fd25306_50536157",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8684,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-19T10:01:29Z",
+      "side": 1,
+      "message": "Does this still refer to the right user after clearing identity ?\nOr use hasUserRestrictionForUser(String, UserHandle) instead ?",
+      "range": {
+        "startLine": 8684,
+        "startChar": 30,
+        "endLine": 8684,
+        "endChar": 48
+      },
+      "revId": "ca7a29fa3ba39dcf13021e003bff3d122d4d277c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1097c12_9b01ffd7",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8686,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-19T10:01:29Z",
+      "side": 1,
+      "message": "Pre-existing, but this should probably be ConnectivitySettingsManager.getPrivateDnsDefaultMode (should not be changed in the same CL though)",
+      "range": {
+        "startLine": 8686,
+        "startChar": 24,
+        "endLine": 8686,
+        "endChar": 54
+      },
+      "revId": "ca7a29fa3ba39dcf13021e003bff3d122d4d277c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
