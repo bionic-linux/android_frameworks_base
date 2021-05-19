@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b868609_657f3565",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8671,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-05-19T13:45:25Z",
+      "side": 1,
+      "message": "I find it does not cause crash(No sercurityException thrown).",
+      "parentUuid": "8850a351_d29dabf4",
+      "range": {
+        "startLine": 8671,
+        "startChar": 13,
+        "endLine": 8671,
+        "endChar": 43
+      },
+      "revId": "ca7a29fa3ba39dcf13021e003bff3d122d4d277c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fd25306_50536157",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-19T10:01:29Z",
       "side": 1,
       "message": "Does this still refer to the right user after clearing identity ?\nOr use hasUserRestrictionForUser(String, UserHandle) instead ?",
+      "range": {
+        "startLine": 8684,
+        "startChar": 30,
+        "endLine": 8684,
+        "endChar": 48
+      },
+      "revId": "ca7a29fa3ba39dcf13021e003bff3d122d4d277c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95b6919c_5257651f",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 8684,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-05-19T13:45:25Z",
+      "side": 1,
+      "message": "I tried it. It results in the same UserHandle with hasUserRestrictionForUser.\nThey all result in primary user.\n\nFollowing two get the same result, so I did not use hasUserRestrictionForUser(String, UserHandle). It does not look like necessary.\nhasUserRestrictionForUser(string, UserHandle.getUserHandleForUid(Binder.getCallingUid()))\nhasUserRestrcition(string)",
+      "parentUuid": "4fd25306_50536157",
       "range": {
         "startLine": 8684,
         "startChar": 30,
