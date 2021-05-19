@@ -460,7 +460,7 @@ public abstract class Window {
          * @return Return true to allow the menu to open, or false to prevent
          *         the menu from opening.
          */
-        boolean onMenuOpened(int featureId, @NonNull Menu menu);
+        boolean onMenuOpened(int featureId, Menu menu);
 
         /**
          * Called when a panel's menu item has been selected by the user.
