@@ -16,6 +16,7 @@
 
 package android.view;
 
+import static android.provider.Settings.Global.DEVELOPMENT_FORCE_DESKTOP_MODE_ON_EXTERNAL_DISPLAYS;
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.Display.INVALID_DISPLAY;
 import static android.view.InputDevice.SOURCE_CLASS_NONE;
@@ -70,6 +71,7 @@ import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.ActivityThread;
 import android.app.ResourcesManager;
+import android.app.Service;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -111,10 +113,12 @@ import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.sysprop.DisplayProperties;
 import android.util.AndroidRuntimeException;
 import android.util.DisplayMetrics;
@@ -125,8 +129,10 @@ import android.util.Slog;
 import android.util.SparseArray;
 import android.util.TimeUtils;
 import android.util.TypedValue;
+import android.view.IDisplayWindowListener;
 import android.view.InputDevice.InputSourceClass;
 import android.view.InsetsState.InternalInsetsType;
+import android.view.IWindowManager;
 import android.view.Surface.OutOfResourcesException;
 import android.view.SurfaceControl.Transaction;
 import android.view.View.AttachInfo;
@@ -927,7 +933,11 @@ public final class ViewRootImpl implements ViewParent,
 
                 mAttachInfo.mDisplayState = mDisplay.getState();
                 mDisplayManager.registerDisplayListener(mDisplayListener, mHandler);
-
+                try {
+                    mWindowManager.registerDisplayWindowListener(mDisplayContainerListener);
+                } catch (Exception e) {
+                    Log.e(TAG, " Unable to register hierarchy listener. " + e);
+                }
                 mViewLayoutDirectionInitial = mView.getRawLayoutDirection();
                 mFallbackEventHandler.setView(view);
                 mWindowAttributes.copyFrom(attrs);
@@ -4689,6 +4699,11 @@ public final class ViewRootImpl implements ViewParent,
             mInputEventReceiver = null;
         }
 
+        try {
+            mWindowManager.unregisterDisplayWindowListener(mDisplayContainerListener);
+        } catch (Exception e) {
+            Log.e(TAG, " Unable to unregister hierarchy listener. " + e);
+        }
         mDisplayManager.unregisterDisplayListener(mDisplayListener);
 
         unscheduleTraversals();
@@ -4743,6 +4758,43 @@ public final class ViewRootImpl implements ViewParent,
         }
         mForceNextConfigUpdate = false;
     }
+
+    private final IWindowManager mWindowManager = IWindowManager.Stub.asInterface(
+            ServiceManager.getService(Service.WINDOW_SERVICE));
+
+    private final IDisplayWindowListener mDisplayContainerListener =
+            new IDisplayWindowListener.Stub() {
+                @Override
+                public void onDisplayAdded(int displayId) { }
+
+                @Override
+                public void onDisplayConfigurationChanged(int displayId, Configuration newConfig) {
+                    boolean isDeskTopMode = Settings.Global.getInt(mContext.getContentResolver(),
+                                    DEVELOPMENT_FORCE_DESKTOP_MODE_ON_EXTERNAL_DISPLAYS, 0) == 1;
+                    if (!isDeskTopMode
+                            || displayId == DEFAULT_DISPLAY
+                            || mView == null
+                            || mDisplay.getDisplayId() != displayId) {
+                        return;
+                    }
+                    try {
+                        final Resources localResources = mView.getResources();
+                        final DisplayMetrics metrics = localResources.getDisplayMetrics();
+                        localResources.updateConfiguration(newConfig, metrics, null);
+                    } catch (Exception e) {
+                        Log.e(TAG, " Unable to update configuration. " + e);
+                    }
+                }
+
+                @Override
+                public void onDisplayRemoved(int displayId) { }
+
+                @Override
+                public void onFixedRotationStarted(int displayId, int newRotation) { }
+
+                @Override
+                public void onFixedRotationFinished(int displayId) { }
+            };
 
     /**
      * Update display and views if last applied merged configuration changed.
