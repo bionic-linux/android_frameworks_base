@@ -8676,20 +8676,21 @@ public class ConnectivityService extends IConnectivityManager.Stub
         try {
             final IpMemoryStore ipMemoryStore = IpMemoryStore.getMemoryStore(mContext);
             ipMemoryStore.factoryReset();
+
+            // Turn airplane mode off
+            setAirplaneMode(false);
+
+            // restore private DNS settings to default mode (opportunistic)
+            if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_PRIVATE_DNS)) {
+                ConnectivitySettingsManager.setPrivateDnsMode(mContext,
+                        PRIVATE_DNS_MODE_OPPORTUNISTIC);
+            }
+
+            Settings.Global.putString(mContext.getContentResolver(),
+                    ConnectivitySettingsManager.NETWORK_AVOID_BAD_WIFI, null);
         } finally {
             Binder.restoreCallingIdentity(token);
         }
-
-        // Turn airplane mode off
-        setAirplaneMode(false);
-
-        // restore private DNS settings to default mode (opportunistic)
-        if (!mUserManager.hasUserRestriction(UserManager.DISALLOW_CONFIG_PRIVATE_DNS)) {
-            ConnectivitySettingsManager.setPrivateDnsMode(mContext, PRIVATE_DNS_MODE_OPPORTUNISTIC);
-        }
-
-        Settings.Global.putString(mContext.getContentResolver(),
-                ConnectivitySettingsManager.NETWORK_AVOID_BAD_WIFI, null);
     }
 
     @Override
