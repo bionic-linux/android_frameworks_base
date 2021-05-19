@@ -26,6 +26,7 @@ import android.util.Log;
 import android.util.MathUtils;
 import android.view.Display;
 import android.view.IWindowManager;
+import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 
 import com.android.settingslib.R;
@@ -85,8 +86,10 @@ public class DisplayDensityUtils {
     private final int mCurrentIndex;
 
     public DisplayDensityUtils(Context context) {
-        final int defaultDensity = DisplayDensityUtils.getDefaultDisplayDensity(
-                Display.DEFAULT_DISPLAY);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        final int displayId = display != null ? display.getDisplayId() : Display.DEFAULT_DISPLAY;
+        final int defaultDensity = DisplayDensityUtils.getDefaultDisplayDensity(displayId);
         if (defaultDensity <= 0) {
             mEntries = null;
             mValues = null;
