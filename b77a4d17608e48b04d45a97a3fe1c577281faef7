@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010923299",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1711210?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "4c0bea82_be2d2174",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4773,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-19T04:11:36Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 4773,
+        "startChar": 0,
+        "endLine": 4773,
+        "endChar": 104
+      },
+      "revId": "b77a4d17608e48b04d45a97a3fe1c577281faef7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010923299",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1711210?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b0fe0794_24ecc85b",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/display/DisplayDensityUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-19T04:11:36Z",
+      "side": 1,
+      "message": "Prefer to use context.getSystemService(WindowManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 89,
+        "startChar": 27,
+        "endLine": 89,
+        "endChar": 68
+      },
+      "revId": "b77a4d17608e48b04d45a97a3fe1c577281faef7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
