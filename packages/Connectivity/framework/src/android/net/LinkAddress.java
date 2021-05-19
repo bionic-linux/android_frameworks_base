@@ -356,7 +356,6 @@ public class LinkAddress implements Parcelable {
         LinkAddress linkAddress = (LinkAddress) obj;
         return this.address.equals(linkAddress.address)
                 && this.prefixLength == linkAddress.prefixLength
-                && this.flags == linkAddress.flags
                 && this.scope == linkAddress.scope;
     }
 
