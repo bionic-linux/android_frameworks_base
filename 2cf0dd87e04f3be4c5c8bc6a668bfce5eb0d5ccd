@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "509fcf1a_54d199d2",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 8672,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-05-20T02:00:22Z",
+      "side": 1,
+      "message": "Should this be called before clearCallingIdentity ? It looks weird at least",
+      "range": {
+        "startLine": 8672,
+        "startChar": 8,
+        "endLine": 8672,
+        "endChar": 46
+      },
+      "revId": "2cf0dd87e04f3be4c5c8bc6a668bfce5eb0d5ccd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
