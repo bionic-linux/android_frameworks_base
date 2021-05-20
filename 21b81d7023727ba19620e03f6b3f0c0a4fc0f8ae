@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54ba55c3_92b185d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1074459
+      },
+      "writtenOn": "2021-05-20T22:26:45Z",
+      "side": 1,
+      "message": "This statement is not correct. onCapabilities is immediately invoked on registering the callback (if network is connected). But, anyway this synchronous API might still be more convenient than asking all apps to convert the NetworkCallback#onCapabilitiesChanged() to a synchronous call if they want location sensitive data in a synchronous call.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "21b81d7023727ba19620e03f6b3f0c0a4fc0f8ae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
