@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000010966983",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1713708?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0c2ca00d_a236eb6b",
+        "filename": "packages/Connectivity/tests/unit/java/com/android/server/connectivity/PermissionMonitorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-05-20T06:10:05Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 549,
+        "startChar": 0,
+        "endLine": 549,
+        "endChar": 101
+      },
+      "revId": "9ca32148d966b97a146f92e6280a5151ec21df55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
