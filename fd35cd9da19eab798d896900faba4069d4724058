@@ -232,6 +232,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b764ff58_2619a519",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2639,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-20T14:57:20Z",
+      "side": 1,
+      "message": "Per discussion, this isn\u0027t strictly necessary because there does not seem to be a need to persist unmetered templates. However: persisting the policy to disk does not seem harmful, and it allow us to remove hardcoded assumptions in the code that mobile templates are always metered.",
+      "parentUuid": "70178ed5_b07fa77d",
+      "range": {
+        "startLine": 2639,
+        "startChar": 16,
+        "endLine": 2639,
+        "endChar": 56
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5f8480a_432a262d",
@@ -269,6 +293,30 @@
       "side": 1,
       "message": "But it still allows to add mobile policy from API.\nIdeally the factory reset should make sure the policy off.\nBut I am ok to remove if we don\u0027t take care this scenario.",
       "parentUuid": "b5f8480a_432a262d",
+      "range": {
+        "startLine": 5567,
+        "startChar": 59,
+        "endLine": 5567,
+        "endChar": 97
+      },
+      "revId": "fd35cd9da19eab798d896900faba4069d4724058",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4af67a63_9276f25f",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 5567,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-20T14:57:20Z",
+      "side": 1,
+      "message": "Ok. Can you add a comment that removing the mobile policy shouldn\u0027t be necessary, because all policies loaded from disk will be carrier templates, and setting will also only set carrier templates, but we clear mobile templates just in case one is set by some other caller?",
+      "parentUuid": "029852c0_25d468bf",
       "range": {
         "startLine": 5567,
         "startChar": 59,

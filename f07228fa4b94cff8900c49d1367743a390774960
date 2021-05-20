@@ -67,6 +67,52 @@
       "message": "+2 but another thing I worried about is that is\nthere any cases we didn\u0027t aware of and cause the\nduplicated carrier/mobile persisted policy.\n Per sync with les it is unlikely.",
       "revId": "f07228fa4b94cff8900c49d1367743a390774960",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6454bb8_7cffce43",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-20T14:57:20Z",
+      "side": 1,
+      "message": "Would shorten to ATTR_TEMPLATE_METERED and \"templateMetered\" to be consistent with the existing \"metered\" and \"inferred\".",
+      "range": {
+        "startLine": 385,
+        "startChar": 61,
+        "endLine": 385,
+        "endChar": 80
+      },
+      "revId": "f07228fa4b94cff8900c49d1367743a390774960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cabcb9a_2f4a4dd1",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 2368,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-20T14:57:20Z",
+      "side": 1,
+      "message": "Can this be final? If so, please make it final.\n\nAlso would rename to templateMetered.",
+      "range": {
+        "startLine": 2368,
+        "startChar": 24,
+        "endLine": 2368,
+        "endChar": 47
+      },
+      "revId": "f07228fa4b94cff8900c49d1367743a390774960",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

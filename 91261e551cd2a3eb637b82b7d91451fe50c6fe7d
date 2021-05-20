@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91870508_d0cba4bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-20T14:57:20Z",
+      "side": 1,
+      "message": "LGTM assuming comments addressed.",
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0e894d9_4e5ca535",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-20T14:57:20Z",
+      "side": 1,
+      "message": "Boolean accessors usually use \"is\" or \"has\". Suggest calling this \"isMetered\".",
+      "range": {
+        "startLine": 517,
+        "startChar": 15,
+        "endLine": 517,
+        "endChar": 29
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
