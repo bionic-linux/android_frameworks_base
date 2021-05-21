@@ -178,6 +178,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0fd29ac_988a7f3d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-21T09:45:30Z",
+      "side": 1,
+      "message": "Lorenzo mentioned the previous comment doesn\u0027t clear.\nPlease allow me to explain again.\nWe can use two questions to explain the use case.\n\n1. do we ever need to save a template with MATCH_RULE_EXACT? if so, why?\nAns: It is obvious, the template: buildTemplateCarrierMetered will be used as a default network policy and it uses the MATCH_RULE_EXACT.\n\n\n2. do we ever need to save a template with MATCH_RULE_ALL? if so, why?\n\nAns: \nIt is planned to use for Wifi. Now there are two possible subscriberId value for Wifi Network.\n1. Includes subscriberId - a carrier merged wifi network\n2. Excludes subscriberId - a non-carrier wifi network.\n\n\nSo the possible use case is that someone want to add an alert policy for a specific wifi network which use the template: buildTemplateWifi with given SSID. It uses the MATCH_RULE_ALL to ignore the subscriberId.\n\nIdeally I don\u0027t see the use case, but it is a valid template and we can\u0027t ignore this case when doing code change.\n\nIIUC, the current API: isPersist() in NetworkTemplate is designed to avoid an invalid usage use case to be a network policy.",
+      "parentUuid": "3d957b25_a0b10e2b",
+      "range": {
+        "startLine": 2657,
+        "startChar": 0,
+        "endLine": 2657,
+        "endChar": 61
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ea4b2b3_1d52761d",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 24
@@ -213,6 +237,30 @@
       "side": 1,
       "message": "The major reason is we plan to remove a hard code metered check in matchesMobile.\nsee: The discrepancy between matchesCarrier and matchesMobile\nmatchesMobile:\nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkTemplate.java;l\u003d610?q\u003dcore%2Fjava%2Fandroid%2Fnet%2FNetworkTemplate.java\u0026start\u003d11\nmatchesCarrier: \nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkTemplate.java;l\u003d715?q\u003dcore%2Fjava%2Fandroid%2Fnet%2FNetworkTemplate.java\u0026start\u003d11\n\nNow we use buildTemplateCarrierMetered which use METERED_YES to force metered network in NetworkTemplate.\n\nThus we need to persist the meteredness value in template. Otherwise it will cause multi-policy and caller update incorrect policy after reboot devices.",
       "parentUuid": "5ea4b2b3_1d52761d",
+      "range": {
+        "startLine": 2662,
+        "startChar": 0,
+        "endLine": 2664,
+        "endChar": 0
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeb62ed1_5cce7d64",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 2664,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-21T09:45:30Z",
+      "side": 1,
+      "message": "Lorenzo mentioned the previous comment doesn\u0027t clear.\nPlease allow me to explain again.\nWe can use two questions to explain the use case.\n\n1. do we ever need to save a template with METER_YES? if so, why?\nAns: It is obvious, the template: buildTemplateCarrierMetered will be used as a default network policy and it uses the METER_YES.\n\n2. do we ever need to save a template with METER_NO or METERED_ALL? if so, why?\nAns: Same as above, the possible use case is that someone want to add an alert policy for a specific wifi network which use the template: buildTemplateWifi with given SSID. It uses the METERED_ALL to ignore the metered check.\n\nIdeally I don\u0027t see the caller who is interested the use case for wifi per SSID policy, but it is a valid template and we can\u0027t ignore this case when doing code change.\n\nAnd the other reason is that old design in NetworkTemplate used hard code check in each matches() to filter metered or unmetered. But now NetworkTemplate supported METERED_YES/METERED_NO/METERED_ALL, thus we plan to remove the hardcode check in NetworkTemplate and use the meteredness in NetworkTemplate to handle that.\n\n\nmatchesMobile:\nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkTemplate.java;l\u003d610?q\u003dcore%2Fjava%2Fandroid%2Fnet%2FNetworkTemplate.java\u0026start\u003d11\n\nmatchesCarrier: \nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkTemplate.java;l\u003d715?q\u003dcore%2Fjava%2Fandroid%2Fnet%2FNetworkTemplate.java\u0026start\u003d11",
+      "parentUuid": "0e69736a_ba8801dc",
       "range": {
         "startLine": 2662,
         "startChar": 0,
