@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "308b71aa_3a85cd00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-05-21T00:05:10Z",
+      "side": 1,
+      "message": "lorenzo@ pinged me to glance at this CL, so I left a few thoughts inline, but it\u0027s been a long time since I worked in this area, so please don\u0027t consider my feedback as blocking merging of this CL if you already have approvals from the current OWNERS of this area.  😊",
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0e894d9_4e5ca535",
@@ -36,6 +53,75 @@
         "startChar": 15,
         "endLine": 517,
         "endChar": 29
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "218271a6_a76c7c68",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1518,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-05-21T00:05:10Z",
+      "side": 1,
+      "message": "Longer-term I was hoping that we could converge these internals towards the well-defined constants on NetworkCapabilities, such as being able to replace NetworkTemplate with something closer to a Predicate\u003cNetworkCapabilities\u003e.\n\nThen we could write matching rules in terms of TRANSPORT_CELLULAR, NET_CAPABILITY_NOT_METERED, etc.\n\n(Pretty much all of this code pre-dates the NetworkCapabilities object, which is why it had its own definitions.)\n\nGoing that direction would let an external caller write their warning/limit code in terms of NetworkCapabilities values would hopefully make it less error-prone over time, and it would automatically pave the way to support all newer transport/capabilities added over there.",
+      "range": {
+        "startLine": 1518,
+        "startChar": 25,
+        "endLine": 1518,
+        "endChar": 38
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da5df230_67e9e2dd",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-05-21T00:05:10Z",
+      "side": 1,
+      "message": "Hmm, the two possible values here appear to be:\n\n    public static final int SUBSCRIBER_ID_MATCH_RULE_EXACT \u003d 0;\n    public static final int SUBSCRIBER_ID_MATCH_RULE_ALL \u003d 1;\n\nWhen I consider the code being persisted here, it\u0027s indicating what type of network should be matched for the purposes of alerting the user of data overages, etc.\n\nI currently don\u0027t see a use-case SUBSCRIBER_ID_MATCH_RULE_ALL for being useful in this situation, since it could cause chaos on multi-SIM devices.  😞\n\nCould you elaborate on why you\u0027d like to persist this?",
+      "range": {
+        "startLine": 2657,
+        "startChar": 0,
+        "endLine": 2657,
+        "endChar": 61
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ea4b2b3_1d52761d",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 2664,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-05-21T00:05:10Z",
+      "side": 1,
+      "message": "Hm, this is similar to above; I\u0027m not seeing the use-case where a network alerting rule would need to write a rule which makes a meteredness distinction; they\u0027re typically always implemented against a metered connection, right?",
+      "range": {
+        "startLine": 2662,
+        "startChar": 0,
+        "endLine": 2664,
+        "endChar": 0
       },
       "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
