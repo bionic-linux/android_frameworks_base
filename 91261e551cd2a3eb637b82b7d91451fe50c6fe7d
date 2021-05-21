@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "631cad69_80f66dc4",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-21T05:53:35Z",
+      "side": 1,
+      "message": "The possible value is METERED_ALL, METERED_YES, METERED_NO.\nIt is not the boolean. Thus I keep the current naming.",
+      "parentUuid": "c0e894d9_4e5ca535",
+      "range": {
+        "startLine": 517,
+        "startChar": 15,
+        "endLine": 517,
+        "endChar": 29
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "218271a6_a76c7c68",
@@ -106,6 +130,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d957b25_a0b10e2b",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 2657,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-21T05:53:35Z",
+      "side": 1,
+      "message": "The wifi network includes two types.\n1. Includes subscriberId - carrier merged wifi network\n2. Excludes subscriberId - a generic wifi network.\n\nThat is why we think it needs to persist this value if we plan to support set a policy for wifi network which based on SSID.",
+      "parentUuid": "da5df230_67e9e2dd",
+      "range": {
+        "startLine": 2657,
+        "startChar": 0,
+        "endLine": 2657,
+        "endChar": 61
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5ea4b2b3_1d52761d",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 24
@@ -117,6 +165,30 @@
       "writtenOn": "2021-05-21T00:05:10Z",
       "side": 1,
       "message": "Hm, this is similar to above; I\u0027m not seeing the use-case where a network alerting rule would need to write a rule which makes a meteredness distinction; they\u0027re typically always implemented against a metered connection, right?",
+      "range": {
+        "startLine": 2662,
+        "startChar": 0,
+        "endLine": 2664,
+        "endChar": 0
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e69736a_ba8801dc",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 2664,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-21T05:53:35Z",
+      "side": 1,
+      "message": "The major reason is we plan to remove a hard code metered check in matchesMobile.\nsee: The discrepancy between matchesCarrier and matchesMobile\nmatchesMobile:\nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkTemplate.java;l\u003d610?q\u003dcore%2Fjava%2Fandroid%2Fnet%2FNetworkTemplate.java\u0026start\u003d11\nmatchesCarrier: \nhttps://source.corp.google.com/aosp-master/frameworks/base/core/java/android/net/NetworkTemplate.java;l\u003d715?q\u003dcore%2Fjava%2Fandroid%2Fnet%2FNetworkTemplate.java\u0026start\u003d11\n\nNow we use buildTemplateCarrierMetered which use METERED_YES to force metered network in NetworkTemplate.\n\nThus we need to persist the meteredness value in template. Otherwise it will cause multi-policy and caller update incorrect policy after reboot devices.",
+      "parentUuid": "5ea4b2b3_1d52761d",
       "range": {
         "startLine": 2662,
         "startChar": 0,

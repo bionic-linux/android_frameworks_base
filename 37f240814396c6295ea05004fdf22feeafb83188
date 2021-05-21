@@ -16,6 +16,24 @@
       "message": "Can we remove \"on-unsupported-carrier-usage\" from this filename? This is just a standard mobile policy.",
       "revId": "37f240814396c6295ea05004fdf22feeafb83188",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa6a8c56_9ab52a26",
+        "filename": "services/tests/servicestests/assets/NetworkPolicyManagerServiceTest/netpolicy/network-policy-mobile-on-unsupported-carrier-usage.xml",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-21T05:53:35Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "6cbd289d_85a6d704",
+      "revId": "37f240814396c6295ea05004fdf22feeafb83188",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
