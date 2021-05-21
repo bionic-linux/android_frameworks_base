@@ -107,6 +107,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "380ccbdf_bb826c4a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 1518,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-21T05:54:29Z",
+      "side": 1,
+      "message": "+ junyulai@ to know the suggestion for longer-term plan",
+      "parentUuid": "218271a6_a76c7c68",
+      "range": {
+        "startLine": 1518,
+        "startChar": 25,
+        "endLine": 1518,
+        "endChar": 38
+      },
+      "revId": "91261e551cd2a3eb637b82b7d91451fe50c6fe7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da5df230_67e9e2dd",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 24
