@@ -1969,6 +1969,9 @@ public class VcnGatewayConnection extends StateMachine {
             }
             builder.setAdministratorUids(adminUids);
 
+            builder.setLinkUpstreamBandwidthKbps(underlyingCaps.getLinkUpstreamBandwidthKbps());
+            builder.setLinkDownstreamBandwidthKbps(underlyingCaps.getLinkDownstreamBandwidthKbps());
+
             // Set TransportInfo for SysUI use (never parcelled out of SystemServer).
             if (underlyingCaps.hasTransport(TRANSPORT_WIFI)
                     && underlyingCaps.getTransportInfo() instanceof WifiInfo) {
@@ -2012,6 +2015,7 @@ public class VcnGatewayConnection extends StateMachine {
         lp.addRoute(new RouteInfo(new IpPrefix(Inet6Address.ANY, 0), null /*gateway*/,
                 null /*iface*/, RouteInfo.RTN_UNICAST));
 
+        lp.setTcpBufferSizes(underlying.linkProperties.getTcpBufferSizes());
         final int underlyingMtu = (underlying == null) ? 0 : underlying.linkProperties.getMtu();
         lp.setMtu(
                 MtuUtils.getMtu(
