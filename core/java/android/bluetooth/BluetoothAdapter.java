@@ -2168,6 +2168,20 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Return true if Csis Client is supported.
+     *
+     * @return true if phone supports Csis Client profile
+     */
+    private boolean isCsisClientSupported() {
+        try {
+            return mManagerService.isCsisClientSupported();
+        } catch (RemoteException e) {
+            Log.e(TAG, "remote exception when calling isCsisClientSupported", e);
+            return false;
+        }
+    }
+
+    /**
      * Get the maximum number of connected audio devices.
      *
      * @return the maximum number of connected audio devices
@@ -2350,6 +2364,9 @@ public final class BluetoothAdapter {
                     // Bluetooth is disabled. Just fill in known supported Profiles
                     if (isHearingAidProfileSupported()) {
                         supportedProfiles.add(BluetoothProfile.HEARING_AID);
+                    }
+                    if (isCsisClientSupported()) {
+                        supportedProfiles.add(BluetoothProfile.CSIS_CLIENT);
                     }
                 }
             }
@@ -2818,6 +2835,9 @@ public final class BluetoothAdapter {
         } else if (profile == BluetoothProfile.VOLUME_CONTROL) {
             BluetoothVolumeControl vcs = new BluetoothVolumeControl(context, listener, this);
             return true;
+        } else if (profile == BluetoothProfile.CSIS_CLIENT) {
+            BluetoothCsisClient csisClient = new BluetoothCsisClient(context, listener);
+            return true;
         } else {
             return false;
         }
@@ -2906,6 +2926,9 @@ public final class BluetoothAdapter {
             case BluetoothProfile.VOLUME_CONTROL:
                 BluetoothVolumeControl vcs = (BluetoothVolumeControl) proxy;
                 vcs.close();
+            case BluetoothProfile.CSIS_CLIENT:
+                BluetoothCsisClient csisClient = (BluetoothCsisClient) proxy;
+                csisClient.close();
                 break;
         }
     }
