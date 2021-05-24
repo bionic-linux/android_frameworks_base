@@ -1145,6 +1145,9 @@ android.bluetooth.IBluetoothAvrcpTarget
 android.bluetooth.IBluetoothCallback$Stub$Proxy
 android.bluetooth.IBluetoothCallback$Stub
 android.bluetooth.IBluetoothCallback
+android.bluetooth.IBluetoothCsisClient
+android.bluetooth.IBluetoothCsisClient$Stub$Proxy
+android.bluetooth.IBluetoothCsisClient$Stub
 android.bluetooth.IBluetoothGatt$Stub$Proxy
 android.bluetooth.IBluetoothGatt$Stub
 android.bluetooth.IBluetoothGatt

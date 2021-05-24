@@ -242,6 +242,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private final int mSystemUiUid;
 
     private boolean mIsHearingAidProfileSupported;
+    private boolean mIsCsisClientSupported;
 
     private AppOpsManager mAppOps;
 
@@ -499,6 +500,23 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             if (isHearingAidEnabled && !mIsHearingAidProfileSupported) {
                 // Overwrite to enable support by FeatureFlag
                 mIsHearingAidProfileSupported = true;
+            }
+        }
+
+        mIsCsisClientSupported = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_csis_client_supported);
+
+        // TODO: We need a more generic way to initialize the persist keys of FeatureFlagUtils
+        value = SystemProperties.get(
+                FeatureFlagUtils.PERSIST_PREFIX + FeatureFlagUtils.CSIS_CLIENT_SETTINGS);
+        if (!TextUtils.isEmpty(value)) {
+            boolean isCsisClientEnabled = Boolean.parseBoolean(value);
+            Log.v(TAG, "set feature flag CSIS_CLIENT_SETTINGS to " + isCsisClientEnabled);
+            FeatureFlagUtils.setEnabled(
+                    context, FeatureFlagUtils.CSIS_CLIENT_SETTINGS, isCsisClientEnabled);
+            if (isCsisClientEnabled && !mIsCsisClientSupported) {
+                // Overwrite to enable support by FeatureFlag
+                mIsCsisClientSupported = true;
             }
         }
 
@@ -783,6 +801,11 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
 
     @Override
     public boolean isHearingAidProfileSupported() {
+        return mIsHearingAidProfileSupported;
+    }
+
+    @Override
+    public boolean isCsisClientSupported() {
         return mIsHearingAidProfileSupported;
     }
 
