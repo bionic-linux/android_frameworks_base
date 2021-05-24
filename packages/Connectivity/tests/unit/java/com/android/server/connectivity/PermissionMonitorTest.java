@@ -878,7 +878,9 @@ public class PermissionMonitorTest {
         final NetdServiceMonitor mNetdServiceMonitor = new NetdServiceMonitor(mNetdService);
         final ArgumentCaptor<BroadcastReceiver> receiverCaptor =
                 ArgumentCaptor.forClass(BroadcastReceiver.class);
-        verify(mContext, times(1)).registerReceiver(receiverCaptor.capture(), any(), any(), any());
+        verify(mContext, times(1)).registerReceiver(receiverCaptor.capture(),
+                argThat(filter -> filter.hasAction(Intent.ACTION_PACKAGE_ADDED)
+                        && filter.hasAction(Intent.ACTION_PACKAGE_REMOVED)), any(), any());
         final BroadcastReceiver receiver = receiverCaptor.getValue();
 
         // Verify receiving PACKAGE_ADDED intent.
@@ -997,5 +999,41 @@ public class PermissionMonitorTest {
         when(mPackageManager.getPackagesForUid(MOCK_UID1)).thenReturn(new String[]{MOCK_PACKAGE2});
         removePackageForUsers(new UserHandle[]{MOCK_USER1}, MOCK_PACKAGE1, MOCK_UID1);
         mNetdMonitor.expectNoPermission(new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+    }
+
+    private void buildAndMockPackageInfoWithPermissions(String packageName, int uid,
+            String... permissions) throws Exception {
+        final PackageInfo packageInfo = setPackagePermissions(packageName, uid, permissions);
+        packageInfo.packageName = packageName;
+        packageInfo.applicationInfo.uid = uid;
+    }
+
+    @Test
+    public void testOnExternalApplicationsAvailable() throws Exception {
+        final NetdServiceMonitor netdServiceMonitor = new NetdServiceMonitor(mNetdService);
+        final NetdMonitor netdMonitor = new NetdMonitor(mNetdService);
+        final ArgumentCaptor<BroadcastReceiver> receiverCaptor =
+                ArgumentCaptor.forClass(BroadcastReceiver.class);
+        verify(mContext, times(1)).registerReceiver(receiverCaptor.capture(),
+                argThat(filter -> filter.hasAction(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)),
+                any(), any());
+        final BroadcastReceiver receiver = receiverCaptor.getValue();
+
+        mPermissionMonitor.onUserAdded(MOCK_USER1);
+
+        // Verify receiving EXTERNAL_APPLICATIONS_AVAILABLE intent and update permission to netd.
+        final Intent externalIntent = new Intent(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE);
+        externalIntent.putExtra(Intent.EXTRA_CHANGED_PACKAGE_LIST,
+                new String[] { MOCK_PACKAGE1 , MOCK_PACKAGE2});
+        buildAndMockPackageInfoWithPermissions(MOCK_PACKAGE1, MOCK_UID1, new String[] {
+                CONNECTIVITY_USE_RESTRICTED_NETWORKS, INTERNET });
+        buildAndMockPackageInfoWithPermissions(MOCK_PACKAGE2, MOCK_UID2, new String[] {
+                CHANGE_NETWORK_STATE, UPDATE_DEVICE_STATS });
+        receiver.onReceive(mContext, externalIntent);
+        netdMonitor.expectPermission(SYSTEM, new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID1});
+        netdMonitor.expectPermission(NETWORK, new UserHandle[]{MOCK_USER1}, new int[]{MOCK_UID2});
+        netdServiceMonitor.expectPermission(INetd.PERMISSION_INTERNET, new int[] { MOCK_UID1 });
+        netdServiceMonitor.expectPermission(
+                INetd.PERMISSION_UPDATE_DEVICE_STATS, new int[] { MOCK_UID2 });
     }
 }
