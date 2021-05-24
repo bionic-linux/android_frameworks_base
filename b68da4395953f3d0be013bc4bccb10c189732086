@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f38906a_c05ac853",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-24T22:13:12Z",
+      "side": 1,
+      "message": "Yeah. They\u0027re guaranteed to be non-null",
+      "parentUuid": "df4d5eeb_8c15f6c2",
+      "range": {
+        "startLine": 1947,
+        "startChar": 38,
+        "endLine": 1947,
+        "endChar": 52
+      },
+      "revId": "b68da4395953f3d0be013bc4bccb10c189732086",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f68a4f9c_37c1029f",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-05-24T21:58:21Z",
       "side": 1,
       "message": "is underlying.linkProperties guaranteed to be NonNull?",
+      "range": {
+        "startLine": 2018,
+        "startChar": 40,
+        "endLine": 2018,
+        "endChar": 54
+      },
+      "revId": "b68da4395953f3d0be013bc4bccb10c189732086",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f976dde8_45b9b805",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-24T22:13:12Z",
+      "side": 1,
+      "message": "Yeah. They\u0027re guaranteed to be non-null",
+      "parentUuid": "f68a4f9c_37c1029f",
       "range": {
         "startLine": 2018,
         "startChar": 40,
