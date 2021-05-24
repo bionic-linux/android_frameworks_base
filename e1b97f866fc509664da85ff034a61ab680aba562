@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80de551e_fc0afd9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2021-05-24T21:21:25Z",
+      "side": 1,
+      "message": "Adding a CTS test to the existing proxy tests at:\ncts/hostsidetests/devicepolicy/src/com/android/cts/devicepolicy/DeviceOwnerTest.java\n\nwould be nice if possible; given that it\u0027s a host side test (to allow it to set up a device management app to configure the proxy) then I *think* there should be some way to kill the proxy service from the host in order to test the case that\u0027s being fixed here, though I\u0027m not certain.\n\nFailing that it would be good to at least manually test it; I\u0027d suggest a tiny test app that calls java.net.ProxySelector every time you press a button. Set up a PAC config, run the app, make sure you get the result you expect from the button, then kill the service and wait for it to restart, then hit the button again to ensure that it can deal with the other end of the IPC connection having restarted inbetween. I don\u0027t know how that works for system services to be confident that it actually works otherwise; the PacProxySelector implementation doesn\u0027t explicitly handle the connection and just lets ServiceManager do it.",
+      "revId": "e1b97f866fc509664da85ff034a61ab680aba562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

@@ -16,6 +16,24 @@
       "message": "(repeating my comment from the original CL in case you didn\u0027t see): just nulling this out means we\u0027ll have to download the PAC script again before we can configure the service, however recently we already downloaded it.\n\nIt might work to just check if mCurrentPac !\u003d null and then setCurrentProxyScript(mCurrentPac)\n(later in the function, right before posting the download task, so that mProxyService is set)",
       "revId": "696b8390581020bdda3a7af1d1130249306bc079",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d98cd75b_4ec6c43c",
+        "filename": "services/core/java/com/android/server/connectivity/PacProxyService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2021-05-24T21:21:25Z",
+      "side": 1,
+      "message": "OK - this looks reasonable to me.",
+      "parentUuid": "b4685b82_22d6449c",
+      "revId": "696b8390581020bdda3a7af1d1130249306bc079",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
