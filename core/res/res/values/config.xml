@@ -133,6 +133,9 @@
     <!-- Whether Hearing Aid profile is supported -->
     <bool name="config_hearing_aid_profile_supported">false</bool>
 
+    <!-- Whether Coordinated Set Service Client is supported -->
+    <bool name="config_csis_client_supported">true</bool>
+
     <!-- Flag to disable all transition animations -->
     <bool name="config_disableTransitionAnimation">false</bool>
 
