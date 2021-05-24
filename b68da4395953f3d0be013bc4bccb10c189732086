@@ -93,6 +93,30 @@
       },
       "revId": "b68da4395953f3d0be013bc4bccb10c189732086",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d038be07_8c3bf03c",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-05-24T22:57:29Z",
+      "side": 1,
+      "message": "Added a check for underlying being null, and log.wtf for the case where it is null.",
+      "parentUuid": "f976dde8_45b9b805",
+      "range": {
+        "startLine": 2018,
+        "startChar": 40,
+        "endLine": 2018,
+        "endChar": 54
+      },
+      "revId": "b68da4395953f3d0be013bc4bccb10c189732086",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
