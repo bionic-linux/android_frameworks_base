@@ -33,6 +33,29 @@
       "message": "Failed to build on aosp-master since we are lacking of NS05~NS07.\nLet\u0027s wait for them first.\n\npackages/modules/Connectivity/tests/cts/net/src/android/net/cts/NetworkAgentTest.kt:781:18: error: unresolved reference: setExiting\n                .setExiting(true).build())\n                 ^",
       "revId": "bd2d5f0c51e91fd5b91bfe95188b490043d3ae40",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a615fe9_8c7c4561",
+        "filename": "packages/Connectivity/framework/src/android/net/NetworkAgent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1258594
+      },
+      "writtenOn": "2021-05-25T17:45:51Z",
+      "side": 1,
+      "message": "as per our design requirement we need this to be 0. Can you please raise a new change",
+      "range": {
+        "startLine": 112,
+        "startChar": 50,
+        "endLine": 112,
+        "endChar": 54
+      },
+      "revId": "bd2d5f0c51e91fd5b91bfe95188b490043d3ae40",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
