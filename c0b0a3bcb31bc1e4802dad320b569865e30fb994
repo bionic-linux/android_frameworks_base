@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "259b1d12_0ddde86e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-05-25T12:51:12Z",
+      "side": 1,
+      "message": "Cherry-pick ready for sc-dev in http://ag/14717310",
+      "revId": "c0b0a3bcb31bc1e4802dad320b569865e30fb994",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
