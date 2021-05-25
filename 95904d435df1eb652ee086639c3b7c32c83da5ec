@@ -33,6 +33,23 @@
       "message": "Gently ping for review",
       "revId": "95904d435df1eb652ee086639c3b7c32c83da5ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4827c4f6_f974ed23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-05-25T15:09:59Z",
+      "side": 1,
+      "message": "Thanks for helping answer the questions I had.  I remain skeptical of the currently proposed design, but I won\u0027t have time this week to make alternative suggestions.\n\nIf your team is under deadline pressure, you\u0027ll need to decide internally if you\u0027re comfortable committing to long-term maintenance of the design you\u0027ve proposed.\n\nIdeally a request for design feedback would have been made several months ago, earlier in the SC process.  😞",
+      "revId": "95904d435df1eb652ee086639c3b7c32c83da5ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
