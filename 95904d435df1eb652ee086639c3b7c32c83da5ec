@@ -16,6 +16,23 @@
       "message": "@Jeff,\n\nLorenzo like to get your feedback before we merge it.\nPlease help to take a look my response.\n\nThank you.",
       "revId": "95904d435df1eb652ee086639c3b7c32c83da5ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea80c97e_de45fc87",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-25T11:26:24Z",
+      "side": 1,
+      "message": "Gently ping for review",
+      "revId": "95904d435df1eb652ee086639c3b7c32c83da5ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
