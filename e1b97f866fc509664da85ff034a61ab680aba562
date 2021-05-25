@@ -16,6 +16,52 @@
       "message": "Adding a CTS test to the existing proxy tests at:\ncts/hostsidetests/devicepolicy/src/com/android/cts/devicepolicy/DeviceOwnerTest.java\n\nwould be nice if possible; given that it\u0027s a host side test (to allow it to set up a device management app to configure the proxy) then I *think* there should be some way to kill the proxy service from the host in order to test the case that\u0027s being fixed here, though I\u0027m not certain.\n\nFailing that it would be good to at least manually test it; I\u0027d suggest a tiny test app that calls java.net.ProxySelector every time you press a button. Set up a PAC config, run the app, make sure you get the result you expect from the button, then kill the service and wait for it to restart, then hit the button again to ensure that it can deal with the other end of the IPC connection having restarted inbetween. I don\u0027t know how that works for system services to be confident that it actually works otherwise; the PacProxySelector implementation doesn\u0027t explicitly handle the connection and just lets ServiceManager do it.",
       "revId": "e1b97f866fc509664da85ff034a61ab680aba562",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a144d9da_b942c325",
+        "filename": "services/core/java/com/android/server/connectivity/PacProxyService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-25T08:06:47Z",
+      "side": 1,
+      "message": "Not sure \"exit for any reason\" means. Do you mean \"might have exited for any reason\"? If so, maybe might want to say something like:\n\n                        // If mCurrentPac is not null, then the PacService might have crashed\n                        // and restarted. The download task will early-exit without actually calling\n                        // setCurrentProxyScript, so call setCurrentProxyScript here.\n\nAlso, is it true that the download task will early-exit? I don\u0027t see anything like that in current code. It appears to do the download unconditionally:\n\n        public void run() {\n            String file;\n            final Uri pacUrl \u003d mPacUrl;\n            if (Uri.EMPTY.equals(pacUrl)) return;\n            final int oldTag \u003d TrafficStats.getAndSetThreadStatsTag(\n                    TrafficStatsConstants.TAG_SYSTEM_PAC);\n            try {\n                file \u003d get(pacUrl);",
+      "range": {
+        "startLine": 348,
+        "startChar": 78,
+        "endLine": 349,
+        "endChar": 33
+      },
+      "revId": "e1b97f866fc509664da85ff034a61ab680aba562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e3ae4f5_eb5360e7",
+        "filename": "services/core/java/com/android/server/connectivity/PacProxyService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-05-25T08:06:47Z",
+      "side": 1,
+      "message": "If the current pac is already known, then why do the download again? Should this be in an else clause?",
+      "range": {
+        "startLine": 355,
+        "startChar": 24,
+        "endLine": 355,
+        "endChar": 63
+      },
+      "revId": "e1b97f866fc509664da85ff034a61ab680aba562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
