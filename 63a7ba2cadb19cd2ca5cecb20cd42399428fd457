@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6900fa3_ac51ce0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-25T14:43:27Z",
+      "side": 1,
+      "message": "git is changed, please review aosp/1717735 instead.",
+      "revId": "63a7ba2cadb19cd2ca5cecb20cd42399428fd457",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fda06bbd_79df4d70",
@@ -31,6 +48,30 @@
       "writtenOn": "2021-05-21T11:26:23Z",
       "side": 1,
       "message": "Question: Do we have other caller?\nIf not, I don\u0027t really see this refactoring valuable.\nMaybe I missed something.",
+      "range": {
+        "startLine": 5085,
+        "startChar": 12,
+        "endLine": 5085,
+        "endChar": 29
+      },
+      "revId": "63a7ba2cadb19cd2ca5cecb20cd42399428fd457",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86fa4c86_45be2818",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5085,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-25T14:43:27Z",
+      "side": 1,
+      "message": "It\u0027s used in previous patch.\nRemoved.",
+      "parentUuid": "fda06bbd_79df4d70",
       "range": {
         "startLine": 5085,
         "startChar": 12,
@@ -64,6 +105,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6414df5c_3109fd64",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7375,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-25T14:43:27Z",
+      "side": 1,
+      "message": "Removed this method.",
+      "parentUuid": "c5bcd674_7522903c",
+      "range": {
+        "startLine": 7375,
+        "startChar": 10,
+        "endLine": 7375,
+        "endChar": 11
+      },
+      "revId": "63a7ba2cadb19cd2ca5cecb20cd42399428fd457",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1209294_d5bfbea8",
@@ -87,6 +152,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cc5d332_f3b15291",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7395,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-25T14:43:27Z",
+      "side": 1,
+      "message": "Updated comment.",
+      "parentUuid": "f1209294_d5bfbea8",
+      "range": {
+        "startLine": 7395,
+        "startChar": 27,
+        "endLine": 7395,
+        "endChar": 36
+      },
+      "revId": "63a7ba2cadb19cd2ca5cecb20cd42399428fd457",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fefdced5_022df4e7",
@@ -100,6 +189,30 @@
       "writtenOn": "2021-05-21T11:26:23Z",
       "side": 1,
       "message": "Stupid question: Sorry for lack of context, why do we need to send proxy broadcast if this is true?",
+      "range": {
+        "startLine": 7398,
+        "startChar": 65,
+        "endLine": 7398,
+        "endChar": 94
+      },
+      "revId": "63a7ba2cadb19cd2ca5cecb20cd42399428fd457",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ca93e0d_25219d75",
+        "filename": "packages/Connectivity/service/src/com/android/server/ConnectivityService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 7398,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-05-25T14:43:27Z",
+      "side": 1,
+      "message": "Per offline discussion, here is trying to send a proxy broadcast when the proxy is set in VPN or any default network.\nAnd we agreed that there might be false alarms in current design. e.g. uid 10100 is removed from the VPN to any default network but their proxy are the same.\nBut there is no good(easy) way to compare all the uids which are added to/removed from the VPN to all default networks.\nAdd a TODO to point out this problem.",
+      "parentUuid": "fefdced5_022df4e7",
       "range": {
         "startLine": 7398,
         "startChar": 65,
