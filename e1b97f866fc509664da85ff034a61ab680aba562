@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e33f64ee_5a15deac",
+        "filename": "services/core/java/com/android/server/connectivity/PacProxyService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-05-26T14:56:06Z",
+      "side": 1,
+      "message": "Yes, you are right, checked the code again, it\u0027s not early-exit.\nIt doesn\u0027t call setCurrentProxyScript and then do nothing in sendProxyIfNeeded().\nRefine the description.",
+      "parentUuid": "a144d9da_b942c325",
+      "range": {
+        "startLine": 348,
+        "startChar": 78,
+        "endLine": 349,
+        "endChar": 33
+      },
+      "revId": "e1b97f866fc509664da85ff034a61ab680aba562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e3ae4f5_eb5360e7",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-05-25T08:06:47Z",
       "side": 1,
       "message": "If the current pac is already known, then why do the download again? Should this be in an else clause?",
+      "range": {
+        "startLine": 355,
+        "startChar": 24,
+        "endLine": 355,
+        "endChar": 63
+      },
+      "revId": "e1b97f866fc509664da85ff034a61ab680aba562",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7afcd68f_3ab8d8fe",
+        "filename": "services/core/java/com/android/server/connectivity/PacProxyService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-05-26T14:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e3ae4f5_eb5360e7",
       "range": {
         "startLine": 355,
         "startChar": 24,
