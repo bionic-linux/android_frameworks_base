@@ -113,9 +113,9 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
         // Layout all child views so that we can move them around later
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
-            int width = child.getMeasuredWidth();
-            int height = child.getMeasuredHeight();
-            int top = (int) (midY - height / 2.0f);
+            final int width = child.getMeasuredWidth();
+            final int height = child.getMeasuredHeight();
+            final int top = (int) (midY - height / 2.0f);
             child.layout(0, top, width, top + height);
         }
 
@@ -145,7 +145,7 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         mMeasureViews.clear();
-        int mode = MeasureSpec.getMode(widthMeasureSpec);
+        final int mode = MeasureSpec.getMode(widthMeasureSpec);
         final int width = MeasureSpec.getSize(widthMeasureSpec);
         final int count = getChildCount();
         // Collect all of the views which want to be laid out
@@ -157,8 +157,8 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
             }
         }
 
-        int visibleCount = mMeasureViews.size();
-        int maxVisible = visibleCount <= MAX_ICONS ? MAX_ICONS : MAX_ICONS - 1;
+        final int visibleCount = mMeasureViews.size();
+        final int maxVisible = visibleCount <= MAX_ICONS ? MAX_ICONS : MAX_ICONS - 1;
         int totalWidth = mPaddingLeft + mPaddingRight;
         boolean trackWidth = true;
 
@@ -266,10 +266,10 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
      */
     private void calculateIconTranslations() {
         mLayoutStates.clear();
-        float width = getWidth();
+        final float width = getWidth();
         float translationX = width - getPaddingEnd();
-        float contentStart = getPaddingStart();
-        int childCount = getChildCount();
+        final float contentStart = getPaddingStart();
+        final int childCount = getChildCount();
         // Underflow === don't show content until that index
         if (DEBUG) Log.d(TAG, "calculateIconTranslations: start=" + translationX
                 + " width=" + width + " underflow=" + mNeedsUnderflow);
@@ -299,8 +299,8 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
         }
 
         // Show either 1-MAX_ICONS icons, or (MAX_ICONS - 1) icons + overflow
-        int totalVisible = mLayoutStates.size();
-        int maxVisible = totalVisible <= MAX_ICONS ? MAX_ICONS : MAX_ICONS - 1;
+        final int totalVisible = mLayoutStates.size();
+        final int maxVisible = totalVisible <= MAX_ICONS ? MAX_ICONS : MAX_ICONS - 1;
 
         mUnderflowStart = 0;
         int visible = 0;
