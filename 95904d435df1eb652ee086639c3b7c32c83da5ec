@@ -50,6 +50,23 @@
       "message": "Thanks for helping answer the questions I had.  I remain skeptical of the currently proposed design, but I won\u0027t have time this week to make alternative suggestions.\n\nIf your team is under deadline pressure, you\u0027ll need to decide internally if you\u0027re comfortable committing to long-term maintenance of the design you\u0027ve proposed.\n\nIdeally a request for design feedback would have been made several months ago, earlier in the SC process.  😞",
       "revId": "95904d435df1eb652ee086639c3b7c32c83da5ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbb136dc_517baa16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-05-26T11:17:07Z",
+      "side": 1,
+      "message": "@Lorenzo,\n\nCould you help to review this CL#? Jeff doesn\u0027t have time to review it this week.\nPatch#25 fixed the comment from patch#24 which +2ed.\n\nThank you.",
+      "revId": "95904d435df1eb652ee086639c3b7c32c83da5ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
