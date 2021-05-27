@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9a165ea_bd5fcc12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2021-05-27T17:51:27Z",
+      "side": 1,
+      "message": "Yeah this looks reasonable to me; it doesn\u0027t seem like anything de-schedules the alarm for the periodic download unless the PAC URL changes, so there shouldn\u0027t be any need to re-schedule it if the service restarts and we already have a downloaded script.",
+      "revId": "eb9d9b261ee580e2ab3169f3d5b92d8f0bc09a80",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
