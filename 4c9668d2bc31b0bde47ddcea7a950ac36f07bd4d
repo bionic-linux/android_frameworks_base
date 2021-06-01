@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2635d5ea_2b22063d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-06-01T16:07:00Z",
+      "side": 1,
+      "message": "merged to internal repo ",
+      "revId": "4c9668d2bc31b0bde47ddcea7a950ac36f07bd4d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
