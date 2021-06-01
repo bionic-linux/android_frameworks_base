@@ -413,6 +413,14 @@ public class NetworkStatsHistory implements Parcelable {
             entry.txPackets = getLong(input.txPackets, i, 0L);
             entry.operations = getLong(input.operations, i, 0L);
 
+            if (entry.rxBytes < 0 || entry.rxPackets < 0 || entry.txBytes < 0 || entry.txPackets < 0 || entry.operations < 0) {
+                entry.rxBytes = Math.max(entry.rxBytes, 0L);
+                entry.rxPackets = Math.max(entry.rxPackets, 0L);
+                entry.txBytes = Math.max(entry.txBytes, 0L);
+                entry.txPackets = Math.max(entry.txPackets, 0L);
+                entry.operations = Math.max(entry.operations, 0L);
+            }
+
             recordData(bucketStart, bucketEnd, entry);
         }
     }
