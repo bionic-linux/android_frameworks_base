@@ -1728,7 +1728,9 @@ public final class ViewRootImpl implements ViewParent,
                 destroySurface();
             }
         }
-        scheduleConsumeBatchedInputImmediately();
+        if (stopped) {
+            scheduleConsumeBatchedInputImmediately();
+        }
     }
 
 
