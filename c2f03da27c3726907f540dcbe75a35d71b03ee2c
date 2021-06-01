@@ -16,6 +16,46 @@
       "message": "Cherry-pick with trivial conflicts",
       "revId": "c2f03da27c3726907f540dcbe75a35d71b03ee2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c844927b_519f93c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-01T14:49:04Z",
+      "side": 1,
+      "message": "Identical to the parts of ag/13929764 that are still in frameworks/base after the code move.",
+      "revId": "c2f03da27c3726907f540dcbe75a35d71b03ee2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d8ddf9b_505f9f97",
+        "filename": "native/android/net.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-01T14:49:04Z",
+      "side": 1,
+      "message": "While you\u0027re at it, I don\u0027t see a response on https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/13929764/comment/b6c6ece0_08509c51/ . I can\u0027t remember how we resolved it. Did we conclude that the code was correct?",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "revId": "c2f03da27c3726907f540dcbe75a35d71b03ee2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
