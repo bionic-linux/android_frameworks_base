@@ -67,6 +67,24 @@
       "message": "@Lorenzo,\n\nCould you help to review this CL#? Jeff doesn\u0027t have time to review it this week.\nPatch#25 fixed the comment from patch#24 which +2ed.\n\nThank you.",
       "revId": "95904d435df1eb652ee086639c3b7c32c83da5ec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b2590eb_ce49384a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-01T05:43:57Z",
+      "side": 1,
+      "message": "Thanks Jeff. Les: let\u0027s make sure that if we want to touch this code again, we gather Jeff\u0027s feedback early in the release cycle.",
+      "parentUuid": "4827c4f6_f974ed23",
+      "revId": "95904d435df1eb652ee086639c3b7c32c83da5ec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
