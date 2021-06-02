@@ -146,7 +146,7 @@ public final class ViewRootImpl implements ViewParent,
     private static final boolean LOCAL_LOGV = false;
     /** @noinspection PointlessBooleanExpression*/
     private static final boolean DEBUG_DRAW = false || LOCAL_LOGV;
-    private static final boolean DEBUG_LAYOUT = false || LOCAL_LOGV;
+    private static final boolean DEBUG_LAYOUT = true || LOCAL_LOGV;
     private static final boolean DEBUG_DIALOG = false || LOCAL_LOGV;
     private static final boolean DEBUG_INPUT_RESIZE = false || LOCAL_LOGV;
     private static final boolean DEBUG_ORIENTATION = false || LOCAL_LOGV;
@@ -1997,18 +1997,22 @@ public final class ViewRootImpl implements ViewParent,
         mWindowAttributesChangesFlag = 0;
 
         Rect frame = mWinFrame;
+        Log.d("MIHAI", "mFirst is true?");
         if (mFirst) {
             mFullRedrawNeeded = true;
             mLayoutRequested = true;
 
             final Configuration config = mContext.getResources().getConfiguration();
+            Log.d("MIHAI", "Yes");
             if (shouldUseDisplaySize(lp)) {
                 // NOTE -- system code, won't try to do compat mode.
                 Point size = new Point();
                 mDisplay.getRealSize(size);
+                Log.d("MIHAI", "Should use display size " + size.x + " " + size.y);
                 desiredWindowWidth = size.x;
                 desiredWindowHeight = size.y;
             } else {
+                Log.d("MIHAI", "Should not use display size " + mWinFrame);
                 desiredWindowWidth = mWinFrame.width();
                 desiredWindowHeight = mWinFrame.height();
             }
@@ -2029,6 +2033,7 @@ public final class ViewRootImpl implements ViewParent,
             mAttachInfo.mTreeObserver.dispatchOnWindowAttachedChange(true);
             dispatchApplyInsets(host);
         } else {
+            Log.d("MIHAI", "Not mFirst, adjusting to " + frame);
             desiredWindowWidth = frame.width();
             desiredWindowHeight = frame.height();
             if (desiredWindowWidth != mWidth || desiredWindowHeight != mHeight) {
@@ -2104,14 +2109,17 @@ public final class ViewRootImpl implements ViewParent,
                         || lp.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
                     windowSizeMayChange = true;
 
+                    Log.d("MIHAI", "Is layout requested...");
                     if (shouldUseDisplaySize(lp)) {
                         // NOTE -- system code, won't try to do compat mode.
                         Point size = new Point();
                         mDisplay.getRealSize(size);
+                        Log.d("MIHAI", "real size..." + size);
                         desiredWindowWidth = size.x;
                         desiredWindowHeight = size.y;
                     } else {
                         Configuration config = res.getConfiguration();
+                        Log.d("MIHAI", "res.getConf" + config.screenWidthDp + " " + config.screenHeightDp);
                         desiredWindowWidth = dipToPx(config.screenWidthDp);
                         desiredWindowHeight = dipToPx(config.screenHeightDp);
                     }
@@ -2218,6 +2226,7 @@ public final class ViewRootImpl implements ViewParent,
         final boolean windowRelayoutWasForced = mForceNextWindowRelayout;
         boolean surfaceSizeChanged = false;
 
+        Log.d("MIHAI", "Window should resize " + windowShouldResize);
         if (mFirst || windowShouldResize || insetsChanged ||
                 viewVisibilityChanged || params != null || mForceNextWindowRelayout) {
             mForceNextWindowRelayout = false;
