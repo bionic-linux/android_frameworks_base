@@ -33,6 +33,24 @@
       "message": "Hi Severson, is it ready to submit? Thx.",
       "revId": "c2b03154eb77f43d9e433f569d6aafa1e5048b27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "120c9455_8746f1eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2021-06-03T01:39:07Z",
+      "side": 1,
+      "message": "Yeah it looks good.",
+      "parentUuid": "2216beb7_aebc4aa5",
+      "revId": "c2b03154eb77f43d9e433f569d6aafa1e5048b27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
