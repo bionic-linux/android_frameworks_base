@@ -3094,7 +3094,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
         // TODO(lifecycler): Can't switch to use #handleLaunchActivity() because it will try to
         // call #reportSizeConfigurations(), but the server might not know anything about the
-        // activity if it was launched from LocalAcvitivyManager.
+        // activity if it was launched from LocalActivityManager.
         return performLaunchActivity(r, null /* customIntent */);
     }
 
