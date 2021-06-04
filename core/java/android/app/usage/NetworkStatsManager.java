@@ -48,6 +48,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.DataUnit;
 import android.util.Log;
 
@@ -214,6 +215,12 @@ public class NetworkStatsManager {
      *                     null} value when querying for the mobile network type to receive usage
      *                     for all mobile networks. For additional details see {@link
      *                     TelephonyManager#getSubscriberId()}.
+     *                     <p>Starting with API level 31, the {@code subscriberId} is applicable
+     *                     for the wifi network. Given {@code null} or an empty string value when
+     *                     querying for the wifi network type to receive usage
+     *                     for all wifi networks. Or given a specific {@code subscriberId} when
+     *                     querying for the wifi network to receive usage for the carrier merged
+     *                     wifi network.
      * @param startTime Start of period. Defined in terms of "Unix time", see
      *            {@link java.lang.System#currentTimeMillis}.
      * @param endTime End of period. Defined in terms of "Unix time", see
@@ -255,6 +262,12 @@ public class NetworkStatsManager {
      *                     null} value when querying for the mobile network type to receive usage
      *                     for all mobile networks. For additional details see {@link
      *                     TelephonyManager#getSubscriberId()}.
+     *                     <p>Starting with API level 31, the {@code subscriberId} is applicable
+     *                     for the wifi network. Given {@code null} or an empty string value when
+     *                     querying for the wifi network type to receive usage
+     *                     for all wifi networks. Or given a specific {@code subscriberId} when
+     *                     querying for the wifi network to receive usage for the carrier merged
+     *                     wifi network.
      * @param startTime Start of period. Defined in terms of "Unix time", see
      *            {@link java.lang.System#currentTimeMillis}.
      * @param endTime End of period. Defined in terms of "Unix time", see
@@ -300,6 +313,12 @@ public class NetworkStatsManager {
      *                     null} value when querying for the mobile network type to receive usage
      *                     for all mobile networks. For additional details see {@link
      *                     TelephonyManager#getSubscriberId()}.
+     *                     <p>Starting with API level 31, the {@code subscriberId} is applicable
+     *                     for the wifi network. Given {@code null} or an empty string value when
+     *                     querying for the wifi network type to receive usage
+     *                     for all wifi networks. Or given a specific {@code subscriberId} when
+     *                     querying for the wifi network to receive usage for the carrier merged
+     *                     wifi network.
      * @param startTime Start of period. Defined in terms of "Unix time", see
      *            {@link java.lang.System#currentTimeMillis}.
      * @param endTime End of period. Defined in terms of "Unix time", see
@@ -388,6 +407,12 @@ public class NetworkStatsManager {
      *                     null} value when querying for the mobile network type to receive usage
      *                     for all mobile networks. For additional details see {@link
      *                     TelephonyManager#getSubscriberId()}.
+     *                     <p>Starting with API level 31, the {@code subscriberId} is applicable
+     *                     for the wifi network. Given {@code null} or an empty string value when
+     *                     querying for the wifi network type to receive usage
+     *                     for all wifi networks. Or given a specific {@code subscriberId} when
+     *                     querying for the wifi network to receive usage for the carrier merged
+     *                     wifi network.
      * @param startTime Start of period. Defined in terms of "Unix time", see
      *            {@link java.lang.System#currentTimeMillis}.
      * @param endTime End of period. Defined in terms of "Unix time", see
@@ -450,6 +475,12 @@ public class NetworkStatsManager {
      *                     null} value when querying for the mobile network type to receive usage
      *                     for all mobile networks. For additional details see {@link
      *                     TelephonyManager#getSubscriberId()}.
+     *                     <p>Starting with API level 31, the {@code subscriberId} is applicable
+     *                     for the wifi network. Given {@code null} or an empty string value when
+     *                     querying for the wifi network type to receive usage
+     *                     for all wifi networks. Or given a specific {@code subscriberId} when
+     *                     querying for the wifi network to receive usage for the carrier merged
+     *                     wifi network.
      * @param startTime Start of period. Defined in terms of "Unix time", see
      *            {@link java.lang.System#currentTimeMillis}.
      * @param endTime End of period. Defined in terms of "Unix time", see
@@ -531,6 +562,12 @@ public class NetworkStatsManager {
      *                     null} value when registering for the mobile network type to receive
      *                     notifications for all mobile networks. For additional details see {@link
      *                     TelephonyManager#getSubscriberId()}.
+     *                     <p>Starting with API level 31, the {@code subscriberId} is applicable
+     *                     for the wifi network. Given {@code null} or an empty string value when
+     *                     querying for the wifi network type to receive usage
+     *                     for all wifi networks. Or given a specific {@code subscriberId} when
+     *                     querying for the wifi network to receive usage for the carrier merged
+     *                     wifi network.
      * @param thresholdBytes Threshold in bytes to be notified on.
      * @param callback The {@link UsageCallback} that the system will call when data usage
      *            has exceeded the specified threshold.
@@ -644,7 +681,7 @@ public class NetworkStatsManager {
                         : NetworkTemplate.buildTemplateMobileAll(subscriberId);
                 break;
             case ConnectivityManager.TYPE_WIFI:
-                template = subscriberId == null
+                template = TextUtils.isEmpty(subscriberId)
                         ? NetworkTemplate.buildTemplateWifiWildcard()
                         : NetworkTemplate.buildTemplateWifi(NetworkTemplate.WIFI_NETWORKID_ALL,
                                 subscriberId);
