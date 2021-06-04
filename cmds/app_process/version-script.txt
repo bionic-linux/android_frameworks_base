@@ -1,0 +1,11 @@
+# Symbols exported from the executable in .dynsym interpose symbols in every
+# linker namespace, including an app's classloader namespace. Provide this
+# empty version script to prevent unwanted interposition.
+#
+# By default, the static linker doesn't export most of the executable's
+# symbols, but it will export a symbol that appears to override a symbol in
+# a needed DSO, which commonly happens with C++ vaguely-linked entities.
+{
+  local:
+    *;
+};
