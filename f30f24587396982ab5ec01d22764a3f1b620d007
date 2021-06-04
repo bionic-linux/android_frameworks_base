@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "384bf1ba_fff30952",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-06-04T10:58:21Z",
+      "side": 1,
+      "message": "1. I think we should still document null.\nHandling for empty string is only for backward compatibility.\n2. Not sure if the readers understand what is merged wifi network without any explanation.\n\nMaybe:\n\u003cp\u003eStarting with API level 31, calling apps can provide a {@code subscriberId} with wifi network type to receive usage for wifi networks which is under the given subscription if applicable. Otherwise, provides {@code null} when querying all wifi networks.",
+      "range": {
+        "startLine": 219,
+        "startChar": 68,
+        "endLine": 219,
+        "endChar": 92
+      },
+      "revId": "f30f24587396982ab5ec01d22764a3f1b620d007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
