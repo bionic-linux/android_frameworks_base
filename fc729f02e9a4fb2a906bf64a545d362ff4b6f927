@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3aadca7_3fde71ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-06-07T05:19:15Z",
+      "side": 1,
+      "message": "Cherry-pick of approved change split into 2 repositories",
+      "revId": "fc729f02e9a4fb2a906bf64a545d362ff4b6f927",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
