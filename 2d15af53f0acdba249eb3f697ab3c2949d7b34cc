@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b54be67b_85b07a37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-06-08T06:10:15Z",
+      "side": 1,
+      "message": "I\u0027m sorry to inform you that you need to cherry-pick your commit to packages/modules/Connectivity. Because all Connectivity moudle files have been move to there. Very thanks for your upstreaming.",
+      "revId": "2d15af53f0acdba249eb3f697ab3c2949d7b34cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
