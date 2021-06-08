@@ -22,6 +22,30 @@
       },
       "revId": "f30f24587396982ab5ec01d22764a3f1b620d007",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26b2f52f_8e534d10",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-06-08T01:59:25Z",
+      "side": 1,
+      "message": "@Lorenzo,\n\nDo you have any concern if I take Junyu\u0027s suggestion?",
+      "parentUuid": "384bf1ba_fff30952",
+      "range": {
+        "startLine": 219,
+        "startChar": 68,
+        "endLine": 219,
+        "endChar": 92
+      },
+      "revId": "f30f24587396982ab5ec01d22764a3f1b620d007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
