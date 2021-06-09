@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e99db19_d832dfc6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229339
+      },
+      "writtenOn": "2021-06-09T02:17:08Z",
+      "side": 1,
+      "message": "If it were easy to write a test, I think I would. I\u0027m not really sure how to?\n\nThere is an llvm-nm in prebuilts/clang/host/linux-x86/llvm-binutils-stable.",
+      "parentUuid": "4f27a520_c95f111a",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0d0cd69a_938324e3",
         "filename": "cmds/app_process/version-script.txt",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2021-06-07T15:20:00Z",
       "side": 1,
       "message": "Is it safe to not export these, or can we get ODR issues?",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0744d212_ffdd57a9",
+        "filename": "cmds/app_process/version-script.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229339
+      },
+      "writtenOn": "2021-06-09T02:17:08Z",
+      "side": 1,
+      "message": "I think it\u0027s safe to hide the symbols listed in b/190100879#comment8, which this CL does.\n\nIt\u0027s possible to have code where DSOs need to have their vaguely-linked entities merged. It seems to come up mostly with NDK users and RTTI variables -- someone uses C++ exceptions or dynamic_cast across DSO boundaries, which tends to break when the RTTI variables aren\u0027t merged.\n\nThis CL is restoring the visibility situation that existed when app_process still had the sigchain version script (except that now the signal/sigchain APIs aren\u0027t exported from app_process):\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1621159/",
+      "parentUuid": "0d0cd69a_938324e3",
       "range": {
         "startLine": 7,
         "startChar": 44,
