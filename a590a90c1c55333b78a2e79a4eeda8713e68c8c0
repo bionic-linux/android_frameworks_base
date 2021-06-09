@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5ba97726_32ce8c1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-06-09T13:10:11Z",
+      "side": 1,
+      "message": "If only Android testing was not so complicated... I hoped you had some magic for testing such linker things already.",
+      "parentUuid": "0e99db19_d832dfc6",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0d0cd69a_938324e3",
         "filename": "cmds/app_process/version-script.txt",
         "patchSetId": 1
