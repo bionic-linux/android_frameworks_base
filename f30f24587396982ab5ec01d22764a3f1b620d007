@@ -46,6 +46,30 @@
       },
       "revId": "f30f24587396982ab5ec01d22764a3f1b620d007",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e3bb8ef_7c172a14",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-06-09T06:14:01Z",
+      "side": 1,
+      "message": "Take Junyu\u0027s suggestion first.",
+      "parentUuid": "26b2f52f_8e534d10",
+      "range": {
+        "startLine": 219,
+        "startChar": 68,
+        "endLine": 219,
+        "endChar": 92
+      },
+      "revId": "f30f24587396982ab5ec01d22764a3f1b620d007",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
