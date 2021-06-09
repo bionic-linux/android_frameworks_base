@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55f75caa_f4d1cc65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2021-06-09T14:34:13Z",
+      "side": 1,
+      "message": "What about adding a genrule that takes the output of the cc_binary and checks it with a bash script? We do something similar here to check the APEXes we build: https://cs.android.com/android/platform/superproject/+/master:art/build/apex/Android.bp;l\u003d493-509;drc\u003df2d1a510bf36f98e0607f0527299789a64d755c9 (The *-fakebin module there is added to PACKAGE_HOST_MODULES to ensure the genrule gets executed at build time.)",
+      "parentUuid": "5ba97726_32ce8c1c",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0d0cd69a_938324e3",
         "filename": "cmds/app_process/version-script.txt",
         "patchSetId": 1
@@ -109,6 +133,30 @@
       "side": 1,
       "message": "I think it\u0027s safe to hide the symbols listed in b/190100879#comment8, which this CL does.\n\nIt\u0027s possible to have code where DSOs need to have their vaguely-linked entities merged. It seems to come up mostly with NDK users and RTTI variables -- someone uses C++ exceptions or dynamic_cast across DSO boundaries, which tends to break when the RTTI variables aren\u0027t merged.\n\nThis CL is restoring the visibility situation that existed when app_process still had the sigchain version script (except that now the signal/sigchain APIs aren\u0027t exported from app_process):\n\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1621159/",
       "parentUuid": "0d0cd69a_938324e3",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27d0cb21_48fe4914",
+        "filename": "cmds/app_process/version-script.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2021-06-09T14:34:13Z",
+      "side": 1,
+      "message": "Ok, I guess C++ exceptions and RTTI stuff *shouldn\u0027t* come into play here, and it\u0027d apply only to app_main.cpp, right?\n\nThen I agree this is enough, but maybe the comment could be extended to spell out that it may affect dynamic_cast and exceptions, for readers that won\u0027t immediately make that connection from \"vaguely-linked entities\".",
+      "parentUuid": "0744d212_ffdd57a9",
       "range": {
         "startLine": 7,
         "startChar": 44,
