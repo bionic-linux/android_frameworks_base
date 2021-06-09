@@ -161,7 +161,7 @@ public abstract class Spline {
                 } else {
                     float a = m[i] / d[i];
                     float b = m[i + 1] / d[i];
-                    if (a < 0f || b < 0f) {
+                    if (Float.compare(a, 0f) == -1 || Float.compare(b, 0f) == -1) {
                         throw new IllegalArgumentException("The control points must have "
                                 + "monotonic Y values.");
                     }
