@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17a1b33b_e8075045",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229339
+      },
+      "writtenOn": "2021-06-10T22:47:10Z",
+      "side": 1,
+      "message": "That seems like too much trouble. Also: adding a test that all symbols are hidden, after adding a version script that hides all symbols, seems a bit redundant.\n\nMaybe a test verifying that an app can have a main function is OK, though?\n\nhttps://android-review.googlesource.com/c/platform/cts/+/1734121",
+      "parentUuid": "55f75caa_f4d1cc65",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0d0cd69a_938324e3",
         "filename": "cmds/app_process/version-script.txt",
         "patchSetId": 1
@@ -157,6 +181,30 @@
       "side": 1,
       "message": "Ok, I guess C++ exceptions and RTTI stuff *shouldn\u0027t* come into play here, and it\u0027d apply only to app_main.cpp, right?\n\nThen I agree this is enough, but maybe the comment could be extended to spell out that it may affect dynamic_cast and exceptions, for readers that won\u0027t immediately make that connection from \"vaguely-linked entities\".",
       "parentUuid": "0744d212_ffdd57a9",
+      "range": {
+        "startLine": 7,
+        "startChar": 44,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5399978_c6ca9bfe",
+        "filename": "cmds/app_process/version-script.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229339
+      },
+      "writtenOn": "2021-06-10T22:47:10Z",
+      "side": 1,
+      "message": "Yeah, it only applies to app_main.cpp (and the headers it includes).\n\nI expanded the comment listing template functions and type_info variables as examples of vaguely-linked things. My point was that a version script was necessary, even if it might seem unnecessary for an executable.\n\nI don\u0027t think app_process is really that special here -- it\u0027s just a little unexpected that its dynamic symbols are exposed to all linker namespaces. Currently, any DSO with a public API may want/need to use a version script to hide internal symbols, but then hiding symbols may prevent merging of C++ vaguely-linked entities with other DSOs. I think we avoid the issue mostly by not using C++ exceptions and dynamic_cast, especially across DSO boundaries?",
+      "parentUuid": "27d0cb21_48fe4914",
       "range": {
         "startLine": 7,
         "startChar": 44,
