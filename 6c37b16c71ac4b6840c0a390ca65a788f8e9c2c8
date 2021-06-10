@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f11261f5_6635aeec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112033
+      },
+      "writtenOn": "2021-06-10T18:17:16Z",
+      "side": 1,
+      "message": "Per instructions at: https://g3doc.corp.google.com/company/teams/android/developing/code-reviews.md?cl\u003dhead#buganizer-component-links-in-owners",
+      "revId": "6c37b16c71ac4b6840c0a390ca65a788f8e9c2c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
