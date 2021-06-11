@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "863f24dc_5ba02d97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-11T10:03:23Z",
+      "side": 1,
+      "message": "LGTM assuming you address the trivial comments.",
+      "revId": "b2076d2b3b6e962cdc9749092c3638fd2452dcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f73eae7_47834aa0",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-11T10:03:23Z",
+      "side": 1,
+      "message": "pass",
+      "range": {
+        "startLine": 221,
+        "startChar": 38,
+        "endLine": 221,
+        "endChar": 46
+      },
+      "revId": "b2076d2b3b6e962cdc9749092c3638fd2452dcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3c3569f_f9276e08",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-11T10:03:23Z",
+      "side": 1,
+      "message": "pass",
+      "range": {
+        "startLine": 266,
+        "startChar": 38,
+        "endLine": 266,
+        "endChar": 46
+      },
+      "revId": "b2076d2b3b6e962cdc9749092c3638fd2452dcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43e25788_02d3f561",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-11T10:03:23Z",
+      "side": 1,
+      "message": "pass",
+      "range": {
+        "startLine": 315,
+        "startChar": 38,
+        "endLine": 315,
+        "endChar": 46
+      },
+      "revId": "b2076d2b3b6e962cdc9749092c3638fd2452dcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15ae494f_04546aeb",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-11T10:03:23Z",
+      "side": 1,
+      "message": "pass",
+      "range": {
+        "startLine": 407,
+        "startChar": 38,
+        "endLine": 407,
+        "endChar": 46
+      },
+      "revId": "b2076d2b3b6e962cdc9749092c3638fd2452dcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f15c7251_6e6db936",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-11T10:03:23Z",
+      "side": 1,
+      "message": "pass",
+      "range": {
+        "startLine": 473,
+        "startChar": 38,
+        "endLine": 473,
+        "endChar": 46
+      },
+      "revId": "b2076d2b3b6e962cdc9749092c3638fd2452dcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f476431_669cc78a",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-11T10:03:23Z",
+      "side": 1,
+      "message": "pass",
+      "range": {
+        "startLine": 558,
+        "startChar": 38,
+        "endLine": 558,
+        "endChar": 46
+      },
+      "revId": "b2076d2b3b6e962cdc9749092c3638fd2452dcda",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
