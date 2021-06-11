@@ -122,6 +122,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "efba9d14_2e22cb97",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-06-11T08:52:52Z",
+      "side": 1,
+      "message": "\u003e Maybe a test verifying that an app can have a main function is OK, though?\n\nYeah, that\u0027s a good idea!\n\n\u003e adding a test that all symbols are hidden, after adding a version script that hides all symbols, seems a bit redundant.\n\nI think what I worry is somewhat doing a refactoring again, and forgetting the version script. Can you add a comment in the .bp file to *not* remove the version script as otherwise we would overwrite app symbols?",
+      "parentUuid": "17a1b33b_e8075045",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0d0cd69a_938324e3",
         "filename": "cmds/app_process/version-script.txt",
         "patchSetId": 1
