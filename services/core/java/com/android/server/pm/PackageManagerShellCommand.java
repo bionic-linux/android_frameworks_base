@@ -3437,8 +3437,9 @@ class PackageManagerShellCommand extends ShellCommand {
                 }
                 prefix = "  ";
             }
-            List<PermissionInfo> ps = mPermissionManager
-                    .queryPermissionsByGroup(groupList.get(i), 0 /*flags*/).getList();
+            ParceledListSlice<PermissionInfo> pls = mPermissionManager
+                    .queryPermissionsByGroup(groupList.get(i), 0 /*flags*/);
+            List<PermissionInfo> ps = (pls == null ? Collections.emptyList() : pls.getList());
             final int count = ps.size();
             boolean first = true;
             for (int p = 0 ; p < count ; p++) {
