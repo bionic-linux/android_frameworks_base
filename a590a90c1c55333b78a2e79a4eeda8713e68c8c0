@@ -168,6 +168,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4156c2af_6ce95be9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-06-14T08:18:37Z",
+      "side": 1,
+      "message": "Sounds good, thanks!",
+      "parentUuid": "ebf9eeea_f8c9d4a2",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "a590a90c1c55333b78a2e79a4eeda8713e68c8c0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d0cd69a_938324e3",
