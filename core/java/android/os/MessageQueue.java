@@ -565,7 +565,7 @@ public final class MessageQueue {
             }
 
             msg.markInUse();
-            msg.when = when;
+            msg.when = when != 0 ? when : SystemClock.uptimeMillis();
             Message p = mMessages;
             boolean needWake;
             if (p == null || when == 0 || when < p.when) {
