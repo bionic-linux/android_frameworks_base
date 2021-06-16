@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec5aa3c7_86ea725c",
+        "filename": "core/java/android/bluetooth/OobData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2021-06-16T17:57:49Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 950,
+        "startChar": 31,
+        "endLine": 950,
+        "endChar": 39
+      },
+      "revId": "d2ebf3532d509e7c0c01fdfd3bb24a7f82188d15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
