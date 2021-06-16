@@ -1342,8 +1342,9 @@ public class HdmiControlService extends SystemService {
                     deviceInfo.getLogicalAddress(), deviceInfo.getPhysicalAddress(),
                     deviceInfo.getPortId(), deviceInfo.getDeviceType(), deviceInfo.getVendorId(),
                     newDisplayName, deviceInfo.getDevicePowerStatus()));
-            sendCecCommand(HdmiCecMessageBuilder.buildSetOsdNameCommand(
-                    device.mAddress, Constants.ADDR_TV, newDisplayName));
+            sendCecCommand(
+                    HdmiCecMessageBuilder.buildSetOsdNameCommand(
+                            deviceInfo.getLogicalAddress(), Constants.ADDR_TV, newDisplayName));
         }
     }
 
@@ -2295,7 +2296,9 @@ public class HdmiControlService extends SystemService {
                     }
                     sendCecCommand(
                             HdmiCecMessageBuilder.buildSetSystemAudioMode(
-                                    audioSystem().mAddress, Constants.ADDR_BROADCAST, true));
+                                    audioSystem().getDeviceInfo().getLogicalAddress(),
+                                    Constants.ADDR_BROADCAST,
+                                    true));
                 }
             });
         }
@@ -3260,7 +3263,7 @@ public class HdmiControlService extends SystemService {
             playback.setIsActiveSource(true);
             playback.wakeUpIfActiveSource();
             playback.maySendActiveSource(source);
-            setActiveSource(playback.mAddress, physicalAddress);
+            setActiveSource(playback.getDeviceInfo().getLogicalAddress(), physicalAddress);
         }
 
         if (deviceType == HdmiDeviceInfo.DEVICE_AUDIO_SYSTEM) {
@@ -3271,7 +3274,7 @@ public class HdmiControlService extends SystemService {
                 audioSystem.setIsActiveSource(true);
                 audioSystem.wakeUpIfActiveSource();
                 audioSystem.maySendActiveSource(source);
-                setActiveSource(audioSystem.mAddress, physicalAddress);
+                setActiveSource(audioSystem.getDeviceInfo().getLogicalAddress(), physicalAddress);
             }
         }
     }
@@ -3294,13 +3297,13 @@ public class HdmiControlService extends SystemService {
             if (audioSystem != null) {
                 audioSystem.setIsActiveSource(false);
             }
-            setActiveSource(playback.mAddress, physicalAddress);
+            setActiveSource(playback.getDeviceInfo().getLogicalAddress(), physicalAddress);
         } else {
             if (audioSystem != null) {
                 audioSystem.setIsActiveSource(true);
                 audioSystem.wakeUpIfActiveSource();
                 audioSystem.maySendActiveSource(sourceAddress);
-                setActiveSource(audioSystem.mAddress, physicalAddress);
+                setActiveSource(audioSystem.getDeviceInfo().getLogicalAddress(), physicalAddress);
             }
         }
     }
