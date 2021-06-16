@@ -22,8 +22,10 @@ import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.tv.cec.V1_0.SendMessageResult;
 import android.os.Looper;
 import android.os.test.TestLooper;
+
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
+
 import com.android.server.hdmi.HdmiCecLocalDeviceAudioSystem.TvSystemAudioModeSupportedCallback;
 
 import org.junit.Before;
@@ -66,7 +68,8 @@ public class DetectTvSystemAudioModeSupportActionTest {
                                     mHdmiCecLocalDeviceAudioSystem.dispatchMessage(
                                             HdmiCecMessageBuilder.buildFeatureAbortCommand(
                                                     Constants.ADDR_TV,
-                                                    mHdmiCecLocalDeviceAudioSystem.mAddress,
+                                                    mHdmiCecLocalDeviceAudioSystem.mDeviceInfo
+                                                            .getLogicalAddress(),
                                                     Constants.MESSAGE_SET_SYSTEM_AUDIO_MODE,
                                                     Constants.ABORT_UNRECOGNIZED_OPCODE));
                                 }
@@ -99,6 +102,7 @@ public class DetectTvSystemAudioModeSupportActionTest {
                     }
                 };
         mHdmiCecLocalDeviceAudioSystem.init();
+        mHdmiCecLocalDeviceAudioSystem.setDeviceInfo(mDeviceInfoForTests);
         Looper looper = mTestLooper.getLooper();
         hdmiControlService.setIoLooper(looper);
 
