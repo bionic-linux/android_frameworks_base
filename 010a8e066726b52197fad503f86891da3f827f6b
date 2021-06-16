@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4dc8bc4_165e0c6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-06-16T10:32:05Z",
+      "side": 1,
+      "message": "LGTM. The shell is already able to observe network policy by calling \"dumpsys netpolicy\".",
+      "revId": "010a8e066726b52197fad503f86891da3f827f6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
