@@ -22,6 +22,30 @@
       },
       "revId": "d2ebf3532d509e7c0c01fdfd3bb24a7f82188d15",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "993d92f5_f3e47457",
+        "filename": "core/java/android/bluetooth/OobData.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-06-16T19:08:16Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "ec5aa3c7_86ea725c",
+      "range": {
+        "startLine": 950,
+        "startChar": 31,
+        "endLine": 950,
+        "endChar": 39
+      },
+      "revId": "d2ebf3532d509e7c0c01fdfd3bb24a7f82188d15",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
