@@ -179,6 +179,7 @@ public class SystemAudioInitiationActionFromAvrTest {
                     }
                 };
         mHdmiCecLocalDeviceAudioSystem.init();
+        mHdmiCecLocalDeviceAudioSystem.setDeviceInfo(mDeviceInfoForTests);
         Looper looper = mTestLooper.getLooper();
         hdmiControlService.setIoLooper(looper);
     }

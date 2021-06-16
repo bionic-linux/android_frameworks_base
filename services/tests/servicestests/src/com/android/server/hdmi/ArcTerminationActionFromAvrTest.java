@@ -71,7 +71,9 @@ public class ArcTerminationActionFromAvrTest {
                                     mHdmiCecLocalDeviceAudioSystem.dispatchMessage(
                                             HdmiCecMessageBuilder.buildReportArcTerminated(
                                                     Constants.ADDR_TV,
-                                                    mHdmiCecLocalDeviceAudioSystem.mAddress));
+                                                    mHdmiCecLocalDeviceAudioSystem
+                                                            .getDeviceInfo()
+                                                            .getLogicalAddress()));
                                 }
                                 break;
                             default:
@@ -108,6 +110,7 @@ public class ArcTerminationActionFromAvrTest {
                     }
                 };
         mHdmiCecLocalDeviceAudioSystem.init();
+        mHdmiCecLocalDeviceAudioSystem.setDeviceInfo(mDeviceInfoForTests);
         Looper looper = mTestLooper.getLooper();
         hdmiControlService.setIoLooper(looper);
 

@@ -94,7 +94,9 @@ abstract class HdmiCecLocalDeviceSource extends HdmiCecLocalDevice {
 
         // Send standby to TV only for now
         int targetAddress = Constants.ADDR_TV;
-        mService.sendCecCommand(HdmiCecMessageBuilder.buildStandby(mAddress, targetAddress));
+        mService.sendCecCommand(
+                HdmiCecMessageBuilder.buildStandby(
+                        getDeviceInfo().getLogicalAddress(), targetAddress));
     }
 
     @ServiceThreadOnly

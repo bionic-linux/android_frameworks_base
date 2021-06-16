@@ -97,10 +97,14 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
             mService.setAndBroadcastActiveSource(mService.getPhysicalAddress(),
                     getDeviceInfo().getDeviceType(), Constants.ADDR_BROADCAST);
         }
-        mService.sendCecCommand(HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(
-                mAddress, mService.getPhysicalAddress(), mDeviceType));
-        mService.sendCecCommand(HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
-                mAddress, mService.getVendorId()));
+        mService.sendCecCommand(
+                HdmiCecMessageBuilder.buildReportPhysicalAddressCommand(
+                        getDeviceInfo().getLogicalAddress(),
+                        mService.getPhysicalAddress(),
+                        mDeviceType));
+        mService.sendCecCommand(
+                HdmiCecMessageBuilder.buildDeviceVendorIdCommand(
+                        getDeviceInfo().getLogicalAddress(), mService.getVendorId()));
         // Actively send out an OSD name to the TV to update the TV panel in case the TV
         // does not query the OSD name on time. This is not a required behavior by the spec.
         // It is used for some TVs that need the OSD name update but don't query it themselves.
@@ -109,8 +113,10 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
             // If current device is not a functional audio system device,
             // send message to potential audio system device in the system to get the system
             // audio mode status. If no response, set to false.
-            mService.sendCecCommand(HdmiCecMessageBuilder.buildGiveSystemAudioModeStatus(
-                    mAddress, Constants.ADDR_AUDIO_SYSTEM), new SendMessageCallback() {
+            mService.sendCecCommand(
+                    HdmiCecMessageBuilder.buildGiveSystemAudioModeStatus(
+                            getDeviceInfo().getLogicalAddress(), Constants.ADDR_AUDIO_SYSTEM),
+                    new SendMessageCallback() {
                         @Override
                         public void onSendCompleted(int error) {
                             if (error != SendMessageResult.SUCCESS) {
@@ -178,8 +184,9 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
             return;
         }
         if (mIsActiveSource) {
-            mService.sendCecCommand(HdmiCecMessageBuilder.buildInactiveSource(
-                    mAddress, mService.getPhysicalAddress()));
+            mService.sendCecCommand(
+                    HdmiCecMessageBuilder.buildInactiveSource(
+                            getDeviceInfo().getLogicalAddress(), mService.getPhysicalAddress()));
         }
         boolean wasActiveSource = mIsActiveSource;
         // Invalidate the internal active source record when goes to standby
@@ -191,12 +198,14 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
         switch (standbyAction) {
             case HdmiControlService.STANDBY_SCREEN_OFF:
                 mService.sendCecCommand(
-                        HdmiCecMessageBuilder.buildStandby(mAddress, Constants.ADDR_TV));
+                        HdmiCecMessageBuilder.buildStandby(
+                                getDeviceInfo().getLogicalAddress(), Constants.ADDR_TV));
                 break;
             case HdmiControlService.STANDBY_SHUTDOWN:
                 // ACTION_SHUTDOWN is taken as a signal to power off all the devices.
                 mService.sendCecCommand(
-                        HdmiCecMessageBuilder.buildStandby(mAddress, Constants.ADDR_BROADCAST));
+                        HdmiCecMessageBuilder.buildStandby(
+                                getDeviceInfo().getLogicalAddress(), Constants.ADDR_BROADCAST));
                 break;
         }
     }
@@ -350,7 +359,7 @@ public class HdmiCecLocalDevicePlayback extends HdmiCecLocalDeviceSource {
     protected boolean handleSystemAudioModeStatus(HdmiCecMessage message) {
         // Only directly addressed System Audio Mode Status message can change internal
         // system audio mode status.
-        if (message.getDestination() == mAddress
+        if (message.getDestination() == getDeviceInfo().getLogicalAddress()
                 && message.getSource() == Constants.ADDR_AUDIO_SYSTEM) {
             boolean setSystemAudioModeOn = HdmiUtils.parseCommandParamSystemAudioStatus(message);
             if (mService.isSystemAudioActivated() != setSystemAudioModeOn) {

@@ -301,9 +301,6 @@ final class HdmiCecController {
     @ServiceThreadOnly
     void clearLogicalAddress() {
         assertRunOnServiceThread();
-        for (int i = 0; i < mLocalDevices.size(); ++i) {
-            mLocalDevices.valueAt(i).clearAddress();
-        }
         mNativeWrapperImpl.nativeClearLogicalAddress();
     }
 
