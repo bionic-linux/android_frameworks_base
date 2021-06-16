@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000011840769",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1736917?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7e1f6fa3_6a39bbf8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-06-16T18:51:55Z",
+      "side": 1,
+      "message": "\"Manual test app, log OobData\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 34
+      },
+      "revId": "ef57c54716987872dfb9c7828e84160612b08fbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000011840769",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1736917?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1429f85b_03cf7967",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-06-16T18:51:55Z",
+      "side": 1,
+      "message": "{#stability %!s(int\u003d5) %!s(int\u003d4) %!s(int\u003d15)} requires you include cert test changes to ensure this issue does not happen in the future",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "ef57c54716987872dfb9c7828e84160612b08fbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
