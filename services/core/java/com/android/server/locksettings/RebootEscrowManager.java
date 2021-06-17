@@ -236,6 +236,12 @@ class RebootEscrowManager {
                 return true;
             }
 
+            if (DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_OTA, "server_based_ror_for_test",
+                    false)) {
+                Slog.i(TAG, "Forcing server based RoR for tests");
+                return true;
+            }
+
             return DeviceConfig.getBoolean(DeviceConfig.NAMESPACE_OTA,
                     "server_based_ror_enabled", false);
         }
