@@ -1199,13 +1199,11 @@ public class HdmiControlService extends SystemService {
     @ServiceThreadOnly
     void onHotplug(int portId, boolean connected) {
         assertRunOnServiceThread();
+        // initPortInfo at hotplug event.
+        initPortInfo();
 
         if (connected && !isTvDevice()
                 && getPortInfo(portId).getType() == HdmiPortInfo.PORT_OUTPUT) {
-            if (isSwitchDevice()) {
-                initPortInfo();
-                HdmiLogger.debug("initPortInfo for switch device when onHotplug from tx.");
-            }
             ArrayList<HdmiCecLocalDevice> localDevices = new ArrayList<>();
             for (int type : mLocalDevices) {
                 HdmiCecLocalDevice localDevice = mCecController.getLocalDevice(type);
