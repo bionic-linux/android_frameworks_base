@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2d04d81_743a8a76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358301
+      },
+      "writtenOn": "2021-06-19T01:49:52Z",
+      "side": 1,
+      "message": "Hi Gopi, this change gives us ownership over the new platformtestprotos target. Please note that this target actually won\u0027t be used yet because CTS has some hidden dependency on platformprotos, so this is just laying the groundwork for now.",
+      "revId": "6fd185eedbd9efa7524dad7f45c587b16a484074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
