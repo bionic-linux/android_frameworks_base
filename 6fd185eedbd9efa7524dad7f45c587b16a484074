@@ -16,6 +16,23 @@
       "message": "Hi Gopi, this change gives us ownership over the new platformtestprotos target. Please note that this target actually won\u0027t be used yet because CTS has some hidden dependency on platformprotos, so this is just laying the groundwork for now.",
       "revId": "6fd185eedbd9efa7524dad7f45c587b16a484074",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21bc86d9_3f804560",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358301
+      },
+      "writtenOn": "2021-06-21T22:15:11Z",
+      "side": 1,
+      "message": "Adding nandana@ for owner approval.",
+      "revId": "6fd185eedbd9efa7524dad7f45c587b16a484074",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
