@@ -19,6 +19,7 @@
 
 #define LOG_TAG "AudioSystem-JNI"
 #include <android/media/AudioVibratorInfo.h>
+#include <android/media/INativeAudioVolumeGroupCallback.h>
 #include <android/media/INativeSpatializerCallback.h>
 #include <android/media/ISpatializer.h>
 #include <android/media/audio/common/AudioConfigBase.h>
@@ -3129,6 +3130,22 @@ static jboolean android_media_AudioSystem_isBluetoothVariableLatencyEnabled(JNIE
     return enabled;
 }
 
+static int android_media_AudioSystem_registerAudioVolumeGroupCallback(JNIEnv *env, jobject thiz,
+        jobject jIAudioVolumeGroupCallback) {
+    sp<media::INativeAudioVolumeGroupCallback> nIAudioVolumeGroupCallback
+            = interface_cast<media::INativeAudioVolumeGroupCallback>(
+                    ibinderForJavaObject(env, jIAudioVolumeGroupCallback));
+    return AudioSystem::addAudioVolumeGroupCallback(nIAudioVolumeGroupCallback);
+}
+
+static int android_media_AudioSystem_unregisterAudioVolumeGroupCallback(JNIEnv *env, jobject thiz,
+        jobject jIAudioVolumeGroupCallback) {
+    sp<media::INativeAudioVolumeGroupCallback> nIAudioVolumeGroupCallback
+            = interface_cast<media::INativeAudioVolumeGroupCallback>(
+                    ibinderForJavaObject(env, jIAudioVolumeGroupCallback));
+    return AudioSystem::removeAudioVolumeGroupCallback(nIAudioVolumeGroupCallback);
+}
+
 // ----------------------------------------------------------------------------
 
 #define MAKE_AUDIO_SYSTEM_METHOD(x) \
@@ -3294,6 +3311,12 @@ static const JNINativeMethod gMethods[] =
          MAKE_JNI_NATIVE_METHOD("clearPreferredMixerAttributes",
                                 "(Landroid/media/AudioAttributes;II)I",
                                 android_media_AudioSystem_clearPreferredMixerAttributes),
+         MAKE_JNI_NATIVE_METHOD("registerAudioVolumeGroupCallback",
+                                "(Landroid/media/INativeAudioVolumeGroupCallback;)I",
+                                android_media_AudioSystem_registerAudioVolumeGroupCallback),
+         MAKE_JNI_NATIVE_METHOD("unregisterAudioVolumeGroupCallback",
+                                "(Landroid/media/INativeAudioVolumeGroupCallback;)I",
+                                android_media_AudioSystem_unregisterAudioVolumeGroupCallback),
          MAKE_AUDIO_SYSTEM_METHOD(supportsBluetoothVariableLatency),
          MAKE_AUDIO_SYSTEM_METHOD(setBluetoothVariableLatencyEnabled),
          MAKE_AUDIO_SYSTEM_METHOD(isBluetoothVariableLatencyEnabled)};
