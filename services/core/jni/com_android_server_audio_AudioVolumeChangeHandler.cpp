@@ -31,6 +31,12 @@ namespace android {
 static const char* const kAudioVolumeChangeHandlerClassPathName =
         "com/android/server/audio/AudioVolumeChangeHandler";
 
+static const char* const kAudioDevicePortGainClassPathName =
+        "android/media/audiopolicy/AudioDevicePortGain";
+
+static jclass gAudioDevicePortGainClass;
+static jmethodID gAudioDevicePortGainCstor;
+
 static struct {
     jfieldID    mJniCallback;
 } gAudioVolumeChangeHandlerFields;
@@ -38,6 +44,12 @@ static struct {
 static struct {
     jmethodID    postEventFromNative;
 } gAudioVolumeChangeHandlerMethods;
+
+static jclass gArrayListClass;
+static jmethodID gArrayListCstor;
+static struct {
+    jmethodID    add;
+} gArrayListMethods;
 
 static Mutex gLock;
 
@@ -66,6 +78,45 @@ JNIAudioVolumeChangeHandler::~JNIAudioVolumeChangeHandler()
     }
     env->DeleteGlobalRef(mObject);
     env->DeleteGlobalRef(mClass);
+}
+
+void JNIAudioVolumeChangeHandler::onAudioDevicePortGainsChanged(
+        audio_gain_mask_t reasons, const std::vector<audio_port_config>& gains)
+{
+    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    if (env == NULL) {
+        return;
+    }
+    jobject jPortConfigs = env->NewObject(gArrayListClass, gArrayListCstor);
+
+    for (size_t j = 0; j < static_cast<size_t>(gains.size()); j++) {
+        jint jPortId = gains[j].id;
+        jint jPortIndex = gains[j].gain.index;
+
+        jobject jPortConfig = env->NewObject(gAudioDevicePortGainClass,
+                                             gAudioDevicePortGainCstor,
+                                             jPortId,
+                                             jPortIndex);
+        env->CallBooleanMethod(jPortConfigs, gArrayListMethods.add, jPortConfig);
+
+        if (jPortConfig != NULL) {
+            env->DeleteLocalRef(jPortConfig);
+            jPortConfig = NULL;
+        }
+    }
+    env->CallStaticVoidMethod(mClass,
+                              gAudioVolumeChangeHandlerMethods.postEventFromNative,
+                              mObject,
+                              AUDIOVOLUMEGROUP_EVENT_DEVICE_PORT_GAIN_CHANGED,
+                              reasons, 0, jPortConfigs);
+    if (env->ExceptionCheck()) {
+        ALOGW("An exception occurred while notifying an event.");
+        env->ExceptionClear();
+    }
+    if (jPortConfigs != NULL) {
+        env->DeleteLocalRef(jPortConfigs);
+        jPortConfigs = NULL;
+    }
 }
 
 void JNIAudioVolumeChangeHandler::onAudioVolumeGroupChanged(volume_group_t group, int flags)
@@ -139,6 +190,14 @@ static const JNINativeMethod gMethods[] = {
 
 int register_android_server_audio_AudioVolumeChangeHandler(JNIEnv *env)
 {
+    jclass arrayListClass = FindClassOrDie(env, "java/util/ArrayList");
+    gArrayListCstor = GetMethodIDOrDie(env, arrayListClass, "<init>", "()V");
+    gArrayListClass = MakeGlobalRefOrDie(env, arrayListClass);
+    gArrayListMethods.add = GetMethodIDOrDie(env, arrayListClass, "add", "(Ljava/lang/Object;)Z");
+    jclass audioDevicePortGainClass = FindClassOrDie(env, kAudioDevicePortGainClassPathName);
+    gAudioDevicePortGainClass = MakeGlobalRefOrDie(env, audioDevicePortGainClass);
+    gAudioDevicePortGainCstor = GetMethodIDOrDie(env, gAudioDevicePortGainClass, "<init>", "(II)V");
+
     jclass AudioVolumeChangeHandlerClass =
             FindClassOrDie(env, kAudioVolumeChangeHandlerClassPathName);
     gAudioVolumeChangeHandlerMethods.postEventFromNative =

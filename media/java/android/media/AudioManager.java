@@ -37,6 +37,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes.AttributeSystemUsage;
+import android.media.audiopolicy.AudioDevicePortGain;
 import android.media.audiopolicy.AudioPolicy;
 import android.media.audiopolicy.AudioPolicy.AudioPolicyFocusListener;
 import android.media.audiopolicy.AudioProductStrategy;
@@ -7158,13 +7159,15 @@ public class AudioManager {
     }
 
     //====================================================================
-    // Notification of volume group changes
+    // Notification of volume group & gain changes
     /**
      * @hide
-     * Interface for receiving update notifications about volume group on the system.
+     * Interface for receiving update notifications about volume group & audio device port
+     * gains on the system.
      * Extend this abstract class and register it with
      * {@link AudioManager#registerAudioVolumeCallback(Executor, AudioVolumeCallback)}
      * to be notified.
+     * @see AudioDevicePortGain
      */
     @SystemApi
     public static abstract class VolumeGroupCallback {
@@ -7173,13 +7176,22 @@ public class AudioManager {
          * @param group the group for which the volume has changed
          */
         public void onAudioVolumeGroupChanged(int group, int flags) {}
+
+        /**
+         * Called whenever the playback activity and configuration has changed.
+         * @param reasons one or more reasons describing the device port(s) gain changes.
+         * @param audioDevicePortGains list containing the
+         *      {@link AudioDevicePortGain} that changed.
+         */
+        public void onAudioDevicePortGainsChanged(
+                int reasons, @NonNull List<AudioDevicePortGain> audioDevicePortGains) {}
     }
 
     /**
      * @hide
-     * Register an audio volume group change listener.
+     * Register an audio volume group|gain change listener.
      * @param executor {@link Executor} to handle the callbacks
-     * @param callback the callback to receive the audio volume group changes
+     * @param callback the callback to receive the audio volume group & gain changes
      */
     @SystemApi
     public void registerVolumeGroupCallback(@NonNull Executor executor,
@@ -7189,7 +7201,7 @@ public class AudioManager {
 
     /**
      * @hide
-     * Unregister an audio volume group change listener.
+     * Unregister an audio volume group|gain change listener.
      * @param callback the {@link VolumeGroupCallback} to unregister
      */
     @SystemApi
