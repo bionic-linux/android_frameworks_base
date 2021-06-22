@@ -420,6 +420,7 @@ java_defaults {
         "framework-permission-aidl-java",
         "spatializer-aidl-java",
         "audiopolicy-aidl-java",
+        "volumegroupcallback-aidl-java",
         "sounddose-aidl-java",
         "modules-utils-expresslog",
     ],
