@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77ffbeaa_78c9e9fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1651174
+      },
+      "writtenOn": "2021-06-22T19:27:47Z",
+      "side": 1,
+      "message": "check out this. path data values interchanged for expand and collapse animation in these two themes - https://www.w3schools.com/code/tryit.asp?filename\u003dGQ6MV46KTFI2 .",
+      "revId": "28fd6b680cbbe499f184388d15a6a5969ecb5e9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
