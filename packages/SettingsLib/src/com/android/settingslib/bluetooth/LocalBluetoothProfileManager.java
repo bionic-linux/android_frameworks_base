@@ -23,6 +23,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothHeadsetClient;
 import android.bluetooth.BluetoothHearingAid;
+import android.bluetooth.BluetoothCsipSetCoordinator;
 import android.bluetooth.BluetoothHidDevice;
 import android.bluetooth.BluetoothHidHost;
 import android.bluetooth.BluetoothMap;
@@ -100,6 +101,7 @@ public class LocalBluetoothProfileManager {
     private PbapClientProfile mPbapClientProfile;
     private PbapServerProfile mPbapProfile;
     private HearingAidProfile mHearingAidProfile;
+    private CsipSetCoordinatorProfile mCsipSetCoordinatorProfile;
     private SapProfile mSapProfile;
 
     /**
@@ -219,6 +221,14 @@ public class LocalBluetoothProfileManager {
             }
             mSapProfile = new SapProfile(mContext, mDeviceManager, this);
             addProfile(mSapProfile, SapProfile.NAME, BluetoothSap.ACTION_CONNECTION_STATE_CHANGED);
+        }
+        if (mCsipSetCoordinatorProfile == null && supportedList.contains(BluetoothProfile.CSIP_SET_COORDINATOR)) {
+            if (DEBUG) {
+                Log.d(TAG, "Adding local CSIP set coordinator profile");
+            }
+            mCsipSetCoordinatorProfile = new CsipSetCoordinatorProfile(mContext, mDeviceManager, this);
+            addProfile(mCsipSetCoordinatorProfile, mCsipSetCoordinatorProfile.NAME,
+                    BluetoothCsipSetCoordinator.ACTION_CSIS_CONNECTION_STATE_CHANGED);
         }
         mEventManager.registerProfileIntentReceiver();
     }
@@ -441,6 +451,10 @@ public class LocalBluetoothProfileManager {
         return mHearingAidProfile;
     }
 
+    public CsipSetCoordinatorProfile getCsipSetCoordinatorProfile() {
+        return mCsipSetCoordinatorProfile;
+    }
+
     @VisibleForTesting
     HidProfile getHidProfile() {
         return mHidProfile;
@@ -563,6 +577,11 @@ public class LocalBluetoothProfileManager {
         if (mSapProfile != null && ArrayUtils.contains(uuids, BluetoothUuid.SAP)) {
             profiles.add(mSapProfile);
             removedProfiles.remove(mSapProfile);
+        }
+
+        if (mCsipSetCoordinatorProfile != null && ArrayUtils.contains(uuids, BluetoothUuid.COORDINATED_SET)) {
+            profiles.add(mCsipSetCoordinatorProfile);
+            removedProfiles.remove(mCsipSetCoordinatorProfile);
         }
 
         if (DEBUG) {
