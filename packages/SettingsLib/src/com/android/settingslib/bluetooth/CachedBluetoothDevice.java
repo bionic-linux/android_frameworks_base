@@ -1148,6 +1148,17 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                 BluetoothProfile.STATE_CONNECTED;
     }
 
+    /**
+     * @return {@code true} if {@code cachedBluetoothDevice} is CSIP Set Coordinator device
+     */
+    public boolean isConnectedCsipSetCoordinatorDevice() {
+        CsipSetCoordinatorProfile csipSetCoordinator =
+                mProfileManager.getCsipSetCoordinatorProfile();
+        return csipSetCoordinator != null
+                && csipSetCoordinator.getConnectionStatus(mDevice)
+                == BluetoothProfile.STATE_CONNECTED;
+    }
+
     public CachedBluetoothDevice getSubDevice() {
         return mSubDevice;
     }
