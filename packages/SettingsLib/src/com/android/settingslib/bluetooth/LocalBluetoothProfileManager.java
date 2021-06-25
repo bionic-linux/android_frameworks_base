@@ -23,6 +23,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothHeadsetClient;
 import android.bluetooth.BluetoothHearingAid;
+import android.bluetooth.BluetoothCsisClient;
 import android.bluetooth.BluetoothHidDevice;
 import android.bluetooth.BluetoothHidHost;
 import android.bluetooth.BluetoothMap;
@@ -100,6 +101,7 @@ public class LocalBluetoothProfileManager {
     private PbapClientProfile mPbapClientProfile;
     private PbapServerProfile mPbapProfile;
     private HearingAidProfile mHearingAidProfile;
+    private CsisClientProfile mCsisClientProfile;
     private SapProfile mSapProfile;
 
     /**
@@ -219,6 +221,14 @@ public class LocalBluetoothProfileManager {
             }
             mSapProfile = new SapProfile(mContext, mDeviceManager, this);
             addProfile(mSapProfile, SapProfile.NAME, BluetoothSap.ACTION_CONNECTION_STATE_CHANGED);
+        }
+        if (mCsisClientProfile == null && supportedList.contains(BluetoothProfile.CSIS_CLIENT)) {
+            if (DEBUG) {
+                Log.d(TAG, "Adding local CSIS profile");
+            }
+            mCsisClientProfile = new CsisClientProfile(mContext, mDeviceManager, this);
+            addProfile(mCsisClientProfile, mCsisClientProfile.NAME,
+                    BluetoothCsisClient.ACTION_CSIS_CONNECTION_STATE_CHANGED);
         }
         mEventManager.registerProfileIntentReceiver();
     }
@@ -441,6 +451,10 @@ public class LocalBluetoothProfileManager {
         return mHearingAidProfile;
     }
 
+    public CsisClientProfile getCsisClientProfile() {
+        return mCsisClientProfile;
+    }
+
     @VisibleForTesting
     HidProfile getHidProfile() {
         return mHidProfile;
@@ -563,6 +577,11 @@ public class LocalBluetoothProfileManager {
         if (mSapProfile != null && ArrayUtils.contains(uuids, BluetoothUuid.SAP)) {
             profiles.add(mSapProfile);
             removedProfiles.remove(mSapProfile);
+        }
+
+        if (mCsisClientProfile != null && ArrayUtils.contains(uuids, BluetoothUuid.CSIS)) {
+            profiles.add(mCsisClientProfile);
+            removedProfiles.remove(mCsisClientProfile);
         }
 
         if (DEBUG) {

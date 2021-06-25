@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHearingAid;
+import android.bluetooth.BluetoothCsisClient;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothUuid;
 import android.content.Context;
@@ -94,6 +95,7 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     private boolean mIsActiveDeviceA2dp = false;
     private boolean mIsActiveDeviceHeadset = false;
     private boolean mIsActiveDeviceHearingAid = false;
+    private boolean mIsActiveDeviceCsis = false;
     // Media profile connect state
     private boolean mIsA2dpProfileConnectedFail = false;
     private boolean mIsHeadsetProfileConnectedFail = false;
@@ -471,6 +473,13 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                 result = true;
             }
         }
+        CsisClientProfile csisClientProfile = mProfileManager.getCsisClientProfile();
+        if ((csisClientProfile != null) && isConnectedProfile(csisClientProfile)) {
+            mIsActiveDeviceCsis = true;
+            dispatchAttributesChanged();
+
+            result = true;
+        }
         return result;
     }
 
@@ -566,6 +575,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                 return mIsActiveDeviceHeadset;
             case BluetoothProfile.HEARING_AID:
                 return mIsActiveDeviceHearingAid;
+            case BluetoothProfile.CSIS_CLIENT:
+                return mIsActiveDeviceCsis;
             default:
                 Log.w(TAG, "getActiveDevice: unknown profile " + bluetoothProfile);
                 break;
@@ -659,6 +670,10 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         HearingAidProfile hearingAidProfile = mProfileManager.getHearingAidProfile();
         if (hearingAidProfile != null) {
             mIsActiveDeviceHearingAid = hearingAidProfile.getActiveDevices().contains(mDevice);
+        }
+        CsisClientProfile csis = mProfileManager.getCsisClientProfile();
+        if (csis != null) {
+            mIsActiveDeviceCsis = csis.getConnectedDevices().contains(mDevice);
         }
     }
 
@@ -897,6 +912,7 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         boolean a2dpConnected = true;        // A2DP is connected
         boolean hfpConnected = true;         // HFP is connected
         boolean hearingAidConnected = true;  // Hearing Aid is connected
+        boolean csisClientConnected = true;  // CSIS is connected
         int leftBattery = -1;
         int rightBattery = -1;
 
@@ -928,6 +944,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                                 hfpConnected = false;
                             } else if (profile instanceof HearingAidProfile) {
                                 hearingAidConnected = false;
+                            } else if (profile instanceof CsisClientProfile) {
+                                csisClientConnected = false;
                             }
                         }
                         break;
@@ -1145,6 +1163,15 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     public boolean isConnectedHearingAidDevice() {
         HearingAidProfile hearingAidProfile = mProfileManager.getHearingAidProfile();
         return hearingAidProfile != null && hearingAidProfile.getConnectionStatus(mDevice) ==
+                BluetoothProfile.STATE_CONNECTED;
+    }
+
+    /**
+     * @return {@code true} if {@code cachedBluetoothDevice} is CSIS device
+     */
+    public boolean isConnectedCsisDevice() {
+        CsisClientProfile csis = mProfileManager.getCsisClientProfile();
+        return csis != null && csis.getConnectionStatus(mDevice) ==
                 BluetoothProfile.STATE_CONNECTED;
     }
 
