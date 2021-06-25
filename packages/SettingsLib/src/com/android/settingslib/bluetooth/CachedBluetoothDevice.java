@@ -897,6 +897,7 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         boolean a2dpConnected = true;        // A2DP is connected
         boolean hfpConnected = true;         // HFP is connected
         boolean hearingAidConnected = true;  // Hearing Aid is connected
+        boolean csipSetCoordinatorConnected = true;  // CSIP Set Coordinator is connected
         int leftBattery = -1;
         int rightBattery = -1;
 
@@ -928,6 +929,8 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
                                 hfpConnected = false;
                             } else if (profile instanceof HearingAidProfile) {
                                 hearingAidConnected = false;
+                            } else if (profile instanceof CsipSetCoordinatorProfile) {
+                                csipSetCoordinatorConnected = false;
                             }
                         }
                         break;
@@ -1146,6 +1149,17 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
         HearingAidProfile hearingAidProfile = mProfileManager.getHearingAidProfile();
         return hearingAidProfile != null && hearingAidProfile.getConnectionStatus(mDevice) ==
                 BluetoothProfile.STATE_CONNECTED;
+    }
+
+    /**
+     * @return {@code true} if {@code cachedBluetoothDevice} is CSIP Set Coordinator device
+     */
+    public boolean isConnectedCsipSetCoordinatorDevice() {
+        CsipSetCoordinatorProfile csipSetCoordinator =
+                mProfileManager.getCsipSetCoordinatorProfile();
+        return csipSetCoordinator != null
+                && csipSetCoordinator.getConnectionStatus(mDevice)
+                == BluetoothProfile.STATE_CONNECTED;
     }
 
     public CachedBluetoothDevice getSubDevice() {
