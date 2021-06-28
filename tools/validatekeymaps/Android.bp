@@ -30,9 +30,10 @@ cc_binary_host {
         "libcutils",
         "liblog",
     ],
+
     target: {
         linux_glibc: {
-            static_libs: [
+            shared_libs: [
                 // libbinder is only available for linux
                 "libbinder",
             ],
