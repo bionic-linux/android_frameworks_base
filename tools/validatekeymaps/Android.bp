@@ -32,7 +32,7 @@ cc_binary_host {
     ],
     target: {
         linux_glibc: {
-            static_libs: [
+            shared_libs: [
                 // libbinder is only available for linux
                 "libbinder",
             ],
