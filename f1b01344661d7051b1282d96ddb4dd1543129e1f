@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000012455916",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1749722?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "da011fcc_ab5de16f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-06-29T09:21:10Z",
+      "side": 1,
+      "message": "\"atest CsisClientStateMachineTest CsisClientServiceTest\" is not a known atest stanza format. Expected something like \"atest (--host) \u003ctest\u003e\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "f1b01344661d7051b1282d96ddb4dd1543129e1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000012455919",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1749722?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "742fe07d_d23f3d9c",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothAdapter.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothAdapter.java",
+              "range": {
+                "startLine": 2179,
+                "startChar": 31,
+                "endLine": 2179,
+                "endChar": 40
+              },
+              "replacement": "exception"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "c917498b_a092c34e",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-06-29T09:21:10Z",
+      "side": 1,
+      "message": "Common typo found: \"expection\" -- should it be \"exception\"?\nor, alternatively, \u0027expectation\u0027\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 2179,
+        "startChar": 31,
+        "endLine": 2179,
+        "endChar": 40
+      },
+      "revId": "f1b01344661d7051b1282d96ddb4dd1543129e1f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
