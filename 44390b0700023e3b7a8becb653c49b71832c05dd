@@ -16,6 +16,23 @@
       "message": "Yan, can you take a look?",
       "revId": "44390b0700023e3b7a8becb653c49b71832c05dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9c88514_f8661a9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328424
+      },
+      "writtenOn": "2021-06-30T14:17:09Z",
+      "side": 1,
+      "message": "Hi Marvin,\nYan had given +2. Can you vote as Code Owners?",
+      "revId": "44390b0700023e3b7a8becb653c49b71832c05dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
