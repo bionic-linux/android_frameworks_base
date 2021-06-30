@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0326daef_1549d26f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-06-30T17:06:24Z",
+      "side": 1,
+      "message": "Clean cherry-pick from sc-dev to aosp-master, to unlobck TH failure of merge-conflict.",
+      "revId": "0411ba6168881ce4cbed124465cd0cbfcf2f218b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
