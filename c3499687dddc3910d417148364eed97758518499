@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed93d416_8fdc98af",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-06-30T01:24:22Z",
+      "side": 1,
+      "message": "Is this related ?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 243,
+        "endChar": 13
+      },
+      "revId": "c3499687dddc3910d417148364eed97758518499",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
