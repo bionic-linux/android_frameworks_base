@@ -25,6 +25,32 @@
       },
       "revId": "eea4ae0ffbb2c94a1c99e084dc8d520fb3e641cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000012567111",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1753600?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "550a808f_e63b5e58",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-06-30T23:59:58Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(PowerManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 289,
+        "startChar": 36,
+        "endLine": 289,
+        "endChar": 77
+      },
+      "revId": "eea4ae0ffbb2c94a1c99e084dc8d520fb3e641cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
