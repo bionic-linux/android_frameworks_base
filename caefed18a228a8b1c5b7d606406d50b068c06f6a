@@ -22,6 +22,30 @@
       },
       "revId": "caefed18a228a8b1c5b7d606406d50b068c06f6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fe7b9f0_9dc214a0",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-07-01T19:03:16Z",
+      "side": 1,
+      "message": "There are two choices here:\n\n1. You could release the wakelock during the DEFAULT_LOAD_ESCROW_DATA_RETRY_INTERVAL_SECONDS delay, but you\u0027d then need to schedule an AlarmManager event to ensure the device wakes back up after that timeout period for the next attempt.\n2. You could hold the wakelock the entire time, knowing it will only ever happen once during a boot, and will be held for a maximum of DEFAULT_WAKE_LOCK_TIMEOUT_MILLIS.\n\nGiven how late we are in the release, I\u0027d recommend approach (2) since it\u0027s easier to rationalize about, and has marginal power cost.",
+      "parentUuid": "6cb00a84_a0bd5a0a",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 9
+      },
+      "revId": "caefed18a228a8b1c5b7d606406d50b068c06f6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
