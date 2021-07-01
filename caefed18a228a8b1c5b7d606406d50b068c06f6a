@@ -46,6 +46,30 @@
       },
       "revId": "caefed18a228a8b1c5b7d606406d50b068c06f6a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f0ce228_36cf7115",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1088085
+      },
+      "writtenOn": "2021-07-01T19:03:57Z",
+      "side": 1,
+      "message": "Yes, that\u0027s exactly the intention of b/191784420. If we release the wake lock in the middle, the cpu may suspend; and we won\u0027t get the retry after 30 seconds.",
+      "parentUuid": "6cb00a84_a0bd5a0a",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 9
+      },
+      "revId": "caefed18a228a8b1c5b7d606406d50b068c06f6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
