@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cb00a84_a0bd5a0a",
+        "filename": "services/core/java/com/android/server/locksettings/RebootEscrowManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1286860
+      },
+      "writtenOn": "2021-07-01T18:49:41Z",
+      "side": 1,
+      "message": "This means the wake lock would be held during wait for retry ? Is it necessary ?",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 543,
+        "endChar": 9
+      },
+      "revId": "caefed18a228a8b1c5b7d606406d50b068c06f6a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
