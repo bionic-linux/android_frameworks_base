@@ -51,6 +51,23 @@
       "parentUuid": "e9c88514_f8661a9d",
       "revId": "44390b0700023e3b7a8becb653c49b71832c05dd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6466db1_5539ce49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1328424
+      },
+      "writtenOn": "2021-07-02T06:30:15Z",
+      "side": 1,
+      "message": "Hi Nathalie, Can you reivew and +2 for this? We need owner\u0027s vote.",
+      "revId": "44390b0700023e3b7a8becb653c49b71832c05dd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
