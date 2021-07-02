@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "390f2c7e_c5b82aa4",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-07-02T09:38:19Z",
+      "side": 0,
+      "message": "Why should this be removed?",
+      "range": {
+        "startLine": 1169,
+        "startChar": 8,
+        "endLine": 1169,
+        "endChar": 60
+      },
+      "revId": "77ba0a4383b15d5d78922bb953c4f1cb8b61bbae",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
