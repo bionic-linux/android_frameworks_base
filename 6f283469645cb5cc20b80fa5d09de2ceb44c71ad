@@ -1,0 +1,28 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8e7b772_aad82295",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 16321,
+      "author": {
+        "id": 1674162
+      },
+      "writtenOn": "2021-07-02T09:18:34Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "7c580c1e_8ba72753",
+      "range": {
+        "startLine": 16321,
+        "startChar": 0,
+        "endLine": 16321,
+        "endChar": 104
+      },
+      "revId": "6f283469645cb5cc20b80fa5d09de2ceb44c71ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
