@@ -33,6 +33,41 @@
       "message": "Hi Junyu Lai,\n\nThanks for approving the change. Can u reset the Presubmit ready bit for TreeHugger to run again.\n\nWe don\u0027t have access to check the failures. Can you let us know if the failures are introduced with this CL ?\n\nThanks in advance !",
       "revId": "9c48c78de3ebecafd9c8cef832ebe5079c639e42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47ed5a22_ec6e0f5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-07-07T07:34:15Z",
+      "side": 1,
+      "message": "java.lang.AssertionError: expected:\u003c9\u003e but was:\u003c8\u003e\njava.lang.AssertionError: expected:\u003c9\u003e but was:\u003c8\u003e\n\tat org.junit.Assert.fail(Assert.java:89)\n\tat org.junit.Assert.failNotEquals(Assert.java:835)\n\tat org.junit.Assert.assertEquals(Assert.java:647)\n\tat org.junit.Assert.assertEquals(Assert.java:633)\n\tat com.android.server.biometrics.sensors.fingerprint.aidl.FingerprintProviderTest.halServiceDied_resetsAllSchedulers(FingerprintProviderTest.java:116)",
+      "revId": "9c48c78de3ebecafd9c8cef832ebe5079c639e42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afee00c6_9c9c5536",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-07-07T07:34:15Z",
+      "side": 1,
+      "message": "It\u0027s unrelated failure.\nTypically we just retry TreeHugger.\n\njava.lang.AssertionError: expected:\u003c9\u003e but was:\u003c8\u003e\njava.lang.AssertionError: expected:\u003c9\u003e but was:\u003c8\u003e\n\tat org.junit.Assert.fail(Assert.java:89)\n\tat org.junit.Assert.failNotEquals(Assert.java:835)\n\tat org.junit.Assert.assertEquals(Assert.java:647)\n\tat org.junit.Assert.assertEquals(Assert.java:633)\n\tat com.android.server.biometrics.sensors.fingerprint.aidl.FingerprintProviderTest.halServiceDied_resetsAllSchedulers(FingerprintProviderTest.java:116)",
+      "parentUuid": "8803f005_61c52b2a",
+      "revId": "9c48c78de3ebecafd9c8cef832ebe5079c639e42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
