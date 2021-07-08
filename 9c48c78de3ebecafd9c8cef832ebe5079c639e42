@@ -68,6 +68,24 @@
       "parentUuid": "8803f005_61c52b2a",
       "revId": "9c48c78de3ebecafd9c8cef832ebe5079c639e42",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b05688a5_f8464876",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1607903
+      },
+      "writtenOn": "2021-07-08T05:38:10Z",
+      "side": 1,
+      "message": "Thanks Junyu Lai.\n\nCan you help merge this change if there are no concerns, Qualcomm-review bit is set as well.",
+      "parentUuid": "47ed5a22_ec6e0f5e",
+      "revId": "9c48c78de3ebecafd9c8cef832ebe5079c639e42",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
