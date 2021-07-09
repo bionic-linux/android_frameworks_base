@@ -16,6 +16,29 @@
       "message": "Do we have any scenario that Setting need to connect CSIS profile directly not trigger it by the other service or profile?",
       "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c08e14e_5605270b",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-07-09T02:15:31Z",
+      "side": 1,
+      "message": "The active device is used for the audio active device currently. If we would like to switch Le audio device group, I would recommend to set it via LeAudio Profile. The CSIP profile may not be used for LE audio profile only in the future. It could be any scenario of a coordinated set, such as sensor or volume control device, etc.",
+      "range": {
+        "startLine": 98,
+        "startChar": 20,
+        "endLine": 98,
+        "endChar": 39
+      },
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
