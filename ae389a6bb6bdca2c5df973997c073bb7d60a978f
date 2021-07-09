@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a537cc5_f7603cf9",
+        "filename": "config/preloaded-classes",
+        "patchSetId": 4
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-09T17:27:27Z",
+      "side": 1,
+      "message": "This is auto generated, please don\u0027t modify",
+      "range": {
+        "startLine": 1148,
+        "startChar": 0,
+        "endLine": 1150,
+        "endChar": 43
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2268e4b3_a144807c",
+        "filename": "core/java/android/util/FeatureFlagUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-09T17:27:27Z",
+      "side": 1,
+      "message": "HearingAid profile is only one that have feature flag, please don\u0027t add one for CSIS",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 57
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "906ffd58_ec9cec12",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-09T17:27:27Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 136,
+        "startChar": 3,
+        "endLine": 137,
+        "endChar": 57
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
