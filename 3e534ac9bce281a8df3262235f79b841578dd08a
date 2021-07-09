@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "90094105_e3c004f1",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-09T17:35:17Z",
+      "side": 1,
+      "message": "I think this is not needed when profile is not displayed, see my next comment.",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 77
+      },
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c08e14e_5605270b",
         "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
         "patchSetId": 4
@@ -36,6 +59,52 @@
         "startChar": 20,
         "endLine": 98,
         "endChar": 39
+      },
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18a2f9dc_0d6893d3",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-09T17:35:17Z",
+      "side": 1,
+      "message": "As Alice commented abouve, this is required just for Audio related profiles. Remove.",
+      "range": {
+        "startLine": 1169,
+        "startChar": 0,
+        "endLine": 1176,
+        "endChar": 5
+      },
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dd0678c_1b9e6e42",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsisClientProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-09T17:35:17Z",
+      "side": 1,
+      "message": "false.\n\nWe don\u0027t want it displayed as togglable profile in BT settings.\nLE Audio profile would return \"true\" here\n\n/**\n     * Return {@code true} if the user can initiate a connection for this profile in UI.\n     */",
+      "range": {
+        "startLine": 103,
+        "startChar": 51,
+        "endLine": 103,
+        "endChar": 55
       },
       "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
