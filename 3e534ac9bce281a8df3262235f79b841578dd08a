@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8d6c15c_741adffc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-07-09T02:10:37Z",
+      "side": 1,
+      "message": "Do we have any scenario that Setting need to connect CSIS profile directly not trigger it by the other service or profile?",
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
