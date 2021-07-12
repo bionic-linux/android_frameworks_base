@@ -62,6 +62,30 @@
       },
       "revId": "aea51ea0eb3800c9942f79cfa0ba6ed454d177da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2de00d3_a0cbf663",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 16160,
+      "author": {
+        "id": 1674162
+      },
+      "writtenOn": "2021-07-12T09:19:35Z",
+      "side": 1,
+      "message": "Profileowner is of final type so i think that is doesn\u0027t matter outside of synchronized block.\n\nThis fix is mainly to put the cancel and notify of the notification outside of synchronized block. so if posing the notification code to handler,but still inside of synchronized block, maybe cann\u0027t have fix deadlock issue",
+      "parentUuid": "0bca996b_78c05437",
+      "range": {
+        "startLine": 16160,
+        "startChar": 12,
+        "endLine": 16160,
+        "endChar": 24
+      },
+      "revId": "aea51ea0eb3800c9942f79cfa0ba6ed454d177da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
