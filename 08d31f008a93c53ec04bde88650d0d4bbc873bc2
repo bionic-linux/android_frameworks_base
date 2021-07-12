@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91db1a1e_8a11899b",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/display/DisplayDensityUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1407552
+      },
+      "writtenOn": "2021-07-12T09:19:24Z",
+      "side": 1,
+      "message": "suggest adding the following api in the end of DisplayDensityUtils. then update coade as \n\n    final int displayId \u003d DisplayDensityUtils.getCurrentDisplayId(context);\n    final int defaultDensity \u003d DisplayDensityUtils.getDefaultDisplayDensity(displayId);\n\n\n\n\npublic static int getCurrentDisplayId(Context context) {\n    final Display display \u003d context.getDisplay();\n    return display !\u003d null ? display.getDisplayId() : Display.DEFAULT_DISPLAY;\n}",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 91
+      },
+      "revId": "08d31f008a93c53ec04bde88650d0d4bbc873bc2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
