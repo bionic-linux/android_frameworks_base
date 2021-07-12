@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "854ed132_51416e38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2021-07-12T19:27:08Z",
+      "side": 1,
+      "message": "This entire code path is deprecated now with the new APIs being introduced in Android S, any reason why this is being added here?",
+      "revId": "fb70e8f00123d3831a54024598ede4d6a5f9fc16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
