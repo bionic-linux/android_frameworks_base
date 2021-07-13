@@ -50,6 +50,23 @@
       "message": "Hi, everyone, could you take out time of your busy schedule to review the change or give some suggestions? Thanks very much!",
       "revId": "3202ff97ae5e0c1e0a9ef621df37d53a20f6af53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75613c94_6127bd38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2021-07-13T13:55:56Z",
+      "side": 1,
+      "message": "Hi everyone, could you please help me? \n\nThanks.",
+      "revId": "3202ff97ae5e0c1e0a9ef621df37d53a20f6af53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
