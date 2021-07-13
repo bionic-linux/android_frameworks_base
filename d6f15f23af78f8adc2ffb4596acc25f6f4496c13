@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07b9afc8_b95e82ff",
+        "filename": "services/devicepolicy/java/com/android/server/devicepolicy/DevicePolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16303,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2021-07-13T09:05:59Z",
+      "side": 1,
+      "message": "Instead of pasing in profileOwner, why no passing in the two fields of profileOwner that\u0027s being accessed? That way you don\u0027t need to acquire the lock again.",
+      "range": {
+        "startLine": 16303,
+        "startChar": 31,
+        "endLine": 16303,
+        "endChar": 55
+      },
+      "revId": "d6f15f23af78f8adc2ffb4596acc25f6f4496c13",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
