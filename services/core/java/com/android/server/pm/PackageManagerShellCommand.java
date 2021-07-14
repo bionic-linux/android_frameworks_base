@@ -2369,6 +2369,11 @@ class PackageManagerShellCommand extends ShellCommand {
             return 1;
         }
 
+        ApexManager apexManager = ApexManager.getInstance();
+        final PackageManagerInternal internal =
+                LocalServices.getService(PackageManagerInternal.class);
+        String apexContainingPkg = apexManager.getActiveApexPackageNameContainingPackage(
+                internal.getPackage(pkg));
         ArraySet<String> privAppPermissions = null;
         if (isVendorApp(pkg)) {
             privAppPermissions = SystemConfig.getInstance().getVendorPrivAppPermissions(pkg);
@@ -2377,6 +2382,9 @@ class PackageManagerShellCommand extends ShellCommand {
         } else if (isSystemExtApp(pkg)) {
             privAppPermissions = SystemConfig.getInstance()
                     .getSystemExtPrivAppPermissions(pkg);
+        } else if (apexContainingPkg != null) {
+            privAppPermissions = SystemConfig.getInstance()
+                    .getApexPrivAppPermissions(apexContainingPkg, pkg);
         } else {
             privAppPermissions = SystemConfig.getInstance().getPrivAppPermissions(pkg);
         }
@@ -2393,6 +2401,11 @@ class PackageManagerShellCommand extends ShellCommand {
             return 1;
         }
 
+        ApexManager apexManager = ApexManager.getInstance();
+        final PackageManagerInternal internal =
+                LocalServices.getService(PackageManagerInternal.class);
+        String apexContainingPkg = apexManager.getActiveApexPackageNameContainingPackage(
+                internal.getPackage(pkg));
         ArraySet<String> privAppPermissions = null;
         if (isVendorApp(pkg)) {
             privAppPermissions = SystemConfig.getInstance().getVendorPrivAppDenyPermissions(pkg);
@@ -2401,6 +2414,9 @@ class PackageManagerShellCommand extends ShellCommand {
         } else if (isSystemExtApp(pkg)) {
             privAppPermissions = SystemConfig.getInstance()
                     .getSystemExtPrivAppDenyPermissions(pkg);
+        } else if (apexContainingPkg != null) {
+            privAppPermissions = SystemConfig.getInstance()
+                    .getApexPrivAppDenyPermissions(apexContainingPkg, pkg);
         } else {
             privAppPermissions = SystemConfig.getInstance().getPrivAppDenyPermissions(pkg);
         }

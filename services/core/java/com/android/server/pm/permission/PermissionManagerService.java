@@ -47,7 +47,6 @@ import static android.os.Trace.TRACE_TAG_PACKAGE_MANAGER;
 import static android.permission.PermissionManager.KILL_APP_REASON_GIDS_CHANGED;
 import static android.permission.PermissionManager.KILL_APP_REASON_PERMISSIONS_REVOKED;
 
-import static com.android.server.pm.ApexManager.MATCH_ACTIVE_PACKAGE;
 import static com.android.server.pm.PackageManagerService.DEBUG_INSTALL;
 import static com.android.server.pm.PackageManagerService.DEBUG_PACKAGE_SCANNING;
 import static com.android.server.pm.PackageManagerService.DEBUG_PERMISSIONS;
@@ -3522,7 +3521,8 @@ public class PermissionManagerService extends IPermissionManager.Stub {
      *
      * <p>This handles parent/child apps.
      */
-    private boolean hasPrivappWhitelistEntry(String perm, AndroidPackage pkg) {
+    private boolean hasPrivappAllowlistEntry(String perm, AndroidPackage pkg,
+            String apexContainingPkg) {
         ArraySet<String> wlPermissions;
         if (pkg.isVendor()) {
             wlPermissions =
@@ -3534,6 +3534,21 @@ public class PermissionManagerService extends IPermissionManager.Stub {
             wlPermissions =
                     SystemConfig.getInstance().getSystemExtPrivAppPermissions(
                             pkg.getPackageName());
+        } else if (apexContainingPkg != null) {
+            wlPermissions =
+                    SystemConfig.getInstance().getApexPrivAppPermissions(
+                            apexContainingPkg, pkg.getPackageName());
+            ArraySet<String> privAppPermissions = SystemConfig.getInstance().getPrivAppPermissions(
+                    pkg.getPackageName());
+            if (privAppPermissions != null) {
+                // TODO: This warning should be turned into an error as soon as all apk-in-apex
+                // permission allowlists are migrated.
+                Slog.w(TAG, "Package " + pkg.getPackageName() + " is an APK in APEX,"
+                        + " but has permission allowlist on the system image. Please bundle the"
+                        + " allowlist in the " + apexContainingPkg + " APEX instead.");
+                wlPermissions = new ArraySet<>(wlPermissions);
+                wlPermissions.addAll(privAppPermissions);
+            }
         } else {
             wlPermissions = SystemConfig.getInstance().getPrivAppPermissions(pkg.getPackageName());
         }
@@ -3550,54 +3565,51 @@ public class PermissionManagerService extends IPermissionManager.Stub {
                 RoSystemProperties.CONTROL_PRIVAPP_PERMISSIONS_DISABLE;
         boolean platformPermission = PLATFORM_PACKAGE_NAME.equals(bp.getSourcePackageName());
         boolean platformPackage = PLATFORM_PACKAGE_NAME.equals(pkg.getPackageName());
+        ApexManager apexMgr = ApexManager.getInstance();
+        String apexContainingPkg = apexMgr.getActiveApexPackageNameContainingPackage(
+                pkg);
         if (!privappPermissionsDisable && privilegedPermission && pkg.isPrivileged()
                 && !platformPackage && platformPermission) {
-            if (!hasPrivappWhitelistEntry(perm, pkg)) {
-                // Only enforce whitelist this on boot
+            if (!hasPrivappAllowlistEntry(perm, pkg, apexContainingPkg)) {
+                // Only enforce allowlist this on boot
                 if (!mSystemReady
-                        // Updated system apps do not need to be whitelisted
+                        // Updated system apps do not need to be allowlisted
                         && !pkgSetting.getPkgState().isUpdatedSystemApp()) {
-                    ApexManager apexMgr = ApexManager.getInstance();
-                    String apexContainingPkg = apexMgr.getActiveApexPackageNameContainingPackage(
-                            pkg);
+                    ArraySet<String> deniedPermissions = null;
+                    if (pkg.isVendor()) {
+                        deniedPermissions = SystemConfig.getInstance()
+                                .getVendorPrivAppDenyPermissions(pkg.getPackageName());
+                    } else if (pkg.isProduct()) {
+                        deniedPermissions = SystemConfig.getInstance()
+                                .getProductPrivAppDenyPermissions(pkg.getPackageName());
+                    } else if (pkg.isSystemExt()) {
+                        deniedPermissions = SystemConfig.getInstance()
+                                .getSystemExtPrivAppDenyPermissions(pkg.getPackageName());
+                    } else if (apexContainingPkg != null) {
+                        deniedPermissions = SystemConfig.getInstance()
+                                .getApexPrivAppDenyPermissions(
+                                        apexContainingPkg, pkg.getPackageName());
+                    } else {
+                        deniedPermissions = SystemConfig.getInstance()
+                                .getPrivAppDenyPermissions(pkg.getPackageName());
+                    }
+                    final boolean permissionViolation =
+                            deniedPermissions == null || !deniedPermissions.contains(perm);
+                    if (permissionViolation) {
+                        Slog.w(TAG, "Privileged permission " + perm + " for package "
+                                + pkg.getPackageName() + " (" + pkg.getCodePath()
+                                + ") not in privapp-permissions allowlist");
 
-                    // Apps that are in updated apexs' do not need to be whitelisted
-                    if (apexContainingPkg == null || apexMgr.isFactory(
-                            apexMgr.getPackageInfo(apexContainingPkg, MATCH_ACTIVE_PACKAGE))) {
-                        // it's only a reportable violation if the permission isn't explicitly
-                        // denied
-                        ArraySet<String> deniedPermissions = null;
-                        if (pkg.isVendor()) {
-                            deniedPermissions = SystemConfig.getInstance()
-                                    .getVendorPrivAppDenyPermissions(pkg.getPackageName());
-                        } else if (pkg.isProduct()) {
-                            deniedPermissions = SystemConfig.getInstance()
-                                    .getProductPrivAppDenyPermissions(pkg.getPackageName());
-                        } else if (pkg.isSystemExt()) {
-                            deniedPermissions = SystemConfig.getInstance()
-                                    .getSystemExtPrivAppDenyPermissions(pkg.getPackageName());
-                        } else {
-                            deniedPermissions = SystemConfig.getInstance()
-                                    .getPrivAppDenyPermissions(pkg.getPackageName());
-                        }
-                        final boolean permissionViolation =
-                                deniedPermissions == null || !deniedPermissions.contains(perm);
-                        if (permissionViolation) {
-                            Slog.w(TAG, "Privileged permission " + perm + " for package "
-                                    + pkg.getPackageName() + " (" + pkg.getCodePath()
-                                    + ") not in privapp-permissions whitelist");
-
-                            if (RoSystemProperties.CONTROL_PRIVAPP_PERMISSIONS_ENFORCE) {
-                                if (mPrivappPermissionsViolations == null) {
-                                    mPrivappPermissionsViolations = new ArraySet<>();
-                                }
-                                mPrivappPermissionsViolations.add(
-                                        pkg.getPackageName() + " (" + pkg.getCodePath() + "): "
-                                                + perm);
+                        if (RoSystemProperties.CONTROL_PRIVAPP_PERMISSIONS_ENFORCE) {
+                            if (mPrivappPermissionsViolations == null) {
+                                mPrivappPermissionsViolations = new ArraySet<>();
                             }
-                        } else {
-                            return false;
+                            mPrivappPermissionsViolations.add(
+                                    pkg.getPackageName() + " (" + pkg.getCodePath() + "): "
+                                            + perm);
                         }
+                    } else {
+                        return false;
                     }
                 }
                 if (RoSystemProperties.CONTROL_PRIVAPP_PERMISSIONS_ENFORCE) {

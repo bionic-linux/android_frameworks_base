@@ -87,6 +87,9 @@ public class SystemConfig {
     // property for runtime configuration differentiation in vendor
     private static final String VENDOR_SKU_PROPERTY = "ro.boot.product.vendor.sku";
 
+    private static final ArrayMap<String, ArraySet<String>> EMPTY_PERMISSIONS =
+            new ArrayMap<>();
+
     // Group-ids that are given to all packages as read from etc/permissions/*.xml.
     int[] mGlobalGids;
 
@@ -214,6 +217,11 @@ public class SystemConfig {
 
     final ArrayMap<String, ArraySet<String>> mSystemExtPrivAppPermissions = new ArrayMap<>();
     final ArrayMap<String, ArraySet<String>> mSystemExtPrivAppDenyPermissions = new ArrayMap<>();
+
+    final ArrayMap<String, ArrayMap<String, ArraySet<String>>> mApexPrivAppPermissions =
+            new ArrayMap<>();
+    final ArrayMap<String, ArrayMap<String, ArraySet<String>>> mApexPrivAppDenyPermissions =
+            new ArrayMap<>();
 
     final ArrayMap<String, ArrayMap<String, Boolean>> mOemPermissions = new ArrayMap<>();
 
@@ -351,6 +359,17 @@ public class SystemConfig {
     }
 
     public ArraySet<String> getPrivAppDenyPermissions(String packageName) {
+        return mPrivAppDenyPermissions.get(packageName);
+    }
+
+    /** Get privapp permission allowlist for an apk-in-apex */
+    public ArraySet<String> getApexPrivAppPermissions(String module, String packageName) {
+        return mApexPrivAppPermissions.getOrDefault(module, EMPTY_PERMISSIONS)
+                .get(packageName);
+    }
+
+    /** Get privapp permissions denylist for an apk-in-apex */
+    public ArraySet<String> getApexPrivAppDenyPermissions(String module, String packageName) {
         return mPrivAppDenyPermissions.get(packageName);
     }
 
@@ -552,7 +571,8 @@ public class SystemConfig {
             if (f.isFile() || f.getPath().contains("@")) {
                 continue;
             }
-            readPermissions(Environment.buildPath(f, "etc", "permissions"), ALLOW_LIBS);
+            readPermissions(Environment.buildPath(f, "etc", "permissions"),
+                    ALLOW_LIBS | ALLOW_PRIVAPP_PERMISSIONS);
         }
     }
 
@@ -1033,6 +1053,8 @@ public class SystemConfig {
                                     Environment.getProductDirectory().toPath() + "/");
                             boolean systemExt = permFile.toPath().startsWith(
                                     Environment.getSystemExtDirectory().toPath() + "/");
+                            boolean apex = permFile.toPath().startsWith(
+                                    Environment.getApexDirectory().toPath() + "/");
                             if (vendor) {
                                 readPrivAppPermissions(parser, mVendorPrivAppPermissions,
                                         mVendorPrivAppDenyPermissions);
@@ -1042,6 +1064,8 @@ public class SystemConfig {
                             } else if (systemExt) {
                                 readPrivAppPermissions(parser, mSystemExtPrivAppPermissions,
                                         mSystemExtPrivAppDenyPermissions);
+                            } else if (apex) {
+                                readApexPrivAppPermissions(parser, permFile);
                             } else {
                                 readPrivAppPermissions(parser, mPrivAppPermissions,
                                         mPrivAppDenyPermissions);
@@ -1528,6 +1552,43 @@ public class SystemConfig {
                 componentEnabledStates.put(clsname, !"false".equals(enabled));
             }
         }
+    }
+
+    /**
+     * Returns the module name for a file in the apex module's partition.
+     * @param path the path of the file
+     */
+    private String getApexModuleNameFromFilePath(String path) {
+        final String apexDirectoryPath = Environment.getApexDirectory() + "/";
+        if (!path.startsWith(apexDirectoryPath)) {
+            throw new IllegalArgumentException("File " + path + " is not part of an APEX.");
+        }
+        int separatorPos = path.indexOf("/", apexDirectoryPath.length());
+        if (separatorPos == -1) {
+            throw new IllegalArgumentException("File " + path + " is in the APEX partition,"
+                                                + " but not inside a module.");
+        }
+        return path.substring(apexDirectoryPath.length(), separatorPos);
+    }
+
+    private void readApexPrivAppPermissions(XmlPullParser parser, File permFile)
+            throws IOException, XmlPullParserException {
+        final String moduleName = getApexModuleNameFromFilePath(permFile.toPath().toString());
+        final ArrayMap<String, ArraySet<String>> privAppPermissions;
+        if (mApexPrivAppPermissions.containsKey(moduleName)) {
+            privAppPermissions = mApexPrivAppPermissions.get(moduleName);
+        } else {
+            privAppPermissions = new ArrayMap<>();
+            mApexPrivAppPermissions.put(moduleName, privAppPermissions);
+        }
+        final ArrayMap<String, ArraySet<String>> privAppDenyPermissions;
+        if (mApexPrivAppDenyPermissions.containsKey(moduleName)) {
+            privAppDenyPermissions = mApexPrivAppDenyPermissions.get(moduleName);
+        } else {
+            privAppDenyPermissions = new ArrayMap<>();
+            mApexPrivAppDenyPermissions.put(moduleName, privAppDenyPermissions);
+        }
+        readPrivAppPermissions(parser, privAppPermissions, privAppDenyPermissions);
     }
 
     private static boolean isSystemProcess() {
