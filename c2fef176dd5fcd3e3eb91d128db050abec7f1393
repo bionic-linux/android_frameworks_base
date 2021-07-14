@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013220244",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1766011?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9b734531_c1b758d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-14T16:44:10Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 34
+      },
+      "revId": "c2fef176dd5fcd3e3eb91d128db050abec7f1393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013220250",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1766011?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "a71eba12_0a84e4c3",
+          "description": "Change to \"core/java/com/android/server/SystemConfig.java\"",
+          "replacements": [
+            {
+              "path": "core/java/com/android/server/SystemConfig.java",
+              "range": {
+                "startLine": 1568,
+                "startChar": 72,
+                "endLine": 1568,
+                "endChar": 79
+              },
+              "replacement": "the"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "8561c7dc_da446bae",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-14T16:44:10Z",
+      "side": 1,
+      "message": "Common typo found: \"the the\" -- should it be \"the\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1568,
+        "startChar": 72,
+        "endLine": 1568,
+        "endChar": 79
+      },
+      "revId": "c2fef176dd5fcd3e3eb91d128db050abec7f1393",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
