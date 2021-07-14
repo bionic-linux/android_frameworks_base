@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cafd9228_87fae6b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-07-14T16:52:42Z",
+      "side": 1,
+      "message": "This may not cleanly merge upstream, so there\u0027s a chance I\u0027ll need to merge into internal first.",
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
