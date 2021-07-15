@@ -147,6 +147,10 @@ package android.os {
     method @Nullable public android.os.IBinder getOrThrow() throws android.os.StatsServiceManager.ServiceNotFoundException;
   }
 
+  public final class ServiceManager {
+    method public static boolean isDeclared(@NonNull String);
+    method @NonNull public static android.os.IBinder waitForDeclaredService(@NonNull String);
+  }
 }
 
 package android.telephony {
