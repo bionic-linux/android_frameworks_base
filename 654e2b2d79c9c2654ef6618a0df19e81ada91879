@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "00223d90_da033872",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-07-15T12:45:55Z",
+      "side": 1,
+      "message": "That makes sense. Unfortunately we cannot have a test running on a user build if we want to install test_apex. However, we should add an MTS test / unit test on userdebug builds.",
+      "parentUuid": "d27f0d74_4e796390",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cafd9228_87fae6b8",
@@ -95,6 +119,24 @@
       "writtenOn": "2021-07-15T12:37:32Z",
       "side": 1,
       "message": "Thanks! As discussed, I\u0027ll elaborate on the design doc (perhaps including this as a reference); I\u0027ll also need to submit this internally first due to merge conflicts.",
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a824659_aa0da31b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-07-15T12:45:55Z",
+      "side": 1,
+      "message": "Note that PackageManager is developed internally. The team is doing some large refactorings as well. IMO, just submit this internally, no need for AOSP cherry-pick (unless someone asks for this or we need to do changes in soong or other aosp-first projects).",
+      "parentUuid": "4dbe1f8d_b700925a",
       "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -148,6 +190,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0a53f03a_b5148141",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-07-15T12:45:55Z",
+      "side": 1,
+      "message": "Not sure I fully follow this... Could we not check correctness of exposed permissions at parsing time, and then just assume they are declared in the right modules?",
+      "parentUuid": "98ba2ea9_bfec76a7",
+      "range": {
+        "startLine": 366,
+        "startChar": 54,
+        "endLine": 366,
+        "endChar": 67
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d7e340c2_29eebe37",
         "filename": "core/java/com/android/server/SystemConfig.java",
         "patchSetId": 3
@@ -183,6 +249,30 @@
       "side": 1,
       "message": "Because otherwise the \"privapp-permissions\" tags will be ignored and log an error http://cs/android/frameworks/base/core/java/com/android/server/SystemConfig.java?l\u003d1033",
       "parentUuid": "d7e340c2_29eebe37",
+      "range": {
+        "startLine": 575,
+        "startChar": 33,
+        "endLine": 575,
+        "endChar": 58
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c23a8fd0_bf87b974",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-07-15T12:45:55Z",
+      "side": 1,
+      "message": "Oh, I missed that this is a for loop specific to parsing apexes.",
+      "parentUuid": "f7821851_a05e57a7",
       "range": {
         "startLine": 575,
         "startChar": 33,
