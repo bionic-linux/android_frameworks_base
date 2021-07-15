@@ -123,11 +123,11 @@ class IdmapHeader {
   }
 
   inline StringPiece GetTargetPath() const {
-    return StringPiece(target_path_);
+    return {target_path_};
   }
 
   inline StringPiece GetOverlayPath() const {
-    return StringPiece(overlay_path_);
+    return {overlay_path_};
   }
 
   inline const std::string& GetDebugInfo() const {

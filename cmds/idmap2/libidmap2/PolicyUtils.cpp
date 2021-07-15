@@ -39,7 +39,7 @@ Result<PolicyBitmask> PoliciesToBitmaskResult(const std::vector<std::string>& po
   }
 
   if (unknown_policies.empty()) {
-    return Result<PolicyBitmask>(bitmask);
+    return {bitmask};
   }
 
   auto prefix = unknown_policies.size() == 1 ? "policy" : "policies";
