@@ -210,7 +210,8 @@ public class Binder implements IBinder {
      *
      * @hide
      */
-    public static IBinder allowBlocking(IBinder binder) {
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @NonNull public static IBinder allowBlocking(@NonNull IBinder binder) {
         try {
             if (binder instanceof BinderProxy) {
                 ((BinderProxy) binder).mWarnOnBlocking = false;

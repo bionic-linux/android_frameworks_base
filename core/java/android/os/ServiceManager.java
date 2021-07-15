@@ -17,6 +17,8 @@
 package android.os;
 
 import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -28,6 +30,7 @@ import com.android.internal.util.StatLogger;
 import java.util.Map;
 
 /** @hide */
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
 public final class ServiceManager {
     private static final String TAG = "ServiceManager";
     private static final Object sLock = new Object();
@@ -98,10 +101,17 @@ public final class ServiceManager {
         int COUNT = GET_SERVICE + 1;
     }
 
-    public static final StatLogger sStatLogger = new StatLogger(new String[] {
+    private static final StatLogger S_STAT_LOGGER = new StatLogger(new String[] {
             "getService()",
     });
 
+    /** @hide */
+    @UnsupportedAppUsage
+    @NonNull public static StatLogger getStatLogger() {
+        return S_STAT_LOGGER;
+    }
+
+    /** @hide */
     @UnsupportedAppUsage
     public ServiceManager() {
     }
@@ -125,7 +135,7 @@ public final class ServiceManager {
      * @return a reference to the service, or <code>null</code> if the service doesn't exist
      */
     @UnsupportedAppUsage
-    public static IBinder getService(String name) {
+    @NonNull public static IBinder getService(@NonNull String name) {
         try {
             IBinder service = sCache.get(name);
             if (service != null) {
@@ -162,7 +172,7 @@ public final class ServiceManager {
      * @param service the service object
      */
     @UnsupportedAppUsage
-    public static void addService(String name, IBinder service) {
+    public static void addService(@NonNull String name, @NonNull IBinder service) {
         addService(name, service, false, IServiceManager.DUMP_FLAG_PRIORITY_DEFAULT);
     }
 
@@ -176,7 +186,8 @@ public final class ServiceManager {
      * to access this service
      */
     @UnsupportedAppUsage
-    public static void addService(String name, IBinder service, boolean allowIsolated) {
+    public static void addService(@NonNull String name, @NonNull IBinder service,
+            boolean allowIsolated) {
         addService(name, service, allowIsolated, IServiceManager.DUMP_FLAG_PRIORITY_DEFAULT);
     }
 
@@ -191,8 +202,8 @@ public final class ServiceManager {
      * to access this service
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    public static void addService(String name, IBinder service, boolean allowIsolated,
-            int dumpPriority) {
+    public static void addService(@NonNull String name, @NonNull IBinder service,
+            boolean allowIsolated, int dumpPriority) {
         try {
             getIServiceManager().addService(name, service, allowIsolated, dumpPriority);
         } catch (RemoteException e) {
@@ -205,7 +216,7 @@ public final class ServiceManager {
      * service manager.  Non-blocking.
      */
     @UnsupportedAppUsage
-    public static IBinder checkService(String name) {
+    @Nullable public static IBinder checkService(@NonNull String name) {
         try {
             IBinder service = sCache.get(name);
             if (service != null) {
@@ -240,12 +251,12 @@ public final class ServiceManager {
      * @return true if the service is declared somewhere (eg. VINTF manifest) and
      * waitForService should always be able to return the service.
      */
-    public static String[] getDeclaredInstances(@NonNull String iface) {
+    @NonNull public static String[] getDeclaredInstances(@NonNull String iface) {
         try {
             return getIServiceManager().getDeclaredInstances(iface);
         } catch (RemoteException e) {
             Log.e(TAG, "error in getDeclaredInstances", e);
-            return null;
+            return new String[0];
         }
     }
 
@@ -257,7 +268,7 @@ public final class ServiceManager {
      *
      * @return {@code null} only if there are permission problems or fatal errors.
      */
-    public static native IBinder waitForService(@NonNull String name);
+    @Nullable public static native IBinder waitForService(@NonNull String name);
 
     /**
      * Returns the specified service from the service manager, if declared.
@@ -267,8 +278,10 @@ public final class ServiceManager {
      *
      * @return {@code null} if the service is not declared in the manifest, or if there are
      * permission problems, or if there are fatal errors.
+     * @hide
      */
-    public static IBinder waitForDeclaredService(@NonNull String name) {
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @Nullable public static IBinder waitForDeclaredService(@NonNull String name) {
         return isDeclared(name) ? waitForService(name) : null;
     }
 
@@ -278,12 +291,12 @@ public final class ServiceManager {
      * case of an exception
      */
     @UnsupportedAppUsage
-    public static String[] listServices() {
+    @NonNull public static String[] listServices() {
         try {
             return getIServiceManager().listServices(IServiceManager.DUMP_FLAG_PRIORITY_ALL);
         } catch (RemoteException e) {
             Log.e(TAG, "error in listServices", e);
-            return null;
+            return new String[0];
         }
     }
 
@@ -330,11 +343,11 @@ public final class ServiceManager {
     }
 
     private static IBinder rawGetService(String name) throws RemoteException {
-        final long start = sStatLogger.getTime();
+        final long start = S_STAT_LOGGER.getTime();
 
         final IBinder binder = getIServiceManager().getService(name);
 
-        final int time = (int) sStatLogger.logDurationStat(Stats.GET_SERVICE, start);
+        final int time = (int) S_STAT_LOGGER.logDurationStat(Stats.GET_SERVICE, start);
 
         final int myUid = Process.myUid();
         final boolean isCore = UserHandle.isCore(myUid);
