@@ -141,6 +141,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "314fb7ed_9b323788",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-07-15T13:11:31Z",
+      "side": 1,
+      "message": "ACK. Will only submit to internal.",
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9dbb033f_1bb44779",
@@ -202,6 +219,30 @@
       "side": 1,
       "message": "Not sure I fully follow this... Could we not check correctness of exposed permissions at parsing time, and then just assume they are declared in the right modules?",
       "parentUuid": "98ba2ea9_bfec76a7",
+      "range": {
+        "startLine": 366,
+        "startChar": 54,
+        "endLine": 366,
+        "endChar": 67
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d807dc79_c5365c4d",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-07-15T13:11:31Z",
+      "side": 1,
+      "message": "Now I\u0027m not sure I follow 😊\nI could assume that the allowlists are declared in the proper location, and put them all in one bucket - but that would mean that APEX A could allowlist a permission for an APK inside APEX B. That could be *fine*.\nAlternatively, doing this check at parse time is costly and doesn\u0027t seem to be the way the other permissions are treated.",
+      "parentUuid": "0a53f03a_b5148141",
       "range": {
         "startLine": 366,
         "startChar": 54,
