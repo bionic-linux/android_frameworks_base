@@ -210,6 +210,7 @@ public class Binder implements IBinder {
      *
      * @hide
      */
+    @SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
     public static IBinder allowBlocking(IBinder binder) {
         try {
             if (binder instanceof BinderProxy) {

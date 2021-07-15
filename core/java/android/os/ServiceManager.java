@@ -17,6 +17,7 @@
 package android.os;
 
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -268,6 +269,7 @@ public final class ServiceManager {
      * @return {@code null} if the service is not declared in the manifest, or if there are
      * permission problems, or if there are fatal errors.
      */
+    @SystemApi(client = SystemApi.Client.SYSTEM_SERVER)
     public static IBinder waitForDeclaredService(@NonNull String name) {
         return isDeclared(name) ? waitForService(name) : null;
     }
