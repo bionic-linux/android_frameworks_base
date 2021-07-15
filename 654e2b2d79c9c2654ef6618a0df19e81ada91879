@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d27f0d74_4e796390",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-07-15T12:37:32Z",
+      "side": 1,
+      "message": "Yes; the way I tested was by reading the logcat - and observing that there were warnings about privapp-permissions for APK-in-APEXes being allowlisted in the /system partition, then moving the allowlist for mediaprovider into the APEX and noticing that the warnings disappeared for that APK, and the system booted successfully.\n\nA \u0027proper\u0027 test would likely require installing an APEX with an APK that requires a certain permission, and checking that the permission is denied unless it\u0027s allowlisted in the APEX. I\u0027d prefer to do that as a follow-up if possible.",
+      "parentUuid": "f19bae26_53673d7a",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cafd9228_87fae6b8",
@@ -58,6 +82,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dbe1f8d_b700925a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-07-15T12:37:32Z",
+      "side": 1,
+      "message": "Thanks! As discussed, I\u0027ll elaborate on the design doc (perhaps including this as a reference); I\u0027ll also need to submit this internally first due to merge conflicts.",
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9dbb033f_1bb44779",
@@ -83,6 +124,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98ba2ea9_bfec76a7",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-07-15T12:37:32Z",
+      "side": 1,
+      "message": "Permission allowlists are stored per module, so that when granting privapp permissions, only these (and the /system one for now) are inspected. \ni.e. you can add permissions for APK A in mainline module B\u0027s priv-app permission allowlist, but when attempting to grant that permission for A, you only inspect the allowlist for the APEX that A is bundled in (if applicable).",
+      "parentUuid": "9dbb033f_1bb44779",
+      "range": {
+        "startLine": 366,
+        "startChar": 54,
+        "endLine": 366,
+        "endChar": 67
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d7e340c2_29eebe37",
         "filename": "core/java/com/android/server/SystemConfig.java",
         "patchSetId": 3
@@ -94,6 +159,30 @@
       "writtenOn": "2021-07-15T11:34:49Z",
       "side": 1,
       "message": "why is this needed now?",
+      "range": {
+        "startLine": 575,
+        "startChar": 33,
+        "endLine": 575,
+        "endChar": 58
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7821851_a05e57a7",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-07-15T12:37:32Z",
+      "side": 1,
+      "message": "Because otherwise the \"privapp-permissions\" tags will be ignored and log an error http://cs/android/frameworks/base/core/java/com/android/server/SystemConfig.java?l\u003d1033",
+      "parentUuid": "d7e340c2_29eebe37",
       "range": {
         "startLine": 575,
         "startChar": 33,
