@@ -11735,7 +11735,7 @@ public class ActivityManagerService extends IActivityManager.Stub
 
                 pw.println();
                 pw.println("  ServiceManager statistics:");
-                ServiceManager.sStatLogger.dump(pw, "    ");
+                ServiceManager.getStatLogger().dump(pw, "    ");
                 pw.println();
             }
         }
