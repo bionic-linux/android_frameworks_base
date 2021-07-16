@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "952bdc21_f9164eb7",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-07-16T18:17:40Z",
+      "side": 1,
+      "message": "If this should never be able to be un-set then a one-liner class that just allows this thing to be set and never cleared is an option for maximum safety.",
+      "range": {
+        "startLine": 560,
+        "startChar": 20,
+        "endLine": 560,
+        "endChar": 31
+      },
+      "revId": "b04d731eaa18970dfac3b3f09e023795de7aa58d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af903e4f_a3a13ab8",
+        "filename": "services/core/java/com/android/server/vcn/VcnGatewayConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-07-16T18:17:40Z",
+      "side": 1,
+      "message": "Please add a comment here drawing attention to the operator. Logical operators are used sparsely and nobody gonna notice this unless it\u0027s in big boldface letters.",
+      "range": {
+        "startLine": 1305,
+        "startChar": 25,
+        "endLine": 1305,
+        "endChar": 26
+      },
+      "revId": "b04d731eaa18970dfac3b3f09e023795de7aa58d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
