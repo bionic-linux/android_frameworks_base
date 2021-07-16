@@ -102,6 +102,10 @@ public class VcnGatewayConnectionDisconnectedStateTest extends VcnGatewayConnect
         mGatewayConnection.teardownAsynchronously();
         mTestLooper.dispatchAll();
 
+        // Verify that sending a non-quitting disconnect request does not unset the isQuitting flag
+        mGatewayConnection.sendDisconnectRequestedAndAcquireWakelock("TEST", false);
+        mTestLooper.dispatchAll();
+
         assertNull(mGatewayConnection.getCurrentState());
         verify(mIpSecSvc).deleteTunnelInterface(eq(TEST_IPSEC_TUNNEL_RESOURCE_ID), any());
         verifySafeModeTimeoutAlarmAndGetCallback(true /* expectCanceled */);
