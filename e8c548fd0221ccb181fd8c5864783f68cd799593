@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "625286ad_a4864090",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-07-16T21:28:01Z",
+      "side": 1,
+      "message": "All failing tests marked as already failing in ToT",
+      "revId": "e8c548fd0221ccb181fd8c5864783f68cd799593",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
