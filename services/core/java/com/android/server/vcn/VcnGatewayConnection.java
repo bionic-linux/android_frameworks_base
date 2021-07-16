@@ -551,6 +551,11 @@ public class VcnGatewayConnection extends StateMachine {
      * <p>This variable is false for the lifecycle of the VcnGatewayConnection, until a command to
      * teardown has been received. This may be flipped due to events such as the Network becoming
      * unwanted, the owning VCN entering safe mode, or an irrecoverable internal failure.
+     *
+     * <p>WARNING: Assignments to this MUST ALWAYS (except for testing) use the or operator ("|="),
+     * otherwise the flag may be flipped back to false after having been set to true. This could
+     * lead to a case where the Vcn parent instance has commanded a teardown, but a spurious
+     * non-quitting disconnect request could flip this back to true.
      */
     private boolean mIsQuitting = false;
 
@@ -1297,7 +1302,7 @@ public class VcnGatewayConnection extends StateMachine {
             // TODO(b/180526152): notify VcnStatusCallback for Network loss
 
             logDbg("Tearing down. Cause: " + info.reason);
-            mIsQuitting = info.shouldQuit;
+            mIsQuitting |= info.shouldQuit;
 
             teardownNetwork();
 
@@ -1365,7 +1370,7 @@ public class VcnGatewayConnection extends StateMachine {
                     break;
                 case EVENT_DISCONNECT_REQUESTED:
                     if (((EventDisconnectRequestedInfo) msg.obj).shouldQuit) {
-                        mIsQuitting = true;
+                        mIsQuitting |= true; // Mark true, use or-assignment ("|=") for consistency
 
                         quitNow();
                     }
@@ -1451,7 +1456,7 @@ public class VcnGatewayConnection extends StateMachine {
                     break;
                 case EVENT_DISCONNECT_REQUESTED:
                     EventDisconnectRequestedInfo info = ((EventDisconnectRequestedInfo) msg.obj);
-                    mIsQuitting = info.shouldQuit;
+                    mIsQuitting |= info.shouldQuit;
                     teardownNetwork();
 
                     if (info.reason.equals(DISCONNECT_REASON_UNDERLYING_NETWORK_LOST)) {
@@ -2180,18 +2185,15 @@ public class VcnGatewayConnection extends StateMachine {
     private void logVdbg(String msg) {
         if (VDBG) {
             Slog.v(TAG, getLogPrefix() + msg);
-            LOCAL_LOG.log(getLogPrefix() + "VDBG: " + msg);
         }
     }
 
     private void logDbg(String msg) {
         Slog.d(TAG, getLogPrefix() + msg);
-        LOCAL_LOG.log(getLogPrefix() + "DBG: " + msg);
     }
 
     private void logDbg(String msg, Throwable tr) {
         Slog.d(TAG, getLogPrefix() + msg, tr);
-        LOCAL_LOG.log(getLogPrefix() + "DBG: " + msg + tr);
     }
 
     private void logWarn(String msg) {
