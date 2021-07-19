@@ -2849,9 +2849,23 @@ class Task extends WindowContainer<WindowContainer> {
                 + " from stack=" + getStack());
         EventLogTags.writeWmTaskRemoved(mTaskId, "reParentTask:" + reason);
 
+        final ActivityRecord r = topRunningActivityLocked();
+        ActivityStack sourceStack = null;
+        if (r != null) {
+            sourceStack = r.getStack();
+        }
+
         reparent(stack, position);
 
         stack.positionChildAt(position, this, moveParents);
+
+        if (sourceStack != null) {
+            boolean wasPaused = sourceStack.mPausingActivity == r;
+            if (wasPaused) {
+                Slog.i(TAG_TASKS, "reparent of " + this + " set old stack.mPausingActivity as null after reparent.");
+                sourceStack.mPausingActivity = null;
+            }
+        }
 
         // If we are moving from the fullscreen stack to the pinned stack then we want to preserve
         // our insets so that there will not be a jump in the area covered by system decorations.
