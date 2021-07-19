@@ -72,6 +72,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7e7b846_8849e11f",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-19T13:13:17Z",
+      "side": 1,
+      "message": "This is needed just between Bluetooth and Settings. Hide, don\u0027t expose publicly.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 69
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f813e38_aefb4db9",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-19T13:13:17Z",
+      "side": 1,
+      "message": "This is needed just between Bluetooth and Settings. Hide, don\u0027t expose publicly.",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 61
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46267111_9366c516",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-07-19T13:13:17Z",
+      "side": 1,
+      "message": "This is needed just between Bluetooth and Settings. Hide, don\u0027t expose publicly.",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f4975e9_b06e89c0",
         "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
         "patchSetId": 4
