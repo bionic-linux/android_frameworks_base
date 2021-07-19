@@ -39,4 +39,8 @@ oneway interface IVolumeController {
      *     {@link VolumePolicy#A11Y_MODE_INDEPENDENT_A11Y_VOLUME}
      */
     void setA11yMode(int mode);
+    /**
+     * after backup from settings, notify register volumcontrol update stream volume.
+     */
+    void updateAllStreamVolume();
 }

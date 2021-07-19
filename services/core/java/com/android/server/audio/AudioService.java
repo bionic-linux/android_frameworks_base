@@ -4335,6 +4335,7 @@ public class AudioService extends IAudioService.Stub
     /** @see AudioManager#reloadAudioSettings() */
     public void reloadAudioSettings() {
         readAudioSettings(false /*userSwitch*/);
+        mVolumeController.updateAllStreamVolume();
     }
 
     private void readAudioSettings(boolean userSwitch) {
@@ -8189,6 +8190,16 @@ public class AudioService extends IAudioService.Stub
                 return;
             try {
                 mController.setA11yMode(a11yMode);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Error calling setA11Mode", e);
+            }
+        }
+
+        public void updateAllStreamVolume() {
+            if (mController == null)
+                return;
+            try {
+                mController.updateAllStreamVolume();
             } catch (RemoteException e) {
                 Log.w(TAG, "Error calling setA11Mode", e);
             }

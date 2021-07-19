@@ -781,6 +781,11 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
             }
             mWorker.obtainMessage(W.ACCESSIBILITY_MODE_CHANGED, mShowA11yStream).sendToTarget();
         }
+
+        @Override
+        public void updateAllStreamVolume() {
+            getState();
+        }
     }
 
     private final class W extends Handler {
