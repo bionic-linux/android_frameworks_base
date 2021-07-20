@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0ad8efe5_58efb85b",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-07-20T19:55:22Z",
+      "side": 1,
+      "message": "wait - yeah, we should only be adding this one API. Do you know why the others are added?",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 94
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "89cebe59_138b96d7",
         "filename": "core/java/android/os/ServiceManager.java",
         "patchSetId": 3
