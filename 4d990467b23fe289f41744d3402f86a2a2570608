@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8729289a_d04b8890",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3295,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-07-20T18:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3df17aa4_6ec9a497",
+      "range": {
+        "startLine": 3295,
+        "startChar": 30,
+        "endLine": 3295,
+        "endChar": 34
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2f2800f_5c6a5651",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45d447e0_d77f0a03",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-07-20T18:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f2800f_5c6a5651",
+      "range": {
+        "startLine": 3300,
+        "startChar": 29,
+        "endLine": 3300,
+        "endChar": 45
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "347b675d_8ff3c4be",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-07-20T17:01:44Z",
       "side": 1,
       "message": "I think if we just make this change from 5 to 0",
+      "range": {
+        "startLine": 3307,
+        "startChar": 56,
+        "endLine": 3307,
+        "endChar": 57
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59aa036a_3113e47f",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3307,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-07-20T18:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "347b675d_8ff3c4be",
       "range": {
         "startLine": 3307,
         "startChar": 56,
