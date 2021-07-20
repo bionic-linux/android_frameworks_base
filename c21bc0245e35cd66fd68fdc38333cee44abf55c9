@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013509903",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1771607?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8388be8a_fe0f6e26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-20T09:51:00Z",
+      "side": 1,
+      "message": "Change must include a \"Sponsor:\" stanza indicating who at Google has personally signed up to take responsibility in case of any potential fallout.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "c21bc0245e35cd66fd68fdc38333cee44abf55c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013509903",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1771607?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a889c526_ad9a96ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-20T09:51:00Z",
+      "side": 1,
+      "message": "\"Validate ScanFilter using IRK and Static random ID address\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 64
+      },
+      "revId": "c21bc0245e35cd66fd68fdc38333cee44abf55c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013509903",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1771607?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ec613902_7348a538",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-20T09:51:00Z",
+      "side": 1,
+      "message": "{#compatibility %!s(int\u003d9) %!s(int\u003d4) %!s(int\u003d19)} requires you include cert test changes to ensure this issue does not happen in the future",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "c21bc0245e35cd66fd68fdc38333cee44abf55c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013509903",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1771607?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5484e0a1_4f1bf848",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-20T09:51:00Z",
+      "side": 1,
+      "message": "#compatibility requires a tracking bug number",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "c21bc0245e35cd66fd68fdc38333cee44abf55c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
