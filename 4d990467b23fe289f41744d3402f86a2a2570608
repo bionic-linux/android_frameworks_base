@@ -114,6 +114,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cd7804a_34b6d0c7",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-07-20T18:52:27Z",
+      "side": 1,
+      "message": "nit: I believe this should read \"if the Most Significant Byte of the address...\" given 2 hex digits --\u003e 1 byte 😊",
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "347b675d_8ff3c4be",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 5
