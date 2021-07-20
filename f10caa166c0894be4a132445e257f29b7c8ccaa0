@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba8144f3_f78e0706",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-07-20T18:33:15Z",
+      "side": 1,
+      "message": "Hey Chris, I added other Chris because he was doing similar cleanup for another API. I think we should split the cleanup into a separate CL (we can also submit it separately below this). Can you do that?",
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89cebe59_138b96d7",
+        "filename": "core/java/android/os/ServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-07-20T18:33:15Z",
+      "side": 1,
+      "message": "note - this is safe for mainline modules because it\u0027s only exposing HAL interfaces",
+      "range": {
+        "startLine": 283,
+        "startChar": 36,
+        "endLine": 283,
+        "endChar": 58
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e710ab7_1a6a4f02",
+        "filename": "core/java/com/android/internal/util/StatLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-07-20T18:33:15Z",
+      "side": 1,
+      "message": "is StatLogger needed to be exposed?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 54
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
