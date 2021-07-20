@@ -157,6 +157,30 @@
       },
       "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d76107a7_744b0e4a",
+        "filename": "core/java/com/android/internal/util/StatLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-07-20T23:36:30Z",
+      "side": 1,
+      "message": "if that variable is @hide, it should be okay",
+      "parentUuid": "7432fc09_84cd635a",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 54
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
