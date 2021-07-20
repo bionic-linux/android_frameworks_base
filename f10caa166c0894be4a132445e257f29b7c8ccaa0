@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3e19fb79_5eda9782",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-07-20T21:24:20Z",
+      "side": 1,
+      "message": "I think as we mark the whole class as: @SystemApi(client \u003d SystemApi.Client.MODULE_LIBRARIES)\nthen all the methods were added automatically? \nWe\u0027ll probably have to make all other functions hide, let me try it.",
+      "parentUuid": "0ad8efe5_58efb85b",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 94
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "89cebe59_138b96d7",
         "filename": "core/java/android/os/ServiceManager.java",
         "patchSetId": 3
@@ -66,6 +90,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc41b20e_59da6aef",
+        "filename": "core/java/android/os/ServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-07-20T21:24:20Z",
+      "side": 1,
+      "message": "Cool, thanks for the clarification!",
+      "parentUuid": "89cebe59_138b96d7",
+      "range": {
+        "startLine": 283,
+        "startChar": 36,
+        "endLine": 283,
+        "endChar": 58
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e710ab7_1a6a4f02",
         "filename": "core/java/com/android/internal/util/StatLogger.java",
         "patchSetId": 3
@@ -77,6 +125,30 @@
       "writtenOn": "2021-07-20T18:33:15Z",
       "side": 1,
       "message": "is StatLogger needed to be exposed?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 54
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7432fc09_84cd635a",
+        "filename": "core/java/com/android/internal/util/StatLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-07-20T21:24:20Z",
+      "side": 1,
+      "message": "ServiceManager is referencing it :\n    public static final StatLogger sStatLogger \u003d new StatLogger(new String[] {\n            \"getService()\",\n    });\nI don\u0027t see a good way to solve it, other than make the StatLogger exposed.\nMaybe framework team has better solution?",
+      "parentUuid": "0e710ab7_1a6a4f02",
       "range": {
         "startLine": 36,
         "startChar": 0,
