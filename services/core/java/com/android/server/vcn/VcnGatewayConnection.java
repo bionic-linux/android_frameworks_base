@@ -32,6 +32,7 @@ import static android.net.vcn.VcnManager.VCN_ERROR_CODE_NETWORK_ERROR;
 
 import static com.android.server.VcnManagementService.LOCAL_LOG;
 import static com.android.server.VcnManagementService.VDBG;
+import static com.android.server.vcn.VcnNetworkProvider.TRANSPORT_VCN;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -1962,6 +1963,7 @@ public class VcnGatewayConnection extends StateMachine {
         final NetworkCapabilities.Builder builder = new NetworkCapabilities.Builder();
 
         builder.addTransportType(TRANSPORT_CELLULAR);
+        builder.addTransportType(TRANSPORT_VCN);
         builder.addCapability(NET_CAPABILITY_NOT_VCN_MANAGED);
         builder.addCapability(NET_CAPABILITY_NOT_CONGESTED);
         builder.addCapability(NET_CAPABILITY_NOT_SUSPENDED);

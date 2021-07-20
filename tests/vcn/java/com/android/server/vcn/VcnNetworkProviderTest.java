@@ -18,6 +18,8 @@ package com.android.server.vcn;
 
 import static android.net.NetworkProvider.NetworkOfferCallback;
 
+import static com.android.server.vcn.VcnNetworkProvider.TRANSPORT_VCN;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
@@ -89,7 +91,7 @@ public class VcnNetworkProviderTest {
                                 score ->
                                         score.getLegacyInt()
                                                 == Vcn.getNetworkScore().getLegacyInt()),
-                        any(),
+                        argThat(nc -> nc.hasTransport(TRANSPORT_VCN)),
                         any(),
                         cbCaptor.capture());
 

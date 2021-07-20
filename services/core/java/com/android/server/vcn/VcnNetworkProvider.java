@@ -57,6 +57,10 @@ import java.util.concurrent.Executor;
 public class VcnNetworkProvider extends NetworkProvider {
     private static final String TAG = VcnNetworkProvider.class.getSimpleName();
 
+    // TODO: Make TRANSPORT_VCN @SystemApi in Android T
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    static final int TRANSPORT_VCN = 9;
+
     private final Set<NetworkRequestListener> mListeners = new ArraySet<>();
 
     private final Context mContext;
@@ -113,6 +117,7 @@ public class VcnNetworkProvider extends NetworkProvider {
         final NetworkCapabilities.Builder builder =
                 new NetworkCapabilities.Builder()
                         .addTransportType(TRANSPORT_CELLULAR)
+                        .addTransportType(TRANSPORT_VCN)
                         .addCapability(NET_CAPABILITY_TRUSTED)
                         .addCapability(NET_CAPABILITY_NOT_RESTRICTED)
                         .addCapability(NET_CAPABILITY_NOT_VPN)
