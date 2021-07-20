@@ -16,6 +16,75 @@
       "message": "If you see the figure 1.2 you will notice the MSB is at the end due to the device address being little endian.  Since the string wasn\u0027t being printed, it was implemented assuming little endian.  However, I think if we update it to check the MSB as a big endian string.  I think the easiest would be to just change the 5 to the 0 after the split and leave the rest.  No need to change the 0b11 to 0xC0 and all.",
       "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3df17aa4_6ec9a497",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3295,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-07-20T17:01:44Z",
+      "side": 1,
+      "message": "Is there a benefit of using 0xC0 vs 0b11 ??  If not lets, leave it as is since it matches the spec a little easier.",
+      "range": {
+        "startLine": 3295,
+        "startChar": 30,
+        "endLine": 3295,
+        "endChar": 34
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2f2800f_5c6a5651",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3300,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-07-20T17:01:44Z",
+      "side": 1,
+      "message": "keep this modification too",
+      "range": {
+        "startLine": 3300,
+        "startChar": 29,
+        "endLine": 3300,
+        "endChar": 45
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "347b675d_8ff3c4be",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3307,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-07-20T17:01:44Z",
+      "side": 1,
+      "message": "I think if we just make this change from 5 to 0",
+      "range": {
+        "startLine": 3307,
+        "startChar": 56,
+        "endLine": 3307,
+        "endChar": 57
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
