@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013512822",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1771607?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "445c28b2_dd33f395",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-20T10:53:33Z",
+      "side": 1,
+      "message": "Change must include a \"Sponsor:\" stanza indicating who at Google has personally signed up to take responsibility in case of any potential fallout.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013512822",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1771607?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ac406c0c_27810ac6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-20T10:53:33Z",
+      "side": 1,
+      "message": "\"manual\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 12
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000013512822",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1771607?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "149d559a_07dbffcc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-07-20T10:53:33Z",
+      "side": 1,
+      "message": "{#compatibility %!s(int\u003d10) %!s(int\u003d4) %!s(int\u003d19)} requires you include cert test changes to ensure this issue does not happen in the future",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
