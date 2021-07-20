@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebacc8d3_abd84248",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132614
+      },
+      "writtenOn": "2021-07-20T16:59:21Z",
+      "side": 1,
+      "message": "If you see the figure 1.2 you will notice the MSB is at the end due to the device address being little endian.  Since the string wasn\u0027t being printed, it was implemented assuming little endian.  However, I think if we update it to check the MSB as a big endian string.  I think the easiest would be to just change the 5 to the 0 after the split and leave the rest.  No need to change the 0b11 to 0xC0 and all.",
+      "revId": "4d990467b23fe289f41744d3402f86a2a2570608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
