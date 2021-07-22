@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75c39644_a79f1a85",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-07-22T22:41:31Z",
+      "side": 1,
+      "message": "Marked the unnecessary APIs to @hide,  just left 2 functions: \n    method public static boolean isDeclared(@NonNull String);\n    method @Nullable public static android.os.IBinder waitForDeclaredService(@NonNull String);",
+      "parentUuid": "3e19fb79_5eda9782",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 94
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89cebe59_138b96d7",
