@@ -136,6 +136,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ae6f7bb_58ed9ddd",
+        "filename": "core/java/android/os/ServiceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-07-22T22:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc41b20e_59da6aef",
+      "range": {
+        "startLine": 283,
+        "startChar": 36,
+        "endLine": 283,
+        "endChar": 58
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e710ab7_1a6a4f02",
