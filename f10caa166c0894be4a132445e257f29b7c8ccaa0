@@ -229,6 +229,30 @@
       },
       "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d679aee_0d597108",
+        "filename": "core/java/com/android/internal/util/StatLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-07-22T22:42:13Z",
+      "side": 1,
+      "message": "Removed the @SystemApi and don\u0027t expose StatLogger.",
+      "parentUuid": "45351119_4b9df6b1",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 54
+      },
+      "revId": "f10caa166c0894be4a132445e257f29b7c8ccaa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
