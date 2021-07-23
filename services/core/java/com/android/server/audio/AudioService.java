@@ -5086,6 +5086,9 @@ public class AudioService extends IAudioService.Stub
             return AudioSystem.STREAM_MUSIC;
         }
 
+        final boolean useAssistantStreamAlias = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_useAssistantVolume);
+
         switch (mPlatformType) {
         case AudioSystem.PLATFORM_VOICE:
             if (isInCommunication()) {
@@ -5097,6 +5100,12 @@ public class AudioService extends IAudioService.Stub
                     return AudioSystem.STREAM_VOICE_CALL;
                 }
             } else if (suggestedStreamType == AudioManager.USE_DEFAULT_STREAM_TYPE) {
+                if (wasStreamActiveRecently(AudioSystem.STREAM_ASSISTANT, sStreamOverrideDelayMs)
+                        && useAssistantStreamAlias) {
+                    if (DEBUG_VOL)
+                        Log.v(TAG, "getActiveStreamType: Forcing STREAM_ASSISTANT active");
+                    return AudioSystem.STREAM_ASSISTANT;
+                }
                 if (wasStreamActiveRecently(AudioSystem.STREAM_RING, sStreamOverrideDelayMs)) {
                     if (DEBUG_VOL)
                         Log.v(TAG, "getActiveStreamType: Forcing STREAM_RING stream active");
@@ -5132,6 +5141,10 @@ public class AudioService extends IAudioService.Stub
                     if (DEBUG_VOL)  Log.v(TAG, "getActiveStreamType: Forcing STREAM_VOICE_CALL");
                     return AudioSystem.STREAM_VOICE_CALL;
                 }
+            } else if (AudioSystem.isStreamActive(AudioSystem.STREAM_ASSISTANT,
+                    sStreamOverrideDelayMs) && useAssistantStreamAlias) {
+                if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: Forcing STREAM_ASSISTANT");
+                return AudioSystem.STREAM_ASSISTANT;
             } else if (AudioSystem.isStreamActive(
                     AudioSystem.STREAM_NOTIFICATION, sStreamOverrideDelayMs)) {
                 if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: Forcing STREAM_NOTIFICATION");
