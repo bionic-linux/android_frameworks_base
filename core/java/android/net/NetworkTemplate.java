@@ -312,9 +312,10 @@ public class NetworkTemplate implements Parcelable {
 
     public NetworkTemplate(int matchRule, String subscriberId, String[] matchSubscriberIds,
             String networkId) {
-        this(matchRule, subscriberId, matchSubscriberIds, networkId, METERED_ALL, ROAMING_ALL,
-                DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_ALL,
-                SUBSCRIBER_ID_MATCH_RULE_EXACT);
+        this(matchRule, subscriberId, matchSubscriberIds, networkId,
+                (matchRule  == MATCH_MOBILE || matchRule == MATCH_MOBILE_WILDCARD) ? METERED_YES
+                : METERED_ALL , ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL,
+                OEM_MANAGED_ALL, SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
 
     // TODO: Remove it after updating all of the caller.
@@ -589,11 +590,7 @@ public class NetworkTemplate implements Parcelable {
             // TODO: consider matching against WiMAX subscriber identity
             return true;
         } else {
-            // Only metered mobile network would be matched regardless of metered filter.
-            // This is used to exclude non-metered APNs, e.g. IMS. See ag/908650.
-            // TODO: Respect metered filter and remove mMetered condition.
-            return (ident.mType == TYPE_MOBILE && ident.mMetered)
-                    && !ArrayUtils.isEmpty(mMatchSubscriberIds)
+            return ident.mType == TYPE_MOBILE && !ArrayUtils.isEmpty(mMatchSubscriberIds)
                     && ArrayUtils.contains(mMatchSubscriberIds, ident.mSubscriberId)
                     && matchesCollapsedRatType(ident);
         }
@@ -707,8 +704,7 @@ public class NetworkTemplate implements Parcelable {
         if (ident.mType == TYPE_WIMAX) {
             return true;
         } else {
-            return (ident.mType == TYPE_MOBILE && ident.mMetered)
-                    && matchesCollapsedRatType(ident);
+            return ident.mType == TYPE_MOBILE && matchesCollapsedRatType(ident);
         }
     }
 
