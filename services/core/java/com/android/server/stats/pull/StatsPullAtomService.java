@@ -1196,7 +1196,7 @@ public class StatsPullAtomService extends SystemService {
     @Nullable private NetworkStats getUidNetworkStatsSnapshotForTransport(int transport) {
         final NetworkTemplate template = (transport == TRANSPORT_CELLULAR)
                 ? NetworkTemplate.buildTemplateMobileWithRatType(
-                /*subscriptionId=*/null, NETWORK_TYPE_ALL)
+                /*subscriptionId=*/null, NETWORK_TYPE_ALL, NetworkStats.METERED_ALL)
                 : NetworkTemplate.buildTemplateWifiWildcard();
         return getUidNetworkStatsSnapshotForTemplate(template, /*includeTags=*/false);
     }
@@ -1236,7 +1236,8 @@ public class StatsPullAtomService extends SystemService {
         final List<NetworkStatsExt> ret = new ArrayList<>();
         for (final int ratType : getAllCollapsedRatTypes()) {
             final NetworkTemplate template =
-                    buildTemplateMobileWithRatType(subInfo.subscriberId, ratType);
+                    buildTemplateMobileWithRatType(subInfo.subscriberId, ratType,
+                    NetworkStats.METERED_ALL);
             final NetworkStats stats =
                     getUidNetworkStatsSnapshotForTemplate(template, /*includeTags=*/false);
             if (stats != null) {
