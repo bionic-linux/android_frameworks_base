@@ -25,6 +25,8 @@ import static android.content.pm.PackageInfo.REQUESTED_PERMISSION_GRANTED;
 import static android.content.pm.PermissionInfo.PROTECTION_DANGEROUS;
 import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
+import static android.net.NetworkStats.METERED_ALL;
+import static android.net.NetworkStats.METERED_YES;
 import static android.net.NetworkTemplate.NETWORK_TYPE_ALL;
 import static android.net.NetworkTemplate.buildTemplateMobileWildcard;
 import static android.net.NetworkTemplate.buildTemplateMobileWithRatType;
@@ -173,7 +175,6 @@ import com.android.server.stats.pull.netstats.SubInfo;
 import com.android.server.storage.DiskStatsFileLogger;
 import com.android.server.storage.DiskStatsLoggingService;
 
-import java.util.concurrent.ExecutionException;
 import libcore.io.IoUtils;
 
 import org.json.JSONArray;
@@ -196,6 +197,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -1198,7 +1200,7 @@ public class StatsPullAtomService extends SystemService {
     @Nullable private NetworkStats getUidNetworkStatsSnapshotForTransport(int transport) {
         final NetworkTemplate template = (transport == TRANSPORT_CELLULAR)
                 ? NetworkTemplate.buildTemplateMobileWithRatType(
-                /*subscriptionId=*/null, NETWORK_TYPE_ALL)
+                /*subscriptionId=*/null, NETWORK_TYPE_ALL, METERED_YES)
                 : NetworkTemplate.buildTemplateWifiWildcard();
         return getUidNetworkStatsSnapshotForTemplate(template, /*includeTags=*/false);
     }
@@ -1238,7 +1240,7 @@ public class StatsPullAtomService extends SystemService {
         final List<NetworkStatsExt> ret = new ArrayList<>();
         for (final int ratType : getAllCollapsedRatTypes()) {
             final NetworkTemplate template =
-                    buildTemplateMobileWithRatType(subInfo.subscriberId, ratType);
+                    buildTemplateMobileWithRatType(subInfo.subscriberId, ratType, METERED_ALL);
             final NetworkStats stats =
                     getUidNetworkStatsSnapshotForTemplate(template, /*includeTags=*/false);
             if (stats != null) {
