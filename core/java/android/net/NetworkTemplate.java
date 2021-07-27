@@ -185,13 +185,23 @@ public class NetworkTemplate implements Parcelable {
      */
     public static NetworkTemplate buildTemplateMobileWithRatType(@Nullable String subscriberId,
             @NetworkType int ratType) {
+        return buildTemplateMobileWithRatType(subscriberId, ratType, METERED_ALL);
+    }
+
+    /**
+     * Template to match cellular networks with the given IMSI, {@code ratType} and
+     * meteredness. Use {@link #NETWORK_TYPE_ALL} to include all network types when
+     * filtering. See {@code TelephonyManager.NETWORK_TYPE_*}.
+     */
+    public static NetworkTemplate buildTemplateMobileWithRatType(@Nullable String subscriberId,
+            @NetworkType int ratType, int metered) {
         if (TextUtils.isEmpty(subscriberId)) {
             return new NetworkTemplate(MATCH_MOBILE_WILDCARD, null, null, null,
-                    METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, ratType, OEM_MANAGED_ALL,
+                    metered, ROAMING_ALL, DEFAULT_NETWORK_ALL, ratType, OEM_MANAGED_ALL,
                     SUBSCRIBER_ID_MATCH_RULE_EXACT);
         }
         return new NetworkTemplate(MATCH_MOBILE, subscriberId, new String[]{subscriberId}, null,
-                METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, ratType, OEM_MANAGED_ALL,
+                metered, ROAMING_ALL, DEFAULT_NETWORK_ALL, ratType, OEM_MANAGED_ALL,
                 SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
 
