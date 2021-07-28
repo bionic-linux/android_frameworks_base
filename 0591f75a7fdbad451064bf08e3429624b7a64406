@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dbb6664_fda2af8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-07-28T17:37:39Z",
+      "side": 1,
+      "message": "Hi Steven, can we land the CL on master first, and then port it to aosp?  \nThe CL on master is ag/15321652, thanks!",
+      "revId": "0591f75a7fdbad451064bf08e3429624b7a64406",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
