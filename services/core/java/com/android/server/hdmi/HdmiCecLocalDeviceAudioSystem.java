@@ -396,7 +396,10 @@ public class HdmiCecLocalDeviceAudioSystem extends HdmiCecLocalDeviceSource {
                         ALWAYS_SYSTEM_AUDIO_CONTROL_ON_POWER_ON);
         boolean lastSystemAudioControlStatus =
                 SystemProperties.getBoolean(Constants.PROPERTY_LAST_SYSTEM_AUDIO_CONTROL, true);
-        systemAudioControlOnPowerOn(systemAudioControlOnPowerOnProp, lastSystemAudioControlStatus);
+        if (!mService.isQuiescent()) {
+            systemAudioControlOnPowerOn(
+                    systemAudioControlOnPowerOnProp, lastSystemAudioControlStatus);
+        }
         clearDeviceInfoList();
         launchDeviceDiscovery();
         startQueuedActions();
