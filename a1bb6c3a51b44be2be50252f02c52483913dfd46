@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a5ce95c_824d27c5",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-07-29T11:03:25Z",
+      "side": 1,
+      "message": "should be moved inside the if check at #125",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 9
+      },
+      "revId": "a1bb6c3a51b44be2be50252f02c52483913dfd46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b95daf8_e88ede95",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1081223
+      },
+      "writtenOn": "2021-07-29T11:03:25Z",
+      "side": 1,
+      "message": "addressType is written to the parcel regardless of address being null or not.\nif mDeviceAddress is null the next field will be mAddressType that if it happens to be 1 ( ADDRESS_TYPE_RANDOM ) the check at #208 will be true and it\u0027ll try reading mIrk \u003d\u003d null and mIrk itself as UUID.",
+      "range": {
+        "startLine": 195,
+        "startChar": 12,
+        "endLine": 195,
+        "endChar": 44
+      },
+      "revId": "a1bb6c3a51b44be2be50252f02c52483913dfd46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
