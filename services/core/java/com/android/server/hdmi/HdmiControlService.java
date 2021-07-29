@@ -37,6 +37,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
+import android.hardware.display.DisplayManager;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiHotplugEvent;
@@ -81,6 +82,7 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Slog;
 import android.util.SparseArray;
+import android.view.Display;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -408,6 +410,9 @@ public class HdmiControlService extends SystemService {
     private PowerManager mPowerManager;
 
     @Nullable
+    private DisplayManager mDisplayManager;
+
+    @Nullable
     private Looper mIoLooper;
 
     @HdmiControlManager.HdmiCecVersion
@@ -630,6 +635,13 @@ public class HdmiControlService extends SystemService {
                 }, mServiceThreadExecutor);
     }
 
+    /** Returns true if the device screen is off */
+    boolean isScreenOff() {
+        return mDisplayManager == null
+                || mDisplayManager.getDisplay(Display.DEFAULT_DISPLAY).getState()
+                        == Display.STATE_OFF;
+    }
+
     private void bootCompleted() {
         // on boot, if device is interactive, set HDMI CEC state as powered on as well
         if (mPowerManager.isInteractive() && isPowerStandbyOrTransient()) {
@@ -688,6 +700,7 @@ public class HdmiControlService extends SystemService {
             mTvInputManager = (TvInputManager) getContext().getSystemService(
                     Context.TV_INPUT_SERVICE);
             mPowerManager = getContext().getSystemService(PowerManager.class);
+            mDisplayManager = getContext().getSystemService(DisplayManager.class);
         } else if (phase == SystemService.PHASE_BOOT_COMPLETED) {
             runOnServiceThread(this::bootCompleted);
         }
