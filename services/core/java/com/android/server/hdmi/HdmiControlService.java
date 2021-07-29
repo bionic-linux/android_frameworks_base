@@ -552,6 +552,14 @@ public class HdmiControlService extends SystemService {
         mMhlController.setOption(OPTION_MHL_SERVICE_CONTROL, ENABLED);
     }
 
+    /** Returns true if the device is asleep and the reason for sleep was a quiescent boot. */
+    public boolean isQuiescent() {
+        boolean isAsleep = !mPowerManager.isInteractive();
+        boolean sleepReasonQuiescent =
+                mPowerManager.getLastSleepReason() == PowerManager.GO_TO_SLEEP_REASON_QUIESCENT;
+        return isAsleep && sleepReasonQuiescent;
+    }
+
     private void bootCompleted() {
         // on boot, if device is interactive, set HDMI CEC state as powered on as well
         if (mPowerManager.isInteractive() && isPowerStandbyOrTransient()) {
