@@ -37,6 +37,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
+import android.hardware.display.DisplayManager;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiHotplugEvent;
@@ -81,6 +82,7 @@ import android.text.TextUtils;
 import android.util.ArrayMap;
 import android.util.Slog;
 import android.util.SparseArray;
+import android.view.Display;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -628,6 +630,16 @@ public class HdmiControlService extends SystemService {
                         }
                     }
                 }, mServiceThreadExecutor);
+    }
+
+    /** Returns true if the device is in the process of a quiescent boot */
+    boolean isQuiescentBoot() {
+        return mPowerManager.isInteractive()
+                && getContext()
+                                .getSystemService(DisplayManager.class)
+                                .getDisplay(Display.DEFAULT_DISPLAY)
+                                .getState()
+                        == Display.STATE_OFF;
     }
 
     private void bootCompleted() {
