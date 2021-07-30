@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00c0b6b6_c6560705",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-07-30T08:46:14Z",
+      "side": 0,
+      "message": "Do we have any test coverage for this?\nIf not, maybe add one in NetworkTemplateTest.kt?",
+      "range": {
+        "startLine": 614,
+        "startChar": 76,
+        "endLine": 614,
+        "endChar": 90
+      },
+      "revId": "dc425aefbc9fca6a4f2a71ec2534daf701a74105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
