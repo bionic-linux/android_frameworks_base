@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28289e8e_bb14c7af",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-07-30T09:46:47Z",
+      "side": 1,
+      "message": "Is it not feasible to remove this method?",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 5
+      },
+      "revId": "03c5d843c07215355bc32cbd8c7e4bc581200a58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
