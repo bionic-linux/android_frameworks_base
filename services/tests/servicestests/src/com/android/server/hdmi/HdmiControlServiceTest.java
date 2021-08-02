@@ -27,6 +27,8 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
@@ -49,6 +51,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
@@ -252,6 +255,18 @@ public class HdmiControlServiceTest {
         mHdmiControlService.onBootPhase(PHASE_BOOT_COMPLETED);
         assertThat(mHdmiControlService.getPowerStatus()).isEqualTo(
                 HdmiControlManager.POWER_STATUS_STANDBY);
+    }
+
+    @Test
+    public void normalBoot_queuedActionsStartedAfterBoot() {
+        Mockito.clearInvocations(mAudioSystemDeviceSpy);
+        Mockito.clearInvocations(mPlaybackDeviceSpy);
+
+        mHdmiControlServiceSpy.onBootPhase(PHASE_BOOT_COMPLETED);
+        mTestLooper.dispatchAll();
+
+        verify(mAudioSystemDeviceSpy, times(1)).startQueuedActions();
+        verify(mPlaybackDeviceSpy, times(1)).startQueuedActions();
     }
 
     @Test
