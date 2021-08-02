@@ -67,6 +67,24 @@
       "message": "Hi, any update?",
       "revId": "7f67d81687f8511fd68a7294041b80327aa3a86e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7098079_202d4cda",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2021-08-02T06:38:01Z",
+      "side": 1,
+      "message": "They will no longer have ActivityStack anymore. Maybe you can wait for the next release to see it the problem still exists.\nAnd it\u0027s better to check why cleanUpActivityReferences in Task#onParentChanged didn\u0027t work.",
+      "parentUuid": "79367a12_55e87bb8",
+      "revId": "7f67d81687f8511fd68a7294041b80327aa3a86e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
