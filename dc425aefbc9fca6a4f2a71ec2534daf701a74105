@@ -22,6 +22,30 @@
       },
       "revId": "dc425aefbc9fca6a4f2a71ec2534daf701a74105",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e14aa7d_77c425b3",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-08-03T02:24:08Z",
+      "side": 0,
+      "message": "Done. Create aosp/1784390 for test coverage.",
+      "parentUuid": "00c0b6b6_c6560705",
+      "range": {
+        "startLine": 614,
+        "startChar": 76,
+        "endLine": 614,
+        "endChar": 90
+      },
+      "revId": "dc425aefbc9fca6a4f2a71ec2534daf701a74105",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
