@@ -16,6 +16,29 @@
       "message": "Hi Steven, can we land the CL on master first, and then port it to aosp?  \nThe CL on master is ag/15321652, thanks!",
       "revId": "0591f75a7fdbad451064bf08e3429624b7a64406",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9db3430_8d0dd1c3",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-06T21:46:25Z",
+      "side": 1,
+      "message": "See internal conversation; I\u0027d strongly prefer us not to expose the blocking/non-blocking detection logic in its current state.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 96
+      },
+      "revId": "0591f75a7fdbad451064bf08e3429624b7a64406",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
