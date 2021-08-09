@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9226890_01e5db9c",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-08-09T13:29:39Z",
+      "side": 1,
+      "message": "Is this required? Can we just check for (reason \u003d\u003d INITIATED_BY_SCREEN_ON) to know that we\u0027re not in a quiescent boot? During quiescent boot, no ACTION_SCREEN_ON broadcast is received.\n\nAlternatively, we could check for the HdmiControlManager power state: during a regular boot, the power state transitions to ON. During a quiescent boot, it remains in (transient to) standby.",
+      "range": {
+        "startLine": 393,
+        "startChar": 12,
+        "endLine": 393,
+        "endChar": 35
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
