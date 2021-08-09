@@ -22,6 +22,30 @@
       },
       "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b87381b3_ba3c6fb6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2021-08-09T14:16:14Z",
+      "side": 1,
+      "message": "I use mService, since it can access the PowerManager. This uses the boot reason and screen on status to determine if the boot was quiescent.\nThe state transition could be in transition to ON even during a regular boot. We may need a wait time to make sure that it remains in transition for a specific wait time before we decide that it is a quiescent boot.",
+      "parentUuid": "a9226890_01e5db9c",
+      "range": {
+        "startLine": 393,
+        "startChar": 12,
+        "endLine": 393,
+        "endChar": 35
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
