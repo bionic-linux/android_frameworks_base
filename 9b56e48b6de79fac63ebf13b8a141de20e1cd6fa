@@ -46,6 +46,76 @@
       },
       "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcc9f55b_c53622bd",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-08-10T15:13:49Z",
+      "side": 1,
+      "message": "I was mistaken: during a regular boot, no ACTION_SCREEN_ON is broadcast either. So checking for the reason is not enough to differentiate a quiescent boot from a regular boot.",
+      "parentUuid": "b87381b3_ba3c6fb6",
+      "range": {
+        "startLine": 393,
+        "startChar": 12,
+        "endLine": 393,
+        "endChar": 35
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccc80366_cd03ccab",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-08-10T15:13:49Z",
+      "side": 1,
+      "message": "isQuiescentBoot()",
+      "range": {
+        "startLine": 556,
+        "startChar": 19,
+        "endLine": 556,
+        "endChar": 30
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77491eb9_00933279",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-08-10T15:13:49Z",
+      "side": 1,
+      "message": "Better to keep this package-private.",
+      "range": {
+        "startLine": 556,
+        "startChar": 4,
+        "endLine": 556,
+        "endChar": 11
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
