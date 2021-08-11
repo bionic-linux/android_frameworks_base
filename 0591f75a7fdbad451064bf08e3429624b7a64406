@@ -39,6 +39,30 @@
       },
       "revId": "0591f75a7fdbad451064bf08e3429624b7a64406",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a21e1da5_95c02156",
+        "filename": "core/api/module-lib-current.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-08-11T16:54:29Z",
+      "side": 1,
+      "message": "Sure Jeff. We\u0027ve already removed it on the master CL. I will make the same change for this aosp CL, (Seems we still want to land the 2 CLs on aosp?)",
+      "parentUuid": "b9db3430_8d0dd1c3",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 96
+      },
+      "revId": "0591f75a7fdbad451064bf08e3429624b7a64406",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
