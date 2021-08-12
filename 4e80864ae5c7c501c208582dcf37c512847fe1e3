@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aae67d73_5df62e57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1408266
+      },
+      "writtenOn": "2021-08-12T21:35:10Z",
+      "side": 1,
+      "message": "Hi Sundong, do you know who is the right person to do owner review?",
+      "revId": "4e80864ae5c7c501c208582dcf37c512847fe1e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
