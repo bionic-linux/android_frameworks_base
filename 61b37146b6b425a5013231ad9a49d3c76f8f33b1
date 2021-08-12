@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdc29183_79044e81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-08-12T01:18:14Z",
+      "side": 1,
+      "message": "Hi Jeff, can you review the latest PS? I\u0027ve removed the Binder.allowBlocking() and all other unnecessary changes. Thanks!",
+      "revId": "61b37146b6b425a5013231ad9a49d3c76f8f33b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
