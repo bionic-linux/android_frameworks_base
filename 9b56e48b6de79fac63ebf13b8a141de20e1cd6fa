@@ -74,6 +74,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c2d1171b_08f4aabd",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-08-12T14:34:53Z",
+      "side": 1,
+      "message": "At what time does this get called?\nIs boot completed by that point?\nI\u0027m wondering because it checks PowerManager#getLastSleepReason(), and a device only goes to sleep once quiescent boot *completes*.",
+      "range": {
+        "startLine": 393,
+        "startChar": 8,
+        "endLine": 393,
+        "endChar": 36
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ccc80366_cd03ccab",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 2
