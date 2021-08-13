@@ -16,6 +16,23 @@
       "message": "EO\nBonvolu aldoni Esperanton al la listo de elekteblaj lingvoj.\n\nEN\nPlease add Esperanto to the list of selectable languages.",
       "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c07fcc_cd187d06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2021-08-13T22:12:43Z",
+      "side": 1,
+      "message": "Ŝanĝo aldonanta la internacian lingvon Esperanton al la listo de elekteblaj lingvoj en Android.",
+      "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
