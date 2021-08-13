@@ -1728,6 +1728,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
     }
 
     @GuardedBy("mDeviceStateLock")
+    protected void removeAllCommunicationRouteClients() {
+        Iterator<CommunicationRouteClient> it = mCommunicationRouteClients.iterator();
+        while (it.hasNext()) {
+            CommunicationRouteClient client = it.next();
+            if (client.requestsBluetoothSco()) {
+                client.unregisterDeathRecipient();
+                it.remove();
+            }
+        }
+    }
+
+    @GuardedBy("mDeviceStateLock")
     private CommunicationRouteClient addCommunicationRouteClient(
                     IBinder cb, int pid, AudioDeviceAttributes device) {
         // always insert new request at first position
