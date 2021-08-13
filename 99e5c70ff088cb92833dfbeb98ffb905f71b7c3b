@@ -46,6 +46,30 @@
       },
       "revId": "99e5c70ff088cb92833dfbeb98ffb905f71b7c3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b7fc96f_b56d2e95",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2021-08-13T20:54:09Z",
+      "side": 0,
+      "message": "Ah, thanks.\n\nLooks like KeyDescriptor does not implement hashCode, so I bet that was the problem.",
+      "parentUuid": "18177215_74224c5f",
+      "range": {
+        "startLine": 105,
+        "startChar": 36,
+        "endLine": 105,
+        "endChar": 47
+      },
+      "revId": "99e5c70ff088cb92833dfbeb98ffb905f71b7c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

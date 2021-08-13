@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29691033_b81910c1",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2021-08-13T20:54:09Z",
+      "side": 1,
+      "message": "nit: might as well initialize result to getClass().hashCode().\n\nI don\u0027t see a lot of value in setting initial result to \"31 + getClass().hashCode()\".",
+      "range": {
+        "startLine": 105,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 56
+      },
+      "revId": "7bdc12d5f36ed0602811b56019e449bf775c868d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
