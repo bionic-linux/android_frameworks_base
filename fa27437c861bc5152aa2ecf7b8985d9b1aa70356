@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b887b5be_b3b5b093",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1408266
+      },
+      "writtenOn": "2021-08-13T16:42:45Z",
+      "side": 1,
+      "message": "Hi Dianne, Gerrit suggests that you can do owner review. Could you take a look? Thanks",
+      "revId": "fa27437c861bc5152aa2ecf7b8985d9b1aa70356",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
