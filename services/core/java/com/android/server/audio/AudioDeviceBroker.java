@@ -299,7 +299,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
         final boolean wasBtScoRequested = isBluetoothScoRequested();
         final boolean wasSpeakerphoneRequested = isSpeakerphoneRequested();
         CommunicationRouteClient client;
-
+        final AudioDeviceAttributes prevPreferredDevice = preferredCommunicationDevice();
 
         // Save previous client route in case of failure to start BT SCO audio
         AudioDeviceAttributes prevClientDevice = null;
@@ -322,7 +322,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
         }
 
         boolean isBtScoRequested = isBluetoothScoRequested();
-        if (isBtScoRequested && !wasBtScoRequested) {
+        if (isBtScoRequested && (!wasBtScoRequested || prevPreferredDevice == null)) {
             if (!mBtHelper.startBluetoothSco(scoAudioMode, eventSource)) {
                 Log.w(TAG, "setCommunicationRouteForClient: failure to start BT SCO for pid: "
                         + pid);
