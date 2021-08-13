@@ -22,6 +22,30 @@
       },
       "revId": "99e5c70ff088cb92833dfbeb98ffb905f71b7c3b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18177215_74224c5f",
+        "filename": "keystore/java/android/security/keystore2/AndroidKeyStoreKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1092085
+      },
+      "writtenOn": "2021-08-13T20:34:36Z",
+      "side": 0,
+      "message": "Now that would clearly be a bug. But the problem seems to be that at least one of the fields has a different hash code every time we load the key, and this makes the hash code very volatile and impossible to compare two keys even if we added those fields to equals instead of removing them here.",
+      "parentUuid": "2786e7f1_b956fc8f",
+      "range": {
+        "startLine": 105,
+        "startChar": 36,
+        "endLine": 105,
+        "endChar": 47
+      },
+      "revId": "99e5c70ff088cb92833dfbeb98ffb905f71b7c3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
