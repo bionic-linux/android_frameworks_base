@@ -612,6 +612,7 @@ public class BtHelper {
         }
         mBluetoothHeadsetDevice = btDevice;
         if (mBluetoothHeadsetDevice == null) {
+            mDeviceBroker.removeAllCommunicationRouteClients();
             resetBluetoothSco();
         }
     }

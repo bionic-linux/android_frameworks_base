@@ -300,7 +300,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
         final boolean wasSpeakerphoneRequested = isSpeakerphoneRequested();
         CommunicationRouteClient client;
 
-
         // Save previous client route in case of failure to start BT SCO audio
         AudioDeviceAttributes prevClientDevice = null;
         client = getCommunicationRouteClientForPid(pid);
@@ -1725,6 +1724,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
             }
         }
         return null;
+    }
+
+    @GuardedBy("mDeviceStateLock")
+    protected void removeAllCommunicationRouteClients() {
+        Iterator<CommunicationRouteClient> it = mCommunicationRouteClients.iterator();
+        while (it.hasNext()) {
+            CommunicationRouteClient client = it.next();
+            if (client.requestsBluetoothSco()) {
+                client.unregisterDeathRecipient();
+                it.remove();
+            }
+        }
     }
 
     @GuardedBy("mDeviceStateLock")
