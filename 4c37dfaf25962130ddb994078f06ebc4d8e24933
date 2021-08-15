@@ -33,6 +33,41 @@
       "message": "Ŝanĝo aldonanta la internacian lingvon Esperanton al la listo de elekteblaj lingvoj en Android.",
       "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aae12af_67c812ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2021-08-15T19:21:27Z",
+      "side": 1,
+      "message": "EN\nPlease review the change, which adds Esperanto to the list of languages and merge it into Android.\n\nEO\nBonvolu revizii la ŝanĝon aldonantan Esperanton al la listo de lingvoj kaj kunfandi ĝin al Android.",
+      "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d8347c0_ac1e8f28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2021-08-15T19:21:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51c07fcc_cd187d06",
+      "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
