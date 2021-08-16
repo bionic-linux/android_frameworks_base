@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3f40b61_8daa5ae6",
+        "filename": "packages/FusedLocation/src/com/android/location/fused/FusedLocationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1146013
+      },
+      "writtenOn": "2021-08-16T16:07:36Z",
+      "side": 1,
+      "message": "The default implementation of onUnbind() is empty and does not do anything as far as I can tell. Can you explain what this CL is doing?",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 29
+      },
+      "revId": "3cab35fa5021bebb026bd01f3571d76495a55ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
