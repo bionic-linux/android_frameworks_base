@@ -39,11 +39,12 @@ public class FusedLocationService extends Service {
     }
 
     @Override
-    public void onDestroy() {
+    public boolean onUnbind(Intent intent) {
         if (mProvider != null) {
             mProvider.stop();
             mProvider = null;
         }
+        return super.onUnbind(intent);
     }
 
     @Override
