@@ -68,6 +68,23 @@
       "parentUuid": "51c07fcc_cd187d06",
       "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8afbe50e_f7c559e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1688644
+      },
+      "writtenOn": "2021-08-16T22:01:01Z",
+      "side": 1,
+      "message": "EN\nThe file locale_config.xml has languages such as: Aghem (agq), Akan (ak), Asturian (ast)… - all of them don\u0027t have translations, will they be removed from the list?\n\nEO\nLa dosiero locale_config.xml enhavas lingvojn kiel: Aghem (agq), akana (ak), astura (ast)… - ili ĉiuj ne ankaŭ ne havas tradukojn, ĉu ili ankaŭ estos forigitaj el la listo?",
+      "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
