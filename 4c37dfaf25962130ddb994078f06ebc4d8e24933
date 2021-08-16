@@ -85,6 +85,24 @@
       "message": "EN\nThe file locale_config.xml has languages such as: Aghem (agq), Akan (ak), Asturian (ast)… - all of them don\u0027t have translations, will they be removed from the list?\n\nEO\nLa dosiero locale_config.xml enhavas lingvojn kiel: Aghem (agq), akana (ak), astura (ast)… - ili ĉiuj ne ankaŭ ne havas tradukojn, ĉu ili ankaŭ estos forigitaj el la listo?",
       "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7d755d2_2648d2de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-08-16T22:17:22Z",
+      "side": 1,
+      "message": "\u003e The file locale_config.xml has languages such as: Aghem (agq), Akan (ak), Asturian (ast)… - all of them don\u0027t have translations, will they be removed from the list?\n\nthat\u0027s a very good question (and part of why i added vichang). `git log` implies that mnita\u0027s the only person to have touched this list in a long time, so he might be the source of the canonical answer. (the git log does show though that we have removed languages in cases where the CLDR data wasn\u0027t complete... i\u0027m not sure what state the esperanto CLDR data is in?)\n\nlooks like mnita doesn\u0027t have an AOSP gerrit account though :-( i\u0027ll bring this to their attention directly...",
+      "parentUuid": "8afbe50e_f7c559e4",
+      "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
