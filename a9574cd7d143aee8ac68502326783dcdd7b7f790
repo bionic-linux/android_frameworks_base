@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e286e221_44739e58",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1471,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2021-08-16T06:11:26Z",
+      "side": 1,
+      "message": "nit: remove the extra space",
+      "range": {
+        "startLine": 1471,
+        "startChar": 90,
+        "endLine": 1471,
+        "endChar": 91
+      },
+      "revId": "a9574cd7d143aee8ac68502326783dcdd7b7f790",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
