@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72772a96_087fdc4a",
+        "filename": "services/core/java/com/android/server/wm/ActivityStarter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2021-08-16T05:28:27Z",
+      "side": 1,
+      "message": "I think we can check if the targetTask is attached to a DisplayArea by adding targetTask.isAttached() in line#1471 vs. doing null check here.",
+      "range": {
+        "startLine": 1482,
+        "startChar": 44,
+        "endLine": 1482,
+        "endChar": 79
+      },
+      "revId": "0df8915504500a8606f98290e499cb04a66e4d19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
