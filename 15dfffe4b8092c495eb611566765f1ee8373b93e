@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "512f0a51_765156d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2021-08-17T16:11:51Z",
+      "side": 1,
+      "message": "This is for MTK to rebase their changes on for b/194429425",
+      "revId": "15dfffe4b8092c495eb611566765f1ee8373b93e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
