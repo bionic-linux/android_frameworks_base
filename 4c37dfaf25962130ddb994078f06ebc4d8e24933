@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4cbae325_0f7038e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2021-08-17T20:51:00Z",
+      "side": 1,
+      "message": "okay, i talked to the folks who actually know what they\u0027re talking about... :-)\n\n(they\u0027re actually working on some public documentation for how to add a language, but it\u0027s not quite ready yet.)\n\nright now it looks like Esperanto doesn\u0027t yet meet the CLDR coverage criterion for inclusion. specifically, the language needs to have good \"basic\" coverage in CLDR. you can Esperanto is currently only at 31.5% here: https://unicode-org.github.io/cldr-staging/charts/39/supplemental/locale_coverage.html\n\nexactly what \"basic\" means is defined here: https://unicode.org/reports/tr35/tr35-info.html#Coverage_Levels\n\nso improving the CLDR data for Esperanto is what you\u0027d need to work on first. specifically those parts that contribute towards \"basic\" coverage, until you\u0027re close to 100% of that. (note that that should be done upstream: Android updates regularly to each new icu release, so you\u0027ll get that part \"for free\" once the data\u0027s actually in CLDR.)\n\nhope that helps!",
+      "parentUuid": "b7d755d2_2648d2de",
+      "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df262f11_5fd93723",
         "filename": "core/res/res/values/locale_config.xml",
         "patchSetId": 6
