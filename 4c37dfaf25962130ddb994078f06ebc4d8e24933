@@ -103,6 +103,23 @@
       "parentUuid": "8afbe50e_f7c559e4",
       "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df262f11_5fd93723",
+        "filename": "core/res/res/values/locale_config.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1022037
+      },
+      "writtenOn": "2021-08-17T00:25:48Z",
+      "side": 1,
+      "message": "I am happy to add Esperanto, but what is the purpose of all of these country/regional variants? In CLDR, there is data only for \"eo\", and the (empty) default content locale is \"eo-001\" (\u003d World Esperanto). [Like en-US as the empty default locale for en.]",
+      "revId": "4c37dfaf25962130ddb994078f06ebc4d8e24933",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
