@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000014515443",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1796512?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "282a222f_abb62813",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3533,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-08-17T05:58:30Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3533,
+        "startChar": 0,
+        "endLine": 3533,
+        "endChar": 114
+      },
+      "revId": "22f6380da0c8a82586d596cf8333a96bede1430c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000014515443",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1796512?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ae34da81_db4ab732",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3534,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-08-17T05:58:30Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3534,
+        "startChar": 0,
+        "endLine": 3534,
+        "endChar": 125
+      },
+      "revId": "22f6380da0c8a82586d596cf8333a96bede1430c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
