@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c6981d2_c6fc4269",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2175,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-08-18T09:41:47Z",
+      "side": 1,
+      "message": "Exactly, please remove this API",
+      "parentUuid": "8cbd7250_2b342f6b",
+      "range": {
+        "startLine": 2175,
+        "startChar": 20,
+        "endLine": 2175,
+        "endChar": 41
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3047d65d_8d236c2f",
         "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
         "patchSetId": 4
