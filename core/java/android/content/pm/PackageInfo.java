@@ -91,8 +91,9 @@ public class PackageInfo implements Parcelable {
     /**
      * The version name of this package, as specified by the &lt;manifest&gt;
      * tag's {@link android.R.styleable#AndroidManifest_versionName versionName}
-     * attribute.
+     * attribute, or {@code null} if not specified.
      */
+    @Nullable
     public String versionName;
 
     /**
