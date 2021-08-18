@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "649da8e1_2363b8db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-08-18T15:24:19Z",
+      "side": 1,
+      "message": "Could we expose an api to getGroupId by uuid from csip profile? The previous work about the LeAudioDeviceManager would be changed to the CsipDeviceManager and integration with Csip profile. The concept is more generic for the scenario that csis would be included in the other service in the further.",
+      "revId": "810c08e9e217d9130a2855c17eda746723668e56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a65707ef_65bf5a23",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsisClientProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-08-18T15:24:19Z",
+      "side": 1,
+      "message": "How about changing the naming to CsipCoordinatorProfile to match the CSIP specification role definition?",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "810c08e9e217d9130a2855c17eda746723668e56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d67e17c_30fdbe33",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsisClientProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-08-18T15:24:19Z",
+      "side": 1,
+      "message": "Please remove the connect/disconnect API. This is the older pattern and was removed from the other profile.",
+      "range": {
+        "startLine": 118,
+        "startChar": 1,
+        "endLine": 118,
+        "endChar": 52
+      },
+      "revId": "810c08e9e217d9130a2855c17eda746723668e56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
