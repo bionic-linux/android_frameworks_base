@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1308cf5_7077690c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2021-08-19T05:32:50Z",
+      "side": 1,
+      "message": "I\u0027ll just trying manually CPing it.",
+      "revId": "b95a5b2af8d809f4fd8cd21526a359d88db50629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
