@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb259a00_a5eb461c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2021-08-19T13:27:54Z",
+      "side": 1,
+      "message": "I think we should either\n - 1) Remove all clients requesting BT SCO from the client stack when BT headset device is disconnect\n - 2) automatically reconnect SCO audio when a headset is connected and a client is in the stack",
+      "revId": "a1c7e9a1023202257546d6adc7356efb8d63f963",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
