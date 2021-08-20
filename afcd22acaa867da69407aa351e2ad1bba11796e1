@@ -68,6 +68,23 @@
       "message": "Hi, Would you please do a code review for me?",
       "revId": "afcd22acaa867da69407aa351e2ad1bba11796e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edf3cf90_d7ccc890",
+        "filename": "core/java/android/app/usage/UsageStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2021-08-20T15:29:30Z",
+      "side": 1,
+      "message": "@Michael, do we intentionally not copy mChooserCountsObfuscated?",
+      "revId": "afcd22acaa867da69407aa351e2ad1bba11796e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
