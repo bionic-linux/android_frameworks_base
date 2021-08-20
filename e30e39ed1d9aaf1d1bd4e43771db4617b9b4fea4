@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "765560ea_08e2ac20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2021-08-20T23:52:16Z",
+      "side": 1,
+      "message": "Please file a bug first.\nI also think this may cause merge conflict.",
+      "revId": "e30e39ed1d9aaf1d1bd4e43771db4617b9b4fea4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
