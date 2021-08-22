@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d206e14c_2df0bbde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133258
+      },
+      "writtenOn": "2021-08-22T01:35:57Z",
+      "side": 1,
+      "message": "There are presubmit error when we throw exception in waitForVintfService(). The system_server keeps crashing as it is called with non-exist service name.\nChange it back to Nullable and try the presubmit again.",
+      "revId": "ce81994f5f1ab73cc3c540793a83ab0dc4bedc4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
