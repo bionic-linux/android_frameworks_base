@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a92d46c9_b083b2d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2021-08-23T01:48:03Z",
+      "side": 1,
+      "message": "This looks good to me. However, the merge conflict is because a refactor moved the toggleFreeformWindowingMode method to ActivityClientController",
+      "revId": "26c3372ada17df1c2ebf4d7cca14a48d92413911",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
