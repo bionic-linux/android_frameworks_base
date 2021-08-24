@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "207c1e84_847d753f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2021-08-24T02:55:36Z",
+      "side": 1,
+      "message": "Thanks! I can\u0027t give you +2 in China due to a known bug. Please ask someone else for a +2. Sorry for the inconvenience.",
+      "revId": "c3e8e916ebdc4d004bcd364c4bbcd2b7478ae5e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
