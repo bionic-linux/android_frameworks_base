@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000014731491",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1749723?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a3b1ad4f_5808704e",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-08-24T12:48:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1158,
+        "startChar": 0,
+        "endLine": 1158,
+        "endChar": 102
+      },
+      "revId": "c4e13299ff4806d4ad8e4249b14c9b26acc0d894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000014731491",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1749723?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7f120dcb_4834bad9",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-08-24T12:48:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 114
+      },
+      "revId": "c4e13299ff4806d4ad8e4249b14c9b26acc0d894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000014731491",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1749723?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c7c3899a_f68cf823",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-08-24T12:48:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 103
+      },
+      "revId": "c4e13299ff4806d4ad8e4249b14c9b26acc0d894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000014731491",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1749723?revision\u003d6",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b49ec11f_3231c5fe",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-08-24T12:48:32Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 582,
+        "startChar": 0,
+        "endLine": 582,
+        "endChar": 110
+      },
+      "revId": "c4e13299ff4806d4ad8e4249b14c9b26acc0d894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
