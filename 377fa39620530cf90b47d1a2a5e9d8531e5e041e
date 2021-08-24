@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0c8a636_cc073fe3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-08-24T15:45:25Z",
+      "side": 1,
+      "message": "Thanks for writing this CL, but I\u0027m thinking that we actually relax any changes to TEST_MAPPING; I\u0027ll upload a CL to that effect.",
+      "revId": "377fa39620530cf90b47d1a2a5e9d8531e5e041e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
