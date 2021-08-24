@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "802c1371_71204ac6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2021-08-24T10:52:16Z",
+      "side": 1,
+      "message": "This is called when the HDMI service is started/restarted. This could happen before the boot completes. Would the combination of interactive status and last boot reason still be valid?",
+      "parentUuid": "c2d1171b_08f4aabd",
+      "range": {
+        "startLine": 393,
+        "startChar": 8,
+        "endLine": 393,
+        "endChar": 36
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ccc80366_cd03ccab",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 2
