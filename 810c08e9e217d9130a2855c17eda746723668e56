@@ -41,6 +41,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ceb311a5_40e3f512",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsisClientProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T12:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65707ef_65bf5a23",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "810c08e9e217d9130a2855c17eda746723668e56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eac9439_2925c210",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsisClientProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T12:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65707ef_65bf5a23",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 31
+      },
+      "revId": "810c08e9e217d9130a2855c17eda746723668e56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d67e17c_30fdbe33",
@@ -54,6 +102,54 @@
       "writtenOn": "2021-08-18T15:24:19Z",
       "side": 1,
       "message": "Please remove the connect/disconnect API. This is the older pattern and was removed from the other profile.",
+      "range": {
+        "startLine": 118,
+        "startChar": 1,
+        "endLine": 118,
+        "endChar": 52
+      },
+      "revId": "810c08e9e217d9130a2855c17eda746723668e56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "303b3db7_e545d59f",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsisClientProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T12:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d67e17c_30fdbe33",
+      "range": {
+        "startLine": 118,
+        "startChar": 1,
+        "endLine": 118,
+        "endChar": 52
+      },
+      "revId": "810c08e9e217d9130a2855c17eda746723668e56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0ff313c_2776ecb4",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsisClientProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T12:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d67e17c_30fdbe33",
       "range": {
         "startLine": 118,
         "startChar": 1,

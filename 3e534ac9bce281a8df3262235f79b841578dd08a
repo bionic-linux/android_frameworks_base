@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8003196c_1287bdb9",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T12:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90094105_e3c004f1",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 77
+      },
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7c08e14e_5605270b",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-07-09T02:15:31Z",
       "side": 1,
       "message": "The active device is used for the audio active device currently. If we would like to switch Le audio device group, I would recommend to set it via LeAudio Profile. The CSIP profile may not be used for LE audio profile only in the future. It could be any scenario of a coordinated set, such as sensor or volume control device, etc.",
+      "range": {
+        "startLine": 98,
+        "startChar": 20,
+        "endLine": 98,
+        "endChar": 39
+      },
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca694903_580d0780",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T12:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c08e14e_5605270b",
       "range": {
         "startLine": 98,
         "startChar": 20,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a853438_6d929ac8",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T12:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18a2f9dc_0d6893d3",
+      "range": {
+        "startLine": 1169,
+        "startChar": 0,
+        "endLine": 1176,
+        "endChar": 5
+      },
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5dd0678c_1b9e6e42",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-07-09T17:35:17Z",
       "side": 1,
       "message": "false.\n\nWe don\u0027t want it displayed as togglable profile in BT settings.\nLE Audio profile would return \"true\" here\n\n/**\n     * Return {@code true} if the user can initiate a connection for this profile in UI.\n     */",
+      "range": {
+        "startLine": 103,
+        "startChar": 51,
+        "endLine": 103,
+        "endChar": 55
+      },
+      "revId": "3e534ac9bce281a8df3262235f79b841578dd08a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64c8323c_5d010f09",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsisClientProfile.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T12:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd0678c_1b9e6e42",
       "range": {
         "startLine": 103,
         "startChar": 51,
