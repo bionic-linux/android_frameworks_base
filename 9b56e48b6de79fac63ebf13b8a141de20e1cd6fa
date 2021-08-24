@@ -121,6 +121,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "218728f5_d36d4b99",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-08-24T12:08:41Z",
+      "side": 1,
+      "message": "During quiescent boot the device is \"interactive\", and last sleep reason not yet set, so this method would return an incorrect result if called during boot.\nCould this action be delayed until after boot complete?\nOr could you check display state (Display.STATE_OFF during quiescent boot) instead?",
+      "parentUuid": "802c1371_71204ac6",
+      "range": {
+        "startLine": 393,
+        "startChar": 8,
+        "endLine": 393,
+        "endChar": 36
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ccc80366_cd03ccab",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 2
