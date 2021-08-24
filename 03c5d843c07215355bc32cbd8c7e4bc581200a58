@@ -22,6 +22,30 @@
       },
       "revId": "03c5d843c07215355bc32cbd8c7e4bc581200a58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8a1c143_d26f8e1e",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-08-24T14:37:45Z",
+      "side": 1,
+      "message": "Done, removed and update callers.",
+      "parentUuid": "28289e8e_bb14c7af",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 189,
+        "endChar": 5
+      },
+      "revId": "03c5d843c07215355bc32cbd8c7e4bc581200a58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
