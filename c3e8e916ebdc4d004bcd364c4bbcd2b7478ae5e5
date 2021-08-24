@@ -16,6 +16,24 @@
       "message": "Thanks! I can\u0027t give you +2 in China due to a known bug. Please ask someone else for a +2. Sorry for the inconvenience.",
       "revId": "c3e8e916ebdc4d004bcd364c4bbcd2b7478ae5e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05d1cb0c_747129ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2021-08-24T07:28:33Z",
+      "side": 1,
+      "message": "No worries at all, thanks for the review.",
+      "parentUuid": "207c1e84_847d753f",
+      "revId": "c3e8e916ebdc4d004bcd364c4bbcd2b7478ae5e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
