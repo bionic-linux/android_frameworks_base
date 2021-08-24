@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35fbaee9_8bc6d4b9",
+        "filename": "core/java/android/bluetooth/BluetoothProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf8d0867_f7acbecb",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 0
+      },
+      "revId": "bd80e6abb7cb24cdcca1c4d6809eb060e8d25da5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6cf9f84a_c6eab1c8",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-08-18T09:41:47Z",
       "side": 1,
       "message": "remove.\nHearing Aid was exception that got the enable/disable flag due to some dependencies. \nWe don\u0027t need this logic or CSIS",
+      "range": {
+        "startLine": 506,
+        "startChar": 0,
+        "endLine": 521,
+        "endChar": 9
+      },
+      "revId": "bd80e6abb7cb24cdcca1c4d6809eb060e8d25da5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e9d6be5_632e3e48",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf9f84a_c6eab1c8",
       "range": {
         "startLine": 506,
         "startChar": 0,

@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a3d0d04_8aa1b640",
+        "filename": "config/preloaded-classes",
+        "patchSetId": 4
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a537cc5_f7603cf9",
+      "range": {
+        "startLine": 1148,
+        "startChar": 0,
+        "endLine": 1150,
+        "endChar": 43
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8cbd7250_2b342f6b",
@@ -71,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a43f8571_00cffe06",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2175,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c6981d2_c6fc4269",
+      "range": {
+        "startLine": 2175,
+        "startChar": 20,
+        "endLine": 2175,
+        "endChar": 41
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3047d65d_8d236c2f",
@@ -84,6 +132,30 @@
       "writtenOn": "2021-07-10T04:34:24Z",
       "side": 1,
       "message": "int groupId, int opStatus, boolean isLocked",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 84
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f406362e_153ce79b",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3047d65d_8d236c2f",
       "range": {
         "startLine": 81,
         "startChar": 0,
@@ -117,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30c00d3a_f9416cc9",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7e7b846_8849e11f",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 69
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f813e38_aefb4db9",
@@ -130,6 +226,30 @@
       "writtenOn": "2021-07-19T13:13:17Z",
       "side": 1,
       "message": "This is needed just between Bluetooth and Settings. Hide, don\u0027t expose publicly.",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 61
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dcc0f78_55ff02c3",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f813e38_aefb4db9",
       "range": {
         "startLine": 120,
         "startChar": 0,
@@ -163,6 +283,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e050e07_af6fc9cb",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46267111_9366c516",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f4975e9_b06e89c0",
@@ -176,6 +320,30 @@
       "writtenOn": "2021-07-10T04:34:24Z",
       "side": 1,
       "message": "Please remove connect and disconnect api such as volume control profile. Developers should use setConnectionPolicy to connect/disconnect the profile.",
+      "range": {
+        "startLine": 307,
+        "startChar": 0,
+        "endLine": 307,
+        "endChar": 62
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09d87dcb_b6f77711",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f4975e9_b06e89c0",
       "range": {
         "startLine": 307,
         "startChar": 0,
@@ -209,6 +377,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92c2d2f9_10b345e8",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dec161c8_c14f7dcc",
+      "range": {
+        "startLine": 403,
+        "startChar": 24,
+        "endLine": 403,
+        "endChar": 39
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbf2ce61_8096b6a9",
@@ -222,6 +414,30 @@
       "writtenOn": "2021-07-10T04:34:24Z",
       "side": 1,
       "message": "The coding style in the other class of Bluetooth:\n    private boolean isEnabled() { \n        return mAdapter.getState() \u003d\u003d BluetoothAdapter.STATE_ON; \n    }",
+      "range": {
+        "startLine": 617,
+        "startChar": 0,
+        "endLine": 617,
+        "endChar": 92
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d031aa4_82127264",
+        "filename": "core/java/android/bluetooth/BluetoothCsisClient.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbf2ce61_8096b6a9",
       "range": {
         "startLine": 617,
         "startChar": 0,
@@ -255,6 +471,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f344e255_c56276ff",
+        "filename": "core/java/android/util/FeatureFlagUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2268e4b3_a144807c",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 57
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "906ffd58_ec9cec12",
@@ -268,6 +508,30 @@
       "writtenOn": "2021-07-09T17:27:27Z",
       "side": 1,
       "message": "Remove",
+      "range": {
+        "startLine": 136,
+        "startChar": 3,
+        "endLine": 137,
+        "endChar": 57
+      },
+      "revId": "ae389a6bb6bdca2c5df973997c073bb7d60a978f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4a50382_60cfdb4f",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-08-24T10:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "906ffd58_ec9cec12",
       "range": {
         "startLine": 136,
         "startChar": 3,
