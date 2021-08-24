@@ -9,3 +9,9 @@ per-file *BatteryStats* = file:/BATTERY_STATS_OWNERS
 per-file *Assist* = file:/core/java/android/service/voice/OWNERS
 per-file *Hotword* = file:/core/java/android/service/voice/OWNERS
 per-file *Voice* = file:/core/java/android/service/voice/OWNERS
+
+per-file TEST_MAPPING = file:/packages/SystemUI/OWNERS
+per-file TEST_MAPPING = file:/core/java/android/permission/OWNERS
+per-file TEST_MAPPING = file:/BATTERY_STATS_OWNERS
+per-file TEST_MAPPING = file:/core/java/android/service/voice/OWNERS
+per-file TEST_MAPPING = file:/location/java/android/location/OWNERS
