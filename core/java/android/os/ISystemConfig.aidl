@@ -16,6 +16,8 @@
 
 package android.os;
 
+import android.os.CarrierAssociatedAppEntry;
+
 /**
   * Binder interface to query SystemConfig in the system server.
   * {@hide}
@@ -29,12 +31,13 @@ interface ISystemConfig {
     /**
      * @see SystemConfigManager#getDisabledUntilUsedPreinstalledCarrierAssociatedApps
      */
-    Map getDisabledUntilUsedPreinstalledCarrierAssociatedApps();
+    Map<String, List<String>> getDisabledUntilUsedPreinstalledCarrierAssociatedApps();
 
     /**
      * @see SystemConfigManager#getDisabledUntilUsedPreinstalledCarrierAssociatedAppEntries
      */
-    Map getDisabledUntilUsedPreinstalledCarrierAssociatedAppEntries();
+    Map<String, List<CarrierAssociatedAppEntry>>
+        getDisabledUntilUsedPreinstalledCarrierAssociatedAppEntries();
 
     /**
      * @see SystemConfigManager#getSystemPermissionUids

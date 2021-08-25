@@ -79,8 +79,7 @@ public class SystemConfigManager {
     public @NonNull Map<String, List<String>>
             getDisabledUntilUsedPreinstalledCarrierAssociatedApps() {
         try {
-            return (Map<String, List<String>>)
-                    mInterface.getDisabledUntilUsedPreinstalledCarrierAssociatedApps();
+            return mInterface.getDisabledUntilUsedPreinstalledCarrierAssociatedApps();
         } catch (RemoteException e) {
             Log.e(TAG, "Caught remote exception");
             return Collections.emptyMap();
@@ -104,8 +103,7 @@ public class SystemConfigManager {
     public @NonNull Map<String, List<CarrierAssociatedAppEntry>>
             getDisabledUntilUsedPreinstalledCarrierAssociatedAppEntries() {
         try {
-            return (Map<String, List<CarrierAssociatedAppEntry>>)
-                    mInterface.getDisabledUntilUsedPreinstalledCarrierAssociatedAppEntries();
+            return mInterface.getDisabledUntilUsedPreinstalledCarrierAssociatedAppEntries();
         } catch (RemoteException e) {
             Log.e(TAG, "Caught remote exception", e);
             return Collections.emptyMap();

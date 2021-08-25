@@ -20,6 +20,7 @@ import static java.util.stream.Collectors.toMap;
 
 import android.Manifest;
 import android.content.Context;
+import android.os.CarrierAssociatedAppEntry;
 import android.os.ISystemConfig;
 import android.util.ArraySet;
 import android.util.SparseArray;
@@ -48,7 +49,7 @@ public class SystemConfigService extends SystemService {
         }
 
         @Override
-        public Map getDisabledUntilUsedPreinstalledCarrierAssociatedApps() {
+        public Map<String, List<String>> getDisabledUntilUsedPreinstalledCarrierAssociatedApps() {
             mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_CARRIER_APP_INFO,
                     "getDisabledUntilUsedPreInstalledCarrierAssociatedApps requires"
                             + " READ_CARRIER_APP_INFO");
@@ -61,7 +62,8 @@ public class SystemConfigService extends SystemService {
         }
 
         @Override
-        public Map getDisabledUntilUsedPreinstalledCarrierAssociatedAppEntries() {
+        public Map<String, List<CarrierAssociatedAppEntry>>
+                getDisabledUntilUsedPreinstalledCarrierAssociatedAppEntries() {
             mContext.enforceCallingOrSelfPermission(Manifest.permission.READ_CARRIER_APP_INFO,
                     "getDisabledUntilUsedPreInstalledCarrierAssociatedAppEntries requires"
                             + " READ_CARRIER_APP_INFO");
