@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "243dfa16_21d2d44e",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-08-30T18:53:47Z",
+      "side": 1,
+      "message": "No need to hide this one, it\u0027s not hidden for other profiles",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 12
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5607194e_7355452c",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-08-30T18:53:47Z",
+      "side": 1,
+      "message": "@RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 73
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff1c92bb_8947b97f",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-08-30T18:53:47Z",
+      "side": 1,
+      "message": "@RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d796c785_0bba0d4b",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-08-30T18:53:47Z",
+      "side": 1,
+      "message": "Get rid of this method, it\u0027s deprecated. Same as in BluetoothLeAudio.",
+      "range": {
+        "startLine": 495,
+        "startChar": 3,
+        "endLine": 512,
+        "endChar": 98
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aab5f7f_c6d6ff73",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-08-30T18:53:47Z",
+      "side": 1,
+      "message": "Get rid of this method, it\u0027s deprecated. Same as in BluetoothLeAudio.",
+      "range": {
+        "startLine": 546,
+        "startChar": 3,
+        "endLine": 563,
+        "endChar": 5
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
