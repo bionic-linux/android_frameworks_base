@@ -72,6 +72,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f4f99bb6_077deced",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-08-30T19:06:41Z",
+      "side": 1,
+      "message": "I don\u0027t believe finalize() and close() enforce any permission requirements.",
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ac793df_5ac4606c",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-08-30T19:06:41Z",
+      "side": 1,
+      "message": "finalize() and close() should be @hide. Apps can indirectly call them via BluetoothAdapter#closeProfileProxy, so there\u0027s no need to directly expose them as public API.",
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d796c785_0bba0d4b",
         "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
         "patchSetId": 7
