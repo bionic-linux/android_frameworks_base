@@ -34,6 +34,23 @@
       "parentUuid": "207c1e84_847d753f",
       "revId": "c3e8e916ebdc4d004bcd364c4bbcd2b7478ae5e5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f196690_8abe0edd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1114120
+      },
+      "writtenOn": "2021-08-30T07:12:24Z",
+      "side": 1,
+      "message": "Hi Orion Hodson, any more detail about this fix that remove dexopt while boot up, just remove the process to speedup boot or you just move to another stage that I not find a related change\n",
+      "revId": "c3e8e916ebdc4d004bcd364c4bbcd2b7478ae5e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
