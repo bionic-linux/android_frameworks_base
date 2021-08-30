@@ -114,6 +114,29 @@
       },
       "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c16e25b1_34954b14",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-08-30T18:54:43Z",
+      "side": 1,
+      "message": "Didn\u0027t we get rid of this broadcast ? There is callback in it\u0027s place",
+      "range": {
+        "startLine": 202,
+        "startChar": 64,
+        "endLine": 202,
+        "endChar": 87
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
