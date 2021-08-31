@@ -145,6 +145,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5000f944_12c31573",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-08-31T15:37:03Z",
+      "side": 1,
+      "message": "\u003e Could this action be delayed until after boot complete?\nYes, let\u0027s do that. The HdmiControlManager power state is only set to \u0027ON\u0027 after boot complete, so it\u0027s fine to only turn on the Audio System after boot complete as well.",
+      "parentUuid": "218728f5_d36d4b99",
+      "range": {
+        "startLine": 393,
+        "startChar": 8,
+        "endLine": 393,
+        "endChar": 36
+      },
+      "revId": "9b56e48b6de79fac63ebf13b8a141de20e1cd6fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ccc80366_cd03ccab",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 2
