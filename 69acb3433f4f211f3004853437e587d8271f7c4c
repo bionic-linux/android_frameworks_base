@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "97868c65_bd7928e9",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-08-31T06:06:25Z",
+      "side": 1,
+      "message": "Then it should be same as in other CONNECTION_STATE_CHANGED broadcasts",
+      "parentUuid": "c51d7a3a_580b5736",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 73
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff1c92bb_8947b97f",
         "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
         "patchSetId": 7
