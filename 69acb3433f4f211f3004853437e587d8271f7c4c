@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44838d1e_841b6332",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-01T14:21:41Z",
+      "side": 1,
+      "message": "I\u0027s hard to find proper example to follow on the `@hide` and `@RequiresPermission` usage. Each profile does it on it\u0027s own way.",
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "243dfa16_21d2d44e",
@@ -14,6 +31,30 @@
       "writtenOn": "2021-08-30T18:53:47Z",
       "side": 1,
       "message": "No need to hide this one, it\u0027s not hidden for other profiles",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 12
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0bc62ad_e884b115",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-01T14:21:41Z",
+      "side": 1,
+      "message": "It actually is hidden for AVRCP, A2dpSink, MAP, MAPClient, PBAP, SAP and VC.",
+      "parentUuid": "243dfa16_21d2d44e",
       "range": {
         "startLine": 105,
         "startChar": 4,
@@ -97,6 +138,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b890fdcc_6f057c19",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-01T14:21:41Z",
+      "side": 1,
+      "message": "PBAP, VolumeControl, A2dpSink have \"android.Manifest.permission.BLUETOOTH_PRIVILEGED\" as well, so which one is the golden standard?",
+      "parentUuid": "97868c65_bd7928e9",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 73
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff1c92bb_8947b97f",
         "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
         "patchSetId": 7
@@ -120,6 +185,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92a379b6_3b1880f8",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-01T14:21:41Z",
+      "side": 1,
+      "message": "None of the others use it.",
+      "parentUuid": "ff1c92bb_8947b97f",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f4f99bb6_077deced",
         "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
         "patchSetId": 7
@@ -131,6 +220,24 @@
       "writtenOn": "2021-08-30T19:06:41Z",
       "side": 1,
       "message": "I don\u0027t believe finalize() and close() enforce any permission requirements.",
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7cc0be6_c5998a3e",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-01T14:21:41Z",
+      "side": 1,
+      "message": "I guess this was taken after the BluetoothMap.java",
+      "parentUuid": "f4f99bb6_077deced",
       "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -177,6 +284,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "678d53fe_d9f76b28",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-01T14:21:41Z",
+      "side": 1,
+      "message": "Same as in HearingAid it seems. It\u0027s hard to find the right example to follow.",
+      "parentUuid": "d796c785_0bba0d4b",
+      "range": {
+        "startLine": 495,
+        "startChar": 3,
+        "endLine": 512,
+        "endChar": 98
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7aab5f7f_c6d6ff73",
         "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
         "patchSetId": 7
@@ -211,6 +342,30 @@
       "writtenOn": "2021-08-30T18:54:43Z",
       "side": 1,
       "message": "Didn\u0027t we get rid of this broadcast ? There is callback in it\u0027s place",
+      "range": {
+        "startLine": 202,
+        "startChar": 64,
+        "endLine": 202,
+        "endChar": 87
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d3c2ccc_955c9d73",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-01T14:21:41Z",
+      "side": 1,
+      "message": "true",
+      "parentUuid": "c16e25b1_34954b14",
       "range": {
         "startLine": 202,
         "startChar": 64,
