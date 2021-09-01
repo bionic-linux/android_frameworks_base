@@ -308,6 +308,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77d854ed_5eb57083",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-09-01T14:27:35Z",
+      "side": 1,
+      "message": "This one must be gone for sure.",
+      "parentUuid": "678d53fe_d9f76b28",
+      "range": {
+        "startLine": 495,
+        "startChar": 3,
+        "endLine": 512,
+        "endChar": 98
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7aab5f7f_c6d6ff73",
         "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
         "patchSetId": 7
