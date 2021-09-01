@@ -16,6 +16,23 @@
       "message": "Yan, could you please review this change?",
       "revId": "43b4db1834f34839b79e366abe48f13b78994df2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53d967a5_55e77051",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2021-09-01T12:04:03Z",
+      "side": 1,
+      "message": "The code that this change affects, along with the TODO, was removed on master in ag/12661003. I don\u0027t think it makes sense to merge this. ",
+      "revId": "43b4db1834f34839b79e366abe48f13b78994df2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
