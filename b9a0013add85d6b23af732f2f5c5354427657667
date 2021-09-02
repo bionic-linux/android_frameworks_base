@@ -22,6 +22,30 @@
       },
       "revId": "b9a0013add85d6b23af732f2f5c5354427657667",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8a8b04b_e60d7395",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-02T11:32:57Z",
+      "side": 1,
+      "message": "Leftovers I guess. Removed.",
+      "parentUuid": "4c401ffa_a1edfdc0",
+      "range": {
+        "startLine": 900,
+        "startChar": 16,
+        "endLine": 900,
+        "endChar": 43
+      },
+      "revId": "b9a0013add85d6b23af732f2f5c5354427657667",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
