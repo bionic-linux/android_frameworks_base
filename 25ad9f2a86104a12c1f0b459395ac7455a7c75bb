@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83b29f85_c1a453ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-02T16:26:39Z",
+      "side": 1,
+      "message": "I think you eventually did this in aosp/1757322 :)",
+      "revId": "25ad9f2a86104a12c1f0b459395ac7455a7c75bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
