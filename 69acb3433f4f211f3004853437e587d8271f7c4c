@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "51830d6b_cffdd00c",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-02T11:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0bc62ad_e884b115",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 12
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5607194e_7355452c",
@@ -162,6 +186,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e476b547_dc3a79c6",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-02T11:30:53Z",
+      "side": 1,
+      "message": "...most of the other profiles does not use `@RequiresPermission` annotation for these so I removed it. Is that ok?",
+      "parentUuid": "b890fdcc_6f057c19",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 73
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff1c92bb_8947b97f",
         "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
         "patchSetId": 7
@@ -242,6 +290,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e0789dd_53bd7396",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-02T11:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7cc0be6_c5998a3e",
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ac793df_5ac4606c",
@@ -255,6 +321,24 @@
       "writtenOn": "2021-08-30T19:06:41Z",
       "side": 1,
       "message": "finalize() and close() should be @hide. Apps can indirectly call them via BluetoothAdapter#closeProfileProxy, so there\u0027s no need to directly expose them as public API.",
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "215fe1f5_95beec6e",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-02T11:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac793df_5ac4606c",
       "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -330,6 +414,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69c2cd93_7a934e79",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-02T11:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d854ed_5eb57083",
+      "range": {
+        "startLine": 495,
+        "startChar": 3,
+        "endLine": 512,
+        "endChar": 98
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aab5f7f_c6d6ff73",
@@ -343,6 +451,30 @@
       "writtenOn": "2021-08-30T18:53:47Z",
       "side": 1,
       "message": "Get rid of this method, it\u0027s deprecated. Same as in BluetoothLeAudio.",
+      "range": {
+        "startLine": 546,
+        "startChar": 3,
+        "endLine": 563,
+        "endChar": 5
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b35017be_4aec5c49",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-02T11:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aab5f7f_c6d6ff73",
       "range": {
         "startLine": 546,
         "startChar": 3,
@@ -390,6 +522,30 @@
       "side": 1,
       "message": "true",
       "parentUuid": "c16e25b1_34954b14",
+      "range": {
+        "startLine": 202,
+        "startChar": 64,
+        "endLine": 202,
+        "endChar": 87
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0e900b2_782b4053",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-02T11:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d3c2ccc_955c9d73",
       "range": {
         "startLine": 202,
         "startChar": 64,
