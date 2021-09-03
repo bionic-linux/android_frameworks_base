@@ -16,6 +16,29 @@
       "message": "I\u0027ll just trying manually CPing it.",
       "revId": "b95a5b2af8d809f4fd8cd21526a359d88db50629",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fb9d45b_e1d4b432",
+        "filename": "core/java/android/util/ArrayMap.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1059882
+      },
+      "writtenOn": "2021-09-03T20:49:05Z",
+      "side": 1,
+      "message": "Hi, sorry I was wrong in the bug, we should not change behavior like this between use and userdebug builds.  (userdebug needs to be the same as user, except for some debugging tools you can optionally enable, because it is what we do our dogfooding against, which needs to behave the same as what we release, and provide the same privacy.)",
+      "range": {
+        "startLine": 650,
+        "startChar": 46,
+        "endLine": 650,
+        "endChar": 53
+      },
+      "revId": "b95a5b2af8d809f4fd8cd21526a359d88db50629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
