@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23c2c270_6d0acad7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1415318
+      },
+      "writtenOn": "2021-09-03T22:11:58Z",
+      "side": 1,
+      "message": "Which Android Versions are affected by this bug?",
+      "revId": "9a2725c0b72b1cda521199e13a3048e62b553741",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
