@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a49e998_567c1c67",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-03T13:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "180f75d4_f331facb",
+      "range": {
+        "startLine": 1154,
+        "startChar": 4,
+        "endLine": 1154,
+        "endChar": 58
+      },
+      "revId": "1ebd29771969745f8ce5f6b5b910c6e413e36f30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b63f8e3_c7e091d8",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-09-03T10:27:45Z",
       "side": 1,
       "message": "Although the function may not be used, could we set it to true to avoid the confusion?",
+      "range": {
+        "startLine": 128,
+        "startChar": 15,
+        "endLine": 128,
+        "endChar": 20
+      },
+      "revId": "1ebd29771969745f8ce5f6b5b910c6e413e36f30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2f2e8b0_9090cbb8",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-03T13:17:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b63f8e3_c7e091d8",
       "range": {
         "startLine": 128,
         "startChar": 15,
