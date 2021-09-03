@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e6b74ad_250e4a54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2021-09-03T21:05:50Z",
+      "side": 1,
+      "message": "Thanks Dianne,\nEd, lets just remove the key from the log for now - I am not convinced that it adds much practical value while debugging (to the info already being logged).\nYou can guard it by `(DEBUG)` if you\u0027d like.\n\nThe main reason this should happen is when there is bad usage from any client.\nWe have a report internally. We\u0027re investigating there to see if there is a bug somewhere in the call stack from the SMS app.",
+      "revId": "b95a5b2af8d809f4fd8cd21526a359d88db50629",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0fb9d45b_e1d4b432",
