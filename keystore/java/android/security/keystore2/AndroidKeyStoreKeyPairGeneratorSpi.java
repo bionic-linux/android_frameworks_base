@@ -300,6 +300,8 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
             mAttestKeyDescriptor = buildAndCheckAttestKeyDescriptor(spec);
             checkAttestKeyPurpose(spec);
 
+            checkAgreeKeyPurpose(spec, keymasterAlgorithm);
+
             success = true;
         } finally {
             if (!success) {
@@ -314,6 +316,15 @@ public abstract class AndroidKeyStoreKeyPairGeneratorSpi extends KeyPairGenerato
                 && spec.getPurposes() != KeyProperties.PURPOSE_ATTEST_KEY) {
             throw new InvalidAlgorithmParameterException(
                     "PURPOSE_ATTEST_KEY may not be specified with any other purposes");
+        }
+    }
+
+    private void checkAgreeKeyPurpose(KeyGenParameterSpec spec, int algorithm)
+            throws InvalidAlgorithmParameterException {
+        if ((spec.getPurposes() & KeyProperties.PURPOSE_AGREE_KEY) != 0
+                && algorithm != KeymasterDefs.KM_ALGORITHM_EC) {
+            throw new InvalidAlgorithmParameterException(
+                    "Key agreement is only supported for EC keys");
         }
     }
 
