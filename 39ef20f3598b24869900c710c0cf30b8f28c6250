@@ -16,6 +16,24 @@
       "message": "Apparently this doesn\u0027t build on sc-mainline-prod ?",
       "revId": "39ef20f3598b24869900c710c0cf30b8f28c6250",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c42caf6e_be9ac8d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-09-06T10:08:18Z",
+      "side": 1,
+      "message": "I think it\u0027s because sc-mainline-prod brach is not a downstream branch of AOSP-Master(mirror-aosp-master). Therefore, the tests in packages/modules/Connectivity will build failed due to the number of arguments are differnet.",
+      "parentUuid": "7d0205aa_a90083b4",
+      "revId": "39ef20f3598b24869900c710c0cf30b8f28c6250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
