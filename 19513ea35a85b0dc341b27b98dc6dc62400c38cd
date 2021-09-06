@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "628b0466_59f87729",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004882
+      },
+      "writtenOn": "2021-09-06T06:21:42Z",
+      "side": 1,
+      "message": "suprabh@\n\nThank you for the +2!  Feel free to submit when you are ready as I have no Gerrit rights to do that.",
+      "revId": "19513ea35a85b0dc341b27b98dc6dc62400c38cd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
