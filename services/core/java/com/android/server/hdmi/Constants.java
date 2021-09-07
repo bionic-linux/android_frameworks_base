@@ -312,6 +312,7 @@ final class Constants {
     static final int AUDIO_CODEC_MAX = 0xF;
 
     static final int AUDIO_FORMAT_MASK = 0xF8;
+    static final int AUDIO_FORMAT_DDP = 0x50;
 
     @StringDef({
         AUDIO_DEVICE_ARC_IN,
@@ -517,6 +518,8 @@ final class Constants {
 
     static final String POWER_STATE_CHANGE_ON_ACTIVE_SOURCE_LOST_NONE = "none";
     static final String POWER_STATE_CHANGE_ON_ACTIVE_SOURCE_LOST_STANDBY_NOW = "standby_now";
+
+    static final String AVR_CAPABILITY_DDP_ATMOS = "avr_capability_ddp_atmos";
 
     static final int RECORDING_TYPE_DIGITAL_RF = 1;
     static final int RECORDING_TYPE_ANALOGUE_RF = 2;
