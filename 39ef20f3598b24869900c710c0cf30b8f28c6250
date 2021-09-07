@@ -34,6 +34,24 @@
       "parentUuid": "7d0205aa_a90083b4",
       "revId": "39ef20f3598b24869900c710c0cf30b8f28c6250",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e42c5ae_6c77c6f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-07T02:51:27Z",
+      "side": 1,
+      "message": "Ah I see, it is downstream for packages/modules/Connectivity but not for frameworks/base.\n\nI guess that means you either need to keep the old method, or to CP this into sc-mainline-prod first.",
+      "parentUuid": "c42caf6e_be9ac8d2",
+      "revId": "39ef20f3598b24869900c710c0cf30b8f28c6250",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
