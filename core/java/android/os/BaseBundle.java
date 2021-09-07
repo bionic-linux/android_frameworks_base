@@ -110,6 +110,9 @@ public class BaseBundle {
     @VisibleForTesting
     public int mFlags;
 
+    /** @hide */
+    protected final Object mLock;
+
     /**
      * Constructs a new, empty Bundle that uses a specific ClassLoader for
      * instantiating Parcelable and Serializable objects.
@@ -119,8 +122,8 @@ public class BaseBundle {
      * @param capacity Initial size of the ArrayMap.
      */
     BaseBundle(@Nullable ClassLoader loader, int capacity) {
-        mMap = capacity > 0 ?
-                new ArrayMap<String, Object>(capacity) : new ArrayMap<String, Object>();
+        mLock = new Object();
+        mMap = capacity > 0 ? new ArrayMap<>(capacity) : new ArrayMap<>();
         mClassLoader = loader == null ? getClass().getClassLoader() : loader;
     }
 
@@ -138,10 +141,12 @@ public class BaseBundle {
      * @param parcelledData a Parcel containing a Bundle
      */
     BaseBundle(Parcel parcelledData) {
+        mLock = new Object();
         readFromParcelInner(parcelledData);
     }
 
     BaseBundle(Parcel parcelledData, int length) {
+        mLock = new Object();
         readFromParcelInner(parcelledData, length);
     }
 
@@ -173,13 +178,62 @@ public class BaseBundle {
      * @param b a Bundle to be copied.
      */
     BaseBundle(BaseBundle b) {
-        copyInternal(b, false);
+        this(b, /* deep */ false);
+    }
+
+    /**
+     * Constructs a Bundle containing a copy of the mappings from the given
+     * Bundle.
+     *
+     * @param from The bundle to be copied.
+     * @param deep Whether this is a deep or shallow copy.
+     *
+     * @hide
+     */
+    BaseBundle(BaseBundle from, boolean deep) {
+        // We need to copy the lock since there might be some lazy values in the provided bundle
+        // so we'd need to use the same lock to access those in case of a lazy copy
+        mLock = from.mLock;
+        synchronized (mLock) {
+            if (from.mParcelledData != null) {
+                if (from.isEmptyParcel()) {
+                    mParcelledData = NoImagePreloadHolder.EMPTY_PARCEL;
+                    mParcelledByNative = false;
+                } else {
+                    mParcelledData = Parcel.obtain();
+                    mParcelledData.appendFrom(from.mParcelledData, 0,
+                            from.mParcelledData.dataSize());
+                    mParcelledData.setDataPosition(0);
+                    mParcelledByNative = from.mParcelledByNative;
+                }
+            } else {
+                mParcelledData = null;
+                mParcelledByNative = false;
+            }
+
+            if (from.mMap != null) {
+                if (!deep) {
+                    mMap = new ArrayMap<>(from.mMap);
+                } else {
+                    final ArrayMap<String, Object> fromMap = from.mMap;
+                    final int n = fromMap.size();
+                    mMap = new ArrayMap<>(n);
+                    for (int i = 0; i < n; i++) {
+                        mMap.append(fromMap.keyAt(i), deepCopyValue(from.getValueAt(i)));
+                    }
+                }
+            } else {
+                mMap = null;
+            }
+            mClassLoader = from.mClassLoader;
+        }
     }
 
     /**
      * Special constructor that does not initialize the bundle.
      */
     BaseBundle(boolean doInit) {
+        mLock = new Object(); // Can't skip this
     }
 
     /**
@@ -237,7 +291,7 @@ public class BaseBundle {
 
     /** Deserializes the underlying data and each item if {@code itemwise} is true. */
     final void unparcel(boolean itemwise) {
-        synchronized (this) {
+        synchronized (mLock) {
             final Parcel source = mParcelledData;
             if (source != null) {
                 initializeFromParcelLocked(source, /*recycleParcel=*/ true, mParcelledByNative);
@@ -276,7 +330,7 @@ public class BaseBundle {
         Object object = mMap.valueAt(i);
         if (object instanceof Supplier<?>) {
             Supplier<?> supplier = (Supplier<?>) object;
-            synchronized (this) {
+            synchronized (mLock) {
                 object = supplier.get();
             }
             mMap.setValueAt(i, object);
@@ -1634,7 +1688,7 @@ public class BaseBundle {
         // Keep implementation in sync with writeToParcel() in
         // frameworks/native/libs/binder/PersistableBundle.cpp.
         final ArrayMap<String, Object> map;
-        synchronized (this) {
+        synchronized (mLock) {
             // unparcel() can race with this method and cause the parcel to recycle
             // at the wrong time. So synchronize access the mParcelledData's content.
             if (mParcelledData != null) {
@@ -1661,7 +1715,9 @@ public class BaseBundle {
         parcel.writeInt(BUNDLE_MAGIC);
 
         int startPos = parcel.dataPosition();
-        parcel.writeArrayMapInternal(map);
+        synchronized (mLock) {
+            parcel.writeArrayMapInternal(map);
+        }
         int endPos = parcel.dataPosition();
 
         // Backpatch length
@@ -1708,7 +1764,7 @@ public class BaseBundle {
             // otherwise the helper would have to either maintain valid state long after the bundle
             // had been constructed with parcel or to make sure they trigger deserialization of the
             // bundle immediately; neither of which is obvious.
-            synchronized (this) {
+            synchronized (mLock) {
                 initializeFromParcelLocked(parcel, /*recycleParcel=*/ false, isNativeBundle);
                 unparcel(/* itemwise */ true);
             }

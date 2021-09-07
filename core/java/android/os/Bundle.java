@@ -146,8 +146,13 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
      * @see #deepCopy()
      */
     public Bundle(Bundle b) {
-        super(b);
-        mFlags = b.mFlags;
+        this(b, /* deep */ false);
+    }
+
+    /** @hide */
+    Bundle(Bundle from, boolean deep) {
+        super(from, deep);
+        mFlags = from.mFlags;
     }
 
     /**
@@ -256,9 +261,7 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
      * are referenced as-is and not copied in any way.
      */
     public Bundle deepCopy() {
-        Bundle b = new Bundle(false);
-        b.copyInternal(this, true);
-        return b;
+        return new Bundle(this, /* deep */ true);
     }
 
     /**
@@ -289,7 +292,9 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
      */
     public void putAll(Bundle bundle) {
         unparcel();
-        bundle.unparcel();
+        // We need to fully unparcel bundle received because otherwise we'd get some lazy values in
+        // this map that we couldn't safely unparcel without synchronizing on the original lock.
+        bundle.unparcel(/* itemwise */ true);
         mMap.putAll(bundle.mMap);
 
         // FD state is now known if and only if both bundles already knew
@@ -1280,30 +1285,33 @@ public final class Bundle extends BaseBundle implements Cloneable, Parcelable {
     }
 
     @Override
-    public synchronized String toString() {
-        if (mParcelledData != null) {
-            if (isEmptyParcel()) {
-                return "Bundle[EMPTY_PARCEL]";
-            } else {
-                return "Bundle[mParcelledData.dataSize=" +
-                        mParcelledData.dataSize() + "]";
+    public String toString() {
+        synchronized (mLock) {
+            if (mParcelledData != null) {
+                if (isEmptyParcel()) {
+                    return "Bundle[EMPTY_PARCEL]";
+                } else {
+                    return "Bundle[mParcelledData.dataSize=" + mParcelledData.dataSize() + "]";
+                }
             }
+            return "Bundle[" + mMap.toString() + "]";
         }
-        return "Bundle[" + mMap.toString() + "]";
     }
 
     /**
      * @hide
      */
-    public synchronized String toShortString() {
-        if (mParcelledData != null) {
-            if (isEmptyParcel()) {
-                return "EMPTY_PARCEL";
-            } else {
-                return "mParcelledData.dataSize=" + mParcelledData.dataSize();
+    public String toShortString() {
+        synchronized (mLock) {
+            if (mParcelledData != null) {
+                if (isEmptyParcel()) {
+                    return "EMPTY_PARCEL";
+                } else {
+                    return "mParcelledData.dataSize=" + mParcelledData.dataSize();
+                }
             }
+            return mMap.toString();
         }
-        return mMap.toString();
     }
 
     /** @hide */
