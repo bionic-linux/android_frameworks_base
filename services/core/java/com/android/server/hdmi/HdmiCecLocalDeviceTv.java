@@ -30,6 +30,7 @@ import static android.hardware.hdmi.HdmiControlManager.TIMER_RECORDING_TYPE_ANAL
 import static android.hardware.hdmi.HdmiControlManager.TIMER_RECORDING_TYPE_DIGITAL;
 import static android.hardware.hdmi.HdmiControlManager.TIMER_RECORDING_TYPE_EXTERNAL;
 
+import android.text.TextUtils;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiDeviceInfo;
 import android.hardware.hdmi.HdmiPortInfo;
@@ -710,6 +711,35 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
         return true;
     }
 
+    void notifySadSupported(boolean supported) {
+        // The format of values to AudioManager().setParameters() is
+        // avr_sad=[Parameter Length, ARC port]
+        //                [Short Audio Descriptor(3 bytes for 1 SAD)]
+        byte[] buf = new byte[2];
+        String audioParams = Constants.AUDIO_PARAMETER_AVR_SAD;
+        String keyValue;
+        String sadList = "[" + TextUtils.join(" ", mAvrSupportedFormats) + "]";
+
+        if (getAvrDeviceInfo() == null) {
+            Slog.w(TAG, "Failed to notify SAD: No AVR device.");
+            return;
+        }
+        if (!supported || mAvrSupportedFormats == null || mAvrSupportedFormats.size() == 0) {
+            buf[0] = (byte)0x00;
+            buf[1] = (byte) (getAvrDeviceInfo().getPortId());
+            keyValue = audioParams + Arrays.toString(buf);
+            keyValue += "[0]";
+        } else {
+            buf[0] = (byte) mAvrSupportedFormats.size();
+            buf[1] = (byte) (getAvrDeviceInfo().getPortId());
+            keyValue = audioParams + Arrays.toString(buf);
+            keyValue += sadList;
+        }
+
+        Slog.w(TAG,"keyValue:" + keyValue);
+        mService.getAudioManager().setParameters(keyValue);
+    }
+
     @Override
     @ServiceThreadOnly
     protected int handleReportShortAudioDescriptor(HdmiCecMessage message) {
@@ -723,9 +753,15 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
 
     void setShortAudioDescriptor(byte[] params) {
         Slog.w(TAG, "setShortAudioDescriptor");
+        if (params == null) {
+            Slog.e(TAG, "Failed to setShortAudioDescriptor, params is null");
+            notifySadSupported(false);
+            return;
+        }
         int size = params.length;
         int num = size / 3;
         if (num < 1 || (params.length % 3) != 0 ) {
+            notifySadSupported(false);
             return;
         }
 
@@ -743,6 +779,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                  }
              }
         }
+        notifySadSupported(true);
     }
 
     private void setAtmosSupported(int atmosBit) {
@@ -1017,6 +1054,7 @@ final class HdmiCecLocalDeviceTv extends HdmiCecLocalDevice {
                 mService.announceSystemAudioModeChange(on);
                 if (on == false) {
                     mAvrSupportedFormats.clear();
+                    notifySadSupported(false);
                     if (isAtmosSupported()) {
                         setAtmosSupported(0);
                     }

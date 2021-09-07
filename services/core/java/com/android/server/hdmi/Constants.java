@@ -520,6 +520,7 @@ final class Constants {
     static final String POWER_STATE_CHANGE_ON_ACTIVE_SOURCE_LOST_STANDBY_NOW = "standby_now";
 
     static final String AVR_CAPABILITY_DDP_ATMOS = "avr_capability_ddp_atmos";
+    static final String AUDIO_PARAMETER_AVR_SAD = "avr_sad=";
 
     static final int RECORDING_TYPE_DIGITAL_RF = 1;
     static final int RECORDING_TYPE_ANALOGUE_RF = 2;
