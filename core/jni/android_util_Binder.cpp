@@ -958,8 +958,7 @@ static jint android_os_Binder_getCallingUid()
     return IPCThreadState::self()->getCallingUid();
 }
 
-static jboolean android_os_Binder_isHandlingTransaction()
-{
+static jboolean android_os_Binder_isDirectlyHandlingTransaction() {
     return getCurrentServingCall() == BinderCallType::BINDER;
 }
 
@@ -1065,35 +1064,37 @@ static void android_os_Binder_setExtension(JNIEnv* env, jobject obj, jobject ext
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gBinderMethods[] = {
-     /* name, signature, funcPtr */
-    // @CriticalNative
-    { "getCallingPid", "()I", (void*)android_os_Binder_getCallingPid },
-    // @CriticalNative
-    { "getCallingUid", "()I", (void*)android_os_Binder_getCallingUid },
-    // @CriticalNative
-    { "isHandlingTransaction", "()Z", (void*)android_os_Binder_isHandlingTransaction },
-    // @CriticalNative
-    { "clearCallingIdentity", "()J", (void*)android_os_Binder_clearCallingIdentity },
-    { "restoreCallingIdentity", "(J)V", (void*)android_os_Binder_restoreCallingIdentity },
-    // @CriticalNative
-    { "setThreadStrictModePolicy", "(I)V", (void*)android_os_Binder_setThreadStrictModePolicy },
-    // @CriticalNative
-    { "getThreadStrictModePolicy", "()I", (void*)android_os_Binder_getThreadStrictModePolicy },
-    // @CriticalNative
-    { "setCallingWorkSourceUid", "(I)J", (void*)android_os_Binder_setCallingWorkSourceUid },
-    // @CriticalNative
-    { "getCallingWorkSourceUid", "()I", (void*)android_os_Binder_getCallingWorkSourceUid },
-    // @CriticalNative
-    { "clearCallingWorkSource", "()J", (void*)android_os_Binder_clearCallingWorkSource },
-    { "restoreCallingWorkSource", "(J)V", (void*)android_os_Binder_restoreCallingWorkSource },
-    { "markVintfStability", "()V", (void*)android_os_Binder_markVintfStability},
-    { "forceDowngradeToSystemStability", "()V", (void*)android_os_Binder_forceDowngradeToSystemStability},
-    { "flushPendingCommands", "()V", (void*)android_os_Binder_flushPendingCommands },
-    { "getNativeBBinderHolder", "()J", (void*)android_os_Binder_getNativeBBinderHolder },
-    { "getNativeFinalizer", "()J", (void*)android_os_Binder_getNativeFinalizer },
-    { "blockUntilThreadAvailable", "()V", (void*)android_os_Binder_blockUntilThreadAvailable },
-    { "getExtension", "()Landroid/os/IBinder;", (void*)android_os_Binder_getExtension },
-    { "setExtension", "(Landroid/os/IBinder;)V", (void*)android_os_Binder_setExtension },
+        /* name, signature, funcPtr */
+        // @CriticalNative
+        {"getCallingPid", "()I", (void*)android_os_Binder_getCallingPid},
+        // @CriticalNative
+        {"getCallingUid", "()I", (void*)android_os_Binder_getCallingUid},
+        // @CriticalNative
+        {"isDirectlyHandlingTransaction", "()Z",
+         (void*)android_os_Binder_isDirectlyHandlingTransaction},
+        // @CriticalNative
+        {"clearCallingIdentity", "()J", (void*)android_os_Binder_clearCallingIdentity},
+        {"restoreCallingIdentity", "(J)V", (void*)android_os_Binder_restoreCallingIdentity},
+        // @CriticalNative
+        {"setThreadStrictModePolicy", "(I)V", (void*)android_os_Binder_setThreadStrictModePolicy},
+        // @CriticalNative
+        {"getThreadStrictModePolicy", "()I", (void*)android_os_Binder_getThreadStrictModePolicy},
+        // @CriticalNative
+        {"setCallingWorkSourceUid", "(I)J", (void*)android_os_Binder_setCallingWorkSourceUid},
+        // @CriticalNative
+        {"getCallingWorkSourceUid", "()I", (void*)android_os_Binder_getCallingWorkSourceUid},
+        // @CriticalNative
+        {"clearCallingWorkSource", "()J", (void*)android_os_Binder_clearCallingWorkSource},
+        {"restoreCallingWorkSource", "(J)V", (void*)android_os_Binder_restoreCallingWorkSource},
+        {"markVintfStability", "()V", (void*)android_os_Binder_markVintfStability},
+        {"forceDowngradeToSystemStability", "()V",
+         (void*)android_os_Binder_forceDowngradeToSystemStability},
+        {"flushPendingCommands", "()V", (void*)android_os_Binder_flushPendingCommands},
+        {"getNativeBBinderHolder", "()J", (void*)android_os_Binder_getNativeBBinderHolder},
+        {"getNativeFinalizer", "()J", (void*)android_os_Binder_getNativeFinalizer},
+        {"blockUntilThreadAvailable", "()V", (void*)android_os_Binder_blockUntilThreadAvailable},
+        {"getExtension", "()Landroid/os/IBinder;", (void*)android_os_Binder_getExtension},
+        {"setExtension", "(Landroid/os/IBinder;)V", (void*)android_os_Binder_setExtension},
 };
 
 const char* const kBinderPathName = "android/os/Binder";
