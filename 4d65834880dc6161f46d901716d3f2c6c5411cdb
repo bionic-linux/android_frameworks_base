@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "134cc2b0_50351015",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-07T15:50:12Z",
+      "side": 1,
+      "message": "We are planning to move all State.java related files from f/base to f/libs/modules-utils.\n\nThis CL is filling the only diff between internal master and AOSP.\nThis will allow us to not have merge conflict when we will moved the file across repo",
+      "revId": "4d65834880dc6161f46d901716d3f2c6c5411cdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
