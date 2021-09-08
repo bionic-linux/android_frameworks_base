@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5c48ea3_3f2fdde5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1692497
+      },
+      "writtenOn": "2021-09-08T14:06:05Z",
+      "side": 1,
+      "message": "Please help to review the AOSP change of free SMS shortcode requested by Tracfone",
+      "revId": "62ed2fee2ba6c5997094e1798542b3b1232a2af3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
