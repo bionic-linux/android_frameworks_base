@@ -16,6 +16,23 @@
       "message": "I would like to invite you to do the code review, thanks!",
       "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0535365f_3a978c40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-08T16:37:22Z",
+      "side": 1,
+      "message": "Andy, Eric, the issue looks very much like b/178363662 (see the stack in b/178363662#comment7). I can try testing the fix with the repro app code.",
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
