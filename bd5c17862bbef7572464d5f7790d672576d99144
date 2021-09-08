@@ -33,6 +33,46 @@
       "message": "Andy, Eric, the issue looks very much like b/178363662 (see the stack in b/178363662#comment7). I can try testing the fix with the repro app code.",
       "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7693ead4_c3bcb284",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-08T16:45:14Z",
+      "side": 1,
+      "message": "Thank you very much for digging down to the root of the problem! We will work on adopting the proposed soltion.",
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1cbf994_9d534cfd",
+        "filename": "media/jni/audioeffect/android_media_AudioEffect.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-08T16:45:14Z",
+      "side": 1,
+      "message": "This approach unfortunately isn\u0027t reliable as a fresh instance of `event_callback_cookie` could be placed immediately on top of deleted one.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 5
+      },
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
