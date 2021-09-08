@@ -21,6 +21,7 @@
 #define LOG_TAG "AudioEffects-JNI"
 
 #include <utils/Log.h>
+#include <utils/RWLock.h>
 #include <jni.h>
 #include <nativehelper/JNIHelp.h>
 #include <android_runtime/AndroidRuntime.h>
@@ -55,9 +56,20 @@ struct fields_t {
 };
 static fields_t fields;
 
+static const int OBJ_MAGIC = 0xdead4ead;
 struct effect_callback_cookie {
     jclass      audioEffect_class;  // AudioEffect class
     jobject     audioEffect_ref;    // AudioEffect object instance
+    jint        magic;              // mark obj dead
+    RWLock      rw_lock;            // concurrency control lock
+
+    effect_callback_cookie() {
+        magic = OBJ_MAGIC;
+    }
+
+    ~effect_callback_cookie() {
+        magic = 0x0;
+    }
  };
 
 // ----------------------------------------------------------------------------
@@ -174,6 +186,16 @@ static void effectCallback(int event, void* user, void *info) {
         break;
     }
 
+    {
+        RWLock::AutoRLock l(callbackInfo->rw_lock);
+        if (callbackInfo->magic != OBJ_MAGIC) {
+            ALOGW("AudioEffect released: callbackInfo %p, audioEffect_ref %p audioEffect_class %p",
+                    callbackInfo,
+                    callbackInfo->audioEffect_ref,
+                    callbackInfo->audioEffect_class);
+            goto effectCallback_Exit;
+        }
+    }
     env->CallStaticVoidMethod(
         callbackInfo->audioEffect_class,
         fields.midPostNativeEvent,
@@ -408,6 +430,7 @@ setup_failure:
     }
 
     if (lpJniStorage) {
+        RWLock::AutoWLock l(lpJniStorage->mCallbackData.rw_lock);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.audioEffect_class);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.audioEffect_ref);
         delete lpJniStorage;
@@ -442,6 +465,7 @@ static void android_media_AudioEffect_native_release(JNIEnv *env,  jobject thiz)
     env->SetLongField(thiz, fields.fidJniData, 0);
 
     if (lpJniStorage) {
+        RWLock::AutoWLock l(lpJniStorage->mCallbackData.rw_lock);
         ALOGV("deleting pJniStorage: %p\n", lpJniStorage);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.audioEffect_class);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.audioEffect_ref);
