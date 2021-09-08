@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "300c19c0_19da69ff",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-08T00:28:12Z",
+      "side": 1,
+      "message": "you might have to reset this, or consider \u0027// clang-format off\u0027 \u0027// clang-format on\u0027 tags before/after this",
+      "revId": "6e28ae74c7a503a83bde482ef9c0b37d69de9ad9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
