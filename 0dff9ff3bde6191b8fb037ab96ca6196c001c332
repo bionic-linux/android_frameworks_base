@@ -33,6 +33,23 @@
       "message": "Please note that this will make it not show the warning for any carrier in US.",
       "revId": "0dff9ff3bde6191b8fb037ab96ca6196c001c332",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffa23ad1_6cd38bbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1692497
+      },
+      "writtenOn": "2021-09-08T17:47:06Z",
+      "side": 1,
+      "message": "Hello Selim,\n\n  Could you help to review the sms short code change? The system marked as one of the file owner. Telephony member Amit already approved the change and Message TPM Sung Min already verified the change in the US.\n  \n  Please let me know if you have any questions.\n  \nThank you!\nShawn  \n",
+      "revId": "0dff9ff3bde6191b8fb037ab96ca6196c001c332",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
