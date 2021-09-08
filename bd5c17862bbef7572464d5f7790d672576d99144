@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23b8b962_4435744d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2021-09-08T07:53:42Z",
+      "side": 1,
+      "message": "I would like to invite you to do the code review, thanks!",
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
