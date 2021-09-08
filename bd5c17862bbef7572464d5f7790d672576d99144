@@ -73,6 +73,75 @@
       },
       "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "715029d5_3d1f6f9c",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-08T17:04:10Z",
+      "side": 1,
+      "message": "do we need a RWLock? these tend to be performant only on cases where there are lots of reader threads.  Can we reuse the callback_data_lock as a monitor lock for the entire struct?\n\ni would rather have the cookie itself be a refcounted object.",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0506b8ef_c77c8afd",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-08T17:04:10Z",
+      "side": 1,
+      "message": "seems to me you are deleting the rw_lock while holding it.",
+      "range": {
+        "startLine": 460,
+        "startChar": 0,
+        "endLine": 460,
+        "endChar": 28
+      },
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91d24843_add55d91",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-08T17:04:10Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 489,
+        "startChar": 0,
+        "endLine": 489,
+        "endChar": 28
+      },
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
