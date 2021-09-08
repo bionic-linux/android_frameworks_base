@@ -59,6 +59,7 @@ struct fields_t {
 };
 static fields_t fields;
 
+static const int OBJ_MAGIC = 0xdead4ead;
 struct visualizer_callback_cookie {
     jclass      visualizer_class;  // Visualizer class
     jobject     visualizer_ref;    // Visualizer object instance
@@ -73,13 +74,16 @@ struct visualizer_callback_cookie {
     Mutex       callback_data_lock;
     jbyteArray  waveform_data;
     jbyteArray  fft_data;
+    jint        magic;
 
     visualizer_callback_cookie() {
+        magic = OBJ_MAGIC;
         waveform_data = NULL;
         fft_data = NULL;
     }
 
     ~visualizer_callback_cookie() {
+        magic = 0x0;
         cleanupBuffers();
     }
 
@@ -190,6 +194,18 @@ static void captureCallback(void* user,
             jbyte *nArray = env->GetByteArrayElements(jArray, NULL);
             memcpy(nArray, waveform, waveformSize);
             env->ReleaseByteArrayElements(jArray, nArray, 0);
+
+            {
+                Mutex::Autolock l(sLock);
+                if (callbackInfo->magic != OBJ_MAGIC) {
+                    ALOGW("Visualizer realesed: callbackInfo %p, visualizer_ref %p visualizer_class %p",
+                            callbackInfo,
+                            callbackInfo->visualizer_ref,
+                            callbackInfo->visualizer_class);
+                    goto exit;
+                }
+            }
+
             env->CallStaticVoidMethod(
                 callbackInfo->visualizer_class,
                 fields.midPostNativeEvent,
@@ -210,6 +226,17 @@ static void captureCallback(void* user,
             jbyte *nArray = env->GetByteArrayElements(jArray, NULL);
             memcpy(nArray, fft, fftSize);
             env->ReleaseByteArrayElements(jArray, nArray, 0);
+
+            {
+                Mutex::Autolock l(sLock);
+                if (callbackInfo->magic != OBJ_MAGIC) {
+                    ALOGW("Visualizer realesed: callbackInfo %p, visualizer_ref %p visualizer_class %p",
+                            callbackInfo,
+                            callbackInfo->visualizer_ref,
+                            callbackInfo->visualizer_class);
+                    goto exit;
+                }
+            }
             env->CallStaticVoidMethod(
                 callbackInfo->visualizer_class,
                 fields.midPostNativeEvent,
@@ -220,6 +247,7 @@ static void captureCallback(void* user,
         }
     }
 
+exit:
     if (env->ExceptionCheck()) {
         env->ExceptionDescribe();
         env->ExceptionClear();
@@ -336,6 +364,16 @@ static void android_media_visualizer_effect_callback(int32_t event,
         visualizer_callback_cookie* callbackInfo = &lpJniStorage->mCallbackData;
         JNIEnv *env = AndroidRuntime::getJNIEnv();
 
+        {
+            Mutex::Autolock l(sLock);
+            if (callbackInfo->magic != OBJ_MAGIC) {
+                ALOGW("Visualizer realesed: callbackInfo %p, visualizer_ref %p visualizer_class %p",
+                        callbackInfo,
+                        callbackInfo->visualizer_ref,
+                        callbackInfo->visualizer_class);
+                return;
+            }
+        }
         env->CallStaticVoidMethod(
             callbackInfo->visualizer_class,
             fields.midPostNativeEvent,
@@ -359,10 +397,13 @@ android_media_visualizer_native_setup(JNIEnv *env, jobject thiz, jobject weak_th
 
     setVisualizer(env, thiz, 0);
 
-    lpJniStorage = new VisualizerJniStorage();
-    if (lpJniStorage == NULL) {
-        ALOGE("setup: Error creating JNI Storage");
-        goto setup_failure;
+    {
+        Mutex::Autolock l(sLock);
+        lpJniStorage = new VisualizerJniStorage();
+        if (lpJniStorage == NULL) {
+            ALOGE("setup: Error creating JNI Storage");
+            goto setup_failure;
+        }
     }
 
     lpJniStorage->mCallbackData.visualizer_class = (jclass)env->NewGlobalRef(fields.clazzEffect);
@@ -422,6 +463,7 @@ setup_failure:
     }
 
     if (lpJniStorage) {
+        Mutex::Autolock l(sLock);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.visualizer_class);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.visualizer_ref);
         delete lpJniStorage;
@@ -449,6 +491,7 @@ static void android_media_visualizer_native_release(JNIEnv *env,  jobject thiz) 
     env->SetLongField(thiz, fields.fidJniData, 0);
 
     if (lpJniStorage) {
+        Mutex::Autolock l(sLock);
         ALOGV("deleting pJniStorage: %p\n", lpJniStorage);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.visualizer_class);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.visualizer_ref);

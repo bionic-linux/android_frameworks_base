@@ -55,9 +55,19 @@ struct fields_t {
 };
 static fields_t fields;
 
+static const int OBJ_MAGIC = 0xdead4ead;
 struct effect_callback_cookie {
     jclass      audioEffect_class;  // AudioEffect class
     jobject     audioEffect_ref;    // AudioEffect object instance
+    jint        magic;              // mark obj dead
+
+    effect_callback_cookie() {
+        magic = OBJ_MAGIC;
+    }
+
+    ~effect_callback_cookie() {
+        magic = 0x0;
+    }
  };
 
 // ----------------------------------------------------------------------------
@@ -174,6 +184,16 @@ static void effectCallback(int event, void* user, void *info) {
         break;
     }
 
+    {
+        Mutex::Autolock l(sLock);
+        if (callbackInfo->magic != OBJ_MAGIC) {
+            ALOGW("AudioEffect released: callbackInfo %p, audioEffect_ref %p audioEffect_class %p",
+                    callbackInfo,
+                    callbackInfo->audioEffect_ref,
+                    callbackInfo->audioEffect_class);
+            goto effectCallback_Exit;
+        }
+    }
     env->CallStaticVoidMethod(
         callbackInfo->audioEffect_class,
         fields.midPostNativeEvent,
@@ -308,10 +328,13 @@ android_media_AudioEffect_native_setup(JNIEnv *env, jobject thiz, jobject weak_t
         goto setup_failure;
     }
 
-    lpJniStorage = new AudioEffectJniStorage();
-    if (lpJniStorage == NULL) {
-        ALOGE("setup: Error creating JNI Storage");
-        goto setup_failure;
+    {
+        Mutex::Autolock l(sLock);
+        lpJniStorage = new AudioEffectJniStorage();
+        if (lpJniStorage == NULL) {
+            ALOGE("setup: Error creating JNI Storage");
+            goto setup_failure;
+        }
     }
 
     lpJniStorage->mCallbackData.audioEffect_class = (jclass)env->NewGlobalRef(fields.clazzEffect);
@@ -408,6 +431,7 @@ setup_failure:
     }
 
     if (lpJniStorage) {
+        Mutex::Autolock l(sLock);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.audioEffect_class);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.audioEffect_ref);
         delete lpJniStorage;
@@ -442,6 +466,7 @@ static void android_media_AudioEffect_native_release(JNIEnv *env,  jobject thiz)
     env->SetLongField(thiz, fields.fidJniData, 0);
 
     if (lpJniStorage) {
+        Mutex::Autolock l(sLock);
         ALOGV("deleting pJniStorage: %p\n", lpJniStorage);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.audioEffect_class);
         env->DeleteGlobalRef(lpJniStorage->mCallbackData.audioEffect_ref);
