@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd042ee2_c535671f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-08T01:09:24Z",
+      "side": 1,
+      "message": "do we have data for how the lazy bundle performance works after this change?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "51fb99996564e08dde46aa67fe769ac652065000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e591cf3_df589647",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-08T01:09:24Z",
+      "side": 1,
+      "message": "should we have a new test for this?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 162
+      },
+      "revId": "51fb99996564e08dde46aa67fe769ac652065000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4cd2eb73_21581431",
@@ -14,6 +60,75 @@
       "writtenOn": "2021-09-07T14:18:55Z",
       "side": 1,
       "message": "I\u0027m exploring Jeff\u0027s suggestion on http://b/198355758#comment17, so marking as WIP for now.",
+      "revId": "51fb99996564e08dde46aa67fe769ac652065000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "892c11fd_4b482a84",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-08T01:09:24Z",
+      "side": 1,
+      "message": "Why is mLock needed instead of this? I don\u0027t quite understand, but not very familiar w/ the code here.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 29
+      },
+      "revId": "51fb99996564e08dde46aa67fe769ac652065000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "125c9718_7012bd95",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-08T01:09:24Z",
+      "side": 1,
+      "message": "could these s delegate or be made to delegate?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 29
+      },
+      "revId": "51fb99996564e08dde46aa67fe769ac652065000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70d25f44_88b0deb7",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-09-08T01:09:24Z",
+      "side": 1,
+      "message": "this seems like it is largely a copy of copyInternal. Could you add a new lock argument to that function instead?",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 9
+      },
       "revId": "51fb99996564e08dde46aa67fe769ac652065000",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
