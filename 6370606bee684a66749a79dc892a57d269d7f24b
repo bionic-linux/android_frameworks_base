@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb903c12_8c92bdd1",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-08T08:21:20Z",
+      "side": 1,
+      "message": "Why do we check TURNING_OFF but not BLE_TURNING_OFF ?\n\nAnd if we want to add BLE_TURNING_OFF, shouldn\u0027t we replace the condition by \n`mState !\u003d BluetoothAdapter.STATE_OFF` ? (like the disableBle line 961)",
+      "range": {
+        "startLine": 934,
+        "startChar": 46,
+        "endLine": 934,
+        "endChar": 63
+      },
+      "revId": "6370606bee684a66749a79dc892a57d269d7f24b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
