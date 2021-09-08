@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fac3b253_0844be45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1706850
+      },
+      "writtenOn": "2021-09-08T16:41:46Z",
+      "side": 1,
+      "message": "\u003e Patch Set 1:\n\u003e \n\u003e (1 comment)\n\u003e \n\u003e This change is ready for review.",
+      "revId": "0dff9ff3bde6191b8fb037ab96ca6196c001c332",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
