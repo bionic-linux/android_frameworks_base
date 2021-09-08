@@ -16,6 +16,23 @@
       "message": "\u003e Patch Set 1:\n\u003e \n\u003e (1 comment)\n\u003e \n\u003e This change is ready for review.",
       "revId": "0dff9ff3bde6191b8fb037ab96ca6196c001c332",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77238a19_c646a2f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1054648
+      },
+      "writtenOn": "2021-09-08T17:19:10Z",
+      "side": 1,
+      "message": "Please note that this will make it not show the warning for any carrier in US.",
+      "revId": "0dff9ff3bde6191b8fb037ab96ca6196c001c332",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
