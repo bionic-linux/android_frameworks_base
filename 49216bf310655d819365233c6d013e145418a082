@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e71a742c_75efa43e",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-09-09T21:34:57Z",
+      "side": 1,
+      "message": "As mentioned in the other comment thread, we should use the @RequiresPermission annotation. That is the new preferred way to document permission requirements because it tracks as part of the API. We can remove the permission requirement from the JavaDoc as it is automatically added by the annotation.",
+      "revId": "49216bf310655d819365233c6d013e145418a082",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdf38ffb_4a99f98a",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-09-09T21:34:57Z",
+      "side": 1,
+      "message": "Would elevate this to BLUETOOTH_PRIVILEGED as it is not public API.",
+      "revId": "49216bf310655d819365233c6d013e145418a082",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4c7d8c0_49c6116e",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-09-09T21:34:57Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to match the annotation. We can remove this in favor of the annotation.",
+      "revId": "49216bf310655d819365233c6d013e145418a082",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e5da3c9_a278b519",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-09-09T21:34:57Z",
+      "side": 1,
+      "message": "Documented return value seems inconsistent with the return type",
+      "revId": "49216bf310655d819365233c6d013e145418a082",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "893982ae_3532291e",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-09-09T21:34:57Z",
+      "side": 1,
+      "message": "SystemApi, so should require BLUETOOTH_PRIVILEGED",
+      "revId": "49216bf310655d819365233c6d013e145418a082",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd8f4b21_ae046a76",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-09-09T21:34:57Z",
+      "side": 1,
+      "message": "SystemApi, so should require BLUETOOTH_PRIVILEGED",
+      "revId": "49216bf310655d819365233c6d013e145418a082",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

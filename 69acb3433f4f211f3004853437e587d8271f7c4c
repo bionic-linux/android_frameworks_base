@@ -210,6 +210,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "38613e31_05f9a46e",
+        "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-09-09T21:34:57Z",
+      "side": 1,
+      "message": "You should use the annotation and omit it from the JavaDoc. The annotation automatically generates the JavaDoc and is also tracked for API change purposes. We have it in the JavaDoc for many profiles because that was the recommended pattern back when those were developed.\n\nAs for which permission to use, try to match it to the class visibility. If a broadcast is public API, then I assume we want 3P apps to be using it. Therefore, it should require either BLUETOOTH or BLUETOOTH_ADMIN permission. Other public API classes have this broadcast require BLUETOOTH permission. If it\u0027s a @SystemApi, it should require BLUETOOTH_PRIVILEGED permission.",
+      "parentUuid": "e476b547_dc3a79c6",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 73
+      },
+      "revId": "69acb3433f4f211f3004853437e587d8271f7c4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff1c92bb_8947b97f",
         "filename": "core/java/android/bluetooth/BluetoothCsipSetCoordinator.java",
         "patchSetId": 7
