@@ -50,6 +50,23 @@
       "message": "Hello Selim,\n\n  Could you help to review the sms short code change? The system marked as one of the file owner. Telephony member Amit already approved the change and Message TPM Sung Min already verified the change in the US.\n  \n  Please let me know if you have any questions.\n  \nThank you!\nShawn  \n",
       "revId": "0dff9ff3bde6191b8fb037ab96ca6196c001c332",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3859d374_e46d30a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1706850
+      },
+      "writtenOn": "2021-09-09T17:27:42Z",
+      "side": 1,
+      "message": "Update from TracFone - 611611 is free for all carriers in U.S. ",
+      "revId": "0dff9ff3bde6191b8fb037ab96ca6196c001c332",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
