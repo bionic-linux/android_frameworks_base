@@ -69,6 +69,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48a22576_a130e92f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2021-09-10T03:42:59Z",
+      "side": 1,
+      "message": "Can you share this ‘b/178363662’ to me？",
+      "parentUuid": "0535365f_3a978c40",
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1cbf994_9d534cfd",
@@ -82,6 +100,30 @@
       "writtenOn": "2021-09-08T16:45:14Z",
       "side": 1,
       "message": "This approach unfortunately isn\u0027t reliable as a fresh instance of `event_callback_cookie` could be placed immediately on top of deleted one.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 5
+      },
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6288932a_06212564",
+        "filename": "media/jni/audioeffect/android_media_AudioEffect.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2021-09-10T03:42:59Z",
+      "side": 1,
+      "message": "You are right, I\u0027m thinking what to do.",
+      "parentUuid": "d1cbf994_9d534cfd",
       "range": {
         "startLine": 66,
         "startChar": 0,
@@ -117,6 +159,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "32a84bd9_d592205d",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2021-09-10T03:42:59Z",
+      "side": 1,
+      "message": "I think can\u0027t reuse the callback_data_lock. \nexp:\n   0x0000000000004bc8 \u003c+132\u003e:\tmov\tx0, x21\n   0x0000000000004bcc \u003c+136\u003e:\tbl\t0x9760 \u003cpthread_rwlock_wrlock@plt\u003e\n   0x0000000000004bd0 \u003c+140\u003e:\tldr\tx8, [x19]\n   0x0000000000004bd4 \u003c+144\u003e:\tldr\tx1, [x20]\n   0x0000000000004bd8 \u003c+148\u003e:\tldr\tx8, [x8, #176]\n   0x0000000000004bdc \u003c+152\u003e:\tmov\tx0, x19\n   0x0000000000004be0 \u003c+156\u003e:\tblr\tx8\n   0x0000000000004be4 \u003c+160\u003e:\tldr\tx8, [x19]\n   0x0000000000004be8 \u003c+164\u003e:\tldr\tx1, [x20, #8]\n   0x0000000000004bec \u003c+168\u003e:\tldr\tx8, [x8, #176]\n   0x0000000000004bf0 \u003c+172\u003e:\tmov\tx0, x19\n   0x0000000000004bf4 \u003c+176\u003e:\tblr\tx8\n   0x0000000000004bf8 \u003c+180\u003e:\tstr\twzr, [x20, #16]\n   0x0000000000004bfc \u003c+184\u003e:\tmov\tx0, x21     \n   0x0000000000004c00 \u003c+188\u003e:\tbl\t0x9600 \u003cpthread_rwlock_destroy@plt\u003e\n   0x0000000000004c04 \u003c+192\u003e:\tmov\tx0, x20\n   0x0000000000004c08 \u003c+196\u003e:\tbl\t0x9750 \u003c_ZdlPv@plt\u003e  \u003c\u003c\u003c-- free lpJniStorage  memory\n   0x0000000000004c0c \u003c+200\u003e:\tmov\tx0, x21       \u003c\u003c\u003c --- maybe dirty\n   0x0000000000004c10 \u003c+204\u003e:\tbl\t0x9770 \u003cpthread_rwlock_unlock@plt\u003e \u003c\u003c not safe\n\n\nWe should use \u0027static Mutex sLock or static RWLock sRWLock\u0027 \nexp:  \n   0x0000000000004bb0 \u003c+136\u003e:\tmov\tx0, x20   \u003c\u003c  sRWLock\n   0x0000000000004bb4 \u003c+140\u003e:\tbl\t0x9730 \u003cpthread_rwlock_wrlock@plt\u003e\n   0x0000000000004bb8 \u003c+144\u003e:\tldr\tx8, [x19]\n   0x0000000000004bbc \u003c+148\u003e:\tldr\tx1, [x21]\n   0x0000000000004bc0 \u003c+152\u003e:\tldr\tx8, [x8, #176]\n   0x0000000000004bc4 \u003c+156\u003e:\tmov\tx0, x19\n   0x0000000000004bc8 \u003c+160\u003e:\tblr\tx8\n   0x0000000000004bcc \u003c+164\u003e:\tldr\tx8, [x19]\n   0x0000000000004bd0 \u003c+168\u003e:\tldr\tx1, [x21, #8]\n   0x0000000000004bd4 \u003c+172\u003e:\tldr\tx8, [x8, #176]\n   0x0000000000004bd8 \u003c+176\u003e:\tmov\tx0, x19\n   0x0000000000004bdc \u003c+180\u003e:\tblr\tx8\n   0x0000000000004be0 \u003c+184\u003e:\tstr\twzr, [x21, #16]\n   0x0000000000004be4 \u003c+188\u003e:\tmov\tx0, x21\n   0x0000000000004be8 \u003c+192\u003e:\tbl\t0x9720 \u003c_ZdlPv@plt\u003e \n   0x0000000000004bec \u003c+196\u003e:\tmov\tx0, x20   \n   0x0000000000004bf0 \u003c+200\u003e:\tbl\t0x9740 \u003cpthread_rwlock_unlock@plt\u003e",
+      "parentUuid": "715029d5_3d1f6f9c",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0506b8ef_c77c8afd",
         "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
         "patchSetId": 2
@@ -128,6 +194,30 @@
       "writtenOn": "2021-09-08T17:04:10Z",
       "side": 1,
       "message": "seems to me you are deleting the rw_lock while holding it.",
+      "range": {
+        "startLine": 460,
+        "startChar": 0,
+        "endLine": 460,
+        "endChar": 28
+      },
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ececa849_1d445c2d",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2021-09-10T03:42:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0506b8ef_c77c8afd",
       "range": {
         "startLine": 460,
         "startChar": 0,
@@ -151,6 +241,30 @@
       "writtenOn": "2021-09-08T17:04:10Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 489,
+        "startChar": 0,
+        "endLine": 489,
+        "endChar": 28
+      },
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38ffdd65_db04b26d",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1838859
+      },
+      "writtenOn": "2021-09-10T03:42:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91d24843_add55d91",
       "range": {
         "startLine": 489,
         "startChar": 0,
