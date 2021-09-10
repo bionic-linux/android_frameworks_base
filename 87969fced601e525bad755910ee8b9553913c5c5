@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15e1a2f9_8dade456",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-10T02:24:04Z",
+      "side": 1,
+      "message": "Not sure why 15~17 were skipped. I think we could define it as 15 since we are updating it anyway(from Protocol.BASE_NSD_MANAGER+18 to 18). Otherwise, it looks weird that the numbers are assigned randomly(?).",
+      "range": {
+        "startLine": 185,
+        "startChar": 70,
+        "endLine": 185,
+        "endChar": 72
+      },
+      "revId": "87969fced601e525bad755910ee8b9553913c5c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f90aa80d_96fbf62f",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-10T02:24:04Z",
+      "side": 1,
+      "message": "It looks like the import missing here?",
+      "range": {
+        "startLine": 625,
+        "startChar": 12,
+        "endLine": 625,
+        "endChar": 21
+      },
+      "revId": "87969fced601e525bad755910ee8b9553913c5c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df65dc79_2d163972",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-10T02:24:04Z",
+      "side": 1,
+      "message": "missing import",
+      "range": {
+        "startLine": 696,
+        "startChar": 8,
+        "endLine": 696,
+        "endChar": 15
+      },
+      "revId": "87969fced601e525bad755910ee8b9553913c5c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

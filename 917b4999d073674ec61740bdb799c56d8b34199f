@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fce47188_53fb773b",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2021-09-10T02:24:04Z",
+      "side": 0,
+      "message": "Do we need to mark it @Deprecated or something that indicates it\u0027s no longer referred?",
+      "range": {
+        "startLine": 157,
+        "startChar": 45,
+        "endLine": 157,
+        "endChar": 61
+      },
+      "revId": "917b4999d073674ec61740bdb799c56d8b34199f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
