@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "65cf38e4_b38bee46",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-09-11T09:03:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba0827a_5a6f9652",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 50
+      },
+      "revId": "d044b8e8b45a2eea8d1223f2a5445a53b1832e81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f8e0810a_b9891b8d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 7
@@ -37,6 +61,24 @@
       "writtenOn": "2021-09-06T05:11:12Z",
       "side": 1,
       "message": "How did you check that no callers are affected by this ?\n- I can see a lot of calls to some of the constructors and/or the factory methods, and I think this will change the behavior\n- OEMs can have used this in unspecified ways\n- NetworkTemplate(int, String, String) is @UnsupportedAppUsage, so some apps are using it. The same goes with buildNetworkTemplateMobileAll and buildNetworkTemplateWildcard\n\nIf we move to a new API in T and make this Mainline, the internal callers will be dealt with, but @UnsupportedAppUsage will have to stay\n",
+      "revId": "d044b8e8b45a2eea8d1223f2a5445a53b1832e81",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05b83481_83bd1f21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-09-11T09:03:49Z",
+      "side": 1,
+      "message": "Refine the constructor to keep the original behavior.",
+      "parentUuid": "f8e0810a_b9891b8d",
       "revId": "d044b8e8b45a2eea8d1223f2a5445a53b1832e81",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
