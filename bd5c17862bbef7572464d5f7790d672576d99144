@@ -87,6 +87,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d58761bd_852de661",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-11T01:25:13Z",
+      "side": 1,
+      "message": "Unfortunately no. Partners can only see bugs filed by their company.\n\nI\u0027ve uploaded changes to the EffectsTest app which reproduce this issue easily. Please see https://android-review.googlesource.com/c/platform/frameworks/base/+/1824432.\n\nAs far as I understand, there are several problems with the AudioEffects code:\n\n1. android_media_AudioEffect_native_release can delete JVM references while or before effectCallback is accessing them. android_media_AudioEffect_native_setup should avoid sharing a pointer to event_callback_cookie directly with android::AudioEffect.\n\n2. Holding sp\u003cAudioEffect\u003e while android_media_AudioEffect_native_release is running allows android::AudioEffect::EffectClient call any methods on it in parallel, since callback run on a Binder thread.\n\nAdding more locking serializes code execution, but at the same time increases chances for introducing deadlocks and also hurts performance. We are working on addressing the issues at the root of the problem instead.",
+      "parentUuid": "48a22576_a130e92f",
+      "revId": "bd5c17862bbef7572464d5f7790d672576d99144",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1cbf994_9d534cfd",
