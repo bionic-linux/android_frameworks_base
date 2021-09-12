@@ -18,6 +18,7 @@ package android.nfc;
 
 import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
+import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
 import android.annotation.SdkConstant.SdkConstantType;
@@ -523,6 +524,20 @@ public final class NfcAdapter {
          */
         public boolean onUnlockAttempted(Tag tag);
     }
+
+    /**
+     * A callback to be invoked when the DTA pattern number setup complete
+     * <p>Register your {@code SetDtaPatternNoCompleteCallback} implementation with {@link
+     * NfcAdapter#setDtaPatternNo}.
+     * @see NfcAdapter#setDtaPatternNo
+     */
+    public interface SetDtaPatternNoCompleteCallback {
+        /**
+         * Called at DTA pattern number setup complete.
+         */
+        void onDtaPatternSetupNoComplete();
+    }
+
 
     /**
      * Helper to check if this device has FEATURE_NFC_BEAM, but without using
@@ -2376,5 +2391,22 @@ public final class NfcAdapter {
     public void unregisterControllerAlwaysOnListener(
             @NonNull ControllerAlwaysOnListener listener) {
         mControllerAlwaysOnListener.unregister(listener);
+    }
+
+
+    /**
+     * Set the NFC controller to a pattern number based test profile(Configuration Parameters)
+     * defined in NFC Forum Device Test Application(DTA) Specification.
+     *
+     * @param activity the Activity that requests the adapter to set the pattern number.
+     * @param dtaPatternNo the pattern number to be configured.
+     * @param setCompleteCallback the callback to be called when the test profile setup complete.
+     * @return True if the dtaPatternNo value is valid, false otherwise
+     */
+    @RequiresPermission(android.Manifest.permission.NFC_FORUM_TEST)
+    public boolean setDtaPatternNo(@NonNull Activity activity,
+            @NonNull NfcDtaPatternNumber dtaPatternNo,
+            @Nullable NfcAdapter.SetDtaPatternNoCompleteCallback setCompleteCallback) {
+        return mNfcActivityManager.setDtaPatternNo(activity, dtaPatternNo, setCompleteCallback);
     }
 }

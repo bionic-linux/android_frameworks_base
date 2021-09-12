@@ -114,6 +114,7 @@ package android {
     field public static final String MOUNT_UNMOUNT_FILESYSTEMS = "android.permission.MOUNT_UNMOUNT_FILESYSTEMS";
     field public static final String NEARBY_WIFI_DEVICES = "android.permission.NEARBY_WIFI_DEVICES";
     field public static final String NFC = "android.permission.NFC";
+    field public static final String NFC_FORUM_TEST = "android.permission.NFC_FORUM_TEST";
     field public static final String NFC_PREFERRED_PAYMENT_INFO = "android.permission.NFC_PREFERRED_PAYMENT_INFO";
     field public static final String NFC_TRANSACTION_EVENT = "android.permission.NFC_TRANSACTION_EVENT";
     field public static final String PACKAGE_USAGE_STATS = "android.permission.PACKAGE_USAGE_STATS";
@@ -27271,6 +27272,7 @@ package android.nfc {
     method public boolean isSecureNfcSupported();
     method @Deprecated public void setBeamPushUris(android.net.Uri[], android.app.Activity);
     method @Deprecated public void setBeamPushUrisCallback(android.nfc.NfcAdapter.CreateBeamUrisCallback, android.app.Activity);
+    method @RequiresPermission(android.Manifest.permission.NFC_FORUM_TEST) public boolean setDtaPatternNo(@NonNull android.app.Activity, @NonNull android.nfc.NfcDtaPatternNumber, @Nullable android.nfc.NfcAdapter.SetDtaPatternNoCompleteCallback);
     method @Deprecated public void setNdefPushMessage(android.nfc.NdefMessage, android.app.Activity, android.app.Activity...);
     method @Deprecated public void setNdefPushMessageCallback(android.nfc.NfcAdapter.CreateNdefMessageCallback, android.app.Activity, android.app.Activity...);
     method @Deprecated public void setOnNdefPushCompleteCallback(android.nfc.NfcAdapter.OnNdefPushCompleteCallback, android.app.Activity, android.app.Activity...);
@@ -27323,6 +27325,28 @@ package android.nfc {
 
   public static interface NfcAdapter.ReaderCallback {
     method public void onTagDiscovered(android.nfc.Tag);
+  }
+
+  public static interface NfcAdapter.SetDtaPatternNoCompleteCallback {
+    method public void onDtaPatternSetupNoComplete();
+  }
+
+  public class NfcDtaPatternNumber {
+    ctor public NfcDtaPatternNumber();
+    ctor public NfcDtaPatternNumber(int);
+    method public int getValue();
+    field public static final int PN_0000 = 0; // 0x0
+    field public static final int PN_0001 = 1; // 0x1
+    field public static final int PN_0002 = 2; // 0x2
+    field public static final int PN_0003 = 3; // 0x3
+    field public static final int PN_0004 = 4; // 0x4
+    field public static final int PN_0005 = 5; // 0x5
+    field public static final int PN_0006 = 6; // 0x6
+    field public static final int PN_0007 = 7; // 0x7
+    field public static final int PN_0008 = 8; // 0x8
+    field public static final int PN_0009 = 9; // 0x9
+    field public static final int PN_ERR = -2; // 0xfffffffe
+    field public static final int PN_NONE = -1; // 0xffffffff
   }
 
   public final class NfcEvent {
