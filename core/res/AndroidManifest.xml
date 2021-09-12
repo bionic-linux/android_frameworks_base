@@ -2056,6 +2056,14 @@
     <permission android:name="android.permission.NFC_SET_CONTROLLER_ALWAYS_ON"
         android:protectionLevel="signature|privileged" />
 
+    <!-- Allows applications to setup NFC controller for NFC forum tests.
+         <p>Protection level: dangerous
+    -->
+    <permission android:name="android.permission.NFC_FORUM_TEST"
+        android:description="@string/permdesc_nfc_forum_test"
+        android:label="@string/permlab_nfc_forum_test"
+        android:protectionLevel="dangerous" />
+
     <!-- @SystemApi Allows an internal user to use privileged SecureElement APIs.
          Applications holding this permission can access OMAPI reset system API
          and bypass OMAPI AccessControlEnforcer.

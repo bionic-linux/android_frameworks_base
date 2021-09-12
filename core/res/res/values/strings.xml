@@ -1574,6 +1574,12 @@
     <string name="permdesc_preferredPaymentInfo">Allows the app to get preferred nfc payment service information like
       registered aids and route destination.</string>
 
+
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. [CHAR LIMIT=50]-->
+    <string name="permlab_nfc_forum_test">Gives NFC Forum Test App Access</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. [CHAR LIMIT=120]-->
+    <string name="permdesc_nfc_forum_test">Allows the app to get NFC Forum pattern based config access</string>
+
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_nfc">control Near Field Communication</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->

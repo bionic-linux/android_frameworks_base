@@ -27,4 +27,5 @@ interface IAppCallback
     BeamShareData createBeamShareData(byte peerLlcpVersion);
     oneway void onNdefPushComplete(byte peerLlcpVersion);
     oneway void onTagDiscovered(in Tag tag);
+    oneway void onDtaPatternNoSetupComplete();
 }
