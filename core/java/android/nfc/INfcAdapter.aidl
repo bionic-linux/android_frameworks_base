@@ -78,4 +78,5 @@ interface INfcAdapter
     boolean isControllerAlwaysOnSupported();
     void registerControllerAlwaysOnListener(in INfcControllerAlwaysOnListener listener);
     void unregisterControllerAlwaysOnListener(in INfcControllerAlwaysOnListener listener);
+    boolean setDtaPatternNo(IBinder b, IAppCallback callback, int dtaPatternNo);
 }

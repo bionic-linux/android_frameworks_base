@@ -105,6 +105,7 @@ package android {
     field public static final String MOUNT_FORMAT_FILESYSTEMS = "android.permission.MOUNT_FORMAT_FILESYSTEMS";
     field public static final String MOUNT_UNMOUNT_FILESYSTEMS = "android.permission.MOUNT_UNMOUNT_FILESYSTEMS";
     field public static final String NFC = "android.permission.NFC";
+    field public static final String NFC_FORUM_TEST = "android.permission.NFC_FORUM_TEST";
     field public static final String NFC_PREFERRED_PAYMENT_INFO = "android.permission.NFC_PREFERRED_PAYMENT_INFO";
     field public static final String NFC_TRANSACTION_EVENT = "android.permission.NFC_TRANSACTION_EVENT";
     field public static final String PACKAGE_USAGE_STATS = "android.permission.PACKAGE_USAGE_STATS";
@@ -25822,6 +25823,7 @@ package android.nfc {
     method public boolean isSecureNfcSupported();
     method @Deprecated public void setBeamPushUris(android.net.Uri[], android.app.Activity);
     method @Deprecated public void setBeamPushUrisCallback(android.nfc.NfcAdapter.CreateBeamUrisCallback, android.app.Activity);
+    method @RequiresPermission(android.Manifest.permission.NFC_FORUM_TEST) public boolean setDtaPatternNo(@NonNull android.app.Activity, int, @Nullable android.nfc.NfcAdapter.SetDtaPatternNoCompleteCallback);
     method @Deprecated public void setNdefPushMessage(android.nfc.NdefMessage, android.app.Activity, android.app.Activity...);
     method @Deprecated public void setNdefPushMessageCallback(android.nfc.NfcAdapter.CreateNdefMessageCallback, android.app.Activity, android.app.Activity...);
     method @Deprecated public void setOnNdefPushCompleteCallback(android.nfc.NfcAdapter.OnNdefPushCompleteCallback, android.app.Activity, android.app.Activity...);
@@ -25874,6 +25876,10 @@ package android.nfc {
 
   public static interface NfcAdapter.ReaderCallback {
     method public void onTagDiscovered(android.nfc.Tag);
+  }
+
+  public static interface NfcAdapter.SetDtaPatternNoCompleteCallback {
+    method public void onDtaPatternSetupNoComplete();
   }
 
   public final class NfcEvent {

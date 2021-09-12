@@ -23,6 +23,7 @@ import android.content.ContentProvider;
 import android.content.Intent;
 import android.net.Uri;
 import android.nfc.NfcAdapter.ReaderCallback;
+import android.nfc.NfcAdapter.SetDtaPatternNoCompleteCallback;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -117,7 +118,9 @@ public final class NfcActivityManager extends IAppCallback.Stub
         Uri[] uris = null;
         int flags = 0;
         int readerModeFlags = 0;
+        int mDtaPatternNo = 0;
         NfcAdapter.ReaderCallback readerCallback = null;
+        SetDtaPatternNoCompleteCallback mDtaCallback = null;
         Bundle readerModeExtras = null;
         Binder token;
 
@@ -202,6 +205,24 @@ public final class NfcActivityManager extends IAppCallback.Stub
         mApps = new ArrayList<NfcApplicationState>(1);  // Android VM usually has 1 app
     }
 
+    /** update dta pattern number only when the activity is resumed */
+    public boolean setDtaPatternNo(Activity activity, int dtaPatternNo,
+            SetDtaPatternNoCompleteCallback setCompleteCallback) {
+        boolean isResumed;
+        Binder token;
+        synchronized (NfcActivityManager.this) {
+            NfcActivityState state = getActivityState(activity);
+            state.mDtaCallback = setCompleteCallback;
+            state.mDtaPatternNo = dtaPatternNo;
+            token = state.token;
+            isResumed = state.resumed;
+        }
+        if (isResumed) {
+            return updatePatternNo(token, dtaPatternNo);
+        }
+        return false;
+    }
+
     public void enableReaderMode(Activity activity, ReaderCallback callback, int flags,
             Bundle extras) {
         boolean isResumed;
@@ -234,6 +255,17 @@ public final class NfcActivityManager extends IAppCallback.Stub
             setReaderMode(token, 0, null);
         }
 
+    }
+
+    /** set dta pattern number to NfcService */
+    public boolean updatePatternNo(Binder token, int patternNo) {
+        if (DBG) Log.d(TAG, "Setting reader mode");
+        try {
+            return NfcAdapter.sService.setDtaPatternNo(token, this, patternNo);
+        } catch (RemoteException e) {
+            mAdapter.attemptDeadServiceRecovery(e);
+            return false;
+        }
     }
 
     public void setReaderMode(Binder token, int flags, Bundle extras) {
@@ -447,6 +479,22 @@ public final class NfcActivityManager extends IAppCallback.Stub
         }
 
     }
+
+    @Override
+    public void onDtaPatternNoSetupComplete() throws RemoteException {
+        SetDtaPatternNoCompleteCallback callback;
+        synchronized (NfcActivityManager.this) {
+            NfcActivityState state = findResumedActivityState();
+            if (state == null) return;
+
+            callback = state.mDtaCallback;
+        }
+        // Make callback without lock
+        if (callback != null) {
+            callback.onDtaPatternSetupNoComplete();
+        }
+    }
+
     /** Callback from Activity life-cycle, on main thread */
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) { /* NO-OP */ }
@@ -459,6 +507,7 @@ public final class NfcActivityManager extends IAppCallback.Stub
     @Override
     public void onActivityResumed(Activity activity) {
         int readerModeFlags = 0;
+        int dtaPatternNo = 0;
         Bundle readerModeExtras = null;
         Binder token;
         synchronized (NfcActivityManager.this) {
@@ -469,9 +518,13 @@ public final class NfcActivityManager extends IAppCallback.Stub
             token = state.token;
             readerModeFlags = state.readerModeFlags;
             readerModeExtras = state.readerModeExtras;
+            dtaPatternNo = state.mDtaPatternNo;
         }
         if (readerModeFlags != 0) {
             setReaderMode(token, readerModeFlags, readerModeExtras);
+        }
+        if (dtaPatternNo != 0) {
+            updatePatternNo(token, dtaPatternNo);
         }
         requestNfcServiceCallback();
     }
@@ -480,6 +533,7 @@ public final class NfcActivityManager extends IAppCallback.Stub
     @Override
     public void onActivityPaused(Activity activity) {
         boolean readerModeFlagsSet;
+        boolean dtaPatternNoSet;
         Binder token;
         synchronized (NfcActivityManager.this) {
             NfcActivityState state = findActivityState(activity);
@@ -488,10 +542,15 @@ public final class NfcActivityManager extends IAppCallback.Stub
             state.resumed = false;
             token = state.token;
             readerModeFlagsSet = state.readerModeFlags != 0;
+            dtaPatternNoSet = state.mDtaPatternNo != 0;
         }
         if (readerModeFlagsSet) {
             // Restore default p2p modes
             setReaderMode(token, 0, null);
+        }
+        if (dtaPatternNoSet) {
+            // Restore default pattern number
+            updatePatternNo(token, 0);
         }
     }
 
