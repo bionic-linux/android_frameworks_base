@@ -25840,6 +25840,7 @@ package android.nfc {
     field public static final String EXTRA_READER_PRESENCE_CHECK_DELAY = "presence";
     field public static final String EXTRA_SECURE_ELEMENT_NAME = "android.nfc.extra.SECURE_ELEMENT_NAME";
     field public static final String EXTRA_TAG = "android.nfc.extra.TAG";
+    field public static final int FLAG_READER_NDEF_CHECK_ONLY = 64; // 0x40
     field public static final int FLAG_READER_NFC_A = 1; // 0x1
     field public static final int FLAG_READER_NFC_B = 2; // 0x2
     field public static final int FLAG_READER_NFC_BARCODE = 16; // 0x10
