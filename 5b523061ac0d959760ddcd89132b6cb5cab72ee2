@@ -1,0 +1,212 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015274223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1824614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1c060ace_fe913f83",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/BluetoothEventManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-12T08:29:35Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 352,
+        "endChar": 107
+      },
+      "revId": "5b523061ac0d959760ddcd89132b6cb5cab72ee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015274223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1824614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ab408362_c87eae51",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-12T08:29:35Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 106,
+        "startChar": 93,
+        "endLine": 106,
+        "endChar": 97
+      },
+      "revId": "5b523061ac0d959760ddcd89132b6cb5cab72ee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015274223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1824614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7d08b937_73153c8d",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-12T08:29:35Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 4
+      },
+      "revId": "5b523061ac0d959760ddcd89132b6cb5cab72ee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015274223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1824614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2490d360_ed8f82d8",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-12T08:29:35Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 101
+      },
+      "revId": "5b523061ac0d959760ddcd89132b6cb5cab72ee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015274223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1824614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "60def28b_688cf634",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-12T08:29:35Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 101
+      },
+      "revId": "5b523061ac0d959760ddcd89132b6cb5cab72ee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015274223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1824614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7f13c71d_6b668b95",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-12T08:29:35Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 63,
+        "startChar": 68,
+        "endLine": 63,
+        "endChar": 72
+      },
+      "revId": "5b523061ac0d959760ddcd89132b6cb5cab72ee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015274223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1824614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9d9fa80c_fb5b774f",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-12T08:29:35Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "5b523061ac0d959760ddcd89132b6cb5cab72ee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015274223",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1824614?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0daad70f_e9e471b5",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-12T08:29:35Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 145
+      },
+      "revId": "5b523061ac0d959760ddcd89132b6cb5cab72ee2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
