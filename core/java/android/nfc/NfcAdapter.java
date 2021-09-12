@@ -315,6 +315,14 @@ public final class NfcAdapter {
      * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
      * <p>
      * Setting this flag allows the caller to prevent the
+     * platform from reading the whole NDEF message on the tags it finds during NDEF detection.
+     */
+    public static final int FLAG_READER_NDEF_CHECK_ONLY = 0x40;
+
+    /**
+     * Flag for use with {@link #enableReaderMode(Activity, ReaderCallback, int, Bundle)}.
+     * <p>
+     * Setting this flag allows the caller to prevent the
      * platform from performing an NDEF check on the tags it
      * finds.
      */
