@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5c6f61c_39c29176",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-13T06:57:13Z",
+      "side": 1,
+      "message": "Not sure if we want to test this interface.\nIIUC it is going to be deprecated hence it might not be useful if we test it.",
+      "range": {
+        "startLine": 309,
+        "startChar": 4,
+        "endLine": 309,
+        "endChar": 10
+      },
+      "revId": "3338bc520a37029ac479a3b2f64f99657d54c440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69c791e6_03325b95",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-13T06:57:13Z",
+      "side": 1,
+      "message": "I think the reader will be confused if they reads this code.\nMaybe add comment?",
+      "range": {
+        "startLine": 316,
+        "startChar": 85,
+        "endLine": 317,
+        "endChar": 29
+      },
+      "revId": "3338bc520a37029ac479a3b2f64f99657d54c440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
