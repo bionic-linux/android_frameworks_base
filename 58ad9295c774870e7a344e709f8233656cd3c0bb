@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015310505",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1749722?revision\u003d13",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "600a2ed3_72b8e1c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-13T19:02:59Z",
+      "side": 1,
+      "message": "\"CsipSetCoordinatorStateMachineTest CsipSetCoordinatorServiceTest\" is not on the list of allowed atest tests. Expected one of: bluetooth_test_gd OR BluetoothInstrumentationTests",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 76
+      },
+      "revId": "58ad9295c774870e7a344e709f8233656cd3c0bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
