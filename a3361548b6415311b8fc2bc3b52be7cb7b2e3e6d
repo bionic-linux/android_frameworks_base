@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fce25c63_ef0af4a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-14T20:54:24Z",
+      "side": 1,
+      "message": "Please see the official fix here (under review): https://android-review.googlesource.com/c/platform/frameworks/base/+/1826714 ",
+      "revId": "a3361548b6415311b8fc2bc3b52be7cb7b2e3e6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
