@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "537011be_77c654a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042638
+      },
+      "writtenOn": "2021-09-14T20:52:38Z",
+      "side": 1,
+      "message": "I decided to align the code of AudioEffect and Visualizer with the approach used in AudioTrack. It\u0027s not the most elegant thing, however by having them aligned it will be easier to migrate to a more modern solution (see b/199156212).",
+      "revId": "7f5a3a215bf11411c8c2802316d524c157d8f742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
