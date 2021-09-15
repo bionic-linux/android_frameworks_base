@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cd8c051_c9933d68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115498
+      },
+      "writtenOn": "2021-09-15T23:04:49Z",
+      "side": 1,
+      "message": "You can abandon this, KM does the enforcement already.",
+      "revId": "84d749dce98f7986e6cb68ca3bc74e3f2488a2d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
