@@ -29,6 +29,7 @@ import static android.net.NetworkIdentity.OEM_PAID;
 import static android.net.NetworkIdentity.OEM_PRIVATE;
 import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
 import static android.net.NetworkStats.METERED_ALL;
+import static android.net.NetworkStats.METERED_NO;
 import static android.net.NetworkStats.METERED_YES;
 import static android.net.NetworkStats.ROAMING_ALL;
 import static android.net.NetworkTemplate.MATCH_ETHERNET;
@@ -50,6 +51,11 @@ import static android.telephony.TelephonyManager.UNKNOWN_CARRIER_ID;
 import static android.util.MathUtils.constrain;
 
 import static com.android.internal.util.ConcurrentUtils.DIRECT_EXECUTOR;
+import static com.android.internal.util.FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2__METERED__METERED_NO;
+import static com.android.internal.util.FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2__METERED__METERED_UNKNOWN;
+import static com.android.internal.util.FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2__METERED__METERED_YES;
+import static com.android.internal.util.FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2__OPPORTUNISTIC_DATA_SUB__DSS_NOT_OPPORTUNISTIC;
+import static com.android.internal.util.FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2__OPPORTUNISTIC_DATA_SUB__DSS_OPPORTUNISTIC;
 import static com.android.internal.util.FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER__OPPORTUNISTIC_DATA_SUB__NOT_OPPORTUNISTIC;
 import static com.android.internal.util.FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER__OPPORTUNISTIC_DATA_SUB__OPPORTUNISTIC;
 import static com.android.internal.util.FrameworkStatsLog.TIME_ZONE_DETECTOR_STATE__DETECTION_MODE__GEO;
@@ -276,6 +282,17 @@ public class StatsPullAtomService extends SystemService {
     private static final String DANGEROUS_PERMISSION_STATE_SAMPLE_RATE =
             "dangerous_permission_state_sample_rate";
 
+    // Redefine these constants because they are too long that cause lines longer than
+    // 100 characters.
+    private static final int DATA_USAGE_BYTES_TRANSFER__OPPORTUNISTIC =
+            DATA_USAGE_BYTES_TRANSFER__OPPORTUNISTIC_DATA_SUB__OPPORTUNISTIC;
+    private static final int DATA_USAGE_BYTES_TRANSFER__NOT_OPPORTUNISTIC =
+            DATA_USAGE_BYTES_TRANSFER__OPPORTUNISTIC_DATA_SUB__NOT_OPPORTUNISTIC;
+    private static final int DATA_USAGE_BYTES_TRANSFER_V2__DSS_OPPORTUNISTIC =
+            DATA_USAGE_BYTES_TRANSFER_V2__OPPORTUNISTIC_DATA_SUB__DSS_OPPORTUNISTIC;
+    private static final int DATA_USAGE_BYTES_TRANSFER_V2__DSS_NOT_OPPORTUNISTIC =
+            DATA_USAGE_BYTES_TRANSFER_V2__OPPORTUNISTIC_DATA_SUB__DSS_NOT_OPPORTUNISTIC;
+
     /** Parameters relating to ProcStats data upload. */
     // Maximum shards to use when generating StatsEvent objects from ProcStats.
     private static final int MAX_PROCSTATS_SHARDS = 5;
@@ -477,6 +494,7 @@ public class StatsPullAtomService extends SystemService {
                     case FrameworkStatsLog.MOBILE_BYTES_TRANSFER_BY_FG_BG:
                     case FrameworkStatsLog.BYTES_TRANSFER_BY_TAG_AND_METERED:
                     case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER:
+                    case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2:
                     case FrameworkStatsLog.OEM_MANAGED_BYTES_TRANSFER:
                         synchronized (mDataBytesTransferLock) {
                             return pullDataBytesTransferLocked(atomTag, data);
@@ -951,10 +969,13 @@ public class StatsPullAtomService extends SystemService {
         mNetworkStatsBaselines.addAll(
                 collectNetworkStatsSnapshotForAtom(FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER));
         mNetworkStatsBaselines.addAll(
+                collectNetworkStatsSnapshotForAtom(FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2));
+        mNetworkStatsBaselines.addAll(
                 collectNetworkStatsSnapshotForAtom(FrameworkStatsLog.OEM_MANAGED_BYTES_TRANSFER));
 
         // Listen to subscription changes to record historical subscriptions that activated before
-        // pulling, this is used by {@code DATA_USAGE_BYTES_TRANSFER}.
+        // pulling, this is used by {@code DATA_USAGE_BYTES_TRANSFER} and
+        // {@code DATA_USAGE_BYTES_TRANSFER_V2}.
         mSubscriptionManager.addOnSubscriptionsChangedListener(
                 BackgroundThread.getExecutor(), mStatsSubscriptionsListener);
 
@@ -964,6 +985,7 @@ public class StatsPullAtomService extends SystemService {
         registerMobileBytesTransferBackground();
         registerBytesTransferByTagAndMetered();
         registerDataUsageBytesTransfer();
+        registerDataUsageBytesTransferV2();
         registerOemManagedBytesTransfer();
     }
 
@@ -1119,7 +1141,7 @@ public class StatsPullAtomService extends SystemService {
     @NonNull
     private List<NetworkStatsExt> collectNetworkStatsSnapshotForAtom(int atomTag) {
         List<NetworkStatsExt> ret = new ArrayList<>();
-        switch(atomTag) {
+        switch (atomTag) {
             case FrameworkStatsLog.WIFI_BYTES_TRANSFER: {
                 final NetworkStats stats = getUidNetworkStatsSnapshotForTransport(TRANSPORT_WIFI);
                 if (stats != null) {
@@ -1171,7 +1193,15 @@ public class StatsPullAtomService extends SystemService {
             }
             case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER: {
                 for (final SubInfo subInfo : mHistoricalSubs) {
-                    ret.addAll(getDataUsageBytesTransferSnapshotForSub(subInfo));
+                    ret.addAll(getDataUsageBytesTransferSnapshotForSub(subInfo,
+                            false/* includeUnmetered */));
+                }
+                break;
+            }
+            case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2: {
+                for (final SubInfo subInfo : mHistoricalSubs) {
+                    ret.addAll(getDataUsageBytesTransferSnapshotForSub(subInfo,
+                            true/* includeUnmetered */));
                 }
                 break;
             }
@@ -1216,7 +1246,8 @@ public class StatsPullAtomService extends SystemService {
                     addBytesTransferByTagAndMeteredAtoms(diff, pulledData);
                     break;
                 case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER:
-                    addDataUsageBytesTransferAtoms(diff, pulledData);
+                case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2:
+                    addDataUsageBytesTransferAtoms(atomTag, diff, pulledData);
                     break;
                 case FrameworkStatsLog.OEM_MANAGED_BYTES_TRANSFER:
                     addOemDataUsageBytesTransferAtoms(diff, pulledData);
@@ -1264,7 +1295,7 @@ public class StatsPullAtomService extends SystemService {
         }
     }
 
-    private void addDataUsageBytesTransferAtoms(@NonNull NetworkStatsExt statsExt,
+    private void addDataUsageBytesTransferAtoms(int atomTag, @NonNull NetworkStatsExt statsExt,
             @NonNull List<StatsEvent> pulledData) {
 
         // Workaround for 5G NSA mode, see {@link NetworkTemplate#NETWORK_TYPE_5G_NSA}.
@@ -1278,17 +1309,38 @@ public class StatsPullAtomService extends SystemService {
         final NetworkStats.Entry entry = new NetworkStats.Entry(); // for recycling
         for (int i = 0; i < statsExt.stats.size(); i++) {
             statsExt.stats.getValues(i, entry);
-            pulledData.add(FrameworkStatsLog.buildStatsEvent(
-                    FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER, entry.set, entry.rxBytes,
-                    entry.rxPackets, entry.txBytes, entry.txPackets,
-                    is5GNsa ? TelephonyManager.NETWORK_TYPE_LTE : statsExt.ratType,
-                    // Fill information about subscription, these cannot be null since invalid data
-                    // would be filtered when adding into subInfo list.
-                    statsExt.subInfo.mcc, statsExt.subInfo.mnc, statsExt.subInfo.carrierId,
-                    statsExt.subInfo.isOpportunistic
-                            ? DATA_USAGE_BYTES_TRANSFER__OPPORTUNISTIC_DATA_SUB__OPPORTUNISTIC
-                            : DATA_USAGE_BYTES_TRANSFER__OPPORTUNISTIC_DATA_SUB__NOT_OPPORTUNISTIC,
-                    isNR));
+            // TODO: The atom DataUsageBytesTransfer will be eventually replaced with
+            // DataUsageBytesTransferV2.
+            switch(atomTag) {
+                case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER: {
+                    pulledData.add(FrameworkStatsLog.buildStatsEvent(
+                            FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER, entry.set, entry.rxBytes,
+                            entry.rxPackets, entry.txBytes, entry.txPackets,
+                            is5GNsa ? TelephonyManager.NETWORK_TYPE_LTE : statsExt.ratType,
+                            // Fill information about subscription, these cannot be null since
+                            // invalid data would be filtered when adding into subInfo list.
+                            statsExt.subInfo.mcc, statsExt.subInfo.mnc, statsExt.subInfo.carrierId,
+                            statsExt.subInfo.isOpportunistic
+                                    ? DATA_USAGE_BYTES_TRANSFER__OPPORTUNISTIC
+                                    : DATA_USAGE_BYTES_TRANSFER__NOT_OPPORTUNISTIC,
+                            isNR));
+                    break;
+                }
+                case FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2: {
+                    pulledData.add(FrameworkStatsLog.buildStatsEvent(
+                            FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2, entry.set,
+                            entry.rxBytes, entry.rxPackets, entry.txBytes, entry.txPackets,
+                            is5GNsa ? TelephonyManager.NETWORK_TYPE_LTE : statsExt.ratType,
+                            // Fill information about subscription, these cannot be null since
+                            // invalid data would be filtered when adding into subInfo list.
+                            statsExt.subInfo.mcc, statsExt.subInfo.mnc, statsExt.subInfo.carrierId,
+                            statsExt.subInfo.isOpportunistic
+                                    ? DATA_USAGE_BYTES_TRANSFER_V2__DSS_OPPORTUNISTIC
+                                    : DATA_USAGE_BYTES_TRANSFER_V2__DSS_NOT_OPPORTUNISTIC,
+                            isNR, convertToMeteredState(entry.metered)));
+                    break;
+                }
+            }
         }
     }
 
@@ -1304,6 +1356,18 @@ public class StatsPullAtomService extends SystemService {
                         oemManaged, transport, entry.rxBytes, entry.rxPackets, entry.txBytes,
                         entry.txPackets));
             }
+        }
+    }
+
+    private int convertToMeteredState(int metered) {
+        switch(metered) {
+            case METERED_NO:
+                return DATA_USAGE_BYTES_TRANSFER_V2__METERED__METERED_NO;
+            case METERED_YES:
+                return DATA_USAGE_BYTES_TRANSFER_V2__METERED__METERED_YES;
+            default:
+                Slog.wtf(TAG, "Unknown MeteredState, metered: " + metered);
+                return DATA_USAGE_BYTES_TRANSFER_V2__METERED__METERED_UNKNOWN;
         }
     }
 
@@ -1376,20 +1440,28 @@ public class StatsPullAtomService extends SystemService {
         return null;
     }
 
+    /**
+     * Get data usage bytes transfer snapshot for the given subscriber id.
+     *
+     * @param subInfo Information for a subscription which is used to get the subscriber id.
+     * @param includeUnmetered Indicates whether the network stats need to include unmetered data.
+     *        True means to include all, and false means to include metered only.
+     */
     @NonNull private List<NetworkStatsExt> getDataUsageBytesTransferSnapshotForSub(
-            @NonNull SubInfo subInfo) {
+            @NonNull SubInfo subInfo, boolean includeUnmetered) {
         final List<NetworkStatsExt> ret = new ArrayList<>();
         for (final int ratType : getAllCollapsedRatTypes()) {
-            final NetworkTemplate template =
-                    buildTemplateMobileWithRatType(subInfo.subscriberId, ratType,
-                    METERED_YES);
+            final NetworkTemplate template = buildTemplateMobileWithRatType(subInfo.subscriberId,
+                    ratType, includeUnmetered ? METERED_ALL : METERED_YES);
             final NetworkStats stats =
                     getUidNetworkStatsSnapshotForTemplate(template, /*includeTags=*/false);
             if (stats != null) {
-                ret.add(new NetworkStatsExt(sliceNetworkStatsByFgbg(stats),
-                        new int[] {TRANSPORT_CELLULAR}, /*slicedByFgbg=*/true,
-                        /*slicedByTag=*/false, /*slicedByMetered=*/false, ratType, subInfo,
-                        OEM_MANAGED_ALL));
+                final NetworkStats slicedStats = includeUnmetered
+                        ? sliceNetworkStatsByFgbgAndMetered(stats)
+                        : sliceNetworkStatsByFgbg(stats);
+                ret.add(new NetworkStatsExt(slicedStats, new int[] {TRANSPORT_CELLULAR},
+                        /*slicedByFgbg=*/true, /*slicedByTag=*/false, includeUnmetered,
+                        ratType, subInfo, OEM_MANAGED_ALL));
             }
         }
         return ret;
@@ -1399,6 +1471,14 @@ public class StatsPullAtomService extends SystemService {
         return sliceNetworkStats(stats,
                 (newEntry, oldEntry) -> {
                     newEntry.set = oldEntry.set;
+                });
+    }
+
+    @NonNull private NetworkStats sliceNetworkStatsByFgbgAndMetered(@NonNull NetworkStats stats) {
+        return sliceNetworkStats(stats,
+                (newEntry, oldEntry) -> {
+                    newEntry.set = oldEntry.set;
+                    newEntry.metered = oldEntry.metered;
                 });
     }
 
@@ -1530,6 +1610,17 @@ public class StatsPullAtomService extends SystemService {
                 tagId,
                 metadata,
                 BackgroundThread.getExecutor(),
+                mStatsCallbackImpl
+        );
+    }
+
+    private void registerDataUsageBytesTransferV2() {
+        int tagId = FrameworkStatsLog.DATA_USAGE_BYTES_TRANSFER_V2;
+
+        mStatsManager.setPullAtomCallback(
+                tagId,
+                null /* PullAtomMetadata */,
+                DIRECT_EXECUTOR,
                 mStatsCallbackImpl
         );
     }
@@ -4406,7 +4497,10 @@ public class StatsPullAtomService extends SystemService {
                     mHistoricalSubs.add(subInfo);
                     // Since getting snapshot when pulling will also include data before boot,
                     // query stats as baseline to prevent double count is needed.
-                    mNetworkStatsBaselines.addAll(getDataUsageBytesTransferSnapshotForSub(subInfo));
+                    mNetworkStatsBaselines.addAll(getDataUsageBytesTransferSnapshotForSub(subInfo,
+                            false/* includeUnmetered */));
+                    mNetworkStatsBaselines.addAll(getDataUsageBytesTransferSnapshotForSub(subInfo,
+                            true/* includeUnmetered */));
                 }
             }
         }
