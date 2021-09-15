@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dd52149_8760ea94",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-15T10:15:22Z",
+      "side": 1,
+      "message": "// TODO: Consider make this function no-op in next Android release.",
+      "revId": "7964c7724303f4b794f59b7621aafd7eeb5efed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38894b52_b904d382",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-15T10:15:22Z",
+      "side": 1,
+      "message": "matchesMobile* ?",
+      "range": {
+        "startLine": 315,
+        "startChar": 14,
+        "endLine": 315,
+        "endChar": 53
+      },
+      "revId": "7964c7724303f4b794f59b7621aafd7eeb5efed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebd7dc9e_dbd8f60b",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-15T10:15:22Z",
+      "side": 1,
+      "message": "it is hard-codeded to ...",
+      "range": {
+        "startLine": 315,
+        "startChar": 73,
+        "endLine": 315,
+        "endChar": 83
+      },
+      "revId": "7964c7724303f4b794f59b7621aafd7eeb5efed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0595be55_caf9bfa4",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-15T10:15:22Z",
+      "side": 1,
+      "message": "building",
+      "range": {
+        "startLine": 316,
+        "startChar": 39,
+        "endLine": 316,
+        "endChar": 44
+      },
+      "revId": "7964c7724303f4b794f59b7621aafd7eeb5efed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dba2a7df_ad47d394",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-15T10:15:22Z",
+      "side": 1,
+      "message": ".",
+      "range": {
+        "startLine": 316,
+        "startChar": 26,
+        "endLine": 316,
+        "endChar": 27
+      },
+      "revId": "7964c7724303f4b794f59b7621aafd7eeb5efed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9c78e88_d06a8590",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-15T10:15:22Z",
+      "side": 1,
+      "message": "but in order to keep backward compatibility the behavior should be maintained for @UnsupportedAppUsage use cases.",
+      "range": {
+        "startLine": 318,
+        "startChar": 38,
+        "endLine": 318,
+        "endChar": 84
+      },
+      "revId": "7964c7724303f4b794f59b7621aafd7eeb5efed7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
