@@ -78,6 +78,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "beebf410_873443a1",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1532219
+      },
+      "writtenOn": "2021-09-15T11:27:13Z",
+      "side": 1,
+      "message": "I guess this should be like for other profiles. I don\u0027t think there are translations for them. Please correct me if I\u0027m wrong.",
+      "parentUuid": "b62f415f_f0e2687e",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 54
+      },
+      "revId": "fab22d24f9da70f072d9cd0b794b0d6ea10fb753",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f1af36d_6f477499",
         "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
         "patchSetId": 15
