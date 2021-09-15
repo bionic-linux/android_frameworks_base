@@ -33,6 +33,29 @@
       "message": "                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nframeworks/base/packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java:62: Error: Class requires API level 32 (current min is 29): android.bluetooth.BluetoothCsipSetCoordinator [NewApi]\n            mService \u003d (BluetoothCsipSetCoordinator) proxy;\n                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~\nframeworks/base/packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java:225: Error: Cast from BluetoothCsipSetCoordinator to BluetoothProfile requires API level 32 (current min is 29) [NewApi]\n                        BluetoothProfile.CSIP_SET_COORDINATOR, mService);",
       "revId": "fab22d24f9da70f072d9cd0b794b0d6ea10fb753",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b62f415f_f0e2687e",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-15T03:34:37Z",
+      "side": 1,
+      "message": "Does this string need to be translated?",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 54
+      },
+      "revId": "fab22d24f9da70f072d9cd0b794b0d6ea10fb753",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
