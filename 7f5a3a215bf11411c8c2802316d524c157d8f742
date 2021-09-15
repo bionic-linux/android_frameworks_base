@@ -16,6 +16,115 @@
       "message": "I decided to align the code of AudioEffect and Visualizer with the approach used in AudioTrack. It\u0027s not the most elegant thing, however by having them aligned it will be easier to migrate to a more modern solution (see b/199156212).",
       "revId": "7f5a3a215bf11411c8c2802316d524c157d8f742",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af477d81_14965ca5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:24:33Z",
+      "side": 1,
+      "message": "the approach looks fine as is with a few minor nits, though my preference would be non-intrusive template wrapping to handle this.",
+      "revId": "7f5a3a215bf11411c8c2802316d524c157d8f742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3b135f2_ef809824",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:24:33Z",
+      "side": 1,
+      "message": "initialize this?",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "7f5a3a215bf11411c8c2802316d524c157d8f742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59773097_d036333f",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:24:33Z",
+      "side": 1,
+      "message": "std::unordered_set?",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 139,
+        "endChar": 19
+      },
+      "revId": "7f5a3a215bf11411c8c2802316d524c157d8f742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7ad4a8c_99ba1402",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:24:33Z",
+      "side": 1,
+      "message": "a counter would be safer if you have multiple threads.",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 34
+      },
+      "revId": "7f5a3a215bf11411c8c2802316d524c157d8f742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9326ca6a_786884b4",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T00:24:33Z",
+      "side": 1,
+      "message": "prefer to move this to line 502 to avoid busy waiting.",
+      "range": {
+        "startLine": 509,
+        "startChar": 0,
+        "endLine": 509,
+        "endChar": 52
+      },
+      "revId": "7f5a3a215bf11411c8c2802316d524c157d8f742",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
