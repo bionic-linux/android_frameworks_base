@@ -102,6 +102,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "600600eb_5b154f07",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-09-15T12:29:57Z",
+      "side": 1,
+      "message": "getNameResource would return localized name for profiles that are displayed. This one is not displayed.",
+      "parentUuid": "beebf410_873443a1",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 54
+      },
+      "revId": "fab22d24f9da70f072d9cd0b794b0d6ea10fb753",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f1af36d_6f477499",
         "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
         "patchSetId": 15
