@@ -56,6 +56,40 @@
       },
       "revId": "fab22d24f9da70f072d9cd0b794b0d6ea10fb753",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f1af36d_6f477499",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-09-15T10:14:22Z",
+      "side": 1,
+      "message": "@RequiresApi(Build.VERSION_CODES.T)\n\n\nalso remember to:\n\nimport androidx.annotation.RequiresApi;",
+      "revId": "fab22d24f9da70f072d9cd0b794b0d6ea10fb753",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba493738_eff7e271",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-09-15T10:14:22Z",
+      "side": 1,
+      "message": "@RequiresApi(Build.VERSION_CODES.S)",
+      "revId": "fab22d24f9da70f072d9cd0b794b0d6ea10fb753",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
