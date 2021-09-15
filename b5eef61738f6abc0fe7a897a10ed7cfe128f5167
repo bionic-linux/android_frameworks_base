@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64d55844_a5532c7d",
+        "filename": "media/jni/audioeffect/android_media_AudioEffect.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T19:09:16Z",
+      "side": 1,
+      "message": "nit: do you want to change this to a count too?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "b5eef61738f6abc0fe7a897a10ed7cfe128f5167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9995eb65_2959477e",
+        "filename": "media/jni/audioeffect/android_media_Visualizer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-09-15T19:09:16Z",
+      "side": 1,
+      "message": "busy_count \u003e 0 more clear?",
+      "range": {
+        "startLine": 501,
+        "startChar": 35,
+        "endLine": 501,
+        "endChar": 36
+      },
+      "revId": "b5eef61738f6abc0fe7a897a10ed7cfe128f5167",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
