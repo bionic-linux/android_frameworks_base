@@ -22,6 +22,30 @@
       },
       "revId": "dc108d661c21a0e2b50dca90f0029466d1d77857",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bffac14_07fcf5d9",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-16T10:33:02Z",
+      "side": 1,
+      "message": "+1, Good catch.\nIIUC we\u0027ll have to modify all the callers who relies on it.\nLuckily it is not public API so callers are somehow limited.",
+      "parentUuid": "ac9bf2d4_e00b05f6",
+      "range": {
+        "startLine": 336,
+        "startChar": 34,
+        "endLine": 336,
+        "endChar": 41
+      },
+      "revId": "dc108d661c21a0e2b50dca90f0029466d1d77857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
