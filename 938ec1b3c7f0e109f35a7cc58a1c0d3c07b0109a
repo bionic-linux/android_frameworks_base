@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a97b6969_0a3a04a1",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-16T11:55:37Z",
+      "side": 1,
+      "message": "I know you\u0027re only moving this code but while you\u0027re here can you add final to these two locals for clarity ?",
+      "range": {
+        "startLine": 476,
+        "startChar": 8,
+        "endLine": 476,
+        "endChar": 11
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22d54f82_d7435551",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-16T11:55:37Z",
+      "side": 1,
+      "message": "The internal storage of the builder is an implementation detail ; I know this class confusingly doesn\u0027t have a build() method and you can\u0027t really mock the service in CTS, but still the contract is really about the mConfig object that gets sent to the service.\n\nInstead of making this public (and a fortiori mRoutes), can we add an @hide method to return a VpnConfig object as would be used by the establish() method ? It could simply be something like this :\n\n  /**\n   * Build the configuration object to pass to the service.\n   * @hide\n   */\n  @VisibleForTesting\n  public VpnConfig buildConfiguration() {\n    return mConfig; // TODO : have an easy way to copy a VpnConfig\n  }\n\n  @Nullable\n  public ParcelFileDescriptor establish() {\n    try {\n      return getService().establishVpn(buildConfiguration());\n    } catch (RemoteException e) {\n      throw new IllegalStateException(e);\n    }\n }  \n\nReally, ideally we\u0027d make a copy constructor for VpnConfig and remove the TODO :)",
+      "range": {
+        "startLine": 496,
+        "startChar": 8,
+        "endLine": 496,
+        "endChar": 14
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a2cc138_c096f6c6",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-16T11:55:37Z",
+      "side": 1,
+      "message": "Can you annotate this with the relevant @IntDef ?",
+      "range": {
+        "startLine": 602,
+        "startChar": 78,
+        "endLine": 602,
+        "endChar": 86
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46ff5c5d_c77d7235",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-16T11:55:37Z",
+      "side": 1,
+      "message": "final (here and on the index below)",
+      "range": {
+        "startLine": 606,
+        "startChar": 12,
+        "endLine": 606,
+        "endChar": 21
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ee33798_ad0f68d4",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-16T11:55:37Z",
+      "side": 1,
+      "message": "I tend to think we don\u0027t want to add a version that takes a String. I know this is more consistent with the existing, but we want to avoid more and more this kind of weaker types for addresses ; better have the devs use getByAddress before passing it I think.",
+      "range": {
+        "startLine": 677,
+        "startChar": 45,
+        "endLine": 677,
+        "endChar": 51
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2d2bfb4_7f621dfe",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-16T11:55:37Z",
+      "side": 1,
+      "message": "Moot if you remove this method, but InetAddress.parseNumericAddress is deprecated and suggests using InetAddressUtils.parseNumericAddress instead.",
+      "range": {
+        "startLine": 678,
+        "startChar": 32,
+        "endLine": 678,
+        "endChar": 63
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb78d222_71edac4a",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-16T11:55:37Z",
+      "side": 1,
+      "message": "Having only exclude routes is necessarily a configuration error and can never make sense, I think ? Do we want to throw in this case ?",
+      "range": {
+        "startLine": 970,
+        "startChar": 36,
+        "endLine": 970,
+        "endChar": 45
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
