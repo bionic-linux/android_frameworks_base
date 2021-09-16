@@ -619,6 +619,13 @@ public class VpnService extends Service {
             return addRoute(InetAddress.parseNumericAddress(address), prefixLength);
         }
 
+        /** WIP. */
+        @NonNull
+        public Builder excludeRoute(@NonNull IpPrefix prefix) {
+            // TODO: do something.
+            return this;
+        }
+
         /**
          * Add a DNS server to the VPN connection. Both IPv4 and IPv6
          * addresses are supported. If none is set, the DNS servers of
