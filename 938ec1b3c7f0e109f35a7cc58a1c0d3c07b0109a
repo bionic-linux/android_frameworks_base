@@ -118,6 +118,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b0a7845_11cb473a",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-09-16T12:12:59Z",
+      "side": 1,
+      "message": "+1, I\u0027d just remove this.",
+      "parentUuid": "7ee33798_ad0f68d4",
+      "range": {
+        "startLine": 677,
+        "startChar": 45,
+        "endLine": 677,
+        "endChar": 51
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d2d2bfb4_7f621dfe",
         "filename": "core/java/android/net/VpnService.java",
         "patchSetId": 7
@@ -134,6 +158,29 @@
         "startChar": 32,
         "endLine": 678,
         "endChar": 63
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7103794d_2ed5f90a",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-09-16T12:12:59Z",
+      "side": 1,
+      "message": "Instead of taking an InetAddress and an int we should probably unhide the IpPrefix constructor and make this method take an IpPrefix.",
+      "range": {
+        "startLine": 694,
+        "startChar": 45,
+        "endLine": 694,
+        "endChar": 82
       },
       "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
