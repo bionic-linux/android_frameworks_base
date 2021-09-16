@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "492a46bf_853c1c1e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1018371
+      },
+      "writtenOn": "2021-09-16T09:20:49Z",
+      "side": 1,
+      "message": "FYI, ag/15808127 is a related CL.",
+      "revId": "6b5f04971d96fc084c5c79c9ca7ba11dba7f8e79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
