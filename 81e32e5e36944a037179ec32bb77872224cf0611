@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "835adbd9_75bdb799",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDeviceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "nits:  memberDevice : memberDevices",
+      "range": {
+        "startLine": 90,
+        "startChar": 42,
+        "endLine": 90,
+        "endChar": 70
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b45e573_d95c650c",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDeviceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "nits: memberDevice : memberDevices",
+      "range": {
+        "startLine": 142,
+        "startChar": 39,
+        "endLine": 142,
+        "endChar": 66
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93a99965_998bc541",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDeviceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 169,
+        "startChar": 47,
+        "endLine": 169,
+        "endChar": 74
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0de4dd27_8875cbf8",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDeviceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 234,
+        "startChar": 55,
+        "endLine": 234,
+        "endChar": 57
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c418e888_905fd0ad",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDeviceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 260,
+        "startChar": 55,
+        "endLine": 260,
+        "endChar": 57
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c8fc307_a41ec3f9",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDeviceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 280,
+        "startChar": 59,
+        "endLine": 280,
+        "endChar": 61
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d35c96d6_6419a82c",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDeviceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 319,
+        "startChar": 51,
+        "endLine": 319,
+        "endChar": 53
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57ceb402_a516e778",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipDeviceManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "nits: remove the name?",
+      "range": {
+        "startLine": 51,
+        "startChar": 18,
+        "endLine": 51,
+        "endChar": 23
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "959f723a_e49cb2e2",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipSetCoordinatorProfile.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2021-09-16T02:18:40Z",
+      "side": 1,
+      "message": "Please add java doc",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 85
+      },
+      "revId": "81e32e5e36944a037179ec32bb77872224cf0611",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
