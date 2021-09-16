@@ -448,6 +448,8 @@ applications that come with the platform
         <!-- Permission required for hotword detection service CTS tests -->
         <permission name="android.permission.MANAGE_HOTWORD_DETECTION" />
         <permission name="android.permission.BIND_HOTWORD_DETECTION_SERVICE" />
+        <!-- Permission required to run MediaRouter2ManagerTest -->
+        <uses-permission android:name="android.permission.MODIFY_AUDIO_ROUTING" />
     </privapp-permissions>
 
     <privapp-permissions package="com.android.statementservice">
