@@ -2424,7 +2424,8 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
         mLastLayer = -1;
         mSurfaceFreezer.unfreeze(t);
         reassignLayer(t);
-        updateSurfacePosition(t);
+        //updateSurfacePosition(t);
+        updateSurfacePositionNonOrganized();
     }
 
     private void doAnimationFinished(@AnimationType int type, AnimationAdapter anim) {
@@ -2562,6 +2563,12 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
     }
 
     final void updateSurfacePosition() {
+        updateSurfacePosition(getSyncTransaction());
+    }
+
+    final void updateSurfacePositionNonOrganized() {
+        // Avoid fighting with the organizer over Surface position.
+        if (isOrganized()) return;
         updateSurfacePosition(getSyncTransaction());
     }
 
