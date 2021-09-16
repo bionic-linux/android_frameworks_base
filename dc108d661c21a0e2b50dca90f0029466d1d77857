@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac9bf2d4_e00b05f6",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-16T07:02:45Z",
+      "side": 1,
+      "message": "How do you know nobody was calling this constructor with matchRule \u003d MOBILE and metered \u003d false, but still relying on only returning metered traffic ?\n\nA quick survey of the code actually indicates this exists in the code.\n- NetworkPolicyManagerService.readPolicyAL() will read the match rule from an XML file, and use metered \u003d (MOBILE \u003d\u003d rule), so if the rule is MATCH_MOBILE_WILDCARD it will pass false and this patch changes the behavior.\n- StatsPullAtomService.getDataUsageBytesTransferSnapshotForOemManaged() will explicitly pass METERED_ALL together with MATCH_MOBILE_WILDCARD and AFAICT this changes the behavior.\n- MultipathPolicyTracker.MultipathTracker uses explicitly MATCH_MOBILE with METERED_ALL in its constructor and AFAICT this changes the behavior.\n- MetricDisplay.trafficFor passes MATCH_MOBILE_WILDCARD with METERED_ALL and AFAICT this changes the behavior.",
+      "range": {
+        "startLine": 336,
+        "startChar": 34,
+        "endLine": 336,
+        "endChar": 41
+      },
+      "revId": "dc108d661c21a0e2b50dca90f0029466d1d77857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
