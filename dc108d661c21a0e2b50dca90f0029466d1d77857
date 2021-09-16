@@ -46,6 +46,30 @@
       },
       "revId": "dc108d661c21a0e2b50dca90f0029466d1d77857",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "113f115f_da761bfc",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-16T10:51:42Z",
+      "side": 1,
+      "message": "For NPMS.readPolicyAL(),\nIIUC the only real use case is to read the previous created template.\n1. If the template is created \u003c VERSION_SUPPORTED_CARRIER_USAGE\n  If it is mobile, then the template will be upgrated to templateMeteredness \u003d METERED_YES.\n2. If the template is created \u003e\u003dVERSION_SUPPORTED_CARRIER_USAGE\n  The default mobile template will be created by NetworkTemplate.buildTemplateCarrierMetered() which always create template with METERED YES.\n  So I think for NPMS it is fine.\n  For other callers it should be trivial to fix.",
+      "parentUuid": "2bffac14_07fcf5d9",
+      "range": {
+        "startLine": 336,
+        "startChar": 34,
+        "endLine": 336,
+        "endChar": 41
+      },
+      "revId": "dc108d661c21a0e2b50dca90f0029466d1d77857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
