@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaa7cdea_13043ab4",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2021-09-17T22:12:06Z",
+      "side": 1,
+      "message": "\"@GuardedBy(\"mLock\")\"?",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "0f41a189a338a81584df68b191ca7afe7e952573",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c761b575_b452c3e5",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2021-09-17T22:12:06Z",
+      "side": 1,
+      "message": "\"@ServiceThreadOnly\"?",
+      "range": {
+        "startLine": 748,
+        "startChar": 4,
+        "endLine": 748,
+        "endChar": 11
+      },
+      "revId": "0f41a189a338a81584df68b191ca7afe7e952573",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f029d88_a1ec4e45",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2021-09-17T22:12:06Z",
+      "side": 1,
+      "message": "I think log level here should be \"i\".",
+      "range": {
+        "startLine": 751,
+        "startChar": 17,
+        "endLine": 751,
+        "endChar": 18
+      },
+      "revId": "0f41a189a338a81584df68b191ca7afe7e952573",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
