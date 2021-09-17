@@ -294,6 +294,11 @@ public class OverlayConfig {
         final ArrayList<ParsedOverlayInfo> overlays = new ArrayList<>();
         packageManager.forEachPackage((ParsingPackageRead p, Boolean isSystem) -> {
             if (p.getOverlayTarget() != null && isSystem) {
+                Log.w(TAG, "danielnorman getOverlayPackageInfos for " + p.getPackageName());
+                // TODO add the same checks from OverlayManagerServiceImpl here
+                // Maybe need new parameter in OverlayConfig.initializeSystemInstance
+                // to store APEX package info?
+                // https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/PackageManagerService.java;l=3141
                 overlays.add(new ParsedOverlayInfo(p.getPackageName(), p.getOverlayTarget(),
                         p.getTargetSdkVersion(), p.isOverlayIsStatic(), p.getOverlayPriority(),
                         new File(p.getBaseCodePath())));

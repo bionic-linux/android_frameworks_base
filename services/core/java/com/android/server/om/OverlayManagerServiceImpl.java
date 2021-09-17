@@ -26,6 +26,9 @@ import static android.content.om.OverlayInfo.STATE_TARGET_IS_BEING_REPLACED;
 import static com.android.server.om.OverlayManagerService.DEBUG;
 import static com.android.server.om.OverlayManagerService.TAG;
 
+import static com.android.server.pm.ApexManager.MATCH_ACTIVE_PACKAGE;
+
+import com.android.server.pm.parsing.pkg.AndroidPackage;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.om.OverlayInfo;
@@ -38,6 +41,7 @@ import android.util.Slog;
 
 import com.android.internal.content.om.OverlayConfig;
 import com.android.internal.util.ArrayUtils;
+import com.android.server.pm.ApexManager;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -68,6 +72,7 @@ final class OverlayManagerServiceImpl {
     private static final int FLAG_OVERLAY_IS_BEING_REPLACED = 1 << 1;
 
     private final PackageManagerHelper mPackageManager;
+    private final ApexManager mApexManager;
     private final IdmapManager mIdmapManager;
     private final OverlayManagerSettings mSettings;
     private final OverlayConfig mOverlayConfig;
@@ -120,6 +125,7 @@ final class OverlayManagerServiceImpl {
         mSettings = settings;
         mOverlayConfig = overlayConfig;
         mDefaultOverlays = defaultOverlays;
+        mApexManager = ApexManager.getInstance();
     }
 
     /**
@@ -162,10 +168,25 @@ final class OverlayManagerServiceImpl {
                     packagesToUpdateAssets.add(oi.targetPackageName);
                 }
 
+                String baseCodePath = overlayPackage.applicationInfo.getBaseCodePath();
+
+                AndroidPackage apkPackage = mPackageManager.getPackage(overlayPackage.packageName);
+                final List<ApexManager.ActiveApexInfo> activeApexInfos = mApexManager.getActiveApexInfos();
+                if (apkPackage != null) {
+                    String apexPackageName = mApexManager.getActiveApexPackageNameContainingPackage(apkPackage);
+                    String apexModuleName = mApexManager.getApexModuleNameForPackageName(apexPackageName);
+                    for (int j = 0; j < activeApexInfos.size(); j++) {
+                       if (activeApexInfos.get(j).apexModuleName.equals(apexModuleName)) {
+                          Slog.w(TAG, "Setting RRO-in-APEX baseCodePath to preInstalledApexPath for " + overlayPackage.packageName);
+                          baseCodePath = activeApexInfos.get(j).preInstalledApexPath.getPath();
+                       }
+                    }
+                }
+
                 mSettings.init(overlayPackage.packageName, newUserId,
                         overlayPackage.overlayTarget,
                         overlayPackage.targetOverlayableName,
-                        overlayPackage.applicationInfo.getBaseCodePath(),
+                        baseCodePath,
                         isPackageConfiguredMutable(overlayPackage.packageName),
                         isPackageConfiguredEnabled(overlayPackage.packageName),
                         priority, overlayPackage.overlayCategory);
@@ -379,6 +400,15 @@ final class OverlayManagerServiceImpl {
             Slog.d(TAG, "onOverlayPackageAdded packageName=" + packageName + " userId=" + userId);
         }
 
+        /*
+        PackageInfo apexPackage = mApexManager.getPackageInfo(packageName, MATCH_ACTIVE_PACKAGE);
+        if (apexPackage == null) {
+            Slog.w(TAG, "danielnorman apexPackage null for " + packageName);
+        } else {
+            Slog.w(TAG, "danielnorman in apex for overlay " + packageName + " with apex " +
+                apexPackage.applicationInfo.getBaseCodePath());
+        }*/
+
         final PackageInfo overlayPackage = mPackageManager.getPackageInfo(packageName, userId);
         if (overlayPackage == null) {
             Slog.w(TAG, "overlay package " + packageName + " was added, but couldn't be found");
@@ -456,6 +486,14 @@ final class OverlayManagerServiceImpl {
         try {
             final OverlayInfo oldOi = mSettings.getOverlayInfo(packageName, userId);
             if (mustReinitializeOverlay(pkg, oldOi)) {
+                /*
+                PackageInfo apexPackage = mApexManager.getPackageInfo(packageName, MATCH_ACTIVE_PACKAGE);
+                if (apexPackage == null) {
+                    Slog.w(TAG, "danielnorman apexPackage null for " + packageName);
+                } else {
+                    Slog.w(TAG, "danielnorman in apex for overlay " + packageName + " with apex " +
+                        apexPackage.applicationInfo.getBaseCodePath());
+                }*/
                 mSettings.init(packageName, userId, pkg.overlayTarget, pkg.targetOverlayableName,
                         pkg.applicationInfo.getBaseCodePath(),
                         isPackageConfiguredMutable(pkg.packageName),

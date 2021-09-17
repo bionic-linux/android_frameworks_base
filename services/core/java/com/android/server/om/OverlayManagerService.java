@@ -33,6 +33,8 @@ import static android.os.Trace.traceEnd;
 
 import static com.android.server.om.OverlayManagerServiceImpl.OperationFailedException;
 
+import com.android.server.pm.parsing.pkg.AndroidPackage;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
@@ -1149,6 +1151,11 @@ public final class OverlayManagerService extends SystemService {
         @Override
         public PackageInfo getPackageInfo(@NonNull final String packageName, final int userId) {
             return getPackageInfo(packageName, userId, true);
+        }
+
+        @Override
+        public AndroidPackage getPackage(String packageName) {
+            return mPackageManagerInternal.getPackage(packageName);
         }
 
         @NonNull
