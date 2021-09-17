@@ -99,7 +99,8 @@ public class OverlayConfig {
     @VisibleForTesting
     public OverlayConfig(@Nullable File rootDirectory,
             @Nullable Supplier<OverlayScanner> scannerFactory,
-            @Nullable PackageProvider packageProvider) {
+            @Nullable PackageProvider packageProvider,
+            @Nullable ApexManager apexManager) {
         Preconditions.checkArgument((scannerFactory == null) != (packageProvider == null),
                 "scannerFactory and packageProvider cannot be both null or both non-null");
 
@@ -117,6 +118,8 @@ public class OverlayConfig {
 
         boolean foundConfigFile = false;
         ArrayList<ParsedOverlayInfo> packageManagerOverlayInfos = null;
+
+        final List<ApexManager.ActiveApexInfo> activeApexInfos = mApexManager.getActiveApexInfos();
 
         final ArrayList<ParsedConfiguration> overlays = new ArrayList<>();
         for (int i = 0, n = partitions.size(); i < n; i++) {
@@ -145,7 +148,22 @@ public class OverlayConfig {
                 // Filter out overlays not present in the partition.
                 partitionOverlayInfos = new ArrayList<>(packageManagerOverlayInfos);
                 for (int j = partitionOverlayInfos.size() - 1; j >= 0; j--) {
-                    if (!partition.containsFile(partitionOverlayInfos.get(j).path)) {
+                    String overlayPath = partitionOverlayInfos.get(j).path;
+
+                    // TODO fix build errors and reuse lookup logic
+                    // https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/pm/PackageManagerService.java;l=3141
+                    String apexPackageName = apexManager.getActiveApexPackageNameContainingPackageName(partitionOverlayInfos.get(j).packageName);
+                    if (apexPackageName != null) {
+                        String apexModuleName = apexManager.getApexModuleNameForPackageName(apexPackageName);
+                        for (int j = 0; j < activeApexInfos.size(); j++) {
+                           if (activeApexInfos.get(j).apexModuleName.equals(apexModuleName)) {
+                              Slog.w(TAG, "Setting RRO-in-APEX overlayPath to preInstalledApexPath for " + overlayPackage.packageName);
+                              overlayPath = activeApexInfos.get(j).preInstalledApexPath.getPath();
+                           }
+                        }
+                    }
+
+                    if (!partition.containsFile(overlayPath)) {
                         partitionOverlayInfos.remove(j);
                     }
                 }
@@ -190,7 +208,7 @@ public class OverlayConfig {
         Trace.traceBegin(Trace.TRACE_TAG_RRO, "OverlayConfig#getZygoteInstance");
         try {
             return new OverlayConfig(null /* rootDirectory */, OverlayScanner::new,
-                    null /* packageProvider */);
+                    null /* packageProvider */, null);
         } finally {
             Trace.traceEnd(Trace.TRACE_TAG_RRO);
         }
@@ -202,10 +220,10 @@ public class OverlayConfig {
      * {@link #getSystemInstance()} will return the initialized instance.
      */
     @NonNull
-    public static OverlayConfig initializeSystemInstance(PackageProvider packageProvider) {
+    public static OverlayConfig initializeSystemInstance(PackageProvider packageProvider, ApexManager apexManager) {
         Trace.traceBegin(Trace.TRACE_TAG_RRO, "OverlayConfig#initializeSystemInstance");
         try {
-            sInstance = new OverlayConfig(null, null, packageProvider);
+            sInstance = new OverlayConfig(null, null, packageProvider, apexManager);
         } finally {
             Trace.traceEnd(Trace.TRACE_TAG_RRO);
         }

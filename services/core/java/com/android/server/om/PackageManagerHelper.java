@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal;
 
 import com.android.server.pm.PackageManagerServiceUtils;
+import com.android.server.pm.parsing.pkg.AndroidPackage;
 
 import java.io.IOException;
 import java.util.List;
@@ -97,4 +98,6 @@ interface PackageManagerHelper {
      *     in the system returns {@link PackageManager#SIGNATURE_MATCH}
      */
     boolean signaturesMatching(@NonNull String pkgName1, @NonNull String pkgName2, int userId);
+
+    AndroidPackage getPackage(String packageName);
 }
