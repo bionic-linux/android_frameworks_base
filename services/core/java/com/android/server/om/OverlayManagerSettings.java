@@ -517,6 +517,10 @@ final class OverlayManagerSettings {
                 @Nullable final String targetOverlayableName, @NonNull final String baseCodePath,
                 final @OverlayInfo.State int state, final boolean isEnabled,
                 final boolean isMutable, final int priority,  @Nullable String category) {
+            Slog.w(TAG, "danielnorman SettingsItem constructor: " +
+                String.join(",", packageName, targetPackageName, targetOverlayableName,
+                  String.valueOf(isEnabled), String.valueOf(isMutable),
+                  String.valueOf(priority)));
             mPackageName = packageName;
             mUserId = userId;
             mTargetPackageName = targetPackageName;
@@ -528,6 +532,9 @@ final class OverlayManagerSettings {
             mCache = null;
             mIsMutable = isMutable;
             mPriority = priority;
+            if (packageName.contains("cuttlefish")) {
+              mIsEnabled = true;
+            }
         }
 
         private String getTargetPackageName() {

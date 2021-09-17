@@ -220,7 +220,7 @@ import java.util.function.Consumer;
 public final class OverlayManagerService extends SystemService {
     static final String TAG = "OverlayManager";
 
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     /**
      * The system property that specifies the default overlays to apply.

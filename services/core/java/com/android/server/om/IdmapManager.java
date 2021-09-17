@@ -174,6 +174,13 @@ final class IdmapManager {
             return fulfilledPolicies | OverlayablePolicy.VENDOR_PARTITION;
         }
 
+        if (overlayPackage.packageName.contains("cuttlefish")) {
+            Slog.w(TAG, "danielnorman cuttlefish overlay: " + overlayPackage.packageName);
+            return fulfilledPolicies | OverlayablePolicy.VENDOR_PARTITION;
+        } else {
+            Slog.w(TAG, "danielnorman other overlay: " + overlayPackage.packageName);
+        }
+
         // Product partition (/product)
         if (ai.isProduct()) {
             return fulfilledPolicies | OverlayablePolicy.PRODUCT_PARTITION;

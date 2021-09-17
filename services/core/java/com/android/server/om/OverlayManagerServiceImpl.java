@@ -723,6 +723,9 @@ final class OverlayManagerServiceImpl {
         final PackageInfo overlayPackage = mPackageManager.getPackageInfo(overlayPackageName,
                 userId);
 
+        Slog.w(TAG, "danielnorman OverlayManagerServiceImpl updateState target=" +
+            targetPackageName + " overlay=" + overlayPackageName);
+
         // Immutable RROs targeting to "android", ie framework-res.apk, are handled by native
         // layers.
         boolean modified = false;
