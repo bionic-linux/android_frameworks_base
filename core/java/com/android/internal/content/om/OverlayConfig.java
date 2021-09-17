@@ -294,6 +294,7 @@ public class OverlayConfig {
         final ArrayList<ParsedOverlayInfo> overlays = new ArrayList<>();
         packageManager.forEachPackage((ParsingPackageRead p, Boolean isSystem) -> {
             if (p.getOverlayTarget() != null && isSystem) {
+                Log.w(TAG, "danielnorman getOverlayPackageInfos for " + p.getPackageName());
                 overlays.add(new ParsedOverlayInfo(p.getPackageName(), p.getOverlayTarget(),
                         p.getTargetSdkVersion(), p.isOverlayIsStatic(), p.getOverlayPriority(),
                         new File(p.getBaseCodePath())));

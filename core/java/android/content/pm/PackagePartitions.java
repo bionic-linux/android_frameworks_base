@@ -189,6 +189,9 @@ public class PackagePartitions {
 
         /** Returns whether the partition contains the specified file. */
         public boolean containsFile(@NonNull File file) {
+            if (file.getPath().contains("cuttlefish") && type == PARTITION_VENDOR) {
+              return true;
+            }
             return FileUtils.contains(mFolder.getFile(), canonicalize(file));
         }
 
