@@ -135,6 +135,23 @@
       "message": "Please help me review the change, thanks.",
       "revId": "3202ff97ae5e0c1e0a9ef621df37d53a20f6af53",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f878a258_88144f91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2021-09-18T09:00:08Z",
+      "side": 1,
+      "message": "Please help me review the change, thanks.",
+      "revId": "3202ff97ae5e0c1e0a9ef621df37d53a20f6af53",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
