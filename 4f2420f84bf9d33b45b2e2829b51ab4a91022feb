@@ -16,6 +16,42 @@
       "message": "Hmm the preconditions library seems to be linked statically into wifi-modules-utils now. Is this still needed?",
       "revId": "4f2420f84bf9d33b45b2e2829b51ab4a91022feb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fabe725f_3903e892",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-20T21:14:19Z",
+      "side": 1,
+      "message": "Done - \nExact.\nI am including it in the statemachine CL: aosp/1831873",
+      "parentUuid": "a15ec92c_a3186328",
+      "revId": "4f2420f84bf9d33b45b2e2829b51ab4a91022feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6b9cb31_d0082bc9",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-09-20T21:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a15ec92c_a3186328",
+      "revId": "4f2420f84bf9d33b45b2e2829b51ab4a91022feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
