@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71ffa221_0cc0db06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "Hi Lorenzo, Jean,\ncomments addressed, ptal",
+      "revId": "bbc938f989b7d1c5f41b8fbfcc60d32ece33a80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

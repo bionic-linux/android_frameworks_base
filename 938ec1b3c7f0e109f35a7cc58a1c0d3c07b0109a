@@ -24,6 +24,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25799c62_9904343a",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a97b6969_0a3a04a1",
+      "range": {
+        "startLine": 476,
+        "startChar": 8,
+        "endLine": 476,
+        "endChar": 11
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42de68a7_63e6a31a",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "Done for `bytes`. \n`offset` is modified by `++offset` in the for-loop.",
+      "parentUuid": "a97b6969_0a3a04a1",
+      "range": {
+        "startLine": 476,
+        "startChar": 8,
+        "endLine": 476,
+        "endChar": 11
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22d54f82_d7435551",
@@ -37,6 +85,30 @@
       "writtenOn": "2021-09-16T11:55:37Z",
       "side": 1,
       "message": "The internal storage of the builder is an implementation detail ; I know this class confusingly doesn\u0027t have a build() method and you can\u0027t really mock the service in CTS, but still the contract is really about the mConfig object that gets sent to the service.\n\nInstead of making this public (and a fortiori mRoutes), can we add an @hide method to return a VpnConfig object as would be used by the establish() method ? It could simply be something like this :\n\n  /**\n   * Build the configuration object to pass to the service.\n   * @hide\n   */\n  @VisibleForTesting\n  public VpnConfig buildConfiguration() {\n    return mConfig; // TODO : have an easy way to copy a VpnConfig\n  }\n\n  @Nullable\n  public ParcelFileDescriptor establish() {\n    try {\n      return getService().establishVpn(buildConfiguration());\n    } catch (RemoteException e) {\n      throw new IllegalStateException(e);\n    }\n }  \n\nReally, ideally we\u0027d make a copy constructor for VpnConfig and remove the TODO :)",
+      "range": {
+        "startLine": 496,
+        "startChar": 8,
+        "endLine": 496,
+        "endChar": 14
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3280777b_41948e2b",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "added separate methods to retrieve mConfig and mRoutes while builder is being used.",
+      "parentUuid": "22d54f82_d7435551",
       "range": {
         "startLine": 496,
         "startChar": 8,
@@ -70,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "819d809e_eaaacc70",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a2cc138_c096f6c6",
+      "range": {
+        "startLine": 602,
+        "startChar": 78,
+        "endLine": 602,
+        "endChar": 86
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46ff5c5d_c77d7235",
@@ -83,6 +179,30 @@
       "writtenOn": "2021-09-16T11:55:37Z",
       "side": 1,
       "message": "final (here and on the index below)",
+      "range": {
+        "startLine": 606,
+        "startChar": 12,
+        "endLine": 606,
+        "endChar": 21
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42eb4bf8_5e0fa302",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ff5c5d_c77d7235",
       "range": {
         "startLine": 606,
         "startChar": 12,
@@ -140,6 +260,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45df4f0f_1ec3b89b",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "9b0a7845_11cb473a",
+      "range": {
+        "startLine": 677,
+        "startChar": 45,
+        "endLine": 677,
+        "endChar": 51
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d2d2bfb4_7f621dfe",
@@ -153,6 +297,30 @@
       "writtenOn": "2021-09-16T11:55:37Z",
       "side": 1,
       "message": "Moot if you remove this method, but InetAddress.parseNumericAddress is deprecated and suggests using InetAddressUtils.parseNumericAddress instead.",
+      "range": {
+        "startLine": 678,
+        "startChar": 32,
+        "endLine": 678,
+        "endChar": 63
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd1d7d80_ae08029a",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "This method is removed.\n\nThere are a few more usages in this file (not related to this CL)\nI can remove them in a separate CL",
+      "parentUuid": "d2d2bfb4_7f621dfe",
       "range": {
         "startLine": 678,
         "startChar": 32,
@@ -186,6 +354,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13d97432_f4ff9f73",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "Replaced with IpPrefix version, also added IpPrefix overload of `addRoute`",
+      "parentUuid": "7103794d_2ed5f90a",
+      "range": {
+        "startLine": 694,
+        "startChar": 45,
+        "endLine": 694,
+        "endChar": 82
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb78d222_71edac4a",
@@ -199,6 +391,30 @@
       "writtenOn": "2021-09-16T11:55:37Z",
       "side": 1,
       "message": "Having only exclude routes is necessarily a configuration error and can never make sense, I think ? Do we want to throw in this case ?",
+      "range": {
+        "startLine": 970,
+        "startChar": 36,
+        "endLine": 970,
+        "endChar": 45
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38617ead_70217314",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-20T15:59:51Z",
+      "side": 1,
+      "message": "if that\u0027s a configuration error, shouldn\u0027t the code in Vpn#establish(VpnConfig) already throw in that case? then exception there would be propagated to here.\n\nhttps://source.corp.google.com/aosp-master/frameworks/base/services/core/java/com/android/server/connectivity/Vpn.java;l\u003d1326\n\n\nQuick check shows that even if only the exclude routes are provided, Vpn still works:\n- include routes for Vpn addresses are implicitly added.\n- Vpn#establish doesn\u0027t throw\n- netd logs don\u0027t show any errors",
+      "parentUuid": "bb78d222_71edac4a",
       "range": {
         "startLine": 970,
         "startChar": 36,
