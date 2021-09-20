@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a15ec92c_a3186328",
+        "filename": "Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-09-20T15:27:29Z",
+      "side": 1,
+      "message": "Hmm the preconditions library seems to be linked statically into wifi-modules-utils now. Is this still needed?",
+      "revId": "4f2420f84bf9d33b45b2e2829b51ab4a91022feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
