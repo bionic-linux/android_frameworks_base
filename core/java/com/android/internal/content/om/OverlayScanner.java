@@ -27,7 +27,9 @@ import android.util.Log;
 import com.android.internal.annotations.VisibleForTesting;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * This class scans a directory containing overlay APKs and extracts information from the overlay
@@ -44,23 +46,27 @@ public class OverlayScanner {
         public final boolean isStatic;
         public final int priority;
         public final File path;
+        public final File preInstalledApexPath;
 
         public ParsedOverlayInfo(String packageName, String targetPackageName,
-                int targetSdkVersion, boolean isStatic, int priority, File path) {
+                int targetSdkVersion, boolean isStatic, int priority, File path,
+                File preInstalledApexPath) {
             this.packageName = packageName;
             this.targetPackageName = targetPackageName;
             this.targetSdkVersion = targetSdkVersion;
             this.isStatic = isStatic;
             this.priority = priority;
             this.path = path;
+            this.preInstalledApexPath = preInstalledApexPath;
         }
 
         @Override
         public String toString() {
             return getClass().getSimpleName() + String.format("{packageName=%s"
                             + ", targetPackageName=%s, targetSdkVersion=%s, isStatic=%s"
-                            + ", priority=%s, path=%s}",
-                    packageName, targetPackageName, targetSdkVersion, isStatic, priority, path);
+                            + ", priority=%s, path=%s, preInstalledApexPath=%s}",
+                    packageName, targetPackageName, targetSdkVersion, isStatic,
+                    priority, path, preInstalledApexPath);
         }
     }
 
@@ -80,6 +86,29 @@ public class OverlayScanner {
     @NonNull
     final Collection<ParsedOverlayInfo> getAllParsedInfos() {
         return mParsedOverlayInfos.values();
+    }
+
+    /** Finds potential overlay dirs within APEXes preinstalled in the given partition. */
+    @NonNull
+    public ArrayList<File> potentialApexOverlayDirs(File partitionApexDir) {
+        if (!partitionApexDir.exists() || !partitionApexDir.isDirectory()
+                || !partitionApexDir.canRead()) {
+            return Collections.emptyList();
+        }
+
+        final File[] files = partitionApexDir.listFiles();
+        if (files == null) {
+            return Collections.emptyList();
+        }
+
+        ArrayList<File> apexOverlayDirs = new ArrayList<>();
+        for (File f : files) {
+            if (f.getPath().endsWith(".apex")) {
+                apexOverlayDirs.add(new File(
+                        "/apex/" + f.getName().replace(".apex", "") + "/overlay/"));
+            }
+        }
+        return apexOverlayDirs;
     }
 
     /**
@@ -129,7 +158,7 @@ public class OverlayScanner {
             return apkLite.targetPackageName == null ? null :
                     new ParsedOverlayInfo(apkLite.packageName, apkLite.targetPackageName,
                             apkLite.targetSdkVersion, apkLite.overlayIsStatic,
-                            apkLite.overlayPriority, new File(apkLite.codePath));
+                            apkLite.overlayPriority, new File(apkLite.codePath), null);
         } catch (PackageParser.PackageParserException e) {
             Log.w(TAG, "Got exception loading overlay.", e);
             return null;
