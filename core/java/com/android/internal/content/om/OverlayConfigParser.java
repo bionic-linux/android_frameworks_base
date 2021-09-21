@@ -199,6 +199,14 @@ final class OverlayConfigParser {
 
         if (scanner != null) {
             scanner.scanDir(partition.getOverlayFolder());
+            if (partition.policy.equals("vendor")) {
+              Log.w(TAG, "danielnorman OverlayConfigParser::getConfigurations scanning vendor apex");
+              // TODO can we find these apex scandirs by looking through /<partition>/apex/*.apex?
+              // or, pass in APEX info from frameworks/base/core/java/android/content/res/AssetManager.java
+              // when it calls
+              // OverlayConfig.getZygoteInstance().createImmutableFrameworkIdmapsInZygote()?
+              scanner.scanDir(new File("/apex/com.google.aosp_cf_x86_64_phone.rros/overlay/"));
+            }
         }
 
         final File configFile = new File(partition.getOverlayFolder(), CONFIG_DEFAULT_FILENAME);
