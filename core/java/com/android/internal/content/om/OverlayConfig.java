@@ -30,6 +30,7 @@ import com.android.internal.content.om.OverlayConfigParser.OverlayPartition;
 import com.android.internal.content.om.OverlayConfigParser.ParsedConfiguration;
 import com.android.internal.content.om.OverlayScanner.ParsedOverlayInfo;
 import com.android.internal.util.Preconditions;
+import com.android.server.pm.ApexManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -96,10 +97,24 @@ public class OverlayConfig {
     // Singleton instance only assigned in system server
     private static OverlayConfig sInstance;
 
+    private File getApexInstallPath(ApexManager apexManager, String overlayPackageName) {
+      String apexPackageName = apexManager.getActiveApexPackageNameContainingPackageName(overlayPackageName);
+      if (apexPackageName != null) {
+        String apexModuleName = apexManager.getApexModuleNameForPackageName(apexPackageName);
+        for (ApexManager.ActiveApexInfo apexInfo : apexManager.getActiveApexInfos()) {
+          if (apexInfo.apexModuleName.equals(apexModuleName)) {
+            return apexInfo.preinstalledApexPath;
+          }
+        }
+      }
+      return null;
+    }
+
     @VisibleForTesting
     public OverlayConfig(@Nullable File rootDirectory,
             @Nullable Supplier<OverlayScanner> scannerFactory,
-            @Nullable PackageProvider packageProvider) {
+            @Nullable PackageProvider packageProvider,
+            @Nullable ApexManager apexManager) {
         Preconditions.checkArgument((scannerFactory == null) != (packageProvider == null),
                 "scannerFactory and packageProvider cannot be both null or both non-null");
 
@@ -145,7 +160,10 @@ public class OverlayConfig {
                 // Filter out overlays not present in the partition.
                 partitionOverlayInfos = new ArrayList<>(packageManagerOverlayInfos);
                 for (int j = partitionOverlayInfos.size() - 1; j >= 0; j--) {
-                    if (!partition.containsFile(partitionOverlayInfos.get(j).path)) {
+                    File overlayPath = partitionOverlayInfos.get(j).preinstalledApexPath == null ?
+                        partitionOverlayInfos.get(j).preinstalledApexPath :
+                        partitionOverlayInfos.get(j).path;
+                    if (!partition.containsFile(overlayPath)) {
                         partitionOverlayInfos.remove(j);
                     }
                 }
@@ -205,7 +223,7 @@ public class OverlayConfig {
     public static OverlayConfig initializeSystemInstance(PackageProvider packageProvider) {
         Trace.traceBegin(Trace.TRACE_TAG_RRO, "OverlayConfig#initializeSystemInstance");
         try {
-            sInstance = new OverlayConfig(null, null, packageProvider);
+            sInstance = new OverlayConfig(null, null, packageProvider, ApexManager.getInstance());
         } finally {
             Trace.traceEnd(Trace.TRACE_TAG_RRO);
         }
@@ -290,13 +308,18 @@ public class OverlayConfig {
 
     @NonNull
     private static ArrayList<ParsedOverlayInfo> getOverlayPackageInfos(
-            @NonNull PackageProvider packageManager) {
+            @NonNull PackageProvider packageManager,
+            @Nullable ApexManager apexManager) {
         final ArrayList<ParsedOverlayInfo> overlays = new ArrayList<>();
         packageManager.forEachPackage((ParsingPackageRead p, Boolean isSystem) -> {
             if (p.getOverlayTarget() != null && isSystem) {
+                File preInstalledApexPath;
+                if (apexManager != null) {
+                  preInstalledApexPath = getApexInstallPath(apexManager, p.getPackageName());
+                }
                 overlays.add(new ParsedOverlayInfo(p.getPackageName(), p.getOverlayTarget(),
                         p.getTargetSdkVersion(), p.isOverlayIsStatic(), p.getOverlayPriority(),
-                        new File(p.getBaseCodePath())));
+                        new File(p.getBaseCodePath())), preInstalledApexPath);
             }
         });
         return overlays;

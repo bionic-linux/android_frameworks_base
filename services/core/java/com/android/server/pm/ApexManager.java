@@ -213,8 +213,14 @@ public abstract class ApexManager {
      *         any apex.
      */
     @Nullable
-    public abstract String getActiveApexPackageNameContainingPackage(
-            @NonNull AndroidPackage containedPackage);
+    public String getActiveApexPackageNameContainingPackage(
+            @NonNull AndroidPackage containedPackage) {
+      return getActiveApexPackageNameContainingPackageName(containedPackage.getPackageName());
+    }
+
+    @Nullable
+    public abstract String getActiveApexPackageNameContainingPackageName(
+            @NonNull String containedPackage);
 
     /**
      * Retrieves information about an apexd staged session i.e. the internal state used by apexd to
@@ -655,8 +661,8 @@ public abstract class ApexManager {
 
         @Override
         @Nullable
-        public String getActiveApexPackageNameContainingPackage(
-                @NonNull AndroidPackage containedPackage) {
+        public String getActiveApexPackageNameContainingPackageName(
+                @NonNull String containedPackage) {
             Preconditions.checkState(mPackageNameToApexModuleName != null,
                     "APEX packages have not been scanned");
 
@@ -665,8 +671,7 @@ public abstract class ApexManager {
             synchronized (mLock) {
                 int numApksInApex = mApksInApex.size();
                 for (int apkInApexNum = 0; apkInApexNum < numApksInApex; apkInApexNum++) {
-                    if (mApksInApex.valueAt(apkInApexNum).contains(
-                            containedPackage.getPackageName())) {
+                    if (mApksInApex.valueAt(apkInApexNum).contains(containedPackage)) {
                         String apexModuleName = mApksInApex.keyAt(apkInApexNum);
 
                         int numApexPkgs = mPackageNameToApexModuleName.size();
@@ -1101,8 +1106,8 @@ public abstract class ApexManager {
 
         @Override
         @Nullable
-        public String getActiveApexPackageNameContainingPackage(
-                @NonNull AndroidPackage containedPackage) {
+        public String getActiveApexPackageNameContainingPackageName(
+                @NonNull String containedPackage) {
             Objects.requireNonNull(containedPackage);
 
             return null;

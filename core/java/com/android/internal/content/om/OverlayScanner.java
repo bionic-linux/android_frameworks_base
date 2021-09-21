@@ -44,23 +44,26 @@ public class OverlayScanner {
         public final boolean isStatic;
         public final int priority;
         public final File path;
+        public final File preInstalledApexPath;
 
         public ParsedOverlayInfo(String packageName, String targetPackageName,
-                int targetSdkVersion, boolean isStatic, int priority, File path) {
+                int targetSdkVersion, boolean isStatic, int priority, File path,
+                File preInstalledApexPath) {
             this.packageName = packageName;
             this.targetPackageName = targetPackageName;
             this.targetSdkVersion = targetSdkVersion;
             this.isStatic = isStatic;
             this.priority = priority;
             this.path = path;
+            this.preInstalledApexPath = preInstalledApexPath;
         }
 
         @Override
         public String toString() {
             return getClass().getSimpleName() + String.format("{packageName=%s"
                             + ", targetPackageName=%s, targetSdkVersion=%s, isStatic=%s"
-                            + ", priority=%s, path=%s}",
-                    packageName, targetPackageName, targetSdkVersion, isStatic, priority, path);
+                            + ", priority=%s, path=%s, preInstalledApexPath=%s}",
+                    packageName, targetPackageName, targetSdkVersion, isStatic, priority, path, preInstalledApexPath);
         }
     }
 
@@ -129,7 +132,7 @@ public class OverlayScanner {
             return apkLite.targetPackageName == null ? null :
                     new ParsedOverlayInfo(apkLite.packageName, apkLite.targetPackageName,
                             apkLite.targetSdkVersion, apkLite.overlayIsStatic,
-                            apkLite.overlayPriority, new File(apkLite.codePath));
+                            apkLite.overlayPriority, new File(apkLite.codePath), null);
         } catch (PackageParser.PackageParserException e) {
             Log.w(TAG, "Got exception loading overlay.", e);
             return null;
