@@ -2953,8 +2953,8 @@ public class PackageManagerService extends IPackageManager.Stub
 
         final List<ScanPartition> scanPartitions = new ArrayList<>();
         final List<ApexManager.ActiveApexInfo> activeApexInfos = mApexManager.getActiveApexInfos();
-        for (int i = 0; i < activeApexInfos.size(); i++) {
-            final ScanPartition scanPartition = resolveApexToScanPartition(activeApexInfos.get(i));
+        for (ApexManager.ActiveApexInfo apexInfo : activeApexInfos) {
+            final ScanPartition scanPartition = resolveApexToScanPartition(apexInfo);
             if (scanPartition != null) {
                 scanPartitions.add(scanPartition);
             }
@@ -3139,8 +3139,18 @@ public class PackageManagerService extends IPackageManager.Stub
             // Parse overlay configuration files to set default enable state, mutability, and
             // priority of system overlays.
             mOverlayConfig = OverlayConfig.initializeSystemInstance(
-                    consumer -> mPmInternal.forEachPackage(
-                            pkg -> consumer.accept(pkg, pkg.isSystem())));
+                    consumer -> {
+                      final Map<String, File> apkInApexPreInstalledPaths = new HashMap<>();
+                      for (ApexManager.ActiveApexInfo apexInfo : activeApexInfos) {
+                          for (String packageName : mApexManager.getApksInApex(apexInfo.apexModuleName)) {
+                            apkInApexPreInstalledPaths.put(packageName, apexInfo.preInstalledApexPath);
+                          }
+                      }
+
+                      mPmInternal.forEachPackage(
+                            pkg -> consumer.accept(pkg, pkg.isSystem(),
+                              apkInApexPreInstalledPaths.get(pkg.getPackageName())));
+                    });
 
             // Prune any system packages that no longer exist.
             final List<String> possiblyDeletedUpdatedSystemApps = new ArrayList<>();
