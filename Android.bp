@@ -269,6 +269,7 @@ java_library {
         ":framework-non-updatable-sources",
         ":framework-connectivity-sources",
         "core/java/**/*.logtags",
+        ":apex-info-list",
     ],
     aidl: {
         generate_get_transaction_name: true,
