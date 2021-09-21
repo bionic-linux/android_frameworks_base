@@ -30,12 +30,12 @@ import com.android.internal.content.om.OverlayConfigParser.OverlayPartition;
 import com.android.internal.content.om.OverlayConfigParser.ParsedConfiguration;
 import com.android.internal.content.om.OverlayScanner.ParsedOverlayInfo;
 import com.android.internal.util.Preconditions;
+import com.android.internal.util.function.TriConsumer;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
@@ -73,7 +73,7 @@ public class OverlayConfig {
     public interface PackageProvider {
 
         /** Performs the given action for each package. */
-        void forEachPackage(BiConsumer<ParsingPackageRead, Boolean> p);
+        void forEachPackage(TriConsumer<ParsingPackageRead, Boolean, File> p);
     }
 
     private static final Comparator<ParsedConfiguration> sStaticOverlayComparator = (c1, c2) -> {
@@ -145,7 +145,10 @@ public class OverlayConfig {
                 // Filter out overlays not present in the partition.
                 partitionOverlayInfos = new ArrayList<>(packageManagerOverlayInfos);
                 for (int j = partitionOverlayInfos.size() - 1; j >= 0; j--) {
-                    if (!partition.containsFile(partitionOverlayInfos.get(j).path)) {
+                    File overlayPath = partitionOverlayInfos.get(j).preInstalledApexPath != null
+                            ? partitionOverlayInfos.get(j).preInstalledApexPath
+                            : partitionOverlayInfos.get(j).path;
+                    if (!partition.containsFile(overlayPath)) {
                         partitionOverlayInfos.remove(j);
                     }
                 }
@@ -292,11 +295,12 @@ public class OverlayConfig {
     private static ArrayList<ParsedOverlayInfo> getOverlayPackageInfos(
             @NonNull PackageProvider packageManager) {
         final ArrayList<ParsedOverlayInfo> overlays = new ArrayList<>();
-        packageManager.forEachPackage((ParsingPackageRead p, Boolean isSystem) -> {
+        packageManager.forEachPackage((ParsingPackageRead p, Boolean isSystem,
+                File preInstalledApexPath) -> {
             if (p.getOverlayTarget() != null && isSystem) {
                 overlays.add(new ParsedOverlayInfo(p.getPackageName(), p.getOverlayTarget(),
                         p.getTargetSdkVersion(), p.isOverlayIsStatic(), p.getOverlayPriority(),
-                        new File(p.getBaseCodePath())));
+                        new File(p.getBaseCodePath()), preInstalledApexPath));
             }
         });
         return overlays;
