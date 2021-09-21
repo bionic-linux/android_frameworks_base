@@ -73,7 +73,7 @@ public class OverlayConfigIterationRule implements TestRule {
             final File canonicalPath = new File(path.getCanonicalPath());
             mOverlayStubResults.put(canonicalPath, new ParsedOverlayInfo(
                     packageName, targetPackage, targetSdkVersion, isStatic, priority,
-                    canonicalPath));
+                    canonicalPath, null));
         } catch (IOException e) {
             Assert.fail("Failed to add overlay " + e);
         }
