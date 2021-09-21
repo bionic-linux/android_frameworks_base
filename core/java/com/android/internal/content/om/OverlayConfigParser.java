@@ -199,6 +199,10 @@ final class OverlayConfigParser {
 
         if (scanner != null) {
             scanner.scanDir(partition.getOverlayFolder());
+            for (File dir : scanner.findApexOverlayDirs(partition.getApexFolder())) {
+              Log.w(TAG, "danielnorman OverlayConfigParser::getConfigurations scanning apex");
+              scanner.scanDir(dir);
+            }
         }
 
         final File configFile = new File(partition.getOverlayFolder(), CONFIG_DEFAULT_FILENAME);
