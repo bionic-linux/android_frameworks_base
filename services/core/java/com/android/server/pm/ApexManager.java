@@ -110,24 +110,27 @@ public abstract class ApexManager {
         @Nullable public final String apexModuleName;
         public final File apexDirectory;
         public final File preInstalledApexPath;
+        public final List<String> containedPackageNames;
 
         private ActiveApexInfo(File apexDirectory, File preInstalledApexPath) {
-            this(null, apexDirectory, preInstalledApexPath);
+            this(null, apexDirectory, preInstalledApexPath, Collections.emptyList());
         }
 
         private ActiveApexInfo(@Nullable String apexModuleName, File apexDirectory,
-                File preInstalledApexPath) {
+                File preInstalledApexPath, List<String> containedPackageNames) {
             this.apexModuleName = apexModuleName;
             this.apexDirectory = apexDirectory;
             this.preInstalledApexPath = preInstalledApexPath;
+            this.containedPackageNames = containedPackageNames;
         }
 
-        private ActiveApexInfo(ApexInfo apexInfo) {
+        private ActiveApexInfo(ApexInfo apexInfo, List<String> containedPackageNames) {
             this(
                     apexInfo.moduleName,
                     new File(Environment.getApexDirectory() + File.separator
                             + apexInfo.moduleName),
-                    new File(apexInfo.preinstalledModulePath));
+                    new File(apexInfo.preinstalledModulePath),
+                    containedPackageNames);
         }
     }
 
@@ -213,8 +216,14 @@ public abstract class ApexManager {
      *         any apex.
      */
     @Nullable
-    public abstract String getActiveApexPackageNameContainingPackage(
-            @NonNull AndroidPackage containedPackage);
+    public String getActiveApexPackageNameContainingPackage(
+            @NonNull AndroidPackage containedPackage) {
+      return getActiveApexPackageNameContainingPackageName(containedPackage.getPackageName());
+    }
+
+    @Nullable
+    public abstract String getActiveApexPackageNameContainingPackageName(
+            @NonNull String containedPackage);
 
     /**
      * Retrieves information about an apexd staged session i.e. the internal state used by apexd to
@@ -470,7 +479,8 @@ public abstract class ApexManager {
                         final ApexInfo[] activePackages = waitForApexService().getActivePackages();
                         for (int i = 0; i < activePackages.length; i++) {
                             ApexInfo apexInfo = activePackages[i];
-                            mActiveApexInfosCache.add(new ActiveApexInfo(apexInfo));
+                            mActiveApexInfosCache.add(new ActiveApexInfo(apexInfo,
+                                mApksInApex.getOrDefault(apexInfo.moduleName, Collections.emptyList())));
                         }
                     } catch (RemoteException e) {
                         Slog.e(TAG, "Unable to retrieve packages from apexservice", e);
@@ -655,8 +665,8 @@ public abstract class ApexManager {
 
         @Override
         @Nullable
-        public String getActiveApexPackageNameContainingPackage(
-                @NonNull AndroidPackage containedPackage) {
+        public String getActiveApexPackageNameContainingPackageName(
+                @NonNull String containedPackage) {
             Preconditions.checkState(mPackageNameToApexModuleName != null,
                     "APEX packages have not been scanned");
 
@@ -665,8 +675,7 @@ public abstract class ApexManager {
             synchronized (mLock) {
                 int numApksInApex = mApksInApex.size();
                 for (int apkInApexNum = 0; apkInApexNum < numApksInApex; apkInApexNum++) {
-                    if (mApksInApex.valueAt(apkInApexNum).contains(
-                            containedPackage.getPackageName())) {
+                    if (mApksInApex.valueAt(apkInApexNum).contains(containedPackage)) {
                         String apexModuleName = mApksInApex.keyAt(apkInApexNum);
 
                         int numApexPkgs = mPackageNameToApexModuleName.size();
@@ -1101,8 +1110,8 @@ public abstract class ApexManager {
 
         @Override
         @Nullable
-        public String getActiveApexPackageNameContainingPackage(
-                @NonNull AndroidPackage containedPackage) {
+        public String getActiveApexPackageNameContainingPackageName(
+                @NonNull String containedPackage) {
             Objects.requireNonNull(containedPackage);
 
             return null;
