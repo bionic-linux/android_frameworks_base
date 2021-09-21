@@ -119,6 +119,9 @@ public class PackagePartitions {
         @Nullable
         private final DeferredCanonicalFile mOverlayFolder;
 
+        @Nullable
+        private final DeferredCanonicalFile mApexFolder;
+
         @NonNull
         private final File mNonConicalFolder;
 
@@ -131,6 +134,7 @@ public class PackagePartitions {
                     : null;
             this.mOverlayFolder = containsOverlay ? new DeferredCanonicalFile(folder, "overlay")
                     : null;
+            this.mApexFolder = new DeferredCanonicalFile(folder, "apex");
             this.mNonConicalFolder = folder;
         }
 
@@ -140,6 +144,7 @@ public class PackagePartitions {
             this.mAppFolder = original.mAppFolder;
             this.mPrivAppFolder = original.mPrivAppFolder;
             this.mOverlayFolder = original.mOverlayFolder;
+            this.mApexFolder = original.mApexFolder;
             this.mNonConicalFolder = original.mNonConicalFolder;
         }
 
@@ -180,6 +185,12 @@ public class PackagePartitions {
         @Nullable
         public File getOverlayFolder() {
             return mOverlayFolder == null ? null : mOverlayFolder.getFile();
+        }
+
+        /** Returns the canonical pre-installed apex folder of the partition. */
+        @Nullable
+        public File getApexFolder() {
+            return mApexFolder == null ? null : mApexFolder.getFile();
         }
 
         /** Returns whether the partition contains the specified file. */
