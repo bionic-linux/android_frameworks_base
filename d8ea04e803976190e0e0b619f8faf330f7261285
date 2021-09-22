@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50832a93_3dbaba27",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-09-22T00:42:53Z",
+      "side": 1,
+      "message": "Need to fix Java formatting, and add a comment about why we\u0027re doing this lookup inside the consumer rather than before.\n\nApexManager.registerApkInApex is not called until after after OverlayConfig.initializeSystemInstance() is called. Putting it in the consumer allows us to delay the lookup of apks-in-apex until apks-in-apexes are registered.",
+      "revId": "d8ea04e803976190e0e0b619f8faf330f7261285",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
