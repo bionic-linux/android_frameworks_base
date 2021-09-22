@@ -1,0 +1,134 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015585660",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830600?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2e9aa16a_3ce1010e",
+        "filename": "core/java/com/android/internal/content/om/OverlayConfigParser.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-22T19:36:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 101
+      },
+      "revId": "07dfe4d97f7f65f8fa81e3a12179c5fab8944e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015585660",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830600?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "6f02740d_df540e6c",
+        "filename": "core/java/com/android/internal/content/om/OverlayConfigParser.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-22T19:36:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 107
+      },
+      "revId": "07dfe4d97f7f65f8fa81e3a12179c5fab8944e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015585660",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830600?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5cfb6765_55b971bf",
+        "filename": "core/java/com/android/internal/content/om/OverlayScanner.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-22T19:36:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 118
+      },
+      "revId": "07dfe4d97f7f65f8fa81e3a12179c5fab8944e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015585660",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830600?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "2859c0d8_8deb5c38",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-22T19:36:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3145,
+        "startChar": 0,
+        "endLine": 3145,
+        "endChar": 106
+      },
+      "revId": "07dfe4d97f7f65f8fa81e3a12179c5fab8944e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015585660",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830600?revision\u003d12",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1239c1ad_83bb6620",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3146,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-09-22T19:36:51Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 3146,
+        "startChar": 0,
+        "endLine": 3146,
+        "endChar": 103
+      },
+      "revId": "07dfe4d97f7f65f8fa81e3a12179c5fab8944e2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
