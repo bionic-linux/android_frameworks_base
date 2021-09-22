@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9811d4b2_623b397a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-09-22T14:34:54Z",
+      "side": 1,
+      "message": "Think about this patch again,\nI think getUidNetworkStatsSnapshotForTransport should use the template with METERED_YES. Please take a look.",
+      "revId": "f2666736fc65dffa461e5348abb2797ac85f8efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
