@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33abaf51_5a3b5e28",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-23T10:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa0f64bd_af879270",
+      "range": {
+        "startLine": 477,
+        "startChar": 12,
+        "endLine": 477,
+        "endChar": 31
+      },
+      "revId": "bbc938f989b7d1c5f41b8fbfcc60d32ece33a80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "293432a6_6d8f4b41",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7aef5da_3c97ded8",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-23T10:46:21Z",
+      "side": 1,
+      "message": "These @hide annotations are no longer needed.\n\ninitial idea was to make these fields public but @hide, to access them from tests.\nAfter Jean\u0027s suggestion, I added public/@hide methods to access these fields instead.",
+      "parentUuid": "293432a6_6d8f4b41",
+      "range": {
+        "startLine": 497,
+        "startChar": 8,
+        "endLine": 497,
+        "endChar": 20
+      },
+      "revId": "bbc938f989b7d1c5f41b8fbfcc60d32ece33a80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3cf5aab_05664948",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-09-23T06:10:36Z",
       "side": 1,
       "message": "Ditto.",
+      "range": {
+        "startLine": 501,
+        "startChar": 8,
+        "endLine": 501,
+        "endChar": 20
+      },
+      "revId": "bbc938f989b7d1c5f41b8fbfcc60d32ece33a80b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2a6c9ea_c0eb2be3",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-09-23T10:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3cf5aab_05664948",
       "range": {
         "startLine": 501,
         "startChar": 8,
