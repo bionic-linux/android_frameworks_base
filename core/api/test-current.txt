@@ -19,6 +19,7 @@ package android {
     field public static final String MANAGE_ACTIVITY_STACKS = "android.permission.MANAGE_ACTIVITY_STACKS";
     field public static final String MANAGE_CRATES = "android.permission.MANAGE_CRATES";
     field public static final String MANAGE_ROLLBACKS = "android.permission.MANAGE_ROLLBACKS";
+    field public static final String MODIFY_USER_PREFERRED_DISPLAY_MODE = "android.permission.MODIFY_USER_PREFERRED_DISPLAY_MODE";
     field public static final String NETWORK_SETTINGS = "android.permission.NETWORK_SETTINGS";
     field public static final String NETWORK_STACK = "android.permission.NETWORK_STACK";
     field public static final String OVERRIDE_DISPLAY_MODE_REQUESTS = "android.permission.OVERRIDE_DISPLAY_MODE_REQUESTS";
