@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b969c265_317e536e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-09-23T11:28:35Z",
+      "side": 1,
+      "message": "I am working on handling SADs inside the framework for Android T. This patch shouldn\u0027t be merged to master.",
+      "revId": "bca8dc752c063defd44afcda9c614a6223d9a8d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
