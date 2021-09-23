@@ -16,6 +16,46 @@
       "message": "Think about this patch again,\nI think getUidNetworkStatsSnapshotForTransport should use the template with METERED_YES. Please take a look.",
       "revId": "f2666736fc65dffa461e5348abb2797ac85f8efe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4605813a_9d74f871",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-23T02:29:24Z",
+      "side": 1,
+      "message": "-1 since IIUC this should be internal master first to prevent from unsync.",
+      "revId": "f2666736fc65dffa461e5348abb2797ac85f8efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c7a017b_8fb66e94",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-09-23T02:29:24Z",
+      "side": 1,
+      "message": "METERED_YES?",
+      "range": {
+        "startLine": 1243,
+        "startChar": 82,
+        "endLine": 1243,
+        "endChar": 93
+      },
+      "revId": "f2666736fc65dffa461e5348abb2797ac85f8efe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
