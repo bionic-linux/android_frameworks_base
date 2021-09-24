@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "225d0e00_914b0090",
+        "filename": "core/java/com/android/internal/content/om/OverlayConfig.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-24T02:05:02Z",
+      "side": 1,
+      "message": "Note that this file is actually an implementation detail of apexd. The team doesn\u0027t want this to be used from outside of apexd.\n\nNikita might have a comment on this as well.",
+      "range": {
+        "startLine": 327,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 65
+      },
+      "revId": "8897499de2d4918d46045f55caa38f7f831ce0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

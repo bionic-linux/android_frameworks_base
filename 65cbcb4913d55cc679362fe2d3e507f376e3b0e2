@@ -238,6 +238,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "594ae50c_e6021315",
+        "filename": "core/java/com/android/internal/content/om/OverlayScanner.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-24T02:05:02Z",
+      "side": 1,
+      "message": "I see. So this code is executed not inside the system_server, but inside zygote. Is that correct?",
+      "parentUuid": "21e30c63_cbf46a30",
+      "range": {
+        "startLine": 108,
+        "startChar": 35,
+        "endLine": 108,
+        "endChar": 67
+      },
+      "revId": "65cbcb4913d55cc679362fe2d3e507f376e3b0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6555ea08_83613c31",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 16
