@@ -262,6 +262,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0fb4cee5_f2995fc7",
+        "filename": "core/java/com/android/internal/content/om/OverlayScanner.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-09-24T16:49:09Z",
+      "side": 1,
+      "message": "Right, there are two ways that the OverlayConfig.java constructor is used, both of which I\u0027ve updated in this change:\n\n1. From system_server, initialized with OverlayConfig::initializeSystemInstance(). It uses a \"PackageProvider\", which is just a java Consumer that is fed Packages (ParsingPackageRead) from PackageManagerService. In this change I\u0027ve updated PackageManagerService to provide OverlayConfig\u0027s \"SystemInstance\" with information about the package\u0027s preinstalled APEX location directly from ApexManager, since system_server can access ApexManager.\n\n2. From Zygote, initialized with OverlayConfig::getZygoteInstance(), early in Zygote when it is loading \"system assets shared by all applications\", in AssetManager.java::createSystemAssetsInZygoteLocked(). This \"zygote instance\" of OverlayConfig uses a simpler \"directory scanner\" OverlayScanner.java, which scans a set of predetermined directory paths (/\u003cpartition\u003e/overlay/) for RRO APKs, and filters it to only those targeting the \u0027android\u0027 package. In this change I\u0027ve updated OverlayScanner to read the apex-info-list XML to know which /apex/\u003capex\u003e/overlay paths it should read, for each preinstalled partition. I used apex-info-list because Zygote causes libbinder issues (like http://b/123884312#comment19) if it tries to access ApexManager/apexservice this early.\n\n\n\nre: apex-info-list: If Nikita or others want to keep apex-info-list a private implementation detail of apexd, should we formally enforce this with a `visiblity` tag on the apex-info-list build rule, to stop others like myself from attempting this?\nIf we do not use apex-info-list, and can\u0027t otherwise access apexservice from early Zygote, then for (2) one other naive option is to do a simple scan of all dirs in /apex/*, and treat them all as belonging to a relatively-low-priority (https://source.android.com/devices/architecture/rros#overlay-precedence) partition like /vendor.",
+      "parentUuid": "594ae50c_e6021315",
+      "range": {
+        "startLine": 108,
+        "startChar": 35,
+        "endLine": 108,
+        "endChar": 67
+      },
+      "revId": "65cbcb4913d55cc679362fe2d3e507f376e3b0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6555ea08_83613c31",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 16
