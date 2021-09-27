@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de390d36_e859a0a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-09-27T11:23:04Z",
+      "side": 1,
+      "message": "+Metalava folks FYI, I\u0027m adding a simple tool to merge extracted annotations. Could conceivably be built into metalava as well but I did not think that was particularly appealing. I added some assertions in the tool itself that the input looks the way we expect it to. LMK if there are any problems with this.",
+      "revId": "73ceaff945313d26d04529c5de03cfd42475e05b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
