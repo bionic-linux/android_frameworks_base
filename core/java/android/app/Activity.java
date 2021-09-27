@@ -2457,7 +2457,7 @@ public class Activity extends ContextThemeWrapper
      *
      * <p>To get the voice interactor you need to call {@link #getVoiceInteractor()}
      * which would return non <code>null</code> only if there is an ongoing voice
-     * interaction session. You an also detect when the voice interactor is no
+     * interaction session. You can also detect when the voice interactor is no
      * longer valid because the voice interaction session that is backing is finished
      * by calling {@link VoiceInteractor#registerOnDestroyedCallback(Executor, Runnable)}.
      *
