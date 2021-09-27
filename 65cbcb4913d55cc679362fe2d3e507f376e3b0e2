@@ -286,6 +286,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4814b498_5040e293",
+        "filename": "core/java/com/android/internal/content/om/OverlayScanner.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-09-27T06:12:58Z",
+      "side": 1,
+      "message": "Ack.\n\nI admit that using apex-info-list here is inevitable here. Accessing apexservice via binder doesn\u0027t look significantly better because the AIDL interface is also not guaranteed to be stable.\n\nThis is not the only place where the xml file is referenced. ART is the another place. Although that by itself is undesirable, I think the ship has sailed away (ART became an updatable module in S) and this doesn\u0027t make the problem worse because this (OverlayConfig) is not updatable, but a part of the non-updatable platform.",
+      "parentUuid": "0fb4cee5_f2995fc7",
+      "range": {
+        "startLine": 108,
+        "startChar": 35,
+        "endLine": 108,
+        "endChar": 67
+      },
+      "revId": "65cbcb4913d55cc679362fe2d3e507f376e3b0e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6555ea08_83613c31",
         "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
         "patchSetId": 16
