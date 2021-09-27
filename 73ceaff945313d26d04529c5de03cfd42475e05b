@@ -16,6 +16,52 @@
       "message": "+Metalava folks FYI, I\u0027m adding a simple tool to merge extracted annotations. Could conceivably be built into metalava as well but I did not think that was particularly appealing. I added some assertions in the tool itself that the input looks the way we expect it to. LMK if there are any problems with this.",
       "revId": "73ceaff945313d26d04529c5de03cfd42475e05b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e11823f3_ba097c6b",
+        "filename": "api/merge_annotation_zips.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-09-27T11:37:40Z",
+      "side": 1,
+      "message": "zip a function name in python, rename these variables to something else across the file",
+      "range": {
+        "startLine": 66,
+        "startChar": 42,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "73ceaff945313d26d04529c5de03cfd42475e05b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0c3ef05_fee996e6",
+        "filename": "api/merge_annotation_zips.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-09-27T11:37:40Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 67,
+        "startChar": 30,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "73ceaff945313d26d04529c5de03cfd42475e05b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
