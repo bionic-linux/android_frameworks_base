@@ -1398,7 +1398,11 @@ public class Vpn {
             // parameters. If that fails, disconnect.
             if (oldConfig != null
                     && updateLinkPropertiesInPlaceIfPossible(mNetworkAgent, oldConfig)) {
-                // Keep mNetworkAgent unchanged
+                // Update underlying networks if it is changed.
+                if (!Arrays.equals(oldConfig.underlyingNetworks, config.underlyingNetworks)) {
+                    mNetworkAgent.setUnderlyingNetworks((config.underlyingNetworks != null)
+                            ? Arrays.asList(config.underlyingNetworks) : null);
+                }
             } else {
                 // Initialize the state for a new agent, while keeping the old one connected
                 // in case this new connection fails.
