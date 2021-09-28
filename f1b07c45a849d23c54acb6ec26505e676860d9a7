@@ -16,6 +16,23 @@
       "message": "This is a cherry-pick of ag/15432513, for MTK to rebase their changes on for b/194429425",
       "revId": "f1b07c45a849d23c54acb6ec26505e676860d9a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "443b9af7_cea4f935",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-09-28T12:26:42Z",
+      "side": 1,
+      "message": " Once ag/15930804 gets merged, the [DO NOT MERGE] can be removed",
+      "revId": "f1b07c45a849d23c54acb6ec26505e676860d9a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
