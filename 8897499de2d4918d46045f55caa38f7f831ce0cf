@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "234ced94_f9dca891",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2021-09-28T17:19:38Z",
+      "side": 1,
+      "message": "This probably conflicts with other OverlayConfig work and will need to merged internally first.",
+      "revId": "8897499de2d4918d46045f55caa38f7f831ce0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "225d0e00_914b0090",
@@ -44,6 +61,23 @@
         "endLine": 327,
         "endChar": 65
       },
+      "revId": "8897499de2d4918d46045f55caa38f7f831ce0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4722830_5da51322",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2021-09-28T17:19:38Z",
+      "side": 1,
+      "message": "I\u0027m not too sure what this means. This consumer is called synchronously with the initialize method, so any data that must be considered as an overlay must be available at this point in time.\n\nActually, to be honest, I\u0027m not sure how this works at all. This data should be used during scanning, but scanning has already concluded by this point. Seems like the flow is broken.",
       "revId": "8897499de2d4918d46045f55caa38f7f831ce0cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
