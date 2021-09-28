@@ -16,6 +16,23 @@
       "message": "All merge conflicts finally resolved. CP to AOSP is now ready. PTAL.",
       "revId": "dc11f7e67a564367be6e37f2d6e40be77229d75f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b035da00_e57a2ecb",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-09-28T14:18:22Z",
+      "side": 1,
+      "message": "Please make it a habit to put it in sorted order (OK, this list isn\u0027t sorted, but this change makes it less sorted 😊)\n\n(no need to change if the internal changes are unsorted already)",
+      "revId": "dc11f7e67a564367be6e37f2d6e40be77229d75f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
