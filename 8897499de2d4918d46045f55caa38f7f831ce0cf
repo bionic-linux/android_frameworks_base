@@ -83,6 +83,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cfbbbf5_7a345da2",
+        "filename": "core/java/com/android/internal/content/om/OverlayConfig.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-09-29T22:38:38Z",
+      "side": 1,
+      "message": "(closing comment thread)",
+      "parentUuid": "9d4136dc_c1b5c816",
+      "range": {
+        "startLine": 327,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 65
+      },
+      "revId": "8897499de2d4918d46045f55caa38f7f831ce0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4722830_5da51322",
