@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efc23018_f517bfb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-09-29T17:44:57Z",
+      "side": 1,
+      "message": "Right, thanks for the heads up! My current plan is to get your team\u0027s general approval of this AOSP implementation, then cherrypick and fix conflicts internally before getting re-approval there.",
+      "parentUuid": "234ced94_f9dca891",
+      "revId": "8897499de2d4918d46045f55caa38f7f831ce0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "225d0e00_914b0090",
@@ -78,6 +96,24 @@
       "writtenOn": "2021-09-28T17:19:38Z",
       "side": 1,
       "message": "I\u0027m not too sure what this means. This consumer is called synchronously with the initialize method, so any data that must be considered as an overlay must be available at this point in time.\n\nActually, to be honest, I\u0027m not sure how this works at all. This data should be used during scanning, but scanning has already concluded by this point. Seems like the flow is broken.",
+      "revId": "8897499de2d4918d46045f55caa38f7f831ce0cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdb9325a_7200a469",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-09-29T17:44:57Z",
+      "side": 1,
+      "message": "Good catch, you\u0027re right. I think in my earlier tests I had this mApexManager.getApksInApex up a couple blocks of code higher, and saw that it hadn\u0027t loaded yet, so I put it inside the consumer.\n\nI\u0027ve moved it above this call to initializeSystemInstance now, since as you mentioned it does synchronously call the consumer anyway so there\u0027s no need to have it inside.",
+      "parentUuid": "e4722830_5da51322",
       "revId": "8897499de2d4918d46045f55caa38f7f831ce0cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
