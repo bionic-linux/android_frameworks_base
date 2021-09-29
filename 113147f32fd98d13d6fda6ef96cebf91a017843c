@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2435e40_e848c117",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1898000
+      },
+      "writtenOn": "2021-09-29T07:35:50Z",
+      "side": 1,
+      "message": "log message to be updated.",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 51
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ebb55f1_eac8464b",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1898000
+      },
+      "writtenOn": "2021-09-29T07:35:50Z",
+      "side": 1,
+      "message": "pattern no \"0\" is valid pattern.",
+      "range": {
+        "startLine": 526,
+        "startChar": 8,
+        "endLine": 526,
+        "endChar": 32
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3db5aa5_0c138e6c",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1898000
+      },
+      "writtenOn": "2021-09-29T07:35:50Z",
+      "side": 1,
+      "message": "pattern no \"0\" is valid pattern no.\n\nIf we need to revert NFCC config to default value ( when App close/background..), \na customer pattern no ( say -1 or other value) to be used for default/revert configuration.\n\nframework API itself can take pattern no as enum type with enum depicting all valid pattern no.\n\n\nValid pattern no reference\nDevice Test Application Application Specification Version 2.3.01\n- Table 15: Configuration parameters Versus PATTERN_NUMBER\n\n0x0000, 0x0001, 0x0002, 0x0003, 0x0004, 0x0005, 0x0006, 0x0007, 0x0008,\n0x0009, 0x000A, 0x000B, 0x1200, 0x1201, 0x1240, 0x1241, 0x1280, 0x1281",
+      "range": {
+        "startLine": 545,
+        "startChar": 12,
+        "endLine": 545,
+        "endChar": 55
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d8dfdf9_2d9d402d",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1898000
+      },
+      "writtenOn": "2021-09-29T07:35:50Z",
+      "side": 1,
+      "message": "As 0 is valid pattern no,\nAs per above comment, we shall select different value for default",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 554,
+        "endChar": 9
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb7ef8ab_fbff16c1",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1898000
+      },
+      "writtenOn": "2021-09-29T07:35:50Z",
+      "side": 1,
+      "message": "Please also add \"android:description\" \u0026 \"android:label\" field.\nExample\ndescription : \"Gives NFC Forum Test App Access\" \nlabel :       \"Allows the app to get NFC Forum pattern based config access\"",
+      "range": {
+        "startLine": 1903,
+        "startChar": 1,
+        "endLine": 1904,
+        "endChar": 44
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
