@@ -20,6 +20,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f50593b2_36b4bc36",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-09-30T09:41:45Z",
+      "side": 1,
+      "message": "Pre-existing, but since you\u0027re moving it... would something like:\n\n    final IpPrefix prefix \u003d new IpPrefix(address, prefixLength);\n    if (!prefix.getAddress().equals(address)) {\n        throw new IllegalArgumentException(\"Bad address\");\n    }\n\nwork? If so that seems better.",
+      "range": {
+        "startLine": 476,
+        "startChar": 24,
+        "endLine": 476,
+        "endChar": 43
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb7748d7_fe8c644e",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-09-30T09:41:45Z",
+      "side": 1,
+      "message": "the packet",
+      "range": {
+        "startLine": 626,
+        "startChar": 36,
+        "endLine": 626,
+        "endChar": 42
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cf5a85b_14e4a12c",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-09-30T09:41:45Z",
+      "side": 1,
+      "message": "Is there a reason this doesn\u0027t update the allowed families?\n\nCurrently:\n- If the caller only calls excludeRoute() on a particular family, the family remains disallowed.\n- If the caller calls addRoute() then excludeRoute(), then the family will be allowed.\n\nThe difference between the two could be confusing.\n\n\nWhat should happen when a user just calls excludeRoute()? Should the family remain disallowed or be allowed?\n\nI guess saying that the family remains disallowed is more powerful because it allows the caller to say, \"prohibit all traffic except traffic to these destinations, which should be sent native\". That seems like it could be useful to implement a firewall, perhaps? This is a VPN API but people do use it to implement firewals.",
+      "range": {
+        "startLine": 690,
+        "startChar": 9,
+        "endLine": 690,
+        "endChar": 10
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1e18d738_36883a22",
         "filename": "core/java/android/net/VpnService.java",
         "patchSetId": 13
