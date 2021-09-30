@@ -423,6 +423,30 @@
       },
       "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46932ebe_740322fa",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-30T07:44:23Z",
+      "side": 1,
+      "message": "Vpn#establish is an internal method and it assumes parameters have been checked beforehand. It is, for example, called by the system server on boot in the always-on case, where we don\u0027t even have an app to throw at. So I don\u0027t think it should usually throw for configuration errors ; you can see the only exceptions there are for system failures, which should be programming errors in the system server. I do think here is the right place to throw if we want to throw.\n\nSo the question is whether a default route should be added automatically when only exclude routes have been added. Yeah, maybe it makes sense, I guess it\u0027s pretty obvious that is what you would mean by only calling excludeRoutes. Fair enough, let\u0027s keep what you have.",
+      "parentUuid": "38617ead_70217314",
+      "range": {
+        "startLine": 970,
+        "startChar": 36,
+        "endLine": 970,
+        "endChar": 45
+      },
+      "revId": "938ec1b3c7f0e109f35a7cc58a1c0d3c07b0109a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

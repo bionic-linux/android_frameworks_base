@@ -16,6 +16,52 @@
       "message": "Hi Lucas, \ncomments resolved, ptal",
       "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e18d738_36883a22",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-30T07:44:23Z",
+      "side": 1,
+      "message": "I don\u0027t think you should need this, instead the tests can just call configuration() and read the routes from there. That\u0027s more consistent with how you\u0027d usually expect a builder to behave.",
+      "range": {
+        "startLine": 1002,
+        "startChar": 0,
+        "endLine": 1009,
+        "endChar": 9
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "483f2eac_0352f781",
+        "filename": "core/java/com/android/internal/net/VpnConfig.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-09-30T07:44:23Z",
+      "side": 1,
+      "message": "Thanks for adding this !",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 39
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
