@@ -27,6 +27,7 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Process;
 import android.os.SystemProperties;
+import android.sysprop.MediaProperties;
 import android.util.Log;
 import android.util.Pair;
 import android.util.Range;
@@ -195,8 +196,9 @@ public final class MediaCodecInfo {
     private static final Range<Rational> POSITIVE_RATIONALS =
             Range.create(new Rational(1, Integer.MAX_VALUE),
                          new Rational(Integer.MAX_VALUE, 1));
-    private static final Range<Integer> SIZE_RANGE =
-            Process.is64Bit() ? Range.create(1, 32768) : Range.create(1, 4096);
+    private static final Range<Integer> SIZE_RANGE = Process.is64Bit()
+            ? Range.create(1, 32768)
+            : Range.create(1, MediaProperties.resolution_limit_32bit().orElse(4096));
     private static final Range<Integer> FRAME_RATE_RANGE = Range.create(0, 960);
     private static final Range<Integer> BITRATE_RANGE = Range.create(0, 500000000);
     private static final int DEFAULT_MAX_SUPPORTED_INSTANCES = 32;
