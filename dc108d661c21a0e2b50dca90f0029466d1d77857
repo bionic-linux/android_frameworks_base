@@ -118,6 +118,30 @@
       },
       "revId": "dc108d661c21a0e2b50dca90f0029466d1d77857",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ca12715_8f581d36",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-09-30T16:22:54Z",
+      "side": 1,
+      "message": "Sorry for lack information.\n- For StatsPullAtomService.getDataUsageBytesTransferSnapshotForOemManaged(), discussed with owner at ag/15886713.\n- MetricDisplay.trafficFor, discussed with owner at ag/15886631.\nBoth of these two usage expect to collect metered and non-metered stats so I think this should be a bug for them. Thus,remain METERED_ALL would fix the bug.",
+      "parentUuid": "8cbdf314_a647fc3c",
+      "range": {
+        "startLine": 336,
+        "startChar": 34,
+        "endLine": 336,
+        "endChar": 41
+      },
+      "revId": "dc108d661c21a0e2b50dca90f0029466d1d77857",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
