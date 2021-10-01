@@ -3,6 +3,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24ad49c8_afd0267f",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"expection\" -- should it be \"exception\"?\n\u003e or, alternatively, \u0027expectation\u0027\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "e28ab311_d1dfbe36",
+      "range": {
+        "startLine": 2180,
+        "startChar": 31,
+        "endLine": 2180,
+        "endChar": 40
+      },
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8950ecb7_61c41a0f",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "We should remove those status. It should be not needed anymore when start streaming is integrated into audio framework.",
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "40cfb207_d6b29a7c",
         "filename": "core/java/android/provider/Settings.java",
         "patchSetId": 2
@@ -14,6 +55,168 @@
       "writtenOn": "2021-09-27T21:56:09Z",
       "side": 1,
       "message": "@Readable ?",
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8fe0722_288a30b6",
+        "filename": "core/java/android/provider/Settings.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4557,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "haven\u0027t found usage of this. Should we add it here?",
+      "parentUuid": "40cfb207_d6b29a7c",
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "517f6ede_81e531ed",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "59c8839d_f2d1fe53",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 101
+      },
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bed781c_3449289f",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/BluetoothEventManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "aecea72d_b41a971d",
+      "range": {
+        "startLine": 442,
+        "startChar": 0,
+        "endLine": 442,
+        "endChar": 104
+      },
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6debe0b_4a12eb55",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "81f3f10f_2f43a793",
+      "range": {
+        "startLine": 1117,
+        "startChar": 0,
+        "endLine": 1117,
+        "endChar": 130
+      },
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09ccb204_5775efba",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "f1de5e8c_ef79c877",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 507,
+        "endChar": 107
+      },
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "271c1dd8_33efaa64",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "64828118_3fe399c7",
+      "range": {
+        "startLine": 511,
+        "startChar": 0,
+        "endLine": 511,
+        "endChar": 103
+      },
+      "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "974ec092_117674cc",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-01T14:47:21Z",
+      "side": 1,
+      "message": "\u003e Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.\n\nPlease fix.",
+      "parentUuid": "19b8ce1b_e3449149",
+      "range": {
+        "startLine": 903,
+        "startChar": 0,
+        "endLine": 903,
+        "endChar": 103
+      },
       "revId": "f5f2814076312df9137067f3d6a87f35a9c72c7b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
