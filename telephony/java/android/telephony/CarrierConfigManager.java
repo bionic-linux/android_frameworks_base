@@ -1717,22 +1717,32 @@ public class CarrierConfigManager {
             "broadcast_emergency_call_state_changes_bool";
 
     /**
-      * Indicates whether STK LAUNCH_BROWSER command is disabled.
-      * If {@code true}, then the browser will not be launched
-      * on UI for the LAUNCH_BROWSER STK command.
-      * @hide
-      */
+     * Indicates whether STK LAUNCH_BROWSER command is disabled.
+     * If {@code true}, then the browser will not be launched
+     * on UI for the LAUNCH_BROWSER STK command.
+     * @hide
+     */
     public static final String KEY_STK_DISABLE_LAUNCH_BROWSER_BOOL =
             "stk_disable_launch_browser_bool";
 
     /**
-      * Boolean indicating if the helper text for STK GET INKEY/INPUT commands with the digit only
-      * mode is displayed on the input screen.
-      * The helper text is dispayed regardless of the input mode, if {@code false}.
-      * @hide
-      */
+     * Boolean indicating if the helper text for STK GET INKEY/INPUT commands with the digit only
+     * mode is displayed on the input screen.
+     * The helper text is dispayed regardless of the input mode, if {@code false}.
+     * @hide
+     */
     public static final String KEY_HIDE_DIGITS_HELPER_TEXT_ON_STK_INPUT_SCREEN_BOOL =
             "hide_digits_helper_text_on_stk_input_screen_bool";
+
+    /**
+     * Indicates whether the options menu should be displayed on the GET INPUT screen if it is
+     * redundant.
+     * If {@code true}, then the options menu is hidden if it's redundant. It is considered
+     * redundant if the proactive command does not request help and yes/no layout.
+     * @hide
+     */
+    public static final String KEY_HIDE_REDUNDANT_OPTIONS_MENU_ON_STK_INPUT_SCREEN_BOOL =
+            "hide_redundant_options_menu_on_stk_input_screen_bool";
 
     /**
      * Boolean indicating if show data RAT icon on status bar even when data is disabled.
@@ -4887,6 +4897,7 @@ public class CarrierConfigManager {
         sDefaults.putBoolean(KEY_STK_DISABLE_LAUNCH_BROWSER_BOOL, false);
         sDefaults.putBoolean(KEY_ALLOW_METERED_NETWORK_FOR_CERT_DOWNLOAD_BOOL, false);
         sDefaults.putBoolean(KEY_HIDE_DIGITS_HELPER_TEXT_ON_STK_INPUT_SCREEN_BOOL, true);
+        sDefaults.putBoolean(KEY_HIDE_REDUNDANT_OPTIONS_MENU_ON_STK_INPUT_SCREEN_BOOL, false);
         sDefaults.putInt(KEY_PREF_NETWORK_NOTIFICATION_DELAY_INT, -1);
         sDefaults.putInt(KEY_EMERGENCY_NOTIFICATION_DELAY_INT, -1);
         sDefaults.putBoolean(KEY_ALLOW_USSD_REQUESTS_VIA_TELEPHONY_MANAGER_BOOL, true);
