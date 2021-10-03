@@ -1735,6 +1735,16 @@ public class CarrierConfigManager {
             "hide_digits_helper_text_on_stk_input_screen_bool";
 
     /**
+      * Indicates whether the options menu should be displayed on the GET INPUT screen if it is
+      * redundant.
+      * If {@code true}, then the options menu is hidden if it's redundant. It is considered
+      * redundant if the proactive command does not request help and yes/no layout.
+      * @hide
+      */
+    public static final String KEY_HIDE_REDUNDANT_OPTIONS_MENU_ON_STK_INPUT_SCREEN_BOOL =
+            "hide_redundant_options_menu_on_stk_input_screen_bool";
+
+    /**
      * Boolean indicating if show data RAT icon on status bar even when data is disabled.
      */
     public static final String KEY_ALWAYS_SHOW_DATA_RAT_ICON_BOOL =
