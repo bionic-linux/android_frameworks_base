@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b2cee9e_fa31431e",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1744,
+      "author": {
+        "id": 1121198
+      },
+      "writtenOn": "2021-10-04T23:24:38Z",
+      "side": 1,
+      "message": "is this really a carrier specific behavior? or is it more of a device config?",
+      "range": {
+        "startLine": 1744,
+        "startChar": 31,
+        "endLine": 1744,
+        "endChar": 87
+      },
+      "revId": "9d98066834a5a695261abb5f766040c1a2414440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
