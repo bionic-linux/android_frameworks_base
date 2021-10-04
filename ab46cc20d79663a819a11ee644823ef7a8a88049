@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90a87d34_5b5f1993",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1407086
+      },
+      "writtenOn": "2021-10-04T22:35:25Z",
+      "side": 1,
+      "message": "Minor. It seems that javadoc is not properly indented... there seems to be an extra space before the \u0027*\u0027. By the way, this is likely a copy-and-paste issue, as the same occurs in the previous 2 keys.",
+      "range": {
+        "startLine": 1738,
+        "startChar": 6,
+        "endLine": 1738,
+        "endChar": 7
+      },
+      "revId": "ab46cc20d79663a819a11ee644823ef7a8a88049",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
