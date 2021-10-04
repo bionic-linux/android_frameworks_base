@@ -22,6 +22,30 @@
       },
       "revId": "9d98066834a5a695261abb5f766040c1a2414440",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65738226_2d47da59",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1744,
+      "author": {
+        "id": 1138138
+      },
+      "writtenOn": "2021-10-04T23:32:38Z",
+      "side": 1,
+      "message": "It\u0027s a carrier specific behavior - UX desired for Orange\u0027s Mobile Connect (they mark it as  defect to have the options menu showing up)\n\nI prefer to not make it defined across all carriers since it might cause the PTCRB/GCF test cases to fail so safer to limit the change this way to make it a per-carrier configuration.",
+      "parentUuid": "9b2cee9e_fa31431e",
+      "range": {
+        "startLine": 1744,
+        "startChar": 31,
+        "endLine": 1744,
+        "endChar": 87
+      },
+      "revId": "9d98066834a5a695261abb5f766040c1a2414440",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
