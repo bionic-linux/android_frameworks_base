@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000015914826",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1843607?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "01ff06dd_6fa84a48",
+          "description": "Change to \"telephony/java/android/telephony/CarrierConfigManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CarrierConfigManager.java",
+              "range": {
+                "startLine": 1731,
+                "startChar": 26,
+                "endLine": 1731,
+                "endChar": 34
+              },
+              "replacement": "displayed"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "47ba6b31_f0075911",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-04T22:47:44Z",
+      "side": 1,
+      "message": "Common typo found: \"dispayed\" -- should it be \"displayed\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1731,
+        "startChar": 26,
+        "endLine": 1731,
+        "endChar": 34
+      },
+      "revId": "5a96ef302e5ce6999091ddb763eff59a301947df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
