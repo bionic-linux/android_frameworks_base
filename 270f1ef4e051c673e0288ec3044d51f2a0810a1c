@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b67e1bc4_3c46f188",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-10-05T07:56:34Z",
+      "side": 1,
+      "message": "Could we have another auto connect delay define for LE audio, and keep the original one? such as MAX_HEARING_AIDS_DELAY_FOR_AUTO_CONNECT, MAX_HOGP_DELAY_FOR_AUTO_CONNECT?",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 70
+      },
+      "revId": "270f1ef4e051c673e0288ec3044d51f2a0810a1c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
