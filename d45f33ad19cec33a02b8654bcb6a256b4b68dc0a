@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61b227a9_cdeb00eb",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-10-06T16:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f50593b2_36b4bc36",
+      "range": {
+        "startLine": 476,
+        "startChar": 24,
+        "endLine": 476,
+        "endChar": 43
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb7748d7_fe8c644e",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-09-30T09:41:45Z",
       "side": 1,
       "message": "the packet",
+      "range": {
+        "startLine": 626,
+        "startChar": 36,
+        "endLine": 626,
+        "endChar": 42
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3638cf86_d406e1ca",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-10-06T16:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb7748d7_fe8c644e",
       "range": {
         "startLine": 626,
         "startChar": 36,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c39b160_3133143e",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-10-06T16:31:45Z",
+      "side": 1,
+      "message": "I agree that calling addRoute() and then excludeRoute() should have the same effect as just calling excludeRoute(), so the end result is that the particular family remains disallowed.\n\nCurrently, VpnConfig#allowIPv4/6 gets updated on each addRoute call, which is actually not needed, since Vpn#makeLinkProperties takes into account both #allowIPv4/6 fields, and additionally iterates through all routes in the config.\n\nSo, to achieve the above logic I removed the redundant updates of #allowIPv4/6 in VpnService.Builder#addRoute().",
+      "parentUuid": "6cf5a85b_14e4a12c",
+      "range": {
+        "startLine": 690,
+        "startChar": 9,
+        "endLine": 690,
+        "endChar": 10
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e18d738_36883a22",
@@ -100,6 +172,30 @@
       "writtenOn": "2021-09-30T07:44:23Z",
       "side": 1,
       "message": "I don\u0027t think you should need this, instead the tests can just call configuration() and read the routes from there. That\u0027s more consistent with how you\u0027d usually expect a builder to behave.",
+      "range": {
+        "startLine": 1002,
+        "startChar": 0,
+        "endLine": 1009,
+        "endChar": 9
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7df38c5a_e05bd42b",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-10-06T16:31:45Z",
+      "side": 1,
+      "message": "I think I need this because mConfig.routes are getting assigned to the mRoutes only at establish time\n\nCurrent VpnService.Builder implementation seems weird, in a way that some mConfig fields are set immediately, while others - only at #establish time.",
+      "parentUuid": "1e18d738_36883a22",
       "range": {
         "startLine": 1002,
         "startChar": 0,
