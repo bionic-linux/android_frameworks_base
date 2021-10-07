@@ -33,6 +33,23 @@
       "message": "Hello @Todd, could you set Presubmit-Ready to relaunch verification?",
       "revId": "f043496830a72c5d0f81bccb30cc69a524495035",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a68dc9_695aa074",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-10-07T07:47:25Z",
+      "side": 1,
+      "message": "Hi Dianne, could you set \"Presubmit-Ready\" to re-trigger build?\nIt seems there are not any merge conflicts after publishing Android S.",
+      "revId": "f043496830a72c5d0f81bccb30cc69a524495035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
