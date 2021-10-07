@@ -199,6 +199,7 @@ package android.graphics {
 
   public class Rasterizer {
     ctor public Rasterizer();
+    method protected void finalize() throws java.lang.Throwable;
   }
 
 }

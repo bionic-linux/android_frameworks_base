@@ -7512,6 +7512,7 @@ package android.app.backup {
   }
 
   public class BackupDataInput {
+    method protected void finalize() throws java.lang.Throwable;
     method public int getDataSize();
     method public String getKey();
     method public int readEntityData(byte[], int, int) throws java.io.IOException;
@@ -7526,6 +7527,7 @@ package android.app.backup {
   }
 
   public class BackupDataOutput {
+    method protected void finalize() throws java.lang.Throwable;
     method public long getQuota();
     method public int getTransportFlags();
     method public int writeEntityData(byte[], int) throws java.io.IOException;
@@ -7962,6 +7964,7 @@ package android.app.usage {
 
   public final class NetworkStats implements java.lang.AutoCloseable {
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public boolean getNextBucket(android.app.usage.NetworkStats.Bucket);
     method public boolean hasNextBucket();
   }
@@ -8271,6 +8274,7 @@ package android.bluetooth {
     method public void closeProfileProxy(int, android.bluetooth.BluetoothProfile);
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean disable();
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH_ADMIN) public boolean enable();
+    method protected void finalize() throws java.lang.Throwable;
     method @RequiresPermission(android.Manifest.permission.BLUETOOTH) public String getAddress();
     method public android.bluetooth.le.BluetoothLeAdvertiser getBluetoothLeAdvertiser();
     method public android.bluetooth.le.BluetoothLeScanner getBluetoothLeScanner();
@@ -9125,6 +9129,7 @@ package android.bluetooth {
   public final class BluetoothSocket implements java.io.Closeable {
     method public void close() throws java.io.IOException;
     method public void connect() throws java.io.IOException;
+    method protected void finalize() throws java.lang.Throwable;
     method public int getConnectionType();
     method public java.io.InputStream getInputStream() throws java.io.IOException;
     method public int getMaxReceivePacketSize();
@@ -9791,6 +9796,7 @@ package android.content {
     method public void close();
     method public int delete(@NonNull android.net.Uri, @Nullable String, @Nullable String[]) throws android.os.RemoteException;
     method public int delete(@NonNull android.net.Uri, @Nullable android.os.Bundle) throws android.os.RemoteException;
+    method protected void finalize() throws java.lang.Throwable;
     method @Nullable public android.content.ContentProvider getLocalContentProvider();
     method @Nullable public String[] getStreamTypes(@NonNull android.net.Uri, @NonNull String) throws android.os.RemoteException;
     method @Nullable public String getType(@NonNull android.net.Uri) throws android.os.RemoteException;
@@ -9875,6 +9881,7 @@ package android.content {
   public class ContentQueryMap extends java.util.Observable {
     ctor public ContentQueryMap(android.database.Cursor, String, boolean, android.os.Handler);
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public java.util.Map<java.lang.String,android.content.ContentValues> getRows();
     method public android.content.ContentValues getValues(String);
     method public void requery();
@@ -12623,6 +12630,7 @@ package android.content.res {
 
   public final class AssetManager implements java.lang.AutoCloseable {
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public String[] getLocales();
     method @Nullable public String[] list(@NonNull String) throws java.io.IOException;
     method @NonNull public java.io.InputStream open(@NonNull String) throws java.io.IOException;
@@ -12639,6 +12647,7 @@ package android.content.res {
   }
 
   public final class AssetManager.AssetInputStream extends java.io.InputStream {
+    method protected void finalize() throws java.lang.Throwable;
     method public int read() throws java.io.IOException;
   }
 
@@ -12933,6 +12942,7 @@ package android.content.res.loader {
   public class ResourcesProvider implements java.lang.AutoCloseable java.io.Closeable {
     method public void close();
     method @NonNull public static android.content.res.loader.ResourcesProvider empty(@NonNull android.content.res.loader.AssetsProvider);
+    method protected void finalize() throws java.lang.Throwable;
     method @NonNull public static android.content.res.loader.ResourcesProvider loadFromApk(@NonNull android.os.ParcelFileDescriptor) throws java.io.IOException;
     method @NonNull public static android.content.res.loader.ResourcesProvider loadFromApk(@NonNull android.os.ParcelFileDescriptor, @Nullable android.content.res.loader.AssetsProvider) throws java.io.IOException;
     method @NonNull public static android.content.res.loader.ResourcesProvider loadFromDirectory(@NonNull String, @Nullable android.content.res.loader.AssetsProvider) throws java.io.IOException;
@@ -13131,6 +13141,7 @@ package android.database {
     method public void clear();
     method public void copyStringToBuffer(int, int, android.database.CharArrayBuffer);
     method public int describeContents();
+    method protected void finalize() throws java.lang.Throwable;
     method public void freeLastRow();
     method public byte[] getBlob(int, int);
     method public double getDouble(int, int);
@@ -13439,6 +13450,7 @@ package android.database.sqlite {
     method public void execPerConnectionSQL(@NonNull String, @Nullable Object[]) throws android.database.SQLException;
     method public void execSQL(String) throws android.database.SQLException;
     method public void execSQL(String, Object[]) throws android.database.SQLException;
+    method protected void finalize() throws java.lang.Throwable;
     method public static String findEditTable(String);
     method public java.util.List<android.util.Pair<java.lang.String,java.lang.String>> getAttachedDbs();
     method public long getMaximumSize();
@@ -13783,6 +13795,7 @@ package android.drm {
     method @Deprecated public void close();
     method @Deprecated public android.drm.DrmConvertedStatus closeConvertSession(int);
     method @Deprecated public android.drm.DrmConvertedStatus convertData(int, byte[]);
+    method @Deprecated protected void finalize() throws java.lang.Throwable;
     method @Deprecated public String[] getAvailableDrmEngines();
     method @Deprecated @NonNull public java.util.Collection<android.drm.DrmSupportInfo> getAvailableDrmSupportInfo();
     method @Deprecated public android.content.ContentValues getConstraints(String, int);
@@ -14227,6 +14240,7 @@ package android.graphics {
 
   public final class BitmapRegionDecoder {
     method public android.graphics.Bitmap decodeRegion(android.graphics.Rect, android.graphics.BitmapFactory.Options);
+    method protected void finalize() throws java.lang.Throwable;
     method public int getHeight();
     method public int getWidth();
     method public boolean isRecycled();
@@ -14294,6 +14308,7 @@ package android.graphics {
     ctor public Camera();
     method public void applyToCanvas(android.graphics.Canvas);
     method public float dotWithNormal(float, float, float);
+    method protected void finalize() throws java.lang.Throwable;
     method public float getLocationX();
     method public float getLocationY();
     method public float getLocationZ();
@@ -14678,6 +14693,7 @@ package android.graphics {
 
   public class DrawFilter {
     ctor public DrawFilter();
+    method protected void finalize() throws java.lang.Throwable;
   }
 
   public class EmbossMaskFilter extends android.graphics.MaskFilter {
@@ -14725,6 +14741,7 @@ package android.graphics {
     method @NonNull @WorkerThread public static android.graphics.Bitmap decodeBitmap(@NonNull android.graphics.ImageDecoder.Source) throws java.io.IOException;
     method @NonNull @WorkerThread public static android.graphics.drawable.Drawable decodeDrawable(@NonNull android.graphics.ImageDecoder.Source, @NonNull android.graphics.ImageDecoder.OnHeaderDecodedListener) throws java.io.IOException;
     method @NonNull @WorkerThread public static android.graphics.drawable.Drawable decodeDrawable(@NonNull android.graphics.ImageDecoder.Source) throws java.io.IOException;
+    method protected void finalize() throws java.lang.Throwable;
     method public int getAllocator();
     method @Nullable public android.graphics.Rect getCrop();
     method public int getMemorySizePolicy();
@@ -14826,6 +14843,7 @@ package android.graphics {
   public class Interpolator {
     ctor public Interpolator(int);
     ctor public Interpolator(int, int);
+    method protected void finalize() throws java.lang.Throwable;
     method public final int getKeyFrameCount();
     method public final int getValueCount();
     method public void reset(int);
@@ -14858,6 +14876,7 @@ package android.graphics {
 
   public class MaskFilter {
     ctor public MaskFilter();
+    method protected void finalize() throws java.lang.Throwable;
   }
 
   public class Matrix {
@@ -14934,6 +14953,7 @@ package android.graphics {
     method @Deprecated public void draw(android.graphics.Canvas, float, float, android.graphics.Paint);
     method @Deprecated public void draw(android.graphics.Canvas, float, float);
     method @Deprecated public int duration();
+    method @Deprecated protected void finalize() throws java.lang.Throwable;
     method @Deprecated public int height();
     method @Deprecated public boolean isOpaque();
     method @Deprecated public boolean setTime(int);
@@ -14946,6 +14966,7 @@ package android.graphics {
     method public void draw(android.graphics.Canvas, android.graphics.RectF);
     method public void draw(android.graphics.Canvas, android.graphics.Rect);
     method public void draw(android.graphics.Canvas, android.graphics.Rect, android.graphics.Paint);
+    method protected void finalize() throws java.lang.Throwable;
     method public android.graphics.Bitmap getBitmap();
     method public int getDensity();
     method public int getHeight();
@@ -15266,11 +15287,13 @@ package android.graphics {
 
   public class PathEffect {
     ctor public PathEffect();
+    method protected void finalize() throws java.lang.Throwable;
   }
 
   public class PathMeasure {
     ctor public PathMeasure();
     ctor public PathMeasure(android.graphics.Path, boolean);
+    method protected void finalize() throws java.lang.Throwable;
     method public float getLength();
     method public boolean getMatrix(float, android.graphics.Matrix, int);
     method public boolean getPosTan(float, float[], float[]);
@@ -15288,6 +15311,7 @@ package android.graphics {
     method @NonNull public android.graphics.Canvas beginRecording(int, int);
     method public void draw(@NonNull android.graphics.Canvas);
     method public void endRecording();
+    method protected void finalize() throws java.lang.Throwable;
     method public int getHeight();
     method public int getWidth();
     method public boolean requiresHardwareAcceleration();
@@ -15497,6 +15521,7 @@ package android.graphics {
     ctor public Region(int, int, int, int);
     method public boolean contains(int, int);
     method public int describeContents();
+    method protected void finalize() throws java.lang.Throwable;
     method @NonNull public android.graphics.Path getBoundaryPath();
     method public boolean getBoundaryPath(@NonNull android.graphics.Path);
     method @NonNull public android.graphics.Rect getBounds();
@@ -15537,6 +15562,7 @@ package android.graphics {
 
   public class RegionIterator {
     ctor public RegionIterator(android.graphics.Region);
+    method protected void finalize() throws java.lang.Throwable;
     method public final boolean next(android.graphics.Rect);
   }
 
@@ -15633,6 +15659,7 @@ package android.graphics {
     ctor public SurfaceTexture(boolean);
     method public void attachToGLContext(int);
     method public void detachFromGLContext();
+    method protected void finalize() throws java.lang.Throwable;
     method public long getTimestamp();
     method public void getTransformMatrix(float[]);
     method public boolean isReleased();
@@ -16431,6 +16458,7 @@ package android.graphics.pdf {
   public class PdfDocument {
     ctor public PdfDocument();
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public void finishPage(android.graphics.pdf.PdfDocument.Page);
     method public java.util.List<android.graphics.pdf.PdfDocument.PageInfo> getPages();
     method public android.graphics.pdf.PdfDocument.Page startPage(android.graphics.pdf.PdfDocument.PageInfo);
@@ -16458,6 +16486,7 @@ package android.graphics.pdf {
   public final class PdfRenderer implements java.lang.AutoCloseable {
     ctor public PdfRenderer(@NonNull android.os.ParcelFileDescriptor) throws java.io.IOException;
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public int getPageCount();
     method public android.graphics.pdf.PdfRenderer.Page openPage(int);
     method public boolean shouldScaleForPrinting();
@@ -16465,6 +16494,7 @@ package android.graphics.pdf {
 
   public final class PdfRenderer.Page implements java.lang.AutoCloseable {
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public int getHeight();
     method public int getIndex();
     method public int getWidth();
@@ -16822,6 +16852,7 @@ package android.hardware {
     method public void close();
     method @NonNull public static android.hardware.HardwareBuffer create(@IntRange(from=1) int, @IntRange(from=1) int, int, @IntRange(from=1) int, long);
     method public int describeContents();
+    method protected void finalize() throws java.lang.Throwable;
     method public int getFormat();
     method public int getHeight();
     method public int getLayers();
@@ -16961,6 +16992,7 @@ package android.hardware {
   public final class SensorDirectChannel implements java.nio.channels.Channel {
     method public void close();
     method public int configure(android.hardware.Sensor, int);
+    method protected void finalize() throws java.lang.Throwable;
     method public boolean isOpen();
     field public static final int RATE_FAST = 2; // 0x2
     field public static final int RATE_NORMAL = 1; // 0x1
@@ -17873,6 +17905,7 @@ package android.hardware.camera2 {
   public final class DngCreator implements java.lang.AutoCloseable {
     ctor public DngCreator(@NonNull android.hardware.camera2.CameraCharacteristics, @NonNull android.hardware.camera2.CaptureResult);
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method @NonNull public android.hardware.camera2.DngCreator setDescription(@NonNull String);
     method @NonNull public android.hardware.camera2.DngCreator setLocation(@NonNull android.location.Location);
     method @NonNull public android.hardware.camera2.DngCreator setOrientation(int);
@@ -18296,6 +18329,7 @@ package android.hardware.usb {
     method public void close();
     method public int controlTransfer(int, int, int, int, byte[], int, int);
     method public int controlTransfer(int, int, int, int, byte[], int, int, int);
+    method protected void finalize() throws java.lang.Throwable;
     method public int getFileDescriptor();
     method public byte[] getRawDescriptors();
     method public String getSerial();
@@ -18355,6 +18389,7 @@ package android.hardware.usb {
     ctor public UsbRequest();
     method public boolean cancel();
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public Object getClientData();
     method public android.hardware.usb.UsbEndpoint getEndpoint();
     method public boolean initialize(android.hardware.usb.UsbDeviceConnection, android.hardware.usb.UsbEndpoint);
@@ -20257,6 +20292,7 @@ package android.media {
 
   public class FaceDetector {
     ctor public FaceDetector(int, int, int);
+    method protected void finalize() throws java.lang.Throwable;
     method public int findFaces(android.graphics.Bitmap, android.media.FaceDetector.Face[]);
   }
 
@@ -20295,6 +20331,7 @@ package android.media {
     method public android.media.Image acquireNextImage();
     method public void close();
     method public void discardFreeBuffers();
+    method protected void finalize() throws java.lang.Throwable;
     method public int getHeight();
     method public int getImageFormat();
     method public int getMaxImages();
@@ -20312,6 +20349,7 @@ package android.media {
   public class ImageWriter implements java.lang.AutoCloseable {
     method public void close();
     method public android.media.Image dequeueInputImage();
+    method protected void finalize() throws java.lang.Throwable;
     method public int getFormat();
     method public int getMaxImages();
     method @NonNull public static android.media.ImageWriter newInstance(@NonNull android.view.Surface, @IntRange(from=1) int);
@@ -21089,6 +21127,7 @@ package android.media {
     method public void clearOnSessionLostStateListener();
     method public void close();
     method public void closeSession(@NonNull byte[]);
+    method protected void finalize() throws java.lang.Throwable;
     method @android.media.MediaDrm.HdcpLevel public int getConnectedHdcpLevel();
     method public android.media.MediaDrm.CryptoSession getCryptoSession(@NonNull byte[], @NonNull String, @NonNull String);
     method @NonNull public android.media.MediaDrm.KeyRequest getKeyRequest(@NonNull byte[], @Nullable byte[], @Nullable String, int, @Nullable java.util.HashMap<java.lang.String,java.lang.String>) throws android.media.NotProvisionedException;
@@ -21570,6 +21609,7 @@ package android.media {
     ctor public MediaMetadataRetriever();
     method public void close();
     method @Nullable public String extractMetadata(int);
+    method protected void finalize() throws java.lang.Throwable;
     method @Nullable public byte[] getEmbeddedPicture();
     method @Nullable public android.graphics.Bitmap getFrameAtIndex(int, @NonNull android.media.MediaMetadataRetriever.BitmapParams);
     method @Nullable public android.graphics.Bitmap getFrameAtIndex(int);
@@ -21645,6 +21685,7 @@ package android.media {
     ctor public MediaMuxer(@NonNull String, int) throws java.io.IOException;
     ctor public MediaMuxer(@NonNull java.io.FileDescriptor, int) throws java.io.IOException;
     method public int addTrack(@NonNull android.media.MediaFormat);
+    method protected void finalize() throws java.lang.Throwable;
     method public void release();
     method public void setLocation(float, float);
     method public void setOrientationHint(int);
@@ -23535,6 +23576,7 @@ package android.media.midi {
   public final class MidiDevice implements java.io.Closeable {
     method public void close() throws java.io.IOException;
     method public android.media.midi.MidiDevice.MidiConnection connectPorts(android.media.midi.MidiInputPort, int);
+    method protected void finalize() throws java.lang.Throwable;
     method public android.media.midi.MidiDeviceInfo getInfo();
     method public android.media.midi.MidiInputPort openInputPort(int);
     method public android.media.midi.MidiOutputPort openOutputPort(int);
@@ -23542,6 +23584,7 @@ package android.media.midi {
 
   public class MidiDevice.MidiConnection implements java.io.Closeable {
     method public void close() throws java.io.IOException;
+    method protected void finalize() throws java.lang.Throwable;
   }
 
   public final class MidiDeviceInfo implements android.os.Parcelable {
@@ -23597,6 +23640,7 @@ package android.media.midi {
 
   public final class MidiInputPort extends android.media.midi.MidiReceiver implements java.io.Closeable {
     method public void close() throws java.io.IOException;
+    method protected void finalize() throws java.lang.Throwable;
     method public int getPortNumber();
     method public void onSend(byte[], int, int, long) throws java.io.IOException;
   }
@@ -23622,6 +23666,7 @@ package android.media.midi {
 
   public final class MidiOutputPort extends android.media.midi.MidiSender implements java.io.Closeable {
     method public void close() throws java.io.IOException;
+    method protected void finalize() throws java.lang.Throwable;
     method public int getPortNumber();
     method public void onConnect(android.media.midi.MidiReceiver);
     method public void onDisconnect(android.media.midi.MidiReceiver);
@@ -24755,6 +24800,7 @@ package android.mtp {
     ctor public MtpDevice(@NonNull android.hardware.usb.UsbDevice);
     method public void close();
     method public boolean deleteObject(int);
+    method protected void finalize() throws java.lang.Throwable;
     method public int getDeviceId();
     method @Nullable public android.mtp.MtpDeviceInfo getDeviceInfo();
     method @NonNull public String getDeviceName();
@@ -24966,6 +25012,7 @@ package android.net {
 
   public static final class IpSecManager.SecurityParameterIndex implements java.lang.AutoCloseable {
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public int getSpi();
   }
 
@@ -24975,12 +25022,14 @@ package android.net {
 
   public static final class IpSecManager.UdpEncapsulationSocket implements java.lang.AutoCloseable {
     method public void close() throws java.io.IOException;
+    method protected void finalize() throws java.lang.Throwable;
     method public java.io.FileDescriptor getFileDescriptor();
     method public int getPort();
   }
 
   public final class IpSecTransform implements java.lang.AutoCloseable {
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
   }
 
   public static class IpSecTransform.Builder {
@@ -25490,6 +25539,7 @@ package android.net.rtp {
     ctor @Deprecated public AudioGroup();
     ctor @Deprecated public AudioGroup(@NonNull android.content.Context);
     method @Deprecated public void clear();
+    method @Deprecated protected void finalize() throws java.lang.Throwable;
     method @Deprecated public int getMode();
     method @Deprecated public android.net.rtp.AudioStream[] getStreams();
     method @Deprecated public void sendDtmf(int);
@@ -25513,6 +25563,7 @@ package android.net.rtp {
 
   @Deprecated public class RtpStream {
     method @Deprecated public void associate(java.net.InetAddress, int);
+    method @Deprecated protected void finalize() throws java.lang.Throwable;
     method @Deprecated public java.net.InetAddress getLocalAddress();
     method @Deprecated public int getLocalPort();
     method @Deprecated public int getMode();
@@ -29028,6 +29079,7 @@ package android.opengl {
   public class GLSurfaceView extends android.view.SurfaceView implements android.view.SurfaceHolder.Callback2 {
     ctor public GLSurfaceView(android.content.Context);
     ctor public GLSurfaceView(android.content.Context, android.util.AttributeSet);
+    method protected void finalize() throws java.lang.Throwable;
     method public int getDebugFlags();
     method public boolean getPreserveEGLContextOnPause();
     method public int getRenderMode();
@@ -29909,6 +29961,7 @@ package android.os {
   public final class MessageQueue {
     method public void addIdleHandler(@NonNull android.os.MessageQueue.IdleHandler);
     method public void addOnFileDescriptorEventListener(@NonNull java.io.FileDescriptor, int, @NonNull android.os.MessageQueue.OnFileDescriptorEventListener);
+    method protected void finalize() throws java.lang.Throwable;
     method public boolean isIdle();
     method public void removeIdleHandler(@NonNull android.os.MessageQueue.IdleHandler);
     method public void removeOnFileDescriptorEventListener(@NonNull java.io.FileDescriptor);
@@ -29973,6 +30026,7 @@ package android.os {
     method public int dataPosition();
     method public int dataSize();
     method public void enforceInterface(@NonNull String);
+    method protected void finalize() throws java.lang.Throwable;
     method public boolean hasFileDescriptors();
     method public byte[] marshall();
     method @NonNull public static android.os.Parcel obtain();
@@ -30091,6 +30145,7 @@ package android.os {
     method public int detachFd();
     method public static android.os.ParcelFileDescriptor dup(java.io.FileDescriptor) throws java.io.IOException;
     method public android.os.ParcelFileDescriptor dup() throws java.io.IOException;
+    method protected void finalize() throws java.lang.Throwable;
     method public static android.os.ParcelFileDescriptor fromDatagramSocket(java.net.DatagramSocket);
     method public static android.os.ParcelFileDescriptor fromFd(int) throws java.io.IOException;
     method public static android.os.ParcelFileDescriptor fromSocket(java.net.Socket);
@@ -30238,6 +30293,7 @@ package android.os {
   public final class PowerManager.WakeLock {
     method public void acquire();
     method public void acquire(long);
+    method protected void finalize() throws java.lang.Throwable;
     method public boolean isHeld();
     method public void release();
     method public void release(int);
@@ -34621,6 +34677,7 @@ package android.renderscript {
 
   @Deprecated public class BaseObj {
     method @Deprecated public void destroy();
+    method @Deprecated protected void finalize() throws java.lang.Throwable;
     method @Deprecated public String getName();
     method @Deprecated public void setName(String);
   }
@@ -35052,6 +35109,7 @@ package android.renderscript {
     method @Deprecated public static android.renderscript.RenderScript create(android.content.Context, android.renderscript.RenderScript.ContextType, int);
     method @Deprecated public static android.renderscript.RenderScript createMultiContext(android.content.Context, android.renderscript.RenderScript.ContextType, int, int);
     method @Deprecated public void destroy();
+    method @Deprecated protected void finalize() throws java.lang.Throwable;
     method @Deprecated public void finish();
     method @Deprecated public final android.content.Context getApplicationContext();
     method @Deprecated public android.renderscript.RenderScript.RSErrorHandler getErrorHandler();
@@ -45578,6 +45636,7 @@ package android.view {
   }
 
   public final class InputQueue {
+    method protected void finalize() throws java.lang.Throwable;
   }
 
   public static interface InputQueue.Callback {
@@ -45589,6 +45648,7 @@ package android.view {
     method public int describeContents();
     method public static boolean deviceHasKey(int);
     method public static boolean[] deviceHasKeys(int[]);
+    method protected void finalize() throws java.lang.Throwable;
     method public int get(int, int);
     method public static int getDeadChar(int, int);
     method public char getDisplayLabel(int);
@@ -46220,6 +46280,7 @@ package android.view {
     method public void addBatch(long, android.view.MotionEvent.PointerCoords[], int);
     method public static int axisFromString(String);
     method public static String axisToString(int);
+    method protected void finalize() throws java.lang.Throwable;
     method public int findPointerIndex(int);
     method public int getAction();
     method public int getActionButton();
@@ -46562,6 +46623,7 @@ package android.view {
     ctor public Surface(@NonNull android.view.SurfaceControl);
     ctor public Surface(android.graphics.SurfaceTexture);
     method public int describeContents();
+    method protected void finalize() throws java.lang.Throwable;
     method public boolean isValid();
     method public android.graphics.Canvas lockCanvas(android.graphics.Rect) throws java.lang.IllegalArgumentException, android.view.Surface.OutOfResourcesException;
     method public android.graphics.Canvas lockHardwareCanvas();
@@ -46587,6 +46649,7 @@ package android.view {
 
   public final class SurfaceControl implements android.os.Parcelable {
     method public int describeContents();
+    method protected void finalize() throws java.lang.Throwable;
     method public boolean isValid();
     method public void readFromParcel(android.os.Parcel);
     method public void release();
@@ -46623,6 +46686,7 @@ package android.view {
 
   public class SurfaceControlViewHost {
     ctor public SurfaceControlViewHost(@NonNull android.content.Context, @NonNull android.view.Display, @Nullable android.os.IBinder);
+    method protected void finalize() throws java.lang.Throwable;
     method @Nullable public android.view.SurfaceControlViewHost.SurfacePackage getSurfacePackage();
     method @Nullable public android.view.View getView();
     method public void relayout(int, int);
@@ -46736,6 +46800,7 @@ package android.view {
     method public void clear();
     method public void computeCurrentVelocity(int);
     method public void computeCurrentVelocity(int, float);
+    method protected void finalize() throws java.lang.Throwable;
     method public float getXVelocity();
     method public float getXVelocity(int);
     method public float getYVelocity();
@@ -49389,6 +49454,7 @@ package android.view.animation {
     method protected android.view.animation.Animation clone() throws java.lang.CloneNotSupportedException;
     method public long computeDurationHint();
     method protected void ensureInterpolator();
+    method protected void finalize() throws java.lang.Throwable;
     method @Deprecated @ColorInt public int getBackgroundColor();
     method @Deprecated public boolean getDetachWallpaper();
     method public long getDuration();
@@ -50899,6 +50965,7 @@ package android.view.textservice {
   public class SpellCheckerSession {
     method public void cancel();
     method public void close();
+    method protected void finalize() throws java.lang.Throwable;
     method public void getSentenceSuggestions(android.view.textservice.TextInfo[], int);
     method public android.view.textservice.SpellCheckerInfo getSpellChecker();
     method @Deprecated public void getSuggestions(android.view.textservice.TextInfo, int);
