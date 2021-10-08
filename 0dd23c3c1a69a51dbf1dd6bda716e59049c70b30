@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e203eb5_34c55f8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1612700
+      },
+      "writtenOn": "2021-10-08T10:15:51Z",
+      "side": 1,
+      "message": "log :\nI wm_on_resume_called: [181758185,com.tencent.mm.ui.LauncherUI,RESUME_ACTIVITY]\nI wm_on_top_resumed_gained_called: [181758185,com.tencent.mm.ui.LauncherUI,topWhenResuming]\nI wm_stop_activity: [0,202057374,com.android.launcher3/.uioverrides.QuickstepLauncher]\nI wm_on_stop_called: [202057374,com.android.launcher3.uioverrides.QuickstepLauncher,STOP_ACTIVITY_ITEM]\nI ActivityTaskManager: moveTaskToBack: Task{bf2480f #109 visible\u003dtrue type\u003dstandard mode\u003dsplit-screen-secondary translucent\u003dfalse A\u003d10153:com.tencent.mm U\u003d0 StackId\u003d4 sz\u003d1}\nI wm_task_moved: [109,0,-2147483648]\nI wm_pause_activity: [0,181758185,com.tencent.mm/.ui.LauncherUI,userLeaving\u003dfalse]\nI wm_add_to_stopping: [0,181758185,com.tencent.mm/.ui.LauncherUI,makeInvisible]\nI wm_set_resumed_activity: [0,com.android.launcher3/.uioverrides.QuickstepLauncher,resumeTopActivityInnerLocked]\nI wm_set_resumed_activity: [0,com.android.launcher3/.uioverrides.QuickstepLauncher,resumeTopActivityInnerLocked]\nI wm_resume_activity: [0,202057374,80,com.android.launcher3/.uioverrides.QuickstepLauncher]\nI wm_on_top_resumed_lost_called: [181758185,com.tencent.mm.ui.LauncherUI,topStateChangedWhenResumed]\nI wm_on_restart_called: [202057374,com.android.launcher3.uioverrides.QuickstepLauncher,performRestartActivity]\nI wm_on_paused_called: [181758185,com.tencent.mm.ui.LauncherUI,performPause]\nI wm_on_start_called: [202057374,com.android.launcher3.uioverrides.QuickstepLauncher,handleStartActivity]、\n ActivityTaskManager: moveTaskToBack: Task{bf2480f #109 visible\u003dtrue type\u003dstandard mode\u003dsplit-screen-secondary translucent\u003dfalse A\u003d10153:com.tencent.mm U\u003d0 StackId\u003d4 sz\u003d1}\nI wm_task_moved: [109,0,-2147483648]\nI wm_pause_activity: [0,202057374,com.android.launcher3/.uioverrides.QuickstepLauncher,userLeaving\u003dfalse]\nI wm_on_resume_called: [202057374,com.android.launcher3.uioverrides.QuickstepLauncher,RESUME_ACTIVITY]\nI wm_on_top_resumed_gained_called: [202057374,com.android.launcher3.uioverrides.QuickstepLauncher,topStateChangedWhenResumed]\nI wm_on_paused_called: [105177109,org.chromium.chrome.browser.ChromeTabbedActivity,performPause]\nI wm_failed_to_pause: [0,105177109,org.chromium.browser/org.chromium.chrome.browser.ChromeTabbedActivity,(none)]\nI wm_add_to_stopping: [0,202057374,com.android.launcher3/.uioverrides.QuickstepLauncher,makeInvisible]\nI wm_on_top_resumed_lost_called: [202057374,com.android.launcher3.uioverrides.QuickstepLauncher,topStateChangedWhenResumed]\nI wm_on_paused_called: [202057374,com.android.launcher3.uioverrides.QuickstepLauncher,performPause]\nI wm_set_resumed_activity: [0,com.android.music/.MusicBrowserActivity,resumeTopActivityInnerLocked]\nI wm_resume_activity: [0,48238333,111,com.android.music/.MusicBrowserActivity]\nI wm_on_restart_called: [48238333,com.android.music.MusicBrowserActivity,performRestartActivity]\nI wm_on_start_called: [48238333,com.android.music.MusicBrowserActivity,handleStartActivity]\nI wm_on_resume_called: [48238333,com.android.music.MusicBrowserActivity,RESUME_ACTIVITY]\nI wm_on_top_resumed_gained_called: [48238333,com.android.music.",
+      "revId": "0dd23c3c1a69a51dbf1dd6bda716e59049c70b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
