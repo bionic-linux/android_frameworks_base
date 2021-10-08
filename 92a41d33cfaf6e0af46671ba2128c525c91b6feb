@@ -1,0 +1,281 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061867",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "dfef0ce5_f6315131",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "\"Manual\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061862",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [
+        {
+          "fixId": "45304ec8_7420eb20",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothAdapter.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothAdapter.java",
+              "range": {
+                "startLine": 2324,
+                "startChar": 31,
+                "endLine": 2324,
+                "endChar": 40
+              },
+              "replacement": "exception"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "05fde39e_dd566369",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2324,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Common typo found: \"expection\" -- should it be \"exception\"?\nor, alternatively, \u0027expectation\u0027\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 2324,
+        "startChar": 31,
+        "endLine": 2324,
+        "endChar": 40
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061868",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "183dfbf9_22699db6",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027they\u0027, \u0027them\u0027, or \u0027person\u0027; see https://developers.google.com/style/word-list#gender for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 198,
+        "startChar": 17,
+        "endLine": 198,
+        "endChar": 20
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061868",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "48c43bd7_4a57ea31",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 101
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061868",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c3dd7f25_df65d026",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/BluetoothEventManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 104
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061868",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1c3adb66_233dd719",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1204,
+        "startChar": 0,
+        "endLine": 1204,
+        "endChar": 130
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061868",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bc9a3519_6568f5cb",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 508,
+        "startChar": 0,
+        "endLine": 508,
+        "endChar": 4
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061868",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a809b157_47853653",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 520,
+        "startChar": 0,
+        "endLine": 520,
+        "endChar": 107
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061868",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "70ff752e_4f7c66ba",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 103
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016061868",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1830516?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "14526157_1ac8bf2e",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-08T10:59:56Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 906,
+        "startChar": 0,
+        "endLine": 906,
+        "endChar": 103
+      },
+      "revId": "92a41d33cfaf6e0af46671ba2128c525c91b6feb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
