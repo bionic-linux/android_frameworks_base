@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8aa4b6ed_fa05998a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1892515
+      },
+      "writtenOn": "2021-10-08T10:51:58Z",
+      "side": 1,
+      "message": "could you please review. I have abandoned the previous commit that i raised when the S code was not pushed to master.\nhttps://android-review.googlesource.com/c/platform/frameworks/base/+/1796512",
+      "revId": "a40b93f7e07e70656b7a65ba99147aa3c1b880e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
