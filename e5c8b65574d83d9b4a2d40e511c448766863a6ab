@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fb7d254_59b13066",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-08T21:22:51Z",
+      "side": 1,
+      "message": "Not needed on new APIs",
+      "range": {
+        "startLine": 567,
+        "startChar": 2,
+        "endLine": 567,
+        "endChar": 38
+      },
+      "revId": "e5c8b65574d83d9b4a2d40e511c448766863a6ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "300f19fd_1b67f794",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-08T21:22:51Z",
+      "side": 1,
+      "message": "If that\u0027s just for Settings, then also hide as priviliged API",
+      "range": {
+        "startLine": 570,
+        "startChar": 19,
+        "endLine": 570,
+        "endChar": 31
+      },
+      "revId": "e5c8b65574d83d9b4a2d40e511c448766863a6ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
