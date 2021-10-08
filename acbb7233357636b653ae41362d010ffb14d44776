@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3209bc5_5859edc4",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-08T21:19:45Z",
+      "side": 1,
+      "message": "This is just for old APIs, new APIs don\u0027t need that",
+      "range": {
+        "startLine": 520,
+        "startChar": 4,
+        "endLine": 520,
+        "endChar": 38
+      },
+      "revId": "acbb7233357636b653ae41362d010ffb14d44776",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
