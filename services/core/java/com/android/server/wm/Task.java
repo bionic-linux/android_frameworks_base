@@ -7159,6 +7159,11 @@ class Task extends WindowContainer<WindowContainer> {
             }
         }
 
+        if (tr.mResumedActivity == null) {
+            Slog.i(TAG, "moveTaskToBack: return when task.mResumedActivity is null.");
+            return false;
+        }
+
         if (DEBUG_TRANSITION) Slog.v(TAG_TRANSITION, "Prepare to back transition: task="
                 + tr.mTaskId);
 
