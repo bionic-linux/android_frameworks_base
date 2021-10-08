@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7964778_6857b781",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-08T22:06:53Z",
+      "side": 1,
+      "message": "this one is still candidate to split, and need to fix lint issues",
+      "revId": "7a00b768601c3911ade1eea3408c23f688542c2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
