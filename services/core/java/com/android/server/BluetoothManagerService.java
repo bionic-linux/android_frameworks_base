@@ -250,6 +250,7 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     private final int mSystemUiUid;
 
     private boolean mIsHearingAidProfileSupported;
+    private boolean mIsLeAudioProfileSupported;
 
     private AppOpsManager mAppOps;
 
@@ -509,6 +510,21 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
             if (isHearingAidEnabled && !mIsHearingAidProfileSupported) {
                 // Overwrite to enable support by FeatureFlag
                 mIsHearingAidProfileSupported = true;
+            }
+        }
+
+        mIsLeAudioProfileSupported = context.getResources()
+                .getBoolean(com.android.internal.R.bool.config_le_audio_profile_supported);
+
+        // TODO: We need a more generic way to initialize the persist keys of FeatureFlagUtils
+        value = SystemProperties.get(FeatureFlagUtils.PERSIST_PREFIX + FeatureFlagUtils.LE_AUDIO_SETTINGS);
+        if (!TextUtils.isEmpty(value)) {
+            boolean isLeAudioEnabled = Boolean.parseBoolean(value);
+            Log.v(TAG, "set feature flag LE_AUDIO_SETTINGS to " + isLeAudioEnabled);
+            FeatureFlagUtils.setEnabled(context, FeatureFlagUtils.LE_AUDIO_SETTINGS, isLeAudioEnabled);
+            if (isLeAudioEnabled && !mIsLeAudioProfileSupported) {
+                // Overwrite to enable support by FeatureFlag
+                mIsLeAudioProfileSupported = true;
             }
         }
 
@@ -799,6 +815,11 @@ class BluetoothManagerService extends IBluetoothManager.Stub {
     @Override
     public boolean isHearingAidProfileSupported() {
         return mIsHearingAidProfileSupported;
+    }
+
+    @Override
+    public boolean isLeAudioProfileSupported() {
+        return mIsLeAudioProfileSupported;
     }
 
     private boolean isDeviceProvisioned() {
