@@ -84,6 +84,24 @@
       "message": "That was probably a transient failure, but we need Owner +1 from Dianne (I think she clicked the wrong +1 button,it happens to me all the time :-)",
       "revId": "f043496830a72c5d0f81bccb30cc69a524495035",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d61e058_93c6a860",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1182749
+      },
+      "writtenOn": "2021-10-08T16:23:54Z",
+      "side": 1,
+      "message": "Hi Felipe! Hope you are well!\nI think that the Owner vote has been spoiled due to Todd\u0027s account termination :-).\nThank you for your support!",
+      "parentUuid": "145091be_148fcf1f",
+      "revId": "f043496830a72c5d0f81bccb30cc69a524495035",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
