@@ -2313,6 +2313,20 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Return true if LeAudio Profile is supported.
+     *
+     * @return true if phone supports LeAudio
+     */
+    private boolean isLeAudioProfileSupported() {
+        try {
+            return mManagerService.isLeAudioProfileSupported();
+        } catch (RemoteException e) {
+            Log.e(TAG, "remote expection when calling isLeAudioProfileSupported", e);
+            return false;
+        }
+    }
+
+    /**
      * Get the maximum number of connected audio devices.
      *
      * @return the maximum number of connected audio devices
@@ -2518,6 +2532,9 @@ public final class BluetoothAdapter {
                     // Bluetooth is disabled. Just fill in known supported Profiles
                     if (isHearingAidProfileSupported()) {
                         supportedProfiles.add(BluetoothProfile.HEARING_AID);
+                    }
+                    if (isLeAudioProfileSupported()) {
+                        supportedProfiles.add(BluetoothProfile.LE_AUDIO);
                     }
                 }
             }
