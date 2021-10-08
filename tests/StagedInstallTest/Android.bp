@@ -32,6 +32,7 @@ android_test_helper_app {
     test_suites: ["general-tests"],
     java_resources: [
         ":StagedInstallTestApexV2",
+        ":test_com.android.sdkext",
     ],
     platform_apis: true,
 }
