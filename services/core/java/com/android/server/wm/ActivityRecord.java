@@ -339,7 +339,7 @@ import java.util.function.Predicate;
  * An entry in the history stack, representing an activity.
  */
 final class ActivityRecord extends WindowToken implements WindowManagerService.AppFreezeListener {
-    private static final String TAG = TAG_WITH_CLASS_NAME ? "ActivityRecord" : TAG_ATM;
+    private static final String TAG = "ActivityRecord";//TAG_WITH_CLASS_NAME ? "ActivityRecord" : TAG_ATM;
     private static final String TAG_ADD_REMOVE = TAG + POSTFIX_ADD_REMOVE;
     private static final String TAG_APP = TAG + POSTFIX_APP;
     private static final String TAG_CONFIGURATION = TAG + POSTFIX_CONFIGURATION;
