@@ -827,6 +827,15 @@ class ActivityClientController extends IActivityClientController.Stub {
 
                 if (rootTask.inFreeformWindowingMode()) {
                     rootTask.setWindowingMode(WINDOWING_MODE_FULLSCREEN);
+                    // After exiting Freeform and entering split screen mode, the windowing mode
+                    // is still fullscreen. This is because,the windowing mode of
+                    // the mRequestedOverrideConfiguration is given preference while resolving
+                    // configuration from parent.So set windowing mode of
+                    // the mRequestedOverrideConfiguration to WINDOWING_MODE_UNDEFINED to resolve
+                    // configuration dynamically from parent.
+                    Slog.d(TAG,"set requested windowing mode to undefined after exiting freeform");
+                    rootTask.getRequestedOverrideConfiguration().windowConfiguration
+                        .setWindowingMode(WINDOWING_MODE_UNDEFINED);
                 } else if (!r.supportsFreeform()) {
                     throw new IllegalStateException(
                             "This activity is currently not freeform-enabled");
