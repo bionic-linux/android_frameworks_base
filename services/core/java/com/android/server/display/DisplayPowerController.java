@@ -2024,9 +2024,6 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     }
 
     private void putScreenBrightnessSetting(float brightnessValue, boolean updateCurrent) {
-        if (!isValidBrightnessValue(brightnessValue)) {
-            return;
-        }
         if (updateCurrent) {
             setCurrentScreenBrightness(brightnessValue);
         }
