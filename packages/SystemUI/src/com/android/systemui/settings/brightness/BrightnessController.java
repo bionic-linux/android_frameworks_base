@@ -359,11 +359,17 @@ public class BrightnessController implements ToggleSlider.Listener {
                     BrightnessSynchronizer.brightnessFloatToInt(valFloat));
 
         }
-        setBrightness(valFloat);
-        if (!tracking) {
+        if (tracking) {
+            setBrightness(valFloat);
+        } else {
             AsyncTask.execute(new Runnable() {
                     public void run() {
-                        mDisplayManager.setBrightness(mDisplayId, valFloat);
+                        final float brightness = mDisplayManager.getBrightness(mDisplayId);
+                        if (valFloat == brightness) {
+                            setBrightness(Float.NaN);
+                        } else {
+                            mDisplayManager.setBrightness(mDisplayId, valFloat);
+                        }
                     }
                 });
         }
