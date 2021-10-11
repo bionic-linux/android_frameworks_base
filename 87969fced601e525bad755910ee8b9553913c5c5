@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dcac051_59d026c4",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-10-11T16:45:10Z",
+      "side": 1,
+      "message": "Probably some messages in-between were removed at some point ? Agreed it looks weird, updated",
+      "parentUuid": "15e1a2f9_8dade456",
+      "range": {
+        "startLine": 185,
+        "startChar": 70,
+        "endLine": 185,
+        "endChar": 72
+      },
+      "revId": "87969fced601e525bad755910ee8b9553913c5c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f90aa80d_96fbf62f",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc33e815_c53d4f76",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-10-11T16:45:10Z",
+      "side": 1,
+      "message": "Oops, added",
+      "parentUuid": "f90aa80d_96fbf62f",
+      "range": {
+        "startLine": 625,
+        "startChar": 12,
+        "endLine": 625,
+        "endChar": 21
+      },
+      "revId": "87969fced601e525bad755910ee8b9553913c5c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df65dc79_2d163972",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-09-10T02:24:04Z",
       "side": 1,
       "message": "missing import",
+      "range": {
+        "startLine": 696,
+        "startChar": 8,
+        "endLine": 696,
+        "endChar": 15
+      },
+      "revId": "87969fced601e525bad755910ee8b9553913c5c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c10761e5_46d47c42",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-10-11T16:45:10Z",
+      "side": 1,
+      "message": "Thanks, added",
+      "parentUuid": "df65dc79_2d163972",
       "range": {
         "startLine": 696,
         "startChar": 8,
