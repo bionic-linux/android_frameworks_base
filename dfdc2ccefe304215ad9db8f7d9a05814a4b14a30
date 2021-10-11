@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28f68f42_598f18bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-10-11T09:00:59Z",
+      "side": 1,
+      "message": "Also adding in Pat for framework review.",
+      "revId": "dfdc2ccefe304215ad9db8f7d9a05814a4b14a30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d894d5d_02c49448",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-10-11T09:00:59Z",
+      "side": 1,
+      "message": "I\u0027d prefer if this logic was moved to its own createSharedLibrariesLoadedAfterLoaders.\n\nLooks like your logic is going to make all apps have those shared library loaders?",
+      "range": {
+        "startLine": 736,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 9
+      },
+      "revId": "dfdc2ccefe304215ad9db8f7d9a05814a4b14a30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
