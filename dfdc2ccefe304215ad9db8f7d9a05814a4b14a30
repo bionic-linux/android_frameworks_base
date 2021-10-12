@@ -63,6 +63,30 @@
       },
       "revId": "dfdc2ccefe304215ad9db8f7d9a05814a4b14a30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4315b9f5_e8bd0972",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1038443
+      },
+      "writtenOn": "2021-10-12T07:44:26Z",
+      "side": 1,
+      "message": "Oh, so first we need the app to have the \u003cuses-library\u003e tag, and then for a \u0027foo\u0027 library, if that library is in the config_sharedLibrariesLoadedAfterApp then it will always be loaded after?",
+      "parentUuid": "e34c99d3_5dcfebdb",
+      "range": {
+        "startLine": 736,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 9
+      },
+      "revId": "dfdc2ccefe304215ad9db8f7d9a05814a4b14a30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
