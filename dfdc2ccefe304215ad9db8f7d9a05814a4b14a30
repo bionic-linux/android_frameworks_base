@@ -87,6 +87,30 @@
       },
       "revId": "dfdc2ccefe304215ad9db8f7d9a05814a4b14a30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7a8cfca_8eccef43",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1283396
+      },
+      "writtenOn": "2021-10-12T17:19:56Z",
+      "side": 1,
+      "message": "Correct. The application picks the lib (via \u003cuses-library\u003e) and the OEM can set config_sharedLibrariesLoadedAfterApp such that all apps that use the lib will have it loaded last.",
+      "parentUuid": "4315b9f5_e8bd0972",
+      "range": {
+        "startLine": 736,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 9
+      },
+      "revId": "dfdc2ccefe304215ad9db8f7d9a05814a4b14a30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
