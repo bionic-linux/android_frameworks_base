@@ -39,6 +39,30 @@
       },
       "revId": "dfdc2ccefe304215ad9db8f7d9a05814a4b14a30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e34c99d3_5dcfebdb",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1283396
+      },
+      "writtenOn": "2021-10-12T06:01:11Z",
+      "side": 1,
+      "message": "It might be 2 optimizations that I did that are making it tricky to read:\n\n1. I went with a single method so I didn\u0027t have extra string compares at the caller site. I also didn\u0027t think the caller had better context for making the split. This method takes all SharedLibraryInfo\u0027s and splits them into standard and \"after libs\"\n\n2. This is what is creating your second question. This block is only creating a hashset to test against for line 751. You could argue that libsToLoadAfter should be static but, iirc, Resource.getSystem().getStringArrary() wasn\u0027t safe to call earlier as that framework-res would not have been loaded yet. I also didn\u0027t want to have it static b/c allowing it to be changed via RRO makes testing easier, thus I want it generated on every load of the apk.  \n\nSo the answer to your question is No",
+      "parentUuid": "8d894d5d_02c49448",
+      "range": {
+        "startLine": 736,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 9
+      },
+      "revId": "dfdc2ccefe304215ad9db8f7d9a05814a4b14a30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
