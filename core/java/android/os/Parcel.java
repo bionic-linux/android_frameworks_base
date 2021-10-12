@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.annotation.TestApi;
 import android.app.AppOpsManager;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -2858,8 +2859,22 @@ public final class Parcel {
      * from the parcel at the current dataPosition().
      */
     public final void readMap(@NonNull Map outVal, @Nullable ClassLoader loader) {
-        int N = readInt();
-        readMapInternal(outVal, N, loader);
+        int n = readInt();
+        readMapInternal(outVal, n, loader, /* clazzKey */null, /* clazzValue */null);
+    }
+
+    /**
+     * Same as {@link #readMap(Map, ClassLoader)} but accepts {@code clazzKey} and
+     * {@code clazzValue} parameter as the types required for each key and value pair.
+     * If the item to be deserialized is not an instance of that class or any of its children class
+     * a {@link BadParcelableException} will be thrown.
+     */
+    public <K, V> void readMap(@NonNull Map outVal, @Nullable ClassLoader loader,
+            @NonNull Class<K> clazzKey, @NonNull Class<V> clazzValue) {
+        Objects.requireNonNull(clazzKey);
+        Objects.requireNonNull(clazzValue);
+        int n = readInt();
+        readMapInternal(outVal, n, loader, clazzKey, clazzValue);
     }
 
     /**
@@ -2900,7 +2915,28 @@ public final class Parcel {
             return null;
         }
         HashMap m = new HashMap(N);
-        readMapInternal(m, N, loader);
+        readMapInternal(m, N, loader, /* clazzKey */null, /* clazzValue */null);
+        return m;
+    }
+
+    /**
+     * Same as {@link #readHashMap(ClassLoader)} but accepts {@code clazzKey} and
+     * {@code clazzValue} parameter as the types required for each key and value pair.
+     * If the item to be deserialized is not an instance of that class or any of its children class
+     * a {@link BadParcelableException} will be thrown.
+     */
+    @SuppressLint({"ConcreteCollection", "NullableCollection"})
+    @Nullable
+    public <K, V> HashMap readHashMap(@Nullable ClassLoader loader, @NonNull Class<K> clazzKey,
+            @NonNull Class<V> clazzValue) {
+        Objects.requireNonNull(clazzKey);
+        Objects.requireNonNull(clazzValue);
+        int n = readInt();
+        if (n < 0) {
+            return null;
+        }
+        HashMap m = new HashMap(n);
+        readMapInternal(m, n, loader, clazzKey, clazzValue);
         return m;
     }
 
@@ -3093,12 +3129,31 @@ public final class Parcel {
      */
     @Nullable
     public final Object[] readArray(@Nullable ClassLoader loader) {
-        int N = readInt();
-        if (N < 0) {
+        int n = readInt();
+        if (n < 0) {
             return null;
         }
-        Object[] l = new Object[N];
-        readArrayInternal(l, N, loader);
+        Object[] l = new Object[n];
+        readArrayInternal(l, n, loader, /* clazz */ null);
+        return l;
+    }
+
+    /**
+     * Same as {@link #readArray(ClassLoader)} but accepts {@code clazz} parameter as
+     * the type required for each item. If the item to be deserialized is not an instance
+     * of that class or any of its children class
+     * a {@link BadParcelableException} will be thrown.
+     */
+    @SuppressLint({"ArrayReturn", "NullableCollection"})
+    @Nullable
+    public <T> Object[] readArray(@Nullable ClassLoader loader, @NonNull Class<T> clazz) {
+        Objects.requireNonNull(clazz);
+        int n = readInt();
+        if (n < 0) {
+            return null;
+        }
+        Object[] l = new Object[n];
+        readArrayInternal(l, n, loader, clazz);
         return l;
     }
 
@@ -3110,12 +3165,31 @@ public final class Parcel {
      */
     @Nullable
     public final <T> SparseArray<T> readSparseArray(@Nullable ClassLoader loader) {
-        int N = readInt();
-        if (N < 0) {
+        int n = readInt();
+        if (n < 0) {
             return null;
         }
-        SparseArray sa = new SparseArray(N);
-        readSparseArrayInternal(sa, N, loader);
+        SparseArray sa = new SparseArray(n);
+        readSparseArrayInternal(sa, n, loader, /* clazz */null);
+        return sa;
+    }
+
+    /**
+     * Same as {@link #readSparseArray(ClassLoader)} but accepts {@code clazz} parameter as
+     * the type required for each item. If the item to be deserialized is not an instance
+     * of that class or any of its children class
+     * a {@link BadParcelableException} will be thrown.
+     */
+    @Nullable
+    public <T> SparseArray<T> readSparseArray(@Nullable ClassLoader loader,
+            @NonNull Class<T> clazz) {
+        Objects.requireNonNull(clazz);
+        int n = readInt();
+        if (n < 0) {
+            return null;
+        }
+        SparseArray sa = new SparseArray(n);
+        readSparseArrayInternal(sa, n, loader, /* clazz */clazz);
         return sa;
     }
 
@@ -4206,13 +4280,19 @@ public final class Parcel {
         destroy();
     }
 
-    /* package */ void readMapInternal(@NonNull Map outVal, int N,
+    /* package */ void readMapInternal(@NonNull Map outVal, int n,
             @Nullable ClassLoader loader) {
-        while (N > 0) {
-            Object key = readValue(loader);
-            Object value = readValue(loader);
+        readMapInternal(outVal, n, loader, /* clazzKey */null, /* clazzValue */null);
+    }
+
+    /* package */ <K, V> void readMapInternal(@NonNull Map outVal, int n,
+            @Nullable ClassLoader loader, @Nullable Class<K> clazzKey,
+            @Nullable Class<V> clazzValue) {
+        while (n > 0) {
+            Object key = readValue(loader, clazzKey);
+            Object value = readValue(loader, clazzValue);
             outVal.put(key, value);
-            N--;
+            n--;
         }
     }
 
@@ -4305,23 +4385,39 @@ public final class Parcel {
         }
     }
 
-    private void readArrayInternal(@NonNull Object[] outVal, int N,
+    private void readArrayInternal(@NonNull Object[] outVal, int n,
             @Nullable ClassLoader loader) {
-        for (int i = 0; i < N; i++) {
-            Object value = readValue(loader);
+        readArrayInternal(outVal, n, loader, /* clazz */null);
+    }
+
+    /**
+     * @param clazz The type of the object expected or {@code null} for performing no checks.
+     */
+    private <T> void readArrayInternal(@NonNull Object[] outVal, int n,
+            @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
+        for (int i = 0; i < n; i++) {
+            Object value = readValue(loader, clazz);
             //Log.d(TAG, "Unmarshalling value=" + value);
             outVal[i] = value;
         }
     }
 
-    private void readSparseArrayInternal(@NonNull SparseArray outVal, int N,
+    private void readSparseArrayInternal(@NonNull SparseArray outVal, int n,
             @Nullable ClassLoader loader) {
-        while (N > 0) {
+        readSparseArrayInternal(outVal, n, loader, /* clazz */null);
+    }
+
+    /**
+     * @param clazz The type of the object expected or {@code null} for performing no checks.
+     */
+    private <T> void readSparseArrayInternal(@NonNull SparseArray outVal, int n,
+            @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
+        while (n > 0) {
             int key = readInt();
-            Object value = readValue(loader);
+            Object value = readValue(loader, clazz);
             //Log.i(TAG, "Unmarshalling key=" + key + " value=" + value);
             outVal.append(key, value);
-            N--;
+            n--;
         }
     }
 
