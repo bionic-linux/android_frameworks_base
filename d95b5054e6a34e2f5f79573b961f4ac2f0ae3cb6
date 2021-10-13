@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016203395",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1856318?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b0b0d593_2d3e42b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-13T12:33:03Z",
+      "side": 1,
+      "message": "\"compile\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 13
+      },
+      "revId": "d95b5054e6a34e2f5f79573b961f4ac2f0ae3cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016203396",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1856318?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d4f7c348_51349dc5",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-13T12:33:03Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027they\u0027, \u0027them\u0027, or \u0027person\u0027; see https://developers.google.com/style/word-list#gender for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 198,
+        "startChar": 17,
+        "endLine": 198,
+        "endChar": 20
+      },
+      "revId": "d95b5054e6a34e2f5f79573b961f4ac2f0ae3cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
