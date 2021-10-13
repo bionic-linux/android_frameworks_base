@@ -47,6 +47,30 @@
       },
       "revId": "d95b5054e6a34e2f5f79573b961f4ac2f0ae3cb6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e52239e_380bb15f",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-13T21:59:10Z",
+      "side": 1,
+      "message": "Then it\u0027s fine, we should just add the bypass reason to the commit message just so it\u0027s clear!",
+      "parentUuid": "226a4ff5_94e2984d",
+      "range": {
+        "startLine": 198,
+        "startChar": 17,
+        "endLine": 198,
+        "endChar": 20
+      },
+      "revId": "d95b5054e6a34e2f5f79573b961f4ac2f0ae3cb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
