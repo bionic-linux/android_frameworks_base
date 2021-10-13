@@ -2952,6 +2952,15 @@ public class AudioService extends IAudioService.Stub
                 mDeviceBroker.postSetAvrcpAbsoluteVolumeIndex(newIndex / 10);
             }
 
+            if (device == AudioSystem.DEVICE_OUT_BLE_HEADSET
+                    && streamType == getBluetoothContextualVolumeStream()) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "adjustSreamVolume postSetLeAudioVolumeIndex index="
+                            + newIndex + " stream=" + streamType);
+                }
+                mDeviceBroker.postSetLeAudioVolumeIndex(newIndex, streamType);
+            }
+
             // Check if volume update should be send to Hearing Aid
             if (device == AudioSystem.DEVICE_OUT_HEARING_AID) {
                 // only modify the hearing aid attenuation when the stream to modify matches
@@ -3578,6 +3587,15 @@ public class AudioService extends IAudioService.Stub
                             + "stream=" + streamType);
                 }
                 mDeviceBroker.postSetAvrcpAbsoluteVolumeIndex(index / 10);
+            }
+
+            if (device == AudioSystem.DEVICE_OUT_BLE_HEADSET
+                    && streamType == getBluetoothContextualVolumeStream()) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "adjustSreamVolume postSetLeAudioVolumeIndex index="
+                            + index + " stream=" + streamType);
+                }
+                mDeviceBroker.postSetLeAudioVolumeIndex(index, streamType);
             }
 
             if (device == AudioSystem.DEVICE_OUT_HEARING_AID
