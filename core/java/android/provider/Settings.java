@@ -12790,7 +12790,10 @@ public final class Settings {
         @Readable
         public static final String
                 BLUETOOTH_HEARING_AID_PRIORITY_PREFIX = "bluetooth_hearing_aid_priority_";
-
+        @Readable
+        /** {@hide} */
+        public static final String
+                BLUETOOTH_LE_AUDIO_PRIORITY_PREFIX = "bluetooth_le_audio_priority_";
         /**
          * Enable/disable radio bug detection
          *
