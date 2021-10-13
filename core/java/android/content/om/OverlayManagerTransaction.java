@@ -22,9 +22,11 @@ import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Process;
 import android.os.UserHandle;
 
 import java.lang.annotation.Retention;
@@ -185,6 +187,9 @@ public class OverlayManagerTransaction
          * @hide
          */
         public Builder setEnabled(@NonNull OverlayIdentifier overlay, boolean enable, int userId) {
+            if (Binder.getCallingUid() == Process.SHELL_UID) {
+                throw new IllegalArgumentException("UID SHELL is not allowed to call this API");
+            }
             checkNotNull(overlay);
             @Request.RequestType final int type =
                 enable ? Request.TYPE_SET_ENABLED : Request.TYPE_SET_DISABLED;
