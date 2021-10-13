@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "321f40e1_8144229d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "please move all media framework related changes to separate patch.\nthis means */android/server/audio* and */android/server/media/*",
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ccbf3a3_87cf31b2",
+        "filename": "core/java/android/util/FeatureFlagUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "remove, this was just for hearing aid profile",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 81
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db6b8718_156146b1",
+        "filename": "core/java/android/util/FeatureFlagUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 54
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce185a27_a028c8c7",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "remove, this was just for Hearing Aids profile",
+      "range": {
+        "startLine": 140,
+        "startChar": 3,
+        "endLine": 141,
+        "endChar": 62
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a172d18b_97e2bdc6",
+        "filename": "core/res/res/values/symbols.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 435,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 70
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b66a12a2_ad9b0ee5",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "Is this fixme still valid ?",
+      "range": {
+        "startLine": 1204,
+        "startChar": 64,
+        "endLine": 1204,
+        "endChar": 130
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e557494_9c109bc4",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "Is this still needed ?",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 87,
+        "endChar": 69
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e7976fa_fa534f12",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "Is this still needed ?",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 96
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20a6f255_c4358eff",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "Get rid of that.",
+      "range": {
+        "startLine": 516,
+        "startChar": 5,
+        "endLine": 518,
+        "endChar": 0
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53719572_407e4013",
+        "filename": "services/core/java/com/android/server/BluetoothManagerService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:27:18Z",
+      "side": 1,
+      "message": "get rid of that, it was just for Hearing Aid profile",
+      "range": {
+        "startLine": 820,
+        "startChar": 2,
+        "endLine": 824,
+        "endChar": 0
+      },
+      "revId": "d3a338c71f450dba61b7ef848cfe9bb7fd061c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
