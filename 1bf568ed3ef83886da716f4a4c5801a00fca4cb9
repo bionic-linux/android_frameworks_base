@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23d81801_edf79ab5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2021-10-13T18:48:32Z",
+      "side": 1,
+      "message": "S has been pushed, so this is actually identical to internal now.",
+      "revId": "1bf568ed3ef83886da716f4a4c5801a00fca4cb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
