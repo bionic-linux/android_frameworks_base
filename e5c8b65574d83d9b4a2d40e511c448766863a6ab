@@ -141,6 +141,30 @@
       },
       "revId": "e5c8b65574d83d9b4a2d40e511c448766863a6ab",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9132a701_51c79f2e",
+        "filename": "core/java/android/bluetooth/BluetoothLeAudio.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-13T08:06:50Z",
+      "side": 1,
+      "message": "same level of permission must be requested on .aidl definitions. \nCurrently in .aidl files you requets just CONNECT permission",
+      "parentUuid": "0a5d2208_f28a6472",
+      "range": {
+        "startLine": 570,
+        "startChar": 19,
+        "endLine": 570,
+        "endChar": 31
+      },
+      "revId": "e5c8b65574d83d9b4a2d40e511c448766863a6ab",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
