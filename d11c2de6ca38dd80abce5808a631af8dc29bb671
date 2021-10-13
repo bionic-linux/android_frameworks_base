@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "591274fc_0f7cc2e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870410
+      },
+      "writtenOn": "2021-10-13T10:44:41Z",
+      "side": 1,
+      "message": "Hello everyone,\n\nCould you help me review this change? Thanks!\n\nThis issue exists from Android Q to S, although there are some changes in the design.",
+      "revId": "d11c2de6ca38dd80abce5808a631af8dc29bb671",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
