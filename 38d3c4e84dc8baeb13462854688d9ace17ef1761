@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56711e58_95a32163",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1319385
+      },
+      "writtenOn": "2021-10-13T16:20:52Z",
+      "side": 1,
+      "message": "OK, this seems to be an expected behavior as Shell has CHANGE_OVERLAY_PACKAGES. But this is not consistent with ShellCommand\u0027s behavior as root is required: \"Error: must be root to fabricate overlays through the shell\".\n\nIMO, fabricate overlays should use another permission and this permission should not be granted to shell.",
+      "revId": "38d3c4e84dc8baeb13462854688d9ace17ef1761",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
