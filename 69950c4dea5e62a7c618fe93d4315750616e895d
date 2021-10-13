@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c59dbab_f5ef1d01",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-10-13T12:51:31Z",
+      "side": 1,
+      "message": "Is it ok to use the HFP icon for now? The icon need to been reviewed or designed by the UX designer.",
+      "range": {
+        "startLine": 230,
+        "startChar": 15,
+        "endLine": 230,
+        "endChar": 40
+      },
+      "revId": "69950c4dea5e62a7c618fe93d4315750616e895d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
