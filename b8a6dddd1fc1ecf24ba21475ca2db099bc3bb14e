@@ -22,6 +22,30 @@
       },
       "revId": "b8a6dddd1fc1ecf24ba21475ca2db099bc3bb14e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65fa3974_bdb2de71",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-14T12:52:29Z",
+      "side": 1,
+      "message": "created separate bug to track that: b/203060564",
+      "parentUuid": "40aed2d6_4693ad40",
+      "range": {
+        "startLine": 261,
+        "startChar": 46,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "b8a6dddd1fc1ecf24ba21475ca2db099bc3bb14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
