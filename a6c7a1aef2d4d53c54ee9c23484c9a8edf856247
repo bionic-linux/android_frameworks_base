@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59bcb8b6_344f1b26",
+        "filename": "tests/DynamicCodeLoggerIntegrationTests/src/com/android/server/pm/dex/DynamicCodeLoggerIntegrationTests.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1863140
+      },
+      "writtenOn": "2021-10-14T02:30:00Z",
+      "side": 1,
+      "message": "Is the javalib.jar the same as DynamicCodeLoggerTestLibrary.jar?",
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
