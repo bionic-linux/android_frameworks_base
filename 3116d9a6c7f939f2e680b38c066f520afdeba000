@@ -22,6 +22,30 @@
       },
       "revId": "3116d9a6c7f939f2e680b38c066f520afdeba000",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dac2eece_e8b1d272",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-10-14T12:19:01Z",
+      "side": 1,
+      "message": "I removed IntDef because:\n- it is not visible to frameworks/base, (it\u0027s not @SystemApi for now)\n- if changed to @SystemApi, Lint error is triggered (IntDefs should not be exposed)",
+      "parentUuid": "06776663_4dc0b90a",
+      "range": {
+        "startLine": 637,
+        "startChar": 62,
+        "endLine": 637,
+        "endChar": 65
+      },
+      "revId": "3116d9a6c7f939f2e680b38c066f520afdeba000",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
