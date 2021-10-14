@@ -46,6 +46,30 @@
       },
       "revId": "b8a6dddd1fc1ecf24ba21475ca2db099bc3bb14e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5a1f099_72a14d72",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-10-14T12:54:04Z",
+      "side": 1,
+      "message": "My concern is that if we add the new string, it would be translated to the difference language even we don\u0027t need it, and the string is not be reviewed by UX.",
+      "parentUuid": "65fa3974_bdb2de71",
+      "range": {
+        "startLine": 261,
+        "startChar": 46,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "b8a6dddd1fc1ecf24ba21475ca2db099bc3bb14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
