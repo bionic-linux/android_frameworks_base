@@ -148,6 +148,10 @@ StreamManager::~StreamManager()
     forEach([](Stream *stream) { stream->clearAudioTrack(); });
 }
 
+bool StreamManager::isQueueForPlay() const
+{
+    return mInsideQueueForPlay;
+}
 
 int32_t StreamManager::queueForPlay(const std::shared_ptr<Sound> &sound,
         int32_t soundID, float leftVolume, float rightVolume,
@@ -157,7 +161,7 @@ int32_t StreamManager::queueForPlay(const std::shared_ptr<Sound> &sound,
             __func__, sound.get(), soundID, leftVolume, rightVolume, priority, loop, rate);
     bool launchThread = false;
     int32_t streamID = 0;
-
+    mInsideQueueForPlay = true;
     { // for lock
         std::unique_lock lock(mStreamManagerLock);
         Stream *newStream = nullptr;
@@ -259,7 +263,7 @@ int32_t StreamManager::queueForPlay(const std::shared_ptr<Sound> &sound,
         sanityCheckQueue_l();
         ALOGV("%s: mStreamManagerLock released", __func__);
     } // lock
-
+    mInsideQueueForPlay = false;
     if (launchThread) {
         const int32_t id = mThreadPool->launch([this](int32_t id) { run(id); });
         (void)id; // avoid clang warning -Wunused-variable -Wused-but-marked-unused
