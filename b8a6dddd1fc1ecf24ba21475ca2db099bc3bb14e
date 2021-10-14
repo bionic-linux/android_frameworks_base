@@ -70,6 +70,30 @@
       },
       "revId": "b8a6dddd1fc1ecf24ba21475ca2db099bc3bb14e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ca74079_4a12e58f",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-10-14T13:14:31Z",
+      "side": 1,
+      "message": "Offline sync about it, I\u0027m ok to make this merged soon, and modify it based on the UX mock provided in the near further.",
+      "parentUuid": "d5a1f099_72a14d72",
+      "range": {
+        "startLine": 261,
+        "startChar": 46,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "b8a6dddd1fc1ecf24ba21475ca2db099bc3bb14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
