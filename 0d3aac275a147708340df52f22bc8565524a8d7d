@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cbcb663d_e8337501",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T21:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd8075c7_0a04a7ea",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c93e11f5_5f918648",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8308cde2_85a09f2d",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3080,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T21:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e0ead06_801ce8db",
+      "range": {
+        "startLine": 3080,
+        "startChar": 45,
+        "endLine": 3080,
+        "endChar": 60
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf9aff36_65b62dd1",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-10-14T15:49:06Z",
       "side": 1,
       "message": "classes (here and elsewhere)",
+      "range": {
+        "startLine": 3086,
+        "startChar": 44,
+        "endLine": 3086,
+        "endChar": 49
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f44b1da4_a96b73db",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3086,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T21:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf9aff36_65b62dd1",
       "range": {
         "startLine": 3086,
         "startChar": 44,
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0261fabb_a43da687",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3087,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T21:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c3a06f7_8273c57c",
+      "range": {
+        "startLine": 3085,
+        "startChar": 40,
+        "endLine": 3087,
+        "endChar": 55
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "852b97d5_d920949a",
@@ -123,6 +219,30 @@
       "writtenOn": "2021-10-14T15:49:06Z",
       "side": 1,
       "message": "Let\u0027s use @throws clause",
+      "range": {
+        "startLine": 3133,
+        "startChar": 40,
+        "endLine": 3135,
+        "endChar": 55
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebc5c089_9f5f7c73",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3135,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T21:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "852b97d5_d920949a",
       "range": {
         "startLine": 3133,
         "startChar": 40,
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4da50a1_db82d77c",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4088,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T21:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85ecf450_9c8a2ac4",
+      "range": {
+        "startLine": 4086,
+        "startChar": 40,
+        "endLine": 4088,
+        "endChar": 55
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "158035ef_fc8a2994",
@@ -179,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2ed1dea_0c478ed6",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4338,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T21:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "158035ef_fc8a2994",
+      "range": {
+        "startLine": 4338,
+        "startChar": 29,
+        "endLine": 4338,
+        "endChar": 50
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d7bf66c6_489285c7",
@@ -192,6 +360,30 @@
       "writtenOn": "2021-10-14T15:49:06Z",
       "side": 1,
       "message": "Can you remove this comment?",
+      "range": {
+        "startLine": 4382,
+        "startChar": 12,
+        "endLine": 4382,
+        "endChar": 73
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05d8362a_f00ab915",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4382,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T21:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7bf66c6_489285c7",
       "range": {
         "startLine": 4382,
         "startChar": 12,
