@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40aed2d6_4693ad40",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-10-14T12:47:21Z",
+      "side": 1,
+      "message": "The new string also need to be reviewed. I\u0027m not sure if we would have the LE audio profile toggle on UX. For UX, we may not show LE_AUDIO for the user immediately. For now, A2DP is show media audio, HFP is phone audio.",
+      "range": {
+        "startLine": 261,
+        "startChar": 46,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "b8a6dddd1fc1ecf24ba21475ca2db099bc3bb14e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
