@@ -112,6 +112,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ee9c032_9ad92ce2",
+        "filename": "tests/DynamicCodeLoggerIntegrationTests/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-10-14T16:42:56Z",
+      "side": 1,
+      "message": "Well, if the tests are passing, it must be achieving that somehow.\nAnd it is I think how native code in APKs is intended to be packaged.",
+      "parentUuid": "28261c92_9f921416",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59bcb8b6_344f1b26",
