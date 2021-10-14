@@ -70,6 +70,30 @@
       },
       "revId": "69950c4dea5e62a7c618fe93d4315750616e895d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9d74101_6373e2fb",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1087037
+      },
+      "writtenOn": "2021-10-14T12:46:55Z",
+      "side": 1,
+      "message": "I\u0027m ok with using different icon, since it\u0027s temporary anyway.\nI think this is minor issue we can solve later. I already started cherry-picking this code into internal master.",
+      "parentUuid": "d250ad98_27cdcfe2",
+      "range": {
+        "startLine": 230,
+        "startChar": 15,
+        "endLine": 230,
+        "endChar": 40
+      },
+      "revId": "69950c4dea5e62a7c618fe93d4315750616e895d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
