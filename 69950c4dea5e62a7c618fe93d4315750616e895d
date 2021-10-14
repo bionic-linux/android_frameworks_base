@@ -46,6 +46,30 @@
       },
       "revId": "69950c4dea5e62a7c618fe93d4315750616e895d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d250ad98_27cdcfe2",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-10-14T12:41:20Z",
+      "side": 1,
+      "message": "Please use this one for now. \nreturn com.android.internal.R.drawable.ic_bt_headset_hfp\n\nFrom the previous high level strategy, we would make the user experience as similar as connected the classical audio profile that suggest to use the same icon until the new UX mock provided. The other previous discussion about the icon is based on the supported context type to choose HFP or A2DP icon for reference.",
+      "parentUuid": "96716ece_aeca36b1",
+      "range": {
+        "startLine": 230,
+        "startChar": 15,
+        "endLine": 230,
+        "endChar": 40
+      },
+      "revId": "69950c4dea5e62a7c618fe93d4315750616e895d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
