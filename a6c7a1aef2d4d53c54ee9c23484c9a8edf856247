@@ -1,6 +1,69 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abc97a55_57b3ba2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-10-14T15:13:28Z",
+      "side": 1,
+      "message": "I am far from an expert on Soong, and I\u0027m even less of an expert on makefiles (this is probably the most complex one I ever wrote, and it was all a while ago). \nBut I\u0027ve managed to recollect what I intended it to do, and it seems to me that your version is pretty much doing the same thing.",
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89d3ed94_a5a71508",
+        "filename": "tests/DynamicCodeLoggerIntegrationTests/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-10-14T15:13:28Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be here. We want to make sure we load this code dynamically, from the version we extract from the Java resources.",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0844281_067714e2",
+        "filename": "tests/DynamicCodeLoggerIntegrationTests/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-10-14T15:13:28Z",
+      "side": 1,
+      "message": "The desired effect is that DynamicCodeLoggerNativeTestLibrary.so will be present as a Java resource under /lib/\u003cABI\u003e/, which I think is what this does, and what LOCAL_JNI_SHARED_LIBRARIES did in the makefile.\nIs that right?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59bcb8b6_344f1b26",
@@ -32,6 +95,24 @@
       "side": 1,
       "message": "I\u0027m not 100% sure they\u0027re identical, but this change makes the tests pass and it makes sense. My understanding is that Soong would generate a jar of the same name as the module, which was not the case for make.\n\nI did use your jar diff tool on some outputs I found from the make and Soong runs of the test, and the DynamicCodeLoggerIntegrationTests.jar was a superset of what was contained in javalib.jar; though it only contained a few elements that javalib did not. That said I don\u0027t know for sure that I compared the right jars. There were a number of them.",
       "parentUuid": "59bcb8b6_344f1b26",
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a757f56d_d13012dd",
+        "filename": "tests/DynamicCodeLoggerIntegrationTests/src/com/android/server/pm/dex/DynamicCodeLoggerIntegrationTests.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-10-14T15:13:28Z",
+      "side": 1,
+      "message": "Yeah, the name here doesn\u0027t matter, what matters is the name we give it when we extract it. And this one is better.\n(All we need in the Jar is the tiny Simple class, but there\u0027s no problems if it has other things.)",
+      "parentUuid": "1e397ceb_b80605de",
       "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
