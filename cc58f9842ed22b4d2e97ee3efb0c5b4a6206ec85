@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016239325",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1856321?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fdfedbbe_d0268b14",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/BluetoothEventManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-14T10:08:45Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 104
+      },
+      "revId": "cc58f9842ed22b4d2e97ee3efb0c5b4a6206ec85",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
