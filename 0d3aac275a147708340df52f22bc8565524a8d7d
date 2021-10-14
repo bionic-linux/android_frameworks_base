@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd8075c7_0a04a7ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-14T15:49:06Z",
+      "side": 1,
+      "message": "Put a different title to distinguish from 1st CL? You could say \"Adding typed APIs for list, array, sparse array\" or \"Adding ... 2\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c93e11f5_5f918648",
@@ -14,6 +37,167 @@
       "writtenOn": "2021-10-14T02:04:48Z",
       "side": 1,
       "message": "Resolved the comments, test the presubmit to check whether or not it complains about private API changes",
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e0ead06_801ce8db",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3080,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-14T15:49:06Z",
+      "side": 1,
+      "message": "Nit: /* clazz */ null (here and elsewhere)\n\n(Space between \u0027/\u0027 and \u0027n\u0027)",
+      "range": {
+        "startLine": 3080,
+        "startChar": 45,
+        "endLine": 3080,
+        "endChar": 60
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf9aff36_65b62dd1",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3086,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-14T15:49:06Z",
+      "side": 1,
+      "message": "classes (here and elsewhere)",
+      "range": {
+        "startLine": 3086,
+        "startChar": 44,
+        "endLine": 3086,
+        "endChar": 49
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c3a06f7_8273c57c",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3087,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-14T15:49:06Z",
+      "side": 1,
+      "message": "Let\u0027s put the @throws clause following API council feedback",
+      "range": {
+        "startLine": 3085,
+        "startChar": 40,
+        "endLine": 3087,
+        "endChar": 55
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "852b97d5_d920949a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3135,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-14T15:49:06Z",
+      "side": 1,
+      "message": "Let\u0027s use @throws clause",
+      "range": {
+        "startLine": 3133,
+        "startChar": 40,
+        "endLine": 3135,
+        "endChar": 55
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85ecf450_9c8a2ac4",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4088,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-14T15:49:06Z",
+      "side": 1,
+      "message": "Let\u0027s use @throws clause",
+      "range": {
+        "startLine": 4086,
+        "startChar": 40,
+        "endLine": 4088,
+        "endChar": 55
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "158035ef_fc8a2994",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4338,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-14T15:49:06Z",
+      "side": 1,
+      "message": "Javadoc about @param clazz like in readListInternal()",
+      "range": {
+        "startLine": 4338,
+        "startChar": 29,
+        "endLine": 4338,
+        "endChar": 50
+      },
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7bf66c6_489285c7",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4382,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-14T15:49:06Z",
+      "side": 1,
+      "message": "Can you remove this comment?",
+      "range": {
+        "startLine": 4382,
+        "startChar": 12,
+        "endLine": 4382,
+        "endChar": 73
+      },
       "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
