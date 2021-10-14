@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c93e11f5_5f918648",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-14T02:04:48Z",
+      "side": 1,
+      "message": "Resolved the comments, test the presubmit to check whether or not it complains about private API changes",
+      "revId": "0d3aac275a147708340df52f22bc8565524a8d7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
