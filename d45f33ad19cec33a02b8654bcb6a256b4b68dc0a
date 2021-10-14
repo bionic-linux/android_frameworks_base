@@ -208,6 +208,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "85d6f751_d0c4efb1",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-14T07:25:07Z",
+      "side": 1,
+      "message": "I see. I don\u0027t know why it was done this way but I guess we should eventually clean this up to not have two members outside of mConfig. For now this will do.",
+      "parentUuid": "7df38c5a_e05bd42b",
+      "range": {
+        "startLine": 1002,
+        "startChar": 0,
+        "endLine": 1009,
+        "endChar": 9
+      },
+      "revId": "d45f33ad19cec33a02b8654bcb6a256b4b68dc0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "483f2eac_0352f781",
         "filename": "core/java/com/android/internal/net/VpnConfig.java",
         "patchSetId": 13
