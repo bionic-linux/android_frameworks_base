@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7a72ccf_e5d87988",
+        "filename": "tests/DynamicCodeLoggerIntegrationTests/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1076723
+      },
+      "writtenOn": "2021-10-14T16:32:30Z",
+      "side": 1,
+      "message": "Ah I added this while debugging, and I guess I forgot to try it again without it. Removed.",
+      "parentUuid": "89d3ed94_a5a71508",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0844281_067714e2",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-10-14T15:13:28Z",
       "side": 1,
       "message": "The desired effect is that DynamicCodeLoggerNativeTestLibrary.so will be present as a Java resource under /lib/\u003cABI\u003e/, which I think is what this does, and what LOCAL_JNI_SHARED_LIBRARIES did in the makefile.\nIs that right?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28261c92_9f921416",
+        "filename": "tests/DynamicCodeLoggerIntegrationTests/Android.bp",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1076723
+      },
+      "writtenOn": "2021-10-14T16:32:30Z",
+      "side": 1,
+      "message": "I\u0027m actually not sure. This was automatically converted by the androidmk tool.",
+      "parentUuid": "d0844281_067714e2",
       "range": {
         "startLine": 55,
         "startChar": 4,
