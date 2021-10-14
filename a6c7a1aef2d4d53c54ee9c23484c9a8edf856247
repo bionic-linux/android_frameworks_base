@@ -16,6 +16,24 @@
       "message": "Is the javalib.jar the same as DynamicCodeLoggerTestLibrary.jar?",
       "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e397ceb_b80605de",
+        "filename": "tests/DynamicCodeLoggerIntegrationTests/src/com/android/server/pm/dex/DynamicCodeLoggerIntegrationTests.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1076723
+      },
+      "writtenOn": "2021-10-14T14:11:14Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure they\u0027re identical, but this change makes the tests pass and it makes sense. My understanding is that Soong would generate a jar of the same name as the module, which was not the case for make.\n\nI did use your jar diff tool on some outputs I found from the make and Soong runs of the test, and the DynamicCodeLoggerIntegrationTests.jar was a superset of what was contained in javalib.jar; though it only contained a few elements that javalib did not. That said I don\u0027t know for sure that I compared the right jars. There were a number of them.",
+      "parentUuid": "59bcb8b6_344f1b26",
+      "revId": "a6c7a1aef2d4d53c54ee9c23484c9a8edf856247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
