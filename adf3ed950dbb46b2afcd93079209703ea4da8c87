@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6e365ee_c047c43a",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:05:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e2e17a5_58641e52",
+      "range": {
+        "startLine": 48,
+        "startChar": 27,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83f0e1de_f668747d",
@@ -659,6 +683,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d652e351_490b7590",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:05:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cf0aa584_2661dd91",
+      "range": {
+        "startLine": 238,
+        "startChar": 12,
+        "endLine": 238,
+        "endChar": 67
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "719809ee_001f5d5e",
@@ -672,6 +720,30 @@
       "writtenOn": "2021-10-15T00:47:22Z",
       "side": 1,
       "message": "Do we need a new line here? look like the #629 will not reach line limit.\nif (ArrayUtils.contains(uuids, BluetoothUuid.LE_AUDIO) \u0026\u0026 mLeAudioProfile !\u003d null)",
+      "range": {
+        "startLine": 629,
+        "startChar": 8,
+        "endLine": 630,
+        "endChar": 38
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "702d0dda_fa3742ad",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LocalBluetoothProfileManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:05:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "719809ee_001f5d5e",
       "range": {
         "startLine": 629,
         "startChar": 8,
