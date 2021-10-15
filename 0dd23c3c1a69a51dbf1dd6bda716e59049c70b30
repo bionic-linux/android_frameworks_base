@@ -33,6 +33,23 @@
       "message": "Hi,please help review this commit,thx.",
       "revId": "0dd23c3c1a69a51dbf1dd6bda716e59049c70b30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21d3c387_870826a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1612700
+      },
+      "writtenOn": "2021-10-15T09:42:46Z",
+      "side": 1,
+      "message": "Hi, any update?",
+      "revId": "0dd23c3c1a69a51dbf1dd6bda716e59049c70b30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
