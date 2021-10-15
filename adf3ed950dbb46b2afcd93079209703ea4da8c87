@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9160c0aa_309caeaf",
+        "filename": "packages/SettingsLib/res/drawable/ic_bt_le_audio.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6236de0_0d278259",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 3
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2608173_52942f67",
@@ -48,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8e8eef9_601d4e0a",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/BluetoothEventManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2608173_52942f67",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 461,
+        "endChar": 104
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca46811d_34e2c189",
@@ -61,6 +109,30 @@
       "writtenOn": "2021-10-15T00:47:22Z",
       "side": 1,
       "message": "nits:\n\n/*\n * Copyright 2021 The Android Open Source Project\n *\n * Licensed under the Apache License, Version 2.0 (the \"License\");\n * you may not use this file except in compliance with the License.\n * You may obtain a copy of the License at\n *\n *      http://www.apache.org/licenses/LICENSE-2.0\n *\n * Unless required by applicable law or agreed to in writing, software\n * distributed under the License is distributed on an \"AS IS\" BASIS,\n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n * See the License for the specific language governing permissions and\n * limitations under the License.\n */",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2a0e717_e28e773c",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "This is HIMSA who stays behind this contribution and we should keep copy rights here.",
+      "parentUuid": "ca46811d_34e2c189",
       "range": {
         "startLine": 1,
         "startChar": 0,
@@ -117,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2a50df7_16341615",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "83f0e1de_f668747d",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 60
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25ccebd4_33155610",
@@ -130,6 +226,30 @@
       "writtenOn": "2021-10-15T00:47:22Z",
       "side": 1,
       "message": "mIsProfileReady \u003d true;",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb72cd78_d464a3bf",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25ccebd4_33155610",
       "range": {
         "startLine": 90,
         "startChar": 12,
@@ -163,6 +283,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0777f953_9b4ef4fb",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c010f2ad_0d68195f",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 94,
+        "endChar": 63
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "301ea230_a639af30",
@@ -176,6 +320,30 @@
       "writtenOn": "2021-10-15T00:47:22Z",
       "side": 1,
       "message": "mIsProfileReady \u003d false;",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 34
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b9d32ba_d47640ba",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "301ea230_a639af30",
       "range": {
         "startLine": 96,
         "startChar": 12,
@@ -209,6 +377,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "474adf1b_b38a1f51",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44c0a2c6_c08b54fe",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 71
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3e137ec_e6eaaad7",
@@ -222,6 +414,30 @@
       "writtenOn": "2021-10-15T00:47:22Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 42
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "585f0c4c_b71e2c39",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3e137ec_e6eaaad7",
       "range": {
         "startLine": 141,
         "startChar": 7,
@@ -255,6 +471,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58f4e49e_7789142a",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b32526d_53d3ebe2",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 149,
+        "endChar": 42
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a64e653_823fa1a9",
@@ -268,6 +508,30 @@
       "writtenOn": "2021-10-15T00:47:22Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 55
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c601599e_f076a106",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a64e653_823fa1a9",
       "range": {
         "startLine": 170,
         "startChar": 8,
@@ -301,6 +565,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff2806d5_da435660",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a946a139_2b2b9bab",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 239,
+        "endChar": 40
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fecb3ba0_375556d8",
@@ -314,6 +602,30 @@
       "writtenOn": "2021-10-15T00:47:22Z",
       "side": 1,
       "message": "BluetoothAdapter.getDefaultAdapter().closeProfileProxy(BluetoothProfile.LE_AUDIO,\n        mService);",
+      "range": {
+        "startLine": 242,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 81
+      },
+      "revId": "adf3ed950dbb46b2afcd93079209703ea4da8c87",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25a1a3c8_5d9c3540",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/LeAudioProfile.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-10-15T07:01:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fecb3ba0_375556d8",
       "range": {
         "startLine": 242,
         "startChar": 16,
