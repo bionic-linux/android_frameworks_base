@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a92394b_8310499a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "Only nits",
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "214a7e01_d3d9dad9",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "For consistency do you want to just say \"send\" or \"sendNoArgs\" here or something ? The two other methods are named after the extra data they send. This sounds like it should only be used for STOPPED but it\u0027s also used for UNREGISTER.",
+      "range": {
+        "startLine": 336,
+        "startChar": 25,
+        "endLine": 336,
+        "endChar": 32
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cafbbb9e_0c9a77a9",
+        "filename": "core/java/android/net/nsd/NsdServiceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "No specific objection, but is this useful ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b620c9_671b31fe",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "Can you please make this a blank final (assigning to null in the \u0027case\u0027 statements where it\u0027s not used) or declare it in places it\u0027s initialized ({} are or different identifiers are your friends) ?",
+      "range": {
+        "startLine": 154,
+        "startChar": 16,
+        "endLine": 154,
+        "endChar": 26
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d141fd3b_9460b645",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "Only used in first case ; declare there and make final please",
+      "range": {
+        "startLine": 155,
+        "startChar": 36,
+        "endLine": 155,
+        "endChar": 38
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dffe56d_6b50586e",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "How about using remove() here and removing l.175",
+      "range": {
+        "startLine": 172,
+        "startChar": 41,
+        "endLine": 172,
+        "endChar": 44
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "423caa7b_6af7bedc",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "Do you want to just make in common these case labels ? They have the exact same code don\u0027t they ?\n\nIf for some reason it\u0027s not possible, do you want to fold the repeated 4 lines below into this function ? l.223 can just inline it ; it is, after-all, a one-liner anyway.",
+      "range": {
+        "startLine": 183,
+        "startChar": 32,
+        "endLine": 183,
+        "endChar": 53
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d8fcf1b_d448c87b",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "I get that you\u0027re not changing this, but I don\u0027t think this makes any sense ?\n• if clientInfo is null, then l.386 will also crash\n• mClientIds is (private) final \u003d new SparseIntArray",
+      "range": {
+        "startLine": 385,
+        "startChar": 33,
+        "endLine": 385,
+        "endChar": 55
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee4f4e4f_bdc5529c",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-15T08:23:47Z",
+      "side": 1,
+      "message": "on ?\n\nI tried to look at what we do across the stack. Keepalive callbacks do what you\u0027re doing here, but QosCallback calls these on* while NetworkMonitor calls notify* but the object they forward to are also named notify*.\n\nI think generally notify is for the other direction, so I think it\u0027s clearer to name these on*.",
+      "range": {
+        "startLine": 981,
+        "startChar": 13,
+        "endLine": 981,
+        "endChar": 19
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
