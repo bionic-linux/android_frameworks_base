@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40366c61_99cadd28",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3138,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "T[]",
+      "range": {
+        "startLine": 3138,
+        "startChar": 15,
+        "endLine": 3138,
+        "endChar": 23
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e66cde5_399bb0f1",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3941,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "Remove this line",
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d12cfd0_2415395f",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4133,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "Remove final",
+      "range": {
+        "startLine": 4133,
+        "startChar": 11,
+        "endLine": 4133,
+        "endChar": 16
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab3e6414_048150a3",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4133,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "\u003cT\u003e\n\nI do acknowledge the asymmetry w/ writeParcelableArray() but there we need to make sure we can call \u003citem\u003e.writeToParcel(), so we need the type to be parcelable, here we don\u0027t actually require T to be parcelable, it could be that the parent is not parcelable but all the children are, eg.\n\n  public abstract class AbstractAccount {}\n  public class PaidAccount implements Parcelable { ... }\n  public class FreeAccount implements Parcelable { ... }\n\n  Parcel p \u003d Parcel.obtain();\n  Parcelable[] array \u003d {new PaidAccount(), new FreeAccount()};\n  p.writeParcelableArray(array, 0);\n  p.setDataPosition(0);\n\n  AbstractAccount[] accounts \u003d p.readParcelableArray(null, AbstractAccount.class);\n\nAs @hide like it was before, I do understand the requirement to extend Parcelable due to https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#parcelable-final, but opening up this API means that API guideline does not apply anymore (at least I couldn\u0027t find any such requirement/recommendation in the public docs - https://developer.android.com/reference/android/os/Parcelable).",
+      "range": {
+        "startLine": 4133,
+        "startChar": 17,
+        "endLine": 4133,
+        "endChar": 40
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a17c93c8_639b0bda",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4133,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "@SuppressWarnings(\"unchecked\")",
+      "range": {
+        "startLine": 4133,
+        "startChar": 44,
+        "endLine": 4133,
+        "endChar": 63
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cf06e0c_f44d127b",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4359,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "Can you add a javadoc saying that you\u0027re leaving this unused method here because of unsupported app usage?",
+      "range": {
+        "startLine": 4359,
+        "startChar": 17,
+        "endLine": 4359,
+        "endChar": 33
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89e8a006_32dfab3e",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4361,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "/* clazz */ null",
+      "range": {
+        "startLine": 4361,
+        "startChar": 44,
+        "endLine": 4361,
+        "endChar": 48
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d16558e5_1d1626e6",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4393,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "Can you add a javadoc saying that you\u0027re leaving this unused method here because of unsupported app usage?",
+      "range": {
+        "startLine": 4393,
+        "startChar": 17,
+        "endLine": 4393,
+        "endChar": 34
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c73fa8b_03558ab5",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4405,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "@SuppressWarnings(\"unchecked\")",
+      "range": {
+        "startLine": 4405,
+        "startChar": 25,
+        "endLine": 4405,
+        "endChar": 42
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a992860_ac743129",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4405,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "T[]",
+      "range": {
+        "startLine": 4405,
+        "startChar": 16,
+        "endLine": 4405,
+        "endChar": 24
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6b1768f_57c3e6c2",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4419,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-15T10:58:49Z",
+      "side": 1,
+      "message": "Can you add a javadoc saying that you\u0027re leaving this unused method here because of unsupported app usage?",
+      "range": {
+        "startLine": 4419,
+        "startChar": 17,
+        "endLine": 4419,
+        "endChar": 40
+      },
+      "revId": "5ef6a70d72a1fa27d840fa0dbf4de93649d8f5fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
