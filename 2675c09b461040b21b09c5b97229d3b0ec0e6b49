@@ -16,6 +16,24 @@
       "message": "Thanks. I assume there\u0027s no way to get them to use the aliases, for when you or Rubin are out of office?",
       "revId": "2675c09b461040b21b09c5b97229d3b0ec0e6b49",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d156bd1_5d491936",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1411450
+      },
+      "writtenOn": "2021-10-18T18:30:29Z",
+      "side": 1,
+      "message": "Done. We don\u0027t have a security alias or full team alias yet - but added for work device experience",
+      "parentUuid": "67d9ddf9_c373dfe8",
+      "revId": "2675c09b461040b21b09c5b97229d3b0ec0e6b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
