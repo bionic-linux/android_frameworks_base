@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67d9ddf9_c373dfe8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1388071
+      },
+      "writtenOn": "2021-10-18T18:05:25Z",
+      "side": 1,
+      "message": "Thanks. I assume there\u0027s no way to get them to use the aliases, for when you or Rubin are out of office?",
+      "revId": "2675c09b461040b21b09c5b97229d3b0ec0e6b49",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
