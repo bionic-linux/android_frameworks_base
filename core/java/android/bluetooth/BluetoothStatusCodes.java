@@ -79,6 +79,13 @@ public final class BluetoothStatusCodes {
     public static final int ERROR_MISSING_BLUETOOTH_SCAN_PERMISSION = 7;
 
     /**
+     * Error code indicating that feature is not supported.
+     *
+     * @hide
+     */
+    public static final int ERROR_FEATURE_NOT_SUPPORTED = 8;
+
+    /**
      * If another application has already requested {@link OobData} then another fetch will be
      * disallowed until the callback is removed.
      *
