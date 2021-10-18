@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cbc4543_c556282f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "Sorry being so annoying with the commit message. AOSP commits should contain most information publicly available instead of in internal links. You can leave the internal link but expand on why this is safer, you can mention that we check that the class is expected before running deserialization code, etc.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e400d4d3_d7105966",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "Only minor stuff :) ",
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25e58df9_b77f4d2f",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3100,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "I\u0027d check if the following compiles:\n  @SuppressWarnings(\"unchecked\")\n  public \u003cT\u003e ArrayList\u003cT\u003e readArrayList(@Nullable ClassLoader loader) {\n    return (ArrayList\u003cT\u003e) readArrayListInternal(loader, /* clazz */ null);\n  }\n\nWe\u0027re basically forcing whatever type the caller prefers and doing the casting internally (similar to ag/1933755) , which saves the caller from having to do this.",
+      "range": {
+        "startLine": 3098,
+        "startChar": 4,
+        "endLine": 3100,
+        "endChar": 5
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8389551_13bef701",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3112,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "? extends T\n\nThis way we allow the following code:\n  List\u003cView\u003e views \u003d p.readArrayList(null, FrameLayout.class);\n\n(Assuming for the sake of the example that FrameLayout is parcelable, which is not).\n\nWe\u0027re decoupling the type we check during deserialization from the container type, which allows callers to be more strict in the checks if they want a specific super type for the container. It\u0027s the same argument for the previous CL where we used ? super T.\n\nThe reason we don\u0027t do that for readArray() and readArrayInternal() is because arrays are contravariant, so things like this are already possible:\n\n  FrameLayout[] layouts \u003d p.readArray(null, FrameLayout.class);\n  View[] views \u003d layouts;",
+      "range": {
+        "startLine": 3112,
+        "startChar": 87,
+        "endLine": 3112,
+        "endChar": 88
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0b820a5_909bc24d",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 3164,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "? extends T",
+      "range": {
+        "startLine": 3164,
+        "startChar": 27,
+        "endLine": 3164,
+        "endChar": 28
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d9118ba_8e8d1b2a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4134,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "Fits in one line",
+      "range": {
+        "startLine": 4133,
+        "startChar": 0,
+        "endLine": 4134,
+        "endChar": 38
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "451942f4_eb203ac2",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4364,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "Fits in one line",
+      "range": {
+        "startLine": 4363,
+        "startChar": 0,
+        "endLine": 4364,
+        "endChar": 43
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99dfc61f_440a3375",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4387,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "? extends T",
+      "range": {
+        "startLine": 4387,
+        "startChar": 28,
+        "endLine": 4387,
+        "endChar": 29
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a6bb40e_3de6a111",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4399,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "allow",
+      "range": {
+        "startLine": 4399,
+        "startChar": 49,
+        "endLine": 4399,
+        "endChar": 54
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c2f218b_a1d4e206",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4430,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "allow",
+      "range": {
+        "startLine": 4430,
+        "startChar": 49,
+        "endLine": 4430,
+        "endChar": 54
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03c6e31d_6311116c",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 4447,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-18T09:23:20Z",
+      "side": 1,
+      "message": "? extends T",
+      "range": {
+        "startLine": 4447,
+        "startChar": 28,
+        "endLine": 4447,
+        "endChar": 29
+      },
+      "revId": "4aa4a80655c55b53f45249bdaea5eb8967a82b2a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
