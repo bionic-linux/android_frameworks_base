@@ -2273,6 +2273,53 @@ public final class BluetoothAdapter {
     }
 
     /**
+     * Return true if LE Connected Isochronous Stream Central feature is supported.
+     *
+     * @return true if chipset supports LE Connected Isochronous Stream Central feature
+     */
+    @RequiresNoPermission
+    public boolean isCisCentralSupported() {
+        if (!getLeAccess()) {
+            return false;
+        }
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.isCisCentralSupported();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to get isCisCentralSupported, error: ", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return false;
+    }
+
+    /**
+     * Return true if LE Periodic Advertising Sync Transfer Sender feature is supported.
+     *
+     * @return true if chipset supports LE Periodic Advertising Sync Transfer Sender feature
+     */
+    @RequiresNoPermission
+    public boolean isLePeriodicAdvertisingSyncTransferSenderSupported() {
+        if (!getLeAccess()) {
+            return false;
+        }
+        try {
+            mServiceLock.readLock().lock();
+            if (mService != null) {
+                return mService.isLePeriodicAdvertisingSyncTransferSenderSupported();
+            }
+        } catch (RemoteException e) {
+            Log.e(TAG, "failed to get isLePeriodicAdvertisingSyncTransferSenderSupported,"
+                    + " error: ", e);
+        } finally {
+            mServiceLock.readLock().unlock();
+        }
+        return false;
+    }
+
+    /**
      * Return the maximum LE advertising data length in bytes,
      * if LE Extended Advertising feature is supported, 0 otherwise.
      *
