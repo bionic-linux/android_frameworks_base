@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "644e8c5d_ec004551",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-10-19T03:42:15Z",
+      "side": 1,
+      "message": "How about to keep the same naming as the one in AdapterService, \"isLeConnectedIsochronousStreamCentralSupported.\"",
+      "range": {
+        "startLine": 2280,
+        "startChar": 19,
+        "endLine": 2280,
+        "endChar": 40
+      },
+      "revId": "91d3a748159aa73d6bd6b305352abbd19fb23f3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
