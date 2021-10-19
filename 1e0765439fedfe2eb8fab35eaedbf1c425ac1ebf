@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac158ca2_102fd51a",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-19T18:17:48Z",
+      "side": 1,
+      "message": "These should return a status code instead of a boolean to give developers more insight into a \"false\" return value. Please see the BluetoothStatusCodes class and take a look over go/bluetooth-api-error-codes-itd.",
+      "revId": "1e0765439fedfe2eb8fab35eaedbf1c425ac1ebf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2bf80a5_6169821e",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2291,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-19T18:17:48Z",
+      "side": 1,
+      "message": "Should rethrow the RemoteException. See go/android-api-guidelines#rethrow-remoteexception",
+      "revId": "1e0765439fedfe2eb8fab35eaedbf1c425ac1ebf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
