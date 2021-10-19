@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cfb5b0b_43cec899",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-19T07:12:27Z",
+      "side": 1,
+      "message": "Do we need to do this test ? Is there any issue with setting it if it\u0027s the same ?",
+      "range": {
+        "startLine": 1402,
+        "startChar": 16,
+        "endLine": 1402,
+        "endChar": 94
+      },
+      "revId": "b4038a5b889fdfc301e54f3f1a5e9d111b07253f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
