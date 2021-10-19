@@ -22,6 +22,30 @@
       },
       "revId": "91d3a748159aa73d6bd6b305352abbd19fb23f3a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3acf3862_986e9321",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-10-19T05:50:23Z",
+      "side": 1,
+      "message": "Change the name to isCisCentralSupported in AdapterService and related files",
+      "parentUuid": "644e8c5d_ec004551",
+      "range": {
+        "startLine": 2280,
+        "startChar": 19,
+        "endLine": 2280,
+        "endChar": 40
+      },
+      "revId": "91d3a748159aa73d6bd6b305352abbd19fb23f3a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
