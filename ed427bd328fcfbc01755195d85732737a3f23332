@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba7aa6af_5c3a0c82",
+        "filename": "packages/PackageInstaller/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2021-10-19T21:03:20Z",
+      "side": 1,
+      "message": "You can remove me 😊\nFine with keeping it if you prefer, but it has been really long since I have touched this code so I mostly just forward stuff to your team.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "ed427bd328fcfbc01755195d85732737a3f23332",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
