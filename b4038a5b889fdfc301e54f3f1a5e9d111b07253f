@@ -46,6 +46,30 @@
       },
       "revId": "b4038a5b889fdfc301e54f3f1a5e9d111b07253f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "902f5c8a_db08da6d",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-10-20T08:58:41Z",
+      "side": 1,
+      "message": "I think the code is marginally simpler if we remove the test, but I don\u0027t think it changes much.",
+      "parentUuid": "f30a5b54_68fb15f2",
+      "range": {
+        "startLine": 1402,
+        "startChar": 16,
+        "endLine": 1402,
+        "endChar": 94
+      },
+      "revId": "b4038a5b889fdfc301e54f3f1a5e9d111b07253f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
