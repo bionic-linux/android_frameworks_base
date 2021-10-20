@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99c6c2d6_d9bcb52f",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-10-20T02:36:07Z",
+      "side": 1,
+      "message": "Will change to return BluetoothStatusCodes status code, checked the BluetoothStatusCodes class, there is no code suitable for the feature not supported, will add one status for it.",
+      "parentUuid": "ac158ca2_102fd51a",
+      "revId": "1e0765439fedfe2eb8fab35eaedbf1c425ac1ebf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2bf80a5_6169821e",
         "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
         "patchSetId": 3
@@ -31,6 +49,24 @@
       "writtenOn": "2021-10-19T18:17:48Z",
       "side": 1,
       "message": "Should rethrow the RemoteException. See go/android-api-guidelines#rethrow-remoteexception",
+      "revId": "1e0765439fedfe2eb8fab35eaedbf1c425ac1ebf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0ad5db8_121c7fa6",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2291,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-10-20T02:36:07Z",
+      "side": 1,
+      "message": "will modify",
+      "parentUuid": "e2bf80a5_6169821e",
       "revId": "1e0765439fedfe2eb8fab35eaedbf1c425ac1ebf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
