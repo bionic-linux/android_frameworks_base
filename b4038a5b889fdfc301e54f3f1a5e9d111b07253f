@@ -22,6 +22,30 @@
       },
       "revId": "b4038a5b889fdfc301e54f3f1a5e9d111b07253f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f30a5b54_68fb15f2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-10-20T08:00:08Z",
+      "side": 1,
+      "message": "No, I don\u0027t think there is an issue if we set it when they\u0027re the same.\nIn fact, CS will also check if the old value is the same as the new one.\nAnd I just want to do a pre-check, do you think it\u0027s better to remove this check?",
+      "parentUuid": "5cfb5b0b_43cec899",
+      "range": {
+        "startLine": 1402,
+        "startChar": 16,
+        "endLine": 1402,
+        "endChar": 94
+      },
+      "revId": "b4038a5b889fdfc301e54f3f1a5e9d111b07253f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
