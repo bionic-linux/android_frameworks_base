@@ -6836,7 +6836,8 @@ public class AudioManager {
      * supported for offload A2DP playback
      * @hide
      */
-    public List<BluetoothCodecConfig> getHwOffloadEncodingFormatsSupportedForA2DP() {
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public @NonNull List<BluetoothCodecConfig> getHwOffloadEncodingFormatsSupportedForA2dp() {
         ArrayList<Integer> formatsList = new ArrayList<Integer>();
         ArrayList<BluetoothCodecConfig> codecConfigList = new ArrayList<BluetoothCodecConfig>();
 
