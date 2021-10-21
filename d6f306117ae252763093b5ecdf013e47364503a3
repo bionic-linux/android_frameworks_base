@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61f2578f_5c634656",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3114,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-10-21T19:25:20Z",
+      "side": 0,
+      "message": "is there any reason \u0027final\u0027 is dropped on these?",
+      "range": {
+        "startLine": 3114,
+        "startChar": 11,
+        "endLine": 3114,
+        "endChar": 16
+      },
+      "revId": "d6f306117ae252763093b5ecdf013e47364503a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
