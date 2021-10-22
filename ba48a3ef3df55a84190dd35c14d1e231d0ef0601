@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016477174",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1856319?revision\u003d16",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7d5e261f_cf14d134",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-22T14:36:20Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 101
+      },
+      "revId": "ba48a3ef3df55a84190dd35c14d1e231d0ef0601",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016477174",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1856319?revision\u003d16",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "3db6d1d1_a76db437",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-22T14:36:20Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 102
+      },
+      "revId": "ba48a3ef3df55a84190dd35c14d1e231d0ef0601",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
