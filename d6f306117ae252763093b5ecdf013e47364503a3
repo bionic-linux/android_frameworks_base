@@ -22,6 +22,30 @@
       },
       "revId": "d6f306117ae252763093b5ecdf013e47364503a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d78bdd_3c39cff8",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3114,
+      "author": {
+        "id": 1871820
+      },
+      "writtenOn": "2021-10-23T01:43:34Z",
+      "side": 0,
+      "message": "Bernado correct me if I am wrong, I think the reason was Parcel class is final, so we don\u0027t necessarily need methods to be final. Since this CL only touches these methods, I only dropped final for these methods.",
+      "parentUuid": "61f2578f_5c634656",
+      "range": {
+        "startLine": 3114,
+        "startChar": 11,
+        "endLine": 3114,
+        "endChar": 16
+      },
+      "revId": "d6f306117ae252763093b5ecdf013e47364503a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
