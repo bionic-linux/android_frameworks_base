@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91fc4b26_fbf237e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-10-25T21:40:01Z",
+      "side": 1,
+      "message": "Note to reviewers: Internal change http://ag/16006385 has now landed, so bringing back to life this AOSP version so we can land here too.",
+      "revId": "653a1c1a287b25535b23dbec1b023974a4416a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
