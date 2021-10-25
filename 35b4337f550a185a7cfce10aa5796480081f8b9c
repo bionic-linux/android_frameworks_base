@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cef204bd_523a1d81",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2286,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-25T17:43:02Z",
+      "side": 1,
+      "message": "Looks like the docs will need to be updated to reflect the new return values and type.",
+      "revId": "35b4337f550a185a7cfce10aa5796480081f8b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f96b372c_0bd90e9e",
+        "filename": "core/java/android/bluetooth/BluetoothStatusCodes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-10-25T17:43:02Z",
+      "side": 1,
+      "message": "The APIs using this status code look to be public, so the status code should be as well!",
+      "revId": "35b4337f550a185a7cfce10aa5796480081f8b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
