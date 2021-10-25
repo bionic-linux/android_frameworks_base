@@ -46,6 +46,30 @@
       },
       "revId": "d6f306117ae252763093b5ecdf013e47364503a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e27b0838_dc765410",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3114,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2021-10-25T08:40:13Z",
+      "side": 0,
+      "message": "Yeah, if you add a new final method in Parcel for example, lint will complain that the method is final when the class is already final. Since we\u0027re touching this method, we can use the opportunity to fix this.",
+      "parentUuid": "33d78bdd_3c39cff8",
+      "range": {
+        "startLine": 3114,
+        "startChar": 11,
+        "endLine": 3114,
+        "endChar": 16
+      },
+      "revId": "d6f306117ae252763093b5ecdf013e47364503a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
