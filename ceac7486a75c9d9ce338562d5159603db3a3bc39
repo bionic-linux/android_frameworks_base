@@ -105,6 +105,24 @@
       "parentUuid": "d866a5f3_26778616",
       "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbf56736_cdc1ef3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-10-26T18:35:23Z",
+      "side": 1,
+      "message": "Basically it\u0027s the same thing if you move to ServiceState. They are just a snapshot of a certain moment. ServiceState is even worse because we are trying to make it completely empty and will only have information reside in NetworkRegistrationInfo. ServiceState just becomes a container of multiple NetworkRegistrationInfos.\n\nIn the one-pager, they are saying \"[P0] Data protected by location, may need a way of indicating change - e.g. cellId. If applicable, the change indication should not require location permission.\".\n\nCan we just send a broadcast from telephony when cid changes without giving any cid information in the broadcast?",
+      "parentUuid": "e315bca0_32fed6f0",
+      "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
