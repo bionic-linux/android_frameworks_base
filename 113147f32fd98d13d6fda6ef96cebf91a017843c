@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91fe3f60_af0a7fcc",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-10-26T03:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2435e40_e848c117",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 51
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ebb55f1_eac8464b",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-09-29T07:35:50Z",
       "side": 1,
       "message": "pattern no \"0\" is valid pattern.",
+      "range": {
+        "startLine": 526,
+        "startChar": 8,
+        "endLine": 526,
+        "endChar": 32
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f685b412_a663dcf2",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-10-26T03:58:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ebb55f1_eac8464b",
       "range": {
         "startLine": 526,
         "startChar": 8,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52563732_af04e05e",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-10-26T03:58:52Z",
+      "side": 1,
+      "message": "Defined in\ncore/java/android/nfc/NfcDtaPatternNumber.java",
+      "parentUuid": "c3db5aa5_0c138e6c",
+      "range": {
+        "startLine": 545,
+        "startChar": 12,
+        "endLine": 545,
+        "endChar": 55
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d8dfdf9_2d9d402d",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-09-29T07:35:50Z",
       "side": 1,
       "message": "As 0 is valid pattern no,\nAs per above comment, we shall select different value for default",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 554,
+        "endChar": 9
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83b5a535_d1d7804c",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-10-26T03:58:52Z",
+      "side": 1,
+      "message": "Set NfcDtaPatternNumber.PN_NONE",
+      "parentUuid": "8d8dfdf9_2d9d402d",
       "range": {
         "startLine": 551,
         "startChar": 0,
