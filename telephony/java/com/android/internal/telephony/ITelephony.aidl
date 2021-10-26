@@ -2488,4 +2488,13 @@ interface ITelephony {
      * NSSAIs (configured, allowed and rejected).
      */
     void getSlicingConfig(in ResultReceiver callback);
+
+    /**
+     * return last known cell identity
+     * @param subId user preferred subId.
+     * @param callingPackage the name of the package making the call.
+     * @param callingFeatureId The feature in the package.
+     */
+    CellIdentity getLastKnownCellIdentity(int subId, String callingPackage,
+            String callingFeatureId);
 }

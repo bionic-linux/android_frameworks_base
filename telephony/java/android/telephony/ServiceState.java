@@ -2074,6 +2074,18 @@ public class ServiceState implements Parcelable {
     }
 
     /**
+     * Returns a copy of self with last known cell identity information removed.
+     *
+     * @return the copied ServiceState with last known cell identity removed.
+     * @hide
+     */
+    @NonNull
+    public ServiceState createLastCellIdSanitizedCopy() {
+        ServiceState state = new ServiceState(this);
+        return state;
+    }
+
+    /**
      * @hide
      */
     public void setOperatorAlphaLongRaw(String operatorAlphaLong) {
