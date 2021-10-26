@@ -87,6 +87,24 @@
       "parentUuid": "27302ef1_fe308485",
       "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e315bca0_32fed6f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-10-26T18:04:00Z",
+      "side": 1,
+      "message": "Yes we discussed this. Also you gave a comment to not add in NetworkRegInfo, I moved it to serviceState, but I  guess it was probably not noticed\n\nThere are two features in this. This change is for go/location_for_connection_service. Yes it needs privacy review and I presented it to privacy team.",
+      "parentUuid": "d866a5f3_26778616",
+      "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
