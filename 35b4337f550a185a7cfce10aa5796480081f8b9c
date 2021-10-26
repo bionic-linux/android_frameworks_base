@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5ef5795_9664a244",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2286,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-10-26T01:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef204bd_523a1d81",
+      "revId": "35b4337f550a185a7cfce10aa5796480081f8b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f96b372c_0bd90e9e",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-10-25T17:43:02Z",
       "side": 1,
       "message": "The APIs using this status code look to be public, so the status code should be as well!",
+      "revId": "35b4337f550a185a7cfce10aa5796480081f8b9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "322b9859_d1b6f916",
+        "filename": "core/java/android/bluetooth/BluetoothStatusCodes.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-10-26T01:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96b372c_0bd90e9e",
       "revId": "35b4337f550a185a7cfce10aa5796480081f8b9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
