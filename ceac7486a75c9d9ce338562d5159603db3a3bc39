@@ -33,6 +33,42 @@
       "message": "Currently we do not grant access if the user disables location toggle, regardless caller has location permission or not. This creates complicate scenario for the case that user disables location while receiving cell identity A, but enables location while receiving cell identity B. The \"last known\" thing will just expose A and B to the caller.",
       "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27302ef1_fe308485",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-10-26T17:30:34Z",
+      "side": 1,
+      "message": "So your suggestion is to keep a standalone api in telephonyManager?",
+      "parentUuid": "64bbfa57_17b8783b",
+      "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bf0cd0d_5bb1fcd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-10-26T17:30:34Z",
+      "side": 1,
+      "message": "1) I have presented this design in privacy meeting\n\n2) In this case we are providing location to the connection service regardless of location toggle",
+      "parentUuid": "f1dd2744_a5ba784a",
+      "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
