@@ -69,6 +69,24 @@
       "parentUuid": "f1dd2744_a5ba784a",
       "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d866a5f3_26778616",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-10-26T17:59:55Z",
+      "side": 1,
+      "message": "Did we have a conclusion in the API meeting last time? I didn\u0027t remember that.\n\nAlso I just reviewed the design doc again, and have a new question here. The purpose of this change is for apps that do have location permission, but do not actually need location related information, to access non-location information without triggering the hit in privacy hub. But in this case, you are actually accessing cell id, which is considering location related information. Isn\u0027t that reasonable to show that in the privacy hub? Sorry if I missed anything here.",
+      "parentUuid": "27302ef1_fe308485",
+      "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
