@@ -1067,6 +1067,9 @@ public class TelephonyRegistry extends ITelephonyRegistry.Stub {
                     try {
                         if (VDBG) log("listen: call onSSC state=" + mServiceState[phoneId]);
                         ServiceState rawSs = new ServiceState(mServiceState[phoneId]);
+                        if (TelephonyPermissions.checkBindConnectionServicePermission(mContext)) {
+                            rawSs = rawSs.createLastCellIdSanitizedCopy();
+                        }
                         if (checkFineLocationAccess(r, Build.VERSION_CODES.Q)) {
                             r.callback.onServiceStateChanged(rawSs);
                         } else if (checkCoarseLocationAccess(r, Build.VERSION_CODES.Q)) {
