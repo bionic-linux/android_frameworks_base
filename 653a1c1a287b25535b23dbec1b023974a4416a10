@@ -16,6 +16,23 @@
       "message": "Note to reviewers: Internal change http://ag/16006385 has now landed, so bringing back to life this AOSP version so we can land here too.",
       "revId": "653a1c1a287b25535b23dbec1b023974a4416a10",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "07f803ad_d5111724",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455782
+      },
+      "writtenOn": "2021-10-26T21:30:49Z",
+      "side": 1,
+      "message": "Adding Christian as backup OWNERS for fd_utils.cpp while maco@ is out-of-office.\n\nFor context: This change was already merged internally as http://ag/16006385.",
+      "revId": "653a1c1a287b25535b23dbec1b023974a4416a10",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
