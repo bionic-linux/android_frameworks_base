@@ -366,6 +366,9 @@ public class ServiceState implements Parcelable {
     private boolean mIsDataRoamingFromRegistration;
     private boolean mIsIwlanPreferred;
 
+    @Nullable
+    private CellIdentity mLastKnownCellIdentity;
+
     /**
      * get String description of roaming type
      * @hide
@@ -453,6 +456,14 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShortRaw = s.mOperatorAlphaShortRaw;
         mIsDataRoamingFromRegistration = s.mIsDataRoamingFromRegistration;
         mIsIwlanPreferred = s.mIsIwlanPreferred;
+
+        if (s.mLastKnownCellIdentity != null) {
+            Parcel p = Parcel.obtain();
+            s.mLastKnownCellIdentity.writeToParcel(p, 0);
+            p.setDataPosition(0);
+            mLastKnownCellIdentity = CellIdentity.CREATOR.createFromParcel(p);
+            p.recycle();
+        }
     }
 
     /**
@@ -488,6 +499,7 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShortRaw = in.readString();
         mIsDataRoamingFromRegistration = in.readBoolean();
         mIsIwlanPreferred = in.readBoolean();
+        mLastKnownCellIdentity = in.readParcelable(CellIdentity.class.getClassLoader());
     }
 
     public void writeToParcel(Parcel out, int flags) {
@@ -516,6 +528,7 @@ public class ServiceState implements Parcelable {
         out.writeString(mOperatorAlphaShortRaw);
         out.writeBoolean(mIsDataRoamingFromRegistration);
         out.writeBoolean(mIsIwlanPreferred);
+        out.writeParcelable(mLastKnownCellIdentity, 0);
     }
 
     public int describeContents() {
@@ -950,7 +963,8 @@ public class ServiceState implements Parcelable {
                     mOperatorAlphaLongRaw,
                     mOperatorAlphaShortRaw,
                     mIsDataRoamingFromRegistration,
-                    mIsIwlanPreferred);
+                    mIsIwlanPreferred,
+                    mLastKnownCellIdentity);
         }
     }
 
@@ -981,7 +995,8 @@ public class ServiceState implements Parcelable {
                     && mNetworkRegistrationInfos.containsAll(s.mNetworkRegistrationInfos)
                     && mNrFrequencyRange == s.mNrFrequencyRange
                     && mIsDataRoamingFromRegistration == s.mIsDataRoamingFromRegistration
-                    && mIsIwlanPreferred == s.mIsIwlanPreferred;
+                    && mIsIwlanPreferred == s.mIsIwlanPreferred
+                    && Objects.equals(mLastKnownCellIdentity, s.mLastKnownCellIdentity);
         }
     }
 
@@ -1164,6 +1179,7 @@ public class ServiceState implements Parcelable {
                     .append(", mIsDataRoamingFromRegistration=")
                     .append(mIsDataRoamingFromRegistration)
                     .append(", mIsIwlanPreferred=").append(mIsIwlanPreferred)
+                    .append(" mLastKnownCellIdentity=").append(mLastKnownCellIdentity)
                     .append("}").toString();
         }
     }
@@ -1205,6 +1221,7 @@ public class ServiceState implements Parcelable {
         mOperatorAlphaShortRaw = null;
         mIsDataRoamingFromRegistration = false;
         mIsIwlanPreferred = false;
+        mLastKnownCellIdentity = null;
     }
 
     public void setStateOutOfService() {
@@ -2064,12 +2081,26 @@ public class ServiceState implements Parcelable {
             state.mNetworkRegistrationInfos.clear();
             state.mNetworkRegistrationInfos.addAll(networkRegistrationInfos);
         }
+        state.mLastKnownCellIdentity = null;
         if (!removeCoarseLocation) return state;
 
         state.mOperatorAlphaLong = null;
         state.mOperatorAlphaShort = null;
         state.mOperatorNumeric = null;
 
+        return state;
+    }
+
+    /**
+     * Returns a copy of self with last known cell identity information removed.
+     *
+     * @return the copied ServiceState with last known cell identity removed.
+     * @hide
+     */
+    @NonNull
+    public ServiceState createLastCellIdSanitizedCopy() {
+        ServiceState state = new ServiceState(this);
+        state.mLastKnownCellIdentity = null;
         return state;
     }
 
@@ -2165,6 +2196,33 @@ public class ServiceState implements Parcelable {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Set the last known cell identity.
+     *
+     * @param cellIdentity The last known cell identity.
+     *
+     * @hide
+     */
+    public void setLastKnownCellIdentity(CellIdentity cellIdentity) {
+        mLastKnownCellIdentity = cellIdentity;
+    }
+
+    /**
+     * @return {@CellIdentity} last known cell identity {@CellIdentity}.
+     *
+     * Require {@link android.Manifest.permission#ACCESS_FINE_LOCATION} and
+     * {@link android.Manifest.permission#BIND_CONNECTION_SERVICE}, otherwise return null.
+     * If there is current registered network this value will be same as the registered cell
+     * identity. If the device goes out of service the previous cell identity is cached will be
+     * returned. If the cache age of the Cell identity is more than 24 hours it will be cleared
+     * and null will be returned.
+     *
+     * @hide
+     */
+    public CellIdentity getLastKnownCellIdentity() {
+        return mLastKnownCellIdentity;
     }
 
     /**
