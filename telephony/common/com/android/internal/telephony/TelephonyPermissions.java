@@ -545,6 +545,18 @@ public final class TelephonyPermissions {
     }
 
     /**
+     * Check if the caller (or self, if not processing an IPC) has BIND_CONNECTION_SERVICE
+     * permission
+     *
+     * @return true if caller has BIND_CONNECTION_SERVICE permission else false.
+     */
+    public static boolean checkBindConnectionServicePermission(Context context) {
+        return context.checkCallingOrSelfPermission(
+                android.Manifest.permission.BIND_CONNECTION_SERVICE)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /**
      * Ensure the caller (or self, if not processing an IPC) has
      * {@link android.Manifest.permission#READ_PHONE_STATE} or carrier privileges.
      *
