@@ -16,6 +16,23 @@
       "message": "1. We are moving away from ServiceState, which will become a just a container of multiple NetworkRegistrationInfo.\n2. Either ServiceState or NetworkRegistrationInfo is a snapshot of certain moment, I don\u0027t think adding \"last known\" thing is a good idea.",
       "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1dd2744_a5ba784a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-10-26T16:57:47Z",
+      "side": 1,
+      "message": "Currently we do not grant access if the user disables location toggle, regardless caller has location permission or not. This creates complicate scenario for the case that user disables location while receiving cell identity A, but enables location while receiving cell identity B. The \"last known\" thing will just expose A and B to the caller.",
+      "revId": "ceac7486a75c9d9ce338562d5159603db3a3bc39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
