@@ -39,6 +39,30 @@
       },
       "revId": "135c74748befa883b92e5720434e0fd9f94bbee5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96ea8f1e_06a32e65",
+        "filename": "core/java/android/app/LoadedApk.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1283396
+      },
+      "writtenOn": "2021-10-27T02:54:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d8ca93_adf431b9",
+      "range": {
+        "startLine": 736,
+        "startChar": 8,
+        "endLine": 736,
+        "endChar": 41
+      },
+      "revId": "135c74748befa883b92e5720434e0fd9f94bbee5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
