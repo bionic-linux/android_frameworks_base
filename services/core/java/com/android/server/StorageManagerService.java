@@ -3291,6 +3291,7 @@ class StorageManagerService extends IStorageManager.Stub
         }
 
         if (isFsEncrypted) {
+<<<<<<< TARGET BRANCH (e2180a Merge "[automerger skipped] Merge "mkdir .incomplete in back)
             // When a user has a secure lock screen, a secret is required to
             // unlock the key, so don't bother trying to unlock it without one.
             // This prevents misleading error messages from being logged.  This
@@ -3299,6 +3300,13 @@ class StorageManagerService extends IStorageManager.Stub
                 Slog.d(TAG, "Not unlocking user " + userId
                         + "'s CE storage yet because a secret is needed");
                 return;
+=======
+            // When a user has secure lock screen, require secret to actually unlock.
+            // This check is mostly in place for emulation mode.
+            if (StorageManager.isFileEncryptedEmulatedOnly() &&
+                mLockPatternUtils.isSecure(userId) && ArrayUtils.isEmpty(secret)) {
+                throw new IllegalStateException("Secret required to unlock secure user " + userId);
+>>>>>>> SOURCE BRANCH (ec568a Merge "Fix for TestDirectBootEmulated testcase" into android)
             }
             try {
                 mVold.unlockUserKey(userId, serialNumber, encodeBytes(token),
