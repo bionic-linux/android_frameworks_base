@@ -640,8 +640,12 @@ StorageId IncrementalService::createStorage(std::string_view mountPoint,
         if (!mkdirOrLog(path::join(backing, ".incomplete"), 0777)) {
             return kInvalidStorageId;
         }
+<<<<<<< HEAD   (cc0870 Merge "Merge "Merge "Fix CtsShortcutHostTestCases#testSecond)
         metricsKey = makeUniqueName(mountKey);
         auto status = mVold->mountIncFs(backing, mountTarget, 0, metricsKey, &controlParcel);
+=======
+        auto status = mVold->mountIncFs(backing, mountTarget, 0, &controlParcel);
+>>>>>>> BRANCH (f6e442 Merge "mkdir .incomplete in backing storage to fix CTS/GTS f)
         if (!status.isOk()) {
             LOG(ERROR) << "Vold::mountIncFs() failed: " << status.toString8();
             return kInvalidStorageId;
