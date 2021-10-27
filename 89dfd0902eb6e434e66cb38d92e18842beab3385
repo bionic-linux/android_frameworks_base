@@ -16,6 +16,23 @@
       "message": "Owners +1 for the new test.",
       "revId": "89dfd0902eb6e434e66cb38d92e18842beab3385",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "831a3b4a_8769b80e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2021-10-27T20:00:36Z",
+      "side": 1,
+      "message": "Adding +2 to make it sticky, but relying on the right owners to provide full review.",
+      "revId": "89dfd0902eb6e434e66cb38d92e18842beab3385",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
