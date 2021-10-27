@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4c328f8_e00dee75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2021-10-27T16:13:26Z",
+      "side": 1,
+      "message": "CC-ing takaoka@ just for his awareness.",
+      "revId": "e67c8434ac4bfcc52075fbfa0ab74106a347a285",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
