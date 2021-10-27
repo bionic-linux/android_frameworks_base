@@ -16,6 +16,24 @@
       "message": "I think the @return tag is too similar to the method description. Note that the possible return values will be inserted into the @return tag for both methods. I would update the method description to say something along the lines of \n\n\"Returns {@link BluetoothStatusCodes#SUCCESS} if LE Connected Isochronous Stream Central feature is supported or an error code\"\n\nThen, we can update the @return tag to say \"@return whether the chipset supports the LE Connected Isochronous Stream Central feature\".\n\nWe can repeat this for the other method in this CL as well.",
       "revId": "f101594273395e9dc403ac7b3f6841cb40bd76f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc1b61c4_b794badc",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2288,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-10-27T05:54:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eab6ad37_ac900434",
+      "revId": "f101594273395e9dc403ac7b3f6841cb40bd76f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
