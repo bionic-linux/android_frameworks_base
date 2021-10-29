@@ -160,7 +160,11 @@ final class VibrationThread extends Thread implements IBinder.DeathRecipient {
         } catch (RemoteException e) {
             Slog.e(TAG, "Error linking vibration to token death", e);
         } finally {
-            mVibration.token.unlinkToDeath(this, 0);
+            try {
+                mVibration.token.unlinkToDeath(this, 0);
+            } catch (Exception e) {
+                Slog.e(TAG, "Error unLinking vibration to token death", e);
+            }
             mWakeLock.release();
         }
     }
