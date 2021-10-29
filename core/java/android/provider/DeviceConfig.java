@@ -613,6 +613,14 @@ public final class DeviceConfig {
     @TestApi
     public static final String NAMESPACE_CONSTRAIN_DISPLAY_APIS = "constrain_display_apis";
 
+    /**
+     * Namespace for Android Virtualizatoin Framework related features accessible by native code.
+     *
+     * @hide
+     */
+    public static final String NAMESPACE_VIRTUALIZATION_FRAMEWORK_NATIVE =
+            "virtualization_framework_native";
+
     private static final Object sLock = new Object();
     @GuardedBy("sLock")
     private static ArrayMap<OnPropertiesChangedListener, Pair<String, Executor>> sListeners =
