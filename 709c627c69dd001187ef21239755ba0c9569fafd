@@ -1,0 +1,307 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678730",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "88c6d1df_8d30a901",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Must include a \"Test:\" stanza indicating how you tested this change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7692504d_bc1a9091",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 377,
+        "endChar": 122
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "8a86fa6e_d55bad6f",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 416,
+        "startChar": 0,
+        "endLine": 416,
+        "endChar": 107
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1bca0768_42135745",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 432,
+        "startChar": 0,
+        "endLine": 432,
+        "endChar": 116
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5a84428d_de9fd21e",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 489,
+        "startChar": 0,
+        "endLine": 489,
+        "endChar": 101
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "595aaca4_190dfe16",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 529,
+        "startChar": 0,
+        "endLine": 529,
+        "endChar": 107
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "45179d9a_ec92b5c5",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 530,
+        "startChar": 0,
+        "endLine": 530,
+        "endChar": 111
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "740fa609_e4d55a5f",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 554,
+        "startChar": 0,
+        "endLine": 554,
+        "endChar": 121
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678733",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "348091a1_73c01c6d",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothTbs.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothTbs.java",
+              "range": {
+                "startLine": 737,
+                "startChar": 20,
+                "endLine": 737,
+                "endChar": 26
+              },
+              "replacement": "current"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "065860fb_cd4908e7",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Common typo found: \"curent\" -- should it be \"current\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 737,
+        "startChar": 20,
+        "endLine": 737,
+        "endChar": 26
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "32ac0fe4_c2200c01",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 838,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 114
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000016678731",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0f2949b5_99693e0b",
+        "filename": "core/java/android/bluetooth/BluetoothTbsCall.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-10-29T12:38:57Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 143
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
