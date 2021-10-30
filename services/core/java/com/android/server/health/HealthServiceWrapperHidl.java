@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.health.hidl;
+package com.android.server.health;
 
 import android.annotation.Nullable;
 import android.annotation.NonNull;
@@ -34,19 +34,16 @@ import android.os.Trace;
 import android.util.Slog;
 import android.util.MutableInt;
 
-import com.android.server.health.HealthInfoCallback;
-import com.android.server.health.HealthServiceWrapper;
 import com.android.internal.annotations.VisibleForTesting;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-
 /**
  * Implement HealthServiceWrapper backed by the HIDL HAL.
  */
-public final class HealthServiceWrapperHidl implements HealthServiceWrapper {
+final class HealthServiceWrapperHidl implements HealthServiceWrapper {
     private static final String TAG = "HealthServiceWrapperHidl";
     public static final String INSTANCE_VENDOR = "default";
 
@@ -73,19 +70,6 @@ public final class HealthServiceWrapperHidl implements HealthServiceWrapper {
 
     private static void traceEnd() {
         Trace.traceEnd(Trace.TRACE_TAG_SYSTEM_SERVER);
-    }
-
-    /**
-     * See {@link #init(Callback, IServiceManagerSupplier, IHealthSupplier)}
-     */
-    @Override
-    public void init(@Nullable HealthInfoCallback healthInfoCallback)
-            throws RemoteException, NoSuchElementException {
-        init(healthInfoCallback == null ? null : new HealthHalCallback(healthInfoCallback),
-                new IServiceManagerSupplier() {
-                },
-                new IHealthSupplier() {
-                });
     }
 
     @Override
@@ -175,23 +159,17 @@ public final class HealthServiceWrapperHidl implements HealthServiceWrapper {
         return ret.value;
     }
 
-    public static void copy(HealthInfo dst, HealthInfo src) {
-        dst.chargerAcOnline = src.chargerAcOnline;
-        dst.chargerUsbOnline = src.chargerUsbOnline;
-        dst.chargerWirelessOnline = src.chargerWirelessOnline;
-        dst.maxChargingCurrent = src.maxChargingCurrent;
-        dst.maxChargingVoltage = src.maxChargingVoltage;
-        dst.batteryStatus = src.batteryStatus;
-        dst.batteryHealth = src.batteryHealth;
-        dst.batteryPresent = src.batteryPresent;
-        dst.batteryLevel = src.batteryLevel;
-        dst.batteryVoltage = src.batteryVoltage;
-        dst.batteryTemperature = src.batteryTemperature;
-        dst.batteryCurrent = src.batteryCurrent;
-        dst.batteryCycleCount = src.batteryCycleCount;
-        dst.batteryFullCharge = src.batteryFullCharge;
-        dst.batteryChargeCounter = src.batteryChargeCounter;
-        dst.batteryTechnology = src.batteryTechnology;
+    /**
+     * See {@link #init(Callback, IServiceManagerSupplier, IHealthSupplier)}
+     */
+    @Override
+    public void init(@Nullable HealthInfoCallback healthInfoCallback)
+            throws RemoteException, NoSuchElementException {
+        init(healthInfoCallback == null ? null : new HealthHalCallbackHidl(healthInfoCallback),
+                new IServiceManagerSupplier() {
+                },
+                new IHealthSupplier() {
+                });
     }
 
     /**
@@ -213,7 +191,7 @@ public final class HealthServiceWrapperHidl implements HealthServiceWrapper {
      * @throws NullPointerException   when supplier is null
      */
     @VisibleForTesting
-    public void init(@Nullable Callback callback,
+    void init(@Nullable Callback callback,
             @NonNull IServiceManagerSupplier managerSupplier,
             @NonNull IHealthSupplier healthSupplier)
             throws RemoteException, NoSuchElementException, NullPointerException {

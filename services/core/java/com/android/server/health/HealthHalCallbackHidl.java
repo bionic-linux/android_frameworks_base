@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.health.hidl;
+package com.android.server.health;
 
 import android.annotation.Nullable;
 import android.annotation.NonNull;
@@ -31,8 +31,6 @@ import android.os.RemoteException;
 import android.os.Trace;
 import android.util.Slog;
 
-import com.android.server.health.HealthInfoCallback;
-
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -46,10 +44,10 @@ import java.util.concurrent.atomic.AtomicReference;
  *
  * @hide
  */
-class HealthHalCallback extends IHealthInfoCallback.Stub
+class HealthHalCallbackHidl extends IHealthInfoCallback.Stub
         implements HealthServiceWrapperHidl.Callback {
 
-    private static final String TAG = HealthHalCallback.class.getSimpleName();
+    private static final String TAG = HealthHalCallbackHidl.class.getSimpleName();
 
     private static void traceBegin(String name) {
         Trace.traceBegin(Trace.TRACE_TAG_SYSTEM_SERVER, name);
@@ -61,7 +59,7 @@ class HealthHalCallback extends IHealthInfoCallback.Stub
 
     private HealthInfoCallback mCallback;
 
-    public HealthHalCallback(@NonNull HealthInfoCallback callback) {
+    public HealthHalCallbackHidl(@NonNull HealthInfoCallback callback) {
         mCallback = callback;
     }
 

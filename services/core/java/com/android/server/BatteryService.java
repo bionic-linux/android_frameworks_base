@@ -86,7 +86,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.android.server.health.hidl.HealthServiceWrapperHidl.copy;
+import static com.android.server.health.Utils.copy;
 
 /**
  * <p>BatteryService monitors the charging status, and charge level of the device

@@ -24,8 +24,6 @@ import android.os.RemoteException;
 
 import java.util.NoSuchElementException;
 
-import com.android.server.health.hidl.HealthServiceWrapperHidl;
-
 import com.android.internal.annotations.VisibleForTesting;
 
 /**
@@ -70,7 +68,14 @@ public interface HealthServiceWrapper {
     // TODO(b/177269435): AIDL
     android.hardware.health.V1_0.HealthInfo getHealthInfo() throws RemoteException;
 
-    static HealthServiceWrapper create(@Nullable HealthInfoCallback healthInfoCallback)
+    /**
+     * Create a new HealthServiceWrapper instance.
+     * @param healthInfoCallback the callback to call when health info changes
+     * @return the new HealthServiceWrapper instance, which may be backed by HIDL or AIDL service
+     * @throws RemoteException transaction errors
+     * @throws NoSuchElementException no HIDL or AIDL service is available
+     */
+    public static HealthServiceWrapper create(@Nullable HealthInfoCallback healthInfoCallback)
             throws RemoteException, NoSuchElementException {
         HealthServiceWrapper service = new HealthServiceWrapperHidl();
         service.init(healthInfoCallback);
