@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.android.server;
+package com.android.server.health;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertFalse;
 
 import static org.mockito.Mockito.*;
 
@@ -36,18 +36,18 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 
-public class BatteryServiceTest extends AndroidTestCase {
+public class HealthServiceWrapperHidlTest extends AndroidTestCase {
 
     @Mock IServiceManager mMockedManager;
     @Mock IHealth mMockedHal;
     @Mock IHealth mMockedHal2;
 
-    @Mock BatteryService.HealthServiceWrapper.Callback mCallback;
-    @Mock BatteryService.HealthServiceWrapper.IServiceManagerSupplier mManagerSupplier;
-    @Mock BatteryService.HealthServiceWrapper.IHealthSupplier mHealthServiceSupplier;
-    BatteryService.HealthServiceWrapper mWrapper;
+    @Mock HealthServiceWrapperHidl.Callback mCallback;
+    @Mock HealthServiceWrapperHidl.IServiceManagerSupplier mManagerSupplier;
+    @Mock HealthServiceWrapperHidl.IHealthSupplier mHealthServiceSupplier;
+    HealthServiceWrapperHidl mWrapper;
 
-    private static final String VENDOR = BatteryService.HealthServiceWrapper.INSTANCE_VENDOR;
+    private static final String VENDOR = HealthServiceWrapperHidl.INSTANCE_VENDOR;
 
     @Override
     public void setUp() {
@@ -56,16 +56,18 @@ public class BatteryServiceTest extends AndroidTestCase {
 
     @Override
     public void tearDown() {
-        if (mWrapper != null)
-            mWrapper.getHandlerThread().quitSafely();
+        if (mWrapper != null) mWrapper.getHandlerThread().quitSafely();
     }
 
     public static <T> ArgumentMatcher<T> isOneOf(Collection<T> collection) {
         return new ArgumentMatcher<T>() {
-            @Override public boolean matches(T e) {
+            @Override
+            public boolean matches(T e) {
                 return collection.contains(e);
             }
-            @Override public String toString() {
+
+            @Override
+            public String toString() {
                 return collection.toString();
             }
         };
@@ -73,27 +75,31 @@ public class BatteryServiceTest extends AndroidTestCase {
 
     private void initForInstances(String... instanceNamesArr) throws Exception {
         final Collection<String> instanceNames = Arrays.asList(instanceNamesArr);
-        doAnswer((invocation) -> {
-                // technically, preexisting is ignored by
-                // BatteryService.HealthServiceWrapper.Notification, but still call it correctly.
-                sendNotification(invocation, true);
-                sendNotification(invocation, true);
-                sendNotification(invocation, false);
-                return null;
-            }).when(mMockedManager).registerForNotifications(
-                eq(IHealth.kInterfaceName),
-                argThat(isOneOf(instanceNames)),
-                any(IServiceNotification.class));
+        doAnswer(
+                (invocation) -> {
+                    // technically, preexisting is ignored by
+                    // HealthServiceWrapperHidl.Notification, but still call it correctly.
+                    sendNotification(invocation, true);
+                    sendNotification(invocation, true);
+                    sendNotification(invocation, false);
+                    return null;
+                })
+                .when(mMockedManager)
+                .registerForNotifications(
+                        eq(IHealth.kInterfaceName),
+                        argThat(isOneOf(instanceNames)),
+                        any(IServiceNotification.class));
 
         doReturn(mMockedManager).when(mManagerSupplier).get();
-        doReturn(mMockedHal)        // init calls this
-            .doReturn(mMockedHal)   // notification 1
-            .doReturn(mMockedHal)   // notification 2
-            .doReturn(mMockedHal2)  // notification 3
-            .doThrow(new RuntimeException("Should not call getService for more than 4 times"))
-            .when(mHealthServiceSupplier).get(argThat(isOneOf(instanceNames)));
+        doReturn(mMockedHal) // init calls this
+                .doReturn(mMockedHal) // notification 1
+                .doReturn(mMockedHal) // notification 2
+                .doReturn(mMockedHal2) // notification 3
+                .doThrow(new RuntimeException("Should not call getService for more than 4 times"))
+                .when(mHealthServiceSupplier)
+                .get(argThat(isOneOf(instanceNames)));
 
-        mWrapper = new BatteryService.HealthServiceWrapper();
+        mWrapper = new HealthServiceWrapperHidl();
     }
 
     private void waitHandlerThreadFinish() throws Exception {
@@ -108,10 +114,9 @@ public class BatteryServiceTest extends AndroidTestCase {
 
     private static void sendNotification(InvocationOnMock invocation, boolean preexisting)
             throws Exception {
-        ((IServiceNotification)invocation.getArguments()[2]).onRegistration(
-                IHealth.kInterfaceName,
-                (String)invocation.getArguments()[1],
-                preexisting);
+        ((IServiceNotification) invocation.getArguments()[2])
+                .onRegistration(
+                        IHealth.kInterfaceName, (String) invocation.getArguments()[1], preexisting);
     }
 
     @SmallTest
