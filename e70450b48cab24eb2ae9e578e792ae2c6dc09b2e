@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9838e091_8a692b0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2021-11-01T11:17:17Z",
+      "side": 1,
+      "message": "Based on go/android-native-flag-api-manual",
+      "revId": "e70450b48cab24eb2ae9e578e792ae2c6dc09b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
