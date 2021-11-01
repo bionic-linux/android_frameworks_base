@@ -1310,7 +1310,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             final int subType = combineSubtypeEnabled ? SUBTYPE_COMBINED
                     : getSubTypeForStateSnapshot(snapshot);
             final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, snapshot,
-                    isDefault, subType);
+                    isDefault, subType, snapshot.getSubId());
 
             // Traffic occurring on the base interface is always counted for
             // both total usage and UID details.
@@ -1331,7 +1331,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                     NetworkIdentity vtIdent = new NetworkIdentity(ident.getType(),
                             ident.getSubType(), ident.getSubscriberId(), ident.getNetworkId(),
                             ident.getRoaming(), true /* metered */,
-                            true /* onDefaultNetwork */, ident.getOemManaged());
+                            true /* onDefaultNetwork */, ident.getOemManaged(), ident.getSubId());
                     final String ifaceVt = IFACE_VT + getSubIdForMobile(snapshot);
                     findOrCreateNetworkIdentitySet(mActiveIfaces, ifaceVt).add(vtIdent);
                     findOrCreateNetworkIdentitySet(mActiveUidIfaces, ifaceVt).add(vtIdent);

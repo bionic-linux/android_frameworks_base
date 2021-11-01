@@ -17,6 +17,8 @@
 package android.net;
 
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+import static android.net.NetworkCapabilities.TRANSPORT_CELLULAR;
+import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -103,6 +105,20 @@ public final class NetworkStateSnapshot implements Parcelable {
     public String getSubscriberId() {
         return mSubscriberId;
     }
+
+    /** Get the subId of the network associated with this snapshot. */
+    @Nullable
+    public int getSubId() {
+        int subId = INVALID_SUBSCRIPTION_ID;
+        if (mNetworkCapabilities.hasTransport(TRANSPORT_CELLULAR)) {
+            NetworkSpecifier spec = mNetworkCapabilities.getNetworkSpecifier();
+            if (spec instanceof TelephonyNetworkSpecifier) {
+                subId = ((TelephonyNetworkSpecifier) spec).getSubscriptionId();
+            }
+        }
+        return subId;
+    }
+
 
     /**
      * Get the legacy type of the network associated with this snapshot.
