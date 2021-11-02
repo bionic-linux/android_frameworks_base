@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f20138b0_b49208df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1892515
+      },
+      "writtenOn": "2021-11-02T11:05:38Z",
+      "side": 1,
+      "message": "Updated change as per the comment. Changed it to verbose.",
+      "revId": "66b5005a8989acdba4b637e2d0463d439e544c70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
