@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8f1d3e2_1fdc716d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 13560,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-11-02T17:39:45Z",
+      "side": 1,
+      "message": "should this be updated to use the anyOf{} annotation?",
+      "range": {
+        "startLine": 13560,
+        "startChar": 52,
+        "endLine": 13560,
+        "endChar": 68
+      },
+      "revId": "c619fae5ca05a05068345df421ec584f3ddb91ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
