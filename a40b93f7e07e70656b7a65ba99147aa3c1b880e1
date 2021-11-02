@@ -33,6 +33,29 @@
       "message": "Looks Fine",
       "revId": "a40b93f7e07e70656b7a65ba99147aa3c1b880e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "951825ab_9e2b18bb",
+        "filename": "services/core/java/com/android/server/wm/ActivityClientController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1367099
+      },
+      "writtenOn": "2021-11-02T06:50:24Z",
+      "side": 1,
+      "message": "I don\u0027t think we should have debug log merged. How about changing this to a verbose log adn only output the log if DEBUG_SWITCH is true?",
+      "range": {
+        "startLine": 836,
+        "startChar": 20,
+        "endLine": 836,
+        "endChar": 26
+      },
+      "revId": "a40b93f7e07e70656b7a65ba99147aa3c1b880e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
