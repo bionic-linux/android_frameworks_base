@@ -4784,6 +4784,23 @@ public class CarrierConfigManager {
         /** Specifies the PCO id for IPv4 Epdg server address */
         public static final String KEY_EPDG_PCO_ID_IPV4_INT = KEY_PREFIX + "epdg_pco_id_ipv4_int";
 
+    /**
+     * String array of APN configurations of same MVNO type GID.
+     * The entries should be of form "GID data:all supported apn types:devicecapability:apnname".
+     * example: 52FF:default,mms:SA:nrphone
+     *
+     * @hide
+     */
+    public static final String KEY_MULTI_APN_ARRAY_FOR_SAME_GID = "multi_apn_array_for_same_gid";
+
+    /**
+     * Flag indicating if APN filtering required.
+     *
+     * @hide
+     */
+    public static final String KEY_REQUIRE_APN_FILTERING_WITH_RADIO_CAPABILITY =
+            "require_apn_filtering_with_radio_capability_bool";
+
         /** @hide */
         @IntDef({AUTHENTICATION_METHOD_EAP_ONLY, AUTHENTICATION_METHOD_CERT})
         public @interface AuthenticationMethodType {}
@@ -5806,6 +5823,25 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_CARRIER_PROVISIONING_APP_STRING, "");
         sDefaults.putBoolean(KEY_DISPLAY_NO_DATA_NOTIFICATION_ON_PERMANENT_FAILURE_BOOL, false);
         sDefaults.putBoolean(KEY_UNTHROTTLE_DATA_RETRY_WHEN_TAC_CHANGES_BOOL, false);
+        sDefaults.putStringArray(KEY_MULTI_APN_ARRAY_FOR_SAME_GID, new String[] {
+                "52FF:mms,supl,hipri,default,fota:SA:nrphone",
+                "52FF:mms,supl,hipri,default,fota:NSA:nxtgenphone",
+                "52FF:mms,supl,hipri,default,fota:LTE:nxtgenphone",
+                "52FF:mms,supl,hipri,default,fota:TD_SCDMA:nxtgenphone",
+                "52FF:mms,supl,hipri,default,fota:UMTS:nxtgenphone",
+                "52FF:mms,supl,hipri,default,fota:GSM:nxtgenphone",
+                "52FF:mms,supl,hipri,default,fota:HDR:nxtgenphone",
+                "52FF:mms,supl,hipri,default,fota:1xRTT:nxtgenphone",
+                "53FF:mms,supl,hipri,default,fota:SA:enhancedphone",
+                "53FF:mms,supl,hipri,default,fota:NSA:enhancedphone",
+                "53FF:mms,supl,hipri,default,fota:LTE:nxtgenphone",
+                "53FF:mms,supl,hipri,default,fota:TD_SCDMA:nxtgenphone",
+                "53FF:mms,supl,hipri,default,fota:UMTS:nxtgenphone",
+                "53FF:mms,supl,hipri,default,fota:GSM:nxtgenphone",
+                "53FF:mms,supl,hipri,default,fota:HDR:nxtgenphone",
+                "53FF:mms,supl,hipri,default,fota:1xRTT:nxtgenphone",
+        });
+        sDefaults.putBoolean(KEY_REQUIRE_APN_FILTERING_WITH_RADIO_CAPABILITY, false);
     }
 
     /**
