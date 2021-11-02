@@ -232,11 +232,10 @@ public final class IpSecAlgorithm implements Parcelable {
         ALGO_TO_REQUIRED_FIRST_SDK.put(AUTH_HMAC_SHA512, SDK_VERSION_ZERO);
         ALGO_TO_REQUIRED_FIRST_SDK.put(AUTH_CRYPT_AES_GCM, SDK_VERSION_ZERO);
 
-        // STOPSHIP: b/170424293 Use Build.VERSION_CODES.S when it is defined
-        ALGO_TO_REQUIRED_FIRST_SDK.put(CRYPT_AES_CTR, Build.VERSION_CODES.R + 1);
-        ALGO_TO_REQUIRED_FIRST_SDK.put(AUTH_AES_XCBC, Build.VERSION_CODES.R + 1);
-        ALGO_TO_REQUIRED_FIRST_SDK.put(AUTH_AES_CMAC, Build.VERSION_CODES.R + 1);
-        ALGO_TO_REQUIRED_FIRST_SDK.put(AUTH_CRYPT_CHACHA20_POLY1305, Build.VERSION_CODES.R + 1);
+        ALGO_TO_REQUIRED_FIRST_SDK.put(CRYPT_AES_CTR, Build.VERSION_CODES.S);
+        ALGO_TO_REQUIRED_FIRST_SDK.put(AUTH_AES_XCBC, Build.VERSION_CODES.S);
+        ALGO_TO_REQUIRED_FIRST_SDK.put(AUTH_AES_CMAC, Build.VERSION_CODES.S);
+        ALGO_TO_REQUIRED_FIRST_SDK.put(AUTH_CRYPT_CHACHA20_POLY1305, Build.VERSION_CODES.S);
     }
 
     private static final Set<String> ENABLED_ALGOS =
@@ -353,8 +352,12 @@ public final class IpSecAlgorithm implements Parcelable {
             }
         }
 
+        int device = Build.VERSION.DEVICE_INITIAL_SDK_INT;
+        int board = Build.VERSION.BOARD_INITIAL_SDK_INT;
+        int ver = board ? board : device;
+
         for (Entry<String, Integer> entry : ALGO_TO_REQUIRED_FIRST_SDK.entrySet()) {
-            if (Build.VERSION.DEVICE_INITIAL_SDK_INT >= entry.getValue()) {
+            if (ver >= entry.getValue()) {
                 enabledAlgos.add(entry.getKey());
             }
         }
