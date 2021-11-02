@@ -5982,17 +5982,17 @@ public class CarrierConfigManager {
 
     /**
      * Calling this method triggers telephony services to fetch the current carrier configuration.
-     * <p>
-     * Normally this does not need to be called because the platform reloads config on its own.
+     *
+     * <p>Normally this does not need to be called because the platform reloads config on its own.
      * This should be called by a carrier service app if it wants to update config at an arbitrary
      * moment.
-     * </p>
-     * <p>Requires that the calling app has carrier privileges.
-     * <p>
-     * This method returns before the reload has completed, and
-     * {@link android.service.carrier.CarrierService#onLoadConfig} will be called from an
-     * arbitrary thread.
-     * </p>
+     *
+     * <p>Requires that the calling app has carrier privileges, or has permission {@link
+     * android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}.
+     *
+     * <p>This method returns before the reload has completed, and {@link
+     * android.service.carrier.CarrierService#onLoadConfig} will be called from an arbitrary thread.
+     *
      * @see TelephonyManager#hasCarrierPrivileges
      */
     public void notifyConfigChangedForSubId(int subId) {
