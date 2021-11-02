@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ad9036d_d44245bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-11-02T02:59:47Z",
+      "side": 1,
+      "message": "Sorry, I thought I had already sent this comment, but it looks like perhaps I never did?",
+      "revId": "94d684fb9cd47ca7737969cd236604955f521beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06145a17_01b349da",
+        "filename": "core/java/android/net/NetworkIdentity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-11-02T02:59:47Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is correct due to code in the other parts of the system. Here, TEMPORARILY_NOT_METERED counts as unmetered, but as far as I can see, when TEMPORARILY_NOT_METERED changes, ConnectivityService does not inform NetworkStatsService:\n\n        final boolean oldMetered \u003d prevNc.isMetered();\n        final boolean newMetered \u003d newNc.isMetered();\n        final boolean meteredChanged \u003d oldMetered !\u003d newMetered;\n...\n        // Report changes that are interesting for network statistics tracking.\n        if (meteredChanged || roamingChanged) {\n            notifyIfacesChangedForNetworkStats();\n        }\n...\n    /**\n     * Check if this {@code NetworkCapability} instance is metered.\n     *\n     * @return {@code true} if {@code NET_CAPABILITY_NOT_METERED} is not set on this instance.\n     * @hide\n     */\n    public boolean isMetered() {\n        return !hasCapability(NET_CAPABILITY_NOT_METERED);\n    }",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 77
+      },
+      "revId": "94d684fb9cd47ca7737969cd236604955f521beb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
