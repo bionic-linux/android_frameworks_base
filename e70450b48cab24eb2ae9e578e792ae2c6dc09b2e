@@ -39,6 +39,30 @@
       },
       "revId": "e70450b48cab24eb2ae9e578e792ae2c6dc09b2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a505042_61369590",
+        "filename": "core/java/android/provider/DeviceConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2021-11-03T14:54:25Z",
+      "side": 1,
+      "message": "Took me a second even after you pointer straight at it. Done.",
+      "parentUuid": "3c74ade3_28f0f17a",
+      "range": {
+        "startLine": 617,
+        "startChar": 29,
+        "endLine": 617,
+        "endChar": 43
+      },
+      "revId": "e70450b48cab24eb2ae9e578e792ae2c6dc09b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
