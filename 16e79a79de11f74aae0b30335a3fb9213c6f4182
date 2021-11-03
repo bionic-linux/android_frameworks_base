@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aca2ae36_144b99af",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13559,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-03T00:27:29Z",
+      "side": 1,
+      "message": "@SuppressAutoDoc since we still aren\u0027t capturing carrier privileges properly in @ReqPerm yet (b/72967236)",
+      "range": {
+        "startLine": 13559,
+        "startChar": 4,
+        "endLine": 13559,
+        "endChar": 7
+      },
+      "revId": "16e79a79de11f74aae0b30335a3fb9213c6f4182",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
