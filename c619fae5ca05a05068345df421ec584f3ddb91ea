@@ -22,6 +22,30 @@
       },
       "revId": "c619fae5ca05a05068345df421ec584f3ddb91ea",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "664405cf_c9d14ab6",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 13560,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-03T00:19:52Z",
+      "side": 1,
+      "message": "Sure. The annotation should match the javadoc. Although this make the change a API change, it is worthy. Thanks",
+      "parentUuid": "e8f1d3e2_1fdc716d",
+      "range": {
+        "startLine": 13560,
+        "startChar": 52,
+        "endLine": 13560,
+        "endChar": 68
+      },
+      "revId": "c619fae5ca05a05068345df421ec584f3ddb91ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
