@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bfa9d51_141c944e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 13551,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-03T15:33:30Z",
+      "side": 1,
+      "message": "Lint starts to refuse us to link non-public method/fields in javadoc now.\n\nBoth enableModemForSlot and READ_PRIVILEGED_PHONE_STATE will fail when build offline-sdk-docs:\n\nhttps://android-build.googleplex.com/builds/pending/P27278062/aosp_crosshatch-userdebug/latest/view/logs/build_error.log",
+      "range": {
+        "startLine": 13551,
+        "startChar": 7,
+        "endLine": 13551,
+        "endChar": 42
+      },
+      "revId": "87c3c60449302d2134f7b4e7f38c07bb68e32218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
