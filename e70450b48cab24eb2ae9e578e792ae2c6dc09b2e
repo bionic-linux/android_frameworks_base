@@ -16,6 +16,29 @@
       "message": "Based on go/android-native-flag-api-manual",
       "revId": "e70450b48cab24eb2ae9e578e792ae2c6dc09b2e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c74ade3_28f0f17a",
+        "filename": "core/java/android/provider/DeviceConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1060831
+      },
+      "writtenOn": "2021-11-03T14:42:32Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 617,
+        "startChar": 29,
+        "endLine": 617,
+        "endChar": 43
+      },
+      "revId": "e70450b48cab24eb2ae9e578e792ae2c6dc09b2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
