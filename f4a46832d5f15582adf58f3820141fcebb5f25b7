@@ -50,6 +50,29 @@
       "message": "Please help to review this change, thanks!",
       "revId": "f4a46832d5f15582adf58f3820141fcebb5f25b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61b40018_c90a9be8",
+        "filename": "services/core/java/com/android/server/am/ContentProviderHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2021-11-04T02:09:58Z",
+      "side": 1,
+      "message": "Access to the mProvideMap should be protected with global lock",
+      "range": {
+        "startLine": 942,
+        "startChar": 52,
+        "endLine": 942,
+        "endChar": 64
+      },
+      "revId": "f4a46832d5f15582adf58f3820141fcebb5f25b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
