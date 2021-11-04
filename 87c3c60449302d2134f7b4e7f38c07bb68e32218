@@ -22,6 +22,30 @@
       },
       "revId": "87c3c60449302d2134f7b4e7f38c07bb68e32218",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83da2525_111ee491",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 13551,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-11-04T01:19:18Z",
+      "side": 1,
+      "message": "I believe that the lint is finding a real problem. Is there a way to correct the documentation so taht it doesn\u0027t reference non-public things?",
+      "parentUuid": "3bfa9d51_141c944e",
+      "range": {
+        "startLine": 13551,
+        "startChar": 7,
+        "endLine": 13551,
+        "endChar": 42
+      },
+      "revId": "87c3c60449302d2134f7b4e7f38c07bb68e32218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
