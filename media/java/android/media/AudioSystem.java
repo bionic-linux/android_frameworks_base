@@ -229,6 +229,9 @@ public class AudioSystem
     public static final int AUDIO_FORMAT_APTX_HD        = 0x21000000;
     /** @hide */
     public static final int AUDIO_FORMAT_LDAC           = 0x23000000;
+    /** @hide */
+    public static final int AUDIO_FORMAT_LC3            = 0x2B000000;
+
 
     /** @hide */
     @IntDef(flag = false, prefix = "AUDIO_FORMAT_", value = {
@@ -238,10 +241,32 @@ public class AudioSystem
             AUDIO_FORMAT_SBC,
             AUDIO_FORMAT_APTX,
             AUDIO_FORMAT_APTX_HD,
-            AUDIO_FORMAT_LDAC }
+            AUDIO_FORMAT_LDAC,
+            AUDIO_FORMAT_LC3 }
     )
     @Retention(RetentionPolicy.SOURCE)
     public @interface AudioFormatNativeEnumForBtCodec {}
+
+    /* Formats for device set for encode or decode, must match
+       AudioSystem.h hw_offload_device_type_t */
+    /** @hide */
+    public static final int DEVICE_A2DP_ENCODE        = 0;
+    /** @hide */
+    public static final int DEVICE_A2DP_DECODE        = 1;
+    /** @hide */
+    public static final int DEVICE_LE_AUDIO_ENCODE    = 2;
+    /** @hide */
+    public static final int DEVICE_LE_AUDIO_DECODE    = 3;
+
+    /** @hide */
+    @IntDef(flag = false, prefix = "DEVICE_", value = {
+            DEVICE_A2DP_ENCODE,
+            DEVICE_A2DP_DECODE,
+            DEVICE_LE_AUDIO_ENCODE,
+            DEVICE_LE_AUDIO_DECODE}
+    )
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DeviceType {}
 
     /**
      * @hide
@@ -255,6 +280,7 @@ public class AudioSystem
             case AUDIO_FORMAT_APTX: return BluetoothCodecConfig.SOURCE_CODEC_TYPE_APTX;
             case AUDIO_FORMAT_APTX_HD: return BluetoothCodecConfig.SOURCE_CODEC_TYPE_APTX_HD;
             case AUDIO_FORMAT_LDAC: return BluetoothCodecConfig.SOURCE_CODEC_TYPE_LDAC;
+            case AUDIO_FORMAT_LC3: return BluetoothCodecConfig.SOURCE_CODEC_TYPE_LC3;
             default:
                 Log.e(TAG, "Unknown audio format 0x" + Integer.toHexString(audioFormat)
                         + " for conversion to BT codec");
@@ -1756,8 +1782,8 @@ public class AudioSystem
      * @hide
      * Returns a list of audio formats (codec) supported on the A2DP offload path.
      */
-    public static native int getHwOffloadEncodingFormatsSupportedForA2DP(
-            ArrayList<Integer> formatList);
+    public static native int getHwOffloadFormatsSupported(
+            @DeviceType int deviceType, ArrayList<Integer> formatList);
 
     /** @hide */
     public static native int setSurroundFormatEnabled(int audioFormat, boolean enabled);
