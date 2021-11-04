@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1233c18_8d491ea0",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-04T09:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "214a7e01_d3d9dad9",
+      "range": {
+        "startLine": 336,
+        "startChar": 25,
+        "endLine": 336,
+        "endChar": 32
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cafbbb9e_0c9a77a9",
@@ -54,6 +78,30 @@
       "writtenOn": "2021-10-15T08:23:47Z",
       "side": 1,
       "message": "No specific objection, but is this useful ?",
+      "range": {
+        "startLine": 2,
+        "startChar": 19,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dcb08ba_9e37fac2",
+        "filename": "core/java/android/net/nsd/NsdServiceInfo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-04T09:59:28Z",
+      "side": 1,
+      "message": "IDE added this at some point and I didnt\u0027 bother to revert. Removed so it doesn\u0027t show up in git log.",
+      "parentUuid": "cafbbb9e_0c9a77a9",
       "range": {
         "startLine": 2,
         "startChar": 19,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "203702aa_7d7be58d",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-04T09:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3b620c9_671b31fe",
+      "range": {
+        "startLine": 154,
+        "startChar": 16,
+        "endLine": 154,
+        "endChar": 26
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d141fd3b_9460b645",
@@ -110,6 +182,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c23b90db_6dc1a7cc",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-04T09:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d141fd3b_9460b645",
+      "range": {
+        "startLine": 155,
+        "startChar": 36,
+        "endLine": 155,
+        "endChar": 38
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0dffe56d_6b50586e",
@@ -123,6 +219,30 @@
       "writtenOn": "2021-10-15T08:23:47Z",
       "side": 1,
       "message": "How about using remove() here and removing l.175",
+      "range": {
+        "startLine": 172,
+        "startChar": 41,
+        "endLine": 172,
+        "endChar": 44
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2720e6ff_bff84bef",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-04T09:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dffe56d_6b50586e",
       "range": {
         "startLine": 172,
         "startChar": 41,
@@ -158,6 +278,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "66857a8d_d7d983df",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-04T09:59:28Z",
+      "side": 1,
+      "message": "The cases all different cases as they call a different callback (notifyDiscoverServicesFailed/notifyDiscoverServicesFailed/notifyStopDiscoveryFailed etc), so I can\u0027t have a common case label or fold it into notifyStopDiscoveryFailed; is that what you meant ?",
+      "parentUuid": "423caa7b_6af7bedc",
+      "range": {
+        "startLine": 183,
+        "startChar": 32,
+        "endLine": 183,
+        "endChar": 53
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4d8fcf1b_d448c87b",
         "filename": "services/core/java/com/android/server/NsdService.java",
         "patchSetId": 4
@@ -169,6 +313,30 @@
       "writtenOn": "2021-10-15T08:23:47Z",
       "side": 1,
       "message": "I get that you\u0027re not changing this, but I don\u0027t think this makes any sense ?\n• if clientInfo is null, then l.386 will also crash\n• mClientIds is (private) final \u003d new SparseIntArray",
+      "range": {
+        "startLine": 385,
+        "startChar": 33,
+        "endLine": 385,
+        "endChar": 55
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "236e8191_b9e83f37",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-04T09:59:28Z",
+      "side": 1,
+      "message": "Good point; changed to keep a check for null clientInfo, but just break in that case.",
+      "parentUuid": "4d8fcf1b_d448c87b",
       "range": {
         "startLine": 385,
         "startChar": 33,
@@ -192,6 +360,30 @@
       "writtenOn": "2021-10-15T08:23:47Z",
       "side": 1,
       "message": "on ?\n\nI tried to look at what we do across the stack. Keepalive callbacks do what you\u0027re doing here, but QosCallback calls these on* while NetworkMonitor calls notify* but the object they forward to are also named notify*.\n\nI think generally notify is for the other direction, so I think it\u0027s clearer to name these on*.",
+      "range": {
+        "startLine": 981,
+        "startChar": 13,
+        "endLine": 981,
+        "endChar": 19
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "140fc8e4_d974ea7a",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-04T09:59:28Z",
+      "side": 1,
+      "message": "Thanks for checking. On sounds good.",
+      "parentUuid": "ee4f4e4f_bdc5529c",
       "range": {
         "startLine": 981,
         "startChar": 13,
