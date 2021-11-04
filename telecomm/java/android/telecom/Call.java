@@ -952,8 +952,25 @@ public final class Call {
         }
 
         /**
-         * @return The {@code PhoneAccountHandle} whereby the {@code Call} is currently being
-         * routed.
+         * Returns the {@link PhoneAccountHandle} on which the {@link Call} is routed.
+         * <p>
+         * Calls placed over the mobile network will have the {@link #getCallCapabilities()}
+         * {@link PhoneAccount#CAPABILITY_SIM_SUBSCRIPTION} bit set.  For these calls, information
+         * about the subscription on which the call is taking place can be obtained by creating an
+         * instance of {@link android.telephony.TelephonyManager} using
+         * {@link android.telephony.TelephonyManager#createForPhoneAccountHandle(
+         * PhoneAccountHandle)}.  {@link android.telephony.TelephonyManager#getSubscriptionId()}
+         * returns the subscription ID associated with the line of service the call takes place on.
+         * <p>
+         * The {@link PhoneAccount#getLabel()} for {@link PhoneAccount#CAPABILITY_SIM_SUBSCRIPTION}
+         * {@link PhoneAccount}s will typically be the carrier name associated with the mobile
+         * line of service, or a user-entered name associated with the line of service.
+         * <p>
+         * The {@link PhoneAccount#getAddress()} for a
+         * {@link PhoneAccount#CAPABILITY_SIM_SUBSCRIPTION} {@link PhoneAccount} will
+         * typically be the phone number associated with the line of service.
+         *
+         * @return The {@link PhoneAccountHandle} the {@link Call} is routed on.
          */
         public PhoneAccountHandle getAccountHandle() {
             return mAccountHandle;
