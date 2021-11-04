@@ -6878,19 +6878,23 @@ public class AudioManager {
 
     /**
      * Returns a list of audio formats that corresponds to encoding formats
-     * supported on offload path for A2DP playback.
+     * supported on offload path for A2DP and LE audio playback.
      *
+     * @param deviceType Indicates the target device type {@link AudioSystem.DeviceType}
      * @return a list of {@link BluetoothCodecConfig} objects containing encoding formats
      * supported for offload A2DP playback
      * @hide
      */
-    public List<BluetoothCodecConfig> getHwOffloadEncodingFormatsSupportedForA2DP() {
+    public List<BluetoothCodecConfig> getHwOffloadFormatsSupportedForBluetoothMedia(
+            @AudioSystem.DeviceType int deviceType) {
         ArrayList<Integer> formatsList = new ArrayList<Integer>();
         ArrayList<BluetoothCodecConfig> codecConfigList = new ArrayList<BluetoothCodecConfig>();
 
-        int status = AudioSystem.getHwOffloadEncodingFormatsSupportedForA2DP(formatsList);
+        int status = AudioSystem.getHwOffloadFormatsSupportedForBluetoothMedia(deviceType,
+                                                                                formatsList);
         if (status != AudioManager.SUCCESS) {
-            Log.e(TAG, "getHwOffloadEncodingFormatsSupportedForA2DP failed:" + status);
+            Log.e(TAG, "getHwOffloadFormatsSupportedForBluetoothMedia for deviceType "
+                    + deviceType + " failed:" + status);
             return codecConfigList;
         }
 
