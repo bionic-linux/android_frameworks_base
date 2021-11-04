@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e3019a0_c3735e0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2021-11-04T19:06:15Z",
+      "side": 1,
+      "message": "Reviving this CL as AOSP has been updated for S.",
+      "revId": "339ad683f2d74d7c3cd9e8aedb12a453e4b08e1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
