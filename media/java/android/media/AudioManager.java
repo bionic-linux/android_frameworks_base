@@ -32,6 +32,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothCodecConfig;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothLeAudioCodecConfig;
 import android.bluetooth.BluetoothProfile;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
@@ -6878,30 +6879,50 @@ public class AudioManager {
 
     /**
      * Returns a list of audio formats that corresponds to encoding formats
-     * supported on offload path for A2DP playback.
+     * supported on offload path for A2DP and LE audio playback.
      *
+     * @param deviceType Indicates the target device type {@link AudioSystem.DeviceType}
      * @return a list of {@link BluetoothCodecConfig} objects containing encoding formats
-     * supported for offload A2DP playback
+     * supported for offload A2DP playback or a list of {@link BluetoothLeAudioCodecConfig}
+     * objects containing encoding formats supported for offload LE Audio playback
      * @hide
      */
-    public List<BluetoothCodecConfig> getHwOffloadEncodingFormatsSupportedForA2DP() {
+    public List<?> getHwOffloadFormatsSupportedForBluetoothMedia(
+            @AudioSystem.DeviceType int deviceType) {
         ArrayList<Integer> formatsList = new ArrayList<Integer>();
         ArrayList<BluetoothCodecConfig> codecConfigList = new ArrayList<BluetoothCodecConfig>();
+        ArrayList<BluetoothLeAudioCodecConfig> leAudioCodecConfigList =
+                new ArrayList<BluetoothLeAudioCodecConfig>();
 
-        int status = AudioSystem.getHwOffloadEncodingFormatsSupportedForA2DP(formatsList);
+        int status = AudioSystem.getHwOffloadFormatsSupportedForBluetoothMedia(deviceType,
+                                                                                formatsList);
         if (status != AudioManager.SUCCESS) {
-            Log.e(TAG, "getHwOffloadEncodingFormatsSupportedForA2DP failed:" + status);
+            Log.e(TAG, "getHwOffloadFormatsSupportedForBluetoothMedia for deviceType "
+                    + deviceType + " failed:" + status);
+            return codecConfigList;
+        }
+
+        if (deviceType == AudioSystem.DEVICE_OUT_BLUETOOTH_A2DP
+                || deviceType == AudioSystem.DEVICE_IN_BLUETOOTH_A2DP) {
+            for (Integer format : formatsList) {
+                int btSourceCodec = AudioSystem.audioFormatToBluetoothSourceCodec(format);
+                if (btSourceCodec
+                        != BluetoothCodecConfig.SOURCE_CODEC_TYPE_INVALID) {
+                    codecConfigList.add(new BluetoothCodecConfig(btSourceCodec));
+                }
+            }
+
             return codecConfigList;
         }
 
         for (Integer format : formatsList) {
-            int btSourceCodec = AudioSystem.audioFormatToBluetoothSourceCodec(format);
-            if (btSourceCodec
-                    != BluetoothCodecConfig.SOURCE_CODEC_TYPE_INVALID) {
-                codecConfigList.add(new BluetoothCodecConfig(btSourceCodec));
+            if (format == AudioSystem.AUDIO_FORMAT_LC3) {
+                leAudioCodecConfigList.add(new BluetoothLeAudioCodecConfig(
+                        BluetoothLeAudioCodecConfig.SOURCE_CODEC_TYPE_LC3));
             }
         }
-        return codecConfigList;
+
+        return leAudioCodecConfigList;
     }
 
     // Since we need to calculate the changes since THE LAST NOTIFICATION, and not since the
