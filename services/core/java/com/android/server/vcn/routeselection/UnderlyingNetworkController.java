@@ -19,9 +19,9 @@ package com.android.server.vcn.routeselection;
 import static android.telephony.TelephonyCallback.ActiveDataSubscriptionIdListener;
 
 import static com.android.server.VcnManagementService.LOCAL_LOG;
-import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.getWifiEntryRssiThreshold;
-import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.getWifiExitRssiThreshold;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.isOpportunistic;
+import static com.android.server.vcn.routeselection.metric.WifiSignalStrengthLinkMetricMonitor.getWifiEntryRssiThreshold;
+import static com.android.server.vcn.routeselection.metric.WifiSignalStrengthLinkMetricMonitor.getWifiExitRssiThreshold;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -32,6 +32,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.vcn.VcnGatewayConnectionConfig;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.ParcelUuid;
@@ -41,11 +42,11 @@ import android.telephony.TelephonyCallback;
 import android.telephony.TelephonyManager;
 import android.util.ArrayMap;
 import android.util.Slog;
-import com.android.server.vcn.VcnContext;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IndentingPrintWriter;
-import com.android.server.vcn.routeselection.NetworkPriorityClassifier.PriorityCalculationConfig;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
+import com.android.server.vcn.VcnContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,6 +70,7 @@ public class UnderlyingNetworkController {
 
     @NonNull private final VcnContext mVcnContext;
     @NonNull private final ParcelUuid mSubscriptionGroup;
+    @NonNull private final VcnGatewayConnectionConfig mConnectionConfig;
     @NonNull private final UnderlyingNetworkControllerCallback mCb;
     @NonNull private final Dependencies mDeps;
     @NonNull private final Handler mHandler;
@@ -93,23 +95,21 @@ public class UnderlyingNetworkController {
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull TelephonySubscriptionSnapshot snapshot,
+            @NonNull VcnGatewayConnectionConfig connectionConfig,
             @NonNull UnderlyingNetworkControllerCallback cb) {
-        this(
-                vcnContext,
-                subscriptionGroup,
-                snapshot,
-                cb,
-                new Dependencies());
+        this(vcnContext, subscriptionGroup, snapshot, connectionConfig, cb, new Dependencies());
     }
 
     private UnderlyingNetworkController(
             @NonNull VcnContext vcnContext,
             @NonNull ParcelUuid subscriptionGroup,
             @NonNull TelephonySubscriptionSnapshot snapshot,
+            @NonNull VcnGatewayConnectionConfig connectionConfig,
             @NonNull UnderlyingNetworkControllerCallback cb,
             @NonNull Dependencies deps) {
         mVcnContext = Objects.requireNonNull(vcnContext, "Missing vcnContext");
         mSubscriptionGroup = Objects.requireNonNull(subscriptionGroup, "Missing subscriptionGroup");
+        mConnectionConfig = connectionConfig;
         mLastSnapshot = Objects.requireNonNull(snapshot, "Missing snapshot");
         mCb = Objects.requireNonNull(cb, "Missing cb");
         mDeps = Objects.requireNonNull(deps, "Missing deps");
@@ -331,6 +331,7 @@ public class UnderlyingNetworkController {
 
         final TelephonySubscriptionSnapshot oldSnapshot = mLastSnapshot;
         mLastSnapshot = newSnapshot;
+        mRouteSelectionCallback.updateSubscriptionSnapshot(newSnapshot);
 
         // Only trigger re-registration if subIds in this group have changed
         if (oldSnapshot
@@ -404,12 +405,25 @@ public class UnderlyingNetworkController {
             return sorted;
         }
 
+        private void updateSubscriptionSnapshot(
+                @NonNull TelephonySubscriptionSnapshot newSnapshot) {
+            for (UnderlyingNetworkMonitor monitor : mUnderlyingNetworkMonitors.values()) {
+                monitor.updateSubscriptionSnapshot(newSnapshot);
+            }
+        }
+
         @Override
         public void onAvailable(@NonNull Network network) {
             mUnderlyingNetworkMonitors.put(
                     network,
                     new UnderlyingNetworkMonitor(
-                            network, new MyUnderlyingNetworkMonitorCallback()));
+                            mVcnContext,
+                            mSubscriptionGroup,
+                            mCarrierConfig,
+                            mLastSnapshot,
+                            network,
+                            mConnectionConfig,
+                            new MyUnderlyingNetworkMonitorCallback()));
         }
 
         @Override
@@ -436,10 +450,7 @@ public class UnderlyingNetworkController {
                 return;
             }
 
-            underlyingNetworkMonitor.updateCapabilities(
-                    networkCapabilities,
-                    new PriorityCalculationConfig(
-                            mSubscriptionGroup, mLastSnapshot, mCurrentRecord, mCarrierConfig));
+            underlyingNetworkMonitor.updateCapabilities(networkCapabilities);
         }
 
         @Override
@@ -452,10 +463,7 @@ public class UnderlyingNetworkController {
                 return;
             }
 
-            underlyingNetworkMonitor.updateLinkProperties(
-                    linkProperties,
-                    new PriorityCalculationConfig(
-                            mSubscriptionGroup, mLastSnapshot, mCurrentRecord, mCarrierConfig));
+            underlyingNetworkMonitor.updateLinkProperties(linkProperties);
         }
 
         @Override
@@ -467,10 +475,7 @@ public class UnderlyingNetworkController {
                 return;
             }
 
-            underlyingNetworkMonitor.updateBlockedStatus(
-                    isBlocked,
-                    new PriorityCalculationConfig(
-                            mSubscriptionGroup, mLastSnapshot, mCurrentRecord, mCarrierConfig));
+            underlyingNetworkMonitor.updateBlockedStatus(isBlocked);
         }
     }
 
@@ -526,7 +531,7 @@ public class UnderlyingNetworkController {
     private class MyUnderlyingNetworkMonitorCallback
             implements UnderlyingNetworkMonitor.UnderlyingNetworkMonitorCallback {
         @Override
-        public void onPriorityChanged() {
+        public void onNetworkScoreChanged() {
             reevaluateNetworks();
         }
     }

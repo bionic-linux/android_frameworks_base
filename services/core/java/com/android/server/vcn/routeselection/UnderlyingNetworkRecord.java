@@ -16,8 +16,6 @@
 
 package com.android.server.vcn.routeselection;
 
-import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.PriorityCalculationConfig;
-
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.net.LinkProperties;
@@ -71,43 +69,6 @@ public class UnderlyingNetworkRecord {
         return Objects.hash(network, networkCapabilities, linkProperties, isBlocked);
     }
 
-    /**
-     * Gives networks a priority class, based on the following priorities:
-     *
-     * <ol>
-     *   <li>Opportunistic cellular
-     *   <li>Carrier WiFi, signal strength >= WIFI_ENTRY_RSSI_THRESHOLD_DEFAULT
-     *   <li>Carrier WiFi, active network + signal strength >= WIFI_EXIT_RSSI_THRESHOLD_DEFAULT
-     *   <li>Macro cellular
-     *   <li>Any others
-     * </ol>
-     */
-    private int calculatePriorityClass(
-            ParcelUuid subscriptionGroup,
-            TelephonySubscriptionSnapshot snapshot,
-            UnderlyingNetworkRecord currentlySelected,
-            PersistableBundle carrierConfig) {
-        return new NetworkPriorityClassifier()
-                .calculatePriorityClass(
-                        this,
-                        new PriorityCalculationConfig(
-                                subscriptionGroup, snapshot, currentlySelected, carrierConfig));
-    }
-
-    public static Comparator<UnderlyingNetworkRecord> getComparator(
-            ParcelUuid subscriptionGroup,
-            TelephonySubscriptionSnapshot snapshot,
-            UnderlyingNetworkRecord currentlySelected,
-            PersistableBundle carrierConfig) {
-        return (left, right) -> {
-            return Integer.compare(
-                    left.calculatePriorityClass(
-                            subscriptionGroup, snapshot, currentlySelected, carrierConfig),
-                    right.calculatePriorityClass(
-                            subscriptionGroup, snapshot, currentlySelected, carrierConfig));
-        };
-    }
-
     /** Dumps the state of this record for logging and debugging purposes. */
     public void dump(
             IndentingPrintWriter pw,
@@ -118,15 +79,6 @@ public class UnderlyingNetworkRecord {
         pw.println("UnderlyingNetworkRecord:");
         pw.increaseIndent();
 
-        final int priorityClass =
-                calculatePriorityClass(
-                        subscriptionGroup, snapshot, currentlySelected, carrierConfig);
-        pw.println(
-                "Priority class: "
-                        + NetworkPriorityClassifier.priorityClassToString(priorityClass)
-                        + " ("
-                        + priorityClass
-                        + ")");
         pw.println("mNetwork: " + network);
         pw.println("mNetworkCapabilities: " + networkCapabilities);
         pw.println("mLinkProperties: " + linkProperties);
