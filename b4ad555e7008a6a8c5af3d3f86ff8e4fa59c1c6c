@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68e0de1f_7ef93d9e",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5886,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-05T16:41:01Z",
+      "side": 1,
+      "message": "Right. Good catch. It just hides one level deeper. checkCallingOrSelfReadPhoneState behind the scene allows carrier privilege.\n\nTelephonyManage#getCarrierConfig which is a wrapper of this API also mentions carrier privilege in javadoc. It is better to keep consistent.\nThanks",
+      "parentUuid": "de53b684_a562493c",
+      "range": {
+        "startLine": 5886,
+        "startChar": 29,
+        "endLine": 5886,
+        "endChar": 46
+      },
+      "revId": "b4ad555e7008a6a8c5af3d3f86ff8e4fa59c1c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77d9e93b_da246b68",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-05T00:56:24Z",
       "side": 1,
       "message": "Ditto",
+      "range": {
+        "startLine": 6127,
+        "startChar": 0,
+        "endLine": 6127,
+        "endChar": 61
+      },
+      "revId": "b4ad555e7008a6a8c5af3d3f86ff8e4fa59c1c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a88145b_2674e8b7",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6127,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-05T16:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d9e93b_da246b68",
       "range": {
         "startLine": 6127,
         "startChar": 0,
