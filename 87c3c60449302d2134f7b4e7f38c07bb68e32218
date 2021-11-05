@@ -94,6 +94,30 @@
       },
       "revId": "87c3c60449302d2134f7b4e7f38c07bb68e32218",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b32d3088_ca4241d7",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 13551,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-05T21:44:37Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, Tyler.\n\nThe \"public consumer/developer\"\u0027s view is very helpful. It helps to determine which level of details the javadoc should expose.",
+      "parentUuid": "ba55a368_e6a12972",
+      "range": {
+        "startLine": 13551,
+        "startChar": 7,
+        "endLine": 13551,
+        "endChar": 42
+      },
+      "revId": "87c3c60449302d2134f7b4e7f38c07bb68e32218",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
