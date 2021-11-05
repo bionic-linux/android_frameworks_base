@@ -16,6 +16,24 @@
       "message": "is this needed in v2-dev?",
       "revId": "d9c43983eb4ea1e8df3419a456e10b6acc5f3bf9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97ab131d_e62af647",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1435078
+      },
+      "writtenOn": "2021-11-05T02:47:48Z",
+      "side": 1,
+      "message": "No, the request will not be used in v2 and only will be used in Android T(AIDL IRadio), so I think we can just correct the number in master branch",
+      "parentUuid": "2e48a337_e4e5dba5",
+      "revId": "d9c43983eb4ea1e8df3419a456e10b6acc5f3bf9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
