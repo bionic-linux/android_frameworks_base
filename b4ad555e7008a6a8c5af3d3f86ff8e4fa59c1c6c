@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de53b684_a562493c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5886,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-05T00:56:24Z",
+      "side": 1,
+      "message": "This one also takes carrier privileges, doesn\u0027t it?",
+      "range": {
+        "startLine": 5886,
+        "startChar": 29,
+        "endLine": 5886,
+        "endChar": 46
+      },
+      "revId": "b4ad555e7008a6a8c5af3d3f86ff8e4fa59c1c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77d9e93b_da246b68",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6127,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-11-05T00:56:24Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 6127,
+        "startChar": 0,
+        "endLine": 6127,
+        "endChar": 61
+      },
+      "revId": "b4ad555e7008a6a8c5af3d3f86ff8e4fa59c1c6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
