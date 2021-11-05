@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca76b55b_80793fb3",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2021-11-05T12:20:38Z",
+      "side": 1,
+      "message": "According to go/android-api-guidelines#callbacks-sam the use of functional interfaces seems to be preferred. This however should be reviewed by the API council.",
+      "range": {
+        "startLine": 1814,
+        "startChar": 12,
+        "endLine": 1814,
+        "endChar": 89
+      },
+      "revId": "23713417315f710b586f079d377615526cc44aca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
