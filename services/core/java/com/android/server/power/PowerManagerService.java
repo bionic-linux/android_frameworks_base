@@ -4028,14 +4028,18 @@ public final class PowerManagerService extends SystemService
             }
 
             Slog.i(TAG, "Force-Suspending (uid " + uid + ")...");
-            boolean success = mNativeWrapper.nativeForceSuspend();
+            boolean success = false;
+            synchronized (mLock) {
+                success = mNativeWrapper.nativeForceSuspend();
+                mForceSuspendActive = false;
+            }
+
             if (!success) {
                 Slog.i(TAG, "Force-Suspending failed in native.");
             }
             return success;
         } finally {
             synchronized (mLock) {
-                mForceSuspendActive = false;
                 // Re-enable wake locks once again.
                 updateWakeLockDisabledStatesLocked();
             }
