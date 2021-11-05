@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2114414_078ba592",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1892515
+      },
+      "writtenOn": "2021-11-05T12:19:01Z",
+      "side": 1,
+      "message": "Hi Yunfan, sorry i misinterpreted your previous comment. Modified it as per your comment now. Thank you",
+      "revId": "04dd69b95217ae334e91208ef151d6facf17b0f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
