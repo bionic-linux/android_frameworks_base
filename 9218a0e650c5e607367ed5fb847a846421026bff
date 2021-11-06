@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ec7d3b6_9f04029a",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-11-06T06:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a523d03_e61d7220",
+      "revId": "9218a0e650c5e607367ed5fb847a846421026bff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "acd9cf8b_57a486ff",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-10-30T05:47:07Z",
       "side": 1,
       "message": "Should skip if mHealthService \u003d\u003d null",
+      "revId": "9218a0e650c5e607367ed5fb847a846421026bff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbf9f7b4_bc064d63",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3980,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-11-06T06:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acd9cf8b_57a486ff",
       "revId": "9218a0e650c5e607367ed5fb847a846421026bff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
