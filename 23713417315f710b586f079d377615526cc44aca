@@ -22,6 +22,30 @@
       },
       "revId": "23713417315f710b586f079d377615526cc44aca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7dd1f40_2d6ca443",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2021-11-06T03:12:30Z",
+      "side": 1,
+      "message": "Thank you, Jiyong, for adding the API council reviewers.",
+      "parentUuid": "ca76b55b_80793fb3",
+      "range": {
+        "startLine": 1814,
+        "startChar": 12,
+        "endLine": 1814,
+        "endChar": 89
+      },
+      "revId": "23713417315f710b586f079d377615526cc44aca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
