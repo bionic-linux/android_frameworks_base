@@ -23,6 +23,30 @@
       },
       "revId": "4743dbb7d2b3e426617cb18e982d977217accfb7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f31d47a3_85a8cd23",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1176763
+      },
+      "writtenOn": "2021-11-08T23:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98cc11dd_3dd25ce7",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 106
+      },
+      "revId": "4743dbb7d2b3e426617cb18e982d977217accfb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
