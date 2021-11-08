@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ce7babc_a1064857",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6881,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-11-08T13:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e6124d_f78fad14",
+      "range": {
+        "startLine": 6881,
+        "startChar": 37,
+        "endLine": 6881,
+        "endChar": 41
+      },
+      "revId": "0ff940f8bca755bb9b4b56ad45f2ea489b3a10e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1595f253_33f0073d",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b028138e_ecf23807",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6888,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-11-08T13:41:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1595f253_33f0073d",
+      "range": {
+        "startLine": 6888,
+        "startChar": 38,
+        "endLine": 6888,
+        "endChar": 66
+      },
+      "revId": "0ff940f8bca755bb9b4b56ad45f2ea489b3a10e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8a1c05c_5eb7621f",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-11-05T13:24:53Z",
       "side": 1,
       "message": "why not reuse audio device type for this?\nDEVICE_A2DP_ENCODE \u003c\u003d\u003e DEVICE_OUT_BLUETOOTH_A2DP\nDEVICE_A2DP_DECODE \u003c\u003d\u003e DEVICE_IN_BLUETOOTH_A2DP\nDEVICE_LE_AUDIO_ENCODE \u003c\u003d\u003e DEVICE_OUT_BLE_HEADSET\nDEVICE_LE_AUDIO_DECODE \u003c\u003d\u003e DEVICE_IN_BLE_HEADSET",
+      "range": {
+        "startLine": 253,
+        "startChar": 28,
+        "endLine": 253,
+        "endChar": 46
+      },
+      "revId": "0ff940f8bca755bb9b4b56ad45f2ea489b3a10e3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c16c7fed_16ef9b3c",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1875587
+      },
+      "writtenOn": "2021-11-08T13:41:21Z",
+      "side": 1,
+      "message": "Update to reuse the variables",
+      "parentUuid": "c8a1c05c_5eb7621f",
       "range": {
         "startLine": 253,
         "startChar": 28,
