@@ -300,6 +300,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be9b84db_c0a1a0c1",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-08T06:28:56Z",
+      "side": 1,
+      "message": "Meh.\n\nI think you could have a function like\n\n  void callCallback(final msg) {\n    final cInfo \u003d getClientInfoForReply(msg);\n    if (!cInfo) return;\n    switch (msg.what) {\n      case DISCOVER_SERVICES:\n        cInfo.onDiscoverServicesFailed\n        break\n      case ...\n  }\n\nYou could also have something like\n\n  void callCallback(msg, c : (ClientInfo) -\u003e ()) {\n    final cInfo \u003d getClientInfoForReply(msg);\n    if (cInfo) c(cInfo);\n  }\n\n\nAnother way to write this is nested switches :\n\n    ...\n    break;\n  default:\n    final cInfo \u003d getClientInfoForReply(msg);\n    if (!cInfo) return;\n    switch (msg.what) {\n      case DISCOVER_SERVICES:\n        cInfo.onDiscoverServicesFailed\n        break\n      case ...\n    }\n\nBut it\u0027s not much better than what you have, so maybe don\u0027t bother.",
+      "parentUuid": "66857a8d_d7d983df",
+      "range": {
+        "startLine": 183,
+        "startChar": 32,
+        "endLine": 183,
+        "endChar": 53
+      },
+      "revId": "afcb74fa5873bbdff1d935fb15558167c4ad2e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d8fcf1b_d448c87b",
