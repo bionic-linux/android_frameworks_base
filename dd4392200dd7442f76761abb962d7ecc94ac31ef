@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5e27ad9_fe825706",
+        "filename": "core/jni/com_android_internal_content_NativeLibraryHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2021-11-08T23:07:06Z",
+      "side": 1,
+      "message": "nit: add a comment to say that this is to enable file compression supported by file systems such as F2FS",
+      "range": {
+        "startLine": 261,
+        "startChar": 6,
+        "endLine": 261,
+        "endChar": 7
+      },
+      "revId": "dd4392200dd7442f76761abb962d7ecc94ac31ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
