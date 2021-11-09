@@ -32,12 +32,13 @@ import static android.net.NetworkStats.METERED_ALL;
 import static android.net.NetworkStats.METERED_YES;
 import static android.net.NetworkStats.ROAMING_ALL;
 import static android.net.NetworkTemplate.MATCH_ETHERNET;
+import static android.net.NetworkTemplate.MATCH_MOBILE;
 import static android.net.NetworkTemplate.MATCH_MOBILE_WILDCARD;
 import static android.net.NetworkTemplate.MATCH_WIFI_WILDCARD;
 import static android.net.NetworkTemplate.NETWORK_TYPE_ALL;
 import static android.net.NetworkTemplate.OEM_MANAGED_ALL;
+import static android.net.NetworkTemplate.SUBSCRIBER_ID_MATCH_RULE_EXACT;
 import static android.net.NetworkTemplate.buildTemplateMobileWildcard;
-import static android.net.NetworkTemplate.buildTemplateMobileWithRatType;
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
 import static android.net.NetworkTemplate.getAllCollapsedRatTypes;
 import static android.os.Debug.getIonHeapsSizeKb;
@@ -1318,9 +1319,9 @@ public class StatsPullAtomService extends SystemService {
                 /* A null subscriberId will set wildcard=true, since we aren't trying to select a
                    specific ssid or subscriber. */
                 final NetworkTemplate template = new NetworkTemplate(transport,
-                        /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*networkId=*/null,
-                        METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL,
-                        oemManaged);
+                        /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*subId=*/0,
+                        /*matchSubIds=*/null, /*networkId=*/null, METERED_ALL, ROAMING_ALL,
+                        DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, oemManaged);
                 final NetworkStats stats = getUidNetworkStatsSnapshotForTemplate(template, true);
                 if (stats != null) {
                     ret.add(new NetworkStatsExt(sliceNetworkStatsByUidTagAndMetered(stats),
@@ -1379,9 +1380,19 @@ public class StatsPullAtomService extends SystemService {
             @NonNull SubInfo subInfo) {
         final List<NetworkStatsExt> ret = new ArrayList<>();
         for (final int ratType : getAllCollapsedRatTypes()) {
-            final NetworkTemplate template =
-                    buildTemplateMobileWithRatType(subInfo.subscriberId, ratType,
-                    METERED_YES);
+            final NetworkTemplate template;
+            if (TextUtils.isEmpty(subInfo.subscriberId)) {
+                template = new NetworkTemplate(MATCH_MOBILE_WILDCARD, null,
+                        null, 0, null, null, METERED_YES, ROAMING_ALL, DEFAULT_NETWORK_ALL, ratType,
+                        OEM_MANAGED_ALL, SUBSCRIBER_ID_MATCH_RULE_EXACT);
+            } else {
+                template = new NetworkTemplate(MATCH_MOBILE,
+                        subInfo.subscriberId, new String[]{subInfo.subscriberId}, subInfo.subId,
+                        new int[]{subInfo.subId}, null, METERED_YES, ROAMING_ALL,
+                        DEFAULT_NETWORK_ALL, ratType, OEM_MANAGED_ALL,
+                        SUBSCRIBER_ID_MATCH_RULE_EXACT);
+            }
+
             final NetworkStats stats =
                     getUidNetworkStatsSnapshotForTemplate(template, /*includeTags=*/false);
             if (stats != null) {

@@ -17,6 +17,15 @@
 package android.app.usage;
 
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+import static android.net.NetworkStats.DEFAULT_NETWORK_ALL;
+import static android.net.NetworkStats.METERED_ALL;
+import static android.net.NetworkStats.ROAMING_ALL;
+import static android.net.NetworkTemplate.MATCH_MOBILE;
+import static android.net.NetworkTemplate.MATCH_WIFI;
+import static android.net.NetworkTemplate.NETWORK_TYPE_ALL;
+import static android.net.NetworkTemplate.OEM_MANAGED_ALL;
+import static android.net.NetworkTemplate.SUBSCRIBER_ID_MATCH_RULE_EXACT;
+import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -47,6 +56,8 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.ServiceManager.ServiceNotFoundException;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DataUnit;
@@ -55,6 +66,7 @@ import android.util.Log;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.net.module.util.NetworkIdentityUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -134,6 +146,37 @@ public class NetworkStatsManager {
     public static final int FLAG_AUGMENT_WITH_SUBSCRIPTION_PLAN = 1 << 2;
 
     private int mFlags;
+
+    /** Map from subId to subscriberId as of last all SubscriptionInfo records update */
+    private static final HashMap<String, Integer> sSubIdToSubscriberId = new HashMap<>();
+
+    /**
+     * Search the existing subId & Subscriber Id mapping table and return the subId from the given
+     * Subscriber Id. If not found, update the mapping table and search again.
+     */
+    private static int getSubId(@NonNull String subscriberId, Context context) {
+        int subId = sSubIdToSubscriberId.get(subscriberId);
+        if (subId == INVALID_SUBSCRIPTION_ID) {
+            final TelephonyManager tm = context.getSystemService(TelephonyManager.class);
+            final SubscriptionManager sm = context.getSystemService(SubscriptionManager.class);
+            final List<SubscriptionInfo> subList = sm.getAllSubscriptionInfoList();
+
+            for (final SubscriptionInfo sub : subList) {
+                subId = sub.getSubscriptionId();
+                final TelephonyManager tmSub = tm.createForSubscriptionId(subId);
+                final String imsi = tmSub.getSubscriberId();
+                if (imsi.equals(subscriberId)) {
+                    sSubIdToSubscriberId.put(subscriberId, subId);
+                    return subId;
+                } else {
+                    if (DBG) {
+                        Log.d(TAG, "Missing subscriberId for subId " + tmSub.getSubscriptionId());
+                    }
+                }
+            }
+        }
+        return subId;
+    }
 
     /**
      * {@hide}
@@ -231,7 +274,7 @@ public class NetworkStatsManager {
             long startTime, long endTime) throws SecurityException, RemoteException {
         NetworkTemplate template;
         try {
-            template = createTemplate(networkType, subscriberId);
+            template = createTemplate(networkType, subscriberId, mContext);
         } catch (IllegalArgumentException e) {
             if (DBG) Log.e(TAG, "Cannot create template", e);
             return null;
@@ -276,7 +319,7 @@ public class NetworkStatsManager {
             long endTime) throws SecurityException, RemoteException {
         NetworkTemplate template;
         try {
-            template = createTemplate(networkType, subscriberId);
+            template = createTemplate(networkType, subscriberId, mContext);
         } catch (IllegalArgumentException e) {
             if (DBG) Log.e(TAG, "Cannot create template", e);
             return null;
@@ -325,7 +368,7 @@ public class NetworkStatsManager {
             long endTime) throws SecurityException, RemoteException {
         NetworkTemplate template;
         try {
-            template = createTemplate(networkType, subscriberId);
+            template = createTemplate(networkType, subscriberId, mContext);
         } catch (IllegalArgumentException e) {
             if (DBG) Log.e(TAG, "Cannot create template", e);
             return null;
@@ -420,7 +463,7 @@ public class NetworkStatsManager {
     public NetworkStats queryDetailsForUidTagState(int networkType, String subscriberId,
             long startTime, long endTime, int uid, int tag, int state) throws SecurityException {
         NetworkTemplate template;
-        template = createTemplate(networkType, subscriberId);
+        template = createTemplate(networkType, subscriberId, mContext);
 
         return queryDetailsForUidTagState(template, startTime, endTime, uid, tag, state);
     }
@@ -483,7 +526,7 @@ public class NetworkStatsManager {
             long endTime) throws SecurityException, RemoteException {
         NetworkTemplate template;
         try {
-            template = createTemplate(networkType, subscriberId);
+            template = createTemplate(networkType, subscriberId, mContext);
         } catch (IllegalArgumentException e) {
             if (DBG) Log.e(TAG, "Cannot create template", e);
             return null;
@@ -564,7 +607,7 @@ public class NetworkStatsManager {
      */
     public void registerUsageCallback(int networkType, String subscriberId, long thresholdBytes,
             UsageCallback callback, @Nullable Handler handler) {
-        NetworkTemplate template = createTemplate(networkType, subscriberId);
+        NetworkTemplate template = createTemplate(networkType, subscriberId, mContext);
         if (DBG) {
             Log.d(TAG, "registerUsageCallback called with: {"
                 + " networkType=" + networkType
@@ -660,24 +703,31 @@ public class NetworkStatsManager {
         }
     }
 
-    private static NetworkTemplate createTemplate(int networkType, String subscriberId) {
+    private static NetworkTemplate createTemplate(int networkType, String subscriberId,
+            Context context) {
         final NetworkTemplate template;
+        final int subId = getSubId(subscriberId, context);
         switch (networkType) {
             case ConnectivityManager.TYPE_MOBILE:
                 template = subscriberId == null
                         ? NetworkTemplate.buildTemplateMobileWildcard()
-                        : NetworkTemplate.buildTemplateMobileAll(subscriberId);
+                        :  new NetworkTemplate(MATCH_MOBILE, subscriberId,
+                        new String[] { subscriberId }, subId, new int[] { subId }, null);
                 break;
             case ConnectivityManager.TYPE_WIFI:
                 template = TextUtils.isEmpty(subscriberId)
                         ? NetworkTemplate.buildTemplateWifiWildcard()
-                        : NetworkTemplate.buildTemplateWifi(NetworkTemplate.WIFI_NETWORKID_ALL,
-                                subscriberId);
+                        : new NetworkTemplate(MATCH_WIFI, subscriberId,
+                        new String[] { subscriberId }, subId, new int[] { subId },
+                        NetworkTemplate.WIFI_NETWORKID_ALL, METERED_ALL, ROAMING_ALL,
+                        DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_ALL,
+                        SUBSCRIBER_ID_MATCH_RULE_EXACT);
                 break;
             default:
                 throw new IllegalArgumentException("Cannot create template for network type "
                         + networkType + ", subscriberId '"
-                        + NetworkIdentityUtils.scrubSubscriberId(subscriberId) + "'.");
+                        + NetworkIdentityUtils.scrubSubscriberId(subscriberId) + "', subId "
+                        + subId + ".");
         }
         return template;
     }
