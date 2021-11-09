@@ -355,7 +355,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     private static final int VERSION_ADDED_CYCLE = 11;
     private static final int VERSION_ADDED_NETWORK_TYPES = 12;
     private static final int VERSION_SUPPORTED_CARRIER_USAGE = 13;
-    private static final int VERSION_LATEST = VERSION_SUPPORTED_CARRIER_USAGE;
+    private static final int VERSION_ADDED_SUB_ID = 14;
+    private static final int VERSION_LATEST = VERSION_ADDED_SUB_ID;
 
     @VisibleForTesting
     public static final int TYPE_WARNING = SystemMessage.NOTE_NET_WARNING;
@@ -2186,7 +2187,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 final String subscriberId = snapshot.getSubscriberId();
                 final long totalBytes = subscriberId == null
                         ? 0 : getTotalBytes(
-                                buildTemplateCarrierMetered(subscriberId), start, startOfDay);
+                                buildTemplateCarrierMetered(subscriberId, subId), start,
+                                startOfDay);
                 final long remainingBytes = limitBytes - totalBytes;
                 // Number of remaining days including current day
                 final long remainingDays =
@@ -2275,7 +2277,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
     @VisibleForTesting
     NetworkPolicy buildDefaultCarrierPolicy(int subId, String subscriberId) {
-        final NetworkTemplate template = buildTemplateCarrierMetered(subscriberId);
+        final NetworkTemplate template = buildTemplateCarrierMetered(subscriberId, subId);
         final RecurrenceRule cycleRule = NetworkPolicy
                 .buildRule(ZonedDateTime.now().getDayOfMonth(), ZoneId.systemDefault());
         final NetworkPolicy policy = new NetworkPolicy(template, cycleRule,
@@ -2463,11 +2465,19 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                         } else {
                             inferred = false;
                         }
+
+                        final int subId;
+                        if (version >= VERSION_ADDED_SUB_ID) {
+                            subId = readIntAttribute(in, ATTR_SUB_ID);
+                        } else {
+                            subId = SubscriptionManager.INVALID_SUBSCRIPTION_ID;
+                        }
                         final NetworkTemplate template = new NetworkTemplate(templateType,
-                                subscriberId, new String[] { subscriberId },
-                                networkId, templateMeteredness, NetworkStats.ROAMING_ALL,
-                                NetworkStats.DEFAULT_NETWORK_ALL, NetworkTemplate.NETWORK_TYPE_ALL,
-                                NetworkTemplate.OEM_MANAGED_ALL, subscriberIdMatchRule);
+                                subscriberId, new String[] { subscriberId }, subId,
+                                new int[] { subId }, networkId, templateMeteredness,
+                                NetworkStats.ROAMING_ALL, NetworkStats.DEFAULT_NETWORK_ALL,
+                                NetworkTemplate.NETWORK_TYPE_ALL, NetworkTemplate.OEM_MANAGED_ALL,
+                                subscriberIdMatchRule);
                         if (template.isPersistable()) {
                             mNetworkPolicy.put(template, new NetworkPolicy(template, cycleRule,
                                     warningBytes, limitBytes, lastWarningSnooze,
@@ -2683,6 +2693,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 if (subscriberId != null) {
                     out.attribute(null, ATTR_SUBSCRIBER_ID, subscriberId);
                 }
+                writeIntAttribute(out, ATTR_SUB_ID, template.getSubId());
                 writeIntAttribute(out, ATTR_SUBSCRIBER_ID_MATCH_RULE,
                         template.getSubscriberIdMatchRule());
                 final String networkId = template.getNetworkId();
@@ -3054,7 +3065,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             }
             // When two normalized templates conflict, prefer the most
             // restrictive policy
-            policy.template = NetworkTemplate.normalize(policy.template, mMergedSubscriberIds);
+            policy.template = NetworkTemplate.normalize(policy.template, mMergedSubscriberIds,
+                    null);
             final NetworkPolicy existing = mNetworkPolicy.get(policy.template);
             if (existing == null || existing.compareTo(policy) > 0) {
                 if (existing != null) {
@@ -5624,8 +5636,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         // Turn carrier/mobile data limit off
         NetworkPolicy[] policies = getNetworkPolicies(mContext.getOpPackageName());
         NetworkTemplate templateCarrier = subscriber != null
-                ? buildTemplateCarrierMetered(subscriber) : null;
-        NetworkTemplate templateMobile = buildTemplateMobileAll(subscriber);
+                ? buildTemplateCarrierMetered(subscriber, 0) : null;
+        NetworkTemplate templateMobile = buildTemplateMobileAll(subscriber, 0);
         for (NetworkPolicy policy : policies) {
             //  All policies loaded from disk will be carrier templates, and setting will also only
             //  set carrier templates, but we clear mobile templates just in case one is set by
