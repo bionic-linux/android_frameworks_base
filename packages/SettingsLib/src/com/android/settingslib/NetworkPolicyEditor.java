@@ -219,7 +219,8 @@ public class NetworkPolicyEditor {
         final String strippedNetworkId = WifiInfo.sanitizeSsid(networkId);
         if (!TextUtils.equals(strippedNetworkId, networkId)) {
             return new NetworkTemplate(
-                    template.getMatchRule(), template.getSubscriberId(), strippedNetworkId);
+                    template.getMatchRule(), template.getSubscriberId(), template.getSubId(),
+                    strippedNetworkId);
         } else {
             return null;
         }

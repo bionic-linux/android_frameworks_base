@@ -662,17 +662,18 @@ public class NetworkStatsManager {
 
     private static NetworkTemplate createTemplate(int networkType, String subscriberId) {
         final NetworkTemplate template;
+        int subId = 0;
         switch (networkType) {
             case ConnectivityManager.TYPE_MOBILE:
                 template = subscriberId == null
                         ? NetworkTemplate.buildTemplateMobileWildcard()
-                        : NetworkTemplate.buildTemplateMobileAll(subscriberId);
+                        : NetworkTemplate.buildTemplateMobileAll(subscriberId, subId);
                 break;
             case ConnectivityManager.TYPE_WIFI:
                 template = TextUtils.isEmpty(subscriberId)
                         ? NetworkTemplate.buildTemplateWifiWildcard()
                         : NetworkTemplate.buildTemplateWifi(NetworkTemplate.WIFI_NETWORKID_ALL,
-                                subscriberId);
+                                subscriberId, subId);
                 break;
             default:
                 throw new IllegalArgumentException("Cannot create template for network type "

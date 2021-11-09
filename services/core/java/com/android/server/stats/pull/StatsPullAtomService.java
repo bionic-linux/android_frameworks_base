@@ -1318,9 +1318,9 @@ public class StatsPullAtomService extends SystemService {
                 /* A null subscriberId will set wildcard=true, since we aren't trying to select a
                    specific ssid or subscriber. */
                 final NetworkTemplate template = new NetworkTemplate(transport,
-                        /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*networkId=*/null,
-                        METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL,
-                        oemManaged);
+                        /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*subId=*/0,
+                        /*matchSubIds=*/null, /*networkId=*/null, METERED_ALL, ROAMING_ALL,
+                        DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, oemManaged);
                 final NetworkStats stats = getUidNetworkStatsSnapshotForTemplate(template, true);
                 if (stats != null) {
                     ret.add(new NetworkStatsExt(sliceNetworkStatsByUidTagAndMetered(stats),
@@ -1340,7 +1340,7 @@ public class StatsPullAtomService extends SystemService {
     @Nullable private NetworkStats getUidNetworkStatsSnapshotForTransport(int transport) {
         final NetworkTemplate template = (transport == TRANSPORT_CELLULAR)
                 ? NetworkTemplate.buildTemplateMobileWithRatType(
-                /*subscriptionId=*/null, NETWORK_TYPE_ALL, METERED_YES)
+                /*subscriptionId=*/null, /*subId=*/0, NETWORK_TYPE_ALL, METERED_YES)
                 : NetworkTemplate.buildTemplateWifiWildcard();
         return getUidNetworkStatsSnapshotForTemplate(template, /*includeTags=*/false);
     }
@@ -1380,7 +1380,7 @@ public class StatsPullAtomService extends SystemService {
         final List<NetworkStatsExt> ret = new ArrayList<>();
         for (final int ratType : getAllCollapsedRatTypes()) {
             final NetworkTemplate template =
-                    buildTemplateMobileWithRatType(subInfo.subscriberId, ratType,
+                    buildTemplateMobileWithRatType(subInfo.subscriberId, subInfo.subId, ratType,
                     METERED_YES);
             final NetworkStats stats =
                     getUidNetworkStatsSnapshotForTemplate(template, /*includeTags=*/false);
