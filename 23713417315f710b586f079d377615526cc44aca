@@ -69,6 +69,30 @@
       },
       "revId": "23713417315f710b586f079d377615526cc44aca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1d30aea_e8cb2b2b",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1415877
+      },
+      "writtenOn": "2021-11-09T01:28:15Z",
+      "side": 1,
+      "message": "Make sense. Done.",
+      "parentUuid": "b9aa8181_2833eb5e",
+      "range": {
+        "startLine": 1841,
+        "startChar": 22,
+        "endLine": 1841,
+        "endChar": 38
+      },
+      "revId": "23713417315f710b586f079d377615526cc44aca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
