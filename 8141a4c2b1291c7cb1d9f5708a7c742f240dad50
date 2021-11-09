@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "453c00ef_a5c0644c",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-09T13:06:00Z",
+      "side": 1,
+      "message": "If mForceSuspendActive is set \u0026 unset all within the same synchronized block, then this should not be possible anymore, could be removed.\n\n(The flag would then only be checked in `setWakeLockDisabledStateLocked`. As far as I can tell, wakelocks are disabled mostly for reporting reasons, `nativeForceSuspend` would suspend the device anyway)",
+      "range": {
+        "startLine": 1813,
+        "startChar": 42,
+        "endLine": 1813,
+        "endChar": 61
+      },
+      "revId": "8141a4c2b1291c7cb1d9f5708a7c742f240dad50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c55256e_064ee9c8",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4032,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-09T13:06:00Z",
+      "side": 1,
+      "message": "This could be merged with the previous synchronized-block?",
+      "range": {
+        "startLine": 4032,
+        "startChar": 12,
+        "endLine": 4032,
+        "endChar": 34
+      },
+      "revId": "8141a4c2b1291c7cb1d9f5708a7c742f240dad50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c85b9ff4_9d25eda2",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4044,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-09T13:06:00Z",
+      "side": 1,
+      "message": "Should this be moved out of the finally block and into the synchronized block above?\nAny exception that may be thrown in the try block appears unhandled, crashing system_server, making cleanup here moot. Could save unlocking \u0026 re-locking.\nOtherwise, making sure `mForceSuspendActive \u003d false` is set here would still be good.",
+      "range": {
+        "startLine": 4043,
+        "startChar": 16,
+        "endLine": 4044,
+        "endChar": 53
+      },
+      "revId": "8141a4c2b1291c7cb1d9f5708a7c742f240dad50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
