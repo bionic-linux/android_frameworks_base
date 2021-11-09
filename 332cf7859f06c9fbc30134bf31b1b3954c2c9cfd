@@ -16,6 +16,29 @@
       "message": "LGTM. Robert, could you please have a look as well?\n\nUnit tests will be added separately. We\u0027d merge this now already and ask Amlogic to verify.",
       "revId": "332cf7859f06c9fbc30134bf31b1b3954c2c9cfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d30f9a38_73c5a0f6",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-09T18:16:51Z",
+      "side": 1,
+      "message": "This causes NullPointerExceptions during HdmiCecLocalDeviceAudioSystemTest.\nmPowerManager is only set on boot phase \"PHASE_SYSTEM_SERVICES_READY\":\nhttps://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/hdmi/HdmiControlService.java;l\u003d690;drc\u003d68e23ec2e6b04483cfab37abb7ed32188a22c5fe\nAnd the test appears to never call `onBootPhase`.\n\nTo check, can `onAddressAllocated` be called before `systemReady()` on real boots?",
+      "range": {
+        "startLine": 637,
+        "startChar": 15,
+        "endLine": 637,
+        "endChar": 44
+      },
+      "revId": "332cf7859f06c9fbc30134bf31b1b3954c2c9cfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
