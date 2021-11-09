@@ -46,6 +46,29 @@
       },
       "revId": "23713417315f710b586f079d377615526cc44aca",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9aa8181_2833eb5e",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1841,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2021-11-09T01:06:06Z",
+      "side": 1,
+      "message": "runtime exception is dropped as per b/150808347. See also discussions on https://android-review.googlesource.com/c/platform/frameworks/base/+/1870153. Even if this is to be consistent w/ other methods, we should probably use a more explicit excpetion so that this doesn\u0027t show up as a success for users of new APIs. WDYT?",
+      "range": {
+        "startLine": 1841,
+        "startChar": 22,
+        "endLine": 1841,
+        "endChar": 38
+      },
+      "revId": "23713417315f710b586f079d377615526cc44aca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
