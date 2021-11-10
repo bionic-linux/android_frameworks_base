@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcd6c5e9_ec847d78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2021-11-10T11:20:58Z",
+      "side": 1,
+      "message": "Cheesing the merge conflicts with internal master by finding a gap git should be able to resolve.",
+      "revId": "a949936fbdff6286aa0458027ddc00e4011957db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
