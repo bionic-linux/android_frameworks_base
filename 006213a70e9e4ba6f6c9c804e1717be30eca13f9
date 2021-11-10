@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fef874f1_d67a9916",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1139038
+      },
+      "writtenOn": "2021-11-10T10:55:03Z",
+      "side": 1,
+      "message": "Hui, could you taks a look at SettingsToPropertiesMapper.java? Thanks!",
+      "revId": "006213a70e9e4ba6f6c9c804e1717be30eca13f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
