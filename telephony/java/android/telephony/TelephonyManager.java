@@ -6549,7 +6549,7 @@ public class TelephonyManager {
             ITelephony telephony = getITelephony();
             if (telephony != null) {
                 return telephony.iccOpenLogicalChannelBySlot(slotIndex, getOpPackageName(), aid,
-                        p2);
+                        p2, new Binder());
             }
         } catch (RemoteException ex) {
         } catch (NullPointerException ex) {
@@ -6616,8 +6616,10 @@ public class TelephonyManager {
     public IccOpenLogicalChannelResponse iccOpenLogicalChannel(int subId, String AID, int p2) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null)
-                return telephony.iccOpenLogicalChannel(subId, getOpPackageName(), AID, p2);
+            if (telephony != null) {
+                return telephony.iccOpenLogicalChannel(subId, getOpPackageName(), AID, p2,
+                        new Binder());
+            }
         } catch (RemoteException ex) {
         } catch (NullPointerException ex) {
         }

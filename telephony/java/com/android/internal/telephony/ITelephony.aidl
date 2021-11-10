@@ -590,10 +590,11 @@ interface ITelephony {
      * @param callingPackage the name of the package making the call.
      * @param AID Application id. See ETSI 102.221 and 101.220.
      * @param p2 P2 parameter (described in ISO 7816-4).
+     * @param binder the binder object instantiated in TelephonyManager.
      * @return an IccOpenLogicalChannelResponse object.
      */
     IccOpenLogicalChannelResponse iccOpenLogicalChannelBySlot(
-            int slotIndex, String callingPackage, String AID, int p2);
+            int slotIndex, String callingPackage, String AID, int p2, IBinder binder);
 
     /**
      * Opens a logical channel to the ICC card.
@@ -604,10 +605,11 @@ interface ITelephony {
      * @param callingPackage the name of the package making the call.
      * @param AID Application id. See ETSI 102.221 and 101.220.
      * @param p2 P2 parameter (described in ISO 7816-4).
+     * @param binder the binder object instantiated in TelephonyManager.
      * @return an IccOpenLogicalChannelResponse object.
      */
     IccOpenLogicalChannelResponse iccOpenLogicalChannel(
-            int subId, String callingPackage, String AID, int p2);
+            int subId, String callingPackage, String AID, int p2, IBinder binder);
 
     /**
      * Closes a previously opened logical channel to the ICC card using the physical slot index.
