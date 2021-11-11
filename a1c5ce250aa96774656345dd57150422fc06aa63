@@ -104,6 +104,24 @@
       "parentUuid": "295f8b59_360a429d",
       "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e6a605d_8b562fd9",
+        "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1344895
+      },
+      "writtenOn": "2021-11-11T19:22:18Z",
+      "side": 1,
+      "message": "GSI team commented on one of the original CLs:\n\nIf ro.board.api_level is defined, it must override the value of ro.board.first_api_level.\nSo the code must look like:\nint firstApiLevel \u003d SystemProperties.getInt(\"ro.board.first_api_level\", 0);\nint boardApiLevel \u003d SystemProperties.getInt(\"ro.board.api_level\", firstApiLevel);\nboolean isRVendor \u003d boardApiLevel \u003d\u003d Build.VERSION_CODES.R;\n\nFrom what I understand, if a vendor specifies boardApiLevel, they can no longer pretend that they are firstApiLevel.",
+      "parentUuid": "e59aefe2_71b085fa",
+      "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
