@@ -350,6 +350,22 @@ public class Build {
                 .getInt("ro.product.first_api_level", 0);
 
         /**
+         * The SDK version of the software that <em>initially</em> shipped for
+         * the chipset of this hardware device. It <em>never</em> changes during
+         * the lifetime of the device, even when {@link #SDK_INT} increases due
+         * to an OTA update.
+         * <p>
+         * Possible values are defined in {@link Build.VERSION_CODES}.
+         *
+         * @see #SDK_INT
+         * @hide
+         */
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        @TestApi
+        public static final int BOARD_INITIAL_SDK_INT = SystemProperties
+                .getInt("ro.board.first_api_level", 0);
+
+        /**
          * The developer preview revision of a prerelease SDK. This value will always
          * be <code>0</code> on production platform builds/devices.
          *
