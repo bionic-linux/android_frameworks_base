@@ -16,6 +16,40 @@
       "message": "This is a cherry-pick of the internal I2ae8b746bb5247b5bb6ef9929b3a11ad5403ca48",
       "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "946333d1_caca7123",
+        "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2021-11-11T18:46:02Z",
+      "side": 1,
+      "message": "should this be `firstApiLevel`?",
+      "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "295f8b59_360a429d",
+        "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2021-11-11T18:46:02Z",
+      "side": 1,
+      "message": "nit: use `List\u003cString\u003e` on the LHS.",
+      "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
