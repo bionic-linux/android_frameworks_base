@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cdc4d87d_fe7c5a9f",
+        "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1344895
+      },
+      "writtenOn": "2021-11-11T18:57:06Z",
+      "side": 1,
+      "message": "If SYSPROP_API_LEVEL is not set, the value will default to SYSPROP_FIRST_API_LEVEL.\nOtherwise, SYSPROP_API_LEVEL takes precedence over SYSPROP_FIRST_API_LEVEL.\n\nSee comments on the internal CL",
+      "parentUuid": "946333d1_caca7123",
+      "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "295f8b59_360a429d",
         "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2021-11-11T18:46:02Z",
       "side": 1,
       "message": "nit: use `List\u003cString\u003e` on the LHS.",
+      "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e59aefe2_71b085fa",
+        "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1344895
+      },
+      "writtenOn": "2021-11-11T18:57:06Z",
+      "side": 1,
+      "message": "I agree with the suggestion, but this change was already merged as-in, and I don\u0027t want to cause unnecessary divergence with master.",
+      "parentUuid": "295f8b59_360a429d",
       "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
