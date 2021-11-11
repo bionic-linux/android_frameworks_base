@@ -55,6 +55,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cf3c0d44_c25c5fc3",
+        "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1565948
+      },
+      "writtenOn": "2021-11-11T19:05:53Z",
+      "side": 1,
+      "message": "I see that but it\u0027s not clear to me why the first api level wouldn\u0027t be the correct one to use if it\u0027s present. If you\u0027ve already worked it out on the internal cls then ignore.",
+      "parentUuid": "cdc4d87d_fe7c5a9f",
+      "revId": "a1c5ce250aa96774656345dd57150422fc06aa63",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "295f8b59_360a429d",
         "filename": "services/core/java/com/android/server/biometrics/AuthService.java",
         "patchSetId": 1
