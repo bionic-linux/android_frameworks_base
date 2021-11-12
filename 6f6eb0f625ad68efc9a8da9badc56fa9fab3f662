@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "047230df_440535dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-11-12T01:39:05Z",
+      "side": 1,
+      "message": "If you merge this CL, please add test coverage for this field somewhere in CTS, since APIs should have CTS tests when written. I guess you could test that it\u0027s an integer and greater than whatever version was current when GRF was introduced (31 maybe?).\n\nFrom a coverage perspective it would be OK to just use this in IpSecAlgorithmTest (which I guess is where you actually want to use it), but that is complicated because IpSecAlgorithmTest will automerge to sc-mainline-prod and the new API will not exist there. So you\u0027d need a shim for it. In fact, I expect that at least for the next few years the CTS tests will probably just read the sysprop directly since that will work on all supported releases.",
+      "revId": "6f6eb0f625ad68efc9a8da9badc56fa9fab3f662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd3d3a4c_fe772f42",
