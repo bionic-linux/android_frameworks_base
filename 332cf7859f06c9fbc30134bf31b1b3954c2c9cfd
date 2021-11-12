@@ -39,6 +39,30 @@
       },
       "revId": "332cf7859f06c9fbc30134bf31b1b3954c2c9cfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f295e47_8611191d",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2021-11-12T11:58:55Z",
+      "side": 1,
+      "message": "onAddressAllocated is called during the HDMI service initialisation. I think since the powerManager is only available after the boot is complete, I will have to rework isQuiescentBoot(). Or I will have to move the systemAudioControlOnPowerOn (https://cs.android.com/android/platform/superproject/+/master:frameworks/base/services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java;drc\u003dmaster;bpv\u003d0;bpt\u003d1;l\u003d285) out of the service initialisation path and into the onBootComplete tasks.",
+      "parentUuid": "d30f9a38_73c5a0f6",
+      "range": {
+        "startLine": 637,
+        "startChar": 15,
+        "endLine": 637,
+        "endChar": 44
+      },
+      "revId": "332cf7859f06c9fbc30134bf31b1b3954c2c9cfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
