@@ -208,13 +208,15 @@ public class MtpStorageManager {
 
         private long maybeApplyTranscodeLengthWorkaround(long length) {
             // Windows truncates transferred files to the size advertised in the object property.
-            if (isTranscodeMtpEnabled() && isFileTranscodeSupported()) {
+            if (mStorage.isHostWindows() && isTranscodeMtpEnabled() && isFileTranscodeSupported()) {
                 // If the file supports transcoding, we double the returned size to accommodate
                 // the increase in size from transcoding to AVC. This is the same heuristic
                 // applied in the FUSE daemon (MediaProvider).
                 return length * 2;
             }
+
             return length;
+
         }
 
         private boolean isTranscodeMtpEnabled() {
@@ -365,6 +367,7 @@ public class MtpStorageManager {
     }
 
     private MtpNotifier mMtpNotifier;
+    boolean mHostIsWindows;
 
     // A cache of MtpObjects. The objects in the cache are keyed by object id.
     // The root object of each storage isn't in this map since they all have ObjectId 0.
@@ -385,8 +388,11 @@ public class MtpStorageManager {
     private volatile boolean mCheckConsistency;
     private Thread mConsistencyThread;
 
-    public MtpStorageManager(MtpNotifier notifier, Set<String> subdirectories) {
+
+    public MtpStorageManager(MtpNotifier notifier, Set<String> subdirectories,
+                             boolean hostIsWindows) {
         mMtpNotifier = notifier;
+        mHostIsWindows = hostIsWindows;
         mSubdirectories = subdirectories;
         mObjects = new HashMap<>();
         mRoots = new HashMap<>();
@@ -457,8 +463,9 @@ public class MtpStorageManager {
      */
     public synchronized MtpStorage addMtpStorage(StorageVolume volume) {
         int storageId = ((getNextStorageId() & 0x0000FFFF) << 16) + 1;
-        MtpStorage storage = new MtpStorage(volume, storageId);
-        MtpObject root = new MtpObject(storage.getPath(), storageId, storage, null, true);
+        MtpStorage storage = new MtpStorage(volume, storageId, mHostIsWindows);
+        MtpObject root = new MtpObject(storage.getPath(), storageId, storage, /* parent= */ null,
+                                       /* isDir= */ true);
         mRoots.put(storageId, root);
         return storage;
     }

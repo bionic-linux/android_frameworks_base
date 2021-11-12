@@ -289,6 +289,7 @@ public class MtpDatabase implements AutoCloseable {
         mContext = Objects.requireNonNull(context);
         mMediaProvider = context.getContentResolver()
                 .acquireContentProviderClient(MediaStore.AUTHORITY);
+        boolean hostIsWindows = mHostType != null && mHostType.startsWith("Windows");
         mManager = new MtpStorageManager(new MtpStorageManager.MtpNotifier() {
             @Override
             public void sendObjectAdded(int id) {
@@ -307,7 +308,7 @@ public class MtpDatabase implements AutoCloseable {
                 if (MtpDatabase.this.mServer != null)
                     MtpDatabase.this.mServer.sendObjectInfoChanged(id);
             }
-        }, subDirectories == null ? null : Sets.newHashSet(subDirectories));
+        }, subDirectories == null ? null : Sets.newHashSet(subDirectories), hostIsWindows);
 
         initDeviceProperties(context);
         mDeviceType = SystemProperties.getInt("sys.usb.mtp.device_type", 0);
