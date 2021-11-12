@@ -63,6 +63,30 @@
       },
       "revId": "332cf7859f06c9fbc30134bf31b1b3954c2c9cfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a014c41_cc4ecc80",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-12T13:14:00Z",
+      "side": 1,
+      "message": "In theory, HdmiControlService#onAddressAllocated could be called before PowerMananager is ready, in the case where HdmiControlService is ready before PowerManager is. However, in that case we wouldn\u0027t be able to call PowerManager#wakeUp() either and wake up the device, which automatically avoids what we\u0027re trying to avoid with this change. So we might just add null checks, something like\n```\nif ((mPowerManager \u003d\u003d null || mPowerManager.isInteractive())\n                \u0026\u0026 (getContext().getSystemService(DisplayManager.class) \u003d\u003d null || getContext().getSystemService(DisplayManager.class).getDisplay(Display.DEFAULT_DISPLAY).getState()\u003d\u003d Display.STATE_OFF)){...}\n```\n\nIn reality, address allocation takes a significant amount of time, to poll all devices in the network. So I would be surprised if PowerManager isn\u0027t ready by then.\n\nAlternatively, if just for boot, I don\u0027t see an issue postponing `systemAudioControlOnPowerOn`. I would avoid doing that on every wake-up, though.\n\nRegarding the test, we can add `onBootPhase(PHASE_SYSTEM_SERVICES_READY)`, just like we already do in other tests as well (e.g. HdmiControlServiceTest.java).",
+      "parentUuid": "6f295e47_8611191d",
+      "range": {
+        "startLine": 637,
+        "startChar": 15,
+        "endLine": 637,
+        "endChar": 44
+      },
+      "revId": "332cf7859f06c9fbc30134bf31b1b3954c2c9cfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
