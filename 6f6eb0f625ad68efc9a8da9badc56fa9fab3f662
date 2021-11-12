@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd3d3a4c_fe772f42",
+        "filename": "core/java/android/os/Build.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1146974
+      },
+      "writtenOn": "2021-11-12T01:37:51Z",
+      "side": 1,
+      "message": "Yes, this is true. But this value is to identify and validate the SoC for GRF. This property alone is not helpful to find the required version for tests.\nAs shown https://docs.partner.android.com/gms/building/integrating/extending-os-upgrade-support-windows#new-system-properties, tests need more properties and find the minumum required version from those properties.\n\nTo make the check easier, ro.vedor.api_level is calculated on boot. (aosp/1856020). It will be more helpful to provide ro.vendor.api_level as a Build constant instead of ro.board.first_api_level.\nro.vedor.api_level is set by the init process and never changed after boot. This value can be changed when the device has OTA for vendor upgrade after the GRF period expires.",
+      "range": {
+        "startLine": 354,
+        "startChar": 48,
+        "endLine": 355,
+        "endChar": 37
+      },
+      "revId": "6f6eb0f625ad68efc9a8da9badc56fa9fab3f662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
