@@ -33,14 +33,16 @@ public class MtpStorage {
     private final boolean mRemovable;
     private final long mMaxFileSize;
     private final String mVolumeName;
+    private final boolean mHostIsWindows;
 
-    public MtpStorage(StorageVolume volume, int storageId) {
+    public MtpStorage(StorageVolume volume, int storageId, boolean hostIsWindows) {
         mStorageId = storageId;
         mPath = volume.getPath();
         mDescription = volume.getDescription(null);
         mRemovable = volume.isRemovable();
         mMaxFileSize = volume.getMaxFileSize();
         mVolumeName = volume.getMediaStoreVolumeName();
+        mHostIsWindows = hostIsWindows;
     }
 
     /**
@@ -92,5 +94,14 @@ public class MtpStorage {
 
     public String getVolumeName() {
         return mVolumeName;
+    }
+
+    /**
+     * Returns true the mtp host of this storage is Windows.
+     *
+     * @return is host Windows
+     */
+    public boolean isHostWindows() {
+        return mHostIsWindows;
     }
 }
