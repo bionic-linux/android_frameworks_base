@@ -48,10 +48,10 @@ import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
-import com.android.server.vcn.UnderlyingNetworkTracker.NetworkBringupCallback;
-import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkListener;
-import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkRecord;
-import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkTrackerCallback;
+import com.android.server.vcn.UnderlyingNetworkController.NetworkBringupCallback;
+import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
+import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkListener;
+import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkRecord;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +64,7 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
 
-public class UnderlyingNetworkTrackerTest {
+public class UnderlyingNetworkControllerTest {
     private static final ParcelUuid SUB_GROUP = new ParcelUuid(new UUID(0, 0));
     private static final int INITIAL_SUB_ID_1 = 1;
     private static final int INITIAL_SUB_ID_2 = 2;
@@ -102,14 +102,14 @@ public class UnderlyingNetworkTrackerTest {
     @Mock private TelephonyManager mTelephonyManager;
     @Mock private CarrierConfigManager mCarrierConfigManager;
     @Mock private TelephonySubscriptionSnapshot mSubscriptionSnapshot;
-    @Mock private UnderlyingNetworkTrackerCallback mNetworkTrackerCb;
+    @Mock private UnderlyingNetworkControllerCallback mNetworkTrackerCb;
     @Mock private Network mNetwork;
 
     @Captor private ArgumentCaptor<UnderlyingNetworkListener> mUnderlyingNetworkListenerCaptor;
 
     private TestLooper mTestLooper;
     private VcnContext mVcnContext;
-    private UnderlyingNetworkTracker mUnderlyingNetworkTracker;
+    private UnderlyingNetworkController mUnderlyingNetworkController;
 
     @Before
     public void setUp() {
@@ -140,12 +140,9 @@ public class UnderlyingNetworkTrackerTest {
 
         when(mSubscriptionSnapshot.getAllSubIdsInGroup(eq(SUB_GROUP))).thenReturn(INITIAL_SUB_IDS);
 
-        mUnderlyingNetworkTracker =
-                new UnderlyingNetworkTracker(
-                        mVcnContext,
-                        SUB_GROUP,
-                        mSubscriptionSnapshot,
-                        mNetworkTrackerCb);
+        mUnderlyingNetworkController =
+                new UnderlyingNetworkController(
+                        mVcnContext, SUB_GROUP, mSubscriptionSnapshot, mNetworkTrackerCb);
     }
 
     private void resetVcnContext() {
@@ -181,11 +178,8 @@ public class UnderlyingNetworkTrackerTest {
                         mVcnNetworkProvider,
                         true /* isInTestMode */);
 
-        new UnderlyingNetworkTracker(
-                vcnContext,
-                SUB_GROUP,
-                mSubscriptionSnapshot,
-                mNetworkTrackerCb);
+        new UnderlyingNetworkController(
+                vcnContext, SUB_GROUP, mSubscriptionSnapshot, mNetworkTrackerCb);
 
         verify(cm)
                 .registerNetworkCallback(
@@ -233,7 +227,7 @@ public class UnderlyingNetworkTrackerTest {
                 mock(TelephonySubscriptionSnapshot.class);
         when(subscriptionUpdate.getAllSubIdsInGroup(eq(SUB_GROUP))).thenReturn(UPDATED_SUB_IDS);
 
-        mUnderlyingNetworkTracker.updateSubscriptionSnapshot(subscriptionUpdate);
+        mUnderlyingNetworkController.updateSubscriptionSnapshot(subscriptionUpdate);
 
         // verify that initially-filed bringup requests are unregistered (cell + wifi)
         verify(mConnectivityManager, times(INITIAL_SUB_IDS.size() + 3))
@@ -255,7 +249,7 @@ public class UnderlyingNetworkTrackerTest {
         return getExpectedRequestBase()
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(netCapsSubIds)
-                .setSignalStrength(UnderlyingNetworkTracker.WIFI_ENTRY_RSSI_THRESHOLD_DEFAULT)
+                .setSignalStrength(UnderlyingNetworkController.WIFI_ENTRY_RSSI_THRESHOLD_DEFAULT)
                 .build();
     }
 
@@ -264,7 +258,7 @@ public class UnderlyingNetworkTrackerTest {
         return getExpectedRequestBase()
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(netCapsSubIds)
-                .setSignalStrength(UnderlyingNetworkTracker.WIFI_EXIT_RSSI_THRESHOLD_DEFAULT)
+                .setSignalStrength(UnderlyingNetworkController.WIFI_EXIT_RSSI_THRESHOLD_DEFAULT)
                 .build();
     }
 
@@ -304,7 +298,7 @@ public class UnderlyingNetworkTrackerTest {
 
     @Test
     public void testTeardown() {
-        mUnderlyingNetworkTracker.teardown();
+        mUnderlyingNetworkController.teardown();
 
         // Expect 5 NetworkBringupCallbacks to be unregistered: 1 for WiFi, 2 for Cellular (1x for
         // each subId), and 1 for each of the Wifi signal strength thresholds
@@ -471,7 +465,7 @@ public class UnderlyingNetworkTrackerTest {
 
         cb.onCapabilitiesChanged(mNetwork, INITIAL_NETWORK_CAPABILITIES);
 
-        // Verify no more calls to the UnderlyingNetworkTrackerCallback when the
+        // Verify no more calls to the UnderlyingNetworkControllerCallback when the
         // UnderlyingNetworkRecord does not actually change
         verifyNoMoreInteractions(mNetworkTrackerCb);
     }
@@ -479,7 +473,7 @@ public class UnderlyingNetworkTrackerTest {
     @Test
     public void testRecordTrackerCallbackNotifiedAfterTeardown() {
         UnderlyingNetworkListener cb = verifyRegistrationOnAvailableAndGetCallback();
-        mUnderlyingNetworkTracker.teardown();
+        mUnderlyingNetworkController.teardown();
 
         cb.onCapabilitiesChanged(mNetwork, UPDATED_NETWORK_CAPABILITIES);
 
