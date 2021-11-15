@@ -87,8 +87,8 @@ import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.WakeupMessage;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
-import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkRecord;
-import com.android.server.vcn.UnderlyingNetworkTracker.UnderlyingNetworkTrackerCallback;
+import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
+import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkRecord;
 import com.android.server.vcn.Vcn.VcnGatewayStatusCallback;
 import com.android.server.vcn.util.LogUtils;
 import com.android.server.vcn.util.MtuUtils;
@@ -201,7 +201,7 @@ public class VcnGatewayConnection extends StateMachine {
     private interface EventInfo {}
 
     /**
-     * Sent when there are changes to the underlying network (per the UnderlyingNetworkTracker).
+     * Sent when there are changes to the underlying network (per the UnderlyingNetworkController).
      *
      * <p>May indicate an entirely new underlying network, OR a change in network properties.
      *
@@ -522,11 +522,14 @@ public class VcnGatewayConnection extends StateMachine {
 
     @NonNull private final VcnContext mVcnContext;
     @NonNull private final ParcelUuid mSubscriptionGroup;
-    @NonNull private final UnderlyingNetworkTracker mUnderlyingNetworkTracker;
+    @NonNull private final UnderlyingNetworkController mUnderlyingNetworkController;
     @NonNull private final VcnGatewayConnectionConfig mConnectionConfig;
     @NonNull private final VcnGatewayStatusCallback mGatewayStatusCallback;
     @NonNull private final Dependencies mDeps;
-    @NonNull private final VcnUnderlyingNetworkTrackerCallback mUnderlyingNetworkTrackerCallback;
+
+    @NonNull
+    private final VcnUnderlyingNetworkControllerCallback mUnderlyingNetworkControllerCallback;
+
     private final boolean mIsMobileDataEnabled;
 
     @NonNull private final IpSecManager mIpSecManager;
@@ -674,17 +677,17 @@ public class VcnGatewayConnection extends StateMachine {
 
         mLastSnapshot = Objects.requireNonNull(snapshot, "Missing snapshot");
 
-        mUnderlyingNetworkTrackerCallback = new VcnUnderlyingNetworkTrackerCallback();
+        mUnderlyingNetworkControllerCallback = new VcnUnderlyingNetworkControllerCallback();
 
         mWakeLock =
                 mDeps.newWakeLock(mVcnContext.getContext(), PowerManager.PARTIAL_WAKE_LOCK, TAG);
 
-        mUnderlyingNetworkTracker =
-                mDeps.newUnderlyingNetworkTracker(
+        mUnderlyingNetworkController =
+                mDeps.newUnderlyingNetworkController(
                         mVcnContext,
                         subscriptionGroup,
                         mLastSnapshot,
-                        mUnderlyingNetworkTrackerCallback);
+                        mUnderlyingNetworkControllerCallback);
         mIpSecManager = mVcnContext.getContext().getSystemService(IpSecManager.class);
 
         addState(mDisconnectedState);
@@ -748,7 +751,7 @@ public class VcnGatewayConnection extends StateMachine {
         cancelRetryTimeoutAlarm();
         cancelSafeModeAlarm();
 
-        mUnderlyingNetworkTracker.teardown();
+        mUnderlyingNetworkController.teardown();
 
         mGatewayStatusCallback.onQuit();
     }
@@ -764,12 +767,13 @@ public class VcnGatewayConnection extends StateMachine {
         mVcnContext.ensureRunningOnLooperThread();
 
         mLastSnapshot = snapshot;
-        mUnderlyingNetworkTracker.updateSubscriptionSnapshot(mLastSnapshot);
+        mUnderlyingNetworkController.updateSubscriptionSnapshot(mLastSnapshot);
 
         sendMessageAndAcquireWakeLock(EVENT_SUBSCRIPTIONS_CHANGED, TOKEN_ALL);
     }
 
-    private class VcnUnderlyingNetworkTrackerCallback implements UnderlyingNetworkTrackerCallback {
+    private class VcnUnderlyingNetworkControllerCallback
+            implements UnderlyingNetworkControllerCallback {
         @Override
         public void onSelectedUnderlyingNetworkChanged(
                 @Nullable UnderlyingNetworkRecord underlying) {
@@ -2264,7 +2268,7 @@ public class VcnGatewayConnection extends StateMachine {
                         + (mNetworkAgent == null ? null : mNetworkAgent.getNetwork()));
         pw.println();
 
-        mUnderlyingNetworkTracker.dump(pw);
+        mUnderlyingNetworkController.dump(pw);
         pw.println();
 
         pw.decreaseIndent();
@@ -2276,8 +2280,8 @@ public class VcnGatewayConnection extends StateMachine {
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
-    UnderlyingNetworkTrackerCallback getUnderlyingNetworkTrackerCallback() {
-        return mUnderlyingNetworkTrackerCallback;
+    UnderlyingNetworkControllerCallback getUnderlyingNetworkControllerCallback() {
+        return mUnderlyingNetworkControllerCallback;
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
@@ -2356,17 +2360,14 @@ public class VcnGatewayConnection extends StateMachine {
     /** External dependencies used by VcnGatewayConnection, for injection in tests */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public static class Dependencies {
-        /** Builds a new UnderlyingNetworkTracker. */
-        public UnderlyingNetworkTracker newUnderlyingNetworkTracker(
+        /** Builds a new UnderlyingNetworkController. */
+        public UnderlyingNetworkController newUnderlyingNetworkController(
                 VcnContext vcnContext,
                 ParcelUuid subscriptionGroup,
                 TelephonySubscriptionSnapshot snapshot,
-                UnderlyingNetworkTrackerCallback callback) {
-            return new UnderlyingNetworkTracker(
-                    vcnContext,
-                    subscriptionGroup,
-                    snapshot,
-                    callback);
+                UnderlyingNetworkControllerCallback callback) {
+            return new UnderlyingNetworkController(
+                    vcnContext, subscriptionGroup, snapshot, callback);
         }
 
         /** Builds a new IkeSession. */
