@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f524868f_2c6b9680",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1047255
+      },
+      "writtenOn": "2021-11-16T19:04:23Z",
+      "side": 1,
+      "message": "Please add a note here that this is safe from a race condition because the pool is only flushed after the SystemServer changes its internal state to stop using the USAP pool.  Because the SystemServer acts as a serialization point we can be sure the USAP won\u0027t be terminated between the time the accept() call returns and the SIGTERM is blocked.  Otherwise LGTM.",
+      "revId": "af28d3b3e70fd1241e300623ce3e4366c677581c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
