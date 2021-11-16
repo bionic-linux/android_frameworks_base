@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "012a794e_a0dee4e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2021-11-16T11:14:10Z",
+      "side": 1,
+      "message": "Context: http://g/android-chatty-eng/73EqiCdgIvI",
+      "revId": "3d2f62fda87584c34f40d65857ba862405481094",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
