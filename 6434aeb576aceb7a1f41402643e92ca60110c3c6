@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba75ae89_883f8524",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 15859,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-11-16T19:51:59Z",
+      "side": 1,
+      "message": "Probably better using annotation \n\n@throws SecurityException when not having permission xxxx..",
+      "range": {
+        "startLine": 15858,
+        "startChar": 0,
+        "endLine": 15859,
+        "endChar": 88
+      },
+      "revId": "6434aeb576aceb7a1f41402643e92ca60110c3c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
