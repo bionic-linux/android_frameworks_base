@@ -153,6 +153,30 @@
       },
       "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eff34940_ebd575f9",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2021-11-16T10:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93f84dc9_e972b71a",
+      "range": {
+        "startLine": 638,
+        "startChar": 19,
+        "endLine": 639,
+        "endChar": 71
+      },
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
