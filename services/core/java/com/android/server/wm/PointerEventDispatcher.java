@@ -45,34 +45,31 @@ public class PointerEventDispatcher extends InputEventReceiver {
 
     @Override
     public void onInputEvent(InputEvent event) {
-        try {
-            if (event instanceof MotionEvent
-                    && (event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
-                MotionEvent motionEvent = (MotionEvent) event;
-                if (ENABLE_PER_WINDOW_INPUT_ROTATION) {
-                    final int rotation = mDisplayContent.getRotation();
-                    if (rotation != Surface.ROTATION_0) {
-                        mDisplayContent.getDisplay().getRealSize(mTmpSize);
-                        motionEvent = MotionEvent.obtain(motionEvent);
-                        motionEvent.transform(MotionEvent.createRotateMatrix(
-                                rotation, mTmpSize.x, mTmpSize.y));
-                    }
-                }
-                PointerEventListener[] listeners;
-                synchronized (mListeners) {
-                    if (mListenersArray == null) {
-                        mListenersArray = new PointerEventListener[mListeners.size()];
-                        mListeners.toArray(mListenersArray);
-                    }
-                    listeners = mListenersArray;
-                }
-                for (int i = 0; i < listeners.length; ++i) {
-                    listeners[i].onPointerEvent(motionEvent);
+        if (event instanceof MotionEvent
+                && (event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
+            MotionEvent motionEvent = (MotionEvent) event;
+            if (ENABLE_PER_WINDOW_INPUT_ROTATION) {
+                final int rotation = mDisplayContent.getRotation();
+                if (rotation != Surface.ROTATION_0) {
+                    mDisplayContent.getDisplay().getRealSize(mTmpSize);
+                    motionEvent = MotionEvent.obtain(motionEvent);
+                    motionEvent.transform(MotionEvent.createRotateMatrix(
+                            rotation, mTmpSize.x, mTmpSize.y));
                 }
             }
-        } finally {
-            finishInputEvent(event, false);
+            PointerEventListener[] listeners;
+            synchronized (mListeners) {
+                if (mListenersArray == null) {
+                    mListenersArray = new PointerEventListener[mListeners.size()];
+                    mListeners.toArray(mListenersArray);
+                }
+                listeners = mListenersArray;
+            }
+            for (int i = 0; i < listeners.length; ++i) {
+                listeners[i].onPointerEvent(motionEvent);
+            }
         }
+        finishInputEvent(event, false);
     }
 
     /**
