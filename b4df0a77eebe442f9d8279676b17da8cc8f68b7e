@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bffd86c_ddcd6aa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-16T07:16:36Z",
+      "side": 1,
+      "message": "Robert, do you agree with this approach?",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b893e4af_28b52fc3",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-16T07:16:36Z",
+      "side": 1,
+      "message": "This can be null as well.\n\nYou can set mDisplayManager similarly to mPowerManager (see onBootPhase) and add a null check here as well.",
+      "range": {
+        "startLine": 638,
+        "startChar": 19,
+        "endLine": 639,
+        "endChar": 71
+      },
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
