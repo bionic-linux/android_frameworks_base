@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.server.vcn;
+package com.android.server.vcn.routeselection;
 
 import static com.android.server.vcn.VcnTestUtils.setupSystemService;
 
@@ -46,12 +46,13 @@ import android.telephony.CarrierConfigManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.TelephonyManager;
 import android.util.ArraySet;
+import com.android.server.vcn.VcnNetworkProvider;
+import com.android.server.vcn.VcnContext;
 
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
-import com.android.server.vcn.UnderlyingNetworkController.NetworkBringupCallback;
-import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
-import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkListener;
-import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkRecord;
+import com.android.server.vcn.routeselection.UnderlyingNetworkController.NetworkBringupCallback;
+import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
+import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkListener;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -249,7 +250,7 @@ public class UnderlyingNetworkControllerTest {
         return getExpectedRequestBase()
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(netCapsSubIds)
-                .setSignalStrength(UnderlyingNetworkController.WIFI_ENTRY_RSSI_THRESHOLD_DEFAULT)
+                .setSignalStrength(NetworkPriorityClassifier.WIFI_ENTRY_RSSI_THRESHOLD_DEFAULT)
                 .build();
     }
 
@@ -258,7 +259,7 @@ public class UnderlyingNetworkControllerTest {
         return getExpectedRequestBase()
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(netCapsSubIds)
-                .setSignalStrength(UnderlyingNetworkController.WIFI_EXIT_RSSI_THRESHOLD_DEFAULT)
+                .setSignalStrength(NetworkPriorityClassifier.WIFI_EXIT_RSSI_THRESHOLD_DEFAULT)
                 .build();
     }
 

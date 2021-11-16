@@ -74,7 +74,6 @@ import android.os.HandlerExecutor;
 import android.os.Message;
 import android.os.ParcelUuid;
 import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
 import android.os.Process;
 import android.os.SystemClock;
 import android.util.ArraySet;
@@ -87,12 +86,14 @@ import com.android.internal.util.State;
 import com.android.internal.util.StateMachine;
 import com.android.internal.util.WakeupMessage;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
-import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
-import com.android.server.vcn.UnderlyingNetworkController.UnderlyingNetworkRecord;
 import com.android.server.vcn.Vcn.VcnGatewayStatusCallback;
+import com.android.server.vcn.routeselection.UnderlyingNetworkController;
+import com.android.server.vcn.routeselection.UnderlyingNetworkController.UnderlyingNetworkControllerCallback;
+import com.android.server.vcn.routeselection.UnderlyingNetworkRecord;
 import com.android.server.vcn.util.LogUtils;
 import com.android.server.vcn.util.MtuUtils;
 import com.android.server.vcn.util.OneWayBoolean;
+import com.android.server.vcn.util.VcnWakeLock;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -687,6 +688,7 @@ public class VcnGatewayConnection extends StateMachine {
                         mVcnContext,
                         subscriptionGroup,
                         mLastSnapshot,
+                        mConnectionConfig,
                         mUnderlyingNetworkControllerCallback);
         mIpSecManager = mVcnContext.getContext().getSystemService(IpSecManager.class);
 
@@ -2365,9 +2367,10 @@ public class VcnGatewayConnection extends StateMachine {
                 VcnContext vcnContext,
                 ParcelUuid subscriptionGroup,
                 TelephonySubscriptionSnapshot snapshot,
+                VcnGatewayConnectionConfig vcnGwConnectionConfig,
                 UnderlyingNetworkControllerCallback callback) {
             return new UnderlyingNetworkController(
-                    vcnContext, subscriptionGroup, snapshot, callback);
+                    vcnContext, subscriptionGroup, snapshot, vcnGwConnectionConfig, callback);
         }
 
         /** Builds a new IkeSession. */
@@ -2515,36 +2518,6 @@ public class VcnGatewayConnection extends StateMachine {
         /** Sets the underlying network used by the IkeSession. */
         public void setNetwork(@NonNull Network network) {
             mImpl.setNetwork(network);
-        }
-    }
-
-    /** Proxy Implementation of WakeLock, used for testing. */
-    @VisibleForTesting(visibility = Visibility.PRIVATE)
-    public static class VcnWakeLock {
-        private final WakeLock mImpl;
-
-        public VcnWakeLock(@NonNull Context context, int flags, @NonNull String tag) {
-            final PowerManager powerManager = context.getSystemService(PowerManager.class);
-            mImpl = powerManager.newWakeLock(flags, tag);
-            mImpl.setReferenceCounted(false /* isReferenceCounted */);
-        }
-
-        /**
-         * Acquire this WakeLock.
-         *
-         * <p>Synchronize this action to minimize locking around WakeLock use.
-         */
-        public synchronized void acquire() {
-            mImpl.acquire();
-        }
-
-        /**
-         * Release this Wakelock.
-         *
-         * <p>Synchronize this action to minimize locking around WakeLock use.
-         */
-        public synchronized void release() {
-            mImpl.release();
         }
     }
 
