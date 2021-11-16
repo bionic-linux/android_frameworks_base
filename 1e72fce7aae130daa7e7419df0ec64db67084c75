@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fd19f6a_db15317f",
+        "filename": "telephony/java/android/telephony/ServiceState.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2083,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T08:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7839b46_c0c5c46c",
+      "range": {
+        "startLine": 2083,
+        "startChar": 24,
+        "endLine": 2083,
+        "endChar": 53
+      },
+      "revId": "1e72fce7aae130daa7e7419df0ec64db67084c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5dd7812_3ca489c7",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc2f1123_92e486ca",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 15780,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T08:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5dd7812_3ca489c7",
+      "range": {
+        "startLine": 15780,
+        "startChar": 15,
+        "endLine": 15780,
+        "endChar": 30
+      },
+      "revId": "1e72fce7aae130daa7e7419df0ec64db67084c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6953661_7f2eb383",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-11-15T23:31:37Z",
       "side": 1,
       "message": "Should throw exception when lack of permission. silent failure is dangerous.",
+      "range": {
+        "startLine": 15783,
+        "startChar": 68,
+        "endLine": 15783,
+        "endChar": 90
+      },
+      "revId": "1e72fce7aae130daa7e7419df0ec64db67084c75",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b9885f6_ffc55880",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 15783,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-16T08:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6953661_7f2eb383",
       "range": {
         "startLine": 15783,
         "startChar": 68,
