@@ -438,7 +438,6 @@ status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
                         gInputEventReceiverClassInfo.dispatchInputEvent, seq, inputEventObj);
                 if (env->ExceptionCheck()) {
                     ALOGE("Exception dispatching input event.");
-                    skipCallbacks = true;
                 }
                 env->DeleteLocalRef(inputEventObj);
             } else {
