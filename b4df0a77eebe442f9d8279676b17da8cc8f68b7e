@@ -63,6 +63,30 @@
       },
       "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39524cad_761b0df9",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-16T09:49:32Z",
+      "side": 1,
+      "message": "mPowerManager and mDisplayManager are set when the system services are ready, which is before the boot is completed.\n\nInitializing mDisplayManager here won\u0027t work before onBootPhase(PHASE_SYSTEM_SERVICES_READY). So better to set it onBootPhase(PHASE_SYSTEM_SERVICES_READY), just like for mPowerManager.",
+      "parentUuid": "5eef7abc_6aa36e19",
+      "range": {
+        "startLine": 638,
+        "startChar": 19,
+        "endLine": 639,
+        "endChar": 71
+      },
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
