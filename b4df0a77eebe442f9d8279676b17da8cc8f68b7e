@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "14cefed7_93c95530",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-16T18:52:28Z",
+      "side": 1,
+      "message": "As we discussed, there are actually some threading issues with accessing PowerManager in HdmiControlService before systemReady(). I will file a bug to keep track of those. Let\u0027s find a fix for the present issue, without fixing all the threading issues, as Amlogic is waiting for a solution for this.\n\nVenkat will investigate the order in which onAddressAllocated and onBootPhase(PHASE_SYSTEM_SERVICES_READY) are called. If generally onAddressAllocated() happens after onBootPhase(PHASE_SYSTEM_SERVICES_READY), I don\u0027t have a concern with merging this change.\n\nOne thing this change doesn\u0027t consider, is the case where quiescent mode is exited and we continue as a regular boot, because a power or wake key was pressed. This is really an edge case, and quiescent boots are timed to avoid users wanting to use their devices at that time. It should be fine to not consider this case, but we can still add it as a comment.\n\nOn a final note, it would probably be possible to switch calls around and only turn on system audio mode, or query the network for who\u0027s active source at a later time, avoiding the threading issues and considering the case where we exit quiescent mode. However, we don\u0027t actively maintain the audio system CEC implementation and don\u0027t have a soundbar device to test this on. Therefore, this would be a risky change to make, potentially doing more harm than good.",
+      "parentUuid": "5a0d2af6_ea154155",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b893e4af_28b52fc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 5
