@@ -87,6 +87,30 @@
       },
       "revId": "332cf7859f06c9fbc30134bf31b1b3954c2c9cfd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d39e5085_110035d2",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2021-11-16T04:58:21Z",
+      "side": 1,
+      "message": "I\u0027ve made the change, the isQuiescentBoot() checks that power manager is not null before use.",
+      "parentUuid": "4a014c41_cc4ecc80",
+      "range": {
+        "startLine": 637,
+        "startChar": 15,
+        "endLine": 637,
+        "endChar": 44
+      },
+      "revId": "332cf7859f06c9fbc30134bf31b1b3954c2c9cfd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
