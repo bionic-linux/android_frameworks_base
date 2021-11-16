@@ -39,6 +39,30 @@
       },
       "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eef7abc_6aa36e19",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2021-11-16T09:36:28Z",
+      "side": 1,
+      "message": "In that case, quiescent boot will always be true, if the boot has not completed by the time the address is allocated. Could we initialise mDisplayManager and mPowerManager in this method in case they are still null (or maybe initialise only mDisplayManager)?",
+      "parentUuid": "b893e4af_28b52fc3",
+      "range": {
+        "startLine": 638,
+        "startChar": 19,
+        "endLine": 639,
+        "endChar": 71
+      },
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
