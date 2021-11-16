@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5a0d2af6_ea154155",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-16T09:54:56Z",
+      "side": 1,
+      "message": "Observations:\n- @ServiceThreadOnly means same thread which systemReady() is called on, right? So no threading concerns with accessing mPowerManager.\n- Order between onAddressAllocated and systemReady is not guaranteed\n- If system is not yet ready, boot will be interpreted as quiescent boot\n\nMy question is, if boot is mistakenly considered quiescent, what are the effects and how do you recover?\nCan we make this more deterministic (guarantee onAddressAllocated happens after systemReady)?",
+      "parentUuid": "8bffd86c_ddcd6aa1",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b893e4af_28b52fc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 5
@@ -103,6 +121,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "39524cad_761b0df9",
+      "range": {
+        "startLine": 638,
+        "startChar": 19,
+        "endLine": 639,
+        "endChar": 71
+      },
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93f84dc9_e972b71a",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-16T09:54:56Z",
+      "side": 1,
+      "message": "PowerManager and DisplayManager are some of the earliest SystemServices that are started. getSystemService(DisplayManager.class) shouldn\u0027t be null at this point, but it\u0027s still not a great idea to call into system services before system services are ready.\n+1 to initializing mDisplayManager on PHASE_SYSTEM_SERVICES_READY",
+      "parentUuid": "5eef7abc_6aa36e19",
       "range": {
         "startLine": 638,
         "startChar": 19,
