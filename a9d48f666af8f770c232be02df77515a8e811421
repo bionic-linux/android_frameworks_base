@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ab51a89_89cd9aac",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-11-17T09:33:42Z",
+      "side": 1,
+      "message": "So this is the only way to unregister and free the memory ? ISTM that it means if a client obtains an instance of NsdManager, it will pass a callback, and that callback will be held onto by the system server until the process dies which means the callback can never be reclaimed.",
+      "range": {
+        "startLine": 667,
+        "startChar": 20,
+        "endLine": 667,
+        "endChar": 30
+      },
+      "revId": "a9d48f666af8f770c232be02df77515a8e811421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
