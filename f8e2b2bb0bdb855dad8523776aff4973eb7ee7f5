@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "324d5985_595c435d",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 15859,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-11-17T01:28:24Z",
+      "side": 1,
+      "message": "Check with Tyler to see if you can mention something not in API in the java doc.\n\nAlso @throws probably should be put right after @return.",
+      "range": {
+        "startLine": 15859,
+        "startChar": 7,
+        "endLine": 15859,
+        "endChar": 52
+      },
+      "revId": "f8e2b2bb0bdb855dad8523776aff4973eb7ee7f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
