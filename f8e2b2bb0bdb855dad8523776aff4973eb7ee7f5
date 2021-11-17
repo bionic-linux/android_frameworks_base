@@ -22,6 +22,30 @@
       },
       "revId": "f8e2b2bb0bdb855dad8523776aff4973eb7ee7f5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dde90c59_b4690f7e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 15859,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-11-17T03:17:08Z",
+      "side": 1,
+      "message": "this is a hidden api. So it is fine to add the documentation that is not in API",
+      "parentUuid": "324d5985_595c435d",
+      "range": {
+        "startLine": 15859,
+        "startChar": 7,
+        "endLine": 15859,
+        "endChar": 52
+      },
+      "revId": "f8e2b2bb0bdb855dad8523776aff4973eb7ee7f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
