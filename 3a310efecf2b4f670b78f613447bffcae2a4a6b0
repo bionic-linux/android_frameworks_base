@@ -56,6 +56,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "29148d22_1dd6a733",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2021-11-17T04:12:41Z",
+      "side": 1,
+      "message": "Thanks, the CL is under review internally, I will submit it when the time comes.",
+      "parentUuid": "567d4614_79a69f37",
+      "revId": "3a310efecf2b4f670b78f613447bffcae2a4a6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "cd9147f3_01ae0962",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
