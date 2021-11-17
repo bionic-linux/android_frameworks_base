@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c31dc5c_da651fbc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1904046
+      },
+      "writtenOn": "2021-11-17T02:53:47Z",
+      "side": 1,
+      "message": "Hello Siarhei Vishniakou, I have already added it, what do I need to do next？",
+      "parentUuid": "1532ad05_3129a387",
+      "revId": "3a310efecf2b4f670b78f613447bffcae2a4a6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cd9147f3_01ae0962",
