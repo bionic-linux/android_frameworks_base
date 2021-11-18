@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92a8f582_7a69c627",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-18T19:50:26Z",
+      "side": 1,
+      "message": "This version of isQuiescentBoot() would also say `true` if called after a regular boot if the device put to sleep before it is invoked. Then system audio mode would not be turned on, which sounds like an acceptable behavior to me - what do you think? This would also allow that edge case to turn on system audio mode, which also sounds like the right thing to do to me.\nThen the check method could be renamed to `isScreenOff` and simplified to `mDisplayManager.getDisplay(Display.DEFAULT_DISPLAY).getState() \u003d\u003d Display.STATE_OFF)` - no need to check isInteractive().\n\n\u003e Do we still need the null checks, though? When the looper only starts accepting work after PHASE_SYSTEM_SERVICES_READY, does that mean that mPowerManager will be initialized by the time onAddressAllocated gets called? The tests currently will still fail, but we can call onBootPhase(PHASE_SYSTEM_SERVICES_READY) to fix that.\n\nNull checks shouldn\u0027t be necessary, since yes, mPowerManager will be initialized by the time onAddressAllocated gets called. As agreed on updating the test to call onBootPhase(PHASE_SYSTEM_SERVICES_READY) as it would happen in a real boot.",
+      "parentUuid": "9568d797_43ac26c6",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b893e4af_28b52fc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 5
