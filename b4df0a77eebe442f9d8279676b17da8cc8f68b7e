@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6c39f116_039bf33c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-18T16:05:04Z",
+      "side": 1,
+      "message": "A correction after tracing the boot process a little more, order is:\n\n1. StartPowerManager\n2. StartHdmiControlService\n3. StartTvInputManager\n4. HdmiControlService receives PHASE_SYSTEM_SERVICES_READY\n5. TvInputManager receives PHASE_SYSTEM_SERVICES_READY\n6. PowerManager receives systemReady()\n7. Boot animation is told to finish up *asynchronously*\n8. Looper starts accepting work\n\nAt this point HdmiControlService work can already run (before PHASE_BOOT_COMPLETED).\nAnd `isInteractive() \u0026\u0026 displayState \u003d\u003d STATE_OFF` can still be observed during a quiescent boot.\n\nOnce the boot animation has finished up:\n1. PowerManagerService receives PHASE_BOOT_COMPLETED\n1.1. If this is a quiescent boot, device transitions to sleep\n2. HdmiControlService receives PHASE_BOOT_COMPLETED\n3. TvInputManager receives PHASE_BOOT_COMPLETED\n\nSo:\n - Any work dispatched to HdmiControlService\u0027s Handler doesn\u0027t need to worry about whether mPowerManager is ready, it can only run after it is ready\n - onAddressAllocated can be called *during* quiescent boot, or if slower, *after* boot completes\n     - If *during* quiescent boot, the current check would recognize it, and NOT turn on system audio mode\n     - If *after* boot complete, `isQuiescentBoot` would return false (since it is not interactive anymore), and WOULD turn on system audio mode, unless there is a check further down I haven\u0027t seen\n     - This latter case seems problematic?",
+      "parentUuid": "6d2d2d02_b067ed58",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b893e4af_28b52fc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 5
