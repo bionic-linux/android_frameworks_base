@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6d2d2d02_b067ed58",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-18T15:27:15Z",
+      "side": 1,
+      "message": "By \"no threading issues\" I meant that the member mPowerManager is not being accessed from multiple threads, but only ever from the single \"Service Thread\" (otherwise you\u0027d have to synchronize access to the member).\n\nAssuming all accesses to mPowerManager happen on the service thread (quick check suggests that is indeed the case), we don\u0027t have to worry about synchronization.\nThis alone does not guarantee a certain ordering of operations however, since messages/Runnables can be posted to HdmiControlService\u0027s Handler at different times, depending on eg. when CEC events are received.\n\nHdmiControlService\u0027s \"service thread\" is the SystemServer\u0027s main thread.\nHdmiControlService\u0027s Handler attaches to the main thread\u0027s Looper.\nLooking back at how SystemServer.java initializes services, I believe that systemReady must always come before anything posted on HdmiControlService\u0027s Handler is executed: SystemServer\u0027s startup is single-threaded, it starts one service after another, and proceeds into the PHASE_SYSTEM_SERVICES_READY afterwards. Since this all happens procedurally on a single thread, it must complete this work before the main thread becomes free to start work on anything posted to the Handler.\nSystemServer starts looping its Looper only after boot is completed.\nSince onAddressAllocated is dispatched to that Looper, it can only be executed after SystemServer has finished boot.\n\nTherefore I\u0027m no longer concerned about mPowerManager not yet being ready in onAddressAllocated.\n\nThat also means that this `isQuiescentBoot` is never actually called *during* quiescent boot, but only after bootComplete. PowerManager processes PHASE_BOOT_COMPLETED before HdmiControlService does, and in case of a quiescent boot puts the device to sleep.\nSo at the time of `onAddressAllocated` being called, `isInteractive() \u0026\u0026 displayState \u003d\u003d STATE_OFF` shouldn\u0027t actually occur anymore - that only happens *during* quiescent boot. (Was this tested performing a quiescent boot on an actual device? Was this condition ever observed in `onAddressAllocated`?)\n\nInstead, can you just check `isInteractive()` alone? I assume there\u0027s no reason to turn on system audio mode when the device is asleep?",
+      "parentUuid": "78addf99_886cf88e",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b893e4af_28b52fc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 5
