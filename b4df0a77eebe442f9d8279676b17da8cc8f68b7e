@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9568d797_43ac26c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-18T18:36:45Z",
+      "side": 1,
+      "message": "Thanks Robert for this very precise investigation and explanation.\n\nI conclude that a check for \n```\nboolean isQuiescentBoot() {\n        return (mPowerManager \u003d\u003d null || !mPowerManager.isInteractive())\n                || mDisplayManager \u003d\u003d null || mDisplayManager.getDisplay(Display.DEFAULT_DISPLAY).getState()\n                                \u003d\u003d Display.STATE_OFF);\n    }\n```\nwill be sufficient.\n\nDo we still need the null checks, though? When the looper only starts accepting work after PHASE_SYSTEM_SERVICES_READY, does that mean that mPowerManager will be initialized by the time onAddressAllocated gets called? The tests currently will still fail, but we can call onBootPhase(PHASE_SYSTEM_SERVICES_READY) to fix that.\n\nWe still need to mention that the edge case of exiting quiescent boot between PHASE_SYSTEM_SERVICE_READY and PHASE_BOOT_COMPLETED isn\u0027t covered.",
+      "parentUuid": "6c39f116_039bf33c",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b893e4af_28b52fc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 5
