@@ -164,6 +164,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aee6ee8a_6916b088",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1468761
+      },
+      "writtenOn": "2021-11-19T09:17:33Z",
+      "side": 1,
+      "message": "Ah you\u0027re right, that edge case is not covered. Your plan sgtm.",
+      "parentUuid": "2e2a2e33_67fc825e",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b893e4af_28b52fc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 5
