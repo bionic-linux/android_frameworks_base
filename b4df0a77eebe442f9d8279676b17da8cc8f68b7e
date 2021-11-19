@@ -146,6 +146,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e2a2e33_67fc825e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-19T08:38:43Z",
+      "side": 1,
+      "message": "Perfect. Then let\u0027s\n- rename the method to `isScreenOff` and simplify to `mDisplayManager.getDisplay(Display.DEFAULT_DISPLAY).getState() \u003d\u003d Display.STATE_OFF)`\n- call onBootPhase(PHASE_SYSTEM_SERVICES_READY) in tests\n\nJust one more thing:\n\u003e This would also allow that edge case to turn on system audio mode, which also sounds like the right thing to do to me.\nWhich edge case do you mean? If this is about exiting quiescent boot, I think there still is a missed edge case, in case quiescent boot gets exited after onAddressAllocated was called. But I\u0027d say this is acceptable, we can just add it as a comment.",
+      "parentUuid": "92a8f582_7a69c627",
+      "revId": "b4df0a77eebe442f9d8279676b17da8cc8f68b7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b893e4af_28b52fc3",
         "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
         "patchSetId": 5
