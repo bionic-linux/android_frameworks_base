@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9148ca63_c1e7d097",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceAudioSystem.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-19T14:38:56Z",
+      "side": 1,
+      "message": "Please add a comment:\n// This prevents from starting System Audio Mode on quiescent boot. If quiescent mode is exited after this statement is checked, this code will only be re-invoked at the next wake-up.",
+      "range": {
+        "startLine": 264,
+        "startChar": 8,
+        "endLine": 264,
+        "endChar": 38
+      },
+      "revId": "cdfca72b60a16f4f4cf1c9f622d3a889207db06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76dc5911_34d27ca7",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2021-11-19T14:38:56Z",
+      "side": 1,
+      "message": "The null check should be removed. This will cause the current unit test HdmiCecLocalDeviceAudioSystemTest to fail, but will be resolved if onBootPhase(PHASE_SYSTEM_SERVICES_READY) is added to the test.",
+      "range": {
+        "startLine": 640,
+        "startChar": 15,
+        "endLine": 641,
+        "endChar": 19
+      },
+      "revId": "cdfca72b60a16f4f4cf1c9f622d3a889207db06f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
