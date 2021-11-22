@@ -46,6 +46,30 @@
       },
       "revId": "a9d48f666af8f770c232be02df77515a8e811421",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "807917f3_a9ae5a97",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-22T05:57:56Z",
+      "side": 1,
+      "message": "Talked about it today: since NsdService is persistent this is the same as today.\nGood improvements could be to bind to the service on-demand and unbind when there\u0027s no registered service / discovery, but that may be a lot of work and shouldn\u0027t be done here in any case.",
+      "parentUuid": "d534292d_f4c290e2",
+      "range": {
+        "startLine": 667,
+        "startChar": 20,
+        "endLine": 667,
+        "endChar": 30
+      },
+      "revId": "a9d48f666af8f770c232be02df77515a8e811421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
