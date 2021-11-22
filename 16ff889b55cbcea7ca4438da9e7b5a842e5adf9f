@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0ac2eba_4ed3c8f5",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-22T17:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "594725b0_906e6525",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 47
+      },
+      "revId": "16ff889b55cbcea7ca4438da9e7b5a842e5adf9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03a45a01_126c5520",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Thanks! Add return false if dtaPatternNo equals to PN_ERR.",
       "parentUuid": "03a45a01_126c5520",
+      "range": {
+        "startLine": 221,
+        "startChar": 19,
+        "endLine": 221,
+        "endChar": 56
+      },
+      "revId": "16ff889b55cbcea7ca4438da9e7b5a842e5adf9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb240d48_77060370",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-22T17:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d4b013_65c76518",
       "range": {
         "startLine": 221,
         "startChar": 19,
