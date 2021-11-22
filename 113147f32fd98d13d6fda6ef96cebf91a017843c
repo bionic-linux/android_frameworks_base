@@ -189,6 +189,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "474da41f_3fb1c22e",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-22T17:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83b5a535_d1d7804c",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 554,
+        "endChar": 9
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb7ef8ab_fbff16c1",
@@ -202,6 +226,30 @@
       "writtenOn": "2021-09-29T07:35:50Z",
       "side": 1,
       "message": "Please also add \"android:description\" \u0026 \"android:label\" field.\nExample\ndescription : \"Gives NFC Forum Test App Access\" \nlabel :       \"Allows the app to get NFC Forum pattern based config access\"",
+      "range": {
+        "startLine": 1903,
+        "startChar": 1,
+        "endLine": 1904,
+        "endChar": 44
+      },
+      "revId": "113147f32fd98d13d6fda6ef96cebf91a017843c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a608f059_60bb179c",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-22T17:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb7ef8ab_fbff16c1",
       "range": {
         "startLine": 1903,
         "startChar": 1,

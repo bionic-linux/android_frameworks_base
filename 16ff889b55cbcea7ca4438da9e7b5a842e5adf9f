@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "594725b0_906e6525",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-22T17:51:48Z",
+      "side": 1,
+      "message": "Thanks! Add return false if dtaPatternNo equals to PN_ERR.",
+      "parentUuid": "7d8ff314_2f421e9b",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 47
+      },
+      "revId": "16ff889b55cbcea7ca4438da9e7b5a842e5adf9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "03a45a01_126c5520",
         "filename": "core/java/android/nfc/NfcActivityManager.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-11T10:10:28Z",
       "side": 1,
       "message": "Shouldn\u0027t we check pattern no validity before calling updatePatternNo?\n\nif ( dtaPatternNo.getValue() !\u003d NfcDtaPatternNumber.PN_ERR ) {\n   return updatePatternNo(token, dtaPatternNo);\n}",
+      "range": {
+        "startLine": 221,
+        "startChar": 19,
+        "endLine": 221,
+        "endChar": 56
+      },
+      "revId": "16ff889b55cbcea7ca4438da9e7b5a842e5adf9f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30d4b013_65c76518",
+        "filename": "core/java/android/nfc/NfcActivityManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2021-11-22T17:51:48Z",
+      "side": 1,
+      "message": "Thanks! Add return false if dtaPatternNo equals to PN_ERR.",
+      "parentUuid": "03a45a01_126c5520",
       "range": {
         "startLine": 221,
         "startChar": 19,
