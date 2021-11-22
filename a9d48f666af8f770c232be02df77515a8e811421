@@ -22,6 +22,30 @@
       },
       "revId": "a9d48f666af8f770c232be02df77515a8e811421",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d534292d_f4c290e2",
+        "filename": "services/core/java/com/android/server/NsdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2021-11-22T03:35:20Z",
+      "side": 1,
+      "message": "Do you mean it will never be reclaimed unless the process dies ? Yes I think that\u0027s the case, but it also was the case before as the AsyncChannel would be connected and never disconnected (disconnect is @hide and VisibleForTesting, only used from tests).",
+      "parentUuid": "2ab51a89_89cd9aac",
+      "range": {
+        "startLine": 667,
+        "startChar": 20,
+        "endLine": 667,
+        "endChar": 30
+      },
+      "revId": "a9d48f666af8f770c232be02df77515a8e811421",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
