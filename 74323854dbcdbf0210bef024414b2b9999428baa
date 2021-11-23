@@ -33,6 +33,46 @@
       "message": "Please help to review code and provide suggestions.",
       "revId": "74323854dbcdbf0210bef024414b2b9999428baa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35f00aa8_6a0057ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-11-23T22:17:52Z",
+      "side": 1,
+      "message": "Thanks for fixing this!\n\nChris - Can you double-check that this looks OK with my suggested deletion? With that change, it looks good to me.",
+      "revId": "74323854dbcdbf0210bef024414b2b9999428baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6d749a3_317b7847",
+        "filename": "core/java/com/android/internal/os/Zygote.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2021-11-23T22:17:52Z",
+      "side": 1,
+      "message": "This now looks wrong to me. SIGTERM is unblocked when we first enter the loop, so it should again be unblocked if we repeat.",
+      "range": {
+        "startLine": 763,
+        "startChar": 16,
+        "endLine": 763,
+        "endChar": 31
+      },
+      "revId": "74323854dbcdbf0210bef024414b2b9999428baa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
