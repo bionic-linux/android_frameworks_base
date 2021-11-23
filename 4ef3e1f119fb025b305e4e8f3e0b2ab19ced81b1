@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31c7771b_2cdd244b",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-11-23T23:02:05Z",
+      "side": 1,
+      "message": "Nit: can we keep the right box pipe aligned? Might have to delete one or two spaces from each side",
+      "range": {
+        "startLine": 144,
+        "startChar": 57,
+        "endLine": 144,
+        "endChar": 59
+      },
+      "revId": "4ef3e1f119fb025b305e4e8f3e0b2ab19ced81b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
