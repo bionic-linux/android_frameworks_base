@@ -92,7 +92,7 @@ public abstract class NetworkPriority {
 
     /** @hide */
     @NonNull
-    PersistableBundle toPersistableBundle() {
+    public PersistableBundle toPersistableBundle() {
         final PersistableBundle result = new PersistableBundle();
 
         result.putInt(NETWORK_PRIORITY_TYPE_KEY, mNetworkPriorityType);

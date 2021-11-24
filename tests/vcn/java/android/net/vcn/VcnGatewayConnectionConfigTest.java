@@ -28,8 +28,11 @@ import static org.junit.Assert.fail;
 import android.net.NetworkCapabilities;
 import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.IkeTunnelConnectionParams;
+import android.net.vcn.networkpriority.NetworkPriority;
 import android.net.vcn.persistablebundleutils.IkeSessionParamsUtilsTest;
 import android.net.vcn.persistablebundleutils.TunnelConnectionParamsUtilsTest;
+import android.vcn.networkpriority.CellNetworkPriorityTest;
+import android.vcn.networkpriority.WifiNetworkPriorityTest;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -37,7 +40,9 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
@@ -50,9 +55,14 @@ public class VcnGatewayConnectionConfigTest {
             };
     public static final int[] UNDERLYING_CAPS = new int[] {NetworkCapabilities.NET_CAPABILITY_DUN};
 
+    private static final List<NetworkPriority> NETWORK_PRIORITIES = new ArrayList<>();
+
     static {
         Arrays.sort(EXPOSED_CAPS);
         Arrays.sort(UNDERLYING_CAPS);
+
+        NETWORK_PRIORITIES.add(CellNetworkPriorityTest.getTestNetworkPriority());
+        NETWORK_PRIORITIES.add(WifiNetworkPriorityTest.getTestNetworkPriority());
     }
 
     public static final long[] RETRY_INTERVALS_MS =
@@ -82,7 +92,10 @@ public class VcnGatewayConnectionConfigTest {
 
     // Public for use in VcnGatewayConnectionTest
     public static VcnGatewayConnectionConfig buildTestConfig() {
-        return buildTestConfigWithExposedCaps(EXPOSED_CAPS);
+        final VcnGatewayConnectionConfig.Builder builder =
+                newBuilder().setNetworkPriorities(NETWORK_PRIORITIES);
+
+        return buildTestConfigWithExposedCaps(builder, EXPOSED_CAPS);
     }
 
     private static VcnGatewayConnectionConfig.Builder newBuilder() {
@@ -159,6 +172,15 @@ public class VcnGatewayConnectionConfigTest {
     }
 
     @Test
+    public void testBuilderRequiresNonNullNetworkPriorities() {
+        try {
+            newBuilder().setNetworkPriorities(null);
+            fail("Expected exception due to invalid networkPriorities");
+        } catch (NullPointerException e) {
+        }
+    }
+
+    @Test
     public void testBuilderRequiresNonNullRetryInterval() {
         try {
             newBuilder().setRetryIntervalsMillis(null);
@@ -195,6 +217,7 @@ public class VcnGatewayConnectionConfigTest {
         Arrays.sort(exposedCaps);
         assertArrayEquals(EXPOSED_CAPS, exposedCaps);
 
+        assertEquals(NETWORK_PRIORITIES, config.getNetworkPriorities());
         assertEquals(TUNNEL_CONNECTION_PARAMS, config.getTunnelConnectionParams());
 
         assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryIntervalsMillis());

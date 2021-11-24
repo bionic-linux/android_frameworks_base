@@ -33,7 +33,8 @@ public class WifiNetworkPriorityTest {
     private static final String SSID = "TestWifi";
     private static final int INVALID_NETWORK_QUALITY = 999;
 
-    private static WifiNetworkPriority getTestNetworkPriority() {
+    // Public for use in VcnGatewayConnectionConfigTest
+    public static WifiNetworkPriority getTestNetworkPriority() {
         return new WifiNetworkPriority.Builder()
                 .setNetworkQuality(NETWORK_QUALITY_OK)
                 .setAllowMetered(true /* allowMetered */)
