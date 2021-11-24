@@ -52,10 +52,12 @@ public abstract class NetworkPriority {
 
     /** @hide */
     protected static final String NETWORK_QUALITY_KEY = "mNetworkQuality";
+
     private final int mNetworkQuality;
 
     /** @hide */
     protected static final String ALLOW_METERED_KEY = "mAllowMetered";
+
     private final boolean mAllowMetered;
 
     /** @hide */
@@ -81,7 +83,7 @@ public abstract class NetworkPriority {
             case NETWORK_PRIORITY_TYPE_WIFI:
                 return WifiNetworkPriority.fromPersistableBundle(in);
             case NETWORK_PRIORITY_TYPE_CELL:
-                throw new UnsupportedOperationException("Not implemented");
+                return CellNetworkPriority.fromPersistableBundle(in);
             default:
                 throw new IllegalArgumentException(
                         "Invalid networkPriorityType:" + networkPriorityType);
