@@ -31,7 +31,8 @@ public class CellUnderlyingNetworkPriorityTest {
     private static final Set<String> ALLOWED_PLMN_IDS = new HashSet<>();
     private static final Set<Integer> ALLOWED_CARRIER_IDS = new HashSet<>();
 
-    private static CellUnderlyingNetworkPriority getTestNetworkPriority() {
+    // Public for use in VcnGatewayConnectionConfigTest
+    public static CellUnderlyingNetworkPriority getTestNetworkPriority() {
         return new CellUnderlyingNetworkPriority.Builder()
                 .setNetworkQuality(NETWORK_QUALITY_OK)
                 .setAllowMetered(true /* allowMetered */)

@@ -41,6 +41,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -166,6 +168,9 @@ public final class VcnGatewayConnectionConfig {
     private static final String EXPOSED_CAPABILITIES_KEY = "mExposedCapabilities";
     @NonNull private final SortedSet<Integer> mExposedCapabilities;
 
+    private static final String UNDERLYING_NETWORK_PRIORITIES_KEY = "mUnderlyingNetworkPriorities";
+    @NonNull private final LinkedHashSet<VcnUnderlyingNetworkPriority> mUnderlyingNetworkPriorities;
+
     private static final String MAX_MTU_KEY = "mMaxMtu";
     private final int mMaxMtu;
 
@@ -177,11 +182,13 @@ public final class VcnGatewayConnectionConfig {
             @NonNull String gatewayConnectionName,
             @NonNull IkeTunnelConnectionParams tunnelConnectionParams,
             @NonNull Set<Integer> exposedCapabilities,
+            @NonNull List<VcnUnderlyingNetworkPriority> underlyingNetworkPriorities,
             @NonNull long[] retryIntervalsMs,
             @IntRange(from = MIN_MTU_V6) int maxMtu) {
         mGatewayConnectionName = gatewayConnectionName;
         mTunnelConnectionParams = tunnelConnectionParams;
         mExposedCapabilities = new TreeSet(exposedCapabilities);
+        mUnderlyingNetworkPriorities = new LinkedHashSet<>(underlyingNetworkPriorities);
         mRetryIntervalsMs = retryIntervalsMs;
         mMaxMtu = maxMtu;
 
@@ -198,12 +205,19 @@ public final class VcnGatewayConnectionConfig {
 
         final PersistableBundle exposedCapsBundle =
                 in.getPersistableBundle(EXPOSED_CAPABILITIES_KEY);
+        final PersistableBundle networkPrioritiesBundle =
+                in.getPersistableBundle(UNDERLYING_NETWORK_PRIORITIES_KEY);
 
         mGatewayConnectionName = in.getString(GATEWAY_CONNECTION_NAME_KEY);
         mTunnelConnectionParams =
                 TunnelConnectionParamsUtils.fromPersistableBundle(tunnelConnectionParamsBundle);
         mExposedCapabilities = new TreeSet<>(PersistableBundleUtils.toList(
                 exposedCapsBundle, PersistableBundleUtils.INTEGER_DESERIALIZER));
+        mUnderlyingNetworkPriorities =
+                new LinkedHashSet<>(
+                        PersistableBundleUtils.toList(
+                                networkPrioritiesBundle,
+                                VcnUnderlyingNetworkPriority::fromPersistableBundle));
         mRetryIntervalsMs = in.getLongArray(RETRY_INTERVAL_MS_KEY);
         mMaxMtu = in.getInt(MAX_MTU_KEY);
 
@@ -221,6 +235,7 @@ public final class VcnGatewayConnectionConfig {
             checkValidCapability(cap);
         }
 
+        Objects.requireNonNull(mUnderlyingNetworkPriorities, "underlyingNetworkPriorities is null");
         Objects.requireNonNull(mRetryIntervalsMs, "retryIntervalsMs was null");
         validateRetryInterval(mRetryIntervalsMs);
 
@@ -303,6 +318,18 @@ public final class VcnGatewayConnectionConfig {
     }
 
     /**
+     * Retrieve the configured VcnUnderlyingNetworkPriority list, or an empty list if it is not
+     * configured.
+     *
+     * @see Builder#setVcnUnderlyingNetworkPriorities(LinkedHashSet<VcnUnderlyingNetworkPriority>)
+     * @hide
+     */
+    @NonNull
+    public LinkedHashSet<VcnUnderlyingNetworkPriority> getVcnUnderlyingNetworkPriorities() {
+        return new LinkedHashSet<>(mUnderlyingNetworkPriorities);
+    }
+
+    /**
      * Retrieves the configured retry intervals.
      *
      * @see Builder#setRetryIntervalsMillis(long[])
@@ -338,10 +365,15 @@ public final class VcnGatewayConnectionConfig {
                 PersistableBundleUtils.fromList(
                         new ArrayList<>(mExposedCapabilities),
                         PersistableBundleUtils.INTEGER_SERIALIZER);
+        final PersistableBundle networkPrioritiesBundle =
+                PersistableBundleUtils.fromList(
+                        new ArrayList<>(mUnderlyingNetworkPriorities),
+                        VcnUnderlyingNetworkPriority::toPersistableBundle);
 
         result.putString(GATEWAY_CONNECTION_NAME_KEY, mGatewayConnectionName);
         result.putPersistableBundle(TUNNEL_CONNECTION_PARAMS_KEY, tunnelConnectionParamsBundle);
         result.putPersistableBundle(EXPOSED_CAPABILITIES_KEY, exposedCapsBundle);
+        result.putPersistableBundle(UNDERLYING_NETWORK_PRIORITIES_KEY, networkPrioritiesBundle);
         result.putLongArray(RETRY_INTERVAL_MS_KEY, mRetryIntervalsMs);
         result.putInt(MAX_MTU_KEY, mMaxMtu);
 
@@ -379,6 +411,11 @@ public final class VcnGatewayConnectionConfig {
         @NonNull private final String mGatewayConnectionName;
         @NonNull private final IkeTunnelConnectionParams mTunnelConnectionParams;
         @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
+
+        @NonNull
+        private final List<VcnUnderlyingNetworkPriority> mUnderlyingNetworkPriorities =
+                new ArrayList<>();
+
         @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
         private int mMaxMtu = DEFAULT_MAX_MTU;
 
@@ -450,6 +487,27 @@ public final class VcnGatewayConnectionConfig {
         }
 
         /**
+         * Set the VcnUnderlyingNetworkPriority list.
+         *
+         * @param underlyingNetworkPriorities a list of unique VcnUnderlyingNetworkPriorities that
+         *     are ordered from most to least preferred, or an empty list to use the default
+         *     prioritization. The default network prioritization is Opportunistic cellular, Carrier
+         *     WiFi and Macro cellular
+         * @return
+         */
+        /** @hide */
+        @NonNull
+        public Builder setVcnUnderlyingNetworkPriorities(
+                @NonNull LinkedHashSet<VcnUnderlyingNetworkPriority> underlyingNetworkPriorities) {
+            Objects.requireNonNull(
+                    mUnderlyingNetworkPriorities, "underlyingNetworkPriorities is null");
+
+            mUnderlyingNetworkPriorities.clear();
+            mUnderlyingNetworkPriorities.addAll(underlyingNetworkPriorities);
+            return this;
+        }
+
+        /**
          * Set the retry interval between VCN establishment attempts upon successive failures.
          *
          * <p>The last retry interval will be repeated until safe mode is entered, or a connection
@@ -513,6 +571,7 @@ public final class VcnGatewayConnectionConfig {
                     mGatewayConnectionName,
                     mTunnelConnectionParams,
                     mExposedCapabilities,
+                    mUnderlyingNetworkPriorities,
                     mRetryIntervalsMs,
                     mMaxMtu);
         }
