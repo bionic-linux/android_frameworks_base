@@ -1,0 +1,99 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017649768",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1649301?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "57e9fd59_79933ddb",
+        "filename": "services/core/java/com/android/server/hdmi/NewDeviceAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-24T08:44:41Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 113
+      },
+      "revId": "348d9a5d1af96381251ffd189710aa906464dffb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017649768",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1649301?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "f756f696_c2246625",
+        "filename": "services/core/java/com/android/server/hdmi/NewDeviceAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-24T08:44:41Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 113
+      },
+      "revId": "348d9a5d1af96381251ffd189710aa906464dffb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017649763",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1649301?revision\u003d3",
+      "fixSuggestions": [
+        {
+          "fixId": "2b52bc47_ce68eeac",
+          "description": "Change to \"services/core/java/com/android/server/hdmi/NewDeviceAction.java\"",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/hdmi/NewDeviceAction.java",
+              "range": {
+                "startLine": 208,
+                "startChar": 44,
+                "endLine": 208,
+                "endChar": 55
+              },
+              "replacement": "preventing"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1296300c_0f4af037",
+        "filename": "services/core/java/com/android/server/hdmi/NewDeviceAction.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-24T08:44:41Z",
+      "side": 1,
+      "message": "Common typo found: \"prevernting\" -- should it be \"preventing\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 208,
+        "startChar": 44,
+        "endLine": 208,
+        "endChar": 55
+      },
+      "revId": "348d9a5d1af96381251ffd189710aa906464dffb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
