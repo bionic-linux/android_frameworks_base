@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbcb5d9a_82842d28",
+        "filename": "core/java/android/net/nsd/NsdManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-11-24T03:29:50Z",
+      "side": 1,
+      "message": "Why do you change the sequence for these two events?",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 73
+      },
+      "revId": "9a1bd887d9b1756793e2e7f4c062722167ca079d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
