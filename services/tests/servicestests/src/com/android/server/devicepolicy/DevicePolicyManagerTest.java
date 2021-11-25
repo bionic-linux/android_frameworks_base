@@ -100,6 +100,7 @@ import android.content.pm.UserInfo;
 import android.graphics.Color;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
+import android.net.ProfileNetworkPreferenceDetails;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -4047,9 +4048,14 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         mServiceContext.permissions.add(permission.INTERACT_ACROSS_USERS_FULL);
 
         dpms.handleStartUser(managedProfileUserId);
-        verify(getServices().connectivityManager, times(1)).setProfileNetworkPreference(
-                eq(UserHandle.of(managedProfileUserId)),
-                anyInt(),
+        ProfileNetworkPreferenceDetails preferenceDetails =
+                new ProfileNetworkPreferenceDetails.Builder()
+                .setProfileAsUser(UserHandle.of(managedProfileUserId))
+                .setProfileNetworkPreference(anyInt())
+                .build();
+        verify(getServices().connectivityManager, times(1))
+                .setProfileNetworkPreference(
+                preferenceDetails,
                 any(),
                 any()
         );
@@ -4064,9 +4070,15 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         mServiceContext.permissions.add(permission.INTERACT_ACROSS_USERS_FULL);
 
         dpms.handleStopUser(managedProfileUserId);
+
+        ProfileNetworkPreferenceDetails preferenceDetails =
+                new ProfileNetworkPreferenceDetails.Builder()
+                        .setProfileAsUser(UserHandle.of(managedProfileUserId))
+                        .setProfileNetworkPreference(
+                                ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                        .build();
         verify(getServices().connectivityManager, times(1)).setProfileNetworkPreference(
-                eq(UserHandle.of(managedProfileUserId)),
-                eq(ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT),
+                preferenceDetails,
                 any(),
                 any()
         );
@@ -4087,18 +4099,28 @@ public class DevicePolicyManagerTest extends DpmTestBase {
 
         dpm.setPreferentialNetworkServiceEnabled(false);
         assertThat(dpm.isPreferentialNetworkServiceEnabled()).isFalse();
+        ProfileNetworkPreferenceDetails preferenceDetails =
+                new ProfileNetworkPreferenceDetails.Builder()
+                        .setProfileAsUser(UserHandle.of(managedProfileUserId))
+                        .setProfileNetworkPreference(
+                                ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                        .build();
         verify(getServices().connectivityManager, times(1)).setProfileNetworkPreference(
-                eq(UserHandle.of(managedProfileUserId)),
-                eq(ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT),
+                preferenceDetails,
                 any(),
                 any()
         );
 
         dpm.setPreferentialNetworkServiceEnabled(true);
         assertThat(dpm.isPreferentialNetworkServiceEnabled()).isTrue();
+        ProfileNetworkPreferenceDetails preferenceDetails2 =
+                new ProfileNetworkPreferenceDetails.Builder()
+                        .setProfileAsUser(UserHandle.of(managedProfileUserId))
+                        .setProfileNetworkPreference(
+                                ConnectivityManager.PROFILE_NETWORK_PREFERENCE_ENTERPRISE)
+                        .build();
         verify(getServices().connectivityManager, times(1)).setProfileNetworkPreference(
-                eq(UserHandle.of(managedProfileUserId)),
-                eq(ConnectivityManager.PROFILE_NETWORK_PREFERENCE_ENTERPRISE),
+                preferenceDetails2,
                 any(),
                 any()
         );
