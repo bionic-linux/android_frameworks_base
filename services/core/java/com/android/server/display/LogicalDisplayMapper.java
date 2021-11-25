@@ -344,6 +344,8 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
 
     private void handleDisplayDeviceAddedLocked(DisplayDevice device) {
         DisplayDeviceInfo deviceInfo = device.getDisplayDeviceInfoLocked();
+        final boolean isDefault = (deviceInfo.flags & DisplayDeviceInfo.FLAG_DEFAULT_DISPLAY) != 0;
+
         // Internal Displays need to have additional initialization.
         // This initializes a default dynamic display layout for INTERNAL
         // devices, which is used as a fallback in case no static layout definitions
@@ -354,7 +356,7 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
 
         // Create a logical display for the new display device
         LogicalDisplay display = createNewLogicalDisplayLocked(
-                device, Layout.assignDisplayIdLocked(false /*isDefault*/));
+                device, Layout.assignDisplayIdLocked(isDefault));
 
         applyLayoutLocked();
         updateLogicalDisplaysLocked();
