@@ -37,6 +37,8 @@ import static android.app.admin.DevicePolicyManager.PRIVATE_DNS_SET_NO_ERROR;
 import static android.app.admin.DevicePolicyManager.WIPE_EUICC;
 import static android.app.admin.PasswordMetrics.computeForPasswordOrPin;
 import static android.content.pm.ApplicationInfo.PRIVATE_FLAG_DIRECT_BOOT_AWARE;
+import static android.net.ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT;
+import static android.net.ConnectivityManager.PROFILE_NETWORK_PREFERENCE_ENTERPRISE;
 import static android.net.InetAddresses.parseNumericAddress;
 
 import static com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_NONE;
@@ -100,6 +102,7 @@ import android.content.pm.UserInfo;
 import android.graphics.Color;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
+import android.net.ProfileNetworkPreferences;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -4044,11 +4047,16 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         mServiceContext.permissions.add(permission.INTERACT_ACROSS_USERS_FULL);
 
         dpms.handleStartUser(managedProfileUserId);
-        verify(getServices().connectivityManager, times(1)).setProfileNetworkPreference(
-                eq(UserHandle.of(managedProfileUserId)),
-                anyInt(),
-                any(),
-                any()
+        ProfileNetworkPreferences preferenceDetails =
+                new ProfileNetworkPreferences.Builder()
+                .setUser(UserHandle.of(managedProfileUserId))
+                .setProfileNetworkPreference(PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                .build();
+        verify(getServices().connectivityManager, times(1))
+                .setProfileNetworkPreference(
+                preferenceDetails,
+                null,
+                null
         );
     }
 
@@ -4061,11 +4069,17 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         mServiceContext.permissions.add(permission.INTERACT_ACROSS_USERS_FULL);
 
         dpms.handleStopUser(managedProfileUserId);
+
+        ProfileNetworkPreferences preferenceDetails =
+                new ProfileNetworkPreferences.Builder()
+                        .setUser(UserHandle.of(managedProfileUserId))
+                        .setProfileNetworkPreference(
+                                ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                        .build();
         verify(getServices().connectivityManager, times(1)).setProfileNetworkPreference(
-                eq(UserHandle.of(managedProfileUserId)),
-                eq(ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT),
-                any(),
-                any()
+                preferenceDetails,
+                null,
+                null
         );
     }
 
@@ -4084,20 +4098,30 @@ public class DevicePolicyManagerTest extends DpmTestBase {
 
         dpm.setPreferentialNetworkServiceEnabled(false);
         assertThat(dpm.isPreferentialNetworkServiceEnabled()).isFalse();
+        ProfileNetworkPreferences preferenceDetails =
+                new ProfileNetworkPreferences.Builder()
+                        .setUser(UserHandle.of(managedProfileUserId))
+                        .setProfileNetworkPreference(
+                                ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT)
+                        .build();
         verify(getServices().connectivityManager, times(1)).setProfileNetworkPreference(
-                eq(UserHandle.of(managedProfileUserId)),
-                eq(ConnectivityManager.PROFILE_NETWORK_PREFERENCE_DEFAULT),
-                any(),
-                any()
+                preferenceDetails,
+                null,
+                null
         );
 
         dpm.setPreferentialNetworkServiceEnabled(true);
         assertThat(dpm.isPreferentialNetworkServiceEnabled()).isTrue();
+        ProfileNetworkPreferences preferenceDetails2 =
+                new ProfileNetworkPreferences.Builder()
+                        .setUser(UserHandle.of(managedProfileUserId))
+                        .setProfileNetworkPreference(
+                                PROFILE_NETWORK_PREFERENCE_ENTERPRISE)
+                        .build();
         verify(getServices().connectivityManager, times(1)).setProfileNetworkPreference(
-                eq(UserHandle.of(managedProfileUserId)),
-                eq(ConnectivityManager.PROFILE_NETWORK_PREFERENCE_ENTERPRISE),
-                any(),
-                any()
+                preferenceDetails2,
+                null,
+                null
         );
     }
 

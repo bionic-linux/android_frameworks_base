@@ -231,6 +231,7 @@ import android.media.IAudioService;
 import android.net.ConnectivityManager;
 import android.net.ConnectivitySettingsManager;
 import android.net.IIpConnectivityMetrics;
+import android.net.ProfileNetworkPreferences;
 import android.net.ProxyInfo;
 import android.net.Uri;
 import android.net.VpnManager;
@@ -17531,10 +17532,13 @@ public class DevicePolicyManagerService extends BaseIDevicePolicyManager {
         }
         int networkPreference = preferentialNetworkServiceEnabled
                 ? PROFILE_NETWORK_PREFERENCE_ENTERPRISE : PROFILE_NETWORK_PREFERENCE_DEFAULT;
+        ProfileNetworkPreferences.Builder preferenceBuilder =
+                new ProfileNetworkPreferences.Builder();
+        preferenceBuilder.setUser(UserHandle.of(userId));
+        preferenceBuilder.setProfileNetworkPreference(networkPreference);
         mInjector.binderWithCleanCallingIdentity(() ->
                 mInjector.getConnectivityManager().setProfileNetworkPreference(
-                        UserHandle.of(userId),
-                        networkPreference,
+                        preferenceBuilder.build(),
                         null /* executor */, null /* listener */));
     }
 
