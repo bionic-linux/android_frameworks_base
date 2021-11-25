@@ -332,7 +332,7 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                 }
                 final SurfaceControl.Transaction sft = new SurfaceControl.Transaction();
                 final SurfaceControl sc = task.getSurfaceControl();
-                sft.setPosition(sc, surfaceBounds.left, surfaceBounds.top);
+                task.updateSurfacePosition(sft);
                 if (surfaceBounds.isEmpty()) {
                     sft.setWindowCrop(sc, null);
                 } else {
