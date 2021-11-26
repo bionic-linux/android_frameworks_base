@@ -679,8 +679,7 @@ public class StateMachine {
         }
     }
 
-    private static class SmHandler extends Handler {
-
+    private static class SmHandler extends StateMachineHandler {
         /** true if StateMachine has quit */
         private boolean mHasQuit = false;
 
@@ -794,11 +793,9 @@ public class StateMachine {
         @Override
         public final void handleMessage(Message msg) {
             if (!mHasQuit) {
-                if (mSm != null && msg.what != SM_INIT_CMD && msg.what != SM_QUIT_CMD) {
-                    mSm.onPreHandleMessage(msg);
-                }
+                onPreHandleMessage(msg);
 
-                if (mDbg) mSm.log("handleMessage: E msg.what=" + msg.what);
+                log("handleMessage: E msg.what=" + msg.what);
 
                 /** Save the current message */
                 mMsg = msg;
@@ -820,19 +817,14 @@ public class StateMachine {
                 performTransitions(msgProcessedState, msg);
 
                 // We need to check if mSm == null here as we could be quitting.
-                if (mDbg && mSm != null) mSm.log("handleMessage: X");
+                log("handleMessage: X");
 
-                if (mSm != null && msg.what != SM_INIT_CMD && msg.what != SM_QUIT_CMD) {
-                    mSm.onPostHandleMessage(msg);
-                }
+                onPostHandleMessage(msg);
             }
         }
 
-        /**
-         * Do any transitions
-         * @param msgProcessedState is the state that processed the message
-         */
-        private void performTransitions(State msgProcessedState, Message msg) {
+        @Override
+        protected void maybeRecordTransitionLogMessage(State msgProcessedState, Message msg) {
             /**
              * If transitionTo has been called, exit and then enter
              * the appropriate states. We loop on this to allow
@@ -840,11 +832,6 @@ public class StateMachine {
              */
             State orgState = mStateStack[mStateStackTopIndex].state;
 
-            /**
-             * Record whether message needs to be logged before we transition and
-             * and we won't log special messages SM_INIT_CMD or SM_QUIT_CMD which
-             * always set msg.obj to the handler.
-             */
             boolean recordLogMsg = mSm.recordLogRec(mMsg) && (msg.obj != mSmHandlerObj);
 
             if (mLogRecords.logOnlyTransitions()) {
@@ -858,6 +845,19 @@ public class StateMachine {
                 mLogRecords.add(mSm, mMsg, mSm.getLogRecString(mMsg), msgProcessedState, orgState,
                         mDestState);
             }
+        }
+
+        /**
+         * Do any transitions
+         * @param msgProcessedState is the state that processed the message
+         */
+        private void performTransitions(State msgProcessedState, Message msg) {
+            /**
+             * Record whether message needs to be logged before we transition and
+             * and we won't log special messages SM_INIT_CMD or SM_QUIT_CMD which
+             * always set msg.obj to the handler.
+             */
+            maybeRecordTransitionLogMessage(msgProcessedState, msg);
 
             State destState = mDestState;
             if (destState != null) {
@@ -865,7 +865,7 @@ public class StateMachine {
                  * Process the transitions including transitions in the enter/exit methods
                  */
                 while (true) {
-                    if (mDbg) mSm.log("handleMessage: new destination call exit/enter");
+                    log("handleMessage: new destination call exit/enter");
 
                     /**
                      * Determine the states to exit and enter and return the
@@ -947,7 +947,7 @@ public class StateMachine {
          * Complete the construction of the state machine.
          */
         private final void completeConstruction() {
-            if (mDbg) mSm.log("completeConstruction: E");
+            log("completeConstruction: E");
 
             /**
              * Determine the maximum depth of the state hierarchy
@@ -963,7 +963,7 @@ public class StateMachine {
                     maxDepth = depth;
                 }
             }
-            if (mDbg) mSm.log("completeConstruction: maxDepth=" + maxDepth);
+            log("completeConstruction: maxDepth=" + maxDepth);
 
             mStateStack = new StateInfo[maxDepth];
             mTempStateStack = new StateInfo[maxDepth];
@@ -972,7 +972,7 @@ public class StateMachine {
             /** Sending SM_INIT_CMD message to invoke enter methods asynchronously */
             sendMessageAtFrontOfQueue(obtainMessage(SM_INIT_CMD, mSmHandlerObj));
 
-            if (mDbg) mSm.log("completeConstruction: X");
+            log("completeConstruction: X");
         }
 
         /**
@@ -983,9 +983,7 @@ public class StateMachine {
          */
         private final State processMsg(Message msg) {
             StateInfo curStateInfo = mStateStack[mStateStackTopIndex];
-            if (mDbg) {
-                mSm.log("processMsg: " + curStateInfo.state.getName());
-            }
+            log("processMsg: " + curStateInfo.state.getName());
 
             if (isQuit(msg)) {
                 transitionTo(mQuittingState);
@@ -999,12 +997,10 @@ public class StateMachine {
                         /**
                          * No parents left so it's not handled
                          */
-                        mSm.unhandledMessage(msg);
+                        unhandledMessage(msg);
                         break;
                     }
-                    if (mDbg) {
-                        mSm.log("processMsg: " + curStateInfo.state.getName());
-                    }
+                    log("processMsg: " + curStateInfo.state.getName());
                 }
             }
             return (curStateInfo != null) ? curStateInfo.state : null;
@@ -1018,7 +1014,7 @@ public class StateMachine {
             while ((mStateStackTopIndex >= 0)
                     && (mStateStack[mStateStackTopIndex] != commonStateInfo)) {
                 State curState = mStateStack[mStateStackTopIndex].state;
-                if (mDbg) mSm.log("invokeExitMethods: " + curState.getName());
+                log("invokeExitMethods: " + curState.getName());
                 curState.exit();
                 mStateStack[mStateStackTopIndex].active = false;
                 mStateStackTopIndex -= 1;
@@ -1034,7 +1030,7 @@ public class StateMachine {
                     // Last enter state for transition
                     mTransitionInProgress = false;
                 }
-                if (mDbg) mSm.log("invokeEnterMethods: " + mStateStack[i].state.getName());
+                log("invokeEnterMethods: " + mStateStack[i].state.getName());
                 mStateStack[i].state.enter();
                 mStateStack[i].active = true;
             }
@@ -1053,7 +1049,7 @@ public class StateMachine {
              */
             for (int i = mDeferredMessages.size() - 1; i >= 0; i--) {
                 Message curMsg = mDeferredMessages.get(i);
-                if (mDbg) mSm.log("moveDeferredMessageAtFrontOfQueue; what=" + curMsg.what);
+                log("moveDeferredMessageAtFrontOfQueue; what=" + curMsg.what);
                 sendMessageAtFrontOfQueue(curMsg);
             }
             mDeferredMessages.clear();
@@ -1071,18 +1067,16 @@ public class StateMachine {
             int i = mTempStateStackCount - 1;
             int j = startingIndex;
             while (i >= 0) {
-                if (mDbg) mSm.log("moveTempStackToStateStack: i=" + i + ",j=" + j);
+                log("moveTempStackToStateStack: i=" + i + ",j=" + j);
                 mStateStack[j] = mTempStateStack[i];
                 j += 1;
                 i -= 1;
             }
 
             mStateStackTopIndex = j - 1;
-            if (mDbg) {
-                mSm.log("moveTempStackToStateStack: X mStateStackTop=" + mStateStackTopIndex
-                        + ",startingIndex=" + startingIndex + ",Top="
-                        + mStateStack[mStateStackTopIndex].state.getName());
-            }
+            log("moveTempStackToStateStack: X mStateStackTop=" + mStateStackTopIndex
+                    + ",startingIndex=" + startingIndex + ",Top="
+                    + mStateStack[mStateStackTopIndex].state.getName());
             return startingIndex;
         }
 
@@ -1111,10 +1105,8 @@ public class StateMachine {
                 curStateInfo = curStateInfo.parentStateInfo;
             } while ((curStateInfo != null) && !curStateInfo.active);
 
-            if (mDbg) {
-                mSm.log("setupTempStateStackWithStatesToEnter: X mTempStateStackCount="
-                        + mTempStateStackCount + ",curStateInfo: " + curStateInfo);
-            }
+            log("setupTempStateStackWithStatesToEnter: X mTempStateStackCount="
+                    + mTempStateStackCount + ",curStateInfo: " + curStateInfo);
             return curStateInfo;
         }
 
@@ -1122,9 +1114,7 @@ public class StateMachine {
          * Initialize StateStack to mInitialState.
          */
         private final void setupInitialStateStack() {
-            if (mDbg) {
-                mSm.log("setupInitialStateStack: E mInitialState=" + mInitialState.getName());
-            }
+            log("setupInitialStateStack: E mInitialState=" + mInitialState.getName());
 
             StateInfo curStateInfo = mStateInfo.get(mInitialState);
             for (mTempStateStackCount = 0; curStateInfo != null; mTempStateStackCount++) {
@@ -1162,10 +1152,8 @@ public class StateMachine {
          * @return stateInfo for this state
          */
         private final StateInfo addState(State state, State parent) {
-            if (mDbg) {
-                mSm.log("addStateInternal: E state=" + state.getName() + ",parent="
-                        + ((parent == null) ? "" : parent.getName()));
-            }
+            log("addStateInternal: E state=" + state.getName() + ",parent="
+                    + ((parent == null) ? "" : parent.getName()));
             StateInfo parentStateInfo = null;
             if (parent != null) {
                 parentStateInfo = mStateInfo.get(parent);
@@ -1188,7 +1176,7 @@ public class StateMachine {
             stateInfo.state = state;
             stateInfo.parentStateInfo = parentStateInfo;
             stateInfo.active = false;
-            if (mDbg) mSm.log("addStateInternal: X stateInfo: " + stateInfo);
+            log("addStateInternal: X stateInfo: " + stateInfo);
             return stateInfo;
         }
 
@@ -1228,23 +1216,23 @@ public class StateMachine {
 
         /** @see StateMachine#setInitialState(State) */
         private final void setInitialState(State initialState) {
-            if (mDbg) mSm.log("setInitialState: initialState=" + initialState.getName());
+            log("setInitialState: initialState=" + initialState.getName());
             mInitialState = initialState;
         }
 
         /** @see StateMachine#transitionTo(IState) */
         private final void transitionTo(IState destState) {
             if (mTransitionInProgress) {
-                Log.wtf(mSm.mName, "transitionTo called while transition already in progress to " +
-                        mDestState + ", new target state=" + destState);
+                logwtf("transitionTo called while transition already in progress to " + mDestState
+                        + ", new target state=" + destState);
             }
             mDestState = (State) destState;
-            if (mDbg) mSm.log("transitionTo: destState=" + mDestState.getName());
+            log("transitionTo: destState=" + mDestState.getName());
         }
 
         /** @see StateMachine#deferMessage(Message) */
         private final void deferMessage(Message msg) {
-            if (mDbg) mSm.log("deferMessage: msg=" + msg.what);
+            log("deferMessage: msg=" + msg.what);
 
             /* Copy the "msg" to "newMsg" as "msg" will be recycled */
             Message newMsg = obtainMessage();
@@ -1255,13 +1243,13 @@ public class StateMachine {
 
         /** @see StateMachine#quit() */
         private final void quit() {
-            if (mDbg) mSm.log("quit:");
+            log("quit:");
             sendMessage(obtainMessage(SM_QUIT_CMD, mSmHandlerObj));
         }
 
         /** @see StateMachine#quitNow() */
         private final void quitNow() {
-            if (mDbg) mSm.log("quitNow:");
+            log("quitNow:");
             sendMessageAtFrontOfQueue(obtainMessage(SM_QUIT_CMD, mSmHandlerObj));
         }
 
@@ -1280,6 +1268,35 @@ public class StateMachine {
             mDbg = dbg;
         }
 
+        @Override
+        protected void onPreHandleMessage(Message msg) {
+            if (mSm == null || msg.what == SM_INIT_CMD || msg.what == SM_QUIT_CMD) return;
+
+            mSm.onPreHandleMessage(msg);
+        }
+
+        @Override
+        protected void onPostHandleMessage(Message msg) {
+            if (mSm == null || msg.what == SM_INIT_CMD || msg.what == SM_QUIT_CMD) return;
+
+            mSm.onPostHandleMessage(msg);
+        }
+
+        @Override
+        protected void unhandledMessage(Message msg) {
+            mSm.unhandledMessage(msg);
+        }
+
+        @Override
+        protected void log(String s) {
+            // Need to check if mSm == null as mSm could be quitting.
+            if (mDbg && mSm != null) mSm.log(s);
+        }
+
+        @Override
+        protected void logwtf(String s) {
+            Log.wtf(mSm.mName, s);
+        }
     }
 
     private SmHandler mSmHandler;
