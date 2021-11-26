@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61463ccc_333c1e10",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1136369
+      },
+      "writtenOn": "2021-11-26T17:08:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure why you would want to do a case insensitive comparison. This is not a value a user can get wrong, it is the the Windows hard coded user agent.",
+      "parentUuid": "82c40f1b_c4c4a9c8",
+      "range": {
+        "startLine": 745,
+        "startChar": 27,
+        "endLine": 745,
+        "endChar": 58
+      },
+      "revId": "56fa9a6b6baa3d9b5e1285340905e20f0a9b2ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54e17b75_5cb22a68",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bc377fe_ef9d4689",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1136369
+      },
+      "writtenOn": "2021-11-26T17:08:14Z",
+      "side": 1,
+      "message": "As far as I understand, the whole MTP server is destroyed when the MTP connection is serered.\n\nAdditionally, the same pattern is used for mSkipThumbForHost.\n\nFinaly, my testing showed that when transitioning from Windows to Linux, the size was not doubled.",
+      "parentUuid": "54e17b75_5cb22a68",
+      "range": {
+        "startLine": 746,
+        "startChar": 20,
+        "endLine": 746,
+        "endChar": 42
+      },
+      "revId": "56fa9a6b6baa3d9b5e1285340905e20f0a9b2ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f748b75_efa48c0f",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-11-26T16:56:56Z",
       "side": 1,
       "message": "Returns true *if* the mtp host ...",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 60
+      },
+      "revId": "56fa9a6b6baa3d9b5e1285340905e20f0a9b2ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e40022b_2f663117",
+        "filename": "media/java/android/mtp/MtpStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1136369
+      },
+      "writtenOn": "2021-11-26T17:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f748b75_efa48c0f",
       "range": {
         "startLine": 102,
         "startChar": 15,
