@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a996116_0fcf867d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-11-26T16:56:56Z",
+      "side": 1,
+      "message": "I\u0027ll do one final pass early next week, just to make sure I\u0027m not missing anything obvious.",
+      "revId": "56fa9a6b6baa3d9b5e1285340905e20f0a9b2ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82c40f1b_c4c4a9c8",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-11-26T16:56:56Z",
+      "side": 1,
+      "message": "I appreciate this follows the existing style, but is it guaranteed that the String value will be capitalized? Is there any reason to think we might want\n\nstringValue \u003d stringValue.toLowerCase(Locale.ROOT);\n\nand use\n\nstringValue.startsWith(\"windows/\"), or is there a reason not to do it this way?",
+      "range": {
+        "startLine": 745,
+        "startChar": 27,
+        "endLine": 745,
+        "endChar": 58
+      },
+      "revId": "56fa9a6b6baa3d9b5e1285340905e20f0a9b2ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54e17b75_5cb22a68",
+        "filename": "media/java/android/mtp/MtpDatabase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-11-26T16:56:56Z",
+      "side": 1,
+      "message": "Question: Is this object re-created for each USB connection?\n\nConcretely I\u0027m wondering whether mHostIsWindows needs to be reset to false ever. For example, if I connect a device to Windows, and then to Linux. Will the mHostIsWindows be false next time I connect to linux?",
+      "range": {
+        "startLine": 746,
+        "startChar": 20,
+        "endLine": 746,
+        "endChar": 42
+      },
+      "revId": "56fa9a6b6baa3d9b5e1285340905e20f0a9b2ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f748b75_efa48c0f",
+        "filename": "media/java/android/mtp/MtpStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2021-11-26T16:56:56Z",
+      "side": 1,
+      "message": "Returns true *if* the mtp host ...",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 60
+      },
+      "revId": "56fa9a6b6baa3d9b5e1285340905e20f0a9b2ad5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
