@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b102af77_f9dc8a32",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9196,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2021-11-29T18:30:15Z",
+      "side": 1,
+      "message": "The following \u003cp\u003e section specified behavior that this is associated with subscription. Is it better to say current \"subscription\" instead of \"SIM card\"?",
+      "range": {
+        "startLine": 9196,
+        "startChar": 0,
+        "endLine": 9196,
+        "endChar": 23
+      },
+      "revId": "459e25e3ad103147cf69cb32a1a1001f3fe80993",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
