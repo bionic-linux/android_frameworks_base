@@ -22,6 +22,29 @@
       },
       "revId": "5ea7bb2293aff1beb270c7eb6ddb873ba109d686",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10d71f70_3692152c",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2021-11-29T18:21:36Z",
+      "side": 1,
+      "message": "Please link in the CTS test for this change to this overall topic.  This type of logic is easily broken due to OEM customization.",
+      "range": {
+        "startLine": 829,
+        "startChar": 4,
+        "endLine": 830,
+        "endChar": 61
+      },
+      "revId": "5ea7bb2293aff1beb270c7eb6ddb873ba109d686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
