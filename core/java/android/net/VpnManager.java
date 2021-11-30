@@ -281,6 +281,22 @@ public class VpnManager {
     /**
      * Request the startup of a previously provisioned VPN.
      *
+     * @return A unique key corresponding to this session.
+     * @throws SecurityException exception if user or device settings prevent this VPN from being
+     *     setup, or if user consent has not been granted
+     */
+    @NonNull
+    public String startProvisionedVpnProfileWithSessionKey() {
+        try {
+            return mService.startVpnProfile(mContext.getOpPackageName());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * Request the startup of a previously provisioned VPN.
+     *
      * @throws SecurityException exception if user or device settings prevent this VPN from being
      *     setup, or if user consent has not been granted
      */
