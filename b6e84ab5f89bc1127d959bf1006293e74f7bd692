@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c7b7874_ac171809",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1928505
+      },
+      "writtenOn": "2021-11-30T20:21:56Z",
+      "side": 1,
+      "message": "Hi, please review fix for only external display.\nThis was fixed while getting Panfrost driver working on Android.",
+      "revId": "b6e84ab5f89bc1127d959bf1006293e74f7bd692",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
