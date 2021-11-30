@@ -16,6 +16,9 @@
 
 package com.android.internal.util;
 
+import static com.android.internal.util.StateMachineHandler.SM_INIT_CMD;
+import static com.android.internal.util.StateMachineHandler.SM_QUIT_CMD;
+
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Handler;
@@ -32,7 +35,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -425,26 +427,6 @@ public class StateMachine extends IStateMachine {
     // Name of the state machine and used as logging tag
     private String mName;
 
-    /** Message.what value when quitting */
-    private static final int SM_QUIT_CMD = -1;
-
-    /** Message.what value when initializing */
-    private static final int SM_INIT_CMD = -2;
-
-    /**
-     * Convenience constant that maybe returned by processMessage
-     * to indicate the message was processed and is not to be
-     * processed by parent states
-     */
-    public static final boolean HANDLED = true;
-
-    /**
-     * Convenience constant that maybe returned by processMessage
-     * to indicate the message was NOT processed and is to be
-     * processed by parent states
-     */
-    public static final boolean NOT_HANDLED = false;
-
     /**
      * StateMachine logging record.
      * {@hide}
@@ -696,56 +678,11 @@ public class StateMachine extends IStateMachine {
         /** A list of log records including messages this state machine has processed */
         private LogRecords mLogRecords = new LogRecords();
 
-        /** true if construction of the state machine has not been completed */
-        private boolean mIsConstructionCompleted;
-
-        /** Stack used to manage the current hierarchy of states */
-        private StateInfo mStateStack[];
-
-        /** Top of mStateStack */
-        private int mStateStackTopIndex = -1;
-
-        /** A temporary stack used to manage the state stack */
-        private StateInfo mTempStateStack[];
-
-        /** The top of the mTempStateStack */
-        private int mTempStateStackCount;
-
         /** State used when state machine is halted */
         private HaltingState mHaltingState = new HaltingState();
 
         /** State used when state machine is quitting */
         private QuittingState mQuittingState = new QuittingState();
-
-        /**
-         * Information about a state.
-         * Used to maintain the hierarchy.
-         */
-        private class StateInfo {
-            /** The state */
-            State state;
-
-            /** The parent of this state, null if there is no parent */
-            StateInfo parentStateInfo;
-
-            /** True when the state has been entered and on the stack */
-            boolean active;
-
-            /**
-             * Convert StateInfo to string
-             */
-            @Override
-            public String toString() {
-                return "state=" + state.getName() + ",active=" + active + ",parent="
-                        + ((parentStateInfo == null) ? "null" : parentStateInfo.state.getName());
-            }
-        }
-
-        /** The map of all of the states in the state machine */
-        private HashMap<State, StateInfo> mStateInfo = new HashMap<State, StateInfo>();
-
-        /** The initial state that will process the first message */
-        private State mInitialState;
 
         /** The destination state when transitionTo has been invoked */
         private State mDestState;
@@ -920,45 +857,21 @@ public class StateMachine extends IStateMachine {
         /**
          * Cleanup all the static variables and the looper after the SM has been quit.
          */
-        private final void cleanupAfterQuitting() {
-            mSm.cleanupAfterQuitting();
-            mSm = null;
+        @Override
+        protected final void cleanupAfterQuitting() {
+            super.cleanupAfterQuitting();
             mMsg = null;
             mLogRecords.cleanup();
-            mStateStack = null;
-            mTempStateStack = null;
-            mStateInfo.clear();
-            mInitialState = null;
             mDestState = null;
             mDeferredMessages.clear();
             mHasQuit = true;
         }
 
-        /**
-         * Complete the construction of the state machine.
-         */
-        private final void completeConstruction() {
+        @Override
+        protected final void completeConstruction() {
             if (mDbg) mSm.log("completeConstruction: E");
 
-            /**
-             * Determine the maximum depth of the state hierarchy
-             * so we can allocate the state stacks.
-             */
-            int maxDepth = 0;
-            for (StateInfo si : mStateInfo.values()) {
-                int depth = 0;
-                for (StateInfo i = si; i != null; depth++) {
-                    i = i.parentStateInfo;
-                }
-                if (maxDepth < depth) {
-                    maxDepth = depth;
-                }
-            }
-            if (mDbg) mSm.log("completeConstruction: maxDepth=" + maxDepth);
-
-            mStateStack = new StateInfo[maxDepth];
-            mTempStateStack = new StateInfo[maxDepth];
-            setupInitialStateStack();
+            super.completeConstruction();
 
             /** Sending SM_INIT_CMD message to invoke enter methods asynchronously */
             sendMessageAtFrontOfQueue(obtainMessage(SM_INIT_CMD, mSmHandlerObj));
@@ -1051,33 +964,6 @@ public class StateMachine extends IStateMachine {
         }
 
         /**
-         * Move the contents of the temporary stack to the state stack
-         * reversing the order of the items on the temporary stack as
-         * they are moved.
-         *
-         * @return index into mStateStack where entering needs to start
-         */
-        private final int moveTempStateStackToStateStack() {
-            int startingIndex = mStateStackTopIndex + 1;
-            int i = mTempStateStackCount - 1;
-            int j = startingIndex;
-            while (i >= 0) {
-                if (mDbg) mSm.log("moveTempStackToStateStack: i=" + i + ",j=" + j);
-                mStateStack[j] = mTempStateStack[i];
-                j += 1;
-                i -= 1;
-            }
-
-            mStateStackTopIndex = j - 1;
-            if (mDbg) {
-                mSm.log("moveTempStackToStateStack: X mStateStackTop=" + mStateStackTopIndex
-                        + ",startingIndex=" + startingIndex + ",Top="
-                        + mStateStack[mStateStackTopIndex].state.getName());
-            }
-            return startingIndex;
-        }
-
-        /**
          * Setup the mTempStateStack with the states we are going to enter.
          *
          * This is found by searching up the destState's ancestors for a
@@ -1107,26 +993,6 @@ public class StateMachine extends IStateMachine {
                         + mTempStateStackCount + ",curStateInfo: " + curStateInfo);
             }
             return curStateInfo;
-        }
-
-        /**
-         * Initialize StateStack to mInitialState.
-         */
-        private final void setupInitialStateStack() {
-            if (mDbg) {
-                mSm.log("setupInitialStateStack: E mInitialState=" + mInitialState.getName());
-            }
-
-            StateInfo curStateInfo = mStateInfo.get(mInitialState);
-            for (mTempStateStackCount = 0; curStateInfo != null; mTempStateStackCount++) {
-                mTempStateStack[mTempStateStackCount] = curStateInfo;
-                curStateInfo = curStateInfo.parentStateInfo;
-            }
-
-            // Empty the StateStack
-            mStateStackTopIndex = -1;
-
-            moveTempStateStackToStateStack();
         }
 
         /**
@@ -1214,12 +1080,6 @@ public class StateMachine extends IStateMachine {
 
             addState(mHaltingState, null);
             addState(mQuittingState, null);
-        }
-
-        /** @see StateMachine#setInitialState(State) */
-        private final void setInitialState(State initialState) {
-            if (mDbg) mSm.log("setInitialState: initialState=" + initialState.getName());
-            mInitialState = initialState;
         }
 
         /** @see StateMachine#transitionTo(IState) */

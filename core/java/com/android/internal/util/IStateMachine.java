@@ -24,6 +24,20 @@ import android.util.Log;
  */
 abstract class IStateMachine {
     /**
+     * Convenience constant that maybe returned by processMessage
+     * to indicate the message was processed and is not to be
+     * processed by parent states
+     */
+    public static final boolean HANDLED = true;
+
+    /**
+     * Convenience constant that maybe returned by processMessage
+     * to indicate the message was NOT processed and is to be
+     * processed by parent states
+     */
+    public static final boolean NOT_HANDLED = false;
+
+    /**
      * @return the name of StateMachine.
      */
     public abstract String getName();
