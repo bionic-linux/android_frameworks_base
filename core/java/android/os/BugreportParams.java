@@ -30,13 +30,24 @@ import java.lang.annotation.RetentionPolicy;
 @SystemApi
 public final class BugreportParams {
     private final int mMode;
+    private final boolean mDeferConsent;
 
     public BugreportParams(@BugreportMode int mode) {
         mMode = mode;
+        mDeferConsent = false;
+    }
+
+    public BugreportParams(@BugreportMode int mode, boolean deferConsent) {
+        mMode = mode;
+        mDeferConsent = deferConsent;
     }
 
     public int getMode() {
         return mMode;
+    }
+
+    public boolean getDeferConsent() {
+        return mDeferConsent;
     }
 
     /**

@@ -16,6 +16,7 @@
 
 package com.android.server.os;
 
+import android.Manifest;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.app.ActivityManager;
@@ -35,7 +36,9 @@ import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.telephony.TelephonyManager;
+import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.Pair;
 import android.util.Slog;
 
 import com.android.internal.annotations.GuardedBy;
@@ -60,10 +63,14 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
     private final TelephonyManager mTelephonyManager;
     private final ArraySet<String> mBugreportWhitelistedPackages;
 
+    // Mapping of (uid, package name) to (bugreport file, screenshot file).
+    private final ArrayMap<Pair<Integer, String>, Pair<String, String>> mBugreportFiles;
+
     BugreportManagerServiceImpl(Context context) {
         mContext = context;
         mAppOps = context.getSystemService(AppOpsManager.class);
         mTelephonyManager = context.getSystemService(TelephonyManager.class);
+        mBugreportFiles = new ArrayMap<>();
         mBugreportWhitelistedPackages =
                 SystemConfig.getInstance().getBugreportWhitelistedPackages();
     }
@@ -72,7 +79,8 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
     @RequiresPermission(android.Manifest.permission.DUMP)
     public void startBugreport(int callingUidUnused, String callingPackage,
             FileDescriptor bugreportFd, FileDescriptor screenshotFd,
-            int bugreportMode, IDumpstateListener listener, boolean isScreenshotRequested) {
+            int bugreportMode, IDumpstateListener listener,
+            boolean isScreenshotRequested, boolean isConsentDeferred) {
         Objects.requireNonNull(callingPackage);
         Objects.requireNonNull(bugreportFd);
         Objects.requireNonNull(listener);
@@ -90,7 +98,7 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
 
         synchronized (mLock) {
             startBugreportLocked(callingUid, callingPackage, bugreportFd, screenshotFd,
-                    bugreportMode, listener, isScreenshotRequested);
+                    bugreportMode, listener, isScreenshotRequested, isConsentDeferred);
         }
     }
 
@@ -119,6 +127,53 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
             // setting a system property which is not thread-safe. So the lock here offers
             // thread-safety only among callers of the API.
             SystemProperties.set("ctl.stop", BUGREPORT_SERVICE);
+        }
+    }
+
+    @Override
+    @RequiresPermission(Manifest.permission.DUMP)
+    public void retrieveBugreport(int callingUidUnused, String callingPackage,
+            FileDescriptor bugreportFd, FileDescriptor screenshotFd, String bugreportFileUnused,
+            String screenshotFileUnused, IDumpstateListener listener) {
+        int callingUid = Binder.getCallingUid();
+        enforcePermission(callingPackage, callingUid, false);
+        String bugreportFile;
+        String screenshotFile;
+
+        Pair<String, String> files = mBugreportFiles.get(new Pair<>(callingUid, callingPackage));
+        mBugreportFiles.remove(new Pair<>(callingUid, callingPackage));
+        if (files != null) {
+            bugreportFile = files.first;
+            screenshotFile = files.second;
+        } else {
+            reportError(listener, IDumpstateListener.BUGREPORT_ERROR_NO_BUGREPORT_TO_RETRIEVE);
+            return;
+        }
+        synchronized (mLock) {
+            if (isDumpstateBinderServiceRunningLocked()) {
+                Slog.w(TAG, "'dumpstate' is already running. Cannot retrieve a bugreport"
+                        + " while another one is currently in progress.");
+                reportError(listener,
+                        IDumpstateListener.BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS);
+                return;
+            }
+
+            IDumpstate ds = startAndGetDumpstateBinderServiceLocked();
+            if (ds == null) {
+                Slog.w(TAG, "Unable to get bugreport service");
+                reportError(listener, IDumpstateListener.BUGREPORT_ERROR_RUNTIME_ERROR);
+                return;
+            }
+
+            // Wrap the listener so we can intercept binder events directly.
+            IDumpstateListener myListener = new DumpstateListener(listener, ds,
+                    new Pair<>(callingUid, callingPackage));
+            try {
+                ds.retrieveBugreport(callingUid, callingPackage, bugreportFd, screenshotFd,
+                        bugreportFile, screenshotFile, myListener);
+            } catch (RemoteException e) {
+                Slog.e(TAG, "RemoteException in retrieveBugreport", e);
+            }
         }
     }
 
@@ -226,7 +281,8 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
     @GuardedBy("mLock")
     private void startBugreportLocked(int callingUid, String callingPackage,
             FileDescriptor bugreportFd, FileDescriptor screenshotFd,
-            int bugreportMode, IDumpstateListener listener, boolean isScreenshotRequested) {
+            int bugreportMode, IDumpstateListener listener,
+            boolean isScreenshotRequested, boolean isConsentDeferred) {
         if (isDumpstateBinderServiceRunningLocked()) {
             Slog.w(TAG, "'dumpstate' is already running. Cannot start a new bugreport"
                     + " while another one is currently in progress.");
@@ -243,10 +299,12 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
         }
 
         // Wrap the listener so we can intercept binder events directly.
-        IDumpstateListener myListener = new DumpstateListener(listener, ds);
+        IDumpstateListener myListener = new DumpstateListener(listener, ds,
+                isConsentDeferred ? new Pair<>(callingUid, callingPackage) : null);
         try {
             ds.startBugreport(callingUid, callingPackage,
-                    bugreportFd, screenshotFd, bugreportMode, myListener, isScreenshotRequested);
+                    bugreportFd, screenshotFd, bugreportMode,
+                    myListener, isScreenshotRequested, isConsentDeferred);
         } catch (RemoteException e) {
             // bugreportd service is already started now. We need to kill it to manage the
             // lifecycle correctly. If we don't subsequent callers will get
@@ -329,10 +387,13 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
         private final IDumpstateListener mListener;
         private final IDumpstate mDs;
         private boolean mDone = false;
+        private final Pair<Integer, String> mCaller;
 
-        DumpstateListener(IDumpstateListener listener, IDumpstate ds) {
+        DumpstateListener(IDumpstateListener listener, IDumpstate ds,
+                @Nullable Pair<Integer, String> caller) {
             mListener = listener;
             mDs = ds;
+            mCaller = caller;
             try {
                 mDs.asBinder().linkToDeath(this, 0);
             } catch (RemoteException e) {
@@ -354,11 +415,14 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
         }
 
         @Override
-        public void onFinished() throws RemoteException {
+        public void onFinished(String bugreportFile, String screenshotFile) throws RemoteException {
             synchronized (mLock) {
                 mDone = true;
             }
-            mListener.onFinished();
+            if (mCaller != null) {
+                mBugreportFiles.put(mCaller, new Pair<>(bugreportFile, screenshotFile));
+            }
+            mListener.onFinished(bugreportFile, screenshotFile);
         }
 
         @Override

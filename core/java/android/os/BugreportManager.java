@@ -16,6 +16,7 @@
 
 package android.os;
 
+import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.FloatRange;
 import android.annotation.IntDef;
@@ -59,6 +60,7 @@ public final class BugreportManager {
     private final Context mContext;
     private final IDumpstate mBinder;
 
+
     /** @hide */
     public BugreportManager(@NonNull Context context, IDumpstate binder) {
         mContext = context;
@@ -88,7 +90,8 @@ public final class BugreportManager {
                     BUGREPORT_ERROR_RUNTIME,
                     BUGREPORT_ERROR_USER_DENIED_CONSENT,
                     BUGREPORT_ERROR_USER_CONSENT_TIMED_OUT,
-                    BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS
+                    BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS,
+                    BUGREPORT_ERROR_NO_BUGREPORT_TO_RETRIEVE
                 })
         public @interface BugreportErrorCode {}
 
@@ -114,6 +117,10 @@ public final class BugreportManager {
         /** There is currently a bugreport running. The caller should try again later. */
         public static final int BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS =
                 IDumpstateListener.BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS;
+
+        /** There is no bugreport to retrieve for the calling package. */
+        public static final int BUGREPORT_ERROR_NO_BUGREPORT_TO_RETRIEVE =
+                IDumpstateListener.BUGREPORT_ERROR_NO_BUGREPORT_TO_RETRIEVE;
 
         /**
          * Called when there is a progress update.
@@ -171,18 +178,26 @@ public final class BugreportManager {
     @RequiresPermission(android.Manifest.permission.DUMP)
     @WorkerThread
     public void startBugreport(
-            @NonNull ParcelFileDescriptor bugreportFd,
+            @Nullable ParcelFileDescriptor bugreportFd,
             @Nullable ParcelFileDescriptor screenshotFd,
             @NonNull BugreportParams params,
             @NonNull @CallbackExecutor Executor executor,
             @NonNull BugreportCallback callback) {
         try {
-            Preconditions.checkNotNull(bugreportFd);
+            if (!params.getDeferConsent()) {
+                Preconditions.checkNotNull(bugreportFd);
+            }
             Preconditions.checkNotNull(params);
             Preconditions.checkNotNull(executor);
             Preconditions.checkNotNull(callback);
 
-            boolean isScreenshotRequested = screenshotFd != null;
+            boolean isScreenshotRequested = screenshotFd != null || params.getDeferConsent();
+            if (bugreportFd == null) {
+                // Binder needs a valid File Descriptor to be passed
+                bugreportFd =
+                        ParcelFileDescriptor.open(
+                                new File("/dev/null"), ParcelFileDescriptor.MODE_READ_ONLY);
+            }
             if (screenshotFd == null) {
                 // Binder needs a valid File Descriptor to be passed
                 screenshotFd =
@@ -199,13 +214,61 @@ public final class BugreportManager {
                     screenshotFd.getFileDescriptor(),
                     params.getMode(),
                     dsListener,
-                    isScreenshotRequested);
+                    isScreenshotRequested, params.getDeferConsent());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         } catch (FileNotFoundException e) {
             Log.wtf(TAG, "Not able to find /dev/null file: ", e);
         } finally {
             // We can close the file descriptors here because binder would have duped them.
+            IoUtils.closeQuietly(bugreportFd);
+            if (screenshotFd != null) {
+                IoUtils.closeQuietly(screenshotFd);
+            }
+        }
+    }
+
+    /**
+     * Retrieves a previously generated bugreport.
+     *
+     * @param bugreportFd file to write the bugreport. This should be opened in write-only, append
+     *                    mode.
+     * @param screenshotFd file to write the screenshot. This should be opened in write-only, append
+     *                     mode.
+     * @param executor the executor to execute callback methods.
+     * @param callback callback for progress and status updates.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.DUMP)
+    @WorkerThread
+    public void retrieveBugreport(
+            @NonNull ParcelFileDescriptor bugreportFd,
+            @Nullable ParcelFileDescriptor screenshotFd,
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull BugreportCallback callback
+    ) {
+        try {
+            Preconditions.checkNotNull(bugreportFd);
+            Preconditions.checkNotNull(executor);
+            Preconditions.checkNotNull(callback);
+            DumpstateListener dsListener = new DumpstateListener(executor, callback, true);
+            if (screenshotFd == null) {
+                // Binder needs a valid File Descriptor to be passed
+                screenshotFd =
+                        ParcelFileDescriptor.open(
+                                new File("/dev/null"), ParcelFileDescriptor.MODE_READ_ONLY);
+            }
+            mBinder.retrieveBugreport(Binder.getCallingUid(), mContext.getOpPackageName(),
+                    bugreportFd.getFileDescriptor(),
+                    screenshotFd.getFileDescriptor(),
+                    null, null,
+                    dsListener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "File not found: " + e);
+        } finally {
             IoUtils.closeQuietly(bugreportFd);
             if (screenshotFd != null) {
                 IoUtils.closeQuietly(screenshotFd);
@@ -340,7 +403,7 @@ public final class BugreportManager {
         }
 
         @Override
-        public void onFinished() throws RemoteException {
+        public void onFinished(String bugreportFile, String screenshotFile) throws RemoteException {
             final long identity = Binder.clearCallingIdentity();
             try {
                 mExecutor.execute(() -> mCallback.onFinished());
