@@ -23,6 +23,7 @@ import android.annotation.Nullable;
 import android.os.PersistableBundle;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
@@ -123,6 +124,26 @@ public abstract class VcnUnderlyingNetworkPriority {
         return mNetworkPriorityType == rhs.mNetworkPriorityType
                 && mNetworkQuality == rhs.mNetworkQuality
                 && mAllowMetered == rhs.mAllowMetered;
+    }
+
+    /** @hide */
+    abstract String getTag();
+
+    /** @hide */
+    abstract void dumpSpecific(IndentingPrintWriter pw);
+
+    /**
+     * Dumps the state of this record for logging and debugging purposes.
+     *
+     * @hide
+     */
+    public void dump(IndentingPrintWriter pw) {
+        pw.println(getTag() + ":");
+        pw.increaseIndent();
+
+        dumpSpecific(pw);
+
+        pw.decreaseIndent();
     }
 
     /** Retrieve the required network quality. */

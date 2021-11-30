@@ -29,6 +29,7 @@ import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.IndentingPrintWriter;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
 import java.util.ArrayList;
@@ -198,6 +199,21 @@ public final class VcnCellUnderlyingNetworkPriority extends VcnUnderlyingNetwork
                 && Objects.equals(mAllowedSpecificCarrierIds, rhs.mAllowedSpecificCarrierIds)
                 && mAllowRoaming == rhs.mAllowRoaming
                 && mRequireOpportunistic == rhs.mRequireOpportunistic;
+    }
+
+    /** @hide */
+    @Override
+    String getTag() {
+        return VcnCellUnderlyingNetworkPriority.class.getSimpleName();
+    }
+
+    /** @hide */
+    @Override
+    void dumpSpecific(IndentingPrintWriter pw) {
+        pw.println("mAllowedNetworkPlmnIds: " + mAllowedNetworkPlmnIds.toString());
+        pw.println("mAllowedSpecificCarrierIds: " + mAllowedSpecificCarrierIds.toString());
+        pw.println("mAllowRoaming: " + mAllowRoaming);
+        pw.println("mRequireOpportunistic: " + mRequireOpportunistic);
     }
 
     /** This class is used to incrementally build WifiNetworkPriority objects. */
