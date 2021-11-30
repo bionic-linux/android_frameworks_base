@@ -151,6 +151,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -203,6 +204,7 @@ public class Vpn {
     private final NetworkInfo mNetworkInfo;
     private int mLegacyState;
     @VisibleForTesting protected String mPackage;
+    private String mSessionKey;
     private int mOwnerUID;
     private boolean mIsPackageTargetingAtLeastQ;
     @VisibleForTesting
@@ -3308,7 +3310,7 @@ public class Vpn {
      *
      * @param packageName the package name of the app provisioning this profile
      */
-    public synchronized void startVpnProfile(@NonNull String packageName) {
+    public synchronized String startVpnProfile(@NonNull String packageName) {
         requireNonNull(packageName, "No package name provided");
 
         enforceNotRestrictedUser();
@@ -3326,6 +3328,8 @@ public class Vpn {
             }
 
             startVpnProfilePrivileged(profile, packageName);
+            mSessionKey = UUID.randomUUID().toString();
+            return mSessionKey;
         } finally {
             Binder.restoreCallingIdentity(token);
         }
