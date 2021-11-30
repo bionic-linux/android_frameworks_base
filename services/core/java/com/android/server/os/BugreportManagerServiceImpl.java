@@ -16,6 +16,7 @@
 
 package com.android.server.os;
 
+import android.Manifest;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.app.ActivityManager;
@@ -119,6 +120,40 @@ class BugreportManagerServiceImpl extends IDumpstate.Stub {
             // setting a system property which is not thread-safe. So the lock here offers
             // thread-safety only among callers of the API.
             SystemProperties.set("ctl.stop", BUGREPORT_SERVICE);
+        }
+    }
+
+    @Override
+    @RequiresPermission(Manifest.permission.DUMP)
+    public void retrieveBugreport(int callingUidUnused, String callingPackage,
+            FileDescriptor bugreportFd, FileDescriptor screenshotFd, String bugreportFile,
+            String screenshotFile, IDumpstateListener listener) {
+        int callingUid = Binder.getCallingUid();
+        enforcePermission(callingPackage, callingUid, false);
+        synchronized (mLock) {
+            if (isDumpstateBinderServiceRunningLocked()) {
+                Slog.w(TAG, "'dumpstate' is already running. Cannot retrieve a bugreport"
+                        + " while another one is currently in progress.");
+                reportError(listener,
+                        IDumpstateListener.BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS);
+                return;
+            }
+
+            IDumpstate ds = startAndGetDumpstateBinderServiceLocked();
+            if (ds == null) {
+                Slog.w(TAG, "Unable to get bugreport service");
+                reportError(listener, IDumpstateListener.BUGREPORT_ERROR_RUNTIME_ERROR);
+                return;
+            }
+
+            // Wrap the listener so we can intercept binder events directly.
+            IDumpstateListener myListener = new DumpstateListener(listener, ds);
+            try {
+                ds.retrieveBugreport(callingUid, callingPackage, bugreportFd, screenshotFd,
+                        bugreportFile, screenshotFile, myListener);
+            } catch (RemoteException e) {
+                Slog.e(TAG, "RemoteException in retrieveBugreport", e);
+            }
         }
     }
 

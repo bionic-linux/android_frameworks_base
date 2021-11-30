@@ -16,6 +16,7 @@
 
 package android.os;
 
+import android.Manifest;
 import android.annotation.CallbackExecutor;
 import android.annotation.FloatRange;
 import android.annotation.IntDef;
@@ -27,8 +28,12 @@ import android.annotation.SystemApi;
 import android.annotation.SystemService;
 import android.annotation.WorkerThread;
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.Toast;
 
 import com.android.internal.R;
@@ -40,6 +45,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
@@ -58,6 +65,16 @@ public final class BugreportManager {
 
     private final Context mContext;
     private final IDumpstate mBinder;
+
+    // Mapping from (calling uid, calling package) to (bugreport file, screenshot file)
+    private final Map<Pair<Integer, String>, Pair<String, String>> mCallerBugreportFiles =
+            new HashMap<>();
+
+    private static final String BUGREPORT_FINISHED_INTENT =
+            "com.android.internal.intent.action.BUGREPORT_FINISHED";
+    private static final String EXTRA_BUGREPORT = "android.intent.extra.BUGREPORT";
+    private static final String EXTRA_SCREENSHOT = "android.intent.extra.SCREENSHOT";
+
 
     /** @hide */
     public BugreportManager(@NonNull Context context, IDumpstate binder) {
@@ -88,7 +105,8 @@ public final class BugreportManager {
                     BUGREPORT_ERROR_RUNTIME,
                     BUGREPORT_ERROR_USER_DENIED_CONSENT,
                     BUGREPORT_ERROR_USER_CONSENT_TIMED_OUT,
-                    BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS
+                    BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS,
+                    BUGREPORT_ERROR_NO_BUGREPORT_TO_RETRIEVE
                 })
         public @interface BugreportErrorCode {}
 
@@ -114,6 +132,10 @@ public final class BugreportManager {
         /** There is currently a bugreport running. The caller should try again later. */
         public static final int BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS =
                 IDumpstateListener.BUGREPORT_ERROR_ANOTHER_REPORT_IN_PROGRESS;
+
+        /** There is no bugreport to retrieve for the calling package. */
+        public static final int BUGREPORT_ERROR_NO_BUGREPORT_TO_RETRIEVE =
+                IDumpstateListener.BUGREPORT_ERROR_NO_BUGREPORT_TO_RETRIEVE;
 
         /**
          * Called when there is a progress update.
@@ -214,6 +236,66 @@ public final class BugreportManager {
     }
 
     /**
+     * Retrieves a previously generated bugreport.
+     * @param bugreportFd file to write the bugreport. This should be opened in write-only, append
+     *                    mode.
+     * @param screenshotFd file to write the screenshot. This should be opened in write-only, append
+     *                     mode.
+     * @param executor the executor to execute callback methods.
+     * @param callback callback for progress and status updates.
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.DUMP)
+    @WorkerThread
+    public void retrieveBugreport(
+            @NonNull ParcelFileDescriptor bugreportFd,
+            @Nullable ParcelFileDescriptor screenshotFd,
+            @NonNull @CallbackExecutor Executor executor,
+            @NonNull BugreportCallback callback
+    ) {
+        try {
+            Preconditions.checkNotNull(bugreportFd);
+            Preconditions.checkNotNull(executor);
+            Preconditions.checkNotNull(callback);
+            DumpstateListener dsListener = new DumpstateListener(executor, callback, true);
+            Pair<Integer, String> caller = new Pair<>(Binder.getCallingUid(),
+                    mContext.getOpPackageName());
+            String bugreportFile;
+            String screenshotFile;
+            if (mCallerBugreportFiles.containsKey(caller)) {
+                Pair<String, String> files = mCallerBugreportFiles.get(caller);
+                bugreportFile = files.first;
+                screenshotFile = files.second;
+            } else {
+                dsListener.onError(BugreportCallback.BUGREPORT_ERROR_NO_BUGREPORT_TO_RETRIEVE);
+                return;
+            }
+            if (screenshotFd == null) {
+                // Binder needs a valid File Descriptor to be passed
+                screenshotFd =
+                        ParcelFileDescriptor.open(
+                                new File("/dev/null"), ParcelFileDescriptor.MODE_READ_ONLY);
+            }
+            mCallerBugreportFiles.remove(caller);
+            mBinder.retrieveBugreport(-1, mContext.getOpPackageName(),
+                    bugreportFd.getFileDescriptor(),
+                    screenshotFd.getFileDescriptor(),
+                    bugreportFile, screenshotFile,
+                    dsListener);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "File not found: " + e);
+        } finally {
+            IoUtils.closeQuietly(bugreportFd);
+            if (screenshotFd != null) {
+                IoUtils.closeQuietly(screenshotFd);
+            }
+        }
+    }
+
+    /**
      * Starts a connectivity bugreport.
      *
      * <p>The connectivity bugreport is a specialized version of bugreport that only includes
@@ -300,11 +382,26 @@ public final class BugreportManager {
         try {
             String title = shareTitle == null ? null : shareTitle.toString();
             String description = shareDescription == null ? null : shareDescription.toString();
+            registerReceiverForCaller(Binder.getCallingUid(), mContext.getOpPackageName());
             ActivityManager.getService()
                     .requestBugReportWithDescription(title, description, params.getMode());
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }
+    }
+
+    private void registerReceiverForCaller(int callingUid, String callingPackage) {
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String bugreportFile = intent.getStringExtra(EXTRA_BUGREPORT);
+                String screenshotFile = intent.getStringExtra(EXTRA_SCREENSHOT);
+                Pair<Integer, String> caller = new Pair(callingUid, callingPackage);
+                mCallerBugreportFiles.put(caller, new Pair<>(bugreportFile, screenshotFile));
+            }
+        };
+        mContext.registerReceiver(receiver, new IntentFilter(BUGREPORT_FINISHED_INTENT));
+
     }
 
     private final class DumpstateListener extends IDumpstateListener.Stub {
