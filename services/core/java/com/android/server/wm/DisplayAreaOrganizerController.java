@@ -64,6 +64,13 @@ public class DisplayAreaOrganizerController extends IDisplayAreaOrganizerControl
 
         @Override
         public void binderDied() {
+            IDisplayAreaOrganizer mFeatureOrganizer
+                 = mOrganizersByFeatureIds.get(mFeature).mOrganizer;
+            if(mFeatureOrganizer != mOrganizer &&
+                 mFeatureOrganizer.asBinder().isBinderAlive()) {
+                 Slog.d(TAG, "The dead organizer already been replaced for feature="+ mFeature);
+                 return;
+            }
             synchronized (mGlobalLock) {
                 mOrganizersByFeatureIds.remove(mFeature).destroy();
             }
