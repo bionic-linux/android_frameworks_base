@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f931b3c8_cc374acf",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3970,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-01T20:05:48Z",
+      "side": 1,
+      "message": "put the ternary expression on a single line if possible. If it won\u0027t fit on a single line, at least separate it from the other parameters to set/setWindow",
+      "range": {
+        "startLine": 3969,
+        "startChar": 30,
+        "endLine": 3970,
+        "endChar": 49
+      },
+      "revId": "43d73ef7eccfbe7682d95c1029fab330d2ddeb8c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
