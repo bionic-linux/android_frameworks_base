@@ -70,6 +70,17 @@ public class StateMachineHandler extends Handler {
     /** The initial state that will process the first message */
     private State mInitialState;
 
+    /** The destination state when transitionTo has been invoked */
+    protected State mDestState;
+
+    /**
+     * Indicates if a transition is in progress
+     *
+     * This will be true for all calls of State.exit and all calls of State.enter except for the
+     * last enter call for the current destination state.
+     */
+    private boolean mTransitionInProgress = false;
+
     /**
      * Information about a state.
      * Used to maintain the hierarchy.
@@ -172,6 +183,16 @@ public class StateMachineHandler extends Handler {
         mInitialState = initialState;
     }
 
+    /** Transition state to destState. */
+    public final void transitionTo(IState destState) {
+        if (mTransitionInProgress) {
+            logwtf("transitionTo called while transition already in progress to " + mDestState
+                    + ", new target state=" + destState);
+        }
+        mDestState = (State) destState;
+        log("transitionTo: destState=" + mDestState.getName());
+    }
+
     /**
      * Cleanup SM handler after the SM has been quit.
      */
@@ -180,6 +201,111 @@ public class StateMachineHandler extends Handler {
         mTempStateStack = null;
         mStateInfo.clear();
         mInitialState = null;
+    }
+
+    /**
+     * Do any transitions
+     * @param msgProcessedState is the state that processed the message
+     * @return the finial destination state after transitions.
+     */
+    protected State performTransitions(State destState) {
+        /**
+         * Process the transitions including transitions in the enter/exit methods
+         */
+        while (true) {
+            log("handleMessage: new destination call exit/enter");
+
+            /**
+             * Determine the states to exit and enter and return the
+             * common ancestor state of the enter/exit states. Then
+             * invoke the exit methods then the enter methods.
+             */
+            StateInfo commonStateInfo = setupTempStateStackWithStatesToEnter(destState);
+            // flag is cleared in invokeEnterMethods before entering the target state
+            mTransitionInProgress = true;
+            invokeExitMethods(commonStateInfo);
+            int stateStackEnteringIndex = moveTempStateStackToStateStack();
+            invokeEnterMethods(stateStackEnteringIndex);
+
+            /**
+             * Since we have transitioned to a new state we need to have
+             * any deferred messages moved to the front of the message queue
+             * so they will be processed before any other messages in the
+             * message queue.
+             */
+            moveDeferredMessageAtFrontOfQueue();
+
+            if (destState != mDestState) {
+                // A new mDestState so continue looping
+                destState = mDestState;
+            } else {
+                // No change in mDestState so we're done
+                break;
+            }
+        }
+        mDestState = null;
+        return destState;
+    }
+
+    /**
+     * Call the exit method for each state from the top of stack
+     * up to the common ancestor state.
+     */
+    private final void invokeExitMethods(StateInfo commonStateInfo) {
+        while ((mStateStackTopIndex >= 0)
+                && (mStateStack[mStateStackTopIndex] != commonStateInfo)) {
+            State curState = mStateStack[mStateStackTopIndex].state;
+            log("invokeExitMethods: " + curState.getName());
+            curState.exit();
+            mStateStack[mStateStackTopIndex].active = false;
+            mStateStackTopIndex -= 1;
+        }
+    }
+
+    /**
+     * Invoke the enter method starting at the entering index to top of state stack
+     */
+    protected final void invokeEnterMethods(int stateStackEnteringIndex) {
+        for (int i = stateStackEnteringIndex; i <= mStateStackTopIndex; i++) {
+            if (stateStackEnteringIndex == mStateStackTopIndex) {
+                // Last enter state for transition
+                mTransitionInProgress = false;
+            }
+            log("invokeEnterMethods: " + mStateStack[i].state.getName());
+            mStateStack[i].state.enter();
+            mStateStack[i].active = true;
+        }
+        mTransitionInProgress = false; // ensure flag set to false if no methods called
+    }
+
+    /**
+     * Setup the mTempStateStack with the states we are going to enter.
+     *
+     * This is found by searching up the destState's ancestors for a
+     * state that is already active i.e. StateInfo.active == true.
+     * The destStae and all of its inactive parents will be on the
+     * TempStateStack as the list of states to enter.
+     *
+     * @return StateInfo of the common ancestor for the destState and
+     * current state or null if there is no common parent.
+     */
+    private final StateInfo setupTempStateStackWithStatesToEnter(State destState) {
+        /**
+         * Search up the parent list of the destination state for an active
+         * state. Use a do while() loop as the destState must always be entered
+         * even if it is active. This can happen if we are exiting/entering
+         * the current state.
+         */
+        mTempStateStackCount = 0;
+        StateInfo curStateInfo = mStateInfo.get(destState);
+        do {
+            mTempStateStack[mTempStateStackCount++] = curStateInfo;
+            curStateInfo = curStateInfo.parentStateInfo;
+        } while ((curStateInfo != null) && !curStateInfo.active);
+
+        log("setupTempStateStackWithStatesToEnter: X mTempStateStackCount="
+                + mTempStateStackCount + ",curStateInfo: " + curStateInfo);
+        return curStateInfo;
     }
 
     protected void onPreHandleMessage(Message msg) { }
@@ -193,4 +319,7 @@ public class StateMachineHandler extends Handler {
     protected void logwtf(final String s) { }
 
     protected void maybeRecordTransitionLogMessage(State msgProcessedState, Message msg) { }
+
+    /** Move the deferred message to the front of the message queue. */
+    protected void moveDeferredMessageAtFrontOfQueue() { }
 }

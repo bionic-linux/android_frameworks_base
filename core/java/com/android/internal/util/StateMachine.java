@@ -702,17 +702,6 @@ public class StateMachine {
         /** Reference to the StateMachine */
         private StateMachine mSm;
 
-        /** The destination state when transitionTo has been invoked */
-        private State mDestState;
-
-        /**
-         * Indicates if a transition is in progress
-         *
-         * This will be true for all calls of State.exit and all calls of State.enter except for the
-         * last enter call for the current destination state.
-         */
-        private boolean mTransitionInProgress = false;
-
         /** The list of deferred messages */
         private ArrayList<Message> mDeferredMessages = new ArrayList<Message>();
 
@@ -767,7 +756,7 @@ public class StateMachine {
                     throw new RuntimeException("StateMachine.handleMessage: "
                             + "The start method not called, received msg: " + msg);
                 }
-                performTransitions(msgProcessedState, msg);
+                maybePerformTransitions(msgProcessedState, msg);
 
                 // We need to check if mSm == null here as we could be quitting.
                 log("handleMessage: X");
@@ -801,10 +790,10 @@ public class StateMachine {
         }
 
         /**
-         * Do any transitions
+         * Do transitions if destState is available
          * @param msgProcessedState is the state that processed the message
          */
-        private void performTransitions(State msgProcessedState, Message msg) {
+        private void maybePerformTransitions(State msgProcessedState, Message msg) {
             /**
              * Record whether message needs to be logged before we transition and
              * and we won't log special messages SM_INIT_CMD or SM_QUIT_CMD which
@@ -812,43 +801,9 @@ public class StateMachine {
              */
             maybeRecordTransitionLogMessage(msgProcessedState, msg);
 
-            State destState = mDestState;
-            if (destState != null) {
-                /**
-                 * Process the transitions including transitions in the enter/exit methods
-                 */
-                while (true) {
-                    log("handleMessage: new destination call exit/enter");
-
-                    /**
-                     * Determine the states to exit and enter and return the
-                     * common ancestor state of the enter/exit states. Then
-                     * invoke the exit methods then the enter methods.
-                     */
-                    StateInfo commonStateInfo = setupTempStateStackWithStatesToEnter(destState);
-                    // flag is cleared in invokeEnterMethods before entering the target state
-                    mTransitionInProgress = true;
-                    invokeExitMethods(commonStateInfo);
-                    int stateStackEnteringIndex = moveTempStateStackToStateStack();
-                    invokeEnterMethods(stateStackEnteringIndex);
-
-                    /**
-                     * Since we have transitioned to a new state we need to have
-                     * any deferred messages moved to the front of the message queue
-                     * so they will be processed before any other messages in the
-                     * message queue.
-                     */
-                    moveDeferredMessageAtFrontOfQueue();
-
-                    if (destState != mDestState) {
-                        // A new mDestState so continue looping
-                        destState = mDestState;
-                    } else {
-                        // No change in mDestState so we're done
-                        break;
-                    }
-                }
-                mDestState = null;
+            State destState = null;
+            if (mDestState != null) {
+                destState = performTransitions(mDestState);
             }
 
             /**
@@ -937,41 +892,8 @@ public class StateMachine {
             return (curStateInfo != null) ? curStateInfo.state : null;
         }
 
-        /**
-         * Call the exit method for each state from the top of stack
-         * up to the common ancestor state.
-         */
-        private final void invokeExitMethods(StateInfo commonStateInfo) {
-            while ((mStateStackTopIndex >= 0)
-                    && (mStateStack[mStateStackTopIndex] != commonStateInfo)) {
-                State curState = mStateStack[mStateStackTopIndex].state;
-                log("invokeExitMethods: " + curState.getName());
-                curState.exit();
-                mStateStack[mStateStackTopIndex].active = false;
-                mStateStackTopIndex -= 1;
-            }
-        }
-
-        /**
-         * Invoke the enter method starting at the entering index to top of state stack
-         */
-        private final void invokeEnterMethods(int stateStackEnteringIndex) {
-            for (int i = stateStackEnteringIndex; i <= mStateStackTopIndex; i++) {
-                if (stateStackEnteringIndex == mStateStackTopIndex) {
-                    // Last enter state for transition
-                    mTransitionInProgress = false;
-                }
-                log("invokeEnterMethods: " + mStateStack[i].state.getName());
-                mStateStack[i].state.enter();
-                mStateStack[i].active = true;
-            }
-            mTransitionInProgress = false; // ensure flag set to false if no methods called
-        }
-
-        /**
-         * Move the deferred message to the front of the message queue.
-         */
-        private final void moveDeferredMessageAtFrontOfQueue() {
+        @Override
+        protected void moveDeferredMessageAtFrontOfQueue() {
             /**
              * The oldest messages on the deferred list must be at
              * the front of the queue so start at the back, which
@@ -984,36 +906,6 @@ public class StateMachine {
                 sendMessageAtFrontOfQueue(curMsg);
             }
             mDeferredMessages.clear();
-        }
-
-        /**
-         * Setup the mTempStateStack with the states we are going to enter.
-         *
-         * This is found by searching up the destState's ancestors for a
-         * state that is already active i.e. StateInfo.active == true.
-         * The destStae and all of its inactive parents will be on the
-         * TempStateStack as the list of states to enter.
-         *
-         * @return StateInfo of the common ancestor for the destState and
-         * current state or null if there is no common parent.
-         */
-        private final StateInfo setupTempStateStackWithStatesToEnter(State destState) {
-            /**
-             * Search up the parent list of the destination state for an active
-             * state. Use a do while() loop as the destState must always be entered
-             * even if it is active. This can happen if we are exiting/entering
-             * the current state.
-             */
-            mTempStateStackCount = 0;
-            StateInfo curStateInfo = mStateInfo.get(destState);
-            do {
-                mTempStateStack[mTempStateStackCount++] = curStateInfo;
-                curStateInfo = curStateInfo.parentStateInfo;
-            } while ((curStateInfo != null) && !curStateInfo.active);
-
-            log("setupTempStateStackWithStatesToEnter: X mTempStateStackCount="
-                    + mTempStateStackCount + ",curStateInfo: " + curStateInfo);
-            return curStateInfo;
         }
 
         /**
@@ -1100,16 +992,6 @@ public class StateMachine {
 
             addState(mHaltingState, null);
             addState(mQuittingState, null);
-        }
-
-        /** @see StateMachine#transitionTo(IState) */
-        private final void transitionTo(IState destState) {
-            if (mTransitionInProgress) {
-                logwtf("transitionTo called while transition already in progress to " + mDestState
-                        + ", new target state=" + destState);
-            }
-            mDestState = (State) destState;
-            log("transitionTo: destState=" + mDestState.getName());
         }
 
         /** @see StateMachine#deferMessage(Message) */
