@@ -46,6 +46,30 @@
       },
       "revId": "85215704b38e8ce04af7b643b5af034ce406792d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f95c7833_decd6444",
+        "filename": "core/jni/android_view_InputEventReceiver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2021-12-01T18:17:16Z",
+      "side": 1,
+      "message": "Yes, the application is expected to use \"try / finally\", or just not to have any exceptions in its code. As far as the system is concerned, you either handle the event and call \u0027finish\u0027, or you don\u0027t handle and get ANRd.\n\nIf there\u0027s an uncaught exception, and the application crashes, I don\u0027t think the framework will raise an ANR. Most likely, we will try to raise an ANR, but the input channel will be gone, and so the ANR will be dropped. It would be good to have  test case for that as well.\n\nIf you can file a bug, i can share the internal patch there, so that you can build a test case based on that patch (to try out this behaviour)",
+      "parentUuid": "4b441b73_30eeabd6",
+      "range": {
+        "startLine": 451,
+        "startChar": 8,
+        "endLine": 453,
+        "endChar": 9
+      },
+      "revId": "85215704b38e8ce04af7b643b5af034ce406792d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
