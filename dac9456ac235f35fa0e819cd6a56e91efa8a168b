@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df1f72fa_28d0d8a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2021-12-01T14:40:38Z",
+      "side": 1,
+      "message": "yaochen@ - if approve this, then I can probably remove you from http://ag/c/16297146/",
+      "revId": "dac9456ac235f35fa0e819cd6a56e91efa8a168b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
