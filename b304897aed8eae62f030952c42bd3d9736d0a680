@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "126b8741_be18105e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005592
+      },
+      "writtenOn": "2021-12-01T19:47:39Z",
+      "side": 1,
+      "message": "Thank you @kweku for feedback. I have changed and commented. Please take a look. ",
+      "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25293f29_33422f6a",
@@ -24,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e17a3abb_8c4b5b12",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3957,
+      "author": {
+        "id": 1005592
+      },
+      "writtenOn": "2021-12-01T19:47:39Z",
+      "side": 1,
+      "message": "Changed to 3rd parameter.",
+      "parentUuid": "25293f29_33422f6a",
+      "range": {
+        "startLine": 3957,
+        "startChar": 34,
+        "endLine": 3957,
+        "endChar": 49
+      },
+      "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d35af894_27dc0027",
@@ -37,6 +78,30 @@
       "writtenOn": "2021-12-01T17:16:05Z",
       "side": 1,
       "message": "I don\u0027t think we need a separate alarm tag",
+      "range": {
+        "startLine": 3966,
+        "startChar": 20,
+        "endLine": 3966,
+        "endChar": 65
+      },
+      "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4356e7b4_f312d71c",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3966,
+      "author": {
+        "id": 1005592
+      },
+      "writtenOn": "2021-12-01T19:47:39Z",
+      "side": 1,
+      "message": "Lets keep it as figure out how it is working. Logs will help us in identifying any issues. Once the feature settles, we can remove the log.",
+      "parentUuid": "d35af894_27dc0027",
       "range": {
         "startLine": 3966,
         "startChar": 20,
