@@ -1013,14 +1013,8 @@ public class IpSecService extends IIpSecService.Stub {
      *
      * @param context Binder context for this service
      */
-    private IpSecService(Context context) {
+    public IpSecService(Context context) {
         this(context, new Dependencies());
-    }
-
-    static IpSecService create(Context context)
-            throws InterruptedException {
-        final IpSecService service = new IpSecService(context);
-        return service;
     }
 
     @NonNull
@@ -1056,14 +1050,6 @@ public class IpSecService extends IIpSecService.Stub {
             mNetd = mDeps.getNetdInstance(mContext);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
-        }
-    }
-
-    public void systemReady() {
-        if (isNetdAlive()) {
-            Log.d(TAG, "IpSecService is ready");
-        } else {
-            Log.wtf(TAG, "IpSecService not ready: failed to connect to NetD Native Service!");
         }
     }
 
