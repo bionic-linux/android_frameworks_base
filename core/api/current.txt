@@ -26779,6 +26779,7 @@ package android.net {
     method public void deleteProvisionedVpnProfile();
     method @Nullable public android.content.Intent provisionVpnProfile(@NonNull android.net.PlatformVpnProfile);
     method public void startProvisionedVpnProfile();
+    method @NonNull public String startProvisionedVpnProfileWithSessionKey();
     method public void stopProvisionedVpnProfile();
     field public static final String ACTION_VPN_MANAGER_ERROR = "android.net.action.VPN_MANAGER_ERROR";
     field public static final String CATEGORY_ERROR_IKE = "android.net.category.ERROR_IKE";
