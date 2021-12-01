@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25293f29_33422f6a",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3957,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-01T17:16:05Z",
+      "side": 1,
+      "message": "nit: make this the 2nd or 3rd parameter instead of the 1st. It\u0027ll make reading the calls a little easier.",
+      "range": {
+        "startLine": 3957,
+        "startChar": 34,
+        "endLine": 3957,
+        "endChar": 49
+      },
+      "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d35af894_27dc0027",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3966,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-01T17:16:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we need a separate alarm tag",
+      "range": {
+        "startLine": 3966,
+        "startChar": 20,
+        "endLine": 3966,
+        "endChar": 65
+      },
+      "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
