@@ -48,7 +48,7 @@ public class StateMachineHandler extends Handler {
     protected boolean mIsConstructionCompleted;
 
     /** The map of all of the states in the state machine */
-    protected HashMap<State, StateInfo> mStateInfo = new HashMap<State, StateInfo>();
+    private HashMap<State, StateInfo> mStateInfo = new HashMap<State, StateInfo>();
 
     /** Stack used to manage the current hierarchy of states */
     protected StateInfo[] mStateStack;
@@ -355,6 +355,73 @@ public class StateMachineHandler extends Handler {
                     + mTempStateStackCount + ",curStateInfo: " + curStateInfo);
         }
         return curStateInfo;
+    }
+
+    /**
+     * Add a new state to the state machine. Bottom up addition
+     * of states is allowed but the same state may only exist
+     * in one hierarchy.
+     *
+     * @param state the state to add
+     * @param parent the parent of state
+     * @return stateInfo for this state
+     */
+    public final StateInfo addState(State state, State parent) {
+        if (mDbg) {
+            mSm.log("addStateInternal: E state=" + state.getName() + ",parent="
+                    + ((parent == null) ? "" : parent.getName()));
+        }
+        StateInfo parentStateInfo = null;
+        if (parent != null) {
+            parentStateInfo = mStateInfo.get(parent);
+            if (parentStateInfo == null) {
+                // Recursively add our parent as it's not been added yet.
+                parentStateInfo = addState(parent, null);
+            }
+        }
+        StateInfo stateInfo = mStateInfo.get(state);
+        if (stateInfo == null) {
+            stateInfo = new StateInfo();
+            mStateInfo.put(state, stateInfo);
+        }
+
+        // Validate that we aren't adding the same state in two different hierarchies.
+        if ((stateInfo.parentStateInfo != null)
+                && (stateInfo.parentStateInfo != parentStateInfo)) {
+            throw new RuntimeException("state already added");
+        }
+        stateInfo.state = state;
+        stateInfo.parentStateInfo = parentStateInfo;
+        stateInfo.active = false;
+        if (mDbg) mSm.log("addStateInternal: X stateInfo: " + stateInfo);
+        return stateInfo;
+    }
+
+    /**
+     * Remove a state from the state machine. Will not remove the state if it is currently
+     * active or if it has any children in the hierarchy.
+     * @param state the state to remove
+     */
+    public void removeState(State state) {
+        StateInfo stateInfo = mStateInfo.get(state);
+        if (stateInfo == null || stateInfo.active) {
+            return;
+        }
+        boolean isParent = mStateInfo.values().stream()
+                .filter(si -> si.parentStateInfo == stateInfo)
+                .findAny()
+                .isPresent();
+        if (isParent) {
+            return;
+        }
+        mStateInfo.remove(state);
+    }
+
+    /**
+     * @return current state
+     */
+    public final IState getCurrentState() {
+        return mStateStack[mStateStackTopIndex].state;
     }
 
     /** Move the deferred message to the front of the message queue. */
