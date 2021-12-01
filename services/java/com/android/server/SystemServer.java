@@ -260,6 +260,8 @@ public final class SystemServer implements Dumpable {
             "com.android.server.scheduling.RebootReadinessManagerService$Lifecycle";
     private static final String CONNECTIVITY_SERVICE_APEX_PATH =
             "/apex/com.android.tethering/javalib/service-connectivity.jar";
+    private static final String IPSEC_SERVICE_INITIALIZER_CLASS =
+            "com.android.server.IpSecServiceInitializer";
     private static final String STATS_COMPANION_LIFECYCLE_CLASS =
             "com.android.server.stats.StatsCompanion$Lifecycle";
     private static final String STATS_PULL_ATOM_SERVICE_CLASS =
@@ -1334,7 +1336,6 @@ public final class SystemServer implements Dumpable {
         DynamicSystemService dynamicSystem = null;
         IStorageManager storageManager = null;
         NetworkManagementService networkManagement = null;
-        IpSecService ipSecService = null;
         VpnManagerService vpnManager = null;
         VcnManagementService vcnManagement = null;
         NetworkStatsService networkStats = null;
@@ -1807,11 +1808,11 @@ public final class SystemServer implements Dumpable {
             }
             t.traceEnd();
 
-
             t.traceBegin("StartIpSecService");
             try {
-                ipSecService = IpSecService.create(context);
-                ServiceManager.addService(Context.IPSEC_SERVICE, ipSecService);
+                // TODO: IpSec service will be moved into Connectivity mainline module so this
+                // should be started by startServiceFromJar with CONNECTIVITY_SERVICE_APEX_PATH.
+                mSystemServiceManager.startService(IPSEC_SERVICE_INITIALIZER_CLASS);
             } catch (Throwable e) {
                 reportWtf("starting IpSec Service", e);
             }
@@ -2683,7 +2684,6 @@ public final class SystemServer implements Dumpable {
         final TelephonyRegistry telephonyRegistryF = telephonyRegistry;
         final MediaRouterService mediaRouterF = mediaRouter;
         final MmsServiceBroker mmsServiceF = mmsService;
-        final IpSecService ipSecServiceF = ipSecService;
         final VpnManagerService vpnManagerF = vpnManager;
         final VcnManagementService vcnManagementF = vcnManagement;
         final WindowManagerService windowManagerF = wm;
@@ -2771,15 +2771,6 @@ public final class SystemServer implements Dumpable {
             if (networkPolicyF != null) {
                 networkPolicyInitReadySignal = networkPolicyF
                         .networkScoreAndNetworkManagementServiceReady();
-            }
-            t.traceEnd();
-            t.traceBegin("MakeIpSecServiceReady");
-            try {
-                if (ipSecServiceF != null) {
-                    ipSecServiceF.systemReady();
-                }
-            } catch (Throwable e) {
-                reportWtf("making IpSec Service ready", e);
             }
             t.traceEnd();
             t.traceBegin("MakeNetworkStatsServiceReady");
