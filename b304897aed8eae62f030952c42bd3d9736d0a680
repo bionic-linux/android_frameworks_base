@@ -110,6 +110,30 @@
       },
       "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2f20d51_50b7c68e",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3966,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-01T20:55:54Z",
+      "side": 1,
+      "message": "We can distinguish between wakeup and non-wakeup in the logs without using separate tags. The alarm manager dump will indicate what type of alarm it is.",
+      "parentUuid": "4356e7b4_f312d71c",
+      "range": {
+        "startLine": 3966,
+        "startChar": 20,
+        "endLine": 3966,
+        "endChar": 65
+      },
+      "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
