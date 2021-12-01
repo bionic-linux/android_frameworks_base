@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6c0a637_18f8230e",
+        "filename": "services/core/java/com/android/server/wm/PointerEventDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2021-12-01T00:55:07Z",
+      "side": 0,
+      "message": "The\n\n   try {\n   ...}\n  finally {\n   finishINputEvent\n   }\n   \napproach is a common one for the input event receiver, and is found in other places in the code base, not just here. so let\u0027s keep this code and remove the native call to finish instead",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 19
+      },
+      "revId": "a1afeb691004f06c150ab25671c89fbfe3bacaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

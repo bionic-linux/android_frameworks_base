@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cf77960_2ab1f10d",
+        "filename": "core/jni/android_view_InputEventReceiver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2021-12-01T00:55:07Z",
+      "side": 1,
+      "message": "After further discussion internally, we decided that the best way forward is to simply delete these lines. Could you please update your solution to this approach?",
+      "range": {
+        "startLine": 451,
+        "startChar": 8,
+        "endLine": 453,
+        "endChar": 9
+      },
+      "revId": "85215704b38e8ce04af7b643b5af034ce406792d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
