@@ -678,46 +678,8 @@ public class StateMachine extends IStateMachine {
         /** A list of log records including messages this state machine has processed */
         private LogRecords mLogRecords = new LogRecords();
 
-        /** State used when state machine is halted */
-        private HaltingState mHaltingState = new HaltingState();
-
-        /** State used when state machine is quitting */
-        private QuittingState mQuittingState = new QuittingState();
-
-        /** The destination state when transitionTo has been invoked */
-        private State mDestState;
-
-        /**
-         * Indicates if a transition is in progress
-         *
-         * This will be true for all calls of State.exit and all calls of State.enter except for the
-         * last enter call for the current destination state.
-         */
-        private boolean mTransitionInProgress = false;
-
         /** The list of deferred messages */
         private ArrayList<Message> mDeferredMessages = new ArrayList<Message>();
-
-        /**
-         * State entered when transitionToHaltingState is called.
-         */
-        private class HaltingState extends State {
-            @Override
-            public boolean processMessage(Message msg) {
-                mSm.haltedProcessMessage(msg);
-                return true;
-            }
-        }
-
-        /**
-         * State entered when a valid quit message is handled.
-         */
-        private class QuittingState extends State {
-            @Override
-            public boolean processMessage(Message msg) {
-                return NOT_HANDLED;
-            }
-        }
 
         /**
          * Handle messages sent to the state machine by calling
@@ -751,7 +713,7 @@ public class StateMachine extends IStateMachine {
                     throw new RuntimeException("StateMachine.handleMessage: "
                             + "The start method not called, received msg: " + msg);
                 }
-                performTransitions(msgProcessedState, msg);
+                maybePerformTransitions(msgProcessedState, msg);
 
                 // We need to check if mSm == null here as we could be quitting.
                 if (mDbg && mSm != null) mSm.log("handleMessage: X");
@@ -763,10 +725,10 @@ public class StateMachine extends IStateMachine {
         }
 
         /**
-         * Do any transitions
+         * Do transitions if destState is available
          * @param msgProcessedState is the state that processed the message
          */
-        private void performTransitions(State msgProcessedState, Message msg) {
+        private void maybePerformTransitions(State msgProcessedState, Message msg) {
             /**
              * If transitionTo has been called, exit and then enter
              * the appropriate states. We loop on this to allow
@@ -793,65 +755,7 @@ public class StateMachine extends IStateMachine {
                         mDestState);
             }
 
-            State destState = mDestState;
-            if (destState != null) {
-                /**
-                 * Process the transitions including transitions in the enter/exit methods
-                 */
-                while (true) {
-                    if (mDbg) mSm.log("handleMessage: new destination call exit/enter");
-
-                    /**
-                     * Determine the states to exit and enter and return the
-                     * common ancestor state of the enter/exit states. Then
-                     * invoke the exit methods then the enter methods.
-                     */
-                    StateInfo commonStateInfo = setupTempStateStackWithStatesToEnter(destState);
-                    // flag is cleared in invokeEnterMethods before entering the target state
-                    mTransitionInProgress = true;
-                    invokeExitMethods(commonStateInfo);
-                    int stateStackEnteringIndex = moveTempStateStackToStateStack();
-                    invokeEnterMethods(stateStackEnteringIndex);
-
-                    /**
-                     * Since we have transitioned to a new state we need to have
-                     * any deferred messages moved to the front of the message queue
-                     * so they will be processed before any other messages in the
-                     * message queue.
-                     */
-                    moveDeferredMessageAtFrontOfQueue();
-
-                    if (destState != mDestState) {
-                        // A new mDestState so continue looping
-                        destState = mDestState;
-                    } else {
-                        // No change in mDestState so we're done
-                        break;
-                    }
-                }
-                mDestState = null;
-            }
-
-            /**
-             * After processing all transitions check and
-             * see if the last transition was to quit or halt.
-             */
-            if (destState != null) {
-                if (destState == mQuittingState) {
-                    /**
-                     * Call onQuitting to let subclasses cleanup.
-                     */
-                    mSm.onQuitting();
-                    cleanupAfterQuitting();
-                } else if (destState == mHaltingState) {
-                    /**
-                     * Call onHalting() if we've transitioned to the halting
-                     * state. All subsequent messages will be processed in
-                     * in the halting state which invokes haltedProcessMessage(msg);
-                     */
-                    mSm.onHalting();
-                }
-            }
+            if (mDestState != null) performTransitions(mDestState);
         }
 
         /**
@@ -862,7 +766,6 @@ public class StateMachine extends IStateMachine {
             super.cleanupAfterQuitting();
             mMsg = null;
             mLogRecords.cleanup();
-            mDestState = null;
             mDeferredMessages.clear();
             mHasQuit = true;
         }
@@ -914,41 +817,8 @@ public class StateMachine extends IStateMachine {
             return (curStateInfo != null) ? curStateInfo.state : null;
         }
 
-        /**
-         * Call the exit method for each state from the top of stack
-         * up to the common ancestor state.
-         */
-        private final void invokeExitMethods(StateInfo commonStateInfo) {
-            while ((mStateStackTopIndex >= 0)
-                    && (mStateStack[mStateStackTopIndex] != commonStateInfo)) {
-                State curState = mStateStack[mStateStackTopIndex].state;
-                if (mDbg) mSm.log("invokeExitMethods: " + curState.getName());
-                curState.exit();
-                mStateStack[mStateStackTopIndex].active = false;
-                mStateStackTopIndex -= 1;
-            }
-        }
-
-        /**
-         * Invoke the enter method starting at the entering index to top of state stack
-         */
-        private final void invokeEnterMethods(int stateStackEnteringIndex) {
-            for (int i = stateStackEnteringIndex; i <= mStateStackTopIndex; i++) {
-                if (stateStackEnteringIndex == mStateStackTopIndex) {
-                    // Last enter state for transition
-                    mTransitionInProgress = false;
-                }
-                if (mDbg) mSm.log("invokeEnterMethods: " + mStateStack[i].state.getName());
-                mStateStack[i].state.enter();
-                mStateStack[i].active = true;
-            }
-            mTransitionInProgress = false; // ensure flag set to false if no methods called
-        }
-
-        /**
-         * Move the deferred message to the front of the message queue.
-         */
-        private final void moveDeferredMessageAtFrontOfQueue() {
+        @Override
+        protected void moveDeferredMessageAtFrontOfQueue() {
             /**
              * The oldest messages on the deferred list must be at
              * the front of the queue so start at the back, which
@@ -961,38 +831,6 @@ public class StateMachine extends IStateMachine {
                 sendMessageAtFrontOfQueue(curMsg);
             }
             mDeferredMessages.clear();
-        }
-
-        /**
-         * Setup the mTempStateStack with the states we are going to enter.
-         *
-         * This is found by searching up the destState's ancestors for a
-         * state that is already active i.e. StateInfo.active == true.
-         * The destStae and all of its inactive parents will be on the
-         * TempStateStack as the list of states to enter.
-         *
-         * @return StateInfo of the common ancestor for the destState and
-         * current state or null if there is no common parent.
-         */
-        private final StateInfo setupTempStateStackWithStatesToEnter(State destState) {
-            /**
-             * Search up the parent list of the destination state for an active
-             * state. Use a do while() loop as the destState must always be entered
-             * even if it is active. This can happen if we are exiting/entering
-             * the current state.
-             */
-            mTempStateStackCount = 0;
-            StateInfo curStateInfo = mStateInfo.get(destState);
-            do {
-                mTempStateStack[mTempStateStackCount++] = curStateInfo;
-                curStateInfo = curStateInfo.parentStateInfo;
-            } while ((curStateInfo != null) && !curStateInfo.active);
-
-            if (mDbg) {
-                mSm.log("setupTempStateStackWithStatesToEnter: X mTempStateStackCount="
-                        + mTempStateStackCount + ",curStateInfo: " + curStateInfo);
-            }
-            return curStateInfo;
         }
 
         /**
@@ -1080,17 +918,6 @@ public class StateMachine extends IStateMachine {
 
             addState(mHaltingState, null);
             addState(mQuittingState, null);
-        }
-
-        /** @see StateMachine#transitionTo(IState) */
-        private final void transitionTo(IState destState) {
-            if (mTransitionInProgress) {
-                Log.wtf(mSm.getName(),
-                        "transitionTo called while transition already in progress to "
-                        + mDestState + ", new target state=" + destState);
-            }
-            mDestState = (State) destState;
-            if (mDbg) mSm.log("transitionTo: destState=" + mDestState.getName());
         }
 
         /** @see StateMachine#deferMessage(Message) */
