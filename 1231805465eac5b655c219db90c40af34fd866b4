@@ -34,6 +34,24 @@
       "parentUuid": "847599fa_a7e6cf2e",
       "revId": "1231805465eac5b655c219db90c40af34fd866b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c92f5ac4_6b6dd661",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-02T15:11:46Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s reasonable to rely on top-level owners for small fixes and patches, during active code development? However, if we add the whole PM team here to reduce load on Pat, I wouldn\u0027t mind too much either. Pat?\n\nAgreed in principal, but I am not sure if there are \"new ideas\" that affect *only* SystemConfig in practice.",
+      "parentUuid": "74fedd1c_240d5cf9",
+      "revId": "1231805465eac5b655c219db90c40af34fd866b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
