@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b52f040_fbfc9e26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1353982
+      },
+      "writtenOn": "2021-12-02T05:48:40Z",
+      "side": 1,
+      "message": "Hi Kweku,\n\nmerge conflict on internal master\n\nI found that the root cause is aosp does not have the \n(ag/15779865) Change-Id: I392da8081afe89a46d0776e634347e67c24ee5e2\n\n\n\nhow can we merge it into aosp?\n\noption 1) discard this change. but TAM team merge it in internal master\nas the purpose of this gerrit was completed (+2 from Google)\n\noption 2) merge ag/15779865 at aosp/master first, then merge this cl.",
+      "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
