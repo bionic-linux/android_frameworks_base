@@ -16,6 +16,46 @@
       "message": "Hi Kweku,\n\nmerge conflict on internal master\n\nI found that the root cause is aosp does not have the \n(ag/15779865) Change-Id: I392da8081afe89a46d0776e634347e67c24ee5e2\n\n\n\nhow can we merge it into aosp?\n\noption 1) discard this change. but TAM team merge it in internal master\nas the purpose of this gerrit was completed (+2 from Google)\n\noption 2) merge ag/15779865 at aosp/master first, then merge this cl.",
       "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6127d61d_d1df0742",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-02T16:09:06Z",
+      "side": 1,
+      "message": "You also need to update DeviceIdleControllerTest.java. It tests scheduleLightAlarmLocked but now the parameters are different.",
+      "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e3af87a_df1e95bb",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3957,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-02T16:09:06Z",
+      "side": 1,
+      "message": "Put \"@GuardedBy(\"this\")\" on the line right above this. That should fix the merge issue.",
+      "range": {
+        "startLine": 3957,
+        "startChar": 9,
+        "endLine": 3957,
+        "endChar": 33
+      },
+      "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
