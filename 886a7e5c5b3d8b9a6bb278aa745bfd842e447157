@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4061ec3_52baf6ff",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9205,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-12-02T00:17:32Z",
+      "side": 1,
+      "message": "The original design allows multiple carrier service packages, right? Shouldn\u0027t we return a @NonNull list here?",
+      "range": {
+        "startLine": 9205,
+        "startChar": 21,
+        "endLine": 9205,
+        "endChar": 27
+      },
+      "revId": "886a7e5c5b3d8b9a6bb278aa745bfd842e447157",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c4acdc2_7584e11c",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9219,
+      "author": {
+        "id": 1081638
+      },
+      "writtenOn": "2021-12-02T00:17:32Z",
+      "side": 1,
+      "message": "I think the existing APIs getCarrierPackageNamesForIntentAndPhone() do not follow go/tel-ids. We expose slot index instead of phone id.",
+      "range": {
+        "startLine": 9219,
+        "startChar": 17,
+        "endLine": 9219,
+        "endChar": 32
+      },
+      "revId": "886a7e5c5b3d8b9a6bb278aa745bfd842e447157",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
