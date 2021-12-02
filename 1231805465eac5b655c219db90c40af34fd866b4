@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "847599fa_a7e6cf2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-02T12:21:03Z",
+      "side": 1,
+      "message": "Jeff brought up a good point on an internal change: should PACKAGE_MANAGER_OWNERS be an owners of the SystemConfig? Or is it just you Pat?\n\nThere are no incoming redesigns planned, however, Mainline team is touching SystemConfig quite often these days and having more than one person in OWNERS, especially in the EMEA would be helpful.",
+      "revId": "1231805465eac5b655c219db90c40af34fd866b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
