@@ -16,6 +16,24 @@
       "message": "Jeff brought up a good point on an internal change: should PACKAGE_MANAGER_OWNERS be an owners of the SystemConfig? Or is it just you Pat?\n\nThere are no incoming redesigns planned, however, Mainline team is touching SystemConfig quite often these days and having more than one person in OWNERS, especially in the EMEA would be helpful.",
       "revId": "1231805465eac5b655c219db90c40af34fd866b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74fedd1c_240d5cf9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-12-02T15:05:08Z",
+      "side": 1,
+      "message": "Hm, if this is mostly about EMEA coverage, there are top-level fallback owners who can help get things merged if you\u0027re on a tight deadline:\n\n* https://cs.android.com/android/platform/superproject/+/master:frameworks/base/OWNERS\n\nI count ~4 people in that list in EMEA timezones.\n\nI\u0027m a bit hesitant to add people to an OWNERS list unless they\u0027re actively taking ownership of an area, to ensure that new ideas are properly reviewed.",
+      "parentUuid": "847599fa_a7e6cf2e",
+      "revId": "1231805465eac5b655c219db90c40af34fd866b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
