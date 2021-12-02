@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017890631",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1907414?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fab5a488_7775bfb2",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3965,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T00:28:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 3965,
+        "startChar": 50,
+        "endLine": 3965,
+        "endChar": 51
+      },
+      "revId": "46216d346aa0b4f3ea94bc98acbc52c0a0f53a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017890631",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1907414?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d4efc254_58399da2",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3970,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-02T00:28:57Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 3970,
+        "startChar": 50,
+        "endLine": 3970,
+        "endChar": 51
+      },
+      "revId": "46216d346aa0b4f3ea94bc98acbc52c0a0f53a34",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
