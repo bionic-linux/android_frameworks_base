@@ -134,6 +134,30 @@
       },
       "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd516e3d_5dc1f79c",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3966,
+      "author": {
+        "id": 1005592
+      },
+      "writtenOn": "2021-12-02T00:29:18Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "d2f20d51_50b7c68e",
+      "range": {
+        "startLine": 3966,
+        "startChar": 20,
+        "endLine": 3966,
+        "endChar": 65
+      },
+      "revId": "b304897aed8eae62f030952c42bd3d9736d0a680",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
