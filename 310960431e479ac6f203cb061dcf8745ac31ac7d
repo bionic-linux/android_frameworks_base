@@ -98,6 +98,30 @@
       },
       "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b253395_e865ce7f",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3957,
+      "author": {
+        "id": 1353982
+      },
+      "writtenOn": "2021-12-02T23:03:21Z",
+      "side": 1,
+      "message": "@Kweku is it enough? (I think it will not cause merge conflict\n\nbut (ag/15779865) seems more complex than this. so I was not sure that is correct way",
+      "parentUuid": "09766062_a315034f",
+      "range": {
+        "startLine": 3957,
+        "startChar": 9,
+        "endLine": 3957,
+        "endChar": 33
+      },
+      "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
