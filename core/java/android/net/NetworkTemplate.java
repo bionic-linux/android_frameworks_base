@@ -521,8 +521,8 @@ public class NetworkTemplate implements Parcelable {
      * Test if given {@link NetworkIdentity} matches this template.
      */
     public boolean matches(NetworkIdentity ident) {
-        if (!matchesMetered(ident)) return false;
-        if (!matchesRoaming(ident)) return false;
+        if (!getNotMeteredMatch(ident)) return false;
+        if (!getNotRoamingMatch(ident)) return false;
         if (!matchesDefaultNetwork(ident)) return false;
         if (!matchesOemNetwork(ident)) return false;
 
@@ -550,13 +550,13 @@ public class NetworkTemplate implements Parcelable {
         }
     }
 
-    private boolean matchesMetered(NetworkIdentity ident) {
+    private boolean getNotMeteredMatch(NetworkIdentity ident) {
         return (mMetered == METERED_ALL)
             || (mMetered == METERED_YES && ident.mMetered)
             || (mMetered == METERED_NO && !ident.mMetered);
     }
 
-    private boolean matchesRoaming(NetworkIdentity ident) {
+    private boolean getNotRoamingMatch(NetworkIdentity ident) {
         return (mRoaming == ROAMING_ALL)
             || (mRoaming == ROAMING_YES && ident.mRoaming)
             || (mRoaming == ROAMING_NO && !ident.mRoaming);
