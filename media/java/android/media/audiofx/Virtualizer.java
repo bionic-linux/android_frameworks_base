@@ -337,6 +337,7 @@ public class Virtualizer extends AudioEffect {
             case AudioDeviceInfo.TYPE_BLUETOOTH_A2DP:
             case AudioDeviceInfo.TYPE_HDMI:
             case AudioDeviceInfo.TYPE_HDMI_ARC:
+            case AudioDeviceInfo.TYPE_HDMI_EARC:
             case AudioDeviceInfo.TYPE_USB_DEVICE:
             case AudioDeviceInfo.TYPE_USB_ACCESSORY:
             case AudioDeviceInfo.TYPE_DOCK:
