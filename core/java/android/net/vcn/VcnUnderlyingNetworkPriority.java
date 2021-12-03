@@ -20,6 +20,7 @@ import static com.android.internal.annotations.VisibleForTesting.Visibility;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.os.PersistableBundle;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -30,8 +31,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
-// TODO: Add documents
-/** @hide */
+/**
+ * This class represents a set of underlying network requirements for doing route selection.
+ *
+ * <p>Caller can configure the underlying network priority for VCN to do route selection by
+ * constructing VcnUnderlyingNetworkPriority objects and set them in VcnGatewayConnectionConfig from
+ * most to least preferred. See {@link
+ * VcnGatewayConnectionConfig.Builder#setVcnUnderlyingNetworkPriorities}
+ */
 public abstract class VcnUnderlyingNetworkPriority {
     /** @hide */
     protected static final int NETWORK_PRIORITY_TYPE_WIFI = 1;
@@ -162,6 +169,9 @@ public abstract class VcnUnderlyingNetworkPriority {
      *
      * @param <T> The subclass to be built.
      */
+    // This builder is specifically designed to be extended by classes deriving from
+    // VcnUnderlyingNetworkPriority, and  build() method only exists in subclasses
+    @SuppressLint({"StaticFinalBuilder", "MissingBuildMethod"})
     public abstract static class Builder<T extends Builder<T>> {
         /** @hide */
         protected int mNetworkQuality = NETWORK_QUALITY_ANY;

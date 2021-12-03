@@ -26,8 +26,11 @@ import com.android.internal.util.IndentingPrintWriter;
 
 import java.util.Objects;
 
-// TODO: Add documents
-/** @hide */
+/**
+ * This class represents a set of Wifi underlying network requirements for doing route selection.
+ *
+ * <p>See {@link VcnUnderlyingNetworkPriority}
+ */
 public final class VcnWifiUnderlyingNetworkPriority extends VcnUnderlyingNetworkPriority {
     private static final String SSID_KEY = "mSsid";
     @Nullable private final String mSsid;
