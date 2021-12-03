@@ -74,6 +74,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c9dae929_a99827a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-12-03T19:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00223d90_da033872",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "cafd9228_87fae6b8",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -243,6 +267,30 @@
       "side": 1,
       "message": "Now I\u0027m not sure I follow 😊\nI could assume that the allowlists are declared in the proper location, and put them all in one bucket - but that would mean that APEX A could allowlist a permission for an APK inside APEX B. That could be *fine*.\nAlternatively, doing this check at parse time is costly and doesn\u0027t seem to be the way the other permissions are treated.",
       "parentUuid": "0a53f03a_b5148141",
+      "range": {
+        "startLine": 366,
+        "startChar": 54,
+        "endLine": 366,
+        "endChar": 67
+      },
+      "revId": "654e2b2d79c9c2654ef6618a0df19e81ada91879",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14949932_a8e8005e",
+        "filename": "core/java/com/android/server/SystemConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2021-12-03T19:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d807dc79_c5365c4d",
       "range": {
         "startLine": 366,
         "startChar": 54,
