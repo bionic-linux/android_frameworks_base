@@ -15,51 +15,52 @@
  */
 package android.net.vcn;
 
-import static android.net.vcn.VcnUnderlyingNetworkPriority.NETWORK_QUALITY_ANY;
-import static android.net.vcn.VcnUnderlyingNetworkPriority.NETWORK_QUALITY_OK;
+import static android.net.vcn.VcnUnderlyingNetworkPriorityRule.NETWORK_QUALITY_ANY;
+import static android.net.vcn.VcnUnderlyingNetworkPriorityRule.NETWORK_QUALITY_OK;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-public class VcnWifiUnderlyingNetworkPriorityTest {
+import java.util.Set;
+
+public class VcnWifiUnderlyingNetworkPriorityRuleTest {
     private static final String SSID = "TestWifi";
     private static final int INVALID_NETWORK_QUALITY = -1;
 
     // Package private for use in VcnGatewayConnectionConfigTest
-    static VcnWifiUnderlyingNetworkPriority getTestNetworkPriority() {
-        return new VcnWifiUnderlyingNetworkPriority.Builder()
+    static VcnWifiUnderlyingNetworkPriorityRule getTestNetworkPriority() {
+        return new VcnWifiUnderlyingNetworkPriorityRule.Builder()
                 .setNetworkQuality(NETWORK_QUALITY_OK)
-                .setAllowMetered(true /* allowMetered */)
-                .setSsid(SSID)
+                .setMatchesMetered(true /* matchesMetered */)
+                .setMatchingSsids(Set.of(SSID))
                 .build();
     }
 
     @Test
     public void testBuilderAndGetters() {
-        final VcnWifiUnderlyingNetworkPriority networkPriority = getTestNetworkPriority();
+        final VcnWifiUnderlyingNetworkPriorityRule networkPriority = getTestNetworkPriority();
         assertEquals(NETWORK_QUALITY_OK, networkPriority.getNetworkQuality());
-        assertTrue(networkPriority.allowMetered());
-        assertEquals(SSID, networkPriority.getSsid());
+        assertTrue(networkPriority.matchesMetered());
+        assertEquals(Set.of(SSID), networkPriority.getMatchingSsids());
     }
 
     @Test
     public void testBuilderAndGettersForDefaultValues() {
-        final VcnWifiUnderlyingNetworkPriority networkPriority =
-                new VcnWifiUnderlyingNetworkPriority.Builder().build();
+        final VcnWifiUnderlyingNetworkPriorityRule networkPriority =
+                new VcnWifiUnderlyingNetworkPriorityRule.Builder().build();
         assertEquals(NETWORK_QUALITY_ANY, networkPriority.getNetworkQuality());
-        assertFalse(networkPriority.allowMetered());
-        assertNull(SSID, networkPriority.getSsid());
+        assertFalse(networkPriority.matchesMetered());
+        assertTrue(networkPriority.getMatchingSsids().isEmpty());
     }
 
     @Test
     public void testBuildWithInvalidNetworkQuality() {
         try {
-            new VcnWifiUnderlyingNetworkPriority.Builder()
+            new VcnWifiUnderlyingNetworkPriorityRule.Builder()
                     .setNetworkQuality(INVALID_NETWORK_QUALITY);
             fail("Expected to fail due to the invalid network quality");
         } catch (Exception expected) {
@@ -68,10 +69,10 @@ public class VcnWifiUnderlyingNetworkPriorityTest {
 
     @Test
     public void testPersistableBundle() {
-        final VcnWifiUnderlyingNetworkPriority networkPriority = getTestNetworkPriority();
+        final VcnWifiUnderlyingNetworkPriorityRule networkPriority = getTestNetworkPriority();
         assertEquals(
                 networkPriority,
-                VcnUnderlyingNetworkPriority.fromPersistableBundle(
+                VcnUnderlyingNetworkPriorityRule.fromPersistableBundle(
                         networkPriority.toPersistableBundle()));
     }
 }
