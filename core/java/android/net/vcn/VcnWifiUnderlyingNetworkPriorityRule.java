@@ -38,8 +38,6 @@ import java.util.Set;
  * networks.
  *
  * <p>See {@link VcnUnderlyingNetworkPriorityRule}
- *
- * @hide
  */
 public final class VcnWifiUnderlyingNetworkPriorityRule extends VcnUnderlyingNetworkPriorityRule {
     private static final String SSIDS_KEY = "mSsids";

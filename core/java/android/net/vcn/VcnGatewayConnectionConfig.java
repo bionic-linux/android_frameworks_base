@@ -383,7 +383,6 @@ public final class VcnGatewayConnectionConfig {
      * configured.
      *
      * @see Builder#setVcnUnderlyingNetworkPriorityRules(List)
-     * @hide
      */
     @NonNull
     public List<VcnUnderlyingNetworkPriorityRule> getVcnUnderlyingNetworkPriorityRules() {
@@ -569,7 +568,6 @@ public final class VcnGatewayConnectionConfig {
          *     prioritization. The default network prioritization order is Opportunistic cellular,
          *     Carrier WiFi and then Macro cellular.
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
         public Builder setVcnUnderlyingNetworkPriorityRules(
