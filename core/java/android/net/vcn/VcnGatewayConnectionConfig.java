@@ -355,8 +355,7 @@ public final class VcnGatewayConnectionConfig {
      * Retrieve the configured VcnUnderlyingNetworkPriority list, or a default list if it is not
      * configured.
      *
-     * @see Builder#setVcnUnderlyingNetworkPriorities(LinkedHashSet<VcnUnderlyingNetworkPriority>)
-     * @hide
+     * @see Builder#setVcnUnderlyingNetworkPriorities(LinkedHashSet)
      */
     @NonNull
     public LinkedHashSet<VcnUnderlyingNetworkPriority> getVcnUnderlyingNetworkPriorities() {
@@ -527,11 +526,10 @@ public final class VcnGatewayConnectionConfig {
          *
          * @param underlyingNetworkPriorities a list of unique VcnUnderlyingNetworkPriorities that
          *     are ordered from most to least preferred, or an empty list to use the default
-         *     prioritization. The default network prioritization is Opportunistic cellular, Carrier
-         *     WiFi and Macro cellular
-         * @return
+         *     prioritization. The default network prioritization order is Opportunistic cellular,
+         *     Carrier WiFi and then Macro cellular.
+         * @return this {@link Builder} instance, for chaining
          */
-        /** @hide */
         @NonNull
         public Builder setVcnUnderlyingNetworkPriorities(
                 @NonNull LinkedHashSet<VcnUnderlyingNetworkPriority> underlyingNetworkPriorities) {

@@ -32,8 +32,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
-// TODO: Add documents
-/** @hide */
+/**
+ * This class represents a set of underlying network requirements for doing route selection.
+ *
+ * <p>Apps provisioning a VCN can configure the underlying network priority for each Gateway
+ * Connection by setting a list (in priority order, most to least preferred) of the appropriate
+ * subclasses in the VcnGatewayConnectionConfig. See {@link
+ * VcnGatewayConnectionConfig.Builder#setVcnUnderlyingNetworkPriorities}
+ */
 public abstract class VcnUnderlyingNetworkPriority {
     /** @hide */
     protected static final int NETWORK_PRIORITY_TYPE_WIFI = 1;
