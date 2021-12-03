@@ -26,8 +26,11 @@ import com.android.internal.util.IndentingPrintWriter;
 
 import java.util.Objects;
 
-// TODO: Add documents
-/** @hide */
+/**
+ * This class represents a configuration for a priority class of underlying Carrier WiFi networks.
+ *
+ * <p>See {@link VcnUnderlyingNetworkPriority}
+ */
 public final class VcnWifiUnderlyingNetworkPriority extends VcnUnderlyingNetworkPriority {
     private static final String SSID_KEY = "mSsid";
     @Nullable private final String mSsid;
