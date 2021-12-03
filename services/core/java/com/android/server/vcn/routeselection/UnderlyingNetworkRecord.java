@@ -21,7 +21,7 @@ import android.annotation.Nullable;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.vcn.VcnUnderlyingNetworkPriority;
+import android.net.vcn.VcnUnderlyingNetworkPriorityRule;
 import android.os.ParcelUuid;
 import android.os.PersistableBundle;
 
@@ -32,7 +32,7 @@ import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscription
 import com.android.server.vcn.VcnContext;
 
 import java.util.Comparator;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -77,7 +77,7 @@ public class UnderlyingNetworkRecord {
 
     static Comparator<UnderlyingNetworkRecord> getComparator(
             VcnContext vcnContext,
-            LinkedHashSet<VcnUnderlyingNetworkPriority> underlyingNetworkPriorities,
+            List<VcnUnderlyingNetworkPriorityRule> underlyingNetworkPriorities,
             ParcelUuid subscriptionGroup,
             TelephonySubscriptionSnapshot snapshot,
             UnderlyingNetworkRecord currentlySelected,
@@ -133,7 +133,7 @@ public class UnderlyingNetworkRecord {
     void dump(
             VcnContext vcnContext,
             IndentingPrintWriter pw,
-            LinkedHashSet<VcnUnderlyingNetworkPriority> underlyingNetworkPriorities,
+            List<VcnUnderlyingNetworkPriorityRule> underlyingNetworkPriorities,
             ParcelUuid subscriptionGroup,
             TelephonySubscriptionSnapshot snapshot,
             UnderlyingNetworkRecord currentlySelected,
