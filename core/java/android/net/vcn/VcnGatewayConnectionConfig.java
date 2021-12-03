@@ -16,7 +16,7 @@
 package android.net.vcn;
 
 import static android.net.ipsec.ike.IkeSessionParams.IKE_OPTION_MOBIKE;
-import static android.net.vcn.VcnUnderlyingNetworkPriority.NETWORK_QUALITY_OK;
+import static android.net.vcn.VcnUnderlyingNetworkPriorityRule.NETWORK_QUALITY_OK;
 
 import static com.android.internal.annotations.VisibleForTesting.Visibility;
 
@@ -42,7 +42,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -162,30 +162,30 @@ public final class VcnGatewayConnectionConfig {
 
     /** @hide */
     @VisibleForTesting(visibility = Visibility.PRIVATE)
-    public static final LinkedHashSet<VcnUnderlyingNetworkPriority>
-            DEFAULT_UNDERLYING_NETWORK_PRIORITIES = new LinkedHashSet<>();
+    public static final List<VcnUnderlyingNetworkPriorityRule>
+            DEFAULT_UNDERLYING_NETWORK_PRIORITIES = new ArrayList<>();
 
     static {
         DEFAULT_UNDERLYING_NETWORK_PRIORITIES.add(
-                new VcnCellUnderlyingNetworkPriority.Builder()
+                new VcnCellUnderlyingNetworkPriorityRule.Builder()
                         .setNetworkQuality(NETWORK_QUALITY_OK)
-                        .setAllowMetered(true /* allowMetered */)
-                        .setAllowRoaming(true /* allowRoaming */)
-                        .setRequireOpportunistic(true /* requireOpportunistic */)
+                        .setMatchesMetered(true /* matchesMetered */)
+                        .setMatchesRoaming(true /* matchesRoaming */)
+                        .setRequiresOpportunistic(true /* requireOpportunistic */)
                         .build());
 
         DEFAULT_UNDERLYING_NETWORK_PRIORITIES.add(
-                new VcnWifiUnderlyingNetworkPriority.Builder()
+                new VcnWifiUnderlyingNetworkPriorityRule.Builder()
                         .setNetworkQuality(NETWORK_QUALITY_OK)
-                        .setAllowMetered(true /* allowMetered */)
+                        .setMatchesMetered(true /* matchesMetered */)
                         .build());
 
         DEFAULT_UNDERLYING_NETWORK_PRIORITIES.add(
-                new VcnCellUnderlyingNetworkPriority.Builder()
+                new VcnCellUnderlyingNetworkPriorityRule.Builder()
                         .setNetworkQuality(NETWORK_QUALITY_OK)
-                        .setAllowMetered(true /* allowMetered */)
-                        .setAllowRoaming(true /* allowRoaming */)
-                        .setRequireOpportunistic(false /* requireOpportunistic */)
+                        .setMatchesMetered(true /* matchesMetered */)
+                        .setMatchesRoaming(true /* matchesRoaming */)
+                        .setRequiresOpportunistic(false /* requireOpportunistic */)
                         .build());
     }
 
@@ -202,7 +202,7 @@ public final class VcnGatewayConnectionConfig {
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     public static final String UNDERLYING_NETWORK_PRIORITIES_KEY = "mUnderlyingNetworkPriorities";
 
-    @NonNull private final LinkedHashSet<VcnUnderlyingNetworkPriority> mUnderlyingNetworkPriorities;
+    @NonNull private final List<VcnUnderlyingNetworkPriorityRule> mUnderlyingNetworkPriorities;
 
     private static final String MAX_MTU_KEY = "mMaxMtu";
     private final int mMaxMtu;
@@ -215,7 +215,7 @@ public final class VcnGatewayConnectionConfig {
             @NonNull String gatewayConnectionName,
             @NonNull IkeTunnelConnectionParams tunnelConnectionParams,
             @NonNull Set<Integer> exposedCapabilities,
-            @NonNull LinkedHashSet<VcnUnderlyingNetworkPriority> underlyingNetworkPriorities,
+            @NonNull List<VcnUnderlyingNetworkPriorityRule> underlyingNetworkPriorityRules,
             @NonNull long[] retryIntervalsMs,
             @IntRange(from = MIN_MTU_V6) int maxMtu) {
         mGatewayConnectionName = gatewayConnectionName;
@@ -224,7 +224,7 @@ public final class VcnGatewayConnectionConfig {
         mRetryIntervalsMs = retryIntervalsMs;
         mMaxMtu = maxMtu;
 
-        mUnderlyingNetworkPriorities = new LinkedHashSet<>(underlyingNetworkPriorities);
+        mUnderlyingNetworkPriorities = new ArrayList<>(underlyingNetworkPriorityRules);
         if (mUnderlyingNetworkPriorities.isEmpty()) {
             mUnderlyingNetworkPriorities.addAll(DEFAULT_UNDERLYING_NETWORK_PRIORITIES);
         }
@@ -257,15 +257,12 @@ public final class VcnGatewayConnectionConfig {
             // UNDERLYING_NETWORK_PRIORITIES_KEY was added in Android T. Thus
             // VcnGatewayConnectionConfig created on old platforms will not have this data and will
             // be assigned with the default value
-            mUnderlyingNetworkPriorities =
-                    new LinkedHashSet<>(DEFAULT_UNDERLYING_NETWORK_PRIORITIES);
-
+            mUnderlyingNetworkPriorities = new ArrayList<>(DEFAULT_UNDERLYING_NETWORK_PRIORITIES);
         } else {
             mUnderlyingNetworkPriorities =
-                    new LinkedHashSet<>(
-                            PersistableBundleUtils.toList(
-                                    networkPrioritiesBundle,
-                                    VcnUnderlyingNetworkPriority::fromPersistableBundle));
+                    PersistableBundleUtils.toList(
+                            networkPrioritiesBundle,
+                            VcnUnderlyingNetworkPriorityRule::fromPersistableBundle);
         }
 
         mRetryIntervalsMs = in.getLongArray(RETRY_INTERVAL_MS_KEY);
@@ -285,7 +282,7 @@ public final class VcnGatewayConnectionConfig {
             checkValidCapability(cap);
         }
 
-        Objects.requireNonNull(mUnderlyingNetworkPriorities, "underlyingNetworkPriorities is null");
+        validateNetworkPriorityRuleList(mUnderlyingNetworkPriorities);
         Objects.requireNonNull(mRetryIntervalsMs, "retryIntervalsMs was null");
         validateRetryInterval(mRetryIntervalsMs);
 
@@ -311,6 +308,20 @@ public final class VcnGatewayConnectionConfig {
             throw new IllegalArgumentException(
                     "Repeating retry interval was too short, must be a minimum of 15 minutes: "
                             + repeatingInterval);
+        }
+    }
+
+    private static void validateNetworkPriorityRuleList(
+            List<VcnUnderlyingNetworkPriorityRule> networkPriorityRules) {
+        Objects.requireNonNull(networkPriorityRules, "networkPriorityRules is null");
+
+        Set<VcnUnderlyingNetworkPriorityRule> existingRules = new ArraySet<>();
+        for (VcnUnderlyingNetworkPriorityRule rule : networkPriorityRules) {
+            Objects.requireNonNull(rule, "Found null value VcnUnderlyingNetworkPriorityRule");
+            if (!existingRules.add(rule)) {
+                throw new IllegalArgumentException(
+                        "Found duplicate VcnUnderlyingNetworkPriorityRule");
+            }
         }
     }
 
@@ -368,15 +379,15 @@ public final class VcnGatewayConnectionConfig {
     }
 
     /**
-     * Retrieve the configured VcnUnderlyingNetworkPriority list, or a default list if it is not
+     * Retrieve the VcnUnderlyingNetworkPriorityRule list, or a default list if it is not
      * configured.
      *
-     * @see Builder#setVcnUnderlyingNetworkPriorities(LinkedHashSet<VcnUnderlyingNetworkPriority>)
+     * @see Builder#setVcnUnderlyingNetworkPriorityRules(List)
      * @hide
      */
     @NonNull
-    public LinkedHashSet<VcnUnderlyingNetworkPriority> getVcnUnderlyingNetworkPriorities() {
-        return new LinkedHashSet<>(mUnderlyingNetworkPriorities);
+    public List<VcnUnderlyingNetworkPriorityRule> getVcnUnderlyingNetworkPriorityRules() {
+        return new ArrayList<>(mUnderlyingNetworkPriorities);
     }
 
     /**
@@ -417,8 +428,8 @@ public final class VcnGatewayConnectionConfig {
                         PersistableBundleUtils.INTEGER_SERIALIZER);
         final PersistableBundle networkPrioritiesBundle =
                 PersistableBundleUtils.fromList(
-                        new ArrayList<>(mUnderlyingNetworkPriorities),
-                        VcnUnderlyingNetworkPriority::toPersistableBundle);
+                        mUnderlyingNetworkPriorities,
+                        VcnUnderlyingNetworkPriorityRule::toPersistableBundle);
 
         result.putString(GATEWAY_CONNECTION_NAME_KEY, mGatewayConnectionName);
         result.putPersistableBundle(TUNNEL_CONNECTION_PARAMS_KEY, tunnelConnectionParamsBundle);
@@ -465,8 +476,8 @@ public final class VcnGatewayConnectionConfig {
         @NonNull private final Set<Integer> mExposedCapabilities = new ArraySet();
 
         @NonNull
-        private final LinkedHashSet<VcnUnderlyingNetworkPriority> mUnderlyingNetworkPriorities =
-                new LinkedHashSet<>(DEFAULT_UNDERLYING_NETWORK_PRIORITIES);
+        private final List<VcnUnderlyingNetworkPriorityRule> mUnderlyingNetworkPriorities =
+                new ArrayList<>(DEFAULT_UNDERLYING_NETWORK_PRIORITIES);
 
         @NonNull private long[] mRetryIntervalsMs = DEFAULT_RETRY_INTERVALS_MS;
         private int mMaxMtu = DEFAULT_MAX_MTU;
@@ -539,27 +550,30 @@ public final class VcnGatewayConnectionConfig {
         }
 
         /**
-         * Set the VcnUnderlyingNetworkPriority list.
+         * Set the VcnUnderlyingNetworkPriorityRule list.
          *
-         * @param underlyingNetworkPriorities a list of unique VcnUnderlyingNetworkPriorities that
-         *     are ordered from most to least preferred, or an empty list to use the default
-         *     prioritization. The default network prioritization is Opportunistic cellular, Carrier
-         *     WiFi and Macro cellular
-         * @return
+         * <p>To select the VCN underlying network, the VCN gateway will go through all the network
+         * candidates and try to find matches in the list of VcnUnderlyingNetworkPriorityRule, and
+         * will return the first match.
+         *
+         * @param underlyingNetworkPriorityRules a list of unique VcnUnderlyingNetworkPriorityRules
+         *     that are ordered from most to least preferred, or an empty list to use the default
+         *     prioritization. The default network prioritization order is Opportunistic cellular,
+         *     Carrier WiFi and then Macro cellular.
+         * @return this {@link Builder} instance, for chaining
+         * @hide
          */
-        /** @hide */
         @NonNull
-        public Builder setVcnUnderlyingNetworkPriorities(
-                @NonNull LinkedHashSet<VcnUnderlyingNetworkPriority> underlyingNetworkPriorities) {
-            Objects.requireNonNull(
-                    mUnderlyingNetworkPriorities, "underlyingNetworkPriorities is null");
+        public Builder setVcnUnderlyingNetworkPriorityRules(
+                @NonNull List<VcnUnderlyingNetworkPriorityRule> underlyingNetworkPriorityRules) {
+            validateNetworkPriorityRuleList(underlyingNetworkPriorityRules);
 
             mUnderlyingNetworkPriorities.clear();
 
-            if (underlyingNetworkPriorities.isEmpty()) {
+            if (underlyingNetworkPriorityRules.isEmpty()) {
                 mUnderlyingNetworkPriorities.addAll(DEFAULT_UNDERLYING_NETWORK_PRIORITIES);
             } else {
-                mUnderlyingNetworkPriorities.addAll(underlyingNetworkPriorities);
+                mUnderlyingNetworkPriorities.addAll(underlyingNetworkPriorityRules);
             }
 
             return this;

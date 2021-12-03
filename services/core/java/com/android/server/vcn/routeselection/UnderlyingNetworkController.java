@@ -33,7 +33,7 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.VcnGatewayConnectionConfig;
-import android.net.vcn.VcnUnderlyingNetworkPriority;
+import android.net.vcn.VcnUnderlyingNetworkPriorityRule;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.ParcelUuid;
@@ -401,7 +401,7 @@ public class UnderlyingNetworkController {
                     new TreeSet<>(
                             UnderlyingNetworkRecord.getComparator(
                                     mVcnContext,
-                                    mConnectionConfig.getVcnUnderlyingNetworkPriorities(),
+                                    mConnectionConfig.getVcnUnderlyingNetworkPriorityRules(),
                                     mSubscriptionGroup,
                                     mLastSnapshot,
                                     mCurrentRecord,
@@ -498,11 +498,11 @@ public class UnderlyingNetworkController {
         pw.println(
                 "Currently selected: " + (mCurrentRecord == null ? null : mCurrentRecord.network));
 
-        pw.println("VcnUnderlyingNetworkPriority list:");
+        pw.println("VcnUnderlyingNetworkPriorityRule list:");
         pw.increaseIndent();
         int index = 0;
-        for (VcnUnderlyingNetworkPriority priority :
-                mConnectionConfig.getVcnUnderlyingNetworkPriorities()) {
+        for (VcnUnderlyingNetworkPriorityRule priority :
+                mConnectionConfig.getVcnUnderlyingNetworkPriorityRules()) {
             pw.println("Priority index: " + index);
             priority.dump(pw);
             index++;
@@ -518,7 +518,7 @@ public class UnderlyingNetworkController {
                 record.dump(
                         mVcnContext,
                         pw,
-                        mConnectionConfig.getVcnUnderlyingNetworkPriorities(),
+                        mConnectionConfig.getVcnUnderlyingNetworkPriorityRules(),
                         mSubscriptionGroup,
                         mLastSnapshot,
                         mCurrentRecord,
