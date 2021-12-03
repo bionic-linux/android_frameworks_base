@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "010c5045_d8dd085c",
+        "filename": "core/api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27235,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:59:15Z",
+      "side": 1,
+      "message": "udpated",
+      "parentUuid": "323e1778_379585cc",
+      "range": {
+        "startLine": 27235,
+        "startChar": 55,
+        "endLine": 27235,
+        "endChar": 60
+      },
+      "revId": "04a6cc386acd0f4c7f164cb154bd64a7f513ab99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7f1295e5_f1a27302",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d219f433_9f7deb8f",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:59:15Z",
+      "side": 1,
+      "message": "We can\u0027t hide it because we need to expose setNetworkQuality and setAllowMetered",
+      "parentUuid": "7f1295e5_f1a27302",
+      "range": {
+        "startLine": 174,
+        "startChar": 18,
+        "endLine": 174,
+        "endChar": 62
+      },
+      "revId": "04a6cc386acd0f4c7f164cb154bd64a7f513ab99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15100de2_c14f9120",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-03T22:44:44Z",
       "side": 1,
       "message": "Nit, it\u0027s not requirements of all wifi underlying networks. Perhaps:\n\nThis class represents a configuration for a priority class of underlying Carrier WiFi networks\n\nDitto for Cell",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 97
+      },
+      "revId": "04a6cc386acd0f4c7f164cb154bd64a7f513ab99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74237090_1ea793b9",
+        "filename": "core/java/android/net/vcn/VcnWifiUnderlyingNetworkPriority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-03T23:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15100de2_c14f9120",
       "range": {
         "startLine": 30,
         "startChar": 3,
