@@ -27269,6 +27269,22 @@ package android.net.sip {
 
 package android.net.vcn {
 
+  public final class VcnCellUnderlyingNetworkPriorityRule extends android.net.vcn.VcnUnderlyingNetworkPriorityRule {
+    method @NonNull public java.util.Set<java.lang.String> getMatchingOperatorPlmnIds();
+    method @NonNull public java.util.Set<java.lang.Integer> getMatchingSpecificCarrierIds();
+    method public boolean matchesRoaming();
+    method public boolean requiresOpportunistic();
+  }
+
+  public static final class VcnCellUnderlyingNetworkPriorityRule.Builder extends android.net.vcn.VcnUnderlyingNetworkPriorityRule.Builder<android.net.vcn.VcnCellUnderlyingNetworkPriorityRule.Builder> {
+    ctor public VcnCellUnderlyingNetworkPriorityRule.Builder();
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkPriorityRule build();
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkPriorityRule.Builder setMatchesRoaming(boolean);
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkPriorityRule.Builder setMatchingOperatorPlmnIds(@NonNull java.util.Set<java.lang.String>);
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkPriorityRule.Builder setMatchingSpecificCarrierIds(@NonNull java.util.Set<java.lang.Integer>);
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkPriorityRule.Builder setRequiresOpportunistic(boolean);
+  }
+
   public final class VcnConfig implements android.os.Parcelable {
     method public int describeContents();
     method @NonNull public java.util.Set<android.net.vcn.VcnGatewayConnectionConfig> getGatewayConnectionConfigs();
@@ -27287,6 +27303,7 @@ package android.net.vcn {
     method @NonNull public String getGatewayConnectionName();
     method @IntRange(from=0x500) public int getMaxMtu();
     method @NonNull public long[] getRetryIntervalsMillis();
+    method @NonNull public java.util.List<android.net.vcn.VcnUnderlyingNetworkPriorityRule> getVcnUnderlyingNetworkPriorityRules();
   }
 
   public static final class VcnGatewayConnectionConfig.Builder {
@@ -27296,6 +27313,7 @@ package android.net.vcn {
     method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder removeExposedCapability(int);
     method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder setMaxMtu(@IntRange(from=0x500) int);
     method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder setRetryIntervalsMillis(@NonNull long[]);
+    method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder setVcnUnderlyingNetworkPriorityRules(@NonNull java.util.List<android.net.vcn.VcnUnderlyingNetworkPriorityRule>);
   }
 
   public class VcnManager {
@@ -27317,6 +27335,24 @@ package android.net.vcn {
     ctor public VcnManager.VcnStatusCallback();
     method public abstract void onGatewayConnectionError(@NonNull String, int, @Nullable Throwable);
     method public abstract void onStatusChanged(int);
+  }
+
+  public abstract class VcnUnderlyingNetworkPriorityRule {
+    method public boolean matchesMetered();
+  }
+
+  public abstract static class VcnUnderlyingNetworkPriorityRule.Builder<T extends android.net.vcn.VcnUnderlyingNetworkPriorityRule.Builder<T>> {
+    method @NonNull public T setMatchesMetered(boolean);
+  }
+
+  public final class VcnWifiUnderlyingNetworkPriorityRule extends android.net.vcn.VcnUnderlyingNetworkPriorityRule {
+    method @NonNull public java.util.Set<java.lang.String> getMatchingSsids();
+  }
+
+  public static class VcnWifiUnderlyingNetworkPriorityRule.Builder extends android.net.vcn.VcnUnderlyingNetworkPriorityRule.Builder<android.net.vcn.VcnWifiUnderlyingNetworkPriorityRule.Builder> {
+    ctor public VcnWifiUnderlyingNetworkPriorityRule.Builder();
+    method @NonNull public android.net.vcn.VcnWifiUnderlyingNetworkPriorityRule build();
+    method @NonNull public android.net.vcn.VcnWifiUnderlyingNetworkPriorityRule.Builder setMatchingSsids(@NonNull java.util.Set<java.lang.String>);
   }
 
 }

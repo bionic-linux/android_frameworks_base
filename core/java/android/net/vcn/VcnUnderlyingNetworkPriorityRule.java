@@ -40,8 +40,6 @@ import java.util.Objects;
  * Connection by setting a list (in priority order, most to least preferred) of the appropriate
  * subclasses in the VcnGatewayConnectionConfig. See {@link
  * VcnGatewayConnectionConfig.Builder#setVcnUnderlyingNetworkPriorityRules}
- *
- * @hide
  */
 public abstract class VcnUnderlyingNetworkPriorityRule {
     /** @hide */
@@ -49,9 +47,17 @@ public abstract class VcnUnderlyingNetworkPriorityRule {
     /** @hide */
     protected static final int NETWORK_PRIORITY_TYPE_CELL = 2;
 
-    /** Denotes that any network quality is acceptable */
+    /**
+     * Denotes that any network quality is acceptable
+     *
+     * @hide
+     */
     public static final int NETWORK_QUALITY_ANY = 0;
-    /** Denotes that network quality needs to be OK */
+    /**
+     * Denotes that network quality needs to be OK
+     *
+     * @hide
+     */
     public static final int NETWORK_QUALITY_OK = 100000;
 
     private static final SparseArray<String> NETWORK_QUALITY_TO_STRING_MAP = new SparseArray<>();
@@ -170,6 +176,7 @@ public abstract class VcnUnderlyingNetworkPriorityRule {
      * Retrieve the required network quality to match this priority rule.
      *
      * @see Builder#setNetworkQuality(int)
+     * @hide
      */
     @NetworkQuality
     public int getNetworkQuality() {
@@ -211,6 +218,7 @@ public abstract class VcnUnderlyingNetworkPriorityRule {
          * and signal strength.
          *
          * @param networkQuality the required network quality. Defaults to NETWORK_QUALITY_ANY
+         * @hide
          */
         @NonNull
         public T setNetworkQuality(@NetworkQuality int networkQuality) {
