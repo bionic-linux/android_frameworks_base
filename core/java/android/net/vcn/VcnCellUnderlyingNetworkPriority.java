@@ -37,8 +37,11 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-// TODO: Add documents
-/** @hide */
+/**
+ * This class represents a configuration for a priority class of underlying cellular networks.
+ *
+ * <p>See {@link VcnUnderlyingNetworkPriority}
+ */
 public final class VcnCellUnderlyingNetworkPriority extends VcnUnderlyingNetworkPriority {
     private static final String ALLOWED_NETWORK_PLMN_IDS_KEY = "mAllowedNetworkPlmnIds";
     @NonNull private final Set<String> mAllowedNetworkPlmnIds;
@@ -169,7 +172,7 @@ public final class VcnCellUnderlyingNetworkPriority extends VcnUnderlyingNetwork
         return mAllowRoaming;
     }
 
-    /** Return if requiring an opportunistic network. */
+    /** Return if requires an opportunistic network. */
     public boolean requireOpportunistic() {
         return mRequireOpportunistic;
     }
@@ -269,7 +272,7 @@ public final class VcnCellUnderlyingNetworkPriority extends VcnUnderlyingNetwork
         }
 
         /**
-         * Set if requiring an opportunistic network.
+         * Set if requires an opportunistic network.
          *
          * @param requireOpportunistic the flag to indicate if caller requires an opportunistic
          *     network. Defaults to {@code false}.
