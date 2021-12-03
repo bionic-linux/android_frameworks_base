@@ -15,8 +15,8 @@
  */
 package android.net.vcn;
 
-import static android.net.vcn.VcnUnderlyingNetworkPriority.NETWORK_QUALITY_ANY;
-import static android.net.vcn.VcnUnderlyingNetworkPriority.NETWORK_QUALITY_OK;
+import static android.net.vcn.VcnUnderlyingNetworkPriorityRule.NETWORK_QUALITY_ANY;
+import static android.net.vcn.VcnUnderlyingNetworkPriorityRule.NETWORK_QUALITY_OK;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -27,51 +27,51 @@ import org.junit.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-public class VcnCellUnderlyingNetworkPriorityTest {
+public class VcnCellUnderlyingNetworkPriorityRuleTest {
     private static final Set<String> ALLOWED_PLMN_IDS = new HashSet<>();
     private static final Set<Integer> ALLOWED_CARRIER_IDS = new HashSet<>();
 
     // Package private for use in VcnGatewayConnectionConfigTest
-    static VcnCellUnderlyingNetworkPriority getTestNetworkPriority() {
-        return new VcnCellUnderlyingNetworkPriority.Builder()
+    static VcnCellUnderlyingNetworkPriorityRule getTestNetworkPriority() {
+        return new VcnCellUnderlyingNetworkPriorityRule.Builder()
                 .setNetworkQuality(NETWORK_QUALITY_OK)
-                .setAllowMetered(true /* allowMetered */)
-                .setAllowedOperatorPlmnIds(ALLOWED_PLMN_IDS)
-                .setAllowedSpecificCarrierIds(ALLOWED_CARRIER_IDS)
-                .setAllowRoaming(true /* allowRoaming */)
+                .setMatchesMetered(true /* allowMetered */)
+                .setMatchingOperatorPlmnIds(ALLOWED_PLMN_IDS)
+                .setMatchingSpecificCarrierIds(ALLOWED_CARRIER_IDS)
+                .setMatchesRoaming(true /* allowRoaming */)
                 .setRequireOpportunistic(true /* requireOpportunistic */)
                 .build();
     }
 
     @Test
     public void testBuilderAndGetters() {
-        final VcnCellUnderlyingNetworkPriority networkPriority = getTestNetworkPriority();
+        final VcnCellUnderlyingNetworkPriorityRule networkPriority = getTestNetworkPriority();
         assertEquals(NETWORK_QUALITY_OK, networkPriority.getNetworkQuality());
-        assertTrue(networkPriority.allowMetered());
-        assertEquals(ALLOWED_PLMN_IDS, networkPriority.getAllowedOperatorPlmnIds());
-        assertEquals(ALLOWED_CARRIER_IDS, networkPriority.getAllowedSpecificCarrierIds());
-        assertTrue(networkPriority.allowRoaming());
+        assertTrue(networkPriority.matchesMetered());
+        assertEquals(ALLOWED_PLMN_IDS, networkPriority.getMatchingOperatorPlmnIds());
+        assertEquals(ALLOWED_CARRIER_IDS, networkPriority.getMatchingSpecificCarrierIds());
+        assertTrue(networkPriority.matchesRoaming());
         assertTrue(networkPriority.requireOpportunistic());
     }
 
     @Test
     public void testBuilderAndGettersForDefaultValues() {
-        final VcnCellUnderlyingNetworkPriority networkPriority =
-                new VcnCellUnderlyingNetworkPriority.Builder().build();
+        final VcnCellUnderlyingNetworkPriorityRule networkPriority =
+                new VcnCellUnderlyingNetworkPriorityRule.Builder().build();
         assertEquals(NETWORK_QUALITY_ANY, networkPriority.getNetworkQuality());
-        assertFalse(networkPriority.allowMetered());
-        assertEquals(new HashSet<String>(), networkPriority.getAllowedOperatorPlmnIds());
-        assertEquals(new HashSet<Integer>(), networkPriority.getAllowedSpecificCarrierIds());
-        assertFalse(networkPriority.allowRoaming());
+        assertFalse(networkPriority.matchesMetered());
+        assertEquals(new HashSet<String>(), networkPriority.getMatchingOperatorPlmnIds());
+        assertEquals(new HashSet<Integer>(), networkPriority.getMatchingSpecificCarrierIds());
+        assertFalse(networkPriority.matchesRoaming());
         assertFalse(networkPriority.requireOpportunistic());
     }
 
     @Test
     public void testPersistableBundle() {
-        final VcnCellUnderlyingNetworkPriority networkPriority = getTestNetworkPriority();
+        final VcnCellUnderlyingNetworkPriorityRule networkPriority = getTestNetworkPriority();
         assertEquals(
                 networkPriority,
-                VcnUnderlyingNetworkPriority.fromPersistableBundle(
+                VcnUnderlyingNetworkPriorityRule.fromPersistableBundle(
                         networkPriority.toPersistableBundle()));
     }
 }
