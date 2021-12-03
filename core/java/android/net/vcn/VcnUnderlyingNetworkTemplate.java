@@ -15,11 +15,15 @@
  */
 package android.net.vcn;
 
+import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_ANY;
+
 import static com.android.internal.annotations.VisibleForTesting.Visibility;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.net.NetworkCapabilities;
 import android.os.PersistableBundle;
 import android.util.SparseArray;
 
@@ -31,17 +35,26 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
-// TODO: Add documents
-/** @hide */
+/**
+ * This class represents a template containing set of underlying network requirements for doing
+ * route selection.
+ *
+ * <p>Apps provisioning a VCN can configure the underlying network template for each Gateway
+ * Connection by setting a list (in priority order, most to least preferred) of the appropriate
+ * subclasses in the VcnGatewayConnectionConfig. See {@link
+ * VcnGatewayConnectionConfig.Builder#setVcnUnderlyingNetworkTemplates}
+ *
+ * @hide
+ */
 public abstract class VcnUnderlyingNetworkTemplate {
     /** @hide */
-    protected static final int NETWORK_PRIORITY_TYPE_WIFI = 1;
+    static final int NETWORK_PRIORITY_TYPE_WIFI = 1;
     /** @hide */
-    protected static final int NETWORK_PRIORITY_TYPE_CELL = 2;
+    static final int NETWORK_PRIORITY_TYPE_CELL = 2;
 
-    /** Denotes that any network quality is acceptable */
+    /** Denotes that any network quality is acceptable. @hide */
     public static final int NETWORK_QUALITY_ANY = 0;
-    /** Denotes that network quality needs to be OK */
+    /** Denotes that network quality needs to be OK. @hide */
     public static final int NETWORK_QUALITY_OK = 100000;
 
     private static final SparseArray<String> NETWORK_QUALITY_TO_STRING_MAP = new SparseArray<>();
@@ -56,23 +69,58 @@ public abstract class VcnUnderlyingNetworkTemplate {
     @IntDef({NETWORK_QUALITY_OK, NETWORK_QUALITY_ANY})
     public @interface NetworkQuality {}
 
+    /**
+     * Used to configure the matching criteria of a network capability (See {@link
+     * NetworkCapabilities}). Denotes that networks with or without the capability are both
+     * acceptable to match the template.
+     */
+    public static final int MATCH_ANY = 0;
+
+    /**
+     * Used to configure the matching criteria of a network capability (See {@link
+     * NetworkCapabilities}). Denotes that only network with the capability can match the template.
+     */
+    public static final int MATCH_REQUIRED = 1;
+
+    /**
+     * Used to configure the matching criteria of a network capability (See {@link
+     * NetworkCapabilities}). Denotes that only network without the capability can match the
+     * template.
+     */
+    public static final int MATCH_FORBIDDEN = 2;
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({MATCH_ANY, MATCH_REQUIRED, MATCH_FORBIDDEN})
+    public @interface MatchCriteria {}
+
+    private static final SparseArray<String> MATCH_CRITERIA_TO_STRING_MAP = new SparseArray<>();
+
+    static {
+        MATCH_CRITERIA_TO_STRING_MAP.put(MATCH_ANY, "MATCH_ANY");
+        MATCH_CRITERIA_TO_STRING_MAP.put(MATCH_REQUIRED, "MATCH_REQUIRED");
+        MATCH_CRITERIA_TO_STRING_MAP.put(MATCH_FORBIDDEN, "MATCH_FORBIDDEN");
+    }
+
     private static final String NETWORK_PRIORITY_TYPE_KEY = "mNetworkPriorityType";
     private final int mNetworkPriorityType;
 
     /** @hide */
-    protected static final String NETWORK_QUALITY_KEY = "mNetworkQuality";
+    static final String NETWORK_QUALITY_KEY = "mNetworkQuality";
+
     private final int mNetworkQuality;
 
     /** @hide */
-    protected static final String ALLOW_METERED_KEY = "mAllowMetered";
-    private final boolean mAllowMetered;
+    static final String UNMETERED_MATCH_KEY = "mUnmeteredMatchCriteria";
+
+    private final int mUnmeteredMatchCriteria;
 
     /** @hide */
-    protected VcnUnderlyingNetworkTemplate(
-            int networkPriorityType, int networkQuality, boolean allowMetered) {
+    VcnUnderlyingNetworkTemplate(
+            int networkPriorityType, int networkQuality, int unmeteredMatchCriteria) {
         mNetworkPriorityType = networkPriorityType;
         mNetworkQuality = networkQuality;
-        mAllowMetered = allowMetered;
+        mUnmeteredMatchCriteria = unmeteredMatchCriteria;
     }
 
     private static void validateNetworkQuality(int networkQuality) {
@@ -82,8 +130,16 @@ public abstract class VcnUnderlyingNetworkTemplate {
     }
 
     /** @hide */
+    static void validateMatchCriteria(int matchCriteria, String matchingCapability) {
+        Preconditions.checkArgument(
+                MATCH_CRITERIA_TO_STRING_MAP.contains(matchCriteria),
+                "Invalid matching matchCriteria: " + matchCriteria + " for " + matchingCapability);
+    }
+
+    /** @hide */
     protected void validate() {
         validateNetworkQuality(mNetworkQuality);
+        validateMatchCriteria(mUnmeteredMatchCriteria, "mUnmeteredMatchCriteria");
     }
 
     /** @hide */
@@ -112,14 +168,14 @@ public abstract class VcnUnderlyingNetworkTemplate {
 
         result.putInt(NETWORK_PRIORITY_TYPE_KEY, mNetworkPriorityType);
         result.putInt(NETWORK_QUALITY_KEY, mNetworkQuality);
-        result.putBoolean(ALLOW_METERED_KEY, mAllowMetered);
+        result.putInt(UNMETERED_MATCH_KEY, mUnmeteredMatchCriteria);
 
         return result;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mNetworkPriorityType, mNetworkQuality, mAllowMetered);
+        return Objects.hash(mNetworkPriorityType, mNetworkQuality, mUnmeteredMatchCriteria);
     }
 
     @Override
@@ -131,7 +187,17 @@ public abstract class VcnUnderlyingNetworkTemplate {
         final VcnUnderlyingNetworkTemplate rhs = (VcnUnderlyingNetworkTemplate) other;
         return mNetworkPriorityType == rhs.mNetworkPriorityType
                 && mNetworkQuality == rhs.mNetworkQuality
-                && mAllowMetered == rhs.mAllowMetered;
+                && mUnmeteredMatchCriteria == rhs.mUnmeteredMatchCriteria;
+    }
+
+    /** @hide */
+    static String getNameString(SparseArray<String> toStringMap, int key) {
+        return toStringMap.get(key, "Invalid value " + key);
+    }
+
+    /** @hide */
+    static String getMatchCriteriaString(int matchCriteria) {
+        return getNameString(MATCH_CRITERIA_TO_STRING_MAP, matchCriteria);
     }
 
     /** @hide */
@@ -148,23 +214,32 @@ public abstract class VcnUnderlyingNetworkTemplate {
 
         pw.println(
                 "mNetworkQuality: "
-                        + NETWORK_QUALITY_TO_STRING_MAP.get(
-                                mNetworkQuality, "Invalid value " + mNetworkQuality));
-        pw.println("mAllowMetered: " + mAllowMetered);
+                        + getNameString(NETWORK_QUALITY_TO_STRING_MAP, mNetworkQuality));
+        pw.println("mUnmeteredMatchCriteria: " + getMatchCriteriaString(mUnmeteredMatchCriteria));
         dumpTransportSpecificFields(pw);
 
         pw.decreaseIndent();
     }
 
-    /** Retrieve the required network quality. */
+    /**
+     * Retrieve the required network quality to match this template.
+     *
+     * @see Builder#setNetworkQuality(int)
+     * @hide
+     */
     @NetworkQuality
     public int getNetworkQuality() {
         return mNetworkQuality;
     }
 
-    /** Return if a metered network is allowed. */
-    public boolean allowMetered() {
-        return mAllowMetered;
+    /**
+     * Return the matching criteria for {@link NetworkCapabilities#NET_CAPABILITY_NOT_METERED}.
+     *
+     * @see Builder#setNotMeteredMatch(int)
+     */
+    @MatchCriteria
+    public int getNotMeteredMatch() {
+        return mUnmeteredMatchCriteria;
     }
 
     /**
@@ -172,19 +247,28 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @param <T> The subclass to be built.
      */
+    // This builder is specifically designed to be extended by classes deriving from
+    // VcnUnderlyingNetworkTemplate, and  build() method only exists in subclasses
+    @SuppressLint({"StaticFinalBuilder", "MissingBuildMethod"})
     public abstract static class Builder<T extends Builder<T>> {
         /** @hide */
-        protected int mNetworkQuality = NETWORK_QUALITY_ANY;
+        int mNetworkQuality = NETWORK_QUALITY_ANY;
         /** @hide */
-        protected boolean mAllowMetered = false;
+        int mUnmeteredMatchCriteria = MATCH_ANY;
 
         /** @hide */
-        protected Builder() {}
+        Builder() {}
 
         /**
-         * Set the required network quality.
+         * Set the required network quality to match this template.
+         *
+         * <p>Network quality is a aggregation of multiple signals that reflect the network link
+         * metrics. For example, the network validation bit (see {@link
+         * NetworkCapabilities#NET_CAPABILITY_VALIDATED}), estimated first hop transport bandwidth
+         * and signal strength.
          *
          * @param networkQuality the required network quality. Defaults to NETWORK_QUALITY_ANY
+         * @hide
          */
         @NonNull
         public T setNetworkQuality(@NetworkQuality int networkQuality) {
@@ -195,14 +279,14 @@ public abstract class VcnUnderlyingNetworkTemplate {
         }
 
         /**
-         * Set if a metered network is allowed.
+         * Set the matching criteria for {@link NetworkCapabilities#NET_CAPABILITY_NOT_METERED}
          *
-         * @param allowMetered the flag to indicate if a metered network is allowed, defaults to
-         *     {@code false}
+         * @param unmeteredMatchCriteria the flag to indicate the matching criteria for {@link
+         *     NetworkCapabilities#NET_CAPABILITY_NOT_METERED}, defaults to {@link #MATCH_ANY}
          */
         @NonNull
-        public T setAllowMetered(boolean allowMetered) {
-            mAllowMetered = allowMetered;
+        public T setNotMeteredMatch(int unmeteredMatchCriteria) {
+            mUnmeteredMatchCriteria = unmeteredMatchCriteria;
             return self();
         }
 

@@ -15,6 +15,9 @@
  */
 package android.net.vcn;
 
+import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_ANY;
+import static android.net.vcn.VcnUnderlyingNetworkTemplate.getMatchCriteriaString;
+
 import static com.android.internal.annotations.VisibleForTesting.Visibility;
 import static com.android.server.vcn.util.PersistableBundleUtils.INTEGER_DESERIALIZER;
 import static com.android.server.vcn.util.PersistableBundleUtils.INTEGER_SERIALIZER;
@@ -23,8 +26,11 @@ import static com.android.server.vcn.util.PersistableBundleUtils.STRING_SERIALIZ
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.net.NetworkCapabilities;
+import android.net.vcn.VcnUnderlyingNetworkTemplate.MatchCriteria;
 import android.os.PersistableBundle;
 import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.util.ArraySet;
 
@@ -37,32 +43,38 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-// TODO: Add documents
-/** @hide */
+/**
+ * This class represents a configuration for a network template class of underlying cellular
+ * networks.
+ *
+ * <p>See {@link VcnUnderlyingNetworkTemplate}
+ *
+ * @hide
+ */
 public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetworkTemplate {
     private static final String ALLOWED_NETWORK_PLMN_IDS_KEY = "mAllowedNetworkPlmnIds";
     @NonNull private final Set<String> mAllowedNetworkPlmnIds;
     private static final String ALLOWED_SPECIFIC_CARRIER_IDS_KEY = "mAllowedSpecificCarrierIds";
     @NonNull private final Set<Integer> mAllowedSpecificCarrierIds;
 
-    private static final String ALLOW_ROAMING_KEY = "mAllowRoaming";
-    private final boolean mAllowRoaming;
+    private static final String NOT_ROAMING_MATCH_KEY = "mNotRoamingMatchCriteria";
+    private final int mNotRoamingMatchCriteria;
 
-    private static final String REQUIRE_OPPORTUNISTIC_KEY = "mRequireOpportunistic";
-    private final boolean mRequireOpportunistic;
+    private static final String OPPORTUNISTIC_MATCH_KEY = "mOpportunisticMatchCriteria";
+    private final int mOpportunisticMatchCriteria;
 
     private VcnCellUnderlyingNetworkTemplate(
             int networkQuality,
-            boolean allowMetered,
+            int unmeteredMatchCriteria,
             Set<String> allowedNetworkPlmnIds,
             Set<Integer> allowedSpecificCarrierIds,
-            boolean allowRoaming,
-            boolean requireOpportunistic) {
-        super(NETWORK_PRIORITY_TYPE_CELL, networkQuality, allowMetered);
+            int notRoamingMatchCriteria,
+            int opportunisticMatchCriteria) {
+        super(NETWORK_PRIORITY_TYPE_CELL, networkQuality, unmeteredMatchCriteria);
         mAllowedNetworkPlmnIds = new ArraySet<>(allowedNetworkPlmnIds);
         mAllowedSpecificCarrierIds = new ArraySet<>(allowedSpecificCarrierIds);
-        mAllowRoaming = allowRoaming;
-        mRequireOpportunistic = requireOpportunistic;
+        mNotRoamingMatchCriteria = notRoamingMatchCriteria;
+        mOpportunisticMatchCriteria = opportunisticMatchCriteria;
 
         validate();
     }
@@ -72,15 +84,17 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
     protected void validate() {
         super.validate();
         validatePlmnIds(mAllowedNetworkPlmnIds);
-        Objects.requireNonNull(mAllowedSpecificCarrierIds, "allowedCarrierIds is null");
+        Objects.requireNonNull(mAllowedSpecificCarrierIds, "matchingCarrierIds is null");
+        validateMatchCriteria(mNotRoamingMatchCriteria, "mNotRoamingMatchCriteria");
+        validateMatchCriteria(mOpportunisticMatchCriteria, "mOpportunisticMatchCriteria");
     }
 
-    private static void validatePlmnIds(Set<String> allowedNetworkPlmnIds) {
-        Objects.requireNonNull(allowedNetworkPlmnIds, "allowedNetworkPlmnIds is null");
+    private static void validatePlmnIds(Set<String> matchingOperatorPlmnIds) {
+        Objects.requireNonNull(matchingOperatorPlmnIds, "matchingOperatorPlmnIds is null");
 
         // A valid PLMN is a concatenation of MNC and MCC, and thus consists of 5 or 6 decimal
         // digits.
-        for (String id : allowedNetworkPlmnIds) {
+        for (String id : matchingOperatorPlmnIds) {
             if ((id.length() == 5 || id.length() == 6) && id.matches("[0-9]+")) {
                 continue;
             } else {
@@ -97,7 +111,7 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         Objects.requireNonNull(in, "PersistableBundle is null");
 
         final int networkQuality = in.getInt(NETWORK_QUALITY_KEY);
-        final boolean allowMetered = in.getBoolean(ALLOW_METERED_KEY);
+        final int unmeteredMatchCriteria = in.getInt(UNMETERED_MATCH_KEY);
 
         final PersistableBundle plmnIdsBundle =
                 in.getPersistableBundle(ALLOWED_NETWORK_PLMN_IDS_KEY);
@@ -114,16 +128,16 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
                         PersistableBundleUtils.toList(
                                 specificCarrierIdsBundle, INTEGER_DESERIALIZER));
 
-        final boolean allowRoaming = in.getBoolean(ALLOW_ROAMING_KEY);
-        final boolean requireOpportunistic = in.getBoolean(REQUIRE_OPPORTUNISTIC_KEY);
+        final int notRoamingMatchCriteria = in.getInt(NOT_ROAMING_MATCH_KEY);
+        final int opportunisticMatchCriteria = in.getInt(OPPORTUNISTIC_MATCH_KEY);
 
         return new VcnCellUnderlyingNetworkTemplate(
                 networkQuality,
-                allowMetered,
+                unmeteredMatchCriteria,
                 allowedNetworkPlmnIds,
                 allowedSpecificCarrierIds,
-                allowRoaming,
-                requireOpportunistic);
+                notRoamingMatchCriteria,
+                opportunisticMatchCriteria);
     }
 
     /** @hide */
@@ -143,35 +157,51 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
                         new ArrayList<>(mAllowedSpecificCarrierIds), INTEGER_SERIALIZER);
         result.putPersistableBundle(ALLOWED_SPECIFIC_CARRIER_IDS_KEY, specificCarrierIdsBundle);
 
-        result.putBoolean(ALLOW_ROAMING_KEY, mAllowRoaming);
-        result.putBoolean(REQUIRE_OPPORTUNISTIC_KEY, mRequireOpportunistic);
+        result.putInt(NOT_ROAMING_MATCH_KEY, mNotRoamingMatchCriteria);
+        result.putInt(OPPORTUNISTIC_MATCH_KEY, mOpportunisticMatchCriteria);
 
         return result;
     }
 
-    /** Retrieve the allowed PLMN IDs, or an empty set if any PLMN ID is acceptable. */
+    /**
+     * Retrieve the matching operator PLMN IDs, or an empty set if any PLMN ID is acceptable.
+     *
+     * @see Builder#setMatchingOperatorPlmnIds(Set)
+     */
     @NonNull
-    public Set<String> getAllowedOperatorPlmnIds() {
+    public Set<String> getMatchingOperatorPlmnIds() {
         return Collections.unmodifiableSet(mAllowedNetworkPlmnIds);
     }
 
     /**
-     * Retrieve the allowed specific carrier IDs, or an empty set if any specific carrier ID is
+     * Retrieve the matching specific carrier IDs, or an empty set if any specific carrier ID is
      * acceptable.
+     *
+     * @see Builder#setMatchingSpecificCarrierIds(Set)
      */
     @NonNull
-    public Set<Integer> getAllowedSpecificCarrierIds() {
+    public Set<Integer> getMatchingSpecificCarrierIds() {
         return Collections.unmodifiableSet(mAllowedSpecificCarrierIds);
     }
 
-    /** Return if roaming is allowed. */
-    public boolean allowRoaming() {
-        return mAllowRoaming;
+    /**
+     * Return the matching criteria for {@link NetworkCapabilities#NET_CAPABILITY_NOT_ROAMING}.
+     *
+     * @see Builder#setNotRoamingMatch(int)
+     */
+    @MatchCriteria
+    public int getNotRoamingMatch() {
+        return mNotRoamingMatchCriteria;
     }
 
-    /** Return if requiring an opportunistic network. */
-    public boolean requireOpportunistic() {
-        return mRequireOpportunistic;
+    /**
+     * Return the matching criteria with regard to requiring opportunistic.
+     *
+     * @see Builder#setOpportunisticMatch(int)
+     */
+    @MatchCriteria
+    public int getOpportunisticMatch() {
+        return mOpportunisticMatchCriteria;
     }
 
     @Override
@@ -180,8 +210,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
                 super.hashCode(),
                 mAllowedNetworkPlmnIds,
                 mAllowedSpecificCarrierIds,
-                mAllowRoaming,
-                mRequireOpportunistic);
+                mNotRoamingMatchCriteria,
+                mOpportunisticMatchCriteria);
     }
 
     @Override
@@ -197,8 +227,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         final VcnCellUnderlyingNetworkTemplate rhs = (VcnCellUnderlyingNetworkTemplate) other;
         return Objects.equals(mAllowedNetworkPlmnIds, rhs.mAllowedNetworkPlmnIds)
                 && Objects.equals(mAllowedSpecificCarrierIds, rhs.mAllowedSpecificCarrierIds)
-                && mAllowRoaming == rhs.mAllowRoaming
-                && mRequireOpportunistic == rhs.mRequireOpportunistic;
+                && mNotRoamingMatchCriteria == rhs.mNotRoamingMatchCriteria
+                && mOpportunisticMatchCriteria == rhs.mOpportunisticMatchCriteria;
     }
 
     /** @hide */
@@ -206,8 +236,10 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
     void dumpTransportSpecificFields(IndentingPrintWriter pw) {
         pw.println("mAllowedNetworkPlmnIds: " + mAllowedNetworkPlmnIds.toString());
         pw.println("mAllowedSpecificCarrierIds: " + mAllowedSpecificCarrierIds.toString());
-        pw.println("mAllowRoaming: " + mAllowRoaming);
-        pw.println("mRequireOpportunistic: " + mRequireOpportunistic);
+        pw.println("mNotRoamingMatchCriteria: " + getMatchCriteriaString(mNotRoamingMatchCriteria));
+        pw.println(
+                "mOpportunisticMatchCriteria: "
+                        + getMatchCriteriaString(mOpportunisticMatchCriteria));
     }
 
     /** This class is used to incrementally build WifiNetworkPriority objects. */
@@ -215,68 +247,73 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         @NonNull private final Set<String> mAllowedNetworkPlmnIds = new ArraySet<>();
         @NonNull private final Set<Integer> mAllowedSpecificCarrierIds = new ArraySet<>();
 
-        private boolean mAllowRoaming = false;
-        private boolean mRequireOpportunistic = false;
+        private int mNotRoamingMatchCriteria = MATCH_ANY;
+        private int mOpportunisticMatchCriteria = MATCH_ANY;
 
         /** Construct a Builder object. */
         public Builder() {}
 
         /**
-         * Set allowed operator PLMN IDs.
+         * Set operator PLMN IDs with which a network can match this priority rule.
          *
          * <p>This is used to distinguish cases where roaming agreements may dictate a different
          * priority from a partner's networks.
          *
-         * @param allowedNetworkPlmnIds the allowed operator PLMN IDs in String. Defaults to an
-         *     empty set, allowing ANY PLMN ID. A valid PLMN is a concatenation of MNC and MCC, and
-         *     thus consists of 5 or 6 decimal digits. See {@link SubscriptionInfo#getMccString()}
-         *     and {@link SubscriptionInfo#getMncString()}.
+         * @param matchingOperatorPlmnIds the matching operator PLMN IDs in String. Network with one
+         *     of the matching PLMN IDs can match this priority rule. Defaults to an empty set,
+         *     allowing ANY PLMN ID. A valid PLMN is a concatenation of MNC and MCC, and thus
+         *     consists of 5 or 6 decimal digits. See {@link SubscriptionInfo#getMccString()} and
+         *     {@link SubscriptionInfo#getMncString()}.
          */
         @NonNull
-        public Builder setAllowedOperatorPlmnIds(@NonNull Set<String> allowedNetworkPlmnIds) {
-            validatePlmnIds(allowedNetworkPlmnIds);
+        public Builder setMatchingOperatorPlmnIds(@NonNull Set<String> matchingOperatorPlmnIds) {
+            validatePlmnIds(matchingOperatorPlmnIds);
 
             mAllowedNetworkPlmnIds.clear();
-            mAllowedNetworkPlmnIds.addAll(allowedNetworkPlmnIds);
+            mAllowedNetworkPlmnIds.addAll(matchingOperatorPlmnIds);
             return this;
         }
 
         /**
-         * Set allowed specific carrier IDs.
+         * Set specific carrier IDs with which a network can match this priority rule.
          *
-         * @param allowedSpecificCarrierIds the allowed specific carrier IDs. Defaults to an empty
-         *     set, allowing ANY carrier ID. See {@link TelephonyManager#getSimSpecificCarrierId()}.
+         * @param matchingSpecificCarrierIds the matching specific carrier IDs. Network with one of
+         *     the specific carrier IDs can match this priority rule. Defaults to an empty set,
+         *     allowing ANY carrier ID. See {@link TelephonyManager#getSimSpecificCarrierId()}.
          */
         @NonNull
-        public Builder setAllowedSpecificCarrierIds(
-                @NonNull Set<Integer> allowedSpecificCarrierIds) {
-            Objects.requireNonNull(allowedSpecificCarrierIds, "allowedCarrierIds is null");
+        public Builder setMatchingSpecificCarrierIds(
+                @NonNull Set<Integer> matchingSpecificCarrierIds) {
+            Objects.requireNonNull(
+                    matchingSpecificCarrierIds, "matchingSpecificCarrierIds is null");
+
             mAllowedSpecificCarrierIds.clear();
-            mAllowedSpecificCarrierIds.addAll(allowedSpecificCarrierIds);
+            mAllowedSpecificCarrierIds.addAll(matchingSpecificCarrierIds);
             return this;
         }
 
         /**
-         * Set if roaming is allowed.
+         * Set the matching criteria for {@link NetworkCapabilities#NET_CAPABILITY_NOT_ROAMING}.
          *
-         * @param allowRoaming the flag to indicate if roaming is allowed. Defaults to {@code
-         *     false}.
+         * @param notRoamingMatchCriteria the flag to indicate the matching criteria for {@link
+         *     NetworkCapabilities#NET_CAPABILITY_NOT_ROAMING}. Defaults to {@link #MATCH_ANY}.
          */
         @NonNull
-        public Builder setAllowRoaming(boolean allowRoaming) {
-            mAllowRoaming = allowRoaming;
+        public Builder setNotRoamingMatch(int notRoamingMatchCriteria) {
+            mNotRoamingMatchCriteria = notRoamingMatchCriteria;
             return this;
         }
 
         /**
-         * Set if requiring an opportunistic network.
+         * Set the matching criteria with regard to requiring opportunistic.
          *
-         * @param requireOpportunistic the flag to indicate if caller requires an opportunistic
-         *     network. Defaults to {@code false}.
+         * @param opportunisticMatchCriteria the flag to the matching criteria with regard to
+         *     requiring opportunistic. Defaults to {@link #MATCH_ANY}. See {@link
+         *     SubscriptionManager#setOpportunistic(boolean, int)}
          */
         @NonNull
-        public Builder setRequireOpportunistic(boolean requireOpportunistic) {
-            mRequireOpportunistic = requireOpportunistic;
+        public Builder setOpportunisticMatch(int opportunisticMatchCriteria) {
+            mOpportunisticMatchCriteria = opportunisticMatchCriteria;
             return this;
         }
 
@@ -285,11 +322,11 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         public VcnCellUnderlyingNetworkTemplate build() {
             return new VcnCellUnderlyingNetworkTemplate(
                     mNetworkQuality,
-                    mAllowMetered,
+                    mUnmeteredMatchCriteria,
                     mAllowedNetworkPlmnIds,
                     mAllowedSpecificCarrierIds,
-                    mAllowRoaming,
-                    mRequireOpportunistic);
+                    mNotRoamingMatchCriteria,
+                    mOpportunisticMatchCriteria);
         }
 
         /** @hide */
