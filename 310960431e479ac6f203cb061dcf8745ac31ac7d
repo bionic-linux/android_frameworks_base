@@ -55,6 +55,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "592776ce_f3f49c34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-03T00:34:17Z",
+      "side": 1,
+      "message": "The DeviceIdleControllerTest change hasn\u0027t been added to the CL.",
+      "parentUuid": "6f6ae8c9_6c944a3b",
+      "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d7edaf4_410c63bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-03T00:34:17Z",
+      "side": 1,
+      "message": "Please add the DeviceIdleControllerTest change and I\u0027ll get it merged upstream",
+      "parentUuid": "0b52f040_fbfc9e26",
+      "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6e3af87a_df1e95bb",
         "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
         "patchSetId": 6
@@ -114,6 +150,30 @@
       "side": 1,
       "message": "@Kweku is it enough? (I think it will not cause merge conflict\n\nbut (ag/15779865) seems more complex than this. so I was not sure that is correct way",
       "parentUuid": "09766062_a315034f",
+      "range": {
+        "startLine": 3957,
+        "startChar": 9,
+        "endLine": 3957,
+        "endChar": 33
+      },
+      "revId": "310960431e479ac6f203cb061dcf8745ac31ac7d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "300a0290_ecff4ca7",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 3957,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-03T00:34:17Z",
+      "side": 1,
+      "message": "This is the only line that would have been an issue because of the proximity. The rest touches lines that aren\u0027t modified in this CL.",
+      "parentUuid": "1b253395_e865ce7f",
       "range": {
         "startLine": 3957,
         "startChar": 9,
