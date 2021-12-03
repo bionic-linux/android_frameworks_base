@@ -37,8 +37,11 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-// TODO: Add documents
-/** @hide */
+/**
+ * This class represents a set of cell underlying network requirements for doing route selection.
+ *
+ * <p>See {@link VcnUnderlyingNetworkPriority}
+ */
 public final class VcnCellUnderlyingNetworkPriority extends VcnUnderlyingNetworkPriority {
     private static final String ALLOWED_NETWORK_PLMN_IDS_KEY = "mAllowedNetworkPlmnIds";
     @NonNull private final Set<String> mAllowedNetworkPlmnIds;
@@ -217,7 +220,7 @@ public final class VcnCellUnderlyingNetworkPriority extends VcnUnderlyingNetwork
     }
 
     /** This class is used to incrementally build WifiNetworkPriority objects. */
-    public static class Builder extends VcnUnderlyingNetworkPriority.Builder<Builder> {
+    public static final class Builder extends VcnUnderlyingNetworkPriority.Builder<Builder> {
         @NonNull private final Set<String> mAllowedNetworkPlmnIds = new ArraySet<>();
         @NonNull private final Set<Integer> mAllowedSpecificCarrierIds = new ArraySet<>();
 
