@@ -40,8 +40,9 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
@@ -54,17 +55,17 @@ public class VcnGatewayConnectionConfigTest {
             };
     public static final int[] UNDERLYING_CAPS = new int[] {NetworkCapabilities.NET_CAPABILITY_DUN};
 
-    private static final LinkedHashSet<VcnUnderlyingNetworkPriority> UNDERLYING_NETWORK_PRIORITIES =
-            new LinkedHashSet();
+    private static final List<VcnUnderlyingNetworkPriorityRule> UNDERLYING_NETWORK_PRIORITIES =
+            new ArrayList();
 
     static {
         Arrays.sort(EXPOSED_CAPS);
         Arrays.sort(UNDERLYING_CAPS);
 
         UNDERLYING_NETWORK_PRIORITIES.add(
-                VcnCellUnderlyingNetworkPriorityTest.getTestNetworkPriority());
+                VcnCellUnderlyingNetworkPriorityRuleTest.getTestNetworkPriority());
         UNDERLYING_NETWORK_PRIORITIES.add(
-                VcnWifiUnderlyingNetworkPriorityTest.getTestNetworkPriority());
+                VcnWifiUnderlyingNetworkPriorityRuleTest.getTestNetworkPriority());
     }
 
     public static final long[] RETRY_INTERVALS_MS =
@@ -95,7 +96,7 @@ public class VcnGatewayConnectionConfigTest {
     // Public for use in VcnGatewayConnectionTest
     public static VcnGatewayConnectionConfig buildTestConfig() {
         final VcnGatewayConnectionConfig.Builder builder =
-                newBuilder().setVcnUnderlyingNetworkPriorities(UNDERLYING_NETWORK_PRIORITIES);
+                newBuilder().setVcnUnderlyingNetworkPriorityRules(UNDERLYING_NETWORK_PRIORITIES);
 
         return buildTestConfigWithExposedCaps(builder, EXPOSED_CAPS);
     }
@@ -176,7 +177,7 @@ public class VcnGatewayConnectionConfigTest {
     @Test
     public void testBuilderRequiresNonNullNetworkPriorities() {
         try {
-            newBuilder().setVcnUnderlyingNetworkPriorities(null);
+            newBuilder().setVcnUnderlyingNetworkPriorityRules(null);
             fail("Expected exception due to invalid underlyingNetworkPriorities");
         } catch (NullPointerException e) {
         }
@@ -219,7 +220,7 @@ public class VcnGatewayConnectionConfigTest {
         Arrays.sort(exposedCaps);
         assertArrayEquals(EXPOSED_CAPS, exposedCaps);
 
-        assertEquals(UNDERLYING_NETWORK_PRIORITIES, config.getVcnUnderlyingNetworkPriorities());
+        assertEquals(UNDERLYING_NETWORK_PRIORITIES, config.getVcnUnderlyingNetworkPriorityRules());
         assertEquals(TUNNEL_CONNECTION_PARAMS, config.getTunnelConnectionParams());
 
         assertArrayEquals(RETRY_INTERVALS_MS, config.getRetryIntervalsMillis());
@@ -240,7 +241,8 @@ public class VcnGatewayConnectionConfigTest {
 
         final VcnGatewayConnectionConfig config = new VcnGatewayConnectionConfig(configBundle);
         assertEquals(
-                DEFAULT_UNDERLYING_NETWORK_PRIORITIES, config.getVcnUnderlyingNetworkPriorities());
+                DEFAULT_UNDERLYING_NETWORK_PRIORITIES,
+                config.getVcnUnderlyingNetworkPriorityRules());
     }
 
     private static IkeTunnelConnectionParams buildTunnelConnectionParams(String ikePsk) {
@@ -286,12 +288,12 @@ public class VcnGatewayConnectionConfigTest {
     }
 
     private static VcnGatewayConnectionConfig buildTestConfigWithVcnUnderlyingNetworkPriorities(
-            LinkedHashSet<VcnUnderlyingNetworkPriority> networkPriorities) {
+            List<VcnUnderlyingNetworkPriorityRule> networkPriorities) {
         return buildTestConfigWithExposedCaps(
                 new VcnGatewayConnectionConfig.Builder(
                                 "buildTestConfigWithVcnUnderlyingNetworkPriorities",
                                 TUNNEL_CONNECTION_PARAMS)
-                        .setVcnUnderlyingNetworkPriorities(networkPriorities),
+                        .setVcnUnderlyingNetworkPriorityRules(networkPriorities),
                 EXPOSED_CAPS);
     }
 
@@ -300,17 +302,17 @@ public class VcnGatewayConnectionConfigTest {
         final VcnGatewayConnectionConfig config =
                 buildTestConfigWithVcnUnderlyingNetworkPriorities(UNDERLYING_NETWORK_PRIORITIES);
 
-        final LinkedHashSet<VcnUnderlyingNetworkPriority> networkPrioritiesEqual =
-                new LinkedHashSet();
-        networkPrioritiesEqual.add(VcnCellUnderlyingNetworkPriorityTest.getTestNetworkPriority());
-        networkPrioritiesEqual.add(VcnWifiUnderlyingNetworkPriorityTest.getTestNetworkPriority());
+        final List<VcnUnderlyingNetworkPriorityRule> networkPrioritiesEqual = new ArrayList();
+        networkPrioritiesEqual.add(
+                VcnCellUnderlyingNetworkPriorityRuleTest.getTestNetworkPriority());
+        networkPrioritiesEqual.add(
+                VcnWifiUnderlyingNetworkPriorityRuleTest.getTestNetworkPriority());
         final VcnGatewayConnectionConfig configEqual =
                 buildTestConfigWithVcnUnderlyingNetworkPriorities(networkPrioritiesEqual);
 
-        final LinkedHashSet<VcnUnderlyingNetworkPriority> networkPrioritiesNotEqual =
-                new LinkedHashSet();
+        final List<VcnUnderlyingNetworkPriorityRule> networkPrioritiesNotEqual = new ArrayList();
         networkPrioritiesNotEqual.add(
-                VcnWifiUnderlyingNetworkPriorityTest.getTestNetworkPriority());
+                VcnWifiUnderlyingNetworkPriorityRuleTest.getTestNetworkPriority());
         final VcnGatewayConnectionConfig configNotEqual =
                 buildTestConfigWithVcnUnderlyingNetworkPriorities(networkPrioritiesNotEqual);
 
