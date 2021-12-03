@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e43c949c_7080ca38",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9205,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-12-03T00:12:53Z",
+      "side": 1,
+      "message": "Sort of, but not really. \"The\" CarrierService package returned here is the one that is used by CarrierConfigLoader, CarrierServiceBindHelper, etc. - this is also expected to be the one doing the important connectivity operations like setting up carrier wi-fi connections and VCN. The wifi/network stack only allow a single package/UID to be designated the owner of networks, so this is the most authoritative info we have to say \"this is the single carrier app that will be managing connectivity.\"\n\nWhile yes, a carrier can technically deploy multiple apps that provide a CarrierService implementation, they should not (and afaik we have no evidence of this occurring in the wild) and that is really a configuration error on their part. All of the CarrierService-dependent platform classes just pick the first one from the list of available services today anyway.\n\nOf course the design (existing + this change) _does_ account for multi-carrier multi-SIM scenarios where carrier A is on SIM 1 and carrier B is on SIM 2, both of their CarrierService implementations will be used for the respective SIMs to get carrier config etc.",
+      "parentUuid": "a4061ec3_52baf6ff",
+      "range": {
+        "startLine": 9205,
+        "startChar": 21,
+        "endLine": 9205,
+        "endChar": 27
+      },
+      "revId": "886a7e5c5b3d8b9a6bb278aa745bfd842e447157",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c4acdc2_7584e11c",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 3
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-02T00:17:32Z",
       "side": 1,
       "message": "I think the existing APIs getCarrierPackageNamesForIntentAndPhone() do not follow go/tel-ids. We expose slot index instead of phone id.",
+      "range": {
+        "startLine": 9219,
+        "startChar": 17,
+        "endLine": 9219,
+        "endChar": 32
+      },
+      "revId": "886a7e5c5b3d8b9a6bb278aa745bfd842e447157",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb2ed11f_babc01e1",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 9219,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2021-12-03T00:12:53Z",
+      "side": 1,
+      "message": "Switched to logicalSlotIndex instead of phoneId",
+      "parentUuid": "5c4acdc2_7584e11c",
       "range": {
         "startLine": 9219,
         "startChar": 17,
