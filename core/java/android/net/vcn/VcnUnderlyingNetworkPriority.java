@@ -20,6 +20,7 @@ import static com.android.internal.annotations.VisibleForTesting.Visibility;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.os.PersistableBundle;
 import android.util.SparseArray;
 
@@ -172,6 +173,9 @@ public abstract class VcnUnderlyingNetworkPriority {
      *
      * @param <T> The subclass to be built.
      */
+    // This builder is specifically designed to be extended by classes deriving from
+    // VcnUnderlyingNetworkPriority, and  build() method only exists in subclasses
+    @SuppressLint({"StaticFinalBuilder", "MissingBuildMethod"})
     public abstract static class Builder<T extends Builder<T>> {
         /** @hide */
         protected int mNetworkQuality = NETWORK_QUALITY_ANY;

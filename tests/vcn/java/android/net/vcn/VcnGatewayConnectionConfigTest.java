@@ -271,4 +271,24 @@ public class VcnGatewayConnectionConfigTest {
         assertNotEquals(tunnelParams, anotherTunnelParams);
         assertNotEquals(config, anotherConfig);
     }
+
+    @Test
+    public void testVcnUnderlyingNetworkPrioritiesNotEqual() throws Exception {
+        final VcnGatewayConnectionConfig config =
+                buildTestConfigWithExposedCaps(
+                        newBuilder()
+                                .setVcnUnderlyingNetworkPriorities(UNDERLYING_NETWORK_PRIORITIES),
+                        EXPOSED_CAPS);
+
+        final LinkedHashSet<VcnUnderlyingNetworkPriority> networkPriorities = new LinkedHashSet();
+        networkPriorities.add(VcnWifiUnderlyingNetworkPriorityTest.getTestNetworkPriority());
+
+        final VcnGatewayConnectionConfig anotherConfig =
+                buildTestConfigWithExposedCaps(
+                        newBuilder().setVcnUnderlyingNetworkPriorities(networkPriorities),
+                        EXPOSED_CAPS);
+
+        assertNotEquals(UNDERLYING_NETWORK_PRIORITIES, networkPriorities);
+        assertNotEquals(config, anotherConfig);
+    }
 }
