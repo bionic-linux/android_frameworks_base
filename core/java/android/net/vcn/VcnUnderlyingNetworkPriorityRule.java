@@ -20,6 +20,8 @@ import static com.android.internal.annotations.VisibleForTesting.Visibility;
 import android.annotation.IntDef;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SuppressLint;
+import android.net.NetworkCapabilities;
 import android.os.PersistableBundle;
 import android.util.SparseArray;
 
@@ -31,9 +33,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Objects;
 
-// TODO: Add documents
-/** @hide */
-public abstract class VcnUnderlyingNetworkPriority {
+/**
+ * This class represents a set of underlying network requirements for doing route selection.
+ *
+ * <p>Apps provisioning a VCN can configure the underlying network priority rule for each Gateway
+ * Connection by setting a list (in priority order, most to least preferred) of the appropriate
+ * subclasses in the VcnGatewayConnectionConfig. See {@link
+ * VcnGatewayConnectionConfig.Builder#setVcnUnderlyingNetworkPriorityRules}
+ *
+ * @hide
+ */
+public abstract class VcnUnderlyingNetworkPriorityRule {
     /** @hide */
     protected static final int NETWORK_PRIORITY_TYPE_WIFI = 1;
     /** @hide */
@@ -68,7 +78,7 @@ public abstract class VcnUnderlyingNetworkPriority {
     private final boolean mAllowMetered;
 
     /** @hide */
-    protected VcnUnderlyingNetworkPriority(
+    protected VcnUnderlyingNetworkPriorityRule(
             int networkPriorityType, int networkQuality, boolean allowMetered) {
         mNetworkPriorityType = networkPriorityType;
         mNetworkQuality = networkQuality;
@@ -89,16 +99,16 @@ public abstract class VcnUnderlyingNetworkPriority {
     /** @hide */
     @NonNull
     @VisibleForTesting(visibility = Visibility.PROTECTED)
-    public static VcnUnderlyingNetworkPriority fromPersistableBundle(
+    public static VcnUnderlyingNetworkPriorityRule fromPersistableBundle(
             @NonNull PersistableBundle in) {
         Objects.requireNonNull(in, "PersistableBundle is null");
 
         final int networkPriorityType = in.getInt(NETWORK_PRIORITY_TYPE_KEY);
         switch (networkPriorityType) {
             case NETWORK_PRIORITY_TYPE_WIFI:
-                return VcnWifiUnderlyingNetworkPriority.fromPersistableBundle(in);
+                return VcnWifiUnderlyingNetworkPriorityRule.fromPersistableBundle(in);
             case NETWORK_PRIORITY_TYPE_CELL:
-                return VcnCellUnderlyingNetworkPriority.fromPersistableBundle(in);
+                return VcnCellUnderlyingNetworkPriorityRule.fromPersistableBundle(in);
             default:
                 throw new IllegalArgumentException(
                         "Invalid networkPriorityType:" + networkPriorityType);
@@ -124,11 +134,11 @@ public abstract class VcnUnderlyingNetworkPriority {
 
     @Override
     public boolean equals(@Nullable Object other) {
-        if (!(other instanceof VcnUnderlyingNetworkPriority)) {
+        if (!(other instanceof VcnUnderlyingNetworkPriorityRule)) {
             return false;
         }
 
-        final VcnUnderlyingNetworkPriority rhs = (VcnUnderlyingNetworkPriority) other;
+        final VcnUnderlyingNetworkPriorityRule rhs = (VcnUnderlyingNetworkPriorityRule) other;
         return mNetworkPriorityType == rhs.mNetworkPriorityType
                 && mNetworkQuality == rhs.mNetworkQuality
                 && mAllowMetered == rhs.mAllowMetered;
@@ -156,22 +166,33 @@ public abstract class VcnUnderlyingNetworkPriority {
         pw.decreaseIndent();
     }
 
-    /** Retrieve the required network quality. */
+    /**
+     * Retrieve the required network quality to match this priority rule.
+     *
+     * @see Builder#setNetworkQuality(int)
+     */
     @NetworkQuality
     public int getNetworkQuality() {
         return mNetworkQuality;
     }
 
-    /** Return if a metered network is allowed. */
-    public boolean allowMetered() {
+    /**
+     * Return if a metered network can match this priority rule.
+     *
+     * @see Builder#setMatchesMetered(boolean)
+     */
+    public boolean matchesMetered() {
         return mAllowMetered;
     }
 
     /**
-     * This class is used to incrementally build VcnUnderlyingNetworkPriority objects.
+     * This class is used to incrementally build VcnUnderlyingNetworkPriorityRule objects.
      *
      * @param <T> The subclass to be built.
      */
+    // This builder is specifically designed to be extended by classes deriving from
+    // VcnUnderlyingNetworkPriorityRule, and  build() method only exists in subclasses
+    @SuppressLint({"StaticFinalBuilder", "MissingBuildMethod"})
     public abstract static class Builder<T extends Builder<T>> {
         /** @hide */
         protected int mNetworkQuality = NETWORK_QUALITY_ANY;
@@ -182,7 +203,12 @@ public abstract class VcnUnderlyingNetworkPriority {
         protected Builder() {}
 
         /**
-         * Set the required network quality.
+         * Set the required network quality to match this priority rule.
+         *
+         * <p>Network quality is a aggregation of multiple signals that reflect the network link
+         * metrics. For example, the network validation bit (see {@link
+         * NetworkCapabilities#NET_CAPABILITY_VALIDATED}), estimated first hop transport bandwidth
+         * and signal strength.
          *
          * @param networkQuality the required network quality. Defaults to NETWORK_QUALITY_ANY
          */
@@ -195,14 +221,14 @@ public abstract class VcnUnderlyingNetworkPriority {
         }
 
         /**
-         * Set if a metered network is allowed.
+         * Set if a metered network can match this priority rule.
          *
-         * @param allowMetered the flag to indicate if a metered network is allowed, defaults to
-         *     {@code false}
+         * @param matchesMetered the flag to indicate if a metered network can match this priority
+         *     rule, defaults to {@code false}
          */
         @NonNull
-        public T setAllowMetered(boolean allowMetered) {
-            mAllowMetered = allowMetered;
+        public T setMatchesMetered(boolean matchesMetered) {
+            mAllowMetered = matchesMetered;
             return self();
         }
 
