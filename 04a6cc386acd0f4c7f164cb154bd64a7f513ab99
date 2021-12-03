@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "323e1778_379585cc",
+        "filename": "core/api/current.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 27235,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T22:44:44Z",
+      "side": 1,
+      "message": "Were we intending to flip this? or is this already flipped?",
+      "range": {
+        "startLine": 27235,
+        "startChar": 55,
+        "endLine": 27235,
+        "endChar": 60
+      },
+      "revId": "04a6cc386acd0f4c7f164cb154bd64a7f513ab99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f1295e5_f1a27302",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T22:44:44Z",
+      "side": 1,
+      "message": "And marking this abstract class @hide doesn\u0027t work, right? Presumably because we can\u0027t have a superclass hidden if we are exposing the subclasses?",
+      "range": {
+        "startLine": 174,
+        "startChar": 18,
+        "endLine": 174,
+        "endChar": 62
+      },
+      "revId": "04a6cc386acd0f4c7f164cb154bd64a7f513ab99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15100de2_c14f9120",
+        "filename": "core/java/android/net/vcn/VcnWifiUnderlyingNetworkPriority.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-03T22:44:44Z",
+      "side": 1,
+      "message": "Nit, it\u0027s not requirements of all wifi underlying networks. Perhaps:\n\nThis class represents a configuration for a priority class of underlying Carrier WiFi networks\n\nDitto for Cell",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 97
+      },
+      "revId": "04a6cc386acd0f4c7f164cb154bd64a7f513ab99",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
