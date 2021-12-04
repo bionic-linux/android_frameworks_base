@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d736145f_3f89d3ca",
+        "filename": "services/core/java/com/android/server/hdmi/NewDeviceAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-12-04T08:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd7cc9c7_1e314fc4",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 40
+      },
+      "revId": "8f12e2133508c768b77f54b352f7dec4e6c913ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9319a6a_6d635cd6",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cccd237_0658b8c6",
+        "filename": "services/core/java/com/android/server/hdmi/NewDeviceAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-12-04T08:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9319a6a_6d635cd6",
+      "range": {
+        "startLine": 79,
+        "startChar": 34,
+        "endLine": 79,
+        "endChar": 36
+      },
+      "revId": "8f12e2133508c768b77f54b352f7dec4e6c913ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3d5794a_53bc7903",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-11-11T13:56:40Z",
       "side": 1,
       "message": "remove extra space",
+      "range": {
+        "startLine": 80,
+        "startChar": 76,
+        "endLine": 80,
+        "endChar": 77
+      },
+      "revId": "8f12e2133508c768b77f54b352f7dec4e6c913ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88d17770_fc9c5cd5",
+        "filename": "services/core/java/com/android/server/hdmi/NewDeviceAction.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1501832
+      },
+      "writtenOn": "2021-12-04T08:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3d5794a_53bc7903",
       "range": {
         "startLine": 80,
         "startChar": 76,
