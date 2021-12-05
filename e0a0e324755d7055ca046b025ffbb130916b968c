@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebd261d9_b40f6b57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725373
+      },
+      "writtenOn": "2021-12-05T19:34:00Z",
+      "side": 1,
+      "message": "Bypassing lint: \"API Test Coverage\" doesn\u0027t consider packages/modules/Connectivity/tests/cts directory",
+      "revId": "e0a0e324755d7055ca046b025ffbb130916b968c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
