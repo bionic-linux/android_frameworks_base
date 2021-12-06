@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e220ad8_9625d96c",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/DeviceIdleControllerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 0,
+      "message": "nit: keep the extra blank line.",
+      "revId": "8d221843b767e18c04c82bb972c8bbdfd459742b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1eeef46_87f860f0",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/DeviceIdleControllerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 0,
+      "message": "nit: keep the blank line",
+      "revId": "8d221843b767e18c04c82bb972c8bbdfd459742b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

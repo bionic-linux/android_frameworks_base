@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a5f199c_8155b1e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 1,
+      "message": "run `atest FrameworksMockingServicesTests:DeviceIdleControllerTest`",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "b2ef950f888f81b31916996a37ffe14ba6cb3b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "662a1eaf_2450b28d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 1,
+      "message": "Add the following line:\n\nMerged-In: Ib9bf9e120c806e61eced99fbfb84cdb19d844e69",
+      "revId": "b2ef950f888f81b31916996a37ffe14ba6cb3b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b976fb0_e4edb33d",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3967,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 1,
+      "message": "Device",
+      "range": {
+        "startLine": 3967,
+        "startChar": 47,
+        "endLine": 3967,
+        "endChar": 52
+      },
+      "revId": "b2ef950f888f81b31916996a37ffe14ba6cb3b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e654c7b_f0a5fdd5",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3967,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 1,
+      "message": "nit: space after comma",
+      "range": {
+        "startLine": 3967,
+        "startChar": 45,
+        "endLine": 3967,
+        "endChar": 46
+      },
+      "revId": "b2ef950f888f81b31916996a37ffe14ba6cb3b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbbc9e41_3f1804e9",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 3972,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 1,
+      "message": "nit: space after comma",
+      "range": {
+        "startLine": 3972,
+        "startChar": 39,
+        "endLine": 3972,
+        "endChar": 40
+      },
+      "revId": "b2ef950f888f81b31916996a37ffe14ba6cb3b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdaf25d8_33659a97",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/DeviceIdleControllerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 1,
+      "message": "eq(false)",
+      "range": {
+        "startLine": 1050,
+        "startChar": 16,
+        "endLine": 1050,
+        "endChar": 21
+      },
+      "revId": "b2ef950f888f81b31916996a37ffe14ba6cb3b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43907e4f_c2606408",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/DeviceIdleControllerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 1,
+      "message": "eq(true)",
+      "range": {
+        "startLine": 1059,
+        "startChar": 16,
+        "endLine": 1059,
+        "endChar": 20
+      },
+      "revId": "b2ef950f888f81b31916996a37ffe14ba6cb3b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83c27409_9e5ec3d3",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/DeviceIdleControllerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2021-12-06T20:30:58Z",
+      "side": 1,
+      "message": "and so on",
+      "range": {
+        "startLine": 1065,
+        "startChar": 16,
+        "endLine": 1065,
+        "endChar": 21
+      },
+      "revId": "b2ef950f888f81b31916996a37ffe14ba6cb3b91",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
