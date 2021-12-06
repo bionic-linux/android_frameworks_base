@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a27107d8_3ed537f0",
+        "filename": "telecomm/java/android/telecom/Connection.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2021-12-06T20:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6c2593e_cfa770f9",
+      "range": {
+        "startLine": 827,
+        "startChar": 25,
+        "endLine": 827,
+        "endChar": 26
+      },
+      "revId": "5ea7bb2293aff1beb270c7eb6ddb873ba109d686",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10d71f70_3692152c",
