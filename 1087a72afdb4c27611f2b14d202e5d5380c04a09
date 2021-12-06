@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c6a19dc_ff5a1130",
+        "filename": "services/core/java/com/android/server/wm/DisplayAreaOrganizerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2021-12-06T09:13:51Z",
+      "side": 1,
+      "message": "Just in case, can you please:\n1. Move the change into the synchronized block.\n2. Also add a null check for mOrganizersByFeatureIds.get(mFeature)\n3. Add space next to the \"if\" for code standard.\n\nThanks for the fix!",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "1087a72afdb4c27611f2b14d202e5d5380c04a09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
