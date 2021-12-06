@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b54eb12_24847936",
+        "filename": "core/tests/bluetoothtests/src/android/bluetooth/BluetoothLeAudioCodecConfigTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-12-06T02:27:06Z",
+      "side": 1,
+      "message": "Does it mean we are intended to not allow the vendors to have their own codec?",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 66
+      },
+      "revId": "ae425ca614998a59374b39448716c326fd72931e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
