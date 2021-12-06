@@ -22,6 +22,30 @@
       },
       "revId": "1087a72afdb4c27611f2b14d202e5d5380c04a09",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c03ae42_fe7e5de7",
+        "filename": "services/core/java/com/android/server/wm/DisplayAreaOrganizerController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1786490
+      },
+      "writtenOn": "2021-12-06T12:17:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c6a19dc_ff5a1130",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "1087a72afdb4c27611f2b14d202e5d5380c04a09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
