@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e02479c9_36009fee",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/DeviceIdleControllerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1005592
+      },
+      "writtenOn": "2021-12-06T20:57:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "4e220ad8_9625d96c",
+      "revId": "8d221843b767e18c04c82bb972c8bbdfd459742b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1eeef46_87f860f0",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-12-06T20:30:58Z",
       "side": 0,
       "message": "nit: keep the blank line",
+      "revId": "8d221843b767e18c04c82bb972c8bbdfd459742b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36508e59_37286d53",
+        "filename": "services/tests/mockingservicestests/src/com/android/server/DeviceIdleControllerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1005592
+      },
+      "writtenOn": "2021-12-06T20:57:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c1eeef46_87f860f0",
       "revId": "8d221843b767e18c04c82bb972c8bbdfd459742b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
