@@ -94,6 +94,30 @@
       },
       "revId": "ae425ca614998a59374b39448716c326fd72931e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad5068be_48ac945a",
+        "filename": "core/tests/bluetoothtests/src/android/bluetooth/BluetoothLeAudioCodecConfigTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-12-06T05:25:11Z",
+      "side": 1,
+      "message": "Another thought, why do we need to assertEquals the getMaxCodecType value? The value would not be changed base on any input parameters. It\u0027s constant.",
+      "parentUuid": "8646d90a_ba450de7",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 66
+      },
+      "revId": "ae425ca614998a59374b39448716c326fd72931e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
