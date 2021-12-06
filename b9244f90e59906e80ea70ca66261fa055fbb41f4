@@ -1,0 +1,99 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018076478",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "36429260_30a4a869",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-06T18:39:36Z",
+      "side": 1,
+      "message": "Must include a \"Test:\" stanza indicating how you tested this change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "b9244f90e59906e80ea70ca66261fa055fbb41f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018076472",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d4",
+      "fixSuggestions": [
+        {
+          "fixId": "88361c89_dd6384df",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothTbs.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothTbs.java",
+              "range": {
+                "startLine": 744,
+                "startChar": 20,
+                "endLine": 744,
+                "endChar": 26
+              },
+              "replacement": "current"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "6c5d64c3_97fff825",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-06T18:39:36Z",
+      "side": 1,
+      "message": "Common typo found: \"curent\" -- should it be \"current\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 744,
+        "startChar": 20,
+        "endLine": 744,
+        "endChar": 26
+      },
+      "revId": "b9244f90e59906e80ea70ca66261fa055fbb41f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018076462",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d4",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "949c83cd_29fae565",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-06T18:39:36Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 845,
+        "startChar": 0,
+        "endLine": 845,
+        "endChar": 114
+      },
+      "revId": "b9244f90e59906e80ea70ca66261fa055fbb41f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
