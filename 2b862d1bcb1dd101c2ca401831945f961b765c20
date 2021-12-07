@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4044b61a_59f1892b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:36:25Z",
+      "side": 1,
+      "message": "Code looks fine. You\u0027ll need CTS.",
+      "revId": "2b862d1bcb1dd101c2ca401831945f961b765c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac2879b4_daf4b9fb",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:36:25Z",
+      "side": 1,
+      "message": "\"with\" normally indicates the client would supply the key. Suggest :\n\n  startProvisionedVpnProfileSession",
+      "range": {
+        "startLine": 289,
+        "startChar": 18,
+        "endLine": 289,
+        "endChar": 58
+      },
+      "revId": "2b862d1bcb1dd101c2ca401831945f961b765c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbb4a400_cbc3d704",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:36:25Z",
+      "side": 1,
+      "message": "I think we wanted to deprecate this and say to call the new one, because it will return a key that can be used to diagnose errors",
+      "range": {
+        "startLine": 303,
+        "startChar": 16,
+        "endLine": 303,
+        "endChar": 42
+      },
+      "revId": "2b862d1bcb1dd101c2ca401831945f961b765c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "359f5650_2bee6d32",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:36:25Z",
+      "side": 1,
+      "message": "Let\u0027s just call the new method",
+      "range": {
+        "startLine": 304,
+        "startChar": 8,
+        "endLine": 308,
+        "endChar": 9
+      },
+      "revId": "2b862d1bcb1dd101c2ca401831945f961b765c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
