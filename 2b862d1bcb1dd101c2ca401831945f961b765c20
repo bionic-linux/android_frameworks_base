@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3e2ad73_04dcc4dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-07T11:37:30Z",
+      "side": 1,
+      "message": "Ah sorry, you do have CTS.",
+      "parentUuid": "4044b61a_59f1892b",
+      "revId": "2b862d1bcb1dd101c2ca401831945f961b765c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac2879b4_daf4b9fb",
