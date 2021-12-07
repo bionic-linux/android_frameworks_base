@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f81ebcf0_38912712",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/NetworkPolicyEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-07T09:20:59Z",
+      "side": 0,
+      "message": "Not sure if we want to touch this.\nIt seems to me all these external callers should have a buildXyzTemplate function.",
+      "range": {
+        "startLine": 221,
+        "startChar": 23,
+        "endLine": 221,
+        "endChar": 38
+      },
+      "revId": "46d823fcd0f0fea48f3a65e69c4f0296a5e077d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
