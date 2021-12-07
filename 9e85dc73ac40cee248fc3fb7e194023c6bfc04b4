@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e51aafa2_32b3e9bf",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-07T08:10:36Z",
+      "side": 1,
+      "message": "\"sources\" to match the style?\nAlso for other places.",
+      "range": {
+        "startLine": 72,
+        "startChar": 39,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "13d73cc8_ca4ae850",
         "filename": "packages/IpSec/framework/src/android/net/IpSecConfig.aidl",
         "patchSetId": 1
@@ -31,6 +54,29 @@
       "writtenOn": "2021-12-07T07:00:50Z",
       "side": 1,
       "message": "Is there any aidl you need to put into framework/aidl-export folder like what we did in the module?",
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90f1420b_f19c429b",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-07T08:10:36Z",
+      "side": 1,
+      "message": "put it according to the alphabet order?",
+      "range": {
+        "startLine": 115,
+        "startChar": 32,
+        "endLine": 115,
+        "endChar": 37
+      },
       "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
