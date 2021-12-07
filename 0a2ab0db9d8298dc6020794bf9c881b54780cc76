@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90babf73_2096ad93",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-07T01:49:14Z",
+      "side": 1,
+      "message": "Are we missing the network priorities here?",
+      "range": {
+        "startLine": 422,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 51
+      },
+      "revId": "0a2ab0db9d8298dc6020794bf9c881b54780cc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cd17941_91142a44",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-07T01:49:14Z",
+      "side": 1,
+      "message": "Ditto missing network priorities",
+      "range": {
+        "startLine": 436,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 74
+      },
+      "revId": "0a2ab0db9d8298dc6020794bf9c881b54780cc76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
