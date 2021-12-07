@@ -421,7 +421,7 @@ D/hsm1    ( 1999): mP2.exit
 D/hsm1    ( 1999): halting
 </pre>
  */
-public class StateMachine {
+public class StateMachine extends IStateMachine {
     // Name of the state machine and used as logging tag
     private String mName;
 
@@ -450,7 +450,7 @@ public class StateMachine {
      * {@hide}
      */
     public static class LogRec {
-        private StateMachine mSm;
+        private IStateMachine mSm;
         private long mTime;
         private int mWhat;
         private String mInfo;
@@ -468,7 +468,7 @@ public class StateMachine {
          * @param transToState is the state that was transitioned to after the message was
          * processed.
          */
-        LogRec(StateMachine sm, Message msg, String info, IState state, IState orgState,
+        LogRec(IStateMachine sm, Message msg, String info, IState state, IState orgState,
                 IState transToState) {
             update(sm, msg, info, state, orgState, transToState);
         }
@@ -479,8 +479,8 @@ public class StateMachine {
          * @param orgState is the first state the received the message
          * @param dstState is the state that was the transition target when logging
          */
-        public void update(StateMachine sm, Message msg, String info, IState state, IState orgState,
-                IState dstState) {
+        public void update(IStateMachine sm, Message msg, String info, IState state,
+                IState orgState, IState dstState) {
             mSm = sm;
             mTime = System.currentTimeMillis();
             mWhat = (msg != null) ? msg.what : 0;
@@ -663,7 +663,7 @@ public class StateMachine {
          * processed.
          *
          */
-        synchronized void add(StateMachine sm, Message msg, String messageInfo, IState state,
+        synchronized void add(IStateMachine sm, Message msg, String messageInfo, IState state,
                 IState orgState, IState transToState) {
             mCount += 1;
             if (mLogRecVector.size() < mMaxSize) {
@@ -679,7 +679,7 @@ public class StateMachine {
         }
     }
 
-    private static class SmHandler extends Handler {
+    private static class SmHandler extends StateMachineHandler {
 
         /** true if StateMachine has quit */
         private boolean mHasQuit = false;
@@ -716,9 +716,6 @@ public class StateMachine {
 
         /** State used when state machine is quitting */
         private QuittingState mQuittingState = new QuittingState();
-
-        /** Reference to the StateMachine */
-        private StateMachine mSm;
 
         /**
          * Information about a state.
@@ -924,13 +921,7 @@ public class StateMachine {
          * Cleanup all the static variables and the looper after the SM has been quit.
          */
         private final void cleanupAfterQuitting() {
-            if (mSm.mSmThread != null) {
-                // If we made the thread then quit looper which stops the thread.
-                getLooper().quit();
-                mSm.mSmThread = null;
-            }
-
-            mSm.mSmHandler = null;
+            mSm.cleanupAfterQuitting();
             mSm = null;
             mMsg = null;
             mLogRecords.cleanup();
@@ -1219,8 +1210,7 @@ public class StateMachine {
          * @param sm the hierarchical state machine
          */
         private SmHandler(Looper looper, StateMachine sm) {
-            super(looper);
-            mSm = sm;
+            super(looper, sm);
 
             addState(mHaltingState, null);
             addState(mQuittingState, null);
@@ -1235,8 +1225,9 @@ public class StateMachine {
         /** @see StateMachine#transitionTo(IState) */
         private final void transitionTo(IState destState) {
             if (mTransitionInProgress) {
-                Log.wtf(mSm.mName, "transitionTo called while transition already in progress to " +
-                        mDestState + ", new target state=" + destState);
+                Log.wtf(mSm.getName(),
+                        "transitionTo called while transition already in progress to "
+                        + mDestState + ", new target state=" + destState);
             }
             mDestState = (State) destState;
             if (mDbg) mSm.log("transitionTo: destState=" + mDestState.getName());
@@ -1296,6 +1287,17 @@ public class StateMachine {
         mSmHandler = new SmHandler(looper, this);
     }
 
+    @Override
+    protected final void cleanupAfterQuitting() {
+        if (mSmThread != null) {
+            // If we made the thread then quit looper which stops the thread.
+            mSmThread.getLooper().quit();
+            mSmThread = null;
+        }
+
+        mSmHandler = null;
+    }
+
     /**
      * Constructor creates a StateMachine with its own thread.
      *
@@ -1328,21 +1330,6 @@ public class StateMachine {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     protected StateMachine(String name, Handler handler) {
         initStateMachine(name, handler.getLooper());
-    }
-
-    /**
-     * Notifies subclass that the StateMachine handler is about to process the Message msg
-     * @param msg The message that is being handled
-     */
-    protected void onPreHandleMessage(Message msg) {
-    }
-
-    /**
-     * Notifies subclass that the StateMachine handler has finished processing the Message msg and
-     * has possibly transitioned to a new state.
-     * @param msg The message that is being handled
-     */
-    protected void onPostHandleMessage(Message msg) {
     }
 
     /**
@@ -1450,32 +1437,9 @@ public class StateMachine {
      *
      * @param msg that couldn't be handled.
      */
+    @Override
     protected void unhandledMessage(Message msg) {
         if (mSmHandler.mDbg) loge(" - unhandledMessage: msg.what=" + msg.what);
-    }
-
-    /**
-     * Called for any message that is received after
-     * transitionToHalting is called.
-     */
-    protected void haltedProcessMessage(Message msg) {
-    }
-
-    /**
-     * This will be called once after handling a message that called
-     * transitionToHalting. All subsequent messages will invoke
-     * {@link StateMachine#haltedProcessMessage(Message)}
-     */
-    protected void onHalting() {
-    }
-
-    /**
-     * This will be called once after a quit message that was NOT handled by
-     * the derived StateMachine. The StateMachine will stop and any subsequent messages will be
-     * ignored. In addition, if this StateMachine created the thread, the thread will
-     * be stopped after this method returns.
-     */
-    protected void onQuitting() {
     }
 
     /**
@@ -1569,31 +1533,6 @@ public class StateMachine {
         if (smh == null) return;
         smh.mLogRecords.add(this, smh.getCurrentMessage(), string, smh.getCurrentState(),
                 smh.mStateStack[smh.mStateStackTopIndex].state, smh.mDestState);
-    }
-
-    /**
-     * @return true if msg should be saved in the log, default is true.
-     */
-    protected boolean recordLogRec(Message msg) {
-        return true;
-    }
-
-    /**
-     * Return a string to be logged by LogRec, default
-     * is an empty string. Override if additional information is desired.
-     *
-     * @param msg that was processed
-     * @return information to be logged as a String
-     */
-    protected String getLogRecString(Message msg) {
-        return "";
-    }
-
-    /**
-     * @return the string for msg.what
-     */
-    protected String getWhatToString(int what) {
-        return null;
     }
 
     /**
@@ -2117,15 +2056,6 @@ public class StateMachine {
     protected void logAndAddLogRec(String s) {
         addLogRec(s);
         log(s);
-    }
-
-    /**
-     * Log with debug
-     *
-     * @param s is string log
-     */
-    protected void log(String s) {
-        Log.d(mName, s);
     }
 
     /**
