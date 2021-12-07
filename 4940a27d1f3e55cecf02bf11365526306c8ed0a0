@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e030265_a39f9857",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-07T23:12:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "805df68c_d777166e",
+      "revId": "4940a27d1f3e55cecf02bf11365526306c8ed0a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0c96b9c_44b46399",
@@ -48,6 +66,30 @@
       "writtenOn": "2021-12-07T21:45:39Z",
       "side": 1,
       "message": "Apps provisioning a VCN can configure the underlying network priority for each Gateway Connection by setting a list (in priority order, most to least preferred) of the appropriate subclasses in the VcnGatewayConnectionConfig. See {@link ...}",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 12
+      },
+      "revId": "4940a27d1f3e55cecf02bf11365526306c8ed0a0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a41de80d_2fc8225a",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriority.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-07T23:12:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0c96b9c_44b46399",
       "range": {
         "startLine": 38,
         "startChar": 6,
