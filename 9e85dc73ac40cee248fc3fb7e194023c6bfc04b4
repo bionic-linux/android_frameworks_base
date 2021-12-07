@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "86d0e85f_37be40c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-12-07T11:38:14Z",
+      "side": 1,
+      "message": "Feel free to ignore if this has been already discussed, but if not... did you consider just packages/Connectivity instead of packages/IpSec? There\u0027s going to be other code moving into f/b/packages/Connectivity in T - for example, NsdManager and networkstats.\n\nIt may be easier to move everything in frameworks/base/packages/Connectivity to packages/modules/Connectivity in one or two CLs instead of doing three moves from packages/IpSec, packages/Nsd, packages/....",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2db0ac8e_d8ad39e8",
@@ -36,6 +59,29 @@
         "startChar": 39,
         "endLine": 72,
         "endChar": 43
+      },
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e33fe11f_d5c2dd8a",
+        "filename": "packages/IpSec/framework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-12-07T11:38:14Z",
+      "side": 1,
+      "message": "Isn\u0027t this code all Apache 2 licensed? If so, just use [\"Android-Apache-2.0\"], as it\u0027s more specific.",
+      "range": {
+        "startLine": 16,
+        "startChar": 35,
+        "endLine": 16,
+        "endChar": 58
       },
       "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
