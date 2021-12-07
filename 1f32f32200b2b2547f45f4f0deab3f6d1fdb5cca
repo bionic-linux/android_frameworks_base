@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22538aa2_ae9dac71",
+        "filename": "services/core/java/com/android/server/wm/DisplayAreaOrganizerController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2021-12-07T06:36:39Z",
+      "side": 1,
+      "message": "featureOrganizer\n\nThe m* version is for class variable",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 40
+      },
+      "revId": "1f32f32200b2b2547f45f4f0deab3f6d1fdb5cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85a8ed66_496b672e",
+        "filename": "services/core/java/com/android/server/wm/DisplayAreaOrganizerController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2021-12-07T06:36:39Z",
+      "side": 1,
+      "message": "!featureOrganizer.asBinder().equals(mOrganizer.asBinder())",
+      "range": {
+        "startLine": 70,
+        "startChar": 24,
+        "endLine": 70,
+        "endChar": 55
+      },
+      "revId": "1f32f32200b2b2547f45f4f0deab3f6d1fdb5cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f19cf0e_8cd502ce",
+        "filename": "services/core/java/com/android/server/wm/DisplayAreaOrganizerController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2021-12-07T06:36:39Z",
+      "side": 1,
+      "message": "Since you are here, can you please also update this to .equals(organizer.asBinder())?\n\nThanks!",
+      "range": {
+        "startLine": 182,
+        "startChar": 82,
+        "endLine": 183,
+        "endChar": 31
+      },
+      "revId": "1f32f32200b2b2547f45f4f0deab3f6d1fdb5cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
