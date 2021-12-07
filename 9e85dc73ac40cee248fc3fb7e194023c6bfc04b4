@@ -16,6 +16,23 @@
       "message": "LGTM but someone else must have a look.",
       "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13d73cc8_ca4ae850",
+        "filename": "packages/IpSec/framework/src/android/net/IpSecConfig.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-07T07:00:50Z",
+      "side": 1,
+      "message": "Is there any aidl you need to put into framework/aidl-export folder like what we did in the module?",
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
