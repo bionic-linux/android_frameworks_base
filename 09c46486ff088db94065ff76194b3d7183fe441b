@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3ed9d1f_592db6eb",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27164,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-08T09:06:48Z",
+      "side": 1,
+      "message": "It does not sound like \"allowing\" roaming or not is about priority. IIUC, the VcnUnderlyingNetworkPriority describes the characteristics of a network, and the VCN will try to match the candidates in order to the priorities ? If that\u0027s the case maybe matchRoaming() is a better name. The same applies to other instances of \"allowed\" in this file.\n\nAlso compare with \"require\" in l.27167",
+      "range": {
+        "startLine": 27164,
+        "startChar": 26,
+        "endLine": 27164,
+        "endChar": 38
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fd27809_81378767",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27167,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-08T09:06:48Z",
+      "side": 1,
+      "message": "I can\u0027t seem to find any documentation on what an \"opportunistic\" network is",
+      "range": {
+        "startLine": 27167,
+        "startChar": 33,
+        "endLine": 27167,
+        "endChar": 46
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecd2d875_af2c683d",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27207,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-08T09:06:48Z",
+      "side": 1,
+      "message": "This is oddly specific for a public API. https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#classes-collections\n\nWhile the \"same order as added\" is a contractual feature of LinkedHashSet, it is still an implementation detail of the concrete class. If you want an ordered set, there is SortedSet, but in this case ISTM you just want List\u003c\u003e as I don\u0027t think there is any real point in trying to force unicity by using some obscure concrete collection class and rely on an implementation detail thereof to provide ordering.",
+      "range": {
+        "startLine": 27207,
+        "startChar": 131,
+        "endLine": 27207,
+        "endChar": 144
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec8f62be_32097c37",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27233,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-08T09:06:48Z",
+      "side": 1,
+      "message": "This seems to lack any documentation about :\n- What this represents concretely\n- How it\u0027s supposed to be decided\n- How it\u0027s used\n\nWithout knowing the above I can\u0027t comment on this API because I can\u0027t say I understand it.\n\nNote that \"quality\" sounds very handwavy to me : you\u0027ll have to be really specific. Also, as discussed in the design doc, this must be something that is fundamentally specific to the VCN, e.g. it can\u0027t be to just let them let go of wifi sooner.",
+      "range": {
+        "startLine": 27233,
+        "startChar": 22,
+        "endLine": 27233,
+        "endChar": 39
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4a38b70_3ff2d217",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27250,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-08T09:06:48Z",
+      "side": 1,
+      "message": "Documentation doesn\u0027t seem to explain what happens when the location toggle is off and this can\u0027t be determined",
+      "range": {
+        "startLine": 27250,
+        "startChar": 84,
+        "endLine": 27250,
+        "endChar": 91
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c80c18_2a841b12",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-08T09:06:48Z",
+      "side": 1,
+      "message": "Can you expand on this documentation ? It kind of looks to me like the VCN will go through underlying network candidates and try to find matches in the list of priorities, and return the first match. If that\u0027s the case :\n- It should be described explicitly, because I don\u0027t think it\u0027s clear.\n- We probably should rename the class (Ben\u0027s suggestion is reasonable, or you could go with *Matcher or similar)",
+      "range": {
+        "startLine": 530,
+        "startChar": 51,
+        "endLine": 530,
+        "endChar": 52
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
