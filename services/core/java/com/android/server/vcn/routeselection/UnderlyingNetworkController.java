@@ -158,8 +158,10 @@ public class UnderlyingNetworkController {
         // of old callbacks
         if (!mIsQuitting) {
             mRouteSelectionCallback = new UnderlyingNetworkListener();
-            mConnectivityManager.registerNetworkCallback(
-                    getRouteSelectionRequest(), mRouteSelectionCallback, mHandler);
+            for (NetworkRequest request : getRouteSelectionRequests()) {
+                mConnectivityManager.registerNetworkCallback(
+                        request, mRouteSelectionCallback, mHandler);
+            }
 
             mWifiEntryRssiThresholdCallback = new NetworkBringupCallback();
             mConnectivityManager.registerNetworkCallback(
@@ -210,28 +212,58 @@ public class UnderlyingNetworkController {
         }
     }
 
+    private Set<Integer> getRequiredCapabilitiesForTransport(int transport) {
+        final Set<Integer> requiredCaps =
+                mConnectionConfig.getRequiredUnderlyingCapabilities().get(transport);
+        if (requiredCaps == null || requiredCaps.isEmpty()) {
+            return Collections.singleton(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        } else {
+            return requiredCaps;
+        }
+    }
+
     /**
-     * Builds the Route selection request
+     * Builds the Route selection requests
      *
-     * <p>This request is guaranteed to select carrier-owned, non-VCN underlying networks by virtue
+     * <p>The requests are guaranteed to select carrier-owned, non-VCN underlying networks by virtue
      * of a populated set of subIds as expressed in NetworkCapabilities#getSubscriptionIds(). Only
-     * carrier owned networks may be selected, as the request specifies only subIds in the VCN's
+     * carrier owned networks may be selected, as the requests specifies only subIds in the VCN's
      * subscription group, while the VCN networks are excluded by virtue of not having subIds set on
      * the VCN-exposed networks.
      *
      * <p>If the VCN that this UnderlyingNetworkController belongs to is in test-mode, this will
      * return a NetworkRequest that only matches Test Networks.
      */
-    private NetworkRequest getRouteSelectionRequest() {
+    private List<NetworkRequest> getRouteSelectionRequests() {
         if (mVcnContext.isInTestMode()) {
-            return getTestNetworkRequest(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup));
+            return Collections.singletonList(
+                    getTestNetworkRequest(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup)));
         }
 
-        return getBaseNetworkRequestBuilder()
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
-                .setSubscriptionIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup))
-                .build();
+        final List<NetworkRequest> requests = new ArrayList<>();
+
+        // If no capabilities are required, use the default INTERNET set. Otherwise register
+        // multiple requests, one for each transport type.
+        if (mConnectionConfig.getRequiredUnderlyingCapabilities().isEmpty()) {
+            requests.add(getBaseNetworkRequestBuilder(
+                            Collections.singleton(NetworkCapabilities.NET_CAPABILITY_INTERNET))
+                    .addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                    .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
+                    .setSubscriptionIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup))
+                    .build());
+        } else {
+            for (int transportType : VcnGatewayConnectionConfig.ALLOWED_TRANSPORTS) {
+                requests.add(getBaseNetworkRequestBuilder(
+                                getRequiredCapabilitiesForTransport(transportType))
+                        .addTransportType(transportType)
+                        .addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                        .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
+                        .setSubscriptionIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup))
+                        .build());
+            }
+        }
+
+        return requests;
     }
 
     /**
@@ -244,7 +276,8 @@ public class UnderlyingNetworkController {
      * but will NEVER bring up a Carrier WiFi network itself.
      */
     private NetworkRequest getWifiNetworkRequest() {
-        return getBaseNetworkRequestBuilder()
+        return getBaseNetworkRequestBuilder(
+                        getRequiredCapabilitiesForTransport(NetworkCapabilities.TRANSPORT_WIFI))
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup))
                 .build();
@@ -258,7 +291,8 @@ public class UnderlyingNetworkController {
      * pace to effectively select a short-lived WiFi offload network.
      */
     private NetworkRequest getWifiEntryRssiThresholdNetworkRequest() {
-        return getBaseNetworkRequestBuilder()
+        return getBaseNetworkRequestBuilder(
+                        getRequiredCapabilitiesForTransport(NetworkCapabilities.TRANSPORT_WIFI))
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup))
                 // Ensure wifi updates signal strengths when crossing this threshold.
@@ -274,7 +308,8 @@ public class UnderlyingNetworkController {
      * pace to effectively select away from a failing WiFi network.
      */
     private NetworkRequest getWifiExitRssiThresholdNetworkRequest() {
-        return getBaseNetworkRequestBuilder()
+        return getBaseNetworkRequestBuilder(
+                        getRequiredCapabilitiesForTransport(NetworkCapabilities.TRANSPORT_WIFI))
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup))
                 // Ensure wifi updates signal strengths when crossing this threshold.
@@ -294,25 +329,40 @@ public class UnderlyingNetworkController {
      * in the NetworkCapabilities, but rather in the TelephonyNetworkSpecifier.
      */
     private NetworkRequest getCellNetworkRequestForSubId(int subId) {
-        return getBaseNetworkRequestBuilder()
+        return getBaseNetworkRequestBuilder(
+                        getRequiredCapabilitiesForTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
                 .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                 .setNetworkSpecifier(new TelephonyNetworkSpecifier(subId))
                 .build();
     }
 
-    /**
-     * Builds and returns a NetworkRequest builder common to all Underlying Network requests
-     */
-    private NetworkRequest.Builder getBaseNetworkRequestBuilder() {
-        return new NetworkRequest.Builder()
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                .removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
-                .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
-                .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+    /** Builds and returns a NetworkRequest builder common to all Underlying Network requests */
+    private NetworkRequest.Builder getBaseNetworkRequestBuilder(Set<Integer> requiredCaps) {
+        final NetworkRequest.Builder builder =
+                new NetworkRequest.Builder()
+                        .removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
+                        .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
+                        .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+
+        if (requiredCaps == null || requiredCaps.isEmpty()) {
+            builder.addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+
+            if (requiredCaps == null) {
+                logWtf("requiredCaps was null", new IllegalArgumentException());
+            }
+        } else {
+            for (int cap : requiredCaps) {
+                builder.addCapability(cap);
+            }
+        }
+
+        return builder;
     }
 
     /** Builds and returns a NetworkRequest for the given subIds to match Test Networks. */
     private NetworkRequest getTestNetworkRequest(@NonNull Set<Integer> subIds) {
+        // TODO: Add a NET_CAPABILITY_TEST and support adding it here.
+
         return new NetworkRequest.Builder()
                 .clearCapabilities()
                 .addTransportType(NetworkCapabilities.TRANSPORT_TEST)
