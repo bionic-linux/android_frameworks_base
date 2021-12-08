@@ -6799,7 +6799,8 @@ public class AudioManager {
      * objects containing encoding formats supported for offload LE Audio playback
      * @hide
      */
-    public List<?> getHwOffloadFormatsSupportedForBluetoothMedia(
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public @NonNull List<?> getHwOffloadFormatsSupportedForBluetoothMedia(
             @AudioSystem.DeviceType int deviceType) {
         ArrayList<Integer> formatsList = new ArrayList<Integer>();
         ArrayList<BluetoothCodecConfig> a2dpCodecConfigList = new ArrayList<BluetoothCodecConfig>();
