@@ -30,6 +30,7 @@ import android.net.ipsec.ike.IkeSessionParams;
 import android.net.ipsec.ike.IkeTunnelConnectionParams;
 import android.net.vcn.persistablebundleutils.IkeSessionParamsUtilsTest;
 import android.net.vcn.persistablebundleutils.TunnelConnectionParamsUtilsTest;
+import android.util.ArrayMap;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -38,7 +39,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
@@ -49,14 +54,20 @@ public class VcnGatewayConnectionConfigTest {
             new int[] {
                 NetworkCapabilities.NET_CAPABILITY_INTERNET, NetworkCapabilities.NET_CAPABILITY_MMS
             };
-    public static final int[] UNDERLYING_CAPS = new int[] {NetworkCapabilities.NET_CAPABILITY_DUN};
+    public static final Map<Integer, Set<Integer>> REQUIRED_UNDERLYING_CAPS;
 
     private static final LinkedHashSet<VcnUnderlyingNetworkPriority> UNDERLYING_NETWORK_PRIORITIES =
             new LinkedHashSet();
 
     static {
         Arrays.sort(EXPOSED_CAPS);
-        Arrays.sort(UNDERLYING_CAPS);
+
+        ArrayMap<Integer, Set<Integer>> underlyingCaps = new ArrayMap<>();
+        underlyingCaps.put(
+                NetworkCapabilities.TRANSPORT_CELLULAR,
+                Collections.unmodifiableSet(
+                        Collections.singleton(NetworkCapabilities.NET_CAPABILITY_DUN)));
+        REQUIRED_UNDERLYING_CAPS = Collections.unmodifiableMap(underlyingCaps);
 
         UNDERLYING_NETWORK_PRIORITIES.add(
                 VcnCellUnderlyingNetworkPriorityTest.getTestNetworkPriority());
@@ -100,17 +111,31 @@ public class VcnGatewayConnectionConfigTest {
     private static VcnGatewayConnectionConfig.Builder newBuilder() {
         // Append a unique identifier to the name prefix to guarantee that all created
         // VcnGatewayConnectionConfigs have a unique name (required by VcnConfig).
+        return newBuilder(GATEWAY_CONNECTION_NAME_PREFIX + sGatewayConnectionConfigCount++);
+    }
+
+    private static VcnGatewayConnectionConfig.Builder newBuilder(String gatewayConnectionName) {
         return new VcnGatewayConnectionConfig.Builder(
-                GATEWAY_CONNECTION_NAME_PREFIX + sGatewayConnectionConfigCount++,
-                TUNNEL_CONNECTION_PARAMS);
+                gatewayConnectionName, TUNNEL_CONNECTION_PARAMS);
     }
 
     private static VcnGatewayConnectionConfig buildTestConfigWithExposedCaps(
             VcnGatewayConnectionConfig.Builder builder, int... exposedCaps) {
+        return buildTestConfigWithExposedCaps(builder, REQUIRED_UNDERLYING_CAPS, exposedCaps);
+    }
+
+    private static VcnGatewayConnectionConfig buildTestConfigWithExposedCaps(
+            VcnGatewayConnectionConfig.Builder builder,
+            Map<Integer, Set<Integer>> requiredCaps,
+            int... exposedCaps) {
         builder.setRetryIntervalsMillis(RETRY_INTERVALS_MS).setMaxMtu(MAX_MTU);
 
         for (int caps : exposedCaps) {
             builder.addExposedCapability(caps);
+        }
+
+        for (Entry<Integer, Set<Integer>> entry : requiredCaps.entrySet()) {
+            builder.setRequiredUnderlyingCapabilities(entry.getKey(), entry.getValue());
         }
 
         return builder.build();
@@ -215,6 +240,7 @@ public class VcnGatewayConnectionConfigTest {
         int[] exposedCaps = config.getExposedCapabilities();
         Arrays.sort(exposedCaps);
         assertArrayEquals(EXPOSED_CAPS, exposedCaps);
+        assertEquals(REQUIRED_UNDERLYING_CAPS, config.getRequiredUnderlyingCapabilities());
 
         assertEquals(UNDERLYING_NETWORK_PRIORITIES, config.getVcnUnderlyingNetworkPriorities());
         assertEquals(TUNNEL_CONNECTION_PARAMS, config.getTunnelConnectionParams());
@@ -270,5 +296,27 @@ public class VcnGatewayConnectionConfigTest {
 
         assertNotEquals(tunnelParams, anotherTunnelParams);
         assertNotEquals(config, anotherConfig);
+    }
+
+    @Test
+    public void testRequiredUnderlyingCapabilitiesEquals() throws Exception {
+        final VcnGatewayConnectionConfig withRequiredUnderlyingCaps1 =
+                buildTestConfigWithExposedCaps(
+                        newBuilder("withRequiredUnderlyingCaps"),
+                        REQUIRED_UNDERLYING_CAPS,
+                        EXPOSED_CAPS);
+        final VcnGatewayConnectionConfig withRequiredUnderlyingCaps2 =
+                buildTestConfigWithExposedCaps(
+                        newBuilder("withRequiredUnderlyingCaps"),
+                        REQUIRED_UNDERLYING_CAPS,
+                        EXPOSED_CAPS);
+        final VcnGatewayConnectionConfig noRequiredUnderlyingCaps =
+                buildTestConfigWithExposedCaps(
+                        newBuilder("noRequiredUnderlyingCaps"),
+                        Collections.emptyMap(),
+                        EXPOSED_CAPS);
+
+        assertEquals(withRequiredUnderlyingCaps1, withRequiredUnderlyingCaps2);
+        assertNotEquals(withRequiredUnderlyingCaps1, noRequiredUnderlyingCaps);
     }
 }
