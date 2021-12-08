@@ -1,0 +1,1014 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package android.bluetooth;
+
+import android.annotation.IntDef;
+import android.annotation.NonNull;
+import android.annotation.Nullable;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * This class represents an LE Audio Broadcast Source and the assosciated information that is needed
+ * by Broadcast Audio Scan Service (BASS) residing on a Scan Delegator.
+ *
+ * <p>For example, the Scan Delegator on an LE Audio Broadcast Sink can use the information
+ * contained within an instance of this class to synchroniz with an LE Audio Broadcast Source in
+ * order to listen to a Broadcast Audio Stream.
+ *
+ * <p>BroadcastAssistant has a BASS client which facilitates scanning and discovery of Broadcast
+ * Sources on behalf of say a Broadcast Sink. Upon successful discovery of one or more Broadcast
+ * sources, this information needs to be communicated to the BASS Server residing within the Scan
+ * Delegator on a Broadcast Sink. This is achieved using the Periodic Advertising Synchronization
+ * Transfer (PAST) procedure. This procedure uses information contained within an instance of this
+ * class.
+ *
+ * @hide
+ */
+public final class BluetoothLeBroadcastSourceInfo implements Parcelable {
+    private static final String TAG = "BluetoothLeBroadcastSourceInfo";
+    private static final boolean DBG = true;
+
+    /**
+     * Constants representing broadcast assist address types
+     *
+     * @hide
+     */
+    @IntDef(
+            prefix = "LE_AUDIO_BROADCAST_SOURCE_ADDRESS_TYPE_",
+            value = {
+                LE_AUDIO_BROADCAST_SOURCE_ADDRESS_TYPE_PUBLIC,
+                LE_AUDIO_BROADCAST_SOURCE_ADDRESS_TYPE_RANDOM,
+                LE_AUDIO_BROADCAST_SOURCE_ADDRESS_TYPE_INVALID
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface LeAudioBroadcastSourceAddressType {}
+
+    /**
+     * Represents a public address used by an LE Audio Broadcast Source
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SOURCE_ADDRESS_TYPE_PUBLIC = 0;
+
+    /**
+     * Represents a random address used by an LE Audio Broadcast Source
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SOURCE_ADDRESS_TYPE_RANDOM = 1;
+
+    /**
+     * Represents an invalid address used by an LE Audio Broadcast Seurce
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SOURCE_ADDRESS_TYPE_INVALID = 0xFFFF;
+
+    /**
+     * Periodic Advertising Synchronization state
+     *
+     * <p>Periodic Advertising (PA) enables the LE Audio Broadcast Assistant to discover broadcast
+     * audio streams as well as the audio stream configuration on behalf of an LE Audio Broadcast
+     * Sink. This information can then be transferred to the LE Audio Broadcast Sink using the
+     * Periodic Advertising Synchronizaton Transfer (PAST) procedure.
+     *
+     * @hide
+     */
+    @IntDef(
+            prefix = "LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_",
+            value = {
+                LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_IDLE,
+                LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_SYNCINFO_REQ,
+                LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_IN_SYNC,
+                LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_SYNC_FAIL,
+                LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_NO_PAST
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface LeAudioBroadcastSinkPaSyncState {}
+
+    /**
+     * Indicates that the Broadcast Sink is not synchronized with the Periodic Advertisements (PA)
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_IDLE = 0;
+
+    /**
+     * Indicates that the Broadcast Sink requested the Broadcast Assistant to synchronize with the
+     * Periodic Advertisements (PA).
+     *
+     * <p>This is also known as scan delegation or scan offloading.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_SYNCINFO_REQ = 1;
+
+    /**
+     * Indicates that the Broadcast Sink is synchronized with the Periodic Advertisements (PA).
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_IN_SYNC = 2;
+
+    /**
+     * Indicates that the Broadcast Sink was unable to synchronize with the Periodic Advertisements
+     * (PA).
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_SYNC_FAIL = 3;
+
+    /**
+     * Indicates that the Broadcast Sink should be synchronized with the Periodic Advertisements
+     * (PA) using the Periodic Advertisements Synchronization Transfert (PAST) procedure.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_NO_PAST = 4;
+
+    /**
+     * Indicates that the Broadcast Sink synchornization state is invalid.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_INVALID = 0xFFFF;
+
+    /** @hide */
+    @IntDef(
+            prefix = "LE_AUDIO_BROADCAST_SINK_AUDIO_SYNC_STATE_",
+            value = {
+                LE_AUDIO_BROADCAST_SINK_AUDIO_SYNC_STATE_NOT_SYNCHRONIZED,
+                LE_AUDIO_BROADCAST_SINK_AUDIO_SYNC_STATE_SYNCHRONIZED
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface LeAudioBroadcastSinkAudioSyncState {}
+
+    /**
+     * Indicates that the Broadcast Sink is not synchronized with a Broadcast Audio Stream.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_AUDIO_SYNC_STATE_NOT_SYNCHRONIZED = 0;
+
+    /**
+     * Indicates that the Broadcast Sink is synchronized with a Broadcast Audio Stream.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_AUDIO_SYNC_STATE_SYNCHRONIZED = 1;
+
+    /**
+     * Indicates that the Broadcast Sink audio synchronization state is invalid.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_AUDIO_SYNC_STATE_INVALID = 0xFFFF;
+
+    /** @hide */
+    @IntDef(
+            prefix = "LE_AUDIO_BROADCAST_SINK_ENC_STATE_",
+            value = {
+                LE_AUDIO_BROADCAST_SINK_ENC_STATE_NOT_ENCRYPTED,
+                LE_AUDIO_BROADCAST_SINK_ENC_STATE_CODE_REQUIRED,
+                LE_AUDIO_BROADCAST_SINK_ENC_STATE_DECRYPTING,
+                LE_AUDIO_BROADCAST_SINK_ENC_STATE_BAD_CODE
+            })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface LeAudioBroadcastSinkEncryptionState {}
+
+    /**
+     * Indicates that the Broadcast Sink is synchronized with an unencrypted audio stream.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_ENC_STATE_NOT_ENCRYPTED = 0;
+
+    /**
+     * Indicates that the Broadcast Sink needs a Broadcast Code to synchronize with the audio
+     * stream.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_ENC_STATE_CODE_REQUIRED = 1;
+
+    /**
+     * Indicates that the Broadcast Sink is synchronized with an encrypted audio stream.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_ENC_STATE_DECRYPTING = 2;
+
+    /**
+     * Indicates that the Broadcast Sink is unable to decrypt an audio stream due to an incorrect
+     * Broadcast Code
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_ENC_STATE_BAD_CODE = 3;
+
+    /**
+     * Indicates that the Broadcast Sink encryption state is invalid.
+     *
+     * @hide
+     */
+    public static final int LE_AUDIO_BROADCAST_SINK_ENC_STATE_INVALID = 0xFF;
+
+    /**
+     * Represents an invalid LE Audio Broadcast Source ID
+     *
+     * @hide
+     */
+    public static final byte LE_AUDIO_BROADCAST_SINK_INVALID_SOURCE_ID = (byte) 0x00;
+
+    /**
+     * Represents an invalid Broadcast ID of a Broadcast Source
+     *
+     * @hide
+     */
+    public static final int INVALID_BROADCAST_ID = 0xFFFFFF;
+
+    private byte mSourceId;
+    private @LeAudioBroadcastSourceAddressType int mSourceAddressType;
+    private BluetoothDevice mSourceDevice;
+    private byte mSourceAdvSid;
+    private int mBroadcastId;
+    private @LeAudioBroadcastSinkPaSyncState int mPaSyncState;
+    private @LeAudioBroadcastSinkEncryptionState int mEncryptionStatus;
+    private @LeAudioBroadcastSinkAudioSyncState int mAudioSyncState;
+    private byte[] mBadBroadcastCode;
+    private byte mNumSubGroups;
+    private Map<Integer, Integer> mSubgroupBisSyncState = new HashMap<Integer, Integer>();
+    private Map<Integer, byte[]> mSubgroupMetadata = new HashMap<Integer, byte[]>();
+
+    private String mBroadcastCode;
+    private static final int BIS_NO_PREF = 0xFFFFFFFF;
+    private static final int BROADCAST_CODE_SIZE = 16;
+
+    /**
+     * Constructor to create an Empty object of {@link BluetoothLeBroadcastSourceInfo } with the
+     * given Source Id.
+     *
+     * <p>This is mainly used to represent the Empty Broadcast source entries
+     *
+     * @param sourceId Source Id for this broadcast source info object
+     * @hide
+     */
+    public BluetoothLeBroadcastSourceInfo(byte sourceId) {
+        mSourceId = sourceId;
+        mSourceAddressType = LE_AUDIO_BROADCAST_SOURCE_ADDRESS_TYPE_INVALID;
+        mSourceDevice = null;
+        mSourceAdvSid = (byte) 0x00;
+        mBroadcastId = INVALID_BROADCAST_ID;
+        mPaSyncState = LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_INVALID;
+        mAudioSyncState = LE_AUDIO_BROADCAST_SINK_AUDIO_SYNC_STATE_INVALID;
+        mEncryptionStatus = LE_AUDIO_BROADCAST_SINK_ENC_STATE_INVALID;
+        mBadBroadcastCode = null;
+        mNumSubGroups = 0;
+        mBroadcastCode = null;
+    }
+
+    /**
+     * Constructor to create an object of {@link BluetoothLeBroadcastSourceInfo}.
+     *
+     * <p>This is used to add a new LE Audio Broadcast Source to the remote BASS Server on the Scan
+     * Delegator within an LE Audio Broadcast Sink.
+     *
+     * @param audioSource BluetoothDevice object whcih is selected as Broadcast source
+     * @param advSid advertising Sid of the Broadcast source device for which reciever synchronized
+     *     with.
+     * @param selectedBisIndices List of BIS indices within the subgroup
+     * @hide
+     */
+    /*package*/ BluetoothLeBroadcastSourceInfo(
+            @LeAudioBroadcastSourceAddressType int addressType,
+            @NonNull BluetoothDevice audioSource,
+            byte advSid,
+            @LeAudioBroadcastSinkPaSyncState int paSyncstate,
+            @LeAudioBroadcastSinkAudioSyncState int audioSyncstate,
+            @NonNull List<BluetoothLeBroadcastSourceChannel> selectedBisIndices) {
+        mSourceId = LE_AUDIO_BROADCAST_ASSISTANT_INVALID_SOURCE_ID;
+        mSourceAddressType = addressType;
+        mSourceDevice = audioSource;
+        mSourceAdvSid = advSid;
+        mBroadcastId = INVALID_BROADCAST_ID;
+        mPaSyncState = paSyncstate;
+        mEncryptionStatus = LE_AUDIO_BROADCAST_ASSISTANT_ENC_STATE_INVALID;
+        mAudioSyncState = audioSyncstate;
+        mBadBroadcastCode = null;
+        mNumSubGroups = 0;
+
+        for (int i = 0; i < selectedBisIndices.size(); i++) {
+            if (selectedBisIndices.get(i).getStatus()
+                    == BluetoothLeBroadcastSourceChannel.LE_AUDIO_BROADCAST_CHANNEL_STATUS_SYNC) {
+                Integer audioBisIndex = 0;
+                int subGroupId = selectedBisIndices.get(i).getSubGroupId();
+
+                if (mSubgroupBisSyncState.containsKey(subGroupId)) {
+                    audioBisIndex = mSubgroupBisSyncState.get(subGroupId);
+                }
+                audioBisIndex = audioBisIndex | (1 << selectedBisIndices.get(i).getIndex());
+                mSubgroupBisSyncState.put(subGroupId, audioBisIndex);
+            }
+        }
+        mBroadcastCode = null;
+    }
+
+    /**
+     * Constructor for creating an object of {@link BluetoothLeBroadcastSourceInfo}.
+     *
+     * <p>This is used to fill in information about an LE Audio Broadcast Source that already exists
+     * on the BASS Server within the Scan Delegator that resides on the LE Audio Broadcast Sink.
+     *
+     * @param sourceId Source Id for this broadcast source info object
+     * @param audioSource BluetoothDevice object whcih is selected as Broadcast source
+     * @param advSid advertising Sid of the Broadcast source device for which reciever synchronized
+     *     with
+     * @param broadcastId Broadcast ID of the BIG that the BISs belong to
+     * @param badCode
+     * @param numSubGroups number of subgroups within the BIG
+     * @param selectedBisIndicesList BISs that the Broadcast Sink is synchronized with
+     * @param subgroupMetadata metadata for each subgroup
+     * @hide
+     */
+    public BluetoothLeBroadcastSourceInfo(
+            byte sourceId,
+            @LeAudioBroadcastSourceAddressType int addressType,
+            @NonNull BluetoothDevice audioSource,
+            byte advSid,
+            int broadcastId,
+            @LeAudioBroadcastSinkPaSyncState int paSyncstate,
+            @LeAudioBroadcastSinkEncryptionState int encryptionStatus,
+            @LeAudioBroadcastSinkAudioSyncState int audioSyncstate,
+            @Nullable byte[] badCode,
+            byte numSubGroups,
+            @NonNull Map<Integer, List<BluetoothLeBroadcastSourceChannel>> selectedBisIndicesList,
+            @Nullable Map<Integer, byte[]> subgroupMetadata) {
+        mSourceId = sourceId;
+        mSourceAddressType = addressType;
+        mSourceDevice = audioSource;
+        mSourceAdvSid = advSid;
+        mBroadcastId = broadcastId;
+        mPaSyncState = paSyncstate;
+        mEncryptionStatus = encryptionStatus;
+        mAudioSyncState = audioSyncstate;
+
+        if (badCode != null) {
+            mBadBroadcastCode = new byte[BROADCAST_CODE_SIZE];
+            System.arraycopy(badCode, 0, mBadBroadcastCode, 0, mBadBroadcastCode.length);
+        }
+
+        mNumSubGroups = numSubGroups;
+        int audioBisIndex = 0;
+
+        for (Map.Entry<Integer, List<BluetoothLeBroadcastSourceChannel>> entry :
+                selectedBisIndicesList.entrySet()) {
+            List<BluetoothLeBroadcastSourceChannel> selectedBisIndices = entry.getValue();
+
+            if (selectedBisIndices != null) {
+                for (int i = 0; i < selectedBisIndices.size(); i++) {
+                    if (selectedBisIndices.get(i).getStatus()
+                            == BluetoothLeBroadcastSourceChannel
+                                    .LE_AUDIO_BROADCAST_CHANNEL_STATUS_SYNC) {
+                        audioBisIndex = audioBisIndex | (1 << selectedBisIndices.get(i).getIndex());
+                    }
+                }
+            }
+            mSubgroupBisSyncState.put(entry.getKey(), audioBisIndex);
+        }
+
+        if (subgroupMetadata != null) {
+            for (Map.Entry<Integer, byte[]> entry : subgroupMetadata.entrySet()) {
+                byte[] metadata = entry.getValue();
+                if (metadata != null && metadata.length != 0) {
+                    byte[] mD = new byte[metadata.length];
+                    System.arraycopy(metadata, 0, mD, 0, metadata.length);
+                }
+                mSubgroupMetadata.put(entry.getKey(), metadata);
+            }
+        }
+    }
+
+    /**
+     * Constructor for creating an object of {@link BluetoothLeBroadcastSourceInfo}.
+     *
+     * <p>This is used to fill in information about an LE Audio Broadcast Source that already exists
+     * on the BASS Server within the Scan Delegator that resides on the LE Audio Broadcast Sink.
+     *
+     * @param sourceId Source Id for this broadcast source info object
+     * @param device BluetoothDevice object whcih is selected as Broadcast source
+     * @param advSid advertising Sid of the Broadcast source device for which reciever synchronized
+     *     with
+     * @param numSubGroups number of subgroups within the BIG
+     * @param selectedBisIndices BISs that the Broadcast Sink is synchronized with
+     * @param broadcastCode Numeric Character String maximum of 16 characters in length, which
+     *     serves as broadcast PIN code
+     * @hide
+     */
+    /*package*/ BluetoothLeBroadcastSourceInfo(
+            byte sourceId,
+            @LeAudioBroadcastSourceAddressType int addressType,
+            BluetoothDevice device,
+            byte advSid,
+            @LeAudioBroadcastSinkPaSyncState int paSyncState,
+            @LeAudioBroadcastSinkEncryptionState int encryptionStatus,
+            @LeAudioBroadcastSinkAudioSyncState int audioSyncState,
+            @NonNull List<BluetoothLeBroadcastSourceChannel> selectedBisIndices,
+            String broadcastCode) {
+        mSourceId = sourceId;
+        mSourceAddressType = addressType;
+        mSourceDevice = device;
+        mSourceAdvSid = advSid;
+        mPaSyncState = paSyncState;
+        mAudioSyncState = audioSyncState;
+        mEncryptionStatus = encryptionStatus;
+        mBroadcastId = INVALID_BROADCAST_ID;
+
+        for (int i = 0; i < selectedBisIndices.size(); i++) {
+            if (selectedBisIndices.get(i).getStatus()
+                    == BluetoothLeBroadcastSourceChannel.LE_AUDIO_BROADCAST_CHANNEL_STATUS_SYNC) {
+                Integer audioBisIndex = 0;
+                int subGroupId = selectedBisIndices.get(i).getSubGroupId();
+
+                if (mSubgroupBisSyncState.containsKey(subGroupId)) {
+                    audioBisIndex = mSubgroupBisSyncState.get(subGroupId);
+                }
+
+                audioBisIndex = audioBisIndex | (1 << selectedBisIndices.get(i).getIndex());
+                mSubgroupBisSyncState.put(subGroupId, audioBisIndex);
+            }
+        }
+        mBroadcastCode = broadcastCode;
+        mBadBroadcastCode = null;
+        mNumSubGroups = 0;
+    }
+
+    /*package*/ BluetoothLeBroadcastSourceInfo(
+            byte sourceId,
+            @LeAudioBroadcastSourceAddressType int addressType,
+            @NonNull BluetoothDevice device,
+            byte advSid,
+            int broadcastId,
+            @LeAudioBroadcastSinkPaSyncState int paSyncstate,
+            @LeAudioBroadcastSinkEncryptionState int encryptionStatus,
+            @LeAudioBroadcastSinkAudioSyncState int audioSyncstate,
+            @Nullable byte[] badCode,
+            byte numSubGroups,
+            @NonNull Map<Integer, Integer> bisIndicesList,
+            @Nullable Map<Integer, byte[]> subgroupMetadata,
+            @NonNull String broadcastCode) {
+        mSourceId = sourceId;
+        mSourceAddressType = addressType;
+        mSourceDevice = device;
+        mSourceAdvSid = advSid;
+        mBroadcastId = broadcastId;
+        mPaSyncState = paSyncstate;
+        mEncryptionStatus = encryptionStatus;
+        mAudioSyncState = audioSyncstate;
+
+        if (badCode != null && badCode.length != 0) {
+            mBadBroadcastCode = new byte[badCode.length];
+            System.arraycopy(badCode, 0, mBadBroadcastCode, 0, badCode.length);
+        }
+        mNumSubGroups = numSubGroups;
+        mSubgroupBisSyncState = new HashMap<Integer, Integer>(bisIndicesList);
+        mSubgroupMetadata = new HashMap<Integer, byte[]>(subgroupMetadata);
+        mBroadcastCode = broadcastCode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof BluetoothLeBroadcastSourceInfo) {
+            BluetoothLeBroadcastSourceInfo other = (BluetoothLeBroadcastSourceInfo) o;
+            return (other.mSourceId == mSourceId
+                    && other.mSourceAddressType == mSourceAddressType
+                    && other.mSourceDevice == mSourceDevice
+                    && other.mSourceAdvSid == mSourceAdvSid
+                    && other.mBroadcastId == mBroadcastId
+                    && other.mPaSyncState == mPaSyncState
+                    && other.mEncryptionStatus == mEncryptionStatus
+                    && other.mAudioSyncState == mAudioSyncState
+                    && Arrays.equals(other.mBadBroadcastCode, mBadBroadcastCode)
+                    && other.mNumSubGroups == mNumSubGroups
+                    && mSubgroupBisSyncState.equals(other.mSubgroupBisSyncState)
+                    && mSubgroupMetadata.equals(other.mSubgroupMetadata)
+                    && other.mBroadcastCode == mBroadcastCode);
+        }
+        return false;
+    }
+
+    /**
+     * Checks if an instance of {@link BluetoothLeBroadcastSourceInfo} is empty.
+     *
+     * @hide
+     */
+    public boolean isEmpty() {
+        boolean ret = false;
+        if (mSourceAddressType == LE_AUDIO_BROADCAST_SINK_ADDRESS_TYPE_INVALID
+                && mSourceDevice == null
+                && mSourceAdvSid == (byte) 0
+                && mPaSyncState == LE_AUDIO_BROADCAST_SINK_PA_SYNC_STATE_INVALID
+                && mEncryptionStatus == LE_AUDIO_BROADCAST_SINK_ENC_STATE_INVALID
+                && mAudioSyncState == LE_AUDIO_BROADCAST_SINK_AUDIO_SYNC_STATE_INVALID
+                && mBadBroadcastCode == null
+                && mNumSubGroups == 0
+                && mBisIndexList.size() == 0
+                && mSubgroupMetadata.size() == 0
+                && mBroadcastCode == null) {
+            ret = true;
+        }
+        return ret;
+    }
+
+    /**
+     * Compares an instance of {@link BluetoothLeBroadcastSourceInfo} with the provided instance.
+     *
+     * @hide
+     */
+    public boolean matches(BluetoothLeBroadcastSourceInfo srcInfo) {
+        boolean ret = false;
+        if (srcInfo == null) {
+            ret = false;
+        } else {
+            if (mSourceDevice == null) {
+                if (mSourceAdvSid == srcInfo.getAdvertisingSid()
+                        && mSourceAddressType == srcInfo.getAdvAddressType()) {
+                    ret = true;
+                }
+            } else {
+                if (mSourceDevice.equals(srcInfo.getSourceDevice())
+                        && mSourceAdvSid == srcInfo.getAdvertisingSid()
+                        && mSourceAddressType == srcInfo.getAdvAddressType()
+                        && mBroadcastId == srcInfo.getBroadcasterId()) {
+                    ret = true;
+                }
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                mSourceId,
+                mSourceAddressType,
+                mSourceDevice,
+                mSourceAdvSid,
+                mBroadcastId,
+                mPaSyncState,
+                mEncryptionStatus,
+                mAudioSyncState,
+                mBadBroadcastCode,
+                mNumSubGroups,
+                mSubgroupBisSyncState,
+                mSubgroupMetadata,
+                mBroadcastCode);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "{BluetoothLeBroadcastSourceInfo : mSourceId"
+                + mSourceId
+                + " addressType: "
+                + mSourceAddressType
+                + " sourceDevice: "
+                + mSourceDevice
+                + " mSourceAdvSid:"
+                + mSourceAdvSid
+                + " mBroadcastId:"
+                + mBroadcastId
+                + " mPaSyncState:"
+                + mPaSyncState
+                + " mEncryptionStatus:"
+                + mEncryptionStatus
+                + " mAudioSyncState:"
+                + mAudioSyncState
+                + " mBadBroadcastCode:"
+                + mBadBroadcastCode
+                + " mNumSubGroups:"
+                + mNumSubGroups
+                + " mSubgroupBisSyncState:"
+                + mSubgroupBisSyncState
+                + " mSubgroupMetadata:"
+                + mSubgroupMetadata
+                + " mBroadcastCode:"
+                + mBroadcastCode
+                + "}";
+    }
+
+    /**
+     * Get the Source Id
+     *
+     * @return byte representing the Source Id, {@link
+     *     #LE_AUDIO_BROADCAST_ASSISTANT_INVALID_SOURCE_ID} if invalid
+     * @hide
+     */
+    public byte getSourceId() {
+        return mSourceId;
+    }
+
+    /**
+     * Set the Source Id
+     *
+     * @param sourceId source Id
+     * @hide
+     */
+    public void setSourceId(byte sourceId) {
+        mSourceId = sourceId;
+    }
+
+    /**
+     * Set the Broadcast Source device
+     *
+     * @param sourceDevice the Broadcast Source BluetoothDevice
+     * @hide
+     */
+    public void setSourceDevice(@NonNull BluetoothDevice sourceDevice) {
+        mSourceDevice = sourceDevice;
+    }
+
+    /**
+     * Get the Broadcast Source BluetoothDevice
+     *
+     * @return Broadcast Source BluetoothDevice
+     * @hide
+     */
+    public @NonNull BluetoothDevice getSourceDevice() {
+        return mSourceDevice;
+    }
+
+    /**
+     * Set the address type of the Broadcast Source advertisements
+     *
+     * @hide
+     */
+    public void setAdvAddressType(@LeAudioBroadcastSourceAddressType int addressType) {
+        mSourceAddressType = addressType;
+    }
+
+    /**
+     * Get the address type used by advertisements from the Broadcast Source.
+     * BluetoothLeBroadcastSourceInfo Object
+     *
+     * @hide
+     */
+    @LeAudioBroadcastSourceAddressType
+    public int getAdvAddressType() {
+        return mSourceAddressType;
+    }
+
+    /**
+     * Set the advertising SID of the Broadcast Source advertisement.
+     *
+     * @param advSid advertising SID of the Broadcast Source
+     * @hide
+     */
+    public void setAdvertisingSid(byte advSid) {
+        mSourceAdvSid = advSid;
+    }
+
+    /**
+     * Get the advertising SID of the Broadcast Source advertisement.
+     *
+     * @return advertising SID of the Broadcast Source
+     * @hide
+     */
+    public byte getAdvertisingSid() {
+        return mSourceAdvSid;
+    }
+
+    /**
+     * Get the Broadcast ID of the Broadcast Source.
+     *
+     * @return broadcast ID
+     * @hide
+     */
+    public int getBroadcastId() {
+        return mBroadcastId;
+    }
+
+    /**
+     * Set the Periodic Advertising (PA) Sync State.
+     *
+     * @hide
+     */
+    /*package*/ void setPaSyncState(@LeAudioBroadcastSinkPaSyncState int paSyncState) {
+        mPaSyncState = paSyncState;
+    }
+
+    /**
+     * Get the Periodic Advertising (PA) Sync State
+     *
+     * @hide
+     */
+    public @LeAudioBroadcastSinkPaSyncState int getMetadataSyncState() {
+        return mPaSyncState;
+    }
+
+    /**
+     * Set the audio sync state
+     *
+     * @hide
+     */
+    /*package*/ void setAudioSyncState(@LeAudioBroadcastSinkAudioSyncState int audioSyncState) {
+        mAudioSyncState = audioSyncState;
+    }
+
+    /**
+     * Get the audio sync state
+     *
+     * @hide
+     */
+    public @LeAudioBroadcastSinkAudioSyncState int getAudioSyncState() {
+        return mAudioSyncState;
+    }
+
+    /**
+     * Set the encryption status
+     *
+     * @hide
+     */
+    /*package*/ void setEncryptionStatus(
+            @LeAudioBroadcastSinkEncryptionState int encryptionStatus) {
+        mEncryptionStatus = encryptionStatus;
+    }
+
+    /**
+     * Get the encryption status
+     *
+     * @hide
+     */
+    public @LeAudioBroadcastSinkEncryptionState int getEncryptionStatus() {
+        return mEncryptionStatus;
+    }
+
+    /**
+     * Get the incorrect broadcast code that the Scan delegator used to decrypt the Broadcast Audio
+     * Stream and failed.
+     *
+     * <p>This code is valid only if {@link #getEncryptionStatus} returns {@link
+     * #LE_AUDIO_BROADCAST_SINK_ENC_STATE_BAD_CODE}
+     *
+     * @return byte array containing bad broadcast value, null if the current encryption
+     *     status is not {@link #LE_AUDIO_BROADCAST_SINK_ENC_STATE_BAD_CODE}
+     * @hide
+     */
+    public @Nullable byte[] getBadBroadcastCode() {
+        return mBadBroadcastCode;
+    }
+
+    /**
+     * Get the number of subgroups.
+     *
+     * @return number of subgroups
+     * @hide
+     */
+    public byte getNumberOfSubGroups() {
+        return mNumSubGroups;
+    }
+
+    /**
+     * Set the BIS indices (channels) the Broadcast Sink is synchronized with
+     *
+     * @param selectedBISIndices BIS indices representing the channels that the Broadcast Sink is
+     *     synchronized with.
+     * @hide
+     */
+    /*package*/ void setBroadcastChannelsSyncStatus(
+            @NonNull List<BluetoothLeBroadcastSourceChannel> selectedBISIndices) {
+        for (int i = 0; i < selectedBISIndices.size(); i++) {
+            if (selectedBISIndices.get(i).getStatus()
+                    == BluetoothLeBroadcastSourceChannel.LE_AUDIO_BROADCAST_CHANNEL_STATUS_SYNC) {
+                Integer audioBisIndex = 0;
+                int subGroupId = selectedBISIndices.get(i).getSubGroupId();
+                if (mSubgroupBisSyncState.containsKey(subGroupId)) {
+                    audioBisIndex = mSubgroupBisSyncState.get(subGroupId);
+                }
+                audioBisIndex = audioBisIndex | (1 << selectedBISIndices.get(i).getIndex());
+                mSubgroupBisSyncState.put(subGroupId, audioBisIndex);
+            }
+        }
+    }
+    /**
+     * Gets the Broadcast channels index and the sync status from BluetoothLeBroadcastSourceInfo
+     * Object This maps the various broadcast source indicies and sync status of them
+     *
+     * @return list of synchronized broadcast channels
+     * @hide
+     */
+    public @NonNull List<BluetoothLeBroadcastSourceChannel> getBroadcastChannelsSyncStatus() {
+        List<BluetoothLeBroadcastSourceChannel> bcastIndices =
+                new ArrayList<BluetoothLeBroadcastSourceChannel>();
+        for (int i = 0; i < mNumSubGroups; i++) {
+            int bisIndexValue = mSubgroupBisSyncState.get(i);
+            int index = 0;
+            while (bisIndexValue != 0) {
+                if ((bisIndexValue & 0x01) == 0x01) {
+                    BluetoothLeBroadcastSourceChannel bI =
+                            new BluetoothLeBroadcastSourceChannel(
+                                    index,
+                                    String.valueOf(index),
+                                    true,
+                                    i,
+                                    mSubgroupMetadata.get(i));
+                    bcastIndices.add(bI);
+                }
+                bisIndexValue = bisIndexValue >> 1;
+                index++;
+            }
+        }
+
+        return bcastIndices;
+    }
+
+    public @NonNull Map<Integer, Integer> getBisIndexList() {
+        return mSubgroupBisSyncState;
+    }
+
+    /*package*/ void setBroadcastCode(@NonNull String broadcastCode) {
+        mBroadcastCode = broadcastCode;
+    }
+
+    /**
+     * Get the broadcast code
+     *
+     * @return
+     * @hide
+     */
+    public @NonNull String getBroadcastCode() {
+        return mBroadcastCode;
+    }
+
+    /**
+     * Set the broadcast ID
+     *
+     * @param broadcastId broadcast ID of the Broadcast Source
+     * @hide
+     */
+    public void setBroadcastId(int broadcastId) {
+        mBroadcastId = broadcastId;
+    }
+
+    private void writeSubgroupBisSyncStateToParcel(
+            @NonNull Parcel dest, @NonNull Map<Integer, Integer> subgroupBisSyncState) {
+        dest.writeInt(subgroupBisSyncState.size());
+        for (Map.Entry<Integer, Integer> entry : subgroupBisSyncState.entrySet()) {
+            dest.writeInt(entry.getKey());
+            dest.writeInt(entry.getValue());
+        }
+    }
+
+    private static void readMapFromParcel(
+            @NonNull Parcel in, @NonNull Map<Integer, Integer> subgroupBisSyncState) {
+        int size = in.readInt();
+
+        for (int i = 0; i < size; i++) {
+            Integer key = in.readInt();
+            Integer value = in.readInt();
+            subgroupBisSyncState.put(key, value);
+        }
+    }
+
+    private void writeSubgroupMetadataToParcel(
+            @NonNull Parcel dest, @Nullable Map<Integer, byte[]> subgroupMetadata) {
+        if (subgroupMetadata == null) {
+            dest.writeInt(0);
+            return;
+        }
+
+        dest.writeInt(subgroupMetadata.size());
+        for (Map.Entry<Integer, byte[]> entry : subgroupMetadata.entrySet()) {
+            dest.writeInt(entry.getKey());
+            byte[] metadata = entry.getValue();
+            if (metadata != null) {
+                dest.writeInt(metadata.length);
+                dest.writeByteArray(metadata);
+            }
+        }
+    }
+
+    private static void readSubgroupMetadataFromParcel(
+            @NonNull Parcel in, @NonNull Map<Integer, byte[]> subgroupMetadata) {
+        int size = in.readInt();
+
+        for (int i = 0; i < size; i++) {
+            Integer key = in.readInt();
+            Integer metaDataLen = in.readInt();
+            byte[] metadata = null;
+            if (metaDataLen != 0) {
+                metadata = new byte[metaDataLen];
+                in.readByteArray(metadata);
+            }
+            subgroupMetadata.put(key, metadata);
+        }
+    }
+
+    public static final @NonNull Parcelable.Creator<BluetoothLeBroadcastSourceInfo> CREATOR =
+            new Parcelable.Creator<BluetoothLeBroadcastSourceInfo>() {
+                public @NonNull BluetoothLeBroadcastSourceInfo createFromParcel(
+                        @NonNull Parcel in) {
+                    final byte sourceId = in.readByte();
+                    final int sourceAddressType = in.readInt();
+                    final BluetoothDevice sourceDevice =
+                            in.readTypedObject(BluetoothDevice.CREATOR);
+                    final byte sourceAdvSid = in.readByte();
+                    final int broadcastId = in.readInt();
+                    final int paSyncState = in.readInt();
+                    final int audioSyncState = in.readInt();
+                    final int encyptionStatus = in.readInt();
+                    final int badBroadcastLen = in.readInt();
+                    byte[] badBroadcastCode = null;
+
+                    if (badBroadcastLen > 0) {
+                        badBroadcastCode = new byte[badBroadcastLen];
+                        in.readByteArray(badBroadcastCode);
+                    }
+                    final byte numSubGroups = in.readByte();
+                    final String broadcastCode = in.readString();
+                    Map<Integer, Integer> subgroupBisSyncState = new HashMap<Integer, Integer>();
+                    readMapFromParcel(in, subgroupBisSyncState);
+                    Map<Integer, byte[]> subgroupMetadata = new HashMap<Integer, byte[]>();
+                    readSubgroupMetadataFromParcel(in, subgroupMetadata);
+
+                    BluetoothLeBroadcastSourceInfo srcInfo =
+                            new BluetoothLeBroadcastSourceInfo(
+                                    sourceId,
+                                    sourceAddressType,
+                                    sourceDevice,
+                                    sourceAdvSid,
+                                    broadcastId,
+                                    paSyncState,
+                                    encyptionStatus,
+                                    audioSyncState,
+                                    badBroadcastCode,
+                                    numSubGroups,
+                                    subgroupBisSyncState,
+                                    subgroupMetadata,
+                                    broadcastCode);
+                    return srcInfo;
+                }
+
+                public @NonNull BluetoothLeBroadcastSourceInfo[] newArray(int size) {
+                    return new BluetoothLeBroadcastSourceInfo[size];
+                }
+            };
+
+    @Override
+    public void writeToParcel(@NonNull Parcel out, int flags) {
+        out.writeByte(mSourceId);
+        out.writeInt(mSourceAddressType);
+        out.writeTypedObject(mSourceDevice, 0);
+        out.writeByte(mSourceAdvSid);
+        out.writeInt(mBroadcastId);
+        out.writeInt(mPaSyncState);
+        out.writeInt(mAudioSyncState);
+        out.writeInt(mEncryptionStatus);
+
+        if (mBadBroadcastCode != null) {
+            out.writeInt(mBadBroadcastCode.length);
+            out.writeByteArray(mBadBroadcastCode);
+        } else {
+            // zero indicates that there is no "bad broadcast code"
+            out.writeInt(0);
+        }
+        out.writeByte(mNumSubGroups);
+        out.writeString(mBroadcastCode);
+        writeSubgroupBisSyncStateToParcel(out, mSubgroupBisSyncState);
+        writeSubgroupMetadataToParcel(out, mSubgroupMetadata);
+    }
+
+    private static void log(@NonNull String msg) {
+        if (DBG) {
+            Log.d(TAG, msg);
+        }
+    }
+}
+;
