@@ -437,7 +437,6 @@ public final class VcnGatewayConnectionConfig {
      * Returns all exposed capabilities.
      *
      * @see Builder#setRequiredUnderlyingCapabilities(int, Set<Integer>)
-     * @hide
      */
     @NonNull
     public Map<Integer, Set<Integer>> getRequiredUnderlyingCapabilities() {
@@ -644,11 +643,11 @@ public final class VcnGatewayConnectionConfig {
          * @return this {@link Builder} instance, for chaining
          * @see VcnGatewayConnectionConfig for a list of capabilities may be required of underlying
          *     networks
-         * @hide
          */
         @NonNull
         public Builder setRequiredUnderlyingCapabilities(
-                @VcnSupportedTransport int transportType, Set<Integer> requiredCapabilities) {
+                @VcnSupportedTransport int transportType,
+                @Nullable Set<Integer> requiredCapabilities) {
             checkValidTransport(transportType);
             for (int cap : requiredCapabilities) {
                 checkValidCapability(cap);
