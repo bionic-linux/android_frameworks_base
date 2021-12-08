@@ -42,6 +42,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.vcn.VcnGatewayConnectionConfig;
 import android.net.vcn.VcnGatewayConnectionConfigTest;
 import android.os.ParcelUuid;
 import android.os.test.TestLooper;
@@ -64,7 +65,10 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -214,11 +218,11 @@ public class UnderlyingNetworkControllerTest {
                             any(NetworkBringupCallback.class), any());
         }
 
-        verify(mConnectivityManager)
-                .registerNetworkCallback(
-                        eq(getRouteSelectionRequest(expectedSubIds)),
-                        any(UnderlyingNetworkListener.class),
-                        any());
+        for (NetworkRequest req : getRouteSelectionRequests(expectedSubIds)) {
+            verify(mConnectivityManager)
+                    .registerNetworkCallback(eq(req), any(UnderlyingNetworkListener.class), any());
+        }
+
         verify(mConnectivityManager)
                 .registerNetworkCallback(
                         eq(getWifiEntryRssiThresholdRequest(expectedSubIds)),
@@ -250,8 +254,18 @@ public class UnderlyingNetworkControllerTest {
         verifyNetworkRequestsRegistered(UPDATED_SUB_IDS);
     }
 
+    private Set<Integer> getExpectedUnderlyingCaps(int transportType) {
+        final Set<Integer> requiredCaps =
+                VcnGatewayConnectionConfigTest.REQUIRED_UNDERLYING_CAPS.get(transportType);
+        if (requiredCaps == null || requiredCaps.isEmpty()) {
+            return Collections.singleton(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        } else {
+            return requiredCaps;
+        }
+    }
+
     private NetworkRequest getWifiRequest(Set<Integer> netCapsSubIds) {
-        return getExpectedRequestBase()
+        return getExpectedRequestBase(getExpectedUnderlyingCaps(NetworkCapabilities.TRANSPORT_WIFI))
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(netCapsSubIds)
                 .build();
@@ -259,7 +273,7 @@ public class UnderlyingNetworkControllerTest {
 
     private NetworkRequest getWifiEntryRssiThresholdRequest(Set<Integer> netCapsSubIds) {
         // TODO (b/187991063): Add tests for carrier-config based thresholds
-        return getExpectedRequestBase()
+        return getExpectedRequestBase(getExpectedUnderlyingCaps(NetworkCapabilities.TRANSPORT_WIFI))
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(netCapsSubIds)
                 .setSignalStrength(WIFI_ENTRY_RSSI_THRESHOLD_DEFAULT)
@@ -268,7 +282,7 @@ public class UnderlyingNetworkControllerTest {
 
     private NetworkRequest getWifiExitRssiThresholdRequest(Set<Integer> netCapsSubIds) {
         // TODO (b/187991063): Add tests for carrier-config based thresholds
-        return getExpectedRequestBase()
+        return getExpectedRequestBase(getExpectedUnderlyingCaps(NetworkCapabilities.TRANSPORT_WIFI))
                 .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                 .setSubscriptionIds(netCapsSubIds)
                 .setSignalStrength(WIFI_EXIT_RSSI_THRESHOLD_DEFAULT)
@@ -276,18 +290,27 @@ public class UnderlyingNetworkControllerTest {
     }
 
     private NetworkRequest getCellRequestForSubId(int subId) {
-        return getExpectedRequestBase()
+        return getExpectedRequestBase(
+                        getExpectedUnderlyingCaps(NetworkCapabilities.TRANSPORT_CELLULAR))
                 .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                 .setNetworkSpecifier(new TelephonyNetworkSpecifier(subId))
                 .build();
     }
 
-    private NetworkRequest getRouteSelectionRequest(Set<Integer> netCapsSubIds) {
-        return getExpectedRequestBase()
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
-                .setSubscriptionIds(netCapsSubIds)
-                .build();
+    private List<NetworkRequest> getRouteSelectionRequests(Set<Integer> netCapsSubIds) {
+        final List<NetworkRequest> results = new ArrayList<>();
+
+        for (int transportType : VcnGatewayConnectionConfig.ALLOWED_TRANSPORTS) {
+            results.add(
+                    getExpectedRequestBase(getExpectedUnderlyingCaps(transportType))
+                            .addTransportType(transportType)
+                            .addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                            .addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
+                            .setSubscriptionIds(netCapsSubIds)
+                            .build());
+        }
+
+        return results;
     }
 
     private NetworkRequest getTestNetworkRequest(Set<Integer> netCapsSubIds) {
@@ -298,13 +321,16 @@ public class UnderlyingNetworkControllerTest {
                 .build();
     }
 
-    private NetworkRequest.Builder getExpectedRequestBase() {
+    private NetworkRequest.Builder getExpectedRequestBase(Set<Integer> expectedUnderlyingCaps) {
         final NetworkRequest.Builder builder =
                 new NetworkRequest.Builder()
-                        .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                         .removeCapability(NetworkCapabilities.NET_CAPABILITY_TRUSTED)
                         .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED)
                         .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+
+        for (int cap : expectedUnderlyingCaps) {
+            builder.addCapability(cap);
+        }
 
         return builder;
     }
@@ -368,11 +394,11 @@ public class UnderlyingNetworkControllerTest {
 
     private UnderlyingNetworkListener verifyRegistrationOnAvailableAndGetCallback(
             NetworkCapabilities networkCapabilities) {
-        verify(mConnectivityManager)
-                .registerNetworkCallback(
-                        eq(getRouteSelectionRequest(INITIAL_SUB_IDS)),
-                        mUnderlyingNetworkListenerCaptor.capture(),
-                        any());
+        for (NetworkRequest req : getRouteSelectionRequests(INITIAL_SUB_IDS)) {
+            verify(mConnectivityManager)
+                    .registerNetworkCallback(
+                            eq(req), mUnderlyingNetworkListenerCaptor.capture(), any());
+        }
 
         UnderlyingNetworkListener cb = mUnderlyingNetworkListenerCaptor.getValue();
         cb.onAvailable(mNetwork);
