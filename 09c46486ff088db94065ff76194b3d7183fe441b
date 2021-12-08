@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cea29e63_4212a0a4",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27167,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-08T19:57:17Z",
+      "side": 1,
+      "message": "Opportunistic\u0027s a telephony concept for a short-ranged, non-primary network or subscription (like CBRS, or other location-restricted networks)\n\nhttps://developer.android.com/reference/android/telephony/SubscriptionManager#setOpportunistic(boolean,%20int)",
+      "parentUuid": "1fd27809_81378767",
+      "range": {
+        "startLine": 27167,
+        "startChar": 33,
+        "endLine": 27167,
+        "endChar": 46
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ecd2d875_af2c683d",
         "filename": "core/api/current.txt",
         "patchSetId": 12
@@ -106,6 +130,30 @@
       "writtenOn": "2021-12-08T09:06:48Z",
       "side": 1,
       "message": "Documentation doesn\u0027t seem to explain what happens when the location toggle is off and this can\u0027t be determined",
+      "range": {
+        "startLine": 27250,
+        "startChar": 84,
+        "endLine": 27250,
+        "endChar": 91
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0067663_6da08f3c",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27250,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-08T19:57:17Z",
+      "side": 1,
+      "message": "As I understand it, location toggle shouldn\u0027t be a concern, since this is pushed to the system server (VcnMgmtSvc), and is not subject to the same app restrictions. In all cases, the VCN needs to be able to mirror TransportInfo for SysUI, so it does have the relevant WifiInfo to gather SSID from.\n\nNotably, the SSIDs of the WiFi (or any information on selected networks, for that matter) are not sent to the provisioning app, so this is a one-way configuration push.\n\nLet me know if I\u0027m missing anything.",
+      "parentUuid": "f4a38b70_3ff2d217",
       "range": {
         "startLine": 27250,
         "startChar": 84,
