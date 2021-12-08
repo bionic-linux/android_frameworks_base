@@ -545,122 +545,6 @@ public class StateMachine extends IStateMachine {
         }
     }
 
-    /**
-     * A list of log records including messages recently processed by the state machine.
-     *
-     * The class maintains a list of log records including messages
-     * recently processed. The list is finite and may be set in the
-     * constructor or by calling setSize. The public interface also
-     * includes size which returns the number of recent records,
-     * count which is the number of records processed since the
-     * the last setSize, get which returns a record and
-     * add which adds a record.
-     */
-    private static class LogRecords {
-
-        private static final int DEFAULT_SIZE = 20;
-
-        private Vector<LogRec> mLogRecVector = new Vector<LogRec>();
-        private int mMaxSize = DEFAULT_SIZE;
-        private int mOldestIndex = 0;
-        private int mCount = 0;
-        private boolean mLogOnlyTransitions = false;
-
-        /**
-         * private constructor use add
-         */
-        private LogRecords() {
-        }
-
-        /**
-         * Set size of messages to maintain and clears all current records.
-         *
-         * @param maxSize number of records to maintain at anyone time.
-        */
-        synchronized void setSize(int maxSize) {
-            // TODO: once b/28217358 is fixed, add unit tests  to verify that these variables are
-            // cleared after calling this method, and that subsequent calls to get() function as
-            // expected.
-            mMaxSize = maxSize;
-            mOldestIndex = 0;
-            mCount = 0;
-            mLogRecVector.clear();
-        }
-
-        synchronized void setLogOnlyTransitions(boolean enable) {
-            mLogOnlyTransitions = enable;
-        }
-
-        synchronized boolean logOnlyTransitions() {
-            return mLogOnlyTransitions;
-        }
-
-        /**
-         * @return the number of recent records.
-         */
-        synchronized int size() {
-            return mLogRecVector.size();
-        }
-
-        /**
-         * @return the total number of records processed since size was set.
-         */
-        synchronized int count() {
-            return mCount;
-        }
-
-        /**
-         * Clear the list of records.
-         */
-        synchronized void cleanup() {
-            mLogRecVector.clear();
-        }
-
-        /**
-         * @return the information on a particular record. 0 is the oldest
-         * record and size()-1 is the newest record. If the index is to
-         * large null is returned.
-         */
-        synchronized LogRec get(int index) {
-            int nextIndex = mOldestIndex + index;
-            if (nextIndex >= mMaxSize) {
-                nextIndex -= mMaxSize;
-            }
-            if (nextIndex >= size()) {
-                return null;
-            } else {
-                return mLogRecVector.get(nextIndex);
-            }
-        }
-
-        /**
-         * Add a processed message.
-         *
-         * @param msg
-         * @param messageInfo to be stored
-         * @param state that handled the message
-         * @param orgState is the first state the received the message but
-         * did not processes the message.
-         * @param transToState is the state that was transitioned to after the message was
-         * processed.
-         *
-         */
-        synchronized void add(IStateMachine sm, Message msg, String messageInfo, IState state,
-                IState orgState, IState transToState) {
-            mCount += 1;
-            if (mLogRecVector.size() < mMaxSize) {
-                mLogRecVector.add(new LogRec(sm, msg, messageInfo, state, orgState, transToState));
-            } else {
-                LogRec pmi = mLogRecVector.get(mOldestIndex);
-                mOldestIndex += 1;
-                if (mOldestIndex >= mMaxSize) {
-                    mOldestIndex = 0;
-                }
-                pmi.update(sm, msg, messageInfo, state, orgState, transToState);
-            }
-        }
-    }
-
     private static class SmHandler extends StateMachineHandler {
 
         /** true if StateMachine has quit */
@@ -668,15 +552,6 @@ public class StateMachine extends IStateMachine {
 
         /** The debug flag */
         private boolean mDbg = false;
-
-        /** The SmHandler object, identifies that message is internal */
-        private static final Object mSmHandlerObj = new Object();
-
-        /** The current message */
-        private Message mMsg;
-
-        /** A list of log records including messages this state machine has processed */
-        private LogRecords mLogRecords = new LogRecords();
 
         /** The list of deferred messages */
         private ArrayList<Message> mDeferredMessages = new ArrayList<Message>();
@@ -725,47 +600,11 @@ public class StateMachine extends IStateMachine {
         }
 
         /**
-         * Do transitions if destState is available
-         * @param msgProcessedState is the state that processed the message
-         */
-        private void maybePerformTransitions(State msgProcessedState, Message msg) {
-            /**
-             * If transitionTo has been called, exit and then enter
-             * the appropriate states. We loop on this to allow
-             * enter and exit methods to use transitionTo.
-             */
-            State orgState = mStateStack[mStateStackTopIndex].state;
-
-            /**
-             * Record whether message needs to be logged before we transition and
-             * and we won't log special messages SM_INIT_CMD or SM_QUIT_CMD which
-             * always set msg.obj to the handler.
-             */
-            boolean recordLogMsg = mSm.recordLogRec(mMsg) && (msg.obj != mSmHandlerObj);
-
-            if (mLogRecords.logOnlyTransitions()) {
-                /** Record only if there is a transition */
-                if (mDestState != null) {
-                    mLogRecords.add(mSm, mMsg, mSm.getLogRecString(mMsg), msgProcessedState,
-                            orgState, mDestState);
-                }
-            } else if (recordLogMsg) {
-                /** Record message */
-                mLogRecords.add(mSm, mMsg, mSm.getLogRecString(mMsg), msgProcessedState, orgState,
-                        mDestState);
-            }
-
-            if (mDestState != null) performTransitions(mDestState);
-        }
-
-        /**
          * Cleanup all the static variables and the looper after the SM has been quit.
          */
         @Override
         protected final void cleanupAfterQuitting() {
             super.cleanupAfterQuitting();
-            mMsg = null;
-            mLogRecords.cleanup();
             mDeferredMessages.clear();
             mHasQuit = true;
         }
@@ -1105,7 +944,7 @@ public class StateMachine extends IStateMachine {
         // mSmHandler can be null if the state machine has quit.
         SmHandler smh = mSmHandler;
         if (smh == null) return 0;
-        return smh.mLogRecords.mMaxSize;
+        return smh.mLogRecords.getMaxSize();
     }
 
     /**
@@ -1132,14 +971,11 @@ public class StateMachine extends IStateMachine {
      * @return a copy of LogRecs as a collection
      */
     public final Collection<LogRec> copyLogRecs() {
-        Vector<LogRec> vlr = new Vector<LogRec>();
+        // mSmHandler can be null if the state machine has quit.
         SmHandler smh = mSmHandler;
-        if (smh != null) {
-            for (LogRec lr : smh.mLogRecords.mLogRecVector) {
-                vlr.add(lr);
-            }
-        }
-        return vlr;
+        if (smh == null) return new Vector<LogRec>();
+
+        return smh.mLogRecords.copyLogRecs();
     }
 
     /**
