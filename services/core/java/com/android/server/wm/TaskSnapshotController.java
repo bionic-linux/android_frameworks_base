@@ -288,7 +288,7 @@ class TaskSnapshotController {
         }
         final ActivityRecord activity = result.first;
         final WindowState mainWindow = result.second;
-        final Rect contentInsets = getSystemBarInsets(task.getBounds(),
+        final Rect contentInsets = getSystemBarInsets(mainWindow.getFrame(),
                 mainWindow.getInsetsStateWithVisibilityOverride());
         InsetUtils.addInsets(contentInsets, activity.getLetterboxInsets());
 
