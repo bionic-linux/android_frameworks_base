@@ -52,6 +52,24 @@
       "parentUuid": "74fedd1c_240d5cf9",
       "revId": "1231805465eac5b655c219db90c40af34fd866b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c60d13c3_96cec534",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-12-09T04:51:21Z",
+      "side": 1,
+      "message": "I\u0027m supportive of expanding the list here to the existing PM owners, but I\u0027ll reiterate that I\u0027m hesitant to add people that aren\u0027t actively taking ownership of an area.\n\n(Please do correct me if I\u0027m misunderstanding, and if you *are* taking active ownership/maintenance of this area.)\n\nDuring active development the true owners of an area should be involved in every review.  If there\u0027s something extremely urgent that can\u0027t wait across timezones, the top-level owners can help keep things moving.",
+      "parentUuid": "c92f5ac4_6b6dd661",
+      "revId": "1231805465eac5b655c219db90c40af34fd866b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
