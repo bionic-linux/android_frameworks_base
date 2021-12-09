@@ -36,6 +36,7 @@ import static android.net.NetworkTemplate.MATCH_MOBILE_WILDCARD;
 import static android.net.NetworkTemplate.MATCH_WIFI_WILDCARD;
 import static android.net.NetworkTemplate.NETWORK_TYPE_ALL;
 import static android.net.NetworkTemplate.OEM_MANAGED_ALL;
+import static android.net.NetworkTemplate.SUBSCRIBER_ID_MATCH_RULE_EXACT;
 import static android.net.NetworkTemplate.buildTemplateMobileWildcard;
 import static android.net.NetworkTemplate.buildTemplateMobileWithRatType;
 import static android.net.NetworkTemplate.buildTemplateWifiWildcard;
@@ -1319,8 +1320,8 @@ public class StatsPullAtomService extends SystemService {
                    specific ssid or subscriber. */
                 final NetworkTemplate template = new NetworkTemplate(transport,
                         /*subscriberId=*/null, /*matchSubscriberIds=*/null, /*networkId=*/null,
-                        METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL,
-                        oemManaged);
+                        /*matchNetworkId=*/null, METERED_ALL, ROAMING_ALL, DEFAULT_NETWORK_ALL,
+                        NETWORK_TYPE_ALL, oemManaged, SUBSCRIBER_ID_MATCH_RULE_EXACT);
                 final NetworkStats stats = getUidNetworkStatsSnapshotForTemplate(template, true);
                 if (stats != null) {
                     ret.add(new NetworkStatsExt(sliceNetworkStatsByUidTagAndMetered(stats),
