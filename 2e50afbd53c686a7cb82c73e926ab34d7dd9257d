@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea393461_b8aec6d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005967
+      },
+      "writtenOn": "2021-12-09T02:24:22Z",
+      "side": 1,
+      "message": "To be clear, the previous iteration had a side effect of enabling tagged pointers (https://source.android.com/devices/tech/debug/tagged-pointers) on zygote services in applications with sufficiently high sdk level. While its pretty unlikely to break anything, better be safe.\n",
+      "revId": "2e50afbd53c686a7cb82c73e926ab34d7dd9257d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
