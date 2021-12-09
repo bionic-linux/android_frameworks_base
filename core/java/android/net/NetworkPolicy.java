@@ -370,7 +370,7 @@ public class NetworkPolicy implements Parcelable, Comparable<NetworkPolicy> {
         try {
             return new NetworkTemplate(matchRule,
                     subscriberId, new String[]{subscriberId},
-                    networkId, metered, NetworkStats.ROAMING_ALL,
+                    networkId, new String[]{networkId}, metered, NetworkStats.ROAMING_ALL,
                     NetworkStats.DEFAULT_NETWORK_ALL, NetworkTemplate.NETWORK_TYPE_ALL,
                     NetworkTemplate.OEM_MANAGED_ALL, subscriberIdMatchRule);
         } catch (IllegalArgumentException e) {
