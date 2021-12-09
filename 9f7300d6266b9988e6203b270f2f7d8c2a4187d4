@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fa5f31f_473544a8",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-09T23:30:55Z",
+      "side": 1,
+      "message": "If caller never calls this setter, is the default map an empty map, or {TRANSPORT_CELLULAR: NET_CAPABILITY_INTERNET, TRANSPORT_WIFI: NET_CAPABILITY_INTERNET}?",
+      "range": {
+        "startLine": 642,
+        "startChar": 64,
+        "endLine": 643,
+        "endChar": 29
+      },
+      "revId": "9f7300d6266b9988e6203b270f2f7d8c2a4187d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6523f07_d33e578e",
+        "filename": "tests/vcn/java/android/net/vcn/VcnGatewayConnectionConfigTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-09T23:30:55Z",
+      "side": 1,
+      "message": "We should use the same name otherwise noRequiredUnderlyingCaps is guaranteed to be not equal to  withRequiredUnderlyingCaps1 even their required caps are the same",
+      "range": {
+        "startLine": 374,
+        "startChar": 36,
+        "endLine": 374,
+        "endChar": 60
+      },
+      "revId": "9f7300d6266b9988e6203b270f2f7d8c2a4187d4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
