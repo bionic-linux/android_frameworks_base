@@ -45,6 +45,9 @@ public class StateMachineHandler extends Handler {
     /** The SmHandler object, identifies that message is internal */
     protected static final Object mSmHandlerObj = new Object();
 
+    /** true if StateMachine has quit */
+    private boolean mHasQuit = false;
+
     /** The debug flag */
     protected boolean mDbg = false;
 
@@ -52,13 +55,13 @@ public class StateMachineHandler extends Handler {
     protected IStateMachine mSm;
 
     /** The current message */
-    protected Message mMsg;
+    private Message mMsg;
 
     /** A list of log records including messages this state machine has processed */
     protected LogRecords mLogRecords = new LogRecords();
 
     /** true if construction of the state machine has not been completed */
-    protected boolean mIsConstructionCompleted;
+    private boolean mIsConstructionCompleted;
 
     /** The map of all of the states in the state machine */
     private HashMap<State, StateInfo> mStateInfo = new HashMap<State, StateInfo>();
@@ -73,7 +76,7 @@ public class StateMachineHandler extends Handler {
     protected StateInfo[] mTempStateStack;
 
     /** The top of the mTempStateStack */
-    protected int mTempStateStackCount;
+    private int mTempStateStackCount;
 
     /** The initial state that will process the first message */
     private State mInitialState;
@@ -85,7 +88,7 @@ public class StateMachineHandler extends Handler {
     protected HaltingState mHaltingState = new HaltingState();
 
     /** State used when state machine is quitting */
-    protected QuittingState mQuittingState = new QuittingState();
+    private QuittingState mQuittingState = new QuittingState();
 
     /**
      * Indicates if a transition is in progress
@@ -279,6 +282,8 @@ public class StateMachineHandler extends Handler {
         super(looper);
 
         mSm = sm;
+        addState(mHaltingState, null);
+        addState(mQuittingState, null);
     }
 
     /**
@@ -307,6 +312,84 @@ public class StateMachineHandler extends Handler {
     }
 
     /**
+     * Handle messages sent to the state machine by calling
+     * the current state's processMessage. It also handles
+     * the enter/exit calls and placing any deferred messages
+     * back onto the queue when transitioning to a new state.
+     */
+    @Override
+    public final void handleMessage(Message msg) {
+        if (!mHasQuit) {
+            if (mSm != null && msg.what != SM_INIT_CMD && msg.what != SM_QUIT_CMD) {
+                mSm.onPreHandleMessage(msg);
+            }
+
+            if (mDbg) mSm.log("handleMessage: E msg.what=" + msg.what);
+
+            /** Save the current message */
+            mMsg = msg;
+
+            /** State that processed the message */
+            State msgProcessedState = null;
+            if (mIsConstructionCompleted || (mMsg.what == SM_QUIT_CMD)) {
+                /** Normal path */
+                msgProcessedState = processMsg(msg);
+            } else if (!mIsConstructionCompleted && (mMsg.what == SM_INIT_CMD)
+                    && (mMsg.obj == mSmHandlerObj)) {
+                /** Initial one time path. */
+                mIsConstructionCompleted = true;
+                invokeEnterMethods(0);
+            } else {
+                throw new RuntimeException("StateMachine.handleMessage: "
+                        + "The start method not called, received msg: " + msg);
+            }
+            maybePerformTransitions(msgProcessedState, msg);
+
+            // We need to check if mSm == null here as we could be quitting.
+            if (mDbg && mSm != null) mSm.log("handleMessage: X");
+
+            if (mSm != null && msg.what != SM_INIT_CMD && msg.what != SM_QUIT_CMD) {
+                mSm.onPostHandleMessage(msg);
+            }
+        }
+    }
+
+    /**
+     * Process the message. If the current state doesn't handle
+     * it, call the states parent and so on. If it is never handled then
+     * call the state machines unhandledMessage method.
+     * @return the state that processed the message
+     */
+    private State processMsg(Message msg) {
+        StateInfo curStateInfo = mStateStack[mStateStackTopIndex];
+        if (mDbg) {
+            mSm.log("processMsg: " + curStateInfo.state.getName());
+        }
+
+        if (isQuit(msg)) {
+            transitionTo(mQuittingState);
+        } else {
+            while (!curStateInfo.state.processMessage(msg)) {
+                /**
+                 * Not processed
+                 */
+                curStateInfo = curStateInfo.parentStateInfo;
+                if (curStateInfo == null) {
+                    /**
+                     * No parents left so it's not handled
+                     */
+                    mSm.unhandledMessage(msg);
+                    break;
+                }
+                if (mDbg) {
+                    mSm.log("processMsg: " + curStateInfo.state.getName());
+                }
+            }
+        }
+        return (curStateInfo != null) ? curStateInfo.state : null;
+    }
+
+    /**
      * Initialize StateStack to mInitialState.
      */
     private void setupInitialStateStack() {
@@ -331,7 +414,7 @@ public class StateMachineHandler extends Handler {
      *
      * @return index into mStateStack where entering needs to start
      */
-    protected final int moveTempStateStackToStateStack() {
+    private int moveTempStateStackToStateStack() {
         int startingIndex = mStateStackTopIndex + 1;
         int i = mTempStateStackCount - 1;
         int j = startingIndex;
@@ -380,6 +463,7 @@ public class StateMachineHandler extends Handler {
         mDestState = null;
         mMsg = null;
         mLogRecords.cleanup();
+        mHasQuit = true;
     }
 
     /**
@@ -448,7 +532,7 @@ public class StateMachineHandler extends Handler {
      * Do transitions if destState is available
      * @param msgProcessedState is the state that processed the message
      */
-    protected void maybePerformTransitions(State msgProcessedState, Message msg) {
+    private void maybePerformTransitions(State msgProcessedState, Message msg) {
         /**
          * If transitionTo has been called, exit and then enter
          * the appropriate states. We loop on this to allow
@@ -497,7 +581,7 @@ public class StateMachineHandler extends Handler {
     /**
      * Invoke the enter method starting at the entering index to top of state stack
      */
-    protected final void invokeEnterMethods(int stateStackEnteringIndex) {
+    private void invokeEnterMethods(int stateStackEnteringIndex) {
         for (int i = stateStackEnteringIndex; i <= mStateStackTopIndex; i++) {
             if (stateStackEnteringIndex == mStateStackTopIndex) {
                 // Last enter state for transition
@@ -603,10 +687,32 @@ public class StateMachineHandler extends Handler {
     }
 
     /**
+     * @return current message
+     */
+    public final Message getCurrentMessage() {
+        return mMsg;
+    }
+
+    /**
      * @return current state
      */
     public final IState getCurrentState() {
         return mStateStack[mStateStackTopIndex].state;
+    }
+
+    /** Validate that the message was sent for quitting state machine. */
+    public boolean isQuit(Message msg) {
+        return (msg.what == SM_QUIT_CMD) && (msg.obj == mSmHandlerObj);
+    }
+
+    /** @return whether debug is enabled. */
+    public final boolean isDbg() {
+        return mDbg;
+    }
+
+    /** Whether turn on debug log. */
+    public final void setDbg(boolean dbg) {
+        mDbg = dbg;
     }
 
     /** Move the deferred message to the front of the message queue. */

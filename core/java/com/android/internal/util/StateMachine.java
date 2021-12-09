@@ -546,58 +546,8 @@ public class StateMachine extends IStateMachine {
     }
 
     private static class SmHandler extends StateMachineHandler {
-
-        /** true if StateMachine has quit */
-        private boolean mHasQuit = false;
-
-        /** The debug flag */
-        private boolean mDbg = false;
-
         /** The list of deferred messages */
         private ArrayList<Message> mDeferredMessages = new ArrayList<Message>();
-
-        /**
-         * Handle messages sent to the state machine by calling
-         * the current state's processMessage. It also handles
-         * the enter/exit calls and placing any deferred messages
-         * back onto the queue when transitioning to a new state.
-         */
-        @Override
-        public final void handleMessage(Message msg) {
-            if (!mHasQuit) {
-                if (mSm != null && msg.what != SM_INIT_CMD && msg.what != SM_QUIT_CMD) {
-                    mSm.onPreHandleMessage(msg);
-                }
-
-                if (mDbg) mSm.log("handleMessage: E msg.what=" + msg.what);
-
-                /** Save the current message */
-                mMsg = msg;
-
-                /** State that processed the message */
-                State msgProcessedState = null;
-                if (mIsConstructionCompleted || (mMsg.what == SM_QUIT_CMD)) {
-                    /** Normal path */
-                    msgProcessedState = processMsg(msg);
-                } else if (!mIsConstructionCompleted && (mMsg.what == SM_INIT_CMD)
-                        && (mMsg.obj == mSmHandlerObj)) {
-                    /** Initial one time path. */
-                    mIsConstructionCompleted = true;
-                    invokeEnterMethods(0);
-                } else {
-                    throw new RuntimeException("StateMachine.handleMessage: "
-                            + "The start method not called, received msg: " + msg);
-                }
-                maybePerformTransitions(msgProcessedState, msg);
-
-                // We need to check if mSm == null here as we could be quitting.
-                if (mDbg && mSm != null) mSm.log("handleMessage: X");
-
-                if (mSm != null && msg.what != SM_INIT_CMD && msg.what != SM_QUIT_CMD) {
-                    mSm.onPostHandleMessage(msg);
-                }
-            }
-        }
 
         /**
          * Cleanup all the static variables and the looper after the SM has been quit.
@@ -606,7 +556,6 @@ public class StateMachine extends IStateMachine {
         protected final void cleanupAfterQuitting() {
             super.cleanupAfterQuitting();
             mDeferredMessages.clear();
-            mHasQuit = true;
         }
 
         @Override
@@ -619,41 +568,6 @@ public class StateMachine extends IStateMachine {
             sendMessageAtFrontOfQueue(obtainMessage(SM_INIT_CMD, mSmHandlerObj));
 
             if (mDbg) mSm.log("completeConstruction: X");
-        }
-
-        /**
-         * Process the message. If the current state doesn't handle
-         * it, call the states parent and so on. If it is never handled then
-         * call the state machines unhandledMessage method.
-         * @return the state that processed the message
-         */
-        private final State processMsg(Message msg) {
-            StateInfo curStateInfo = mStateStack[mStateStackTopIndex];
-            if (mDbg) {
-                mSm.log("processMsg: " + curStateInfo.state.getName());
-            }
-
-            if (isQuit(msg)) {
-                transitionTo(mQuittingState);
-            } else {
-                while (!curStateInfo.state.processMessage(msg)) {
-                    /**
-                     * Not processed
-                     */
-                    curStateInfo = curStateInfo.parentStateInfo;
-                    if (curStateInfo == null) {
-                        /**
-                         * No parents left so it's not handled
-                         */
-                        mSm.unhandledMessage(msg);
-                        break;
-                    }
-                    if (mDbg) {
-                        mSm.log("processMsg: " + curStateInfo.state.getName());
-                    }
-                }
-            }
-            return (curStateInfo != null) ? curStateInfo.state : null;
         }
 
         @Override
@@ -673,13 +587,6 @@ public class StateMachine extends IStateMachine {
         }
 
         /**
-         * @return current message
-         */
-        private final Message getCurrentMessage() {
-            return mMsg;
-        }
-
-        /**
          * Constructor
          *
          * @param looper for dispatching messages
@@ -687,9 +594,6 @@ public class StateMachine extends IStateMachine {
          */
         private SmHandler(Looper looper, StateMachine sm) {
             super(looper, sm);
-
-            addState(mHaltingState, null);
-            addState(mQuittingState, null);
         }
 
         /** @see StateMachine#deferMessage(Message) */
@@ -714,22 +618,6 @@ public class StateMachine extends IStateMachine {
             if (mDbg) mSm.log("quitNow:");
             sendMessageAtFrontOfQueue(obtainMessage(SM_QUIT_CMD, mSmHandlerObj));
         }
-
-        /** Validate that the message was sent by quit or quitNow. */
-        private final boolean isQuit(Message msg) {
-            return (msg.what == SM_QUIT_CMD) && (msg.obj == mSmHandlerObj);
-        }
-
-        /** @see StateMachine#isDbg() */
-        private final boolean isDbg() {
-            return mDbg;
-        }
-
-        /** @see StateMachine#setDbg(boolean) */
-        private final void setDbg(boolean dbg) {
-            mDbg = dbg;
-        }
-
     }
 
     private SmHandler mSmHandler;
