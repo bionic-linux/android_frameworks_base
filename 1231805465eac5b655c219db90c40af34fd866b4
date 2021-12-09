@@ -70,6 +70,24 @@
       "parentUuid": "c92f5ac4_6b6dd661",
       "revId": "1231805465eac5b655c219db90c40af34fd866b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fbcd5eb_ec52420f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2021-12-09T15:36:54Z",
+      "side": 1,
+      "message": "When I last chatted with Artur about this, it sounded like he was open to actual (shared) ownership of SystemConfig.\n\nIf that\u0027s not the case or unlikely to last beyond this release, then I agree we should just expand this to PACKAGE_MANAGER_OWNERS to give more options for those seeking owner approval.",
+      "parentUuid": "c60d13c3_96cec534",
+      "revId": "1231805465eac5b655c219db90c40af34fd866b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
