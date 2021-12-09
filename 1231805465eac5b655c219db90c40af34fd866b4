@@ -88,6 +88,24 @@
       "parentUuid": "c60d13c3_96cec534",
       "revId": "1231805465eac5b655c219db90c40af34fd866b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dacc27e9_90e28247",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-09T15:48:43Z",
+      "side": 1,
+      "message": "I am open to lasting ownership of SystemConfig, but I think there is some misunderstanding (probably on my side).\n\nOwning just SystemConfig isn\u0027t really the type of area ownership that Jeff mentions. Any meaningful change to SystemConfig requires changes in other parts of frameworks/base/ where I may not be an owner.\n\nMost other changes to SystemConfig are likely incremental changes / optimizations, which I hope Jeff would be okay in general for me to review or trusts me enough to delegate if I am not comfortable reviewing them.\n\nThe other argument is still good though, if SystemConfig is only tightly coupled with PM, then it is area of PM responsibility only really.",
+      "parentUuid": "9fbcd5eb_ec52420f",
+      "revId": "1231805465eac5b655c219db90c40af34fd866b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
