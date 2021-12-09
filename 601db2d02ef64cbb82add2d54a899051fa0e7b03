@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4aeeac9a_9f5ab2db",
+        "filename": "core/java/android/net/vcn/VcnWifiUnderlyingNetworkPriorityRule.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-09T03:25:48Z",
+      "side": 1,
+      "message": "Not a new file. Was VcnWifiUnderlyingNetworkPriority before.",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "601db2d02ef64cbb82add2d54a899051fa0e7b03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e360578_46cb05a8",
+        "filename": "tests/vcn/java/android/net/vcn/VcnCellUnderlyingNetworkPriorityRuleTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-09T03:25:48Z",
+      "side": 1,
+      "message": "Not a new file. Was VcnCellUnderlyingNetworkPriorityTest before.",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 53
+      },
+      "revId": "601db2d02ef64cbb82add2d54a899051fa0e7b03",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
