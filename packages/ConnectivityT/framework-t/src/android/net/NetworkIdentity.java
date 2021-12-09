@@ -26,6 +26,7 @@ import android.service.NetworkIdentityProto;
 import android.telephony.Annotation.NetworkType;
 import android.util.proto.ProtoOutputStream;
 
+
 import com.android.net.module.util.NetworkCapabilitiesUtils;
 import com.android.net.module.util.NetworkIdentityUtils;
 
@@ -227,13 +228,12 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
 
         final int oemManaged = getOemBitfield(snapshot.getNetworkCapabilities());
 
+        // TODO: b/210951682 - a way to passively get the wifi conf key in order to
+        // prevent deadlock.
         if (legacyType == TYPE_WIFI) {
-            networkId = snapshot.getNetworkCapabilities().getSsid();
-            if (networkId == null) {
-                final WifiManager wifi = context.getSystemService(WifiManager.class);
-                final WifiInfo info = wifi.getConnectionInfo();
-                networkId = info != null ? info.getSSID() : null;
-            }
+            final WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            final WifiInfo info = wifi.getConnectionInfo();
+            networkId = info != null ? info.getCurrentNetworkKey() : null;
         }
 
         return new NetworkIdentity(legacyType, subType, subscriberId, networkId, roaming, metered,

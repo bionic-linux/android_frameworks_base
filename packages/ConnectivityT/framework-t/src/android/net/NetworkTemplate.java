@@ -35,7 +35,6 @@ import static android.net.NetworkStats.METERED_YES;
 import static android.net.NetworkStats.ROAMING_ALL;
 import static android.net.NetworkStats.ROAMING_NO;
 import static android.net.NetworkStats.ROAMING_YES;
-import static android.net.wifi.WifiInfo.sanitizeSsid;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
@@ -219,11 +218,13 @@ public final class NetworkTemplate implements Parcelable {
     public static NetworkTemplate buildTemplateMobileWithRatType(@Nullable String subscriberId,
             @NetworkType int ratType, int metered) {
         if (TextUtils.isEmpty(subscriberId)) {
-            return new NetworkTemplate(MATCH_MOBILE_WILDCARD, null, null, null,
-                    metered, ROAMING_ALL, DEFAULT_NETWORK_ALL, ratType, OEM_MANAGED_ALL,
-                    SUBSCRIBER_ID_MATCH_RULE_EXACT);
+            return new NetworkTemplate(MATCH_MOBILE_WILDCARD, null /* mSubscriberId */,
+                    null /* mMatchSubscriberIds */, null /* mNetworkId */,
+                    null /* mMatchNetworkIds */, metered, ROAMING_ALL, DEFAULT_NETWORK_ALL,
+                    ratType, OEM_MANAGED_ALL, SUBSCRIBER_ID_MATCH_RULE_EXACT);
         }
-        return new NetworkTemplate(MATCH_MOBILE, subscriberId, new String[]{subscriberId}, null,
+        return new NetworkTemplate(MATCH_MOBILE, subscriberId, new String[] { subscriberId },
+                null /* mNetworkId */, null /* mMatchNetworkIds */,
                 metered, ROAMING_ALL, DEFAULT_NETWORK_ALL, ratType, OEM_MANAGED_ALL,
                 SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
@@ -241,7 +242,7 @@ public final class NetworkTemplate implements Parcelable {
 
     /**
      * Template to match all metered {@link ConnectivityManager#TYPE_WIFI} networks,
-     * regardless of SSID.
+     * regardless of the key of the wifi network..
      *
      * @hide
      */
@@ -261,29 +262,36 @@ public final class NetworkTemplate implements Parcelable {
 
     /**
      * Template to match {@link ConnectivityManager#TYPE_WIFI} networks with the
-     * given SSID.
+     * given the key of the wifi network..
      *
+     * @param networkId the key of the wifi network. see {@link WifiInfo#getCurrentNetworkKey()}
+     *                  to know details about the key.
      * @hide
      */
     public static NetworkTemplate buildTemplateWifi(@NonNull String networkId) {
         Objects.requireNonNull(networkId);
         return new NetworkTemplate(MATCH_WIFI, null /* subscriberId */,
                 new String[] { null } /* matchSubscriberIds */,
-                networkId, METERED_ALL, ROAMING_ALL,
+                networkId, new String[] { networkId }, METERED_ALL, ROAMING_ALL,
                 DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_ALL,
                 SUBSCRIBER_ID_MATCH_RULE_ALL);
     }
 
     /**
-     * Template to match all {@link ConnectivityManager#TYPE_WIFI} networks with the given SSID,
-     * and IMSI.
+     * Template to match all {@link ConnectivityManager#TYPE_WIFI} networks with the given
+     * the key of the wifi network and IMSI.
      *
-     * Call with {@link #WIFI_NETWORKID_ALL} for {@code networkId} to get result regardless of SSID.
+     * Call with {@link #WIFI_NETWORKID_ALL} for {@code networkId} to get result regardless of
+     * the key of the wifi network
+     *
+     * @param networkId the key of the wifi network. see {@link WifiInfo#getCurrentNetworkKey()}
+     *                  to know details about the key.
+     * @param subscriberId the IMSI which associated to this wifi network.
      */
     public static NetworkTemplate buildTemplateWifi(@Nullable String networkId,
             @Nullable String subscriberId) {
         return new NetworkTemplate(MATCH_WIFI, subscriberId, new String[] { subscriberId },
-                networkId, METERED_ALL, ROAMING_ALL,
+                networkId, new String[] { networkId }, METERED_ALL, ROAMING_ALL,
                 DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_ALL,
                 SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
@@ -327,7 +335,8 @@ public final class NetworkTemplate implements Parcelable {
     public static NetworkTemplate buildTemplateCarrierMetered(@NonNull String subscriberId) {
         Objects.requireNonNull(subscriberId);
         return new NetworkTemplate(MATCH_CARRIER, subscriberId,
-                new String[] { subscriberId }, null /* networkId */, METERED_YES, ROAMING_ALL,
+                new String[] { subscriberId }, null /* mNetworkId */, null /* mMatchNetworkIds */,
+                METERED_YES, ROAMING_ALL,
                 DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL, OEM_MANAGED_ALL,
                 SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
@@ -346,6 +355,8 @@ public final class NetworkTemplate implements Parcelable {
     private final String[] mMatchSubscriberIds;
 
     private final String mNetworkId;
+
+    private final String[] mMatchNetworkIds;
 
     // Matches for the NetworkStats constants METERED_*, ROAMING_* and DEFAULT_NETWORK_*.
     private final int mMetered;
@@ -390,7 +401,7 @@ public final class NetworkTemplate implements Parcelable {
         // to metered networks. It is now possible to match mobile with any meteredness, but
         // in order to preserve backward compatibility of @UnsupportedAppUsage methods, this
         //constructor passes METERED_YES for these types.
-        this(matchRule, subscriberId, matchSubscriberIds, networkId,
+        this(matchRule, subscriberId, matchSubscriberIds, networkId, new String[] { networkId },
                 (matchRule == MATCH_MOBILE || matchRule == MATCH_MOBILE_WILDCARD) ? METERED_YES
                 : METERED_ALL , ROAMING_ALL, DEFAULT_NETWORK_ALL, NETWORK_TYPE_ALL,
                 OEM_MANAGED_ALL, SUBSCRIBER_ID_MATCH_RULE_EXACT);
@@ -401,20 +412,26 @@ public final class NetworkTemplate implements Parcelable {
     public NetworkTemplate(int matchRule, String subscriberId, String[] matchSubscriberIds,
             String networkId, int metered, int roaming, int defaultNetwork, int subType,
             int oemManaged) {
-        this(matchRule, subscriberId, matchSubscriberIds, networkId, metered, roaming,
-                defaultNetwork, subType, oemManaged, SUBSCRIBER_ID_MATCH_RULE_EXACT);
+        this(matchRule, subscriberId, matchSubscriberIds, networkId, new String[] { networkId },
+                metered, roaming, defaultNetwork, subType, oemManaged,
+                SUBSCRIBER_ID_MATCH_RULE_EXACT);
     }
 
     /** @hide */
     public NetworkTemplate(int matchRule, String subscriberId, String[] matchSubscriberIds,
-            String networkId, int metered, int roaming, int defaultNetwork, int subType,
-            int oemManaged, int subscriberIdMatchRule) {
+            String networkId, String[] matchNetworkIds, int metered, int roaming,
+            int defaultNetwork, int subType, int oemManaged, int subscriberIdMatchRule) {
         mMatchRule = matchRule;
         mSubscriberId = subscriberId;
         // TODO: Check whether mMatchSubscriberIds = null or mMatchSubscriberIds = {null} when
         // mSubscriberId is null
         mMatchSubscriberIds = matchSubscriberIds;
         mNetworkId = networkId;
+        if (networkId != null && !ArrayUtils.contains(matchNetworkIds, networkId)) {
+            throw new IllegalArgumentException("Invalid MatchNetworkIds " + matchNetworkIds
+                    + " which excludes networkId " + networkId);
+        }
+        mMatchNetworkIds = matchNetworkIds;
         mMetered = metered;
         mRoaming = roaming;
         mDefaultNetwork = defaultNetwork;
@@ -433,6 +450,7 @@ public final class NetworkTemplate implements Parcelable {
         mSubscriberId = in.readString();
         mMatchSubscriberIds = in.createStringArray();
         mNetworkId = in.readString();
+        mMatchNetworkIds = in.createStringArray();
         mMetered = in.readInt();
         mRoaming = in.readInt();
         mDefaultNetwork = in.readInt();
@@ -447,6 +465,7 @@ public final class NetworkTemplate implements Parcelable {
         dest.writeString(mSubscriberId);
         dest.writeStringArray(mMatchSubscriberIds);
         dest.writeString(mNetworkId);
+        dest.writeStringArray(mMatchNetworkIds);
         dest.writeInt(mMetered);
         dest.writeInt(mRoaming);
         dest.writeInt(mDefaultNetwork);
@@ -474,6 +493,9 @@ public final class NetworkTemplate implements Parcelable {
         }
         if (mNetworkId != null) {
             builder.append(", networkId=").append(mNetworkId);
+        }
+        if (mMatchNetworkIds != null) {
+            builder.append(", matchNetworkIds=").append(Arrays.toString(mMatchNetworkIds));
         }
         if (mMetered != METERED_ALL) {
             builder.append(", metered=").append(NetworkStats.meteredToString(mMetered));
@@ -679,12 +701,16 @@ public final class NetworkTemplate implements Parcelable {
     }
 
     /**
-     * Check if network with matching SSID. Returns true when the SSID matches, or when
-     * {@code mNetworkId} is {@code WIFI_NETWORKID_ALL}.
+     * Check if network with matching the key of the wifi network.
+     * Returns true when the key matches, or when {@code mNetworkId} is
+     * {@code WIFI_NETWORKID_ALL}.
+     *
+     * @param networkId the key of the wifi network. see {@link WifiInfo#getCurrentNetworkKey()}
+     *                  to know details about the key.
      */
     private boolean matchesWifiNetworkId(@Nullable String networkId) {
         return Objects.equals(mNetworkId, WIFI_NETWORKID_ALL)
-                || Objects.equals(sanitizeSsid(mNetworkId), sanitizeSsid(networkId));
+                || ArrayUtils.contains(mMatchNetworkIds, networkId);
     }
 
     /**
