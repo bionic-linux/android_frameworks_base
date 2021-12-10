@@ -22645,6 +22645,10 @@ package android.media {
     field public static final String MIMETYPE_VIDEO_SCRAMBLED = "video/scrambled";
     field public static final String MIMETYPE_VIDEO_VP8 = "video/x-vnd.on2.vp8";
     field public static final String MIMETYPE_VIDEO_VP9 = "video/x-vnd.on2.vp9";
+    field public static final int PICTURE_TYPE_B = 3; // 0x3
+    field public static final int PICTURE_TYPE_I = 1; // 0x1
+    field public static final int PICTURE_TYPE_NONE = 0; // 0x0
+    field public static final int PICTURE_TYPE_P = 2; // 0x2
     field public static final int TYPE_BYTE_BUFFER = 5; // 0x5
     field public static final int TYPE_FLOAT = 3; // 0x3
     field public static final int TYPE_INTEGER = 1; // 0x1
