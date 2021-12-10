@@ -100,15 +100,61 @@ filegroup {
     ],
 }
 
+// IpSec related libraries.
+
+filegroup {
+    name: "framework-connectivity-ipsec-java-sources",
+    srcs: [
+        "src/android/net/IpSecAlgorithm.java",
+        "src/android/net/IpSecConfig.java",
+        "src/android/net/IpSecManager.java",
+        "src/android/net/IpSecSpiResponse.java",
+        "src/android/net/IpSecTransform.java",
+        "src/android/net/IpSecTransformResponse.java",
+        "src/android/net/IpSecTunnelInterfaceResponse.java",
+        "src/android/net/IpSecUdpEncapResponse.java",
+    ],
+    path: "src",
+    visibility: [
+        "//visibility:private",
+    ],
+}
+
+filegroup {
+    name: "framework-connectivity-ipsec-aidl-sources",
+    srcs: [
+        "src/android/net/IIpSecService.aidl",
+        "src/android/net/IpSecConfig.aidl",
+        "src/android/net/IpSecSpiResponse.aidl",
+        "src/android/net/IpSecTransformResponse.aidl",
+        "src/android/net/IpSecTunnelInterfaceResponse.aidl",
+        "src/android/net/IpSecUdpEncapResponse.aidl",
+    ],
+    path: "src",
+    visibility: [
+        "//visibility:private",
+    ],
+}
+
+filegroup {
+    name: "framework-connectivity-ipsec-sources",
+    srcs: [
+        ":framework-connectivity-ipsec-java-sources",
+        ":framework-connectivity-ipsec-aidl-sources",
+    ],
+    visibility: [
+        "//visibility:private",
+    ],
+}
+
 // Connectivity-T common libraries.
 
 filegroup {
     name: "framework-connectivity-tiramisu-sources",
     srcs: [
+        ":framework-connectivity-ipsec-sources",
         ":framework-connectivity-netstats-sources",
         ":framework-connectivity-nsd-sources",
     ],
-    visibility: [
-        "//frameworks/base",
-    ],
+    visibility: ["//frameworks/base"],
 }
