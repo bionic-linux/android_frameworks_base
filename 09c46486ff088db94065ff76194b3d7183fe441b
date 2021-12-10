@@ -284,6 +284,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cdea2c9_013e74da",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27250,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-10T02:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0067663_6da08f3c",
+      "range": {
+        "startLine": 27250,
+        "startChar": 84,
+        "endLine": 27250,
+        "endChar": 91
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51c80c18_2a841b12",
