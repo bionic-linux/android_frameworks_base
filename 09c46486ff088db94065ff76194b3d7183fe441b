@@ -237,6 +237,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f26d0afd_5cbd71e4",
+        "filename": "core/api/current.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 27233,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-10T23:36:31Z",
+      "side": 1,
+      "message": "Hide the network quality for now so that we can move forward with the rest of the APIs",
+      "parentUuid": "8780eed0_736082a1",
+      "range": {
+        "startLine": 27233,
+        "startChar": 22,
+        "endLine": 27233,
+        "endChar": 39
+      },
+      "revId": "09c46486ff088db94065ff76194b3d7183fe441b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f4a38b70_3ff2d217",
