@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f1eb1b0_5974baf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1018606
+      },
+      "writtenOn": "2021-12-11T08:53:09Z",
+      "side": 1,
+      "message": "Please squash this commit with the parent.",
+      "revId": "f1e250b2f7f19560d074e8d04a652309dd55a29f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
