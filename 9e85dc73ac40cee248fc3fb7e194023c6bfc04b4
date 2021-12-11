@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8ad663a6_94b98d1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-11T05:05:53Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. Done",
+      "parentUuid": "86d0e85f_37be40c7",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "2db0ac8e_d8ad39e8",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c16c1474_dd6a7f74",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-11T05:05:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e51aafa2_32b3e9bf",
+      "range": {
+        "startLine": 72,
+        "startChar": 39,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e33fe11f_d5c2dd8a",
@@ -77,6 +125,30 @@
       "writtenOn": "2021-12-07T11:38:14Z",
       "side": 1,
       "message": "Isn\u0027t this code all Apache 2 licensed? If so, just use [\"Android-Apache-2.0\"], as it\u0027s more specific.",
+      "range": {
+        "startLine": 16,
+        "startChar": 35,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5d4f212_2e4b51d5",
+        "filename": "packages/IpSec/framework/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-11T05:05:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e33fe11f_d5c2dd8a",
       "range": {
         "startLine": 16,
         "startChar": 35,
@@ -104,6 +176,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebf3f689_5c0c7a63",
+        "filename": "packages/IpSec/framework/src/android/net/IpSecConfig.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-11T05:05:53Z",
+      "side": 1,
+      "message": "Looks like no. IIUC, that\u0027s for public/@SystemApi parcelables.",
+      "parentUuid": "13d73cc8_ca4ae850",
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90f1420b_f19c429b",
@@ -117,6 +207,30 @@
       "writtenOn": "2021-12-07T08:10:36Z",
       "side": 1,
       "message": "put it according to the alphabet order?",
+      "range": {
+        "startLine": 115,
+        "startChar": 32,
+        "endLine": 115,
+        "endChar": 37
+      },
+      "revId": "9e85dc73ac40cee248fc3fb7e194023c6bfc04b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2263ea26_15dea658",
+        "filename": "services/core/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-11T05:05:53Z",
+      "side": 1,
+      "message": "This is renamed to services.connectivity-tiramisu-sources for all sources",
+      "parentUuid": "90f1420b_f19c429b",
       "range": {
         "startLine": 115,
         "startChar": 32,
