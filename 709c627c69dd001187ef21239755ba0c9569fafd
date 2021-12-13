@@ -152,6 +152,30 @@
       },
       "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e17e3d1_0d7cd1f1",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-13T23:47:35Z",
+      "side": 1,
+      "message": "We normally do not want to expose low layer technology names to upper layer, therefore, maybe something like BluetoothLeCallControl is better? \n\nMoreover, typically the profiles mean phone side profiles, if we have client side profiles, we will name them as clients for example\n\nBluetoothHeadset vs BluetoothHeadsetClient\nBluetoothLeAudio vs BluetoothLeAudioClient\n\nand for this one\n\nBluetoothLeCallControl vs BluetoothLeCallControlClient",
+      "parentUuid": "2fbcbf14_5d9fb94a",
+      "range": {
+        "startLine": 64,
+        "startChar": 19,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
