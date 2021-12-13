@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d287f105_8e227c44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2021-12-13T15:15:48Z",
+      "side": 1,
+      "message": "FWIW, the IpSec code has some other OWNERS in it than just our team. We should ensure those OWNERS are preserved in this move.",
+      "revId": "73433242168107b965bdd3bd12430a33fe7dcc0f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
