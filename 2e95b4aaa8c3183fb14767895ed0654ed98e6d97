@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "926f74f0_9ba713c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-13T09:40:28Z",
+      "side": 1,
+      "message": "Update commit to change sequence back and seperate the deprecation to another commit.",
+      "revId": "2e95b4aaa8c3183fb14767895ed0654ed98e6d97",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
