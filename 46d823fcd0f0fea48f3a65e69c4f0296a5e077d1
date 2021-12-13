@@ -22,6 +22,30 @@
       },
       "revId": "46d823fcd0f0fea48f3a65e69c4f0296a5e077d1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad7c229b_2f9a7eee",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/NetworkPolicyEditor.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-13T02:01:21Z",
+      "side": 0,
+      "message": "As talked, We can use the other NetworkTemplate constructor to fill in the subId",
+      "parentUuid": "f81ebcf0_38912712",
+      "range": {
+        "startLine": 221,
+        "startChar": 23,
+        "endLine": 221,
+        "endChar": 38
+      },
+      "revId": "46d823fcd0f0fea48f3a65e69c4f0296a5e077d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

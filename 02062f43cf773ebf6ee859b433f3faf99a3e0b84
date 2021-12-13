@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c75ec7a6_6db648cc",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-13T02:01:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22c2e261_92aaee63",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 64
+      },
+      "revId": "02062f43cf773ebf6ee859b433f3faf99a3e0b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57557685_b6452a5a",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-07T09:20:59Z",
       "side": 1,
       "message": "IIUC this never returns null?",
+      "range": {
+        "startLine": 164,
+        "startChar": 19,
+        "endLine": 164,
+        "endChar": 45
+      },
+      "revId": "02062f43cf773ebf6ee859b433f3faf99a3e0b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d86fda4_a99e551f",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-13T02:01:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57557685_b6452a5a",
       "range": {
         "startLine": 164,
         "startChar": 19,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60e98e9e_0bb7be9f",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-13T02:01:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bee5260_95b33705",
+      "range": {
+        "startLine": 167,
+        "startChar": 22,
+        "endLine": 167,
+        "endChar": 27
+      },
+      "revId": "02062f43cf773ebf6ee859b433f3faf99a3e0b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "325be24b_16c7a0fc",
@@ -83,6 +155,30 @@
       "writtenOn": "2021-12-07T09:20:59Z",
       "side": 1,
       "message": "IIUC this loses the meaning of caching since we have to iterate through the entries.\nIs it better if we use IMSI as the key and subId as the value?",
+      "range": {
+        "startLine": 183,
+        "startChar": 7,
+        "endLine": 185,
+        "endChar": 9
+      },
+      "revId": "02062f43cf773ebf6ee859b433f3faf99a3e0b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86af03b5_c6ec10b9",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-13T02:01:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "325be24b_16c7a0fc",
       "range": {
         "startLine": 183,
         "startChar": 7,
@@ -118,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c7f592a_736b6ce5",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-13T02:01:21Z",
+      "side": 1,
+      "message": "If no sim, that will not have the ActiveSubInfoList.\nSo, the subId will be INVALID_SUBSCRIPTION_ID.",
+      "parentUuid": "991b848b_cb4f6770",
+      "range": {
+        "startLine": 186,
+        "startChar": 64,
+        "endLine": 186,
+        "endChar": 87
+      },
+      "revId": "02062f43cf773ebf6ee859b433f3faf99a3e0b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a88682e2_79d00d91",
         "filename": "core/java/android/net/NetworkTemplate.java",
         "patchSetId": 8
@@ -129,6 +249,30 @@
       "writtenOn": "2021-12-07T09:20:59Z",
       "side": 1,
       "message": "We cannot touch this function signature since it is @UnsupportedAppUsage.",
+      "range": {
+        "startLine": 315,
+        "startChar": 63,
+        "endLine": 315,
+        "endChar": 72
+      },
+      "revId": "02062f43cf773ebf6ee859b433f3faf99a3e0b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "745fcfa7_246ad6c1",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-13T02:01:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a88682e2_79d00d91",
       "range": {
         "startLine": 315,
         "startChar": 63,
@@ -152,6 +296,30 @@
       "writtenOn": "2021-12-07T09:20:59Z",
       "side": 1,
       "message": "Is this always true?",
+      "range": {
+        "startLine": 855,
+        "startChar": 12,
+        "endLine": 855,
+        "endChar": 42
+      },
+      "revId": "02062f43cf773ebf6ee859b433f3faf99a3e0b84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba88d538_affa08f8",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2021-12-13T02:01:21Z",
+      "side": 1,
+      "message": "Yes, remove it.",
+      "parentUuid": "4f640cf6_32801dc1",
       "range": {
         "startLine": 855,
         "startChar": 12,
