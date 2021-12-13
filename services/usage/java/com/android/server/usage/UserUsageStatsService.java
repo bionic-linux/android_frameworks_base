@@ -113,6 +113,12 @@ class UserUsageStatsService {
         mUserId = userId;
         mRealTimeSnapshot = SystemClock.elapsedRealtime();
         mSystemTimeSnapshot = System.currentTimeMillis();
+
+        long realTimeSnapshot  = SystemClock.elapsedRealtime();
+        if (Math.abs(realTimeSnapshot - mRealTimeSnapshot) > UsageStatsService.TIME_CHANGE_THRESHOLD_MILLIS) {
+            mRealTimeSnapshot = SystemClock.elapsedRealtime();
+            mSystemTimeSnapshot = System.currentTimeMillis();
+        }
     }
 
     void init(final long currentTimeMillis, HashMap<String, Long> installedPackages) {
