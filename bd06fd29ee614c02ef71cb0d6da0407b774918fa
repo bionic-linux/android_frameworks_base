@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "74fadf54_15283d41",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 27281,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-12-13T23:58:25Z",
+      "side": 1,
+      "message": "I think maybe a separate sub-object for the MatchingRules would make this cleaner or if the top level class were NetworkPriorityMatchRules?\n\nNetworkPriorityMatchRules.Builder().setRoaming().setOperatorPlmns().setSimCarrierIds()...\n\nThis might also help address some of Jean\u0027s naming concerns while not actually requiring a meaningful shape change?",
+      "range": {
+        "startLine": 27281,
+        "startChar": 43,
+        "endLine": 27281,
+        "endChar": 79
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "33cee970_5c7ccc21",
         "filename": "core/api/current.txt",
         "patchSetId": 17
