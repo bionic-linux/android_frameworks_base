@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee3a4ba8_c085543c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T08:01:40Z",
+      "side": 1,
+      "message": "Quick cursory look only",
+      "revId": "bf33fe2f0081e501c39a4f9c1d415b1c8f8f9bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5a4938d_3c452947",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T08:01:40Z",
+      "side": 1,
+      "message": "Let\u0027s make this final and return early to reduce nesting.\n\n  final int cachedSubId \u003d sSubIdToSubscriberId.get(subscriberId);\n  if (cachedSubId !\u003d INVALID_SUBSCRIPTION_ID) return cachedSubId;\n  final TelephonyManager tm \u003d context.getSystemService(TelephonyManager.class);\n  ...",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 11
+      },
+      "revId": "bf33fe2f0081e501c39a4f9c1d415b1c8f8f9bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04503ec5_f5bee738",
+        "filename": "core/java/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T08:01:40Z",
+      "side": 1,
+      "message": "Please don\u0027t reuse vars like this – it\u0027s unclear what this local means when you use it for two different purposes. Making locals final helps avoiding this.\n\nIf you rename the one at the top cachedSubId like I suggest, you can just declare this one final here. In that case \"subId\" is a good name here.",
+      "revId": "bf33fe2f0081e501c39a4f9c1d415b1c8f8f9bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c2cfe94_78688a6e",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T08:01:40Z",
+      "side": 1,
+      "message": "Considering this TODO, I don\u0027t think we should update the signature of this method. This already forces you to update all callers, so instead let\u0027s remove this method and update all callers to use the constructor below.",
+      "range": {
+        "startLine": 332,
+        "startChar": 7,
+        "endLine": 332,
+        "endChar": 11
+      },
+      "revId": "bf33fe2f0081e501c39a4f9c1d415b1c8f8f9bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31582f13_79ca49e2",
+        "filename": "core/java/android/net/NetworkTemplate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T08:01:40Z",
+      "side": 1,
+      "message": "So only one of the subid or subscriberid needs to match ?\n\nI\u0027m not sure this is great ; I think we should instead have one of the following schemes\n• Distinguish old callers that use the subscribed ID and only match on subscriber ID and the new callers that use the subId and match on the subId only\n• Get the caller to pass both and require both to match\n• Convert one into the other internally and require both to match",
+      "range": {
+        "startLine": 632,
+        "startChar": 20,
+        "endLine": 632,
+        "endChar": 23
+      },
+      "revId": "bf33fe2f0081e501c39a4f9c1d415b1c8f8f9bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19367a24_4e1234df",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T08:01:40Z",
+      "side": 1,
+      "message": "Let\u0027s not have style changes in the same patch as logic changes",
+      "range": {
+        "startLine": 2190,
+        "startChar": 80,
+        "endLine": 2190,
+        "endChar": 81
+      },
+      "revId": "bf33fe2f0081e501c39a4f9c1d415b1c8f8f9bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b81dafca_cb7f90b4",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T08:01:40Z",
+      "side": 1,
+      "message": "Should we look up the subId from the subscriberId if version \u003c VERSION_ADDED_SUB_ID ?\n\nAlso, if version \u003e\u003d VERSION_ADDED_SUB_ID, should we deduce the subscriberId from the subId, and not persist the subscriberId ?",
+      "range": {
+        "startLine": 2473,
+        "startChar": 36,
+        "endLine": 2473,
+        "endChar": 80
+      },
+      "revId": "bf33fe2f0081e501c39a4f9c1d415b1c8f8f9bf2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
