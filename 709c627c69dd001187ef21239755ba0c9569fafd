@@ -128,6 +128,30 @@
       },
       "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fbcbf14_5d9fb94a",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-12-13T14:37:48Z",
+      "side": 1,
+      "message": "Per chat, I like this one, BluetoothCallControlTBS, and think it\u0027s a good idea to cover the profile level meaning and the server meaning. Thanks for the proposal.",
+      "parentUuid": "542d17d1_3e4ff98f",
+      "range": {
+        "startLine": 64,
+        "startChar": 19,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
