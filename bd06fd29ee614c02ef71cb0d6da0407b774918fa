@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b133dea_5480069d",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 27275,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T11:59:25Z",
+      "side": 1,
+      "message": "What you have here doesn\u0027t exactly violates the guidelines per se (https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#builder-method-naming) but it does multiply prefixes and does not match Kotlin property syntax. I think maybe we can avoid this with clever rewording, e.g.\n\n  setRoamingMatched/isRoamingMatched\n  setOpportunisticRequired/isOpportunisticRequired\n\nAnother observation is that while the match for roaming is permissive, the match for opportunistic is restrictive, which feels kind of inconsistent. The simplest solution is probably to say matchNonOpportunistic() or matchesMacro(). If you\u0027re willing to take the extra maintenance/development/testing work, you could have constants and say setRoamingMatch(int) and setOpportunisticMatch(int), and have ROAMING_YES, ROAMING_NO and ROAMING_ANY, and OPPORTUNISTIC_YES/NO/ANY.",
+      "range": {
+        "startLine": 27275,
+        "startChar": 26,
+        "endLine": 27275,
+        "endChar": 40
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33cee970_5c7ccc21",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 27346,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T11:59:25Z",
+      "side": 1,
+      "message": "If it\u0027s only this one method I think we\u0027d be better off not having this class at all, and just having the respective builders offer that method. If we find we need a lot of new common methods and subclasses, we can add it later, but for now I think it\u0027s better to avoid clients trying to subclass this",
+      "range": {
+        "startLine": 27344,
+        "startChar": 0,
+        "endLine": 27346,
+        "endChar": 3
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f69faa4e_3d29f08c",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T11:59:25Z",
+      "side": 1,
+      "message": "What happens if the first rule that matches anything matches multiple networks ?\n\nAlso I think you mentioned in our meeting that the default order is *always* appended to what\u0027s passed here, but the doc doesn\u0027t mention that",
+      "range": {
+        "startLine": 556,
+        "startChar": 38,
+        "endLine": 556,
+        "endChar": 39
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55de1f65_87ec4056",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriorityRule.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-13T11:59:25Z",
+      "side": 1,
+      "message": "ISTM this should be package-private to avoid clients creating their own custom subclass. The same goes for the builder if you keep it.\n\nAlso see https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#avoid-protected",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
