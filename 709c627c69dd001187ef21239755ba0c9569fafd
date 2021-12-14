@@ -200,6 +200,30 @@
       },
       "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "487e70e7_9b0d888e",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-12-14T09:15:12Z",
+      "side": 1,
+      "message": "The problem is with a \"Client\" here as this is not a client.\nThe other problem is with \"Le\" as TBS is over GATT which in could be used over BR/EDR (even hopefully nobody is doing it)\nRegarding technology names - tbs is on the same level as avrcp or a2dp.\n\nBluetoothCallControlTbs would not work?",
+      "parentUuid": "853181b3_aed6feb8",
+      "range": {
+        "startLine": 64,
+        "startChar": 19,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
