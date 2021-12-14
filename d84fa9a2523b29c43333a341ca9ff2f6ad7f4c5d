@@ -58,6 +58,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "830a91d2_955f74c7",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T08:41:18Z",
+      "side": 1,
+      "message": "This is ok, the line here should reflect the code author and the license should be Apache 2.0.",
+      "parentUuid": "6733e06e_e953bd77",
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fe83f0b_d5b0178d",
@@ -136,6 +154,30 @@
       "side": 1,
       "message": "BluetoothInCallService is on 16028, the Bluetooth main process. The callbacks are internal to the Bluetooth process",
       "parentUuid": "60df0d76_0971d0d3",
+      "range": {
+        "startLine": 213,
+        "startChar": 33,
+        "endLine": 213,
+        "endChar": 41
+      },
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65136412_b2eb3843",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T08:41:18Z",
+      "side": 1,
+      "message": "Thanks Chen for the clarification. I think in that case we can skip the binder call. However, since the team already tested on this CL, we can take this version and make the binder removal as a refactor item in the future.",
+      "parentUuid": "a86cf323_29a68b7d",
       "range": {
         "startLine": 213,
         "startChar": 33,
