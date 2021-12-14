@@ -227,6 +227,30 @@
       },
       "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64ca3a57_099f90db",
+        "filename": "core/java/android/bluetooth/BluetoothTbsCall.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1085519
+      },
+      "writtenOn": "2021-12-14T09:21:16Z",
+      "side": 1,
+      "message": "What about BluetoothCallControlTbsCall ?",
+      "parentUuid": "a5eb8c3e_780b6ef3",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
