@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54140bd1_1d59eb1d",
+        "filename": "core/java/android/content/AttributionSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-12-14T20:33:07Z",
+      "side": 1,
+      "message": "Some notes here:\n\n* I\u0027d recommend exposing the single existing myAttributionSource() method as a public API that anyone can use.  (Since there\u0027s no permission protecting the ability to obtain this to system code, it\u0027s something we should make generally available.)\n* I\u0027d recommend adding new logic inside that method to handle the ROOT-vs-SYSTEM UID nuance.\n* I\u0027d recommend adding new logic inside that method that will start by using currentOpPackageName(), but then offer to fall back to AppGlobals.getPackageManager().getPackagesForUid() when no package name is found.\n* Please add very clear docs that strongly discourage usage of this method, and strongly encourage callers to use Context.getAttributionSource() whenever possible, since it enables better scoped controls over attribution tags and other features of AttributionSource.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 0
+      },
+      "revId": "2852073b635bb2d89d32c55784ddb41a1ca77396",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
