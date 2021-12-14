@@ -120,6 +120,30 @@
       },
       "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a86cf323_29a68b7d",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2021-12-14T01:37:51Z",
+      "side": 1,
+      "message": "BluetoothInCallService is on 16028, the Bluetooth main process. The callbacks are internal to the Bluetooth process",
+      "parentUuid": "60df0d76_0971d0d3",
+      "range": {
+        "startLine": 213,
+        "startChar": 33,
+        "endLine": 213,
+        "endChar": 41
+      },
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
