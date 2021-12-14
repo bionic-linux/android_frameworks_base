@@ -95,6 +95,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "14ab8dba_a343f8c6",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T08:44:40Z",
+      "side": 1,
+      "message": "let\u0027s remove the \"public\" wording",
+      "parentUuid": "4fe83f0b_d5b0178d",
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc698821_d250c2e1",
         "filename": "core/java/android/bluetooth/BluetoothTbs.java",
         "patchSetId": 5
@@ -183,6 +201,29 @@
         "startChar": 33,
         "endLine": 213,
         "endChar": 41
+      },
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5eb8c3e_780b6ef3",
+        "filename": "core/java/android/bluetooth/BluetoothTbsCall.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T08:44:40Z",
+      "side": 1,
+      "message": "after renaming, this API should be \"BluetoothLeCall\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 35
       },
       "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
