@@ -48,8 +48,6 @@ import java.util.Set;
  * networks.
  *
  * <p>See {@link VcnUnderlyingNetworkTemplate}
- *
- * @hide
  */
 public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetworkTemplate {
     private static final String ALLOWED_NETWORK_PLMN_IDS_KEY = "mAllowedNetworkPlmnIds";
