@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b981c49c_b25f9cee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-12-14T00:10:56Z",
+      "side": 1,
+      "message": "nit: Should be \"Telephone\", not \"Telephony\"",
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1f496fd_27078394",
         "filename": "core/java/android/bluetooth/BluetoothProfile.java",
         "patchSetId": 5
@@ -20,6 +37,23 @@
         "endLine": 247,
         "endChar": 11
       },
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fe83f0b_d5b0178d",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-12-14T00:10:56Z",
+      "side": 1,
+      "message": "Will this class be public API for T? If not, we should update this accordingly.",
       "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },

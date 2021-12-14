@@ -176,6 +176,30 @@
       },
       "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "853181b3_aed6feb8",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2021-12-14T00:10:56Z",
+      "side": 1,
+      "message": "I spoke to Jack and we agreed that following the hfp pattern is best. This class should be BluetoothLeCallControl and the client implementation should be in the BluetoothLeCallControlClient class.",
+      "parentUuid": "8e17e3d1_0d7cd1f1",
+      "range": {
+        "startLine": 64,
+        "startChar": 19,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
