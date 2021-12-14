@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1f496fd_27078394",
+        "filename": "core/java/android/bluetooth/BluetoothProfile.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T00:09:19Z",
+      "side": 1,
+      "message": "LE_CALL_CONTROL ?",
+      "range": {
+        "startLine": 247,
+        "startChar": 8,
+        "endLine": 247,
+        "endChar": 11
+      },
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fc698821_d250c2e1",
         "filename": "core/java/android/bluetooth/BluetoothTbs.java",
         "patchSetId": 5
