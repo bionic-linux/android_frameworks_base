@@ -40,8 +40,6 @@ import java.util.Set;
  * networks.
  *
  * <p>See {@link VcnUnderlyingNetworkTemplate}
- *
- * @hide
  */
 public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetworkTemplate {
     private static final String SSIDS_KEY = "mSsids";
@@ -169,7 +167,8 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * Set the matching criteria for metered networks.
          *
          * @param matchCriteria the matching criteria for metered networks. Defaults to {@link
-         *     #MATCH_ANY}. See {@link NetworkCapabilities#NET_CAPABILITY_NOT_METERED}
+         *     #MATCH_ANY}.
+         * @see NetworkCapabilities#NET_CAPABILITY_NOT_METERED
          */
         // The matching getter is defined in the super class. Please see {@link
         // VcnUnderlyingNetworkTemplate#getMetered()}

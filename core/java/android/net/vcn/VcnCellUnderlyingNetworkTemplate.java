@@ -49,8 +49,6 @@ import java.util.Set;
  * networks.
  *
  * <p>See {@link VcnUnderlyingNetworkTemplate}
- *
- * @hide
  */
 public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetworkTemplate {
     private static final String ALLOWED_NETWORK_PLMN_IDS_KEY = "mAllowedNetworkPlmnIds";
@@ -280,7 +278,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * Set the matching criteria for metered networks.
          *
          * @param matchCriteria the matching criteria for metered networks. Defaults to {@link
-         *     #MATCH_ANY}. See {@link NetworkCapabilities#NET_CAPABILITY_NOT_METERED}
+         *     #MATCH_ANY}.
+         * @see NetworkCapabilities#NET_CAPABILITY_NOT_METERED
          */
         // The matching getter is defined in the super class. Please see {@link
         // VcnUnderlyingNetworkTemplate#getMetered()}
@@ -302,8 +301,9 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param operatorPlmnIds the matching operator PLMN IDs in String. Network with one of the
          *     matching PLMN IDs can match this template. Defaults to an empty set, allowing ANY
          *     PLMN ID. A valid PLMN is a concatenation of MNC and MCC, and thus consists of 5 or 6
-         *     decimal digits. See {@link SubscriptionInfo#getMccString()} and {@link
-         *     SubscriptionInfo#getMncString()}.
+         *     decimal digits.
+         * @see SubscriptionInfo#getMccString()
+         * @see SubscriptionInfo#getMncString()
          */
         @NonNull
         public Builder setOperatorPlmnIds(@NonNull Set<String> operatorPlmnIds) {
@@ -319,7 +319,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          *
          * @param simSpecificCarrierIds the matching sim specific carrier IDs. Network with one of
          *     the sim specific carrier IDs can match this template. Defaults to an empty set,
-         *     allowing ANY carrier ID. See {@link TelephonyManager#getSimSpecificCarrierId()}.
+         *     allowing ANY carrier ID.
+         * @see TelephonyManager#getSimSpecificCarrierId()
          */
         @NonNull
         public Builder setSimSpecificCarrierIds(@NonNull Set<Integer> simSpecificCarrierIds) {
@@ -334,7 +335,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * Set the matching criteria for roaming networks.
          *
          * @param matchCriteria the matching criteria for roaming networks. Defaults to {@link
-         *     #MATCH_ANY}. See {@link NetworkCapabilities#NET_CAPABILITY_NOT_ROAMING}.
+         *     #MATCH_ANY}.
+         * @see NetworkCapabilities#NET_CAPABILITY_NOT_ROAMING
          */
         @NonNull
         public Builder setRoaming(@MatchCriteria int matchCriteria) {
@@ -348,8 +350,8 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * Set the matching criteria for opportunistic cellular subscriptions.
          *
          * @param matchCriteria the matching criteria for opportunistic cellular subscriptions.
-         *     Defaults to {@link #MATCH_ANY}. See {@link
-         *     SubscriptionManager#setOpportunistic(boolean, int)}
+         *     Defaults to {@link #MATCH_ANY}.
+         * @see SubscriptionManager#setOpportunistic(boolean, int)
          */
         @NonNull
         public Builder setOpportunistic(@MatchCriteria int matchCriteria) {
