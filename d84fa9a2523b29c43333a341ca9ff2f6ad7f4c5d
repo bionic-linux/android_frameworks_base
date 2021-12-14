@@ -43,6 +43,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6733e06e_e953bd77",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1581454
+      },
+      "writtenOn": "2021-12-14T01:07:03Z",
+      "side": 1,
+      "message": "Is this the right license?",
+      "revId": "d84fa9a2523b29c43333a341ca9ff2f6ad7f4c5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4fe83f0b_d5b0178d",
         "filename": "core/java/android/bluetooth/BluetoothTbs.java",
         "patchSetId": 5
