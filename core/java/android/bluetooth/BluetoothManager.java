@@ -22,8 +22,6 @@ import android.annotation.RequiresFeature;
 import android.annotation.RequiresNoPermission;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemService;
-import android.app.ActivityThread;
-import android.app.AppGlobals;
 import android.bluetooth.annotations.RequiresBluetoothConnectPermission;
 import android.bluetooth.annotations.RequiresLegacyBluetoothPermission;
 import android.content.Attributable;
@@ -80,19 +78,10 @@ public final class BluetoothManager {
             res = context.getAttributionSource();
         }
         if (res == null) {
-            res = ActivityThread.currentAttributionSource();
+            res = AttributionSource.getCurrentAttributionSource();
         }
         if (res == null) {
-            int uid = android.os.Process.myUid();
-            if (uid == android.os.Process.ROOT_UID) {
-                uid = android.os.Process.SYSTEM_UID;
-            }
-            try {
-                res = new AttributionSource.Builder(uid)
-                    .setPackageName(AppGlobals.getPackageManager().getPackagesForUid(uid)[0])
-                    .build();
-            } catch (RemoteException ignored) {
-            }
+            res = AttributionSource.getMyUidAttributionSource();
         }
         if (res == null) {
             throw new IllegalStateException("Failed to resolve AttributionSource");

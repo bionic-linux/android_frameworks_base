@@ -2328,6 +2328,8 @@ package android.content {
   }
 
   public final class AttributionSource implements android.os.Parcelable {
+    method @Nullable public static android.content.AttributionSource getCurrentAttributionSource();
+    method @Nullable public static android.content.AttributionSource getMyUidAttributionSource();
     method @NonNull @RequiresPermission(android.Manifest.permission.RENOUNCE_PERMISSIONS) public java.util.Set<java.lang.String> getRenouncedPermissions();
   }
 

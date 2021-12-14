@@ -22,12 +22,14 @@ import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.app.ActivityThread;
+import android.app.AppGlobals;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Process;
+import android.os.RemoteException;
 import android.permission.PermissionManager;
 import android.util.ArraySet;
 
@@ -195,6 +197,37 @@ public final class AttributionSource implements Parcelable {
     public static AttributionSource myAttributionSource() {
         return new AttributionSource(Process.myUid(), ActivityThread.currentOpPackageName(),
                 /*attributionTag*/ null, (String[]) /*renouncedPermissions*/ null, /*next*/ null);
+    }
+
+    /**
+     * Retrieve the current AttributionSource from {@link ActivityThread#currentAttributionSource}
+     * @hide
+     */
+    @SystemApi
+    @Nullable
+    public static AttributionSource getCurrentAttributionSource() {
+        return ActivityThread.currentAttributionSource();
+    }
+
+    /**
+     * Builds a new AttributionSource from {@link Process#myUid}
+     * @hide
+     */
+    @SystemApi
+    @Nullable
+    public static AttributionSource getMyUidAttributionSource() {
+        AttributionSource res = null;
+        int uid = android.os.Process.myUid();
+        if (uid == android.os.Process.ROOT_UID) {
+            uid = android.os.Process.SYSTEM_UID;
+        }
+        try {
+            res = new AttributionSource.Builder(uid)
+                .setPackageName(AppGlobals.getPackageManager().getPackagesForUid(uid)[0])
+                .build();
+        } catch (RemoteException ignored) {
+        }
+        return res;
     }
 
     /**
