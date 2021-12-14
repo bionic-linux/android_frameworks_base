@@ -224,6 +224,30 @@
       },
       "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "306dd090_b30e74fb",
+        "filename": "core/java/android/bluetooth/BluetoothTbs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1121403
+      },
+      "writtenOn": "2021-12-14T09:27:17Z",
+      "side": 1,
+      "message": "This class will be the server side API and hence BluetoothLeCallControl\n\nFrom TBS spec:\n\nServer: The device that contains the TBS\nClient: The device(s) that connects to the Telephone Bearer Service (TBS)\nand accesses the characteristics on the TBS.\n\nSo only the server will implement the operations behind GATT that does the call control work. Even though there is no client implementation, one would still need a client side wrapper around GATT to achieve a TBS client abstraction. \n\nSince we do not expect anyone to connect TBS over BR/EDR, we can restrict it on LE so that our expectation is clear. \n\nAs for the naming, maybe think about how a generic App developer will read the API:\n\nBluetoothLeCallControl -\u003e means the call control profile to be used in BLE\nBluetoothCallControlTbs -\u003e CallControl and TBS is kind of repeating each other\u0027s meanings as Call Control and Telephone Bearer Service are layer names of the same protocol stack. \n\nThat\u0027s why I kind of prefer a more readable and precise name like BluetoothLeCallControl, also similar to other BLE audio profile names like BluetoothLeAudio and BluetoothLeBroadcast",
+      "parentUuid": "487e70e7_9b0d888e",
+      "range": {
+        "startLine": 64,
+        "startChar": 19,
+        "endLine": 64,
+        "endChar": 31
+      },
+      "revId": "709c627c69dd001187ef21239755ba0c9569fafd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
