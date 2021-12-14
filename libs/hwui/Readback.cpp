@@ -74,19 +74,6 @@ CopyResult Readback::copySurfaceInto(ANativeWindow* window, const Rect& inSrcRec
         return CopyResult::SourceEmpty;
     }
 
-    if (sEnableExtraCropInset &&
-        (cropRect.right - cropRect.left != bitmap->width() ||
-        cropRect.bottom - cropRect.top != bitmap->height())) {
-       /*
-        * When we need use filtering, we should also make border shrink here like gui.
-        * But we could not check format for YUV or RGB here... Just use 1 pix.
-        */
-        cropRect.left += 0.5f;
-        cropRect.top  += 0.5f;
-        cropRect.right -= 0.5f;
-        cropRect.bottom -= 0.5f;
-    }
-
     UniqueAHardwareBuffer sourceBuffer{rawSourceBuffer};
     AHardwareBuffer_Desc description;
     AHardwareBuffer_describe(sourceBuffer.get(), &description);
@@ -203,6 +190,14 @@ CopyResult Readback::copySurfaceInto(ANativeWindow* window, const Rect& inSrcRec
     paint.setAlpha(255);
     paint.setBlendMode(SkBlendMode::kSrc);
     if (srcRect.width() != bitmap->width() || srcRect.height() != bitmap->height()) {
+        if (sEnableExtraCropInset) {
+            /*
+            * When we need use filtering, we should also make border shrink here like gui.
+            * But we could not check format for YUV or RGB here... Just use 1 pix.
+            */
+            imageSrcRect.setXYWH(imageSrcRect.left() + 0.5f, imageSrcRect.top() + 0.5f,
+                                 imageSrcRect.width() - 1.0f, imageSrcRect.height() - 1.0f);
+        }
         paint.setFilterQuality(kLow_SkFilterQuality);
     }
     const bool hasBufferCrop = cropRect.left < cropRect.right && cropRect.top < cropRect.bottom;
