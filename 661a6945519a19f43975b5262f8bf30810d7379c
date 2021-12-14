@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3f2b116_a2cf8798",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1322510
+      },
+      "writtenOn": "2021-12-14T07:42:56Z",
+      "side": 1,
+      "message": "Maybe you can use isEmpty() instead, although it return map.size \u003d\u003d 0; for the Hashset",
+      "range": {
+        "startLine": 196,
+        "startChar": 30,
+        "endLine": 196,
+        "endChar": 34
+      },
+      "revId": "661a6945519a19f43975b5262f8bf30810d7379c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
