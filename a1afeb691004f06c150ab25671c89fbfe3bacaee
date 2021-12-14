@@ -22,6 +22,30 @@
       },
       "revId": "a1afeb691004f06c150ab25671c89fbfe3bacaee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9844e405_e5533fbd",
+        "filename": "services/core/java/com/android/server/wm/PointerEventDispatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1904046
+      },
+      "writtenOn": "2021-12-14T06:26:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c6c0a637_18f8230e",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 19
+      },
+      "revId": "a1afeb691004f06c150ab25671c89fbfe3bacaee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
