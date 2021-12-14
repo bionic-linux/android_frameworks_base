@@ -33,6 +33,23 @@
       "message": "Hi, this is TYPE_HDMI_EARC support addition.",
       "revId": "9125ddc02de16e50f3be7a4bd974f064e2b4f455",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e8109b1_a7ec0c79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1928828
+      },
+      "writtenOn": "2021-12-14T06:20:56Z",
+      "side": 1,
+      "message": "Thank you for your review and approved this.\nWhat\u0027s next action?",
+      "revId": "9125ddc02de16e50f3be7a4bd974f064e2b4f455",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
