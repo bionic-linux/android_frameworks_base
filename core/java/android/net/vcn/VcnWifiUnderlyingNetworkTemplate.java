@@ -40,8 +40,6 @@ import java.util.Set;
  * networks.
  *
  * <p>See {@link VcnUnderlyingNetworkTemplate}
- *
- * @hide
  */
 public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetworkTemplate {
     private static final String SSIDS_KEY = "mSsids";
