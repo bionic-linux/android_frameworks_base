@@ -22,6 +22,30 @@
       },
       "revId": "a09ac8b57ba3613916e3e09366ea11da9788621c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e463f85_ed3d1f20",
+        "filename": "packages/ConnectivityT/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2021-12-14T08:24:24Z",
+      "side": 1,
+      "message": "I checked p/m/Connectivity/OWNERS and it currently already incluldes vcn owners.",
+      "parentUuid": "1a1d881c_a46dfc16",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "a09ac8b57ba3613916e3e09366ea11da9788621c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
