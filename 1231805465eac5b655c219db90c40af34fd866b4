@@ -124,6 +124,24 @@
       "parentUuid": "dacc27e9_90e28247",
       "revId": "1231805465eac5b655c219db90c40af34fd866b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4f1df49_342c8085",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2021-12-15T15:49:35Z",
+      "side": 1,
+      "message": "One way to think of \"ownership\" is, are you willing to accept responsibility for any incoming security/performance/privacy issues in this area going forward?",
+      "parentUuid": "f1606be4_78f52ea3",
+      "revId": "1231805465eac5b655c219db90c40af34fd866b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
