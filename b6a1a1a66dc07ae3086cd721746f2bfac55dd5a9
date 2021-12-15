@@ -68,6 +68,99 @@
       },
       "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eca6f475_96d6830e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 27284,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T02:35:44Z",
+      "side": 1,
+      "message": "Looking at it again, this sounds like a good idea, especially if we have a tri-state.\n\nThat\u0027s my oversight. Yan, could you update this to the positive versions? Apologies for the oversight.",
+      "parentUuid": "130f1b68_c8bedb9f",
+      "range": {
+        "startLine": 27284,
+        "startChar": 84,
+        "endLine": 27284,
+        "endChar": 102
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b587f51_32cabf00",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T02:35:44Z",
+      "side": 1,
+      "message": "precise",
+      "range": {
+        "startLine": 276,
+        "startChar": 15,
+        "endLine": 276,
+        "endChar": 23
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adece63e_3023a2d6",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T02:35:44Z",
+      "side": 1,
+      "message": "for opportunistic cellular subscriptions.",
+      "range": {
+        "startLine": 306,
+        "startChar": 37,
+        "endLine": 306,
+        "endChar": 76
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29a2a539_d15f97f2",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T02:35:44Z",
+      "side": 1,
+      "message": "Javadoc guidelines say no links in first line.",
+      "range": {
+        "startLine": 280,
+        "startChar": 43,
+        "endLine": 280,
+        "endChar": 47
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
