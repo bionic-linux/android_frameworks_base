@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55ae68c4_b01ec767",
+        "filename": "core/api/current.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 27283,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-15T10:40:45Z",
+      "side": 1,
+      "message": "TelephonyManager calls this \"specific\" : TelephonyManager#getSimSpecificCarrierId ; should we not use the same term ?",
+      "parentUuid": "712ab896_fb3346bb",
+      "range": {
+        "startLine": 27283,
+        "startChar": 95,
+        "endLine": 27283,
+        "endChar": 103
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "130f1b68_c8bedb9f",
         "filename": "core/api/current.txt",
         "patchSetId": 20
