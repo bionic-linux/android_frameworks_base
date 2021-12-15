@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b892bb8_81722825",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-15T09:44:07Z",
+      "side": 1,
+      "message": "style: maybe add line break after 65 characters?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "f0dd7cf6e30cb59d620f96bd2922f08bbc861e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "352a2742_846a651a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-15T09:44:07Z",
+      "side": 1,
+      "message": "Please kindly add tracking bug against me and todo for this part.\nIIUC we\u0027ll need a way to passively get the wifi conf key in order to prevent deadlock.\nIs it ok to put it inside WifiNetworkSpecifier like the subId inside the TelephonyNetworkSpecifier?",
+      "range": {
+        "startLine": 230,
+        "startChar": 37,
+        "endLine": 230,
+        "endChar": 38
+      },
+      "revId": "f0dd7cf6e30cb59d620f96bd2922f08bbc861e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c37e868_6edfc35b",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-15T09:44:07Z",
+      "side": 1,
+      "message": "nit: Maybe add // TODO: @SystemApi when ready.",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 10
+      },
+      "revId": "f0dd7cf6e30cb59d620f96bd2922f08bbc861e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1997c9a5_86241511",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-15T09:44:07Z",
+      "side": 1,
+      "message": "1. It seems to me expose both API is unnecessary.\nMaybe just keep this one and migrade other callers of buildTemplateWifi to here?\nFor now candidates for wifi are:\nbuildTemplateWifi(networkId)\nbuildTemplateWifi(networkIds)\nbuildTemplateWifi(networkId, subscriberId)\nIt seems to me expose the third one should be enough for wifi?\n\nAlso +jchalard@ to input what kind of API we want to expose to construct wifi template. \n\n2. It seems to me the change could be much simpler if we only support 1 networkId in NetworkTemplate, right?",
+      "range": {
+        "startLine": 217,
+        "startChar": 34,
+        "endLine": 217,
+        "endChar": 51
+      },
+      "revId": "f0dd7cf6e30cb59d620f96bd2922f08bbc861e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "024d4b3b_e2217b79",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-15T09:44:07Z",
+      "side": 1,
+      "message": "Question: Is it possible that future callers need to call this API with multiple networkIds?",
+      "range": {
+        "startLine": 239,
+        "startChar": 69,
+        "endLine": 239,
+        "endChar": 78
+      },
+      "revId": "f0dd7cf6e30cb59d620f96bd2922f08bbc861e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa9ea3e9_e44ec10e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-15T09:44:07Z",
+      "side": 1,
+      "message": "wifi configuration key?",
+      "range": {
+        "startLine": 2027,
+        "startChar": 74,
+        "endLine": 2027,
+        "endChar": 84
+      },
+      "revId": "f0dd7cf6e30cb59d620f96bd2922f08bbc861e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
