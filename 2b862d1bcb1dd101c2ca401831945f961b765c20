@@ -59,6 +59,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdf65e2e_cdac16b2",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T08:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2879b4_daf4b9fb",
+      "range": {
+        "startLine": 289,
+        "startChar": 18,
+        "endLine": 289,
+        "endChar": 58
+      },
+      "revId": "2b862d1bcb1dd101c2ca401831945f961b765c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbb4a400_cbc3d704",
@@ -82,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f31ae9a9_f2269d00",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T08:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb4a400_cbc3d704",
+      "range": {
+        "startLine": 303,
+        "startChar": 16,
+        "endLine": 303,
+        "endChar": 42
+      },
+      "revId": "2b862d1bcb1dd101c2ca401831945f961b765c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "359f5650_2bee6d32",
@@ -95,6 +143,30 @@
       "writtenOn": "2021-12-07T11:36:25Z",
       "side": 1,
       "message": "Let\u0027s just call the new method",
+      "range": {
+        "startLine": 304,
+        "startChar": 8,
+        "endLine": 308,
+        "endChar": 9
+      },
+      "revId": "2b862d1bcb1dd101c2ca401831945f961b765c20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "647ac0d3_293c6a49",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2021-12-15T08:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "359f5650_2bee6d32",
       "range": {
         "startLine": 304,
         "startChar": 8,
