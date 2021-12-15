@@ -22,6 +22,30 @@
       },
       "revId": "661a6945519a19f43975b5262f8bf30810d7379c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fa0d50b_936b413f",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CsipDeviceManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1730162
+      },
+      "writtenOn": "2021-12-15T00:58:00Z",
+      "side": 1,
+      "message": "Sound good. Thanks for the suggestion. Change to use isEmpty().",
+      "parentUuid": "a3f2b116_a2cf8798",
+      "range": {
+        "startLine": 196,
+        "startChar": 30,
+        "endLine": 196,
+        "endChar": 34
+      },
+      "revId": "661a6945519a19f43975b5262f8bf30810d7379c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
