@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018465989",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1922817?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "625971db_e78ead6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-15T22:04:28Z",
+      "side": 1,
+      "message": "\"build\" is not a valid test stanza. Expected one of: gd/cert/run (--device|--rust|--rhost) (\u003cfilter\u003e) OR gd/fuzz/run (--host) \u003ctest\u003e OR atest (--host) \u003ctest\u003e",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "770d50ed431dd16850b916c7adf7a9b89d443cc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
