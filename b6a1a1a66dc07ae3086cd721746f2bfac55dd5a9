@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d63f0f0a_8c06679e",
+        "filename": "core/api/current.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 27283,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-12-15T18:18:51Z",
+      "side": 1,
+      "message": "Ouch. I guess we call it SimSpecific then?\n\nTelephony has the modifier \"precise\" that\u0027s supposed to be used (and is present since like API 1) whenever we decide an existing thing is an abstraction and then put something more granular under it... looks like that pattern wasn\u0027t followed.\n\nPreciseDataConnectionState, PreciseCallState, PreciseDisconnectCause, the permission READ_PRECISE_PHONE_STATE... ugh.",
+      "parentUuid": "55ae68c4_b01ec767",
+      "range": {
+        "startLine": 27283,
+        "startChar": 95,
+        "endLine": 27283,
+        "endChar": 103
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "130f1b68_c8bedb9f",
         "filename": "core/api/current.txt",
         "patchSetId": 20
