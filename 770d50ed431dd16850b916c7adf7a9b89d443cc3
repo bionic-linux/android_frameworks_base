@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32fb6bf0_eff93509",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2021-12-15T22:14:16Z",
+      "side": 1,
+      "message": "Added CTS-Coverage-Bug to commit message",
+      "revId": "770d50ed431dd16850b916c7adf7a9b89d443cc3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
