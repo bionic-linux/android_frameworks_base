@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd7bbd8a_fea3f170",
+        "filename": "core/api/current.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 27282,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-12-15T02:07:54Z",
+      "side": 1,
+      "message": "I really don\u0027t think we need the word \"Matching\" in each of these. If it\u0027s a template, then anything that agrees with the template settings matches...",
+      "range": {
+        "startLine": 27282,
+        "startChar": 86,
+        "endLine": 27282,
+        "endChar": 95
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "712ab896_fb3346bb",
+        "filename": "core/api/current.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 27283,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-12-15T02:07:54Z",
+      "side": 1,
+      "message": "Precise",
+      "range": {
+        "startLine": 27283,
+        "startChar": 95,
+        "endLine": 27283,
+        "endChar": 103
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "130f1b68_c8bedb9f",
+        "filename": "core/api/current.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 27284,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2021-12-15T02:07:54Z",
+      "side": 1,
+      "message": "suggest something like setRoaming()?",
+      "range": {
+        "startLine": 27284,
+        "startChar": 84,
+        "endLine": 27284,
+        "endChar": 102
+      },
+      "revId": "b6a1a1a66dc07ae3086cd721746f2bfac55dd5a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
