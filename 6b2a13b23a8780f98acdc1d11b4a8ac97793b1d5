@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65290445_9f5349ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-15T07:26:15Z",
+      "side": 1,
+      "message": "Style: maybe add line breaks after 65 characters to make this pretty?\nNo strong opinion.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 76
+      },
+      "revId": "6b2a13b23a8780f98acdc1d11b4a8ac97793b1d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e25ff33_415c5466",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-15T07:26:15Z",
+      "side": 1,
+      "message": "nit: you might wwant to mention what\u0027s the plan of files inside opt/net/ethernet/",
+      "revId": "6b2a13b23a8780f98acdc1d11b4a8ac97793b1d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
