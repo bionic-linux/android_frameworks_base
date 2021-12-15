@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c075ae63_56a5e540",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 27275,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-15T01:55:47Z",
+      "side": 1,
+      "message": "Updated to use MATCH_ANY, MATCH_REQUIRED and MATCH_FORBIDDEN",
+      "parentUuid": "0b133dea_5480069d",
+      "range": {
+        "startLine": 27275,
+        "startChar": 26,
+        "endLine": 27275,
+        "endChar": 40
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74fadf54_15283d41",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-13T23:58:25Z",
       "side": 1,
       "message": "I think maybe a separate sub-object for the MatchingRules would make this cleaner or if the top level class were NetworkPriorityMatchRules?\n\nNetworkPriorityMatchRules.Builder().setRoaming().setOperatorPlmns().setSimCarrierIds()...\n\nThis might also help address some of Jean\u0027s naming concerns while not actually requiring a meaningful shape change?",
+      "range": {
+        "startLine": 27281,
+        "startChar": 43,
+        "endLine": 27281,
+        "endChar": 79
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb805bce_fb687cea",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 27281,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-15T01:55:47Z",
+      "side": 1,
+      "message": "Synced with Ben. Updated according to Ben \u0026 Jean\u0027s agreement",
+      "parentUuid": "74fadf54_15283d41",
       "range": {
         "startLine": 27281,
         "startChar": 43,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "133ea18c_f3f1819d",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 27346,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-15T01:55:47Z",
+      "side": 1,
+      "message": "I still want to keep it abstract so that later it is easy to add more common requirements.",
+      "parentUuid": "33cee970_5c7ccc21",
+      "range": {
+        "startLine": 27344,
+        "startChar": 0,
+        "endLine": 27346,
+        "endChar": 3
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f69faa4e_3d29f08c",
@@ -93,6 +165,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e9447b8_569d4bf1",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-15T01:55:47Z",
+      "side": 1,
+      "message": "Doc updated by Ben",
+      "parentUuid": "f69faa4e_3d29f08c",
+      "range": {
+        "startLine": 556,
+        "startChar": 38,
+        "endLine": 556,
+        "endChar": 39
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55de1f65_87ec4056",
@@ -106,6 +202,30 @@
       "writtenOn": "2021-12-13T11:59:25Z",
       "side": 1,
       "message": "ISTM this should be package-private to avoid clients creating their own custom subclass. The same goes for the builder if you keep it.\n\nAlso see https://g3doc.corp.google.com/company/teams/android-api-council/guidelines/index.md?cl\u003dhead#avoid-protected",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "576e6cc8_6d7eb38b",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriorityRule.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-15T01:55:47Z",
+      "side": 1,
+      "message": "\u003e ISTM this should be package-private to avoid clients creating their own custom subclass. \nDone in VcnUnderlyingNetworkTemplate\n\n\u003e The same goes for the builder if you keep it.\nIf I make the abstract builder package private, it will not get exposed as APIs and then make update-api will fail with failures as follows\n\n```\nout/soong/.intermediates/frameworks/base/android-non-updatable.stubs.module_lib/android_common/javac/srcjars/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java:58: error: cannot find symbol\npublic T setNotMeteredMatch(int unmeteredMatchCriteria) { throw new RuntimeException(\"Stub!\"); }\n       ^\n```",
+      "parentUuid": "55de1f65_87ec4056",
       "range": {
         "startLine": 87,
         "startChar": 4,
