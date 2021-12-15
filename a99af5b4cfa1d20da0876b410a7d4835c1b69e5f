@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d00eb24_f2675ce6",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T23:34:34Z",
+      "side": 1,
+      "message": "Nit: All these should be on the next line as \"@see {@link...}\"",
+      "range": {
+        "startLine": 335,
+        "startChar": 27,
+        "endLine": 335,
+        "endChar": 31
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1e64ba1_3098e611",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T23:34:34Z",
+      "side": 1,
+      "message": "Not just netcaps, right? like opportunistic?\n\nPerhaps \"Used to configure the matching criteria of a network characteristic. This may include network capabilities, or cellular subscription information",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45e34737_33587558",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T23:34:34Z",
+      "side": 1,
+      "message": "only a network",
+      "range": {
+        "startLine": 78,
+        "startChar": 47,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7365df2e_abb357b3",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T23:34:34Z",
+      "side": 1,
+      "message": "Suggest capitalizing this",
+      "range": {
+        "startLine": 78,
+        "startChar": 56,
+        "endLine": 78,
+        "endChar": 60
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "740f2468_d6007fe4",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T23:34:34Z",
+      "side": 1,
+      "message": "Ditto capitalizing\n\nAlternatively, you can use IETF language: \"Denotes that a network MUST NOT have the capability in order to match this template\"",
+      "range": {
+        "startLine": 84,
+        "startChar": 56,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60e5fe62_776cb32f",
+        "filename": "core/java/android/net/vcn/VcnWifiUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2021-12-15T23:34:34Z",
+      "side": 1,
+      "message": "@see",
+      "range": {
+        "startLine": 170,
+        "startChar": 28,
+        "endLine": 170,
+        "endChar": 31
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
