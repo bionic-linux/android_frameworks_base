@@ -166,6 +166,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba60c7ef_7cbf8332",
+        "filename": "core/api/current.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 27346,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-15T22:33:35Z",
+      "side": 1,
+      "message": "Done. Removed the abstract Builder",
+      "parentUuid": "e9c1a794_b35101a7",
+      "range": {
+        "startLine": 27344,
+        "startChar": 0,
+        "endLine": 27346,
+        "endChar": 3
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f69faa4e_3d29f08c",
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "\u003e ISTM this should be package-private to avoid clients creating their own custom subclass. \nDone in VcnUnderlyingNetworkTemplate\n\n\u003e The same goes for the builder if you keep it.\nIf I make the abstract builder package private, it will not get exposed as APIs and then make update-api will fail with failures as follows\n\n```\nout/soong/.intermediates/frameworks/base/android-non-updatable.stubs.module_lib/android_common/javac/srcjars/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java:58: error: cannot find symbol\npublic T setNotMeteredMatch(int unmeteredMatchCriteria) { throw new RuntimeException(\"Stub!\"); }\n       ^\n```",
       "parentUuid": "55de1f65_87ec4056",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "bd06fd29ee614c02ef71cb0d6da0407b774918fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "057744b7_b1cf3629",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkPriorityRule.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-15T22:33:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "576e6cc8_6d7eb38b",
       "range": {
         "startLine": 87,
         "startChar": 4,
