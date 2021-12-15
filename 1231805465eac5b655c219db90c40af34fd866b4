@@ -142,6 +142,24 @@
       "parentUuid": "f1606be4_78f52ea3",
       "revId": "1231805465eac5b655c219db90c40af34fd866b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be036ed5_755127b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061164
+      },
+      "writtenOn": "2021-12-15T15:57:02Z",
+      "side": 1,
+      "message": "Yeah, this is a good perspective, and something I thought about before making this proposal. But again, I think the point I am making is that the scope of owning SystemConfig only is different to owning a wide area in the framework. But I am sure I am oversimplifying things here. So.. let\u0027s go with aosp/1916397 which we all agree on I believe? :-) It has merge conflicts, so I\u0027ll spam you a bit more with internal changes Jeff, if you dont mind :-)",
+      "parentUuid": "c4f1df49_342c8085",
+      "revId": "1231805465eac5b655c219db90c40af34fd866b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
