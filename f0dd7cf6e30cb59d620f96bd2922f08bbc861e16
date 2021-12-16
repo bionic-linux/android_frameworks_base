@@ -93,6 +93,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d928b23_162ed3d2",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-16T09:21:07Z",
+      "side": 1,
+      "message": "Per discussion please ignore this.",
+      "parentUuid": "0c37e868_6edfc35b",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 217,
+        "endChar": 10
+      },
+      "revId": "f0dd7cf6e30cb59d620f96bd2922f08bbc861e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe2dc596_c9fa1b9b",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-16T09:21:07Z",
+      "side": 1,
+      "message": "Per discussion we\u0027ll proceed with NetworkTemplate.Builder aosp/1926897.\nPlease create only necessary APIs to unblock your work.\nOr wait for aosp/1926897 to merge and change all callers to use the Builder if you are not in hurry.",
+      "parentUuid": "1997c9a5_86241511",
+      "range": {
+        "startLine": 217,
+        "startChar": 34,
+        "endLine": 217,
+        "endChar": 51
+      },
+      "revId": "f0dd7cf6e30cb59d620f96bd2922f08bbc861e16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "024d4b3b_e2217b79",
