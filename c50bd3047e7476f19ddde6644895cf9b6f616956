@@ -1,0 +1,219 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018482629",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1925500?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "248dc6a8_9b02d8ee",
+          "description": "Change to \"core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+              "range": {
+                "startLine": 160,
+                "startChar": 45,
+                "endLine": 160,
+                "endChar": 54
+              },
+              "replacement": "Criterion"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "02a98042_82af900a",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T07:26:07Z",
+      "side": 1,
+      "message": "Common typo found: \"Critieron\" -- should it be \"Criterion\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 160,
+        "startChar": 45,
+        "endLine": 160,
+        "endChar": 54
+      },
+      "revId": "c50bd3047e7476f19ddde6644895cf9b6f616956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018482629",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1925500?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "7321f964_362bfaf0",
+          "description": "Change to \"core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+              "range": {
+                "startLine": 170,
+                "startChar": 55,
+                "endLine": 170,
+                "endChar": 64
+              },
+              "replacement": "Criterion"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "ec50e780_3682c513",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T07:26:07Z",
+      "side": 1,
+      "message": "Common typo found: \"Critieron\" -- should it be \"Criterion\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 170,
+        "startChar": 55,
+        "endLine": 170,
+        "endChar": 64
+      },
+      "revId": "c50bd3047e7476f19ddde6644895cf9b6f616956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018482629",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1925500?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "fd60806a_6e5c290d",
+          "description": "Change to \"core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+              "range": {
+                "startLine": 181,
+                "startChar": 24,
+                "endLine": 181,
+                "endChar": 33
+              },
+              "replacement": "Criterion"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "19fe81d8_4b2691c5",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T07:26:07Z",
+      "side": 1,
+      "message": "Common typo found: \"Critieron\" -- should it be \"Criterion\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 181,
+        "startChar": 24,
+        "endLine": 181,
+        "endChar": 33
+      },
+      "revId": "c50bd3047e7476f19ddde6644895cf9b6f616956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018482629",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1925500?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "c74b0374_4476ad8a",
+          "description": "Change to \"core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+              "range": {
+                "startLine": 181,
+                "startChar": 50,
+                "endLine": 181,
+                "endChar": 59
+              },
+              "replacement": "Criterion"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "98a4a38c_3dc69247",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T07:26:07Z",
+      "side": 1,
+      "message": "Common typo found: \"Critieron\" -- should it be \"Criterion\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 181,
+        "startChar": 50,
+        "endLine": 181,
+        "endChar": 59
+      },
+      "revId": "c50bd3047e7476f19ddde6644895cf9b6f616956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018482629",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1925500?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "20811400_b66ab0ae",
+          "description": "Change to \"core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+              "range": {
+                "startLine": 207,
+                "startChar": 25,
+                "endLine": 207,
+                "endChar": 34
+              },
+              "replacement": "Criterion"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "54e9f8f3_ef7e5958",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T07:26:07Z",
+      "side": 1,
+      "message": "Common typo found: \"Critieron\" -- should it be \"Criterion\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 207,
+        "startChar": 25,
+        "endLine": 207,
+        "endChar": 34
+      },
+      "revId": "c50bd3047e7476f19ddde6644895cf9b6f616956",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
