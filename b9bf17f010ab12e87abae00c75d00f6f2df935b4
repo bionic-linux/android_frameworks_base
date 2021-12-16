@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "623f4774_89a43a90",
+        "filename": "core/java/android/nfc/NfcDtaPatternNumber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1898000
+      },
+      "writtenOn": "2021-12-16T09:28:19Z",
+      "side": 1,
+      "message": "Below 4 pattern no are missing.\n0011h, 0021h, 0031h, 0012h\n\nPlease refer NFC forum doc below :-\n\nDevice Test Application \nApplication Specification\nVersion 2.3.01\nsection : Table 15: Configuration parameters Versus PATTERN_NUMBER",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "b9bf17f010ab12e87abae00c75d00f6f2df935b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
