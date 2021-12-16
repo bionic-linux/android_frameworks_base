@@ -63,13 +63,13 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
     private final int mOpportunisticMatchCriteria;
 
     private VcnCellUnderlyingNetworkTemplate(
-            int networkQuality,
+            Set<VcnLinkCriteria> linkCriterion,
             int meteredMatchCriteria,
             Set<String> allowedNetworkPlmnIds,
             Set<Integer> allowedSpecificCarrierIds,
             int roamingMatchCriteria,
             int opportunisticMatchCriteria) {
-        super(NETWORK_PRIORITY_TYPE_CELL, networkQuality, meteredMatchCriteria);
+        super(NETWORK_PRIORITY_TYPE_CELL, linkCriterion, meteredMatchCriteria);
         mAllowedNetworkPlmnIds = new ArraySet<>(allowedNetworkPlmnIds);
         mAllowedSpecificCarrierIds = new ArraySet<>(allowedSpecificCarrierIds);
         mRoamingMatchCriteria = roamingMatchCriteria;
@@ -109,7 +109,13 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             @NonNull PersistableBundle in) {
         Objects.requireNonNull(in, "PersistableBundle is null");
 
-        final int networkQuality = in.getInt(NETWORK_QUALITY_KEY);
+        final PersistableBundle linkCriterionBundle = in.getPersistableBundle(LINK_CRITERION_KEY);
+        Objects.requireNonNull(linkCriterionBundle, "linkCriterionBundle is null");
+        final Set<LinkCriterion> linkCriterion =
+                new ArraySet<LinkCriterion>(
+                        PersistableBundleUtils.toList(
+                                linkCriterionBundle, VcnLinkCriteria::fromPersistableBundle));
+
         final int meteredMatchCriteria = in.getInt(METERED_MATCH_KEY);
 
         final PersistableBundle plmnIdsBundle =
@@ -131,7 +137,7 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         final int opportunisticMatchCriteria = in.getInt(OPPORTUNISTIC_MATCH_KEY);
 
         return new VcnCellUnderlyingNetworkTemplate(
-                networkQuality,
+                linkCriterion,
                 meteredMatchCriteria,
                 allowedNetworkPlmnIds,
                 allowedSpecificCarrierIds,
@@ -243,36 +249,17 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
 
     /** This class is used to incrementally build VcnCellUnderlyingNetworkTemplate objects. */
     public static final class Builder {
-        private int mNetworkQuality = NETWORK_QUALITY_ANY;
         private int mMeteredMatchCriteria = MATCH_ANY;
 
         @NonNull private final Set<String> mAllowedNetworkPlmnIds = new ArraySet<>();
         @NonNull private final Set<Integer> mAllowedSpecificCarrierIds = new ArraySet<>();
+        @NonNull private final Set<Integer> mLinkCriterion = new ArraySet<>();
 
         private int mRoamingMatchCriteria = MATCH_ANY;
         private int mOpportunisticMatchCriteria = MATCH_ANY;
 
         /** Construct a Builder object. */
         public Builder() {}
-
-        /**
-         * Set the required network quality to match this template.
-         *
-         * <p>Network quality is a aggregation of multiple signals that reflect the network link
-         * metrics. For example, the network validation bit (see {@link
-         * NetworkCapabilities#NET_CAPABILITY_VALIDATED}), estimated first hop transport bandwidth
-         * and signal strength.
-         *
-         * @param networkQuality the required network quality. Defaults to NETWORK_QUALITY_ANY
-         * @hide
-         */
-        @NonNull
-        public Builder setNetworkQuality(@NetworkQuality int networkQuality) {
-            validateNetworkQuality(networkQuality);
-
-            mNetworkQuality = networkQuality;
-            return this;
-        }
 
         /**
          * Set the matching criteria for metered networks.
@@ -361,11 +348,29 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             return this;
         }
 
+        /**
+         * Set the link criteria that must be met for a network to match this template.
+         *
+         * @param linkCriterion the criteria required of the underlying network. A network must meet
+         *     ALL of the configured criteria in order to match this template.
+         * @return this {@link Builder} instance, for chaining
+         * @see {@link VcnLinkCriteria}
+         * @hide
+         */
+        @NonNull
+        public Builder setLinkCriterion(@NonNull Set<VcnLinkCriteria> linkCriterion) {
+            validateLinkCriterion(linkCriterion);
+
+            mLinkCriterion.clear();
+            mLinkCriterion.addAll(linkCriterion);
+            return this;
+        }
+
         /** Build the VcnCellUnderlyingNetworkTemplate. */
         @NonNull
         public VcnCellUnderlyingNetworkTemplate build() {
             return new VcnCellUnderlyingNetworkTemplate(
-                    mNetworkQuality,
+                    mLinkCriterion,
                     mMeteredMatchCriteria,
                     mAllowedNetworkPlmnIds,
                     mAllowedSpecificCarrierIds,
