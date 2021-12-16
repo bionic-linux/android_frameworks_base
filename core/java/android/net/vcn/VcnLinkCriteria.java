@@ -35,7 +35,6 @@ import java.util.Objects;
  *
  * @see VcnWifiUnderlyingNetworkTemplate.Builder#setLinkCriterion(Set<VcnLinkCriteria>)
  * @see VcnCellUnderlyingNetworkTemplate.Builder#setLinkCriterion(Set<VcnLinkCriteria>)
- * @hide
  */
 public abstract class VcnLinkCriteria {
     /** @hide */
@@ -104,8 +103,6 @@ public abstract class VcnLinkCriteria {
      *
      * <p>A network will only be consdered as matching this template if BOTH reported the upstream
      * and downstream bandwidth estimates are greater than the minimums configured.
-     *
-     * @hide
      */
     public static class EstimatedBandwidthCriteria extends VcnLinkCriteria {
         private static final String MIN_UPSTREAM_BANDWIDTH_KBPS_KEY = "minUpstreamBandwidthKbps";
@@ -114,7 +111,6 @@ public abstract class VcnLinkCriteria {
          * The minimum allowed upstream bandwidth, in Kbps.
          *
          * @see {@link NetworkCapabilities.getLinkUpstreamBandwidthKbps()}
-         * @hide
          */
         public final int minUpstreamBandwidthKbps;
 
@@ -125,15 +121,12 @@ public abstract class VcnLinkCriteria {
          * The minimum allowed downstream bandwidth, in Kbps.
          *
          * @see {@link NetworkCapabilities.getLinkDownstreamBandwidthKbps()}
-         * @hide
          */
         public final int minDownstreamBandwidthKbps;
 
         /**
          * Creates an instance with the configured minium upstream and downstream bandwidth, in
          * Kbps.
-         *
-         * @hide
          */
         public EstimatedBandwidthCriteria(
                 int minUpstreamBandwidthKbps, int minDownstreamBandwidthKbps) {
