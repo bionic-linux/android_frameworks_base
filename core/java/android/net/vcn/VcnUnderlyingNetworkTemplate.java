@@ -28,10 +28,13 @@ import android.util.SparseArray;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IndentingPrintWriter;
 import com.android.internal.util.Preconditions;
+import com.android.server.vcn.util.PersistableBundleUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * This class represents a template containing set of underlying network requirements for doing
@@ -47,23 +50,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
     static final int NETWORK_PRIORITY_TYPE_WIFI = 1;
     /** @hide */
     static final int NETWORK_PRIORITY_TYPE_CELL = 2;
-
-    /** Denotes that any network quality is acceptable. @hide */
-    public static final int NETWORK_QUALITY_ANY = 0;
-    /** Denotes that network quality needs to be OK. @hide */
-    public static final int NETWORK_QUALITY_OK = 100000;
-
-    private static final SparseArray<String> NETWORK_QUALITY_TO_STRING_MAP = new SparseArray<>();
-
-    static {
-        NETWORK_QUALITY_TO_STRING_MAP.put(NETWORK_QUALITY_ANY, "NETWORK_QUALITY_ANY");
-        NETWORK_QUALITY_TO_STRING_MAP.put(NETWORK_QUALITY_OK, "NETWORK_QUALITY_OK");
-    }
-
-    /** @hide */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({NETWORK_QUALITY_OK, NETWORK_QUALITY_ANY})
-    public @interface NetworkQuality {}
 
     /**
      * Used to configure the matching criteria of a network characteristic. This may include network
@@ -103,9 +89,9 @@ public abstract class VcnUnderlyingNetworkTemplate {
     private final int mNetworkPriorityType;
 
     /** @hide */
-    static final String NETWORK_QUALITY_KEY = "mNetworkQuality";
+    static final String LINK_CRITERION_KEY = "mLinkCriterion";
 
-    private final int mNetworkQuality;
+    private final Set<VcnLinkCriteria> mLinkCriterion;
 
     /** @hide */
     static final String METERED_MATCH_KEY = "mMeteredMatchCriteria";
@@ -114,17 +100,19 @@ public abstract class VcnUnderlyingNetworkTemplate {
 
     /** @hide */
     VcnUnderlyingNetworkTemplate(
-            int networkPriorityType, int networkQuality, int meteredMatchCriteria) {
+            int networkPriorityType, Set<VcnLinkCriteria> linkCriterion, int meteredMatchCriteria) {
         mNetworkPriorityType = networkPriorityType;
-        mNetworkQuality = networkQuality;
+        mLinkCriterion = linkCriterion;
         mMeteredMatchCriteria = meteredMatchCriteria;
     }
 
     /** @hide */
-    static void validateNetworkQuality(int networkQuality) {
-        Preconditions.checkArgument(
-                networkQuality == NETWORK_QUALITY_ANY || networkQuality == NETWORK_QUALITY_OK,
-                "Invalid networkQuality:" + networkQuality);
+    static void validateLinkCriterion(Set<VcnLinkCriteria> linkCriterion) {
+        Objects.requireNonNull(linkCriterion, "linkCriterion is null");
+
+        for (VcnLinkCriteria criteria : linkCriterion) {
+            criteria.validate();
+        }
     }
 
     /** @hide */
@@ -139,7 +127,7 @@ public abstract class VcnUnderlyingNetworkTemplate {
 
     /** @hide */
     protected void validate() {
-        validateNetworkQuality(mNetworkQuality);
+        validateLinkCriterion(mLinkCriterion);
         validateMatchCriteria(mMeteredMatchCriteria, "mMeteredMatchCriteria");
     }
 
@@ -168,7 +156,12 @@ public abstract class VcnUnderlyingNetworkTemplate {
         final PersistableBundle result = new PersistableBundle();
 
         result.putInt(NETWORK_PRIORITY_TYPE_KEY, mNetworkPriorityType);
-        result.putInt(NETWORK_QUALITY_KEY, mNetworkQuality);
+
+        final PersistableBundle linkCriterionBundle =
+                PersistableBundleUtils.fromList(
+                        new ArrayList<>(mLinkCriterion), VcnLinkCriteria::toPersistableBundle);
+        result.putPersistableBundle(LINK_CRITERION_KEY, linkCriterionBundle);
+
         result.putInt(METERED_MATCH_KEY, mMeteredMatchCriteria);
 
         return result;
@@ -176,7 +169,7 @@ public abstract class VcnUnderlyingNetworkTemplate {
 
     @Override
     public int hashCode() {
-        return Objects.hash(mNetworkPriorityType, mNetworkQuality, mMeteredMatchCriteria);
+        return Objects.hash(mNetworkPriorityType, mLinkCriterion, mMeteredMatchCriteria);
     }
 
     @Override
@@ -187,7 +180,7 @@ public abstract class VcnUnderlyingNetworkTemplate {
 
         final VcnUnderlyingNetworkTemplate rhs = (VcnUnderlyingNetworkTemplate) other;
         return mNetworkPriorityType == rhs.mNetworkPriorityType
-                && mNetworkQuality == rhs.mNetworkQuality
+                && mLinkCriterion.equals(rhs.mLinkCriterion)
                 && mMeteredMatchCriteria == rhs.mMeteredMatchCriteria;
     }
 
@@ -213,24 +206,17 @@ public abstract class VcnUnderlyingNetworkTemplate {
         pw.println(this.getClass().getSimpleName() + ":");
         pw.increaseIndent();
 
-        pw.println(
-                "mNetworkQuality: "
-                        + getNameString(NETWORK_QUALITY_TO_STRING_MAP, mNetworkQuality));
+        pw.println("mLinkCriterion:");
+        pw.increaseIndent();
+        for (VcnLinkCriteria criteria : mLinkCriterion) {
+            criteria.dump(pw);
+        }
+        pw.decreaseIndent();
+
         pw.println("mMeteredMatchCriteria: " + getMatchCriteriaString(mMeteredMatchCriteria));
         dumpTransportSpecificFields(pw);
 
         pw.decreaseIndent();
-    }
-
-    /**
-     * Retrieve the required network quality to match this template.
-     *
-     * @see Builder#setNetworkQuality(int)
-     * @hide
-     */
-    @NetworkQuality
-    public int getNetworkQuality() {
-        return mNetworkQuality;
     }
 
     /**
@@ -242,5 +228,17 @@ public abstract class VcnUnderlyingNetworkTemplate {
     @MatchCriteria
     public int getMetered() {
         return mMeteredMatchCriteria;
+    }
+
+    /**
+     * Returns the configured link criteria.
+     *
+     * @see VcnWifiUnderlyingNetworkTemplate.Builder#setLinkCriterion(Set<VcnLinkCriteria>)
+     * @see VcnCellUnderlyingNetworkTemplate.Builder#setLinkCriterion(Set<VcnLinkCriteria>)
+     * @hide
+     */
+    @NonNull
+    public Set<VcnLinkCriteria> getLinkCriterion() {
+        return mLinkCriterion;
     }
 }

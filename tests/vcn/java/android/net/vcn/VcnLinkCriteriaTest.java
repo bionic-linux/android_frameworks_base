@@ -15,19 +15,29 @@
  */
 package android.net.vcn;
 
-
 import static org.junit.Assert.assertEquals;
 
 import android.net.vcn.VcnLinkCriteria.EstimatedBandwidthCriteria;
 
 import org.junit.Test;
 
-public class VcnLinkCriteriaTest {
-    private static final int TEST_MIN_UPSTREAM_BANDWIDTH_KBPS = 100;
-    private static final int TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS = 200;
+import java.util.Collections;
+import java.util.Set;
 
-    // Package private for use in Vcn(Wifi|Cell)GatewayConnectionConfigTest
-    static EstimatedBandwidthCriteria getTestEstimatedBandwidthCriteria() {
+public class VcnLinkCriteriaTest {
+    // public for use in NetworkPriorityClassiferTest
+    public static final int TEST_MIN_UPSTREAM_BANDWIDTH_KBPS = 100;
+
+    // public for use in NetworkPriorityClassiferTest
+    public static final int TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS = 200;
+
+    // public for use in NetworkPriorityClassiferTest
+    public static Set<VcnLinkCriteria> getTestLinkCriterion() {
+        return Collections.singleton(getTestEstimatedBandwidthCriteria());
+    }
+
+    // public for use in NetworkPriorityClassiferTest
+    public static EstimatedBandwidthCriteria getTestEstimatedBandwidthCriteria() {
         return new EstimatedBandwidthCriteria(
                 TEST_MIN_UPSTREAM_BANDWIDTH_KBPS, TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS);
     }

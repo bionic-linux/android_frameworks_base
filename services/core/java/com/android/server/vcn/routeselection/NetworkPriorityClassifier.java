@@ -22,8 +22,6 @@ import static android.net.NetworkCapabilities.TRANSPORT_TEST;
 import static android.net.NetworkCapabilities.TRANSPORT_WIFI;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_FORBIDDEN;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_REQUIRED;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_ANY;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_OK;
 
 import static com.android.server.VcnManagementService.LOCAL_LOG;
 
@@ -32,6 +30,7 @@ import android.annotation.Nullable;
 import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.VcnCellUnderlyingNetworkTemplate;
+import android.net.vcn.VcnLinkCriteria;
 import android.net.vcn.VcnManager;
 import android.net.vcn.VcnUnderlyingNetworkTemplate;
 import android.net.vcn.VcnWifiUnderlyingNetworkTemplate;
@@ -121,15 +120,18 @@ class NetworkPriorityClassifier {
             TelephonySubscriptionSnapshot snapshot,
             UnderlyingNetworkRecord currentlySelected,
             PersistableBundle carrierConfig) {
-        // TODO: Check Network Quality reported by metric monitors/probers.
-
         final NetworkCapabilities caps = networkRecord.networkCapabilities;
-
         final int meteredMatch = networkPriority.getMetered();
         final boolean isMetered = !caps.hasCapability(NET_CAPABILITY_NOT_METERED);
         if (meteredMatch == MATCH_REQUIRED && !isMetered
                 || meteredMatch == MATCH_FORBIDDEN && isMetered) {
             return false;
+        }
+
+        for (VcnLinkCriteria criteria : networkPriority.getLinkCriterion()) {
+            if (!checkMatchesLinkCriteria(criteria, networkRecord)) {
+                return false;
+            }
         }
 
         if (vcnContext.isInTestMode() && caps.hasTransport(TRANSPORT_TEST)) {
@@ -172,8 +174,7 @@ class NetworkPriorityClassifier {
         }
 
         // TODO: Move the Network Quality check to the network metric monitor framework.
-        if (networkPriority.getNetworkQuality()
-                > getWifiQuality(networkRecord, currentlySelected, carrierConfig)) {
+        if (!isWifiRssiAcceptable(networkRecord, currentlySelected, carrierConfig)) {
             return false;
         }
 
@@ -185,7 +186,7 @@ class NetworkPriorityClassifier {
         return true;
     }
 
-    private static int getWifiQuality(
+    private static boolean isWifiRssiAcceptable(
             UnderlyingNetworkRecord networkRecord,
             UnderlyingNetworkRecord currentlySelected,
             PersistableBundle carrierConfig) {
@@ -196,14 +197,14 @@ class NetworkPriorityClassifier {
 
         if (isSelectedNetwork
                 && caps.getSignalStrength() >= getWifiExitRssiThreshold(carrierConfig)) {
-            return NETWORK_QUALITY_OK;
+            return true;
         }
 
         if (caps.getSignalStrength() >= getWifiEntryRssiThreshold(carrierConfig)) {
-            return NETWORK_QUALITY_OK;
+            return true;
         }
 
-        return NETWORK_QUALITY_ANY;
+        return false;
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
@@ -282,6 +283,27 @@ class NetworkPriorityClassifier {
         }
 
         return true;
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    public static boolean checkMatchesLinkCriteria(
+            VcnLinkCriteria linkCriteria, UnderlyingNetworkRecord networkRecord) {
+        if (linkCriteria instanceof VcnLinkCriteria.EstimatedBandwidthCriteria) {
+            return checkMatchesEstimatedBandwidthCriteria(
+                    (VcnLinkCriteria.EstimatedBandwidthCriteria) linkCriteria, networkRecord);
+        } else {
+            logWtf("Got unknown VcnLinkCriteria class: " + linkCriteria.getClass().getSimpleName());
+            return false;
+        }
+    }
+
+    private static boolean checkMatchesEstimatedBandwidthCriteria(
+            VcnLinkCriteria.EstimatedBandwidthCriteria estimatedBandwidthCriteria,
+            UnderlyingNetworkRecord networkRecord) {
+        return networkRecord.networkCapabilities.getLinkUpstreamBandwidthKbps()
+                        >= estimatedBandwidthCriteria.minUpstreamBandwidthKbps
+                && networkRecord.networkCapabilities.getLinkDownstreamBandwidthKbps()
+                        >= estimatedBandwidthCriteria.minDownstreamBandwidthKbps;
     }
 
     static boolean isOpportunistic(
