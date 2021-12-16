@@ -176,7 +176,6 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          *     VCN's selected underlying network. If set to {@link #FORBIDDEN}, this template will
          *     ONLY match network that are NOT the VCN's selected underlying network. Defaults to
          *     {@link #MATCH_ANY}.
-         * @hide
          */
         // The matching getter is defined in the super class. Please see {@link
         // VcnUnderlyingNetworkTemplate#getSelectedUnderlyingNetwork()}
@@ -231,7 +230,6 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param minUpstreamBandwidthKbps the minimum accepted upstream bandwidth, or {@code 0} to
          *     disable this requirement. Defaults to {@code 0}
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
         public Builder setMinUpstreamBandwidthKbps(int minUpstreamBandwidthKbps) {
@@ -251,7 +249,6 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          * @param minDownstreamBandwidthKbps the minimum accepted downstream bandwidth, or {@code 0}
          *     to disable this requirement. Defaults to {@code 0}
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
         public Builder setMinDownstreamBandwidthKbps(int minDownstreamBandwidthKbps) {

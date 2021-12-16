@@ -244,7 +244,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @see VcnWifiUnderlyingNetworkTemplate.Builder#setSelectedUnderlyingNetwork(int)
      * @see VcnCellUnderlyingNetworkTemplate.Builder#setSelectedUnderlyingNetwork(int)
-     * @hide
      */
     public int getSelectedUnderlyingNetwork() {
         return mSelectedUnderlyingNetworkMatchCriteria;
@@ -265,7 +264,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @see VcnWifiUnderlyingNetworkTemplate.Builder#setMinUpstreamBandwidthKbps(int)
      * @see VcnCellUnderlyingNetworkTemplate.Builder#setMinUpstreamBandwidthKbps(int)
-     * @hide
      */
     public int getMinUpstreamBandwidthKbps() {
         return mMinUpstreamBandwidthKbps;
@@ -276,7 +274,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @see VcnWifiUnderlyingNetworkTemplate.Builder#setMinDownstreamBandwidthKbps(int)
      * @see VcnCellUnderlyingNetworkTemplate.Builder#setMinDownstreamBandwidthKbps(int)
-     * @hide
      */
     public int getMinDownstreamBandwidthKbps() {
         return mMinDownstreamBandwidthKbps;
