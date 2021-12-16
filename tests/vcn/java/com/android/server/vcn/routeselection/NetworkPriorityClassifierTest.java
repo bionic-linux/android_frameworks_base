@@ -18,12 +18,12 @@ package com.android.server.vcn.routeselection;
 
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_FORBIDDEN;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_REQUIRED;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_OK;
 
 import static com.android.server.vcn.VcnTestUtils.setupSystemService;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.PRIORITY_ANY;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.calculatePriorityClass;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.checkMatchesCellPriorityRule;
+import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.checkMatchesLinkCriterion;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.checkMatchesPriorityRule;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.checkMatchesWifiPriorityRule;
 import static com.android.server.vcn.routeselection.UnderlyingNetworkControllerTest.getLinkPropertiesWithName;
@@ -43,6 +43,8 @@ import android.net.NetworkCapabilities;
 import android.net.TelephonyNetworkSpecifier;
 import android.net.vcn.VcnCellUnderlyingNetworkTemplate;
 import android.net.vcn.VcnGatewayConnectionConfig;
+import android.net.vcn.VcnLinkCriterion.EstimatedBandwidthCriterion;
+import android.net.vcn.VcnLinkCriterionTest;
 import android.net.vcn.VcnManager;
 import android.net.vcn.VcnWifiUnderlyingNetworkTemplate;
 import android.os.ParcelUuid;
@@ -76,6 +78,9 @@ public class NetworkPriorityClassifierTest {
     private static final int CARRIER_ID = 1;
     private static final int CARRIER_ID_OTHER = 2;
 
+    private static final int LINK_UPSTREAM_BANDWIDTH_KBPS = 1024;
+    private static final int LINK_DOWNSTREAM_BANDWIDTH_KBPS = 2048;
+
     private static final ParcelUuid SUB_GROUP = new ParcelUuid(new UUID(0, 0));
 
     private static final NetworkCapabilities WIFI_NETWORK_CAPABILITIES =
@@ -83,6 +88,8 @@ public class NetworkPriorityClassifierTest {
                     .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                     .setSignalStrength(WIFI_RSSI)
                     .setSsid(SSID)
+                    .setLinkUpstreamBandwidthKbps(LINK_UPSTREAM_BANDWIDTH_KBPS)
+                    .setLinkDownstreamBandwidthKbps(LINK_DOWNSTREAM_BANDWIDTH_KBPS)
                     .build();
 
     private static final TelephonyNetworkSpecifier TEL_NETWORK_SPECIFIER =
@@ -93,6 +100,8 @@ public class NetworkPriorityClassifierTest {
                     .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                     .setSubscriptionIds(Set.of(SUB_ID))
                     .setNetworkSpecifier(TEL_NETWORK_SPECIFIER)
+                    .setLinkUpstreamBandwidthKbps(LINK_UPSTREAM_BANDWIDTH_KBPS)
+                    .setLinkDownstreamBandwidthKbps(LINK_DOWNSTREAM_BANDWIDTH_KBPS)
                     .build();
 
     private static final LinkProperties LINK_PROPERTIES = getLinkPropertiesWithName("test_iface");
@@ -146,7 +155,6 @@ public class NetworkPriorityClassifierTest {
     public void testMatchWithoutNotMeteredBit() {
         final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
                 new VcnWifiUnderlyingNetworkTemplate.Builder()
-                        .setNetworkQuality(NETWORK_QUALITY_OK)
                         .setMetered(MATCH_FORBIDDEN)
                         .build();
 
@@ -165,7 +173,7 @@ public class NetworkPriorityClassifierTest {
             boolean isSelectedNetwork, PersistableBundle carrierConfig, boolean expectMatch) {
         final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
                 new VcnWifiUnderlyingNetworkTemplate.Builder()
-                        .setNetworkQuality(NETWORK_QUALITY_OK)
+                        .setLinkCriteria(VcnLinkCriterionTest.getTestLinkCriteria())
                         .build();
         final UnderlyingNetworkRecord selectedNetworkRecord =
                 isSelectedNetwork ? mWifiNetworkRecord : null;
@@ -214,7 +222,7 @@ public class NetworkPriorityClassifierTest {
         final String nwPrioritySsid = useMatchedSsid ? SSID : SSID_OTHER;
         final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
                 new VcnWifiUnderlyingNetworkTemplate.Builder()
-                        .setNetworkQuality(NETWORK_QUALITY_OK)
+                        .setLinkCriteria(VcnLinkCriterionTest.getTestLinkCriteria())
                         .setSsids(Set.of(nwPrioritySsid))
                         .build();
 
@@ -238,7 +246,8 @@ public class NetworkPriorityClassifierTest {
     }
 
     private static VcnCellUnderlyingNetworkTemplate.Builder getCellNetworkPriorityBuilder() {
-        return new VcnCellUnderlyingNetworkTemplate.Builder().setNetworkQuality(NETWORK_QUALITY_OK);
+        return new VcnCellUnderlyingNetworkTemplate.Builder()
+                .setLinkCriteria(VcnLinkCriterionTest.getTestLinkCriteria());
     }
 
     @Test
@@ -340,6 +349,45 @@ public class NetworkPriorityClassifierTest {
                         mCellNetworkRecord,
                         SUB_GROUP,
                         mSubscriptionSnapshot));
+    }
+
+    @Test
+    public void testMatchEstimatedBandwidthCriterion() {
+        final EstimatedBandwidthCriterion criteria =
+                VcnLinkCriterionTest.getTestEstimatedBandwidthCriterion();
+
+        final NetworkCapabilities equalToBandwidthCriteria =
+                new NetworkCapabilities.Builder(CELL_NETWORK_CAPABILITIES)
+                        .setLinkUpstreamBandwidthKbps(
+                                VcnLinkCriterionTest.TEST_MIN_UPSTREAM_BANDWIDTH_KBPS)
+                        .setLinkDownstreamBandwidthKbps(
+                                VcnLinkCriterionTest.TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS)
+                        .build();
+        final NetworkCapabilities failingBandwidthCriteria =
+                new NetworkCapabilities.Builder(CELL_NETWORK_CAPABILITIES)
+                        .setLinkUpstreamBandwidthKbps(
+                                VcnLinkCriterionTest.TEST_MIN_UPSTREAM_BANDWIDTH_KBPS - 1)
+                        .setLinkDownstreamBandwidthKbps(
+                                VcnLinkCriterionTest.TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS - 1)
+                        .build();
+
+        assertTrue(checkMatchesLinkCriterion(criteria, mCellNetworkRecord));
+        assertTrue(
+                checkMatchesLinkCriterion(
+                        criteria,
+                        new UnderlyingNetworkRecord(
+                                mNetwork,
+                                equalToBandwidthCriteria,
+                                LINK_PROPERTIES,
+                                false /* isBlocked */)));
+        assertFalse(
+                checkMatchesLinkCriterion(
+                        criteria,
+                        new UnderlyingNetworkRecord(
+                                mNetwork,
+                                failingBandwidthCriteria,
+                                LINK_PROPERTIES,
+                                false /* isBlocked */)));
     }
 
     private void verifyCalculatePriorityClass(

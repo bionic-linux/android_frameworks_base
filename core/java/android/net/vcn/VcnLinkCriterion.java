@@ -22,6 +22,8 @@ import android.annotation.Nullable;
 import android.os.PersistableBundle;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.IndentingPrintWriter;
+import com.android.internal.util.Preconditions;
 
 import java.util.Objects;
 
@@ -44,6 +46,8 @@ public abstract class VcnLinkCriterion {
 
     private VcnLinkCriterion(int linkCriterionType) {
         mLinkCriterionType = LinkCriterionType;
+
+        validate();
     }
 
     /** @hide */
@@ -61,6 +65,12 @@ public abstract class VcnLinkCriterion {
                         "Invalid LinkCriterionType:" + LinkCriterionType);
         }
     }
+
+    // Package-private, for use in VcnUnderlyingNetworkTemplate
+    abstract void validate();
+
+    // Package-private, for use in VcnUnderlyingNetworkTemplate
+    abstract void dump(IndentingPrintWriter pw);
 
     /** @hide */
     @NonNull
@@ -142,6 +152,14 @@ public abstract class VcnLinkCriterion {
             this.minDownstreamBandwidthKbps = in.getInt(MIN_DOWNSTREAM_BANDWIDTH_KBPS_KEY);
         }
 
+        @Override
+        void validate() {
+            Preconditions.checkArgument(
+                    minUpstreamBandwidthKbps >= 0, "Invalid upstream bandwidth");
+            Preconditions.checkArgument(
+                    minDownstreamBandwidthKbps >= 0, "Invalid downstream bandwidth");
+        }
+
         /** @hide */
         @Override
         @NonNull
@@ -174,6 +192,17 @@ public abstract class VcnLinkCriterion {
             final EstimatedBandwidthCriterion rhs = (EstimatedBandwidthCriterion) other;
             return minUpstreamBandwidthKbps == rhs.minUpstreamBandwidthKbps
                     && minDownstreamBandwidthKbps == rhs.minDownstreamBandwidthKbps;
+        }
+
+        @Override
+        void dump(IndentingPrintWriter pw) {
+            pw.println(this.getClass().getSimpleName() + ":");
+            pw.increaseIndent();
+
+            pw.println("minUpstreamBandwidthKbps: " + minUpstreamBandwidthKbps);
+            pw.println("minDownstreamBandwidthKbps: " + minDownstreamBandwidthKbps);
+
+            pw.decreaseIndent();
         }
     }
 }

@@ -18,8 +18,6 @@ package android.net.vcn;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_ANY;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_FORBIDDEN;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_REQUIRED;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_ANY;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_OK;
 
 import static org.junit.Assert.assertEquals;
 
@@ -35,7 +33,7 @@ public class VcnCellUnderlyingNetworkTemplateTest {
     // Package private for use in VcnGatewayConnectionConfigTest
     static VcnCellUnderlyingNetworkTemplate getTestNetworkTemplate() {
         return new VcnCellUnderlyingNetworkTemplate.Builder()
-                .setNetworkQuality(NETWORK_QUALITY_OK)
+                .setLinkCriteria(VcnLinkCriterionTest.getTestLinkCriteria())
                 .setMetered(MATCH_FORBIDDEN)
                 .setOperatorPlmnIds(ALLOWED_PLMN_IDS)
                 .setSimSpecificCarrierIds(ALLOWED_CARRIER_IDS)
@@ -47,7 +45,7 @@ public class VcnCellUnderlyingNetworkTemplateTest {
     @Test
     public void testBuilderAndGetters() {
         final VcnCellUnderlyingNetworkTemplate networkPriority = getTestNetworkTemplate();
-        assertEquals(NETWORK_QUALITY_OK, networkPriority.getNetworkQuality());
+        assertEquals(VcnLinkCriterionTest.getTestLinkCriteria(), networkPriority.getLinkCriteria());
         assertEquals(MATCH_FORBIDDEN, networkPriority.getMetered());
         assertEquals(ALLOWED_PLMN_IDS, networkPriority.getOperatorPlmnIds());
         assertEquals(ALLOWED_CARRIER_IDS, networkPriority.getSimSpecificCarrierIds());
@@ -59,7 +57,7 @@ public class VcnCellUnderlyingNetworkTemplateTest {
     public void testBuilderAndGettersForDefaultValues() {
         final VcnCellUnderlyingNetworkTemplate networkPriority =
                 new VcnCellUnderlyingNetworkTemplate.Builder().build();
-        assertEquals(NETWORK_QUALITY_ANY, networkPriority.getNetworkQuality());
+        assertEquals(new HashSet<VcnLinkCriterion>(), networkPriority.getLinkCriteria());
         assertEquals(MATCH_ANY, networkPriority.getMetered());
         assertEquals(new HashSet<String>(), networkPriority.getOperatorPlmnIds());
         assertEquals(new HashSet<Integer>(), networkPriority.getSimSpecificCarrierIds());
