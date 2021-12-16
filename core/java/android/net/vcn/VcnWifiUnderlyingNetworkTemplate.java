@@ -46,8 +46,8 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
     @Nullable private final Set<String> mSsids;
 
     private VcnWifiUnderlyingNetworkTemplate(
-            int networkQuality, int meteredMatchCriteria, Set<String> ssids) {
-        super(NETWORK_PRIORITY_TYPE_WIFI, networkQuality, meteredMatchCriteria);
+            Set<VcnLinkCriteria> linkCriterion, int meteredMatchCriteria, Set<String> ssids) {
+        super(NETWORK_PRIORITY_TYPE_WIFI, linkCriterion, meteredMatchCriteria);
         mSsids = new ArraySet<>(ssids);
 
         validate();
@@ -75,7 +75,13 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             @NonNull PersistableBundle in) {
         Objects.requireNonNull(in, "PersistableBundle is null");
 
-        final int networkQuality = in.getInt(NETWORK_QUALITY_KEY);
+        final PersistableBundle linkCriterionBundle = in.getPersistableBundle(LINK_CRITERION_KEY);
+        Objects.requireNonNull(linkCriterionBundle, "linkCriterionBundle is null");
+        final Set<VcnLinkCriteria> linkCriterion =
+                new ArraySet<VcnLinkCriteria>(
+                        PersistableBundleUtils.toList(
+                                linkCriterionBundle, VcnLinkCriteria::fromPersistableBundle));
+
         final int meteredMatchCriteria = in.getInt(METERED_MATCH_KEY);
 
         final PersistableBundle ssidsBundle = in.getPersistableBundle(SSIDS_KEY);
@@ -83,7 +89,7 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
         final Set<String> ssids =
                 new ArraySet<String>(
                         PersistableBundleUtils.toList(ssidsBundle, STRING_DESERIALIZER));
-        return new VcnWifiUnderlyingNetworkTemplate(networkQuality, meteredMatchCriteria, ssids);
+        return new VcnWifiUnderlyingNetworkTemplate(linkCriterion, meteredMatchCriteria, ssids);
     }
 
     /** @hide */
@@ -137,31 +143,12 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
 
     /** This class is used to incrementally build VcnWifiUnderlyingNetworkTemplate objects. */
     public static final class Builder {
-        private int mNetworkQuality = NETWORK_QUALITY_ANY;
         private int mMeteredMatchCriteria = MATCH_ANY;
         @NonNull private final Set<String> mSsids = new ArraySet<>();
+        @NonNull private final Set<Integer> mLinkCriterion = new ArraySet<>();
 
         /** Construct a Builder object. */
         public Builder() {}
-
-        /**
-         * Set the required network quality to match this template.
-         *
-         * <p>Network quality is a aggregation of multiple signals that reflect the network link
-         * metrics. For example, the network validation bit (see {@link
-         * NetworkCapabilities#NET_CAPABILITY_VALIDATED}), estimated first hop transport bandwidth
-         * and signal strength.
-         *
-         * @param networkQuality the required network quality. Defaults to NETWORK_QUALITY_ANY
-         * @hide
-         */
-        @NonNull
-        public Builder setNetworkQuality(@NetworkQuality int networkQuality) {
-            validateNetworkQuality(networkQuality);
-
-            mNetworkQuality = networkQuality;
-            return this;
-        }
 
         /**
          * Set the matching criteria for metered networks.
@@ -196,11 +183,29 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             return this;
         }
 
+        /**
+         * Set the link criteria that must be met for a network to match this template.
+         *
+         * @param linkCriterion the criteria required of the underlying network. A network must meet
+         *     ALL of the configured criteria in order to match this template.
+         * @return this {@link Builder} instance, for chaining
+         * @see {@link VcnLinkCriteria}
+         * @hide
+         */
+        @NonNull
+        public Builder setLinkCriterion(@NonNull Set<VcnLinkCriteria> linkCriterion) {
+            validateLinkCriterion(linkCriterion);
+
+            mLinkCriterion.clear();
+            mLinkCriterion.addAll(linkCriterion);
+            return this;
+        }
+
         /** Build the VcnWifiUnderlyingNetworkTemplate. */
         @NonNull
         public VcnWifiUnderlyingNetworkTemplate build() {
             return new VcnWifiUnderlyingNetworkTemplate(
-                    mNetworkQuality, mMeteredMatchCriteria, mSsids);
+                    mLinkCriterion, mMeteredMatchCriteria, mSsids);
         }
     }
 }
