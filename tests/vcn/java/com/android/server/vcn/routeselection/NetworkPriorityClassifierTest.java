@@ -18,7 +18,6 @@ package com.android.server.vcn.routeselection;
 
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_FORBIDDEN;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_REQUIRED;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_OK;
 
 import static com.android.server.vcn.VcnTestUtils.setupSystemService;
 import static com.android.server.vcn.routeselection.NetworkPriorityClassifier.PRIORITY_ANY;
@@ -76,6 +75,12 @@ public class NetworkPriorityClassifierTest {
     private static final int CARRIER_ID = 1;
     private static final int CARRIER_ID_OTHER = 2;
 
+    private static final int LINK_UPSTREAM_BANDWIDTH_KBPS = 1024;
+    private static final int LINK_DOWNSTREAM_BANDWIDTH_KBPS = 2048;
+
+    private static final int TEST_MIN_UPSTREAM_BANDWIDTH_KBPS = 100;
+    private static final int TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS = 200;
+
     private static final ParcelUuid SUB_GROUP = new ParcelUuid(new UUID(0, 0));
 
     private static final NetworkCapabilities WIFI_NETWORK_CAPABILITIES =
@@ -83,6 +88,8 @@ public class NetworkPriorityClassifierTest {
                     .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
                     .setSignalStrength(WIFI_RSSI)
                     .setSsid(SSID)
+                    .setLinkUpstreamBandwidthKbps(LINK_UPSTREAM_BANDWIDTH_KBPS)
+                    .setLinkDownstreamBandwidthKbps(LINK_DOWNSTREAM_BANDWIDTH_KBPS)
                     .build();
 
     private static final TelephonyNetworkSpecifier TEL_NETWORK_SPECIFIER =
@@ -93,6 +100,8 @@ public class NetworkPriorityClassifierTest {
                     .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                     .setSubscriptionIds(Set.of(SUB_ID))
                     .setNetworkSpecifier(TEL_NETWORK_SPECIFIER)
+                    .setLinkUpstreamBandwidthKbps(LINK_UPSTREAM_BANDWIDTH_KBPS)
+                    .setLinkDownstreamBandwidthKbps(LINK_DOWNSTREAM_BANDWIDTH_KBPS)
                     .build();
 
     private static final LinkProperties LINK_PROPERTIES = getLinkPropertiesWithName("test_iface");
@@ -146,7 +155,6 @@ public class NetworkPriorityClassifierTest {
     public void testMatchWithoutNotMeteredBit() {
         final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
                 new VcnWifiUnderlyingNetworkTemplate.Builder()
-                        .setNetworkQuality(NETWORK_QUALITY_OK)
                         .setMetered(MATCH_FORBIDDEN)
                         .build();
 
@@ -161,11 +169,156 @@ public class NetworkPriorityClassifierTest {
                         null /* carrierConfig */));
     }
 
+    @Test
+    public void testMatchWithUpstreamBandwidthEquals() {
+        final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
+                new VcnWifiUnderlyingNetworkTemplate.Builder()
+                        .setMinUpstreamBandwidthKbps(LINK_UPSTREAM_BANDWIDTH_KBPS)
+                        .build();
+
+        assertTrue(
+                checkMatchesPriorityRule(
+                        mVcnContext,
+                        wifiNetworkPriority,
+                        mWifiNetworkRecord,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        null /* currentlySelecetd */,
+                        null /* carrierConfig */));
+    }
+
+    @Test
+    public void testMatchWithUpstreamBandwidthTooLow() {
+        final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
+                new VcnWifiUnderlyingNetworkTemplate.Builder()
+                        .setMinUpstreamBandwidthKbps(LINK_UPSTREAM_BANDWIDTH_KBPS + 1)
+                        .build();
+
+        assertFalse(
+                checkMatchesPriorityRule(
+                        mVcnContext,
+                        wifiNetworkPriority,
+                        mWifiNetworkRecord,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        null /* currentlySelecetd */,
+                        null /* carrierConfig */));
+    }
+
+    @Test
+    public void testMatchWithDownstreamBandwidthEquals() {
+        final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
+                new VcnWifiUnderlyingNetworkTemplate.Builder()
+                        .setMinDownstreamBandwidthKbps(LINK_DOWNSTREAM_BANDWIDTH_KBPS)
+                        .build();
+
+        assertTrue(
+                checkMatchesPriorityRule(
+                        mVcnContext,
+                        wifiNetworkPriority,
+                        mWifiNetworkRecord,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        null /* currentlySelecetd */,
+                        null /* carrierConfig */));
+    }
+
+    @Test
+    public void testMatchWithDownstreamBandwidthTooLow() {
+        final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
+                new VcnWifiUnderlyingNetworkTemplate.Builder()
+                        .setMinDownstreamBandwidthKbps(LINK_DOWNSTREAM_BANDWIDTH_KBPS + 1)
+                        .build();
+
+        assertFalse(
+                checkMatchesPriorityRule(
+                        mVcnContext,
+                        wifiNetworkPriority,
+                        mWifiNetworkRecord,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        null /* currentlySelecetd */,
+                        null /* carrierConfig */));
+    }
+
+    @Test
+    public void testMatchSelectedUnderlyingNetwork_requiredButNotUnderlying() {
+        final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
+                new VcnWifiUnderlyingNetworkTemplate.Builder()
+                        .setSelectedUnderlyingNetwork(MATCH_REQUIRED)
+                        .build();
+
+        assertFalse(
+                checkMatchesPriorityRule(
+                        mVcnContext,
+                        wifiNetworkPriority,
+                        mWifiNetworkRecord,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        null /* currentlySelecetd */,
+                        null /* carrierConfig */));
+    }
+
+    @Test
+    public void testMatchSelectedUnderlyingNetwork_requiredAndIsUnderlying() {
+        final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
+                new VcnWifiUnderlyingNetworkTemplate.Builder()
+                        .setSelectedUnderlyingNetwork(MATCH_REQUIRED)
+                        .build();
+
+        assertTrue(
+                checkMatchesPriorityRule(
+                        mVcnContext,
+                        wifiNetworkPriority,
+                        mWifiNetworkRecord,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        mWifiNetworkRecord /* currentlySelecetd */,
+                        null /* carrierConfig */));
+    }
+
+    @Test
+    public void testMatchSelectedUnderlyingNetwork_forbiddenButNotUnderlying() {
+        final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
+                new VcnWifiUnderlyingNetworkTemplate.Builder()
+                        .setSelectedUnderlyingNetwork(MATCH_FORBIDDEN)
+                        .build();
+
+        assertTrue(
+                checkMatchesPriorityRule(
+                        mVcnContext,
+                        wifiNetworkPriority,
+                        mWifiNetworkRecord,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        null /* currentlySelecetd */,
+                        null /* carrierConfig */));
+    }
+
+    @Test
+    public void testMatchSelectedUnderlyingNetwork_forbiddenAndIsUnderlying() {
+        final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
+                new VcnWifiUnderlyingNetworkTemplate.Builder()
+                        .setSelectedUnderlyingNetwork(MATCH_FORBIDDEN)
+                        .build();
+
+        assertFalse(
+                checkMatchesPriorityRule(
+                        mVcnContext,
+                        wifiNetworkPriority,
+                        mWifiNetworkRecord,
+                        SUB_GROUP,
+                        mSubscriptionSnapshot,
+                        mWifiNetworkRecord /* currentlySelecetd */,
+                        null /* carrierConfig */));
+    }
+
     private void verifyMatchWifi(
             boolean isSelectedNetwork, PersistableBundle carrierConfig, boolean expectMatch) {
         final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
                 new VcnWifiUnderlyingNetworkTemplate.Builder()
-                        .setNetworkQuality(NETWORK_QUALITY_OK)
+                        .setMinUpstreamBandwidthKbps(TEST_MIN_UPSTREAM_BANDWIDTH_KBPS)
+                        .setMinDownstreamBandwidthKbps(TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS)
                         .build();
         final UnderlyingNetworkRecord selectedNetworkRecord =
                 isSelectedNetwork ? mWifiNetworkRecord : null;
@@ -214,7 +367,8 @@ public class NetworkPriorityClassifierTest {
         final String nwPrioritySsid = useMatchedSsid ? SSID : SSID_OTHER;
         final VcnWifiUnderlyingNetworkTemplate wifiNetworkPriority =
                 new VcnWifiUnderlyingNetworkTemplate.Builder()
-                        .setNetworkQuality(NETWORK_QUALITY_OK)
+                        .setMinUpstreamBandwidthKbps(TEST_MIN_UPSTREAM_BANDWIDTH_KBPS)
+                        .setMinDownstreamBandwidthKbps(TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS)
                         .setSsids(Set.of(nwPrioritySsid))
                         .build();
 
@@ -238,7 +392,9 @@ public class NetworkPriorityClassifierTest {
     }
 
     private static VcnCellUnderlyingNetworkTemplate.Builder getCellNetworkPriorityBuilder() {
-        return new VcnCellUnderlyingNetworkTemplate.Builder().setNetworkQuality(NETWORK_QUALITY_OK);
+        return new VcnCellUnderlyingNetworkTemplate.Builder()
+                .setMinUpstreamBandwidthKbps(TEST_MIN_UPSTREAM_BANDWIDTH_KBPS)
+                .setMinDownstreamBandwidthKbps(TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS);
     }
 
     @Test

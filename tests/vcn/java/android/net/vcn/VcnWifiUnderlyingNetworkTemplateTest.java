@@ -17,12 +17,10 @@ package android.net.vcn;
 
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_ANY;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_FORBIDDEN;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_ANY;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_OK;
+import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_REQUIRED;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -30,13 +28,17 @@ import java.util.Set;
 
 public class VcnWifiUnderlyingNetworkTemplateTest {
     private static final String SSID = "TestWifi";
-    private static final int INVALID_NETWORK_QUALITY = -1;
+
+    private static final int TEST_MIN_UPSTREAM_BANDWIDTH_KBPS = 100;
+    private static final int TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS = 200;
 
     // Package private for use in VcnGatewayConnectionConfigTest
     static VcnWifiUnderlyingNetworkTemplate getTestNetworkTemplate() {
         return new VcnWifiUnderlyingNetworkTemplate.Builder()
-                .setNetworkQuality(NETWORK_QUALITY_OK)
+                .setSelectedUnderlyingNetwork(MATCH_REQUIRED)
                 .setMetered(MATCH_FORBIDDEN)
+                .setMinUpstreamBandwidthKbps(TEST_MIN_UPSTREAM_BANDWIDTH_KBPS)
+                .setMinDownstreamBandwidthKbps(TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS)
                 .setSsids(Set.of(SSID))
                 .build();
     }
@@ -44,8 +46,13 @@ public class VcnWifiUnderlyingNetworkTemplateTest {
     @Test
     public void testBuilderAndGetters() {
         final VcnWifiUnderlyingNetworkTemplate networkPriority = getTestNetworkTemplate();
-        assertEquals(NETWORK_QUALITY_OK, networkPriority.getNetworkQuality());
+        assertEquals(MATCH_REQUIRED, networkPriority.getSelectedUnderlyingNetwork());
         assertEquals(MATCH_FORBIDDEN, networkPriority.getMetered());
+        assertEquals(
+                TEST_MIN_UPSTREAM_BANDWIDTH_KBPS, networkPriority.getMinUpstreamBandwidthKbps());
+        assertEquals(
+                TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS,
+                networkPriority.getMinDownstreamBandwidthKbps());
         assertEquals(Set.of(SSID), networkPriority.getSsids());
     }
 
@@ -53,19 +60,11 @@ public class VcnWifiUnderlyingNetworkTemplateTest {
     public void testBuilderAndGettersForDefaultValues() {
         final VcnWifiUnderlyingNetworkTemplate networkPriority =
                 new VcnWifiUnderlyingNetworkTemplate.Builder().build();
-        assertEquals(NETWORK_QUALITY_ANY, networkPriority.getNetworkQuality());
+        assertEquals(MATCH_ANY, networkPriority.getSelectedUnderlyingNetwork());
         assertEquals(MATCH_ANY, networkPriority.getMetered());
+        assertEquals(0, networkPriority.getMinUpstreamBandwidthKbps());
+        assertEquals(0, networkPriority.getMinDownstreamBandwidthKbps());
         assertTrue(networkPriority.getSsids().isEmpty());
-    }
-
-    @Test
-    public void testBuildWithInvalidNetworkQuality() {
-        try {
-            new VcnWifiUnderlyingNetworkTemplate.Builder()
-                    .setNetworkQuality(INVALID_NETWORK_QUALITY);
-            fail("Expected to fail due to the invalid network quality");
-        } catch (Exception expected) {
-        }
     }
 
     @Test

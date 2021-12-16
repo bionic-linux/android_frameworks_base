@@ -18,8 +18,6 @@ package android.net.vcn;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_ANY;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_FORBIDDEN;
 import static android.net.vcn.VcnUnderlyingNetworkTemplate.MATCH_REQUIRED;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_ANY;
-import static android.net.vcn.VcnUnderlyingNetworkTemplate.NETWORK_QUALITY_OK;
 
 import static org.junit.Assert.assertEquals;
 
@@ -32,11 +30,16 @@ public class VcnCellUnderlyingNetworkTemplateTest {
     private static final Set<String> ALLOWED_PLMN_IDS = new HashSet<>();
     private static final Set<Integer> ALLOWED_CARRIER_IDS = new HashSet<>();
 
+    private static final int TEST_MIN_UPSTREAM_BANDWIDTH_KBPS = 100;
+    private static final int TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS = 200;
+
     // Package private for use in VcnGatewayConnectionConfigTest
     static VcnCellUnderlyingNetworkTemplate getTestNetworkTemplate() {
         return new VcnCellUnderlyingNetworkTemplate.Builder()
-                .setNetworkQuality(NETWORK_QUALITY_OK)
+                .setSelectedUnderlyingNetwork(MATCH_REQUIRED)
                 .setMetered(MATCH_FORBIDDEN)
+                .setMinUpstreamBandwidthKbps(TEST_MIN_UPSTREAM_BANDWIDTH_KBPS)
+                .setMinDownstreamBandwidthKbps(TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS)
                 .setOperatorPlmnIds(ALLOWED_PLMN_IDS)
                 .setSimSpecificCarrierIds(ALLOWED_CARRIER_IDS)
                 .setRoaming(MATCH_FORBIDDEN)
@@ -47,8 +50,13 @@ public class VcnCellUnderlyingNetworkTemplateTest {
     @Test
     public void testBuilderAndGetters() {
         final VcnCellUnderlyingNetworkTemplate networkPriority = getTestNetworkTemplate();
-        assertEquals(NETWORK_QUALITY_OK, networkPriority.getNetworkQuality());
+        assertEquals(MATCH_REQUIRED, networkPriority.getSelectedUnderlyingNetwork());
         assertEquals(MATCH_FORBIDDEN, networkPriority.getMetered());
+        assertEquals(
+                TEST_MIN_UPSTREAM_BANDWIDTH_KBPS, networkPriority.getMinUpstreamBandwidthKbps());
+        assertEquals(
+                TEST_MIN_DOWNSTREAM_BANDWIDTH_KBPS,
+                networkPriority.getMinDownstreamBandwidthKbps());
         assertEquals(ALLOWED_PLMN_IDS, networkPriority.getOperatorPlmnIds());
         assertEquals(ALLOWED_CARRIER_IDS, networkPriority.getSimSpecificCarrierIds());
         assertEquals(MATCH_FORBIDDEN, networkPriority.getRoaming());
@@ -59,8 +67,10 @@ public class VcnCellUnderlyingNetworkTemplateTest {
     public void testBuilderAndGettersForDefaultValues() {
         final VcnCellUnderlyingNetworkTemplate networkPriority =
                 new VcnCellUnderlyingNetworkTemplate.Builder().build();
-        assertEquals(NETWORK_QUALITY_ANY, networkPriority.getNetworkQuality());
+        assertEquals(MATCH_ANY, networkPriority.getSelectedUnderlyingNetwork());
         assertEquals(MATCH_ANY, networkPriority.getMetered());
+        assertEquals(0, networkPriority.getMinUpstreamBandwidthKbps());
+        assertEquals(0, networkPriority.getMinDownstreamBandwidthKbps());
         assertEquals(new HashSet<String>(), networkPriority.getOperatorPlmnIds());
         assertEquals(new HashSet<Integer>(), networkPriority.getSimSpecificCarrierIds());
         assertEquals(MATCH_ANY, networkPriority.getRoaming());

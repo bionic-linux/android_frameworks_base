@@ -28,6 +28,7 @@ import android.util.ArraySet;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.internal.util.Preconditions;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
 import java.util.ArrayList;
@@ -46,8 +47,17 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
     @Nullable private final Set<String> mSsids;
 
     private VcnWifiUnderlyingNetworkTemplate(
-            int networkQuality, int meteredMatchCriteria, Set<String> ssids) {
-        super(NETWORK_PRIORITY_TYPE_WIFI, networkQuality, meteredMatchCriteria);
+            int selectedUnderlyingNetworkMatchCriteria,
+            int meteredMatchCriteria,
+            int minUpstreamBandwidthKbps,
+            int minDownstreamBandwidthKbps,
+            Set<String> ssids) {
+        super(
+                NETWORK_PRIORITY_TYPE_WIFI,
+                selectedUnderlyingNetworkMatchCriteria,
+                meteredMatchCriteria,
+                minUpstreamBandwidthKbps,
+                minDownstreamBandwidthKbps);
         mSsids = new ArraySet<>(ssids);
 
         validate();
@@ -75,15 +85,26 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             @NonNull PersistableBundle in) {
         Objects.requireNonNull(in, "PersistableBundle is null");
 
-        final int networkQuality = in.getInt(NETWORK_QUALITY_KEY);
+        final int selectedUnderlyingNetworkMatchCriteria =
+                in.getInt(SELECTED_UNDERLYING_NETWORK_MATCH_CRITERIA_KEY);
         final int meteredMatchCriteria = in.getInt(METERED_MATCH_KEY);
+
+        final int minUpstreamBandwidthKbps =
+                in.getInt(MIN_UPSTREAM_BANDWIDTH_KBPS_KEY, DEFAULT_MIN_UPSTREAM_BANDWIDTH_KBPS);
+        final int minDownstreamBandwidthKbps =
+                in.getInt(MIN_DOWNSTREAM_BANDWIDTH_KBPS_KEY, DEFAULT_MIN_DOWNSTREAM_BANDWIDTH_KBPS);
 
         final PersistableBundle ssidsBundle = in.getPersistableBundle(SSIDS_KEY);
         Objects.requireNonNull(ssidsBundle, "ssidsBundle is null");
         final Set<String> ssids =
                 new ArraySet<String>(
                         PersistableBundleUtils.toList(ssidsBundle, STRING_DESERIALIZER));
-        return new VcnWifiUnderlyingNetworkTemplate(networkQuality, meteredMatchCriteria, ssids);
+        return new VcnWifiUnderlyingNetworkTemplate(
+                selectedUnderlyingNetworkMatchCriteria,
+                meteredMatchCriteria,
+                minUpstreamBandwidthKbps,
+                minDownstreamBandwidthKbps,
+                ssids);
     }
 
     /** @hide */
@@ -137,29 +158,34 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
 
     /** This class is used to incrementally build VcnWifiUnderlyingNetworkTemplate objects. */
     public static final class Builder {
-        private int mNetworkQuality = NETWORK_QUALITY_ANY;
+        private int mSelectedUnderlyingNetworkMatchCriteria = MATCH_ANY;
         private int mMeteredMatchCriteria = MATCH_ANY;
         @NonNull private final Set<String> mSsids = new ArraySet<>();
+
+        private int mMinUpstreamBandwidthKbps = DEFAULT_MIN_UPSTREAM_BANDWIDTH_KBPS;
+        private int mMinDownstreamBandwidthKbps = DEFAULT_MIN_DOWNSTREAM_BANDWIDTH_KBPS;
 
         /** Construct a Builder object. */
         public Builder() {}
 
         /**
-         * Set the required network quality to match this template.
+         * Set the criteria for matching against the VCN's selected underlying network.
          *
-         * <p>Network quality is a aggregation of multiple signals that reflect the network link
-         * metrics. For example, the network validation bit (see {@link
-         * NetworkCapabilities#NET_CAPABILITY_VALIDATED}), estimated first hop transport bandwidth
-         * and signal strength.
-         *
-         * @param networkQuality the required network quality. Defaults to NETWORK_QUALITY_ANY
+         * @param matchCriteria the matching criteria for matching aginst the VCN's selected
+         *     underlying network. If set to {@link #REQUIRED}, this template will ONLY match a
+         *     VCN's selected underlying network. If set to {@link #FORBIDDEN}, this template will
+         *     ONLY match network that are NOT the VCN's selected underlying network. Defaults to
+         *     {@link #MATCH_ANY}.
          * @hide
          */
+        // The matching getter is defined in the super class. Please see {@link
+        // VcnUnderlyingNetworkTemplate#getSelectedUnderlyingNetwork()}
+        @SuppressLint("MissingGetterMatchingBuilder")
         @NonNull
-        public Builder setNetworkQuality(@NetworkQuality int networkQuality) {
-            validateNetworkQuality(networkQuality);
+        public Builder setSelectedUnderlyingNetwork(@MatchCriteria int matchCriteria) {
+            validateMatchCriteria(matchCriteria, "setSelectedUnderlyingNetwork");
 
-            mNetworkQuality = networkQuality;
+            mSelectedUnderlyingNetworkMatchCriteria = matchCriteria;
             return this;
         }
 
@@ -196,11 +222,55 @@ public final class VcnWifiUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
             return this;
         }
 
+        /**
+         * Set the minimum acceptable upstream bandwidth allowed by this template.
+         *
+         * <p>Estimated bandwidth of a network is provided by the transport layer, and reported in
+         * {@link NetworkCapabilities}. The provided estimates will be used without modification.
+         *
+         * @param minUpstreamBandwidthKbps the minimum accepted upstream bandwidth, or {@code 0} to
+         *     disable this requirement. Defaults to {@code 0}
+         * @return this {@link Builder} instance, for chaining
+         * @hide
+         */
+        @NonNull
+        public Builder setMinUpstreamBandwidthKbps(int minUpstreamBandwidthKbps) {
+            Preconditions.checkArgument(
+                    minUpstreamBandwidthKbps >= 0,
+                    "Invalid minUpstreamBandwidthKbps, must be >= 0");
+            mMinUpstreamBandwidthKbps = minUpstreamBandwidthKbps;
+            return this;
+        }
+
+        /**
+         * Set the minimum acceptable downstream bandwidth allowed by this template.
+         *
+         * <p>Estimated bandwidth of a network is provided by the transport layer, and reported in
+         * {@link NetworkCapabilities}. The provided estimates will be used without modification.
+         *
+         * @param minDownstreamBandwidthKbps the minimum accepted downstream bandwidth, or {@code 0}
+         *     to disable this requirement. Defaults to {@code 0}
+         * @return this {@link Builder} instance, for chaining
+         * @hide
+         */
+        @NonNull
+        public Builder setMinDownstreamBandwidthKbps(int minDownstreamBandwidthKbps) {
+            Preconditions.checkArgument(
+                    minDownstreamBandwidthKbps >= 0,
+                    "Invalid minDownstreamBandwidthKbps, must be >= 0");
+            mMinDownstreamBandwidthKbps = minDownstreamBandwidthKbps;
+            return this;
+        }
+
         /** Build the VcnWifiUnderlyingNetworkTemplate. */
         @NonNull
         public VcnWifiUnderlyingNetworkTemplate build() {
             return new VcnWifiUnderlyingNetworkTemplate(
-                    mNetworkQuality, mMeteredMatchCriteria, mSsids);
+                    mSelectedUnderlyingNetworkMatchCriteria,
+                    mMeteredMatchCriteria,
+                    mMinUpstreamBandwidthKbps,
+                    mMinDownstreamBandwidthKbps,
+                    mSsids);
         }
     }
 }
