@@ -402,9 +402,12 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          *     that IS the already-selected underlying network, or {@code 0} to disable this
          *     requirement. MUST be less than minExitUpstreamBandwidthKbps. Defaults to {@code 0}
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
+        // The getter for the two integers are separated, and in the superclass. Please see {@link
+        // VcnUnderlyingNetworkTemplate#getMinEntryUpstreamBandwidthKbps()} and {@link
+        // VcnUnderlyingNetworkTemplate#getMinExitUpstreamBandwidthKbps()}
+        @SuppressLint("MissingGetterMatchingBuilder")
         public Builder setMinUpstreamBandwidthKbps(
                 int minEntryUpstreamBandwidthKbps, int minExitUpstreamBandwidthKbps) {
             validateMinBandwidthKbps(minEntryUpstreamBandwidthKbps, minExitUpstreamBandwidthKbps);
@@ -451,9 +454,12 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          *     network that IS the already-selected underlying network, or {@code 0} to disable this
          *     requirement. MUST be less than minExitDownstreamBandwidthKbps. Defaults to {@code 0}
          * @return this {@link Builder} instance, for chaining
-         * @hide
          */
         @NonNull
+        // The getter for the two integers are separated, and in the superclass. Please see {@link
+        // VcnUnderlyingNetworkTemplate#getMinEntryDownstreamBandwidthKbps()} and {@link
+        // VcnUnderlyingNetworkTemplate#getMinExitDownstreamBandwidthKbps()}
+        @SuppressLint("MissingGetterMatchingBuilder")
         public Builder setMinDownstreamBandwidthKbps(
                 int minEntryDownstreamBandwidthKbps, int minExitDownstreamBandwidthKbps) {
             validateMinBandwidthKbps(
