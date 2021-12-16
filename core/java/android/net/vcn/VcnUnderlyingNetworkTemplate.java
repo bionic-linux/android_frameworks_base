@@ -261,7 +261,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @see VcnWifiUnderlyingNetworkTemplate.Builder#setMinUpstreamBandwidthKbps(int, int)
      * @see VcnCellUnderlyingNetworkTemplate.Builder#setMinUpstreamBandwidthKbps(int, int)
-     * @hide
      */
     public int getMinEntryUpstreamBandwidthKbps() {
         return mMinEntryUpstreamBandwidthKbps;
@@ -272,7 +271,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @see VcnWifiUnderlyingNetworkTemplate.Builder#setMinUpstreamBandwidthKbps(int, int)
      * @see VcnCellUnderlyingNetworkTemplate.Builder#setMinUpstreamBandwidthKbps(int, int)
-     * @hide
      */
     public int getMinExitUpstreamBandwidthKbps() {
         return mMinExitUpstreamBandwidthKbps;
@@ -283,7 +281,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @see VcnWifiUnderlyingNetworkTemplate.Builder#setMinDownstreamBandwidthKbps(int, int)
      * @see VcnCellUnderlyingNetworkTemplate.Builder#setMinDownstreamBandwidthKbps(int, int)
-     * @hide
      */
     public int getMinEntryDownstreamBandwidthKbps() {
         return mMinEntryDownstreamBandwidthKbps;
@@ -294,7 +291,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @see VcnWifiUnderlyingNetworkTemplate.Builder#setMinDownstreamBandwidthKbps(int, int)
      * @see VcnCellUnderlyingNetworkTemplate.Builder#setMinDownstreamBandwidthKbps(int, int)
-     * @hide
      */
     public int getMinExitDownstreamBandwidthKbps() {
         return mMinExitDownstreamBandwidthKbps;
