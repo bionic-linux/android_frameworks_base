@@ -1,0 +1,99 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018499855",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d10",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "1f034fa7_12d98955",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T20:09:24Z",
+      "side": 1,
+      "message": "Must include a \"Test:\" stanza indicating how you tested this change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "6db383d897d4a4c2931a709dd28e2b0e35418662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018499850",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d10",
+      "fixSuggestions": [
+        {
+          "fixId": "1b84d079_087dee3b",
+          "description": "Change to \"core/java/android/bluetooth/BluetoothLeCallControl.java\"",
+          "replacements": [
+            {
+              "path": "core/java/android/bluetooth/BluetoothLeCallControl.java",
+              "range": {
+                "startLine": 739,
+                "startChar": 20,
+                "endLine": 739,
+                "endChar": 26
+              },
+              "replacement": "current"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "47129789_dcdefeb1",
+        "filename": "core/java/android/bluetooth/BluetoothLeCallControl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T20:09:24Z",
+      "side": 1,
+      "message": "Common typo found: \"curent\" -- should it be \"current\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 739,
+        "startChar": 20,
+        "endLine": 739,
+        "endChar": 26
+      },
+      "revId": "6db383d897d4a4c2931a709dd28e2b0e35418662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018499856",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1873900?revision\u003d10",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "83c6075a_02e2c0ee",
+        "filename": "core/java/android/bluetooth/BluetoothLeCallControl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-16T20:09:24Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 840,
+        "startChar": 0,
+        "endLine": 840,
+        "endChar": 114
+      },
+      "revId": "6db383d897d4a4c2931a709dd28e2b0e35418662",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
