@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe4b2e52_6205f0b2",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-16T01:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d00eb24_f2675ce6",
+      "range": {
+        "startLine": 335,
+        "startChar": 27,
+        "endLine": 335,
+        "endChar": 31
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1e64ba1_3098e611",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-12-15T23:34:34Z",
       "side": 1,
       "message": "Not just netcaps, right? like opportunistic?\n\nPerhaps \"Used to configure the matching criteria of a network characteristic. This may include network capabilities, or cellular subscription information",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a4fd4dd_950df46f",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-16T01:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e64ba1_3098e611",
       "range": {
         "startLine": 70,
         "startChar": 52,
@@ -93,6 +141,54 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2acad24_a4dae300",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-16T01:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7365df2e_abb357b3",
+      "range": {
+        "startLine": 78,
+        "startChar": 56,
+        "endLine": 78,
+        "endChar": 60
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f393fdd_2646c97d",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-16T01:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e34737_33587558",
+      "range": {
+        "startLine": 78,
+        "startChar": 47,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "740f2468_d6007fe4",
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "faebb94d_f5cb8f91",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-16T01:23:11Z",
+      "side": 1,
+      "message": "That\u0027s very IETF",
+      "parentUuid": "740f2468_d6007fe4",
+      "range": {
+        "startLine": 84,
+        "startChar": 56,
+        "endLine": 84,
+        "endChar": 63
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60e5fe62_776cb32f",
@@ -129,6 +249,30 @@
       "writtenOn": "2021-12-15T23:34:34Z",
       "side": 1,
       "message": "@see",
+      "range": {
+        "startLine": 170,
+        "startChar": 28,
+        "endLine": 170,
+        "endChar": 31
+      },
+      "revId": "a99af5b4cfa1d20da0876b410a7d4835c1b69e5f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2de774e8_cd26c1e7",
+        "filename": "core/java/android/net/vcn/VcnWifiUnderlyingNetworkTemplate.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2021-12-16T01:23:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e5fe62_776cb32f",
       "range": {
         "startLine": 170,
         "startChar": 28,
