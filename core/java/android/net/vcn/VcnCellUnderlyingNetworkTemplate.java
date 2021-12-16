@@ -355,7 +355,6 @@ public final class VcnCellUnderlyingNetworkTemplate extends VcnUnderlyingNetwork
          *     ALL of the configured criteria in order to match this template.
          * @return this {@link Builder} instance, for chaining
          * @see {@link VcnLinkCriterion}
-         * @hide
          */
         @NonNull
         public Builder setLinkCriteria(@NonNull Set<VcnLinkCriterion> linkCriteria) {
