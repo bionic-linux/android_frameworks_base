@@ -27279,6 +27279,7 @@ package android.net.vcn {
   public static final class VcnCellUnderlyingNetworkTemplate.Builder {
     ctor public VcnCellUnderlyingNetworkTemplate.Builder();
     method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate build();
+    method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder setLinkCriterion(@NonNull java.util.Set<android.net.vcn.VcnLinkCriteria>);
     method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder setMetered(int);
     method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder setOperatorPlmnIds(@NonNull java.util.Set<java.lang.String>);
     method @NonNull public android.net.vcn.VcnCellUnderlyingNetworkTemplate.Builder setOpportunistic(int);
@@ -27317,6 +27318,15 @@ package android.net.vcn {
     method @NonNull public android.net.vcn.VcnGatewayConnectionConfig.Builder setVcnUnderlyingNetworkTemplates(@NonNull java.util.List<android.net.vcn.VcnUnderlyingNetworkTemplate>);
   }
 
+  public abstract class VcnLinkCriteria {
+  }
+
+  public static class VcnLinkCriteria.EstimatedBandwidthCriteria extends android.net.vcn.VcnLinkCriteria {
+    ctor public VcnLinkCriteria.EstimatedBandwidthCriteria(int, int);
+    field public final int minDownstreamBandwidthKbps;
+    field public final int minUpstreamBandwidthKbps;
+  }
+
   public class VcnManager {
     method @RequiresPermission("carrier privileges") public void clearVcnConfig(@NonNull android.os.ParcelUuid) throws java.io.IOException;
     method @NonNull public java.util.List<android.os.ParcelUuid> getConfiguredSubscriptionGroups();
@@ -27339,6 +27349,7 @@ package android.net.vcn {
   }
 
   public abstract class VcnUnderlyingNetworkTemplate {
+    method @NonNull public java.util.Set<android.net.vcn.VcnLinkCriteria> getLinkCriterion();
     method public int getMetered();
     field public static final int MATCH_ANY = 0; // 0x0
     field public static final int MATCH_FORBIDDEN = 2; // 0x2
@@ -27352,6 +27363,7 @@ package android.net.vcn {
   public static final class VcnWifiUnderlyingNetworkTemplate.Builder {
     ctor public VcnWifiUnderlyingNetworkTemplate.Builder();
     method @NonNull public android.net.vcn.VcnWifiUnderlyingNetworkTemplate build();
+    method @NonNull public android.net.vcn.VcnWifiUnderlyingNetworkTemplate.Builder setLinkCriterion(@NonNull java.util.Set<android.net.vcn.VcnLinkCriteria>);
     method @NonNull public android.net.vcn.VcnWifiUnderlyingNetworkTemplate.Builder setMetered(int);
     method @NonNull public android.net.vcn.VcnWifiUnderlyingNetworkTemplate.Builder setSsids(@NonNull java.util.Set<java.lang.String>);
   }
