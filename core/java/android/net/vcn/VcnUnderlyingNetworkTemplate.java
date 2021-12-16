@@ -233,7 +233,6 @@ public abstract class VcnUnderlyingNetworkTemplate {
      *
      * @see VcnWifiUnderlyingNetworkTemplate.Builder#setLinkCriterion(Set<VcnLinkCriteria>)
      * @see VcnCellUnderlyingNetworkTemplate.Builder#setLinkCriterion(Set<VcnLinkCriteria>)
-     * @hide
      */
     @NonNull
     public Set<VcnLinkCriteria> getLinkCriterion() {
