@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6fc7a59_d083c2d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-17T08:56:18Z",
+      "side": 1,
+      "message": "LGTM but might need some follow-up clean-ups.\n+jchalard@ to take a look.",
+      "revId": "121210da31c24e7c1e0882e3f29245adbcc3c647",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47a4c80e_c7ff8b51",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-17T08:56:18Z",
+      "side": 1,
+      "message": "In general we might want to rename all networkId to wifiNetworkKey if feasible.\nBut it should be ok to do this in follow-up CLs.",
+      "range": {
+        "startLine": 202,
+        "startChar": 68,
+        "endLine": 202,
+        "endChar": 77
+      },
+      "revId": "121210da31c24e7c1e0882e3f29245adbcc3c647",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
