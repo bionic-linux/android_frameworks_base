@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a03a8d3_48c3e7bb",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6796,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-12-20T23:47:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2183ba25_693b511b",
+      "revId": "8642bc112d96c2b77cfa138b606c75454d729d27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10968555_4a0224dd",
@@ -31,6 +49,24 @@
       "writtenOn": "2021-12-20T21:58:05Z",
       "side": 1,
       "message": "Can we split this into 2 methods: one for LE Audio and one for A2DP? There is no common logic between the two possible inputs. It also removes the need for supplying a device type.",
+      "revId": "8642bc112d96c2b77cfa138b606c75454d729d27",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "634b3470_07a5e0a4",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 6803,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2021-12-20T23:47:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10968555_4a0224dd",
       "revId": "8642bc112d96c2b77cfa138b606c75454d729d27",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
