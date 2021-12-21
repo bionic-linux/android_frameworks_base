@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0984a014_e98a58ba",
+        "filename": "core/proto/android/providers/settings/global.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2021-12-21T19:25:50Z",
+      "side": 0,
+      "message": "You should probably just mark this deprecated so that nobody reuses the index in an incompatible manner. Although I\u0027m not sure it\u0027s used regardless.",
+      "revId": "6ff6240694dcd8308cb3eaea55080b5806d4de64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
