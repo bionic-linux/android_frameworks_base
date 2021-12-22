@@ -16,6 +16,24 @@
       "message": "You should probably just mark this deprecated so that nobody reuses the index in an incompatible manner. Although I\u0027m not sure it\u0027s used regardless.",
       "revId": "6ff6240694dcd8308cb3eaea55080b5806d4de64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "285d54e6_e4506238",
+        "filename": "core/proto/android/providers/settings/global.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1308473
+      },
+      "writtenOn": "2021-12-22T01:48:58Z",
+      "side": 0,
+      "message": "I think no one has used this setting, so it should be fine probably.",
+      "parentUuid": "0984a014_e98a58ba",
+      "revId": "6ff6240694dcd8308cb3eaea55080b5806d4de64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
