@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "630e7791_c600baf3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T14:10:22Z",
+      "side": 1,
+      "message": "matchWifiNetworkKeys?",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "339ff779_a29a93cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T14:10:22Z",
+      "side": 1,
+      "message": "wifiNetworkKey?",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46cd4d40_ad81ee2a",
+        "filename": "core/java/android/net/NetworkPolicy.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T14:10:22Z",
+      "side": 1,
+      "message": "Sorry but you might need to rebase against this one aosp/1926944.\nGood news is maybe you don\u0027t even need to touch these conflicting files.",
+      "range": {
+        "startLine": 374,
+        "startChar": 20,
+        "endLine": 379,
+        "endChar": 43
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf610a27_a471eeea",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T14:10:22Z",
+      "side": 1,
+      "message": "nit: redundant new line?",
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21ab5f50_1a61babd",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T14:10:22Z",
+      "side": 1,
+      "message": "@NonNull?",
+      "range": {
+        "startLine": 378,
+        "startChar": 4,
+        "endLine": 378,
+        "endChar": 11
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05b409c0_6d5f729f",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T14:10:22Z",
+      "side": 1,
+      "message": "IIUC this check can be removed?",
+      "range": {
+        "startLine": 514,
+        "startChar": 8,
+        "endLine": 514,
+        "endChar": 41
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "613b3fa1_c29e641f",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T14:10:22Z",
+      "side": 1,
+      "message": "IIUC this could be NonNull?",
+      "range": {
+        "startLine": 777,
+        "startChar": 43,
+        "endLine": 777,
+        "endChar": 51
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1543c64c_03cce1d2",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-22T14:10:22Z",
+      "side": 1,
+      "message": "@NonNull?",
+      "range": {
+        "startLine": 1052,
+        "startChar": 9,
+        "endLine": 1052,
+        "endChar": 17
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
