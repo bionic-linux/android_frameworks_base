@@ -227,7 +227,8 @@ public class MultipathPolicyTracker {
             subscriberId = tele.getSubscriberId();
             mNetworkTemplate = new NetworkTemplate(
                     NetworkTemplate.MATCH_MOBILE, subscriberId, new String[] { subscriberId },
-                    null, NetworkStats.METERED_YES, NetworkStats.ROAMING_ALL,
+                    null /* wifiNetworkKey */, new String[0] /* matchWifiNetworkKeys */,
+                    NetworkStats.METERED_YES, NetworkStats.ROAMING_ALL,
                     NetworkStats.DEFAULT_NETWORK_NO, NETWORK_TYPE_ALL, OEM_MANAGED_ALL,
                     SUBSCRIBER_ID_MATCH_RULE_EXACT);
             mUsageCallback = new UsageCallback() {
