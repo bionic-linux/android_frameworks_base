@@ -39,6 +39,30 @@
       },
       "revId": "121210da31c24e7c1e0882e3f29245adbcc3c647",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49036b0c_cc63e72d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-22T12:46:38Z",
+      "side": 1,
+      "message": "I rename all internal field except mNetworkId because we still use mNetworkId in NetworkIdentity. It seems to me that we should change it together.",
+      "parentUuid": "47a4c80e_c7ff8b51",
+      "range": {
+        "startLine": 202,
+        "startChar": 68,
+        "endLine": 202,
+        "endChar": 77
+      },
+      "revId": "121210da31c24e7c1e0882e3f29245adbcc3c647",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
