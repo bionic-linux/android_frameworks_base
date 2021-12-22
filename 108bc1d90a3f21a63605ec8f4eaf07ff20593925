@@ -16,6 +16,190 @@
       "message": "Patch#8 fix conflict",
       "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd124ca9_eab2a9b5",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T07:21:20Z",
+      "side": 1,
+      "message": "I\u0027m afraid this is probably not going to be acceptable even temporarily for two reasons.\n\n• I think the risk of deadlock is actually substantial here. This is called from NPMS in critical sections. The old code, in effect, would *never* go through this route because a WiFi network always has an SSID. There are race conditions where Wifi doesn\u0027t send the SSID, but they are extremely rare. But now, this path is going to be taken every time.\n• Fixing this will not be trivial. Putting the wifi key somewhere in the network capabilities sounds like a reasonable option, but it\u0027s also fairly substantial and it will be subject to controversy. I don\u0027t think we want to take the risk to ship with this, which means I think we should have at least a design that we agree upon.\n\n\nHowever. If memory serves, WifiInfo implements TransportInfo and is always filled by WiFi. So I expect it\u0027s as simple as calling getTransportInfo() on the capabilities, casting it to a WifiInfo and get the key from there. Please be careful to handle error cases appropriately.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 28
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25aedbd2_0963aae0",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T07:21:20Z",
+      "side": 1,
+      "message": "Nit : you\u0027re supposed to document with the name of the parameter, not the name of a member",
+      "range": {
+        "startLine": 221,
+        "startChar": 70,
+        "endLine": 221,
+        "endChar": 83
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baedcf7b_bdef70f5",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T07:21:20Z",
+      "side": 1,
+      "message": "Two periods (likewise in l.265)",
+      "range": {
+        "startLine": 245,
+        "startChar": 48,
+        "endLine": 245,
+        "endChar": 49
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea59eab3_4606c195",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T07:21:20Z",
+      "side": 1,
+      "message": "s/the //",
+      "range": {
+        "startLine": 282,
+        "startChar": 7,
+        "endLine": 282,
+        "endChar": 10
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2f6c7ef_bbea4a7a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T07:21:20Z",
+      "side": 1,
+      "message": "s/which //",
+      "range": {
+        "startLine": 289,
+        "startChar": 36,
+        "endLine": 289,
+        "endChar": 41
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "510aef52_8e750027",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T07:21:20Z",
+      "side": 1,
+      "message": "So how about equals() and hashcode() ? They ignore mMatchSubscriberIds for the reason described in l.352. What are the semantics of this set ?",
+      "range": {
+        "startLine": 359,
+        "startChar": 27,
+        "endLine": 359,
+        "endChar": 43
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57aba4ad_6cf0ee35",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T07:21:20Z",
+      "side": 1,
+      "message": "Considering you have updated the designated constructor, and have compatibility constructor for old callers, and you require networkId to be one of the members of the array. Do we still need mNetworkId ? It sounds to me like you could just get rid of it completely, because it doesn\u0027t look like it serves any purpose now.",
+      "range": {
+        "startLine": 430,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 9
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac586ad2_1eea9bf0",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-22T07:21:20Z",
+      "side": 1,
+      "message": "s/with matching/matches/",
+      "range": {
+        "startLine": 704,
+        "startChar": 24,
+        "endLine": 704,
+        "endChar": 37
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
