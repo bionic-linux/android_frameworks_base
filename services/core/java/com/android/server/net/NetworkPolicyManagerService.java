@@ -2025,7 +2025,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         for (final NetworkStateSnapshot snapshot : snapshots) {
             mNetIdToSubId.put(snapshot.getNetwork().getNetId(), parseSubId(snapshot));
 
-            // Policies matched by NPMS only match by subscriber ID or by ssid. Thus subtype
+            // Policies matched by NPMS only match by subscriber ID or by network ID. Thus subtype
             // in the object created here is never used and its value doesn't matter, so use
             // NETWORK_TYPE_UNKNOWN.
             final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, snapshot,
@@ -2455,13 +2455,15 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                         }
                         final NetworkTemplate.Builder builder =
                                 new NetworkTemplate.Builder(templateType)
-                                        .setWifiNetworkKey(networkId)
                                         .setMeteredness(templateMeteredness);
                         if (subscriberIdMatchRule
                                 == NetworkStatsUtils.SUBSCRIBER_ID_MATCH_RULE_EXACT) {
                             final ArraySet<String> ids = new ArraySet<>();
                             ids.add(subscriberId);
                             builder.setSubscriberIds(ids);
+                        }
+                        if (networkId != null) {
+                            builder.setWifiNetworkKeys(Set.of(networkId));
                         }
                         final NetworkTemplate template = builder.build();
                         if (NetworkPolicy.isTemplatePersistable(template)) {
