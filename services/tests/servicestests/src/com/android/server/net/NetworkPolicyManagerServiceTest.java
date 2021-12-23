@@ -129,6 +129,8 @@ import android.net.NetworkStats;
 import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
 import android.net.TelephonyNetworkSpecifier;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.INetworkManagementService;
@@ -226,13 +228,13 @@ public class NetworkPolicyManagerServiceTest {
 
     private static final long TEST_START = 1194220800000L;
     private static final String TEST_IFACE = "test0";
-    private static final String TEST_SSID = "AndroidAP";
+    private static final String TEST_WIFI_NETWORK_KEY = "TestWifiNetworkKey";
     private static final String TEST_IMSI = "310210";
     private static final int TEST_SUB_ID = 42;
     private static final Network TEST_NETWORK = mock(Network.class, CALLS_REAL_METHODS);
 
 
-    private static NetworkTemplate sTemplateWifi = buildTemplateWifi(TEST_SSID);
+    private static NetworkTemplate sTemplateWifi = buildTemplateWifi(TEST_WIFI_NETWORK_KEY);
     private static NetworkTemplate sTemplateCarrierMetered =
             buildTemplateCarrierMetered(TEST_IMSI);
 
@@ -262,6 +264,8 @@ public class NetworkPolicyManagerServiceTest {
     private @Mock CarrierConfigManager mCarrierConfigManager;
     private @Mock TelephonyManager mTelephonyManager;
     private @Mock UserManager mUserManager;
+    private @Mock WifiManager mWifiManager;
+    private @Mock WifiInfo mWifiInfo;
 
     private ArgumentCaptor<ConnectivityManager.NetworkCallback> mNetworkCallbackCaptor =
             ArgumentCaptor.forClass(ConnectivityManager.NetworkCallback.class);
@@ -375,6 +379,8 @@ public class NetworkPolicyManagerServiceTest {
                         return mConnManager;
                     case Context.USER_SERVICE:
                         return mUserManager;
+                    case Context.WIFI_SERVICE:
+                        return mWifiManager;
                     default:
                         return super.getSystemService(name);
                 }
@@ -458,6 +464,9 @@ public class NetworkPolicyManagerServiceTest {
         NetworkPolicy defaultPolicy = mService.buildDefaultCarrierPolicy(0, "");
         mDefaultWarningBytes = defaultPolicy.warningBytes;
         mDefaultLimitBytes = defaultPolicy.limitBytes;
+
+        when(mWifiManager.getConnectionInfo()).thenReturn(mWifiInfo);
+        when(mWifiInfo.getCurrentNetworkKey()).thenReturn(TEST_WIFI_NETWORK_KEY);
     }
 
     @After
@@ -2099,7 +2108,7 @@ public class NetworkPolicyManagerServiceTest {
         final LinkProperties prop = new LinkProperties();
         prop.setInterfaceName(TEST_IFACE);
         final NetworkCapabilities networkCapabilities = new NetworkCapabilities.Builder()
-                .addTransportType(TRANSPORT_WIFI).setSsid(TEST_SSID).build();
+                .addTransportType(TRANSPORT_WIFI).build();
         return new NetworkStateSnapshot(TEST_NETWORK, networkCapabilities, prop,
                 null /*subscriberId*/, TYPE_WIFI);
     }
