@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f61f5c83_924b20bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-23T11:59:04Z",
+      "side": 1,
+      "message": "LGTM assuming Jean\u0027s comments will be addressed.",
+      "revId": "fad21da3f39f644b422dc2b8a69fc55c34f1cb7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8daa8ac1_fa9563a0",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-23T11:59:04Z",
+      "side": 1,
+      "message": "Not for this CL.\nIs it better if we check only wifi template could have wifi networ keys?",
+      "range": {
+        "startLine": 1163,
+        "startChar": 12,
+        "endLine": 1163,
+        "endChar": 56
+      },
+      "revId": "fad21da3f39f644b422dc2b8a69fc55c34f1cb7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "777a94d6_217833bb",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-23T11:59:04Z",
+      "side": 1,
+      "message": "Maybe you want to change this?",
+      "range": {
+        "startLine": 2625,
+        "startChar": 39,
+        "endLine": 2625,
+        "endChar": 69
+      },
+      "revId": "fad21da3f39f644b422dc2b8a69fc55c34f1cb7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41f495c0_03721720",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 2688,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-23T11:59:04Z",
+      "side": 1,
+      "message": "IIUC you might want to change this?",
+      "range": {
+        "startLine": 2688,
+        "startChar": 41,
+        "endLine": 2688,
+        "endChar": 65
+      },
+      "revId": "fad21da3f39f644b422dc2b8a69fc55c34f1cb7c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
