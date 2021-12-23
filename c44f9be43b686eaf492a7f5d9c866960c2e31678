@@ -16,6 +16,23 @@
       "message": "Hey Peter, would you mind reviewing this docs-only change as a code owner? Let me know if you have any questions, thanks!",
       "revId": "c44f9be43b686eaf492a7f5d9c866960c2e31678",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1126edcd_54c6c640",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060227
+      },
+      "writtenOn": "2021-12-23T18:58:04Z",
+      "side": 1,
+      "message": "Thanks for doing this! Once this is approved, you may want to cherry-pick the change into sc-v2-dev -- otherwise, the fix probably won\u0027t go live until we start publishing Android T docs next year. (I can give Dr. No approval for a docs-only change.) But for such a small fix, I think it\u0027s okay to just leave the change in master and let it go live in a few months.",
+      "revId": "c44f9be43b686eaf492a7f5d9c866960c2e31678",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
