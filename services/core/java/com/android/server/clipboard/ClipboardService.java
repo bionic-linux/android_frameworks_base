@@ -634,6 +634,10 @@ public class ClipboardService extends SystemService {
                 } catch (RemoteException e) {
                     // The RemoteCallbackList will take care of removing
                     // the dead object for us.
+                } catch (SecurityException e) {
+                    Slog.e(TAG, "Send clip changed broadcast security exception: ", e);
+                    clipboard.primaryClipListeners.unregister(
+                            clipboard.primaryClipListeners.getRegisteredCallbackItem(i));
                 }
             }
         } finally {
