@@ -344,6 +344,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d219ee90_cafead11",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-27T00:11:20Z",
+      "side": 1,
+      "message": "It should not happen.\n\nLet me know if you would like to change to NonNull.",
+      "parentUuid": "81973e96_3c8ee7d0",
+      "range": {
+        "startLine": 777,
+        "startChar": 43,
+        "endLine": 777,
+        "endChar": 51
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1543c64c_03cce1d2",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 11

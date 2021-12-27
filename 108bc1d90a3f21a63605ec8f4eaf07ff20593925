@@ -89,6 +89,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a4754e0_0d359244",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-27T00:11:20Z",
+      "side": 1,
+      "message": "Sorry I thought you were suggesting the future implementation plan.\nRevised to use TransportInfo.\n\nThanks.",
+      "parentUuid": "6427cdc1_d10ecab8",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 28
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25aedbd2_0963aae0",
