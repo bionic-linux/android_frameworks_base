@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9c23e10e_968cd7d9",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkIdentity.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-28T08:56:06Z",
+      "side": 1,
+      "message": "There is some OEM code involved here, so let\u0027s make sure it\u0027s actually an instance of WifiInfo just in case.",
+      "range": {
+        "startLine": 230,
+        "startChar": 34,
+        "endLine": 230,
+        "endChar": 44
+      },
+      "revId": "7858936f636785cc903929a1bfc6a3474592549b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c4d91fd6_722b99cd",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 18

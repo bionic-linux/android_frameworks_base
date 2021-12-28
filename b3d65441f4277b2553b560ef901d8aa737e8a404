@@ -392,6 +392,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4ff66d1d_179656e7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2021-12-28T08:56:06Z",
+      "side": 1,
+      "message": "+1. If it can\u0027t happen it\u0027s actually detrimental to call this @Nullable.",
+      "parentUuid": "5c63bafa_4a7a4dd1",
+      "range": {
+        "startLine": 777,
+        "startChar": 43,
+        "endLine": 777,
+        "endChar": 51
+      },
+      "revId": "b3d65441f4277b2553b560ef901d8aa737e8a404",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1543c64c_03cce1d2",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 11
