@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc8b0e98_0fc4586d",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T10:24:51Z",
+      "side": 1,
+      "message": "ArrayUtils cannot be used anymore since it is @hide.\nMaybe use com/android/net/module/util/CollectionUtils.java instead?",
+      "range": {
+        "startLine": 987,
+        "startChar": 24,
+        "endLine": 987,
+        "endChar": 34
+      },
+      "revId": "e9666564f55f7f09ae26b8fffd8d51c988ae7c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc2eb3d9_d355679e",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T10:24:51Z",
+      "side": 1,
+      "message": "It seems to me document this at WifiInfo#getCurrentNetworkKey() should be more appropriate?",
+      "range": {
+        "startLine": 1064,
+        "startChar": 11,
+        "endLine": 1065,
+        "endChar": 10
+      },
+      "revId": "e9666564f55f7f09ae26b8fffd8d51c988ae7c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8cb13e2_4371376c",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T10:24:51Z",
+      "side": 1,
+      "message": "1. Does carrier template allow wifi network key?\n2. Maybe create a standalone function such as validateWifiNetworkKeys?",
+      "range": {
+        "startLine": 1164,
+        "startChar": 30,
+        "endLine": 1164,
+        "endChar": 40
+      },
+      "revId": "e9666564f55f7f09ae26b8fffd8d51c988ae7c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63859cce_45ddf095",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T10:24:51Z",
+      "side": 1,
+      "message": "nit: final",
+      "range": {
+        "startLine": 2625,
+        "startChar": 20,
+        "endLine": 2625,
+        "endChar": 23
+      },
+      "revId": "e9666564f55f7f09ae26b8fffd8d51c988ae7c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
