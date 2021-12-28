@@ -16,6 +16,30 @@
       "message": "Hello，please help me review, thanks.",
       "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16eeb72c_803683e1",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1902359
+      },
+      "writtenOn": "2021-12-28T03:32:21Z",
+      "side": 1,
+      "message": "\u003e Common typo found: \"splited\" -- should it be \"split\"?\n\u003e Note: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.\n\nPlease fix.",
+      "parentUuid": "a75fb448_c8bd0667",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 23
+      },
+      "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
