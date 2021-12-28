@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8748df6c_46cc2976",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-28T09:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d91fd6_722b99cd",
+      "range": {
+        "startLine": 1026,
+        "startChar": 30,
+        "endLine": 1026,
+        "endChar": 77
+      },
+      "revId": "7858936f636785cc903929a1bfc6a3474592549b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9c3b6783_4fd13da2",
@@ -70,6 +94,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3c56da4_f9af9d70",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-28T09:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c3b6783_4fd13da2",
+      "range": {
+        "startLine": 1078,
+        "startChar": 63,
+        "endLine": 1078,
+        "endChar": 78
+      },
+      "revId": "7858936f636785cc903929a1bfc6a3474592549b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d61d5b3_0cc2f0ee",
@@ -83,6 +131,30 @@
       "writtenOn": "2021-12-28T03:56:36Z",
       "side": 1,
       "message": "Since this will be deprecated.\nMaybe just getWifiNetworkKeys().iterator().next()?\nAlso for below.",
+      "range": {
+        "startLine": 2625,
+        "startChar": 56,
+        "endLine": 2625,
+        "endChar": 73
+      },
+      "revId": "7858936f636785cc903929a1bfc6a3474592549b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9ffdee6_f2076b1c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-28T09:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d61d5b3_0cc2f0ee",
       "range": {
         "startLine": 2625,
         "startChar": 56,

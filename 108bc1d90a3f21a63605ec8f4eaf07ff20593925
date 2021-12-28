@@ -421,6 +421,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6396ccb3_61b3987b",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-28T09:00:06Z",
+      "side": 1,
+      "message": "I mean that I remove the check in constructor and revise code to move it in builder.\n\nPrevious I plan to remove it later because I thought the class member might need to align between NetworkTemplate and NetworkIdentity. Offline discuss with Junyu, it is fine to update NetworkTemplate only.\n\nSo I removed mNetworkId in NetworkTemplate in last CL.",
+      "parentUuid": "e061f372_e908c5d2",
+      "range": {
+        "startLine": 430,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 9
+      },
+      "revId": "108bc1d90a3f21a63605ec8f4eaf07ff20593925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac586ad2_1eea9bf0",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 8
