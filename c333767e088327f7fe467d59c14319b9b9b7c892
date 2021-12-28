@@ -1,0 +1,305 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018757446",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1934200?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "96499695_92b25f9a",
+          "description": "Change to \"packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt\"",
+          "replacements": [
+            {
+              "path": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+              "range": {
+                "startLine": 75,
+                "startChar": 16,
+                "endLine": 75,
+                "endChar": 23
+              },
+              "replacement": "split"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "a75fb448_c8bd0667",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-28T03:29:32Z",
+      "side": 1,
+      "message": "Common typo found: \"splited\" -- should it be \"split\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 23
+      },
+      "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018757446",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1934200?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "45921fcc_68571cd6",
+          "description": "Change to \"packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt\"",
+          "replacements": [
+            {
+              "path": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+              "range": {
+                "startLine": 76,
+                "startChar": 16,
+                "endLine": 76,
+                "endChar": 23
+              },
+              "replacement": "split"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "e1ba95b6_55a599e4",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-28T03:29:32Z",
+      "side": 1,
+      "message": "Common typo found: \"splited\" -- should it be \"split\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 76,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 23
+      },
+      "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018757446",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1934200?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "5dbe4dd4_9fbc9c84",
+          "description": "Change to \"packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt\"",
+          "replacements": [
+            {
+              "path": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+              "range": {
+                "startLine": 77,
+                "startChar": 34,
+                "endLine": 77,
+                "endChar": 41
+              },
+              "replacement": "split"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b0fff8ba_c54e1974",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-28T03:29:32Z",
+      "side": 1,
+      "message": "Common typo found: \"splited\" -- should it be \"split\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 77,
+        "startChar": 34,
+        "endLine": 77,
+        "endChar": 41
+      },
+      "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018757446",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1934200?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "aed672c0_b606b184",
+          "description": "Change to \"packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt\"",
+          "replacements": [
+            {
+              "path": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+              "range": {
+                "startLine": 81,
+                "startChar": 28,
+                "endLine": 81,
+                "endChar": 35
+              },
+              "replacement": "split"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "bef31d80_8f3854b0",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-28T03:29:32Z",
+      "side": 1,
+      "message": "Common typo found: \"splited\" -- should it be \"split\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 81,
+        "startChar": 28,
+        "endLine": 81,
+        "endChar": 35
+      },
+      "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018757446",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1934200?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "c7531135_482c6e5d",
+          "description": "Change to \"packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt\"",
+          "replacements": [
+            {
+              "path": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+              "range": {
+                "startLine": 103,
+                "startChar": 12,
+                "endLine": 103,
+                "endChar": 19
+              },
+              "replacement": "split"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0700ff6b_4a7b480b",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-28T03:29:32Z",
+      "side": 1,
+      "message": "Common typo found: \"splited\" -- should it be \"split\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 19
+      },
+      "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018757446",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1934200?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "5d4ce0c5_1aee2aa0",
+          "description": "Change to \"packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt\"",
+          "replacements": [
+            {
+              "path": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+              "range": {
+                "startLine": 107,
+                "startChar": 12,
+                "endLine": 107,
+                "endChar": 19
+              },
+              "replacement": "split"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "b321e269_bcf86622",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-28T03:29:32Z",
+      "side": 1,
+      "message": "Common typo found: \"splited\" -- should it be \"split\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 19
+      },
+      "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000018757446",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1934200?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "313caf8a_de4def14",
+          "description": "Change to \"packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt\"",
+          "replacements": [
+            {
+              "path": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+              "range": {
+                "startLine": 109,
+                "startChar": 15,
+                "endLine": 109,
+                "endChar": 22
+              },
+              "replacement": "split"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "9c0b955e_83ae6654",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-12-28T03:29:32Z",
+      "side": 1,
+      "message": "Common typo found: \"splited\" -- should it be \"split\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 22
+      },
+      "revId": "c333767e088327f7fe467d59c14319b9b9b7c892",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
