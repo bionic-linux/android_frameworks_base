@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4d91fd6_722b99cd",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T03:56:36Z",
+      "side": 1,
+      "message": "Not sure if this is needed.\nWhat does it mean to query with set(null)?\nDoes it happen in pratice?",
+      "range": {
+        "startLine": 1026,
+        "startChar": 30,
+        "endLine": 1026,
+        "endChar": 77
+      },
+      "revId": "7858936f636785cc903929a1bfc6a3474592549b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c3b6783_4fd13da2",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T03:56:36Z",
+      "side": 1,
+      "message": "is it needed to check if the input only contains non-null keys?",
+      "range": {
+        "startLine": 1078,
+        "startChar": 63,
+        "endLine": 1078,
+        "endChar": 78
+      },
+      "revId": "7858936f636785cc903929a1bfc6a3474592549b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d61d5b3_0cc2f0ee",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T03:56:36Z",
+      "side": 1,
+      "message": "Since this will be deprecated.\nMaybe just getWifiNetworkKeys().iterator().next()?\nAlso for below.",
+      "range": {
+        "startLine": 2625,
+        "startChar": 56,
+        "endLine": 2625,
+        "endChar": 73
+      },
+      "revId": "7858936f636785cc903929a1bfc6a3474592549b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdbe7e85_eb17ba7d",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2107,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2021-12-28T03:56:36Z",
+      "side": 1,
+      "message": "It seems to me this could be a local variable in this function?",
+      "range": {
+        "startLine": 2107,
+        "startChar": 67,
+        "endLine": 2107,
+        "endChar": 76
+      },
+      "revId": "7858936f636785cc903929a1bfc6a3474592549b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
