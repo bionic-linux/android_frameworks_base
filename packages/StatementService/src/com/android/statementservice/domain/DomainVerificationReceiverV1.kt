@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.android.statementservice.domain.worker.CollectV1Worker
 import com.android.statementservice.domain.worker.SingleV1RequestWorker
@@ -33,6 +34,7 @@ class DomainVerificationReceiverV1 : BaseDomainVerificationReceiver() {
     companion object {
         private const val ENABLE_V1 = true
         private const val PACKAGE_WORK_PREFIX_V1 = "package_request_v1-"
+        private const val HOSTS_MAX_SIZE = 100
     }
 
     override val tag = DomainVerificationReceiverV1::class.java.simpleName
@@ -59,7 +61,7 @@ class DomainVerificationReceiverV1 : BaseDomainVerificationReceiver() {
             intent.getStringExtra(PackageManager.EXTRA_INTENT_FILTER_VERIFICATION_PACKAGE_NAME)
                 ?: return
 
-        debugLog { "Attempting v1 verification for $packageName" }
+        debugLog { "Attempting v1 verification for $packageName host size:${hosts.size}" }
 
         val workRequests = hosts.map {
             SingleV1RequestWorker.buildRequest(packageName, it) {
@@ -67,13 +69,43 @@ class DomainVerificationReceiverV1 : BaseDomainVerificationReceiver() {
             }
         }
 
-        WorkManager.getInstance(context)
-            .beginUniqueWork(
-                "$PACKAGE_WORK_PREFIX_V1$packageName",
-                ExistingWorkPolicy.REPLACE,
-                workRequests
-            )
-            .then(CollectV1Worker.buildRequest(verificationId, packageName))
-            .enqueue()
+        val workerManager = WorkManager.getInstance(context)
+        val size = workRequests.size
+        if (size > HOSTS_MAX_SIZE) {
+            val splitedList = splitWorkRequests(workRequests)
+            if (splitedList.size > 0) {
+                for (i in 0 until splitedList.size) {
+                    workerManager.beginUniqueWork(
+                            "$PACKAGE_WORK_PREFIX_V1$packageName",
+                            ExistingWorkPolicy.APPEND,
+                            splitedList[i]
+                    ).enqueue()
+                }
+            }
+            workerManager.beginUniqueWork(
+                    "$PACKAGE_WORK_PREFIX_V1$packageName",
+                    ExistingWorkPolicy.APPEND,
+                    CollectV1Worker.buildRequest(verificationId, packageName)
+            ).enqueue()
+        } else {
+            workerManager.beginUniqueWork(
+                            "$PACKAGE_WORK_PREFIX_V1$packageName",
+                            ExistingWorkPolicy.REPLACE,
+                            workRequests
+                    )
+                    .then(CollectV1Worker.buildRequest(verificationId, packageName))
+                    .enqueue()
+        }
+    }
+
+    private fun splitWorkRequests(workRequests: List<OneTimeWorkRequest>): List<List<OneTimeWorkRequest>> {
+        val num = (workRequests.size + HOSTS_MAX_SIZE - 1) / HOSTS_MAX_SIZE
+        var splitedList = arrayListOf<List<OneTimeWorkRequest>>()
+        for (i in 0 until num) {
+            var start = i * HOSTS_MAX_SIZE
+            var end = if ((i + 1) * HOSTS_MAX_SIZE < workRequests.size) (i+1) * HOSTS_MAX_SIZE else workRequests.size
+            splitedList.add(workRequests.subList(start, end))
+        }
+        return splitedList
     }
 }
