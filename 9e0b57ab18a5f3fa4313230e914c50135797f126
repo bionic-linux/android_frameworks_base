@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70e0654c_85109908",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2021-12-29T02:37:03Z",
+      "side": 1,
+      "message": "I don\u0027t think this size check is necessary.",
+      "revId": "9e0b57ab18a5f3fa4313230e914c50135797f126",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e8248d5_0a9f85d2",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2021-12-29T02:37:03Z",
+      "side": 1,
+      "message": "I don\u0027t think this actually works. You need to use the WorkContinuation (the then() call) in order to pass the results to the collecting worker.\n\nYou should verify this, but you may be able to run a collect worker on every sublist. Make sure that each collect worker doesn\u0027t signal errors for domains that aren\u0027t in the request parameters though, or they\u0027ll step on each other.\n\nI think the better/real solution would be to create a single WorkContinuation with all of these chained together, but I don\u0027t know if that\u0027ll hit the size limit when collecting. This would also ensure a single unique job for the ID which could be REPLACE cancelled.",
+      "revId": "9e0b57ab18a5f3fa4313230e914c50135797f126",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "293158d9_a7a7f1a8",
+        "filename": "packages/StatementService/src/com/android/statementservice/domain/DomainVerificationReceiverV1.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2021-12-29T02:37:03Z",
+      "side": 1,
+      "message": "If we\u0027re going to split, we should split by parceled data size, or rather as a proxy, split by domain string size, since just doing it by count could mean that really large domains/subdomains still cause an error.",
+      "revId": "9e0b57ab18a5f3fa4313230e914c50135797f126",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
