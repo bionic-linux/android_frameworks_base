@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b37fa675_17059c4f",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-29T01:18:12Z",
+      "side": 1,
+      "message": "The getCurrentNetworkKey is nullable because API need to cover the case when wifi disconnect.\n\nConsider we check null value here. Thus I think we should document null is not a valid key here. Any suggestion about the wording?",
+      "parentUuid": "bc2eb3d9_d355679e",
+      "range": {
+        "startLine": 1064,
+        "startChar": 11,
+        "endLine": 1065,
+        "endChar": 10
+      },
+      "revId": "e9666564f55f7f09ae26b8fffd8d51c988ae7c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e8cb13e2_4371376c",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
         "patchSetId": 19
@@ -60,6 +84,30 @@
       "writtenOn": "2021-12-28T10:24:51Z",
       "side": 1,
       "message": "1. Does carrier template allow wifi network key?\n2. Maybe create a standalone function such as validateWifiNetworkKeys?",
+      "range": {
+        "startLine": 1164,
+        "startChar": 30,
+        "endLine": 1164,
+        "endChar": 40
+      },
+      "revId": "e9666564f55f7f09ae26b8fffd8d51c988ae7c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8075104f_d23f82b3",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-29T01:18:12Z",
+      "side": 1,
+      "message": "\u003e 1. Does carrier template allow wifi network key?\nCarrier template should be used for NetworkPolicy only (The current use case).\nI don\u0027t see use cases which need to use carrier template with wifi network key.\n\n\u003eMaybe create a standalone function such as validateWifiNetworkKeys?\nDone",
+      "parentUuid": "e8cb13e2_4371376c",
       "range": {
         "startLine": 1164,
         "startChar": 30,
