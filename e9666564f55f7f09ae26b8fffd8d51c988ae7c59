@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ff09702_afc8e31a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-29T03:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc8b0e98_0fc4586d",
+      "range": {
+        "startLine": 987,
+        "startChar": 24,
+        "endLine": 987,
+        "endChar": 34
+      },
+      "revId": "e9666564f55f7f09ae26b8fffd8d51c988ae7c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc2eb3d9_d355679e",
@@ -131,6 +155,30 @@
       "writtenOn": "2021-12-28T10:24:51Z",
       "side": 1,
       "message": "nit: final",
+      "range": {
+        "startLine": 2625,
+        "startChar": 20,
+        "endLine": 2625,
+        "endChar": 23
+      },
+      "revId": "e9666564f55f7f09ae26b8fffd8d51c988ae7c59",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78bb4469_a97d6b59",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1368080
+      },
+      "writtenOn": "2021-12-29T03:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63859cce_45ddf095",
       "range": {
         "startLine": 2625,
         "startChar": 20,
