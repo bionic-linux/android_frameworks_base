@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee1d8159_bbdd5fdb",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkTemplate.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-03T06:18:05Z",
+      "side": 1,
+      "message": "IIUC this is actually unused.\nIf so maybe remove this from the constructor if all the callers are within this CL.",
+      "range": {
+        "startLine": 423,
+        "startChar": 19,
+        "endLine": 423,
+        "endChar": 33
+      },
+      "revId": "96a0629dec2775800729974fb54c4d5bc7bff6b0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
