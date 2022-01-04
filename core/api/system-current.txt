@@ -1848,7 +1848,11 @@ package android.app.usage {
   }
 
   public class NetworkStatsManager {
+    method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public void advisePersistThreshold(long);
+    method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public void forceUpdate();
     method @NonNull @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STATS_PROVIDER, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void registerNetworkStatsProvider(@NonNull String, @NonNull android.net.netstats.provider.NetworkStatsProvider);
+    method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public void setStatsProviderWarningAndLimitAsync(@NonNull String, long, long);
+    method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public void setUidForeground(int, boolean);
     method @NonNull @RequiresPermission(anyOf={android.Manifest.permission.NETWORK_STATS_PROVIDER, android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK}) public void unregisterNetworkStatsProvider(@NonNull android.net.netstats.provider.NetworkStatsProvider);
   }
 
