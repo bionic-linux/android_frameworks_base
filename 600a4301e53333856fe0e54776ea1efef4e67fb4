@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "576071ab_de15a9f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1565664
+      },
+      "writtenOn": "2022-01-04T02:18:57Z",
+      "side": 1,
+      "message": "Thank you for the review.\nIs there anything else which needs to be addressed as part of this patch-set for the changes to be merged ?",
+      "revId": "600a4301e53333856fe0e54776ea1efef4e67fb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
