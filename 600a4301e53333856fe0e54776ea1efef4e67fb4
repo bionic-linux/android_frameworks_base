@@ -16,6 +16,24 @@
       "message": "Thank you for the review.\nIs there anything else which needs to be addressed as part of this patch-set for the changes to be merged ?",
       "revId": "600a4301e53333856fe0e54776ea1efef4e67fb4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef9580b7_a3d82312",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2022-01-04T03:46:31Z",
+      "side": 1,
+      "message": "We need to ensure the CTS test that is part of this topic is ready to submit, thanks.",
+      "parentUuid": "576071ab_de15a9f8",
+      "revId": "600a4301e53333856fe0e54776ea1efef4e67fb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
