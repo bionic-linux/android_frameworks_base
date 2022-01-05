@@ -5886,6 +5886,7 @@ public class CarrierConfigManager {
                 CellSignalStrengthLte.USE_RSRP);
         // Default wifi configurations.
         sDefaults.putAll(Wifi.getDefaults());
+        sDefaults.putAll(Tethering.getDefaults());
         sDefaults.putBoolean(ENABLE_EAP_METHOD_PREFIX_BOOL, false);
         sDefaults.putInt(KEY_GBA_MODE_INT, GBA_ME);
         sDefaults.putInt(KEY_GBA_UA_SECURITY_ORGANIZATION_INT,
@@ -5980,6 +5981,56 @@ public class CarrierConfigManager {
         }
 
         private Wifi() {}
+    }
+
+    /**
+     * Tethering configs used in Tethering Module.
+     */
+    public static final class Tethering {
+        public static final String KEY_PREFIX = "tethering.";
+
+        /**
+         * Tethering entitlement app's package name. For example:
+         * "com.carrier.tether". Empty string means tethering entitlement
+         * check is not required.
+         *
+         * <p>The app shall implement entitlement check as both:
+         * <pre>
+         * 1. An Activity for foreground entitlement check:
+         *    Action : {@link EntitlementManager#ACTION_TETHERING_ENTITLEMENT}
+         *
+         * 2. A Receiver for background entitlement check:
+         *    a. Receiver
+         *       Action : {@link EntitlementManager#ACTION_TETHERING_ENTITLEMENT_BACKGROUND}
+         *
+         *    b. send broadcast
+         *       Use sendBroadcast to send result back.
+         *       Action : {@link EntitlementManager#ACTION_TETHERING_ENTITLEMENT_RESULT}
+         * </pre>
+         *
+         * <p>Requires Permission:
+         * {@link android.Manifest.permission.TETHER_PRIVILEGED}, or the
+         * calling app has carrier privileges (see {@link TelephonyManager#hasCarrierPrivileges()}).
+         */
+        public static final String KEY_ENTITLEMENT_SERVICE_PACKAGE_STRING =
+                KEY_PREFIX + "entitlement_service_package_string";
+
+        /**
+         * A period, in minutes, to repeat the tethering entitlement check,
+         * if tethering data has been connected for more than this period.
+         * 0 means no need to repeat the check.
+         */
+        public static final String KEY_ENTITLEMENT_CHECK_PERIOD_MILLIS_INT =
+                KEY_PREFIX + "entitlement_check_period_minute_int";
+
+        private Tethering() {}
+
+        private static PersistableBundle getDefaults() {
+            PersistableBundle defaults = new PersistableBundle();
+            defaults.putString(KEY_ENTITLEMENT_SERVICE_PACKAGE_STRING, "");
+            defaults.putInt(KEY_ENTITLEMENT_CHECK_PERIOD_MINUTE_INT, 24 * 3600);
+            return defaults;
+        }
     }
 
     /**
