@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51f764b6_798e241b",
+        "filename": "core/api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 27357,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-05T02:20:42Z",
+      "side": 1,
+      "message": "I think we should have a way to specify this that\u0027s more consistent with the existing (getMetered() in particular). Either make everything a criterion, or explode this method into what it does today. I think the latter is the simpler way. You\u0027d have :\n\n  VcnUnderlyingNetworkTemplate {\n    int getMinimumUpstreamBandwidth()\n    int getMinimumDownstreamBandwidth()\n    int getMetered()\n  }",
+      "range": {
+        "startLine": 27357,
+        "startChar": 75,
+        "endLine": 27357,
+        "endChar": 90
+      },
+      "revId": "284333db648af8753e27d02e65a948ae7de6dc25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
