@@ -362,6 +362,10 @@ package android.os {
     method public static void maybeOnUntaggedSocket();
   }
 
+  public final class SystemClock {
+    method @NonNull public static java.time.Clock currentNetworkTimeClock();
+  }
+
   public class SystemConfigManager {
     method @NonNull public java.util.List<android.content.ComponentName> getEnabledComponentOverrides(@NonNull String);
   }
