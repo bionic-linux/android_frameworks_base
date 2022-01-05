@@ -16,7 +16,10 @@
 
 package android.os;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.NonNull;
+import android.annotation.SystemApi;
 import android.app.IAlarmManager;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
@@ -313,6 +316,7 @@ public final class SystemClock {
      * @throws DateTimeException when no accurate network time can be provided.
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     public static @NonNull Clock currentNetworkTimeClock() {
         return new SimpleClock(ZoneOffset.UTC) {
             @Override
