@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "574bf3a8_a07493d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1895321
+      },
+      "writtenOn": "2022-01-05T11:37:56Z",
+      "side": 1,
+      "message": "Hi, this should use BrightnessSynchronizer.floatEquals() again, or before using \"\u003d\u003d\", check whether it is NaN.\nBe willing to be corrected\n\n",
+      "revId": "523216c4115eecf9adc17feed48a00a4892967aa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
