@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36a03355_fcde489f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-06T06:36:38Z",
+      "side": 1,
+      "message": "Only nits now.",
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b7d1543_a97a26ff",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-06T06:36:38Z",
+      "side": 1,
+      "message": "Nit : this is adequate but I think it can be made a little bit clearer with a wording like\n\n  If the set is empty, any carrier ID will match. The default is an empty set.\n\nThis also applies to l.302.",
+      "range": {
+        "startLine": 321,
+        "startChar": 69,
+        "endLine": 322,
+        "endChar": 39
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d1ab20e_1d294d06",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-06T06:36:38Z",
+      "side": 1,
+      "message": "Not your fault, but because the capability has a negative meaning, maybe it could help to clarify the interaction with that in your doc, e.g.\n\n  A template where setRoaming(MATCH_REQUIRED) will only match roaming\n  networks (one without NET_CAPABILITY_NOT_ROAMING). A template where\n  setRoaming(MATCH_FORBIDDEN) will only match a network that is not\n  roaming (one with NET_CAPABILITY_NOT_ROAMING).\n\nThe same applies to setMetered.",
+      "range": {
+        "startLine": 339,
+        "startChar": 36,
+        "endLine": 339,
+        "endChar": 62
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be08bda0_7eeaee55",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-06T06:36:38Z",
+      "side": 1,
+      "message": "Very nitpicky (especially as the wording in @param clears this up), but maybe use some expression that doesn\u0027t leave leeway for \"in highest\" vs \"in lowest\" priority order, e.g. \"higher priority first\" or \"high-to-low priority order\"",
+      "range": {
+        "startLine": 545,
+        "startChar": 75,
+        "endLine": 545,
+        "endChar": 92
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c76118fd_326047a6",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-06T06:36:38Z",
+      "side": 1,
+      "message": "Is the gateway really the agent that\u0027s going through the candidates ?",
+      "range": {
+        "startLine": 547,
+        "startChar": 60,
+        "endLine": 547,
+        "endChar": 67
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dde99d52_30e41d35",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-06T06:36:38Z",
+      "side": 1,
+      "message": "Is this the same list that\u0027s added as described in l.555 ?\n- If so, I think this needs some clarification as the descriptions don\u0027t match each other.\n- If not, maybe you want to clarify l.555 by saying \"unless the list is empty\" or some other clarification",
+      "range": {
+        "startLine": 561,
+        "startChar": 31,
+        "endLine": 562,
+        "endChar": 51
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd010958_dcfd42e2",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-06T06:36:38Z",
+      "side": 1,
+      "message": "Considering what this does, how about setVcnUnderlyingNetworkPriorities ?\n\nHere, the documentation clarifies what it does, but I think on the getter it\u0027s fairly perplexing with the current naming.",
+      "range": {
+        "startLine": 566,
+        "startChar": 23,
+        "endLine": 566,
+        "endChar": 55
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
