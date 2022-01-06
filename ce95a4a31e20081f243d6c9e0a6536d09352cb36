@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18380484_a38e8bf7",
+        "filename": "services/core/java/com/android/server/powerstats/PowerStatsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2022-01-06T01:47:29Z",
+      "side": 1,
+      "message": "Since the test does not override this method, can it be inlined in `getLooper` below?",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "ce95a4a31e20081f243d6c9e0a6536d09352cb36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
