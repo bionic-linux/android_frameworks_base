@@ -184,6 +184,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed3ae9f5_ae338f01",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-06T23:09:11Z",
+      "side": 1,
+      "message": "No it\u0027s the VcnGatewayConnection on Android device will going through the candidates. Updated to \"VCN connection\"",
+      "parentUuid": "c76118fd_326047a6",
+      "range": {
+        "startLine": 547,
+        "startChar": 60,
+        "endLine": 547,
+        "endChar": 67
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dde99d52_30e41d35",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 24
