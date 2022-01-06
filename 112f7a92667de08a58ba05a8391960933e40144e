@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "118af105_2e84c06c",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-06T23:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b7d1543_a97a26ff",
+      "range": {
+        "startLine": 321,
+        "startChar": 69,
+        "endLine": 322,
+        "endChar": 39
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d1ab20e_1d294d06",
@@ -64,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "037029f0_5b21c1f3",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-06T23:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d1ab20e_1d294d06",
+      "range": {
+        "startLine": 339,
+        "startChar": 36,
+        "endLine": 339,
+        "endChar": 62
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be08bda0_7eeaee55",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-01-06T06:36:38Z",
       "side": 1,
       "message": "Very nitpicky (especially as the wording in @param clears this up), but maybe use some expression that doesn\u0027t leave leeway for \"in highest\" vs \"in lowest\" priority order, e.g. \"higher priority first\" or \"high-to-low priority order\"",
+      "range": {
+        "startLine": 545,
+        "startChar": 75,
+        "endLine": 545,
+        "endChar": 92
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b7a9685_3c096473",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-06T23:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be08bda0_7eeaee55",
       "range": {
         "startLine": 545,
         "startChar": 75,
@@ -135,6 +207,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e6e8931e_001b4eef",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-06T23:03:48Z",
+      "side": 1,
+      "message": "Updated l.556. I think it might be confusing to say that we will implicitly add an template at the end of the priority list. Callers may expect that implicitly added template when they call getVcnUnderlyingNetworkPriorities",
+      "parentUuid": "dde99d52_30e41d35",
+      "range": {
+        "startLine": 561,
+        "startChar": 31,
+        "endLine": 562,
+        "endChar": 51
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bd010958_dcfd42e2",
         "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
         "patchSetId": 24
@@ -146,6 +242,30 @@
       "writtenOn": "2022-01-06T06:36:38Z",
       "side": 1,
       "message": "Considering what this does, how about setVcnUnderlyingNetworkPriorities ?\n\nHere, the documentation clarifies what it does, but I think on the getter it\u0027s fairly perplexing with the current naming.",
+      "range": {
+        "startLine": 566,
+        "startChar": 23,
+        "endLine": 566,
+        "endChar": 55
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a66ad3a_38dfc5b9",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-06T23:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd010958_dcfd42e2",
       "range": {
         "startLine": 566,
         "startChar": 23,
