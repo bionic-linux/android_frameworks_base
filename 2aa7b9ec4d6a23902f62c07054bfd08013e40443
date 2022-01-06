@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "081b402b_26ef8f92",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-06T13:27:25Z",
+      "side": 1,
+      "message": "LGTM for OWNERS approval since Jeff\u0027s comment has been addressed.",
+      "revId": "2aa7b9ec4d6a23902f62c07054bfd08013e40443",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
