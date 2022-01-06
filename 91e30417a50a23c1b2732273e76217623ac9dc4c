@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03c34acb_564b9dca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-01-06T02:00:37Z",
+      "side": 1,
+      "message": "Marking API+1 and CR+2 to help keep the team unblocked across timezone boundaries, but please make the suggested change inline before submitting; thanks!  😊",
+      "revId": "91e30417a50a23c1b2732273e76217623ac9dc4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6497cf58_6f31c598",
+        "filename": "core/java/android/os/SystemClock.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-01-06T02:00:37Z",
+      "side": 1,
+      "message": "Since this API is useful to all apps, I can\u0027t think of a good reason to restrict it to only @SystemApi; can you promote it to a fully public API?\n\nThis will match the existing currentGnssTimeClock() API just below this method.",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 319,
+        "endChar": 41
+      },
+      "revId": "91e30417a50a23c1b2732273e76217623ac9dc4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
