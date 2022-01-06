@@ -16,6 +16,29 @@
       "message": "Happy with this but did you check with Jeff as we discussed ?",
       "revId": "6d53853cfa5c5bfb36580efa6f5b2a24702deecd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a7e0b17_ccfda1fc",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-01-06T02:05:12Z",
+      "side": 1,
+      "message": "We just discussed this in a VC; I\u0027d recommend keeping the data *unaugmented* for public API callers since they may be surprised to see data adjusting up/down over time based on carrier-provided anchor points.\n\nHere\u0027s a few suggested options forward:\n\n* Publish the setAugmentWithSubscriptionPlan(boolean) as a public API to let callers (such as Settings UI) have control over the augmentation of queries they make.\n* If you want to augment by default (either in this release or in a future release), I\u0027d recommend doing so using a CompatChange ID to ensure that legacy apps see unaugmented data by default until they target a modern SDK level.",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 45
+      },
+      "revId": "6d53853cfa5c5bfb36580efa6f5b2a24702deecd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
