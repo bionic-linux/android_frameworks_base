@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7305a9d9_032d0946",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6000,
+      "author": {
+        "id": 1432429
+      },
+      "writtenOn": "2022-01-07T16:59:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5f60db5_8abb113e",
+      "range": {
+        "startLine": 6000,
+        "startChar": 30,
+        "endLine": 6000,
+        "endChar": 48
+      },
+      "revId": "dab3eb0d415925da65e5f20eb072cd7d37ae73be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b5bdcba_0fa78c07",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-06T18:28:26Z",
       "side": 1,
       "message": "How about plain English:\n\n  2. A Receiver for background entitlement check:\n\n    Action: {@link EntitlementManager#ACTION_TETHERING_ENTITLEMENT_BACKGROUND}\n    \n    The result shall be returned by sending a broadcast with action {@link EntitlementManager#ACTION_TETHERING_ENTITLEMENT_RESULT}.",
+      "range": {
+        "startLine": 6003,
+        "startChar": 0,
+        "endLine": 6008,
+        "endChar": 88
+      },
+      "revId": "dab3eb0d415925da65e5f20eb072cd7d37ae73be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc493612_fc9af396",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6008,
+      "author": {
+        "id": 1432429
+      },
+      "writtenOn": "2022-01-07T16:59:13Z",
+      "side": 1,
+      "message": "ok, thanks for the english support.",
+      "parentUuid": "9b5bdcba_0fa78c07",
       "range": {
         "startLine": 6003,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6bf3e7d_79d0b261",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6019,
+      "author": {
+        "id": 1432429
+      },
+      "writtenOn": "2022-01-07T16:59:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "648c28ed_d5b6e9ec",
+      "range": {
+        "startLine": 6019,
+        "startChar": 24,
+        "endLine": 6019,
+        "endChar": 31
+      },
+      "revId": "dab3eb0d415925da65e5f20eb072cd7d37ae73be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0973ac72_636c8aeb",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-01-06T18:28:26Z",
       "side": 1,
       "message": "millis",
+      "range": {
+        "startLine": 6024,
+        "startChar": 55,
+        "endLine": 6024,
+        "endChar": 61
+      },
+      "revId": "dab3eb0d415925da65e5f20eb072cd7d37ae73be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0f11168_0b1a7638",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 6024,
+      "author": {
+        "id": 1432429
+      },
+      "writtenOn": "2022-01-07T16:59:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0973ac72_636c8aeb",
       "range": {
         "startLine": 6024,
         "startChar": 55,
