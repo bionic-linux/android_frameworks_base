@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31cf6dcd_17aa6360",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1058860
+      },
+      "writtenOn": "2022-01-07T17:36:51Z",
+      "side": 1,
+      "message": "We should also remove the PGO properties from external/skia.",
+      "revId": "7c0a3ad3eb6a173feb569ddd499b07f745f2672a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
