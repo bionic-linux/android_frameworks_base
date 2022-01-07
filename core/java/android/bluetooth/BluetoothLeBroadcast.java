@@ -17,6 +17,7 @@
 package android.bluetooth;
 
 import android.annotation.IntDef;
+import android.annotation.SystemApi;
 import android.content.Context;
 import android.util.Log;
 
@@ -33,6 +34,7 @@ import java.util.List;
  *
  * @hide
  */
+@SystemApi
 public final class BluetoothLeBroadcast implements BluetoothProfile {
     private static final String TAG = "BluetoothLeBroadcast";
     private static final boolean DBG = true;
@@ -43,6 +45,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @IntDef(prefix = {"LE_AUDIO_BROADCAST_STATE_"}, value = {
       LE_AUDIO_BROADCAST_STATE_DISABLED,
       LE_AUDIO_BROADCAST_STATE_ENABLING,
@@ -59,6 +62,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public static final int LE_AUDIO_BROADCAST_STATE_DISABLED = 10;
 
     /**
@@ -66,6 +70,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public static final int LE_AUDIO_BROADCAST_STATE_ENABLING = 11;
 
     /**
@@ -73,12 +78,14 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public static final int LE_AUDIO_BROADCAST_STATE_ENABLED = 12;
     /**
      * Indicates that LE Audio Broadcast mode is being disabled
      *
      * @hide
      */
+    @SystemApi
     public static final int LE_AUDIO_BROADCAST_STATE_DISABLING = 13;
 
     /**
@@ -86,6 +93,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public static final int LE_AUDIO_BROADCAST_STATE_PLAYING = 14;
 
     /**
@@ -93,6 +101,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public static final int LE_AUDIO_BROADCAST_STATE_NOT_PLAYING = 15;
 
     /**
@@ -100,6 +109,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @IntDef(prefix = {"LE_AUDIO_BROADCAST_ENCRYPTION_KEY_"}, value = {
       LE_AUDIO_BROADCAST_ENCRYPTION_KEY_32BIT,
       LE_AUDIO_BROADCAST_ENCRYPTION_KEY_128BIT
@@ -112,6 +122,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public static final int LE_AUDIO_BROADCAST_ENCRYPTION_KEY_32BIT = 16;
 
     /**
@@ -119,11 +130,15 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public static final int LE_AUDIO_BROADCAST_ENCRYPTION_KEY_128BIT = 17;
 
     /**
      * Interface for receiving events related to broadcasts
+     *
+     * @hide
      */
+    @SystemApi
     public interface Callback {
         /**
          * Called when broadcast state has changed
@@ -147,6 +162,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     /*package*/ BluetoothLeBroadcast(Context context,
                                      BluetoothProfile.ServiceListener listener) {
     }
@@ -158,6 +174,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @Override
     public int getConnectionState(BluetoothDevice device) {
         throw new UnsupportedOperationException(
@@ -171,6 +188,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @Override
     public List<BluetoothDevice> getDevicesMatchingConnectionStates(int[] states) {
         throw new UnsupportedOperationException(
@@ -184,6 +202,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @Override
     public List<BluetoothDevice> getConnectedDevices() {
         throw new UnsupportedOperationException(
@@ -198,6 +217,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public int enableBroadcastMode() {
         if (DBG) log("enableBroadcastMode");
         return BluetoothStatusCodes.ERROR_LE_AUDIO_BROADCAST_SOURCE_SET_BROADCAST_MODE_FAILED;
@@ -208,6 +228,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public int disableBroadcastMode() {
         if (DBG) log("disableBroadcastMode");
         return BluetoothStatusCodes.ERROR_LE_AUDIO_BROADCAST_SOURCE_SET_BROADCAST_MODE_FAILED;
@@ -218,6 +239,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @LeAudioBroadcastState
     public int getBroadcastState() {
         if (DBG) log("getBroadcastState");
@@ -234,6 +256,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @LeAudioEncryptionKeyLength
     public int enableEncryption(boolean useExisting, int keyLength) {
         if (DBG) log("enableEncryption useExisting=" + useExisting + " keyLength=" + keyLength);
@@ -248,6 +271,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public int disableEncryption(boolean removeExisting) {
         if (DBG) log("disableEncryption removeExisting=" + removeExisting);
         return BluetoothStatusCodes.ERROR_LE_AUDIO_BROADCAST_SOURCE_DISABLE_ENCRYPTION_FAILED;
@@ -262,6 +286,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     @LeAudioEncryptionKeyLength
     public int setEncryptionKey(byte[] key, int keyLength) {
         if (DBG) log("setEncryptionKey key=" + key + " keyLength=" + keyLength);
@@ -276,6 +301,7 @@ public final class BluetoothLeBroadcast implements BluetoothProfile {
      *
      * @hide
      */
+    @SystemApi
     public byte[] getEncryptionKey() {
         if (DBG) log("getEncryptionKey");
         return null;
