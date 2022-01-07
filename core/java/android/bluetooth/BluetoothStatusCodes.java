@@ -236,14 +236,14 @@ public final class BluetoothStatusCodes {
     public static final int ERROR_LE_AUDIO_BROADCAST_SOURCE_SET_BROADCAST_MODE_FAILED = 1110;
 
     /**
-     * Indicates that setting a new encryption key for Bluetooth LE Audio Broadcast Source failed.
+     * Indicates that setting a new Broadcast Code for Bluetooth LE Audio Broadcast Source failed.
      * <p>
      * Example solution: Change parameters and try again. If error persists, the app can report
      * telemetry and/or log the error in a bugreport.
      *
      * @hide
      */
-    public static final int ERROR_LE_AUDIO_BROADCAST_SOURCE_SET_ENCRYPTION_KEY_FAILED = 1111;
+    public static final int ERROR_LE_AUDIO_BROADCAST_SOURCE_SET_BROADCAST_CODE_FAILED = 1111;
 
     /**
      * Indicates that connecting to a remote Broadcast Audio Scan Service failed.
