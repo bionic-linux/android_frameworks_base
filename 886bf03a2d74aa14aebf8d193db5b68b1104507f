@@ -16,6 +16,24 @@
       "message": "The pgo build in tm-release builds this target.  We need to simultaneously remove this target from that build.",
       "revId": "886bf03a2d74aa14aebf8d193db5b68b1104507f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff89bd4c_b6e7b152",
+        "filename": "libs/hwui/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1087625
+      },
+      "writtenOn": "2022-01-07T18:00:45Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "dc76df90_265f1c2e",
+      "revId": "886bf03a2d74aa14aebf8d193db5b68b1104507f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
