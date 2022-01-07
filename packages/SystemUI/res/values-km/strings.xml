@@ -1150,4 +1150,31 @@
     <string name="battery_state_unknown_notification_title" msgid="8464703640483773454">"មានបញ្ហាក្នុង​ការអាន​ឧបករណ៍រង្វាស់កម្រិតថ្មរបស់អ្នក"</string>
     <string name="battery_state_unknown_notification_text" msgid="13720937839460899">"ចុចដើម្បីទទួលបាន​ព័ត៌មានបន្ថែម"</string>
     <string name="qs_alarm_tile_no_alarm" msgid="4826472008616807923">"មិនបាន​កំណត់​ម៉ោងរោទ៍​ទេ"</string>
+<<<<<<< HEAD   (886bf0 Merge changes from topic "phonenumber")
+=======
+    <string name="accessibility_fingerprint_label" msgid="5255731221854153660">"ឧបករណ៍​ចាប់ស្នាមម្រាមដៃ"</string>
+    <string name="accessibility_udfps_disabled_button" msgid="4284034245130239384">"បានបិទ​ឧបករណ៍​ចាប់ស្នាមម្រាមដៃ"</string>
+    <string name="accessibility_authenticate_hint" msgid="798914151813205721">"ផ្ទៀងផ្ទាត់"</string>
+    <string name="accessibility_enter_hint" msgid="2617864063504824834">"បញ្ចូល​ឧបករណ៍"</string>
+    <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"ប្រើស្នាមម្រាមដៃ ដើម្បីបើក"</string>
+    <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"តម្រូវឱ្យ​មាន​ការផ្ទៀងផ្ទាត់។ សូមចុច​ឧបករណ៍​ចាប់ស្នាមម្រាមដៃ ដើម្បី​ផ្ទៀងផ្ទាត់​។"</string>
+    <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"ការហៅទូរសព្ទ​ដែលកំពុង​ដំណើរការ"</string>
+    <string name="mobile_data_settings_title" msgid="3955246641380064901">"ទិន្នន័យ​ទូរសព្ទចល័ត"</string>
+    <string name="preference_summary_default_combination" msgid="8453246369903749670">"<xliff:g id="STATE">%1$s</xliff:g> / <xliff:g id="NETWORKMODE">%2$s</xliff:g>"</string>
+    <string name="mobile_data_connection_active" msgid="944490013299018227">"បានភ្ជាប់"</string>
+    <string name="mobile_data_off_summary" msgid="3663995422004150567">"ទិន្នន័យទូរសព្ទចល័ត​នឹងមិនភ្ជាប់ដោយស្វ័យប្រវត្តិទេ"</string>
+    <string name="mobile_data_no_connection" msgid="1713872434869947377">"មិនមាន​ការតភ្ជាប់ទេ"</string>
+    <string name="non_carrier_network_unavailable" msgid="770049357024492372">"មិន​មាន​បណ្ដាញផ្សេងទៀតដែល​អាច​ប្រើ​បានទេ"</string>
+    <string name="all_network_unavailable" msgid="4112774339909373349">"មិន​មាន​បណ្ដាញដែល​អាច​ប្រើ​បានទេ"</string>
+    <string name="turn_on_wifi" msgid="1308379840799281023">"Wi‑Fi"</string>
+    <string name="pref_title_network_details" msgid="1639455355897668883">"ព័ត៌មាន​លម្អិត​អំពីបណ្ដាញ"</string>
+    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"ចុចលើបណ្ដាញណាមួយ ដើម្បីភ្ជាប់"</string>
+    <string name="unlock_to_view_networks" msgid="5072880496312015676">"ដោះសោ​ដើម្បីមើល​បណ្ដាញ"</string>
+    <string name="wifi_empty_list_wifi_on" msgid="3864376632067585377">"កំពុងស្វែងរកបណ្ដាញ…"</string>
+    <string name="wifi_failed_connect_message" msgid="4161863112079000071">"មិន​អាច​ភ្ជាប់​បណ្ដាញ​បានទេ"</string>
+    <string name="wifi_wont_autoconnect_for_now" msgid="5782282612749867762">"Wi-Fi នឹងមិន​ភ្ជាប់ដោយស្វ័យ​ប្រវត្តិក្នុងពេលនេះទេ"</string>
+    <string name="see_all_networks" msgid="3773666844913168122">"មើលទាំងអស់"</string>
+    <string name="to_switch_networks_disconnect_ethernet" msgid="6698111101156951955">"ដើម្បី​ប្ដូរ​បណ្ដាញ សូមផ្ដាច់​អ៊ីសឺរណិត"</string>
+    <string name="wifi_scan_notify_message" msgid="3753839537448621794">"ដើម្បីធ្វើឱ្យ​បទពិសោធន៍ប្រើប្រាស់​ឧបករណ៍ប្រសើរឡើង កម្មវិធី និងសេវាកម្ម​នៅតែអាចស្កេនរក​បណ្ដាញ Wi‑Fi បានគ្រប់ពេល ទោះបីជា​នៅពេលដែលបិទ Wi‑Fi ក៏ដោយ។ អ្នកអាចប្ដូរវាបាន​នៅក្នុង​ការកំណត់​ការស្កេន Wi‑Fi។ "<annotation id="link">"ប្ដូរ"</annotation></string>
+>>>>>>> BRANCH (acc288 Merge cherrypicks of [16372369] into sc-qpr1-release.)
 </resources>

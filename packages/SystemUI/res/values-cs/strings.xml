@@ -717,7 +717,12 @@
     <string name="tuner_full_importance_settings" msgid="1388025816553459059">"Rozšířené ovládací prvky oznámení"</string>
     <string name="tuner_full_importance_settings_on" msgid="917981436602311547">"Zapnuto"</string>
     <string name="tuner_full_importance_settings_off" msgid="5580102038749680829">"Vypnuto"</string>
+<<<<<<< HEAD   (886bf0 Merge changes from topic "phonenumber")
     <string name="power_notification_controls_description" msgid="1334963837572708952">"Rozšířené ovládací prvky oznámení umožňují nastavit úroveň důležitosti oznámení aplikace od 0 do 5. \n\n"<b>"Úroveň 5"</b>" \n– Zobrazit na začátku seznamu oznámení \n– Povolit vyrušení na celou obrazovku \n– Vždy zobrazit náhled \n\n"<b>"Úroveň 4"</b>" \n– Zabránit vyrušení na celou obrazovku \n– Vždy zobrazit náhled \n\n"<b>"Úroveň 3"</b>" \n– Zabránit vyrušení na celou obrazovku \n– Nikdy nezobrazovat náhled \n\n"<b>"Úroveň 2"</b>" \n– Zabránit vyrušení na celou obrazovku \n– Nikdy nezobrazovat náhled \n– Nikdy nevydávat žádný zvukový signál ani nevibrovat \n\n"<b>"Úroveň 1"</b>" \n– Zabránit vyrušení na celou obrazovku \n– Nikdy nezobrazovat náhled \n– Nikdy nevydávat zvukový signál ani nevibrovat \n– Skrýt z obrazovky uzamčení a stavového řádku \n– Zobrazovat na konci seznamu oznámení \n\n"<b>";Úroveň 0"</b>" \n– Blokovat všechna oznámení z aplikace"</string>
+=======
+    <string name="rotation_lock_camera_rotation_on" msgid="789434807790534274">"Zapnuto – podle obličeje"</string>
+    <string name="power_notification_controls_description" msgid="1334963837572708952">"Rozšířené ovládací prvky oznámení umožňují nastavit úroveň důležitosti oznámení aplikace od 0 do 5. \n\n"<b>"Úroveň 5"</b>" \n– Zobrazit na začátku seznamu oznámení \n– Povolit vyrušení na celou obrazovku \n– Vždy zobrazit náhled \n\n"<b>"Úroveň 4"</b>" \n– Zabránit vyrušení na celou obrazovku \n– Vždy zobrazit náhled \n\n"<b>"Úroveň 3"</b>" \n– Zabránit vyrušení na celou obrazovku \n– Nikdy nezobrazovat náhled \n\n"<b>"Úroveň 2"</b>" \n– Zabránit vyrušení na celou obrazovku \n– Nikdy nezobrazovat náhled \n– Nikdy nevydávat žádný zvukový signál ani nevibrovat \n\n"<b>"Úroveň 1"</b>" \n– Zabránit vyrušení na celou obrazovku \n– Nikdy nezobrazovat náhled \n– Nikdy nevydávat zvukový signál ani nevibrovat \n– Skrýt na obrazovce uzamčení a stavového řádku \n– Zobrazovat na konci seznamu oznámení \n\n"<b>";Úroveň 0"</b>" \n– Blokovat všechna oznámení z aplikace"</string>
+>>>>>>> BRANCH (acc288 Merge cherrypicks of [16372369] into sc-qpr1-release.)
     <string name="notification_header_default_channel" msgid="225454696914642444">"Oznámení"</string>
     <string name="notification_channel_disabled" msgid="928065923928416337">"Tato oznámení již nebudete dostávat"</string>
     <string name="notification_channel_minimized" msgid="6892672757877552959">"Tato oznámení budou minimalizována"</string>
@@ -1162,4 +1167,31 @@
     <string name="battery_state_unknown_notification_title" msgid="8464703640483773454">"Problém s načtením měřiče baterie"</string>
     <string name="battery_state_unknown_notification_text" msgid="13720937839460899">"Klepnutím zobrazíte další informace"</string>
     <string name="qs_alarm_tile_no_alarm" msgid="4826472008616807923">"Budík nenastaven"</string>
+<<<<<<< HEAD   (886bf0 Merge changes from topic "phonenumber")
+=======
+    <string name="accessibility_fingerprint_label" msgid="5255731221854153660">"Snímač otisků prstů"</string>
+    <string name="accessibility_udfps_disabled_button" msgid="4284034245130239384">"Snímač otisků prstů byl deaktivován"</string>
+    <string name="accessibility_authenticate_hint" msgid="798914151813205721">"ověříte"</string>
+    <string name="accessibility_enter_hint" msgid="2617864063504824834">"zadáte zařízení"</string>
+    <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"K otevření použijte otisk prstu"</string>
+    <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"Je vyžadováno ověření. Dotkněte se snímače otisků prstů."</string>
+    <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"Probíhající hovor"</string>
+    <string name="mobile_data_settings_title" msgid="3955246641380064901">"Mobilní data"</string>
+    <string name="preference_summary_default_combination" msgid="8453246369903749670">"<xliff:g id="STATE">%1$s</xliff:g> / <xliff:g id="NETWORKMODE">%2$s</xliff:g>"</string>
+    <string name="mobile_data_connection_active" msgid="944490013299018227">"Připojeno"</string>
+    <string name="mobile_data_off_summary" msgid="3663995422004150567">"Mobilní data se nebudou připojovat automaticky"</string>
+    <string name="mobile_data_no_connection" msgid="1713872434869947377">"Žádné připojení"</string>
+    <string name="non_carrier_network_unavailable" msgid="770049357024492372">"Žádné další sítě nejsou k dispozici"</string>
+    <string name="all_network_unavailable" msgid="4112774339909373349">"Nejsou k dispozici žádné sítě"</string>
+    <string name="turn_on_wifi" msgid="1308379840799281023">"Wi-Fi"</string>
+    <string name="pref_title_network_details" msgid="1639455355897668883">"Podrobnosti sítě"</string>
+    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"Klepněte na síť, ke které se chcete připojit"</string>
+    <string name="unlock_to_view_networks" msgid="5072880496312015676">"Sítě uvidíte po odemknutí"</string>
+    <string name="wifi_empty_list_wifi_on" msgid="3864376632067585377">"Vyhledávání sítí…"</string>
+    <string name="wifi_failed_connect_message" msgid="4161863112079000071">"Připojení k síti se nezdařilo"</string>
+    <string name="wifi_wont_autoconnect_for_now" msgid="5782282612749867762">"Wi-Fi se prozatím nebude připojovat automaticky"</string>
+    <string name="see_all_networks" msgid="3773666844913168122">"Zobrazit vše"</string>
+    <string name="to_switch_networks_disconnect_ethernet" msgid="6698111101156951955">"Pokud chcete přepnout sítě, odpojte ethernet"</string>
+    <string name="wifi_scan_notify_message" msgid="3753839537448621794">"Za účelem lepšího fungování zařízení mohou aplikace a služby vyhledávat sítě Wi-Fi, i když je připojení Wi-Fi vypnuté. Toto chování můžete změnit v nastavení vyhledávání Wi-Fi. "<annotation id="link">"Změnit"</annotation></string>
+>>>>>>> BRANCH (acc288 Merge cherrypicks of [16372369] into sc-qpr1-release.)
 </resources>

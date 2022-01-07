@@ -1156,4 +1156,31 @@
     <string name="battery_state_unknown_notification_title" msgid="8464703640483773454">"Problem sa očitavanjem merača baterije"</string>
     <string name="battery_state_unknown_notification_text" msgid="13720937839460899">"Dodirnite za više informacija"</string>
     <string name="qs_alarm_tile_no_alarm" msgid="4826472008616807923">"Alarm nije podešen"</string>
+<<<<<<< HEAD   (886bf0 Merge changes from topic "phonenumber")
+=======
+    <string name="accessibility_fingerprint_label" msgid="5255731221854153660">"Senzor za otisak prsta"</string>
+    <string name="accessibility_udfps_disabled_button" msgid="4284034245130239384">"Senzor za otisak prsta je onemogućen"</string>
+    <string name="accessibility_authenticate_hint" msgid="798914151813205721">"potvrdite identitet"</string>
+    <string name="accessibility_enter_hint" msgid="2617864063504824834">"unesite uređaj"</string>
+    <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"Otvorite pomoću otiska prsta"</string>
+    <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"Potrebna je potvrda identiteta. Dodirnite senzor za otisak prsta da biste potvrdili identitet."</string>
+    <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"Aktuelni telefonski poziv"</string>
+    <string name="mobile_data_settings_title" msgid="3955246641380064901">"Mobilni podaci"</string>
+    <string name="preference_summary_default_combination" msgid="8453246369903749670">"<xliff:g id="STATE">%1$s</xliff:g>/<xliff:g id="NETWORKMODE">%2$s</xliff:g>"</string>
+    <string name="mobile_data_connection_active" msgid="944490013299018227">"Povezano"</string>
+    <string name="mobile_data_off_summary" msgid="3663995422004150567">"Nije uspelo autom. povezivanje preko mob. podataka"</string>
+    <string name="mobile_data_no_connection" msgid="1713872434869947377">"Veza nije uspostavljena"</string>
+    <string name="non_carrier_network_unavailable" msgid="770049357024492372">"Nije dostupna nijedna druga mreža"</string>
+    <string name="all_network_unavailable" msgid="4112774339909373349">"Nema dostupnih mreža"</string>
+    <string name="turn_on_wifi" msgid="1308379840799281023">"WiFi"</string>
+    <string name="pref_title_network_details" msgid="1639455355897668883">"Detalji o mreži"</string>
+    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"Dodirnite mrežu da biste se povezali"</string>
+    <string name="unlock_to_view_networks" msgid="5072880496312015676">"Otključajte da biste videli mreže"</string>
+    <string name="wifi_empty_list_wifi_on" msgid="3864376632067585377">"Traže se mreže…"</string>
+    <string name="wifi_failed_connect_message" msgid="4161863112079000071">"Povezivanje sa mrežom nije uspelo"</string>
+    <string name="wifi_wont_autoconnect_for_now" msgid="5782282612749867762">"WiFi trenutno ne može da se automatski poveže"</string>
+    <string name="see_all_networks" msgid="3773666844913168122">"Pogledajte sve"</string>
+    <string name="to_switch_networks_disconnect_ethernet" msgid="6698111101156951955">"Da biste promenili mrežu, prekinite eternet vezu"</string>
+    <string name="wifi_scan_notify_message" msgid="3753839537448621794">"Radi boljeg doživljaja uređaja, aplikacije i usluge i dalje mogu da traže WiFi mreže u bilo kom trenutku, čak i kada je WiFi isključen. To možete da promenite u podešavanjima WiFi skeniranja. "<annotation id="link">"Promenite"</annotation></string>
+>>>>>>> BRANCH (acc288 Merge cherrypicks of [16372369] into sc-qpr1-release.)
 </resources>

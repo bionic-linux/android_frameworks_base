@@ -1150,4 +1150,31 @@
     <string name="battery_state_unknown_notification_title" msgid="8464703640483773454">"读取电池计量器时出现问题"</string>
     <string name="battery_state_unknown_notification_text" msgid="13720937839460899">"点按即可了解详情"</string>
     <string name="qs_alarm_tile_no_alarm" msgid="4826472008616807923">"未设置闹钟"</string>
+<<<<<<< HEAD   (886bf0 Merge changes from topic "phonenumber")
+=======
+    <string name="accessibility_fingerprint_label" msgid="5255731221854153660">"指纹传感器"</string>
+    <string name="accessibility_udfps_disabled_button" msgid="4284034245130239384">"指纹传感器已停用"</string>
+    <string name="accessibility_authenticate_hint" msgid="798914151813205721">"身份验证"</string>
+    <string name="accessibility_enter_hint" msgid="2617864063504824834">"进入设备"</string>
+    <string name="keyguard_try_fingerprint" msgid="2825130772993061165">"使用指纹即可打开"</string>
+    <string name="accessibility_fingerprint_bouncer" msgid="7189102492498735519">"需要进行身份验证。请轻触指纹传感器以验证身份。"</string>
+    <string name="ongoing_phone_call_content_description" msgid="5332334388483099947">"正在进行通话"</string>
+    <string name="mobile_data_settings_title" msgid="3955246641380064901">"移动数据网络"</string>
+    <string name="preference_summary_default_combination" msgid="8453246369903749670">"<xliff:g id="STATE">%1$s</xliff:g> / <xliff:g id="NETWORKMODE">%2$s</xliff:g>"</string>
+    <string name="mobile_data_connection_active" msgid="944490013299018227">"已连接"</string>
+    <string name="mobile_data_off_summary" msgid="3663995422004150567">"系统将不会自动连接到移动数据网络"</string>
+    <string name="mobile_data_no_connection" msgid="1713872434869947377">"无网络连接"</string>
+    <string name="non_carrier_network_unavailable" msgid="770049357024492372">"没有其他可用网络"</string>
+    <string name="all_network_unavailable" msgid="4112774339909373349">"没有可用网络"</string>
+    <string name="turn_on_wifi" msgid="1308379840799281023">"WLAN"</string>
+    <string name="pref_title_network_details" msgid="1639455355897668883">"网络详情"</string>
+    <string name="tap_a_network_to_connect" msgid="1565073330852369558">"点按要连接的网络"</string>
+    <string name="unlock_to_view_networks" msgid="5072880496312015676">"解锁即可查看网络"</string>
+    <string name="wifi_empty_list_wifi_on" msgid="3864376632067585377">"正在搜索网络…"</string>
+    <string name="wifi_failed_connect_message" msgid="4161863112079000071">"未能连接到网络"</string>
+    <string name="wifi_wont_autoconnect_for_now" msgid="5782282612749867762">"WLAN 暂时无法自动连接"</string>
+    <string name="see_all_networks" msgid="3773666844913168122">"查看全部"</string>
+    <string name="to_switch_networks_disconnect_ethernet" msgid="6698111101156951955">"如要切换网络，请断开以太网连接"</string>
+    <string name="wifi_scan_notify_message" msgid="3753839537448621794">"为了提升设备的使用体验，即使 WLAN 已关闭，应用和服务仍可以随时扫描 WLAN 网络。您可以在 WLAN 扫描设置中更改此设置。"<annotation id="link">"更改"</annotation></string>
+>>>>>>> BRANCH (acc288 Merge cherrypicks of [16372369] into sc-qpr1-release.)
 </resources>
