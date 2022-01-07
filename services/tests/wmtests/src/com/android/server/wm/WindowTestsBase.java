@@ -70,6 +70,7 @@ import android.app.WindowConfiguration;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Rect;
@@ -77,6 +78,8 @@ import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+=======
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.service.voice.IVoiceInteractionSession;
@@ -87,7 +90,10 @@ import android.view.IDisplayWindowInsetsController;
 import android.view.IWindow;
 import android.view.InsetsSourceControl;
 import android.view.InsetsState;
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
 import android.view.SurfaceControl;
+=======
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
 import android.view.SurfaceControl.Transaction;
 import android.view.View;
 import android.view.WindowManager;
@@ -191,6 +197,7 @@ class WindowTestsBase extends SystemServiceTestsBase {
         mContext.getSystemService(DisplayManager.class)
                 .getDisplay(Display.DEFAULT_DISPLAY).getDisplayInfo(mDisplayInfo);
 
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
         // Only create an additional test display for annotated test class/method because it may
         // significantly increase the execution time.
         final Description description = mSystemServicesTestRule.getDescription();
@@ -203,6 +210,28 @@ class WindowTestsBase extends SystemServiceTestsBase {
         } else {
             mDisplayContent = mDefaultDisplay;
         }
+=======
+            // Set-up some common windows.
+            mWallpaperWindow = createCommonWindow(null, TYPE_WALLPAPER, "wallpaperWindow");
+            mImeWindow = createCommonWindow(null, TYPE_INPUT_METHOD, "mImeWindow");
+            mDisplayContent.mInputMethodWindow = mImeWindow;
+            mImeDialogWindow = createCommonWindow(null, TYPE_INPUT_METHOD_DIALOG,
+                    "mImeDialogWindow");
+            mStatusBarWindow = createCommonWindow(null, TYPE_STATUS_BAR, "mStatusBarWindow");
+            mNotificationShadeWindow = createCommonWindow(null, TYPE_NOTIFICATION_SHADE,
+                    "mNotificationShadeWindow");
+            mNavBarWindow = createCommonWindow(null, TYPE_NAVIGATION_BAR, "mNavBarWindow");
+            mDockedDividerWindow = createCommonWindow(null, TYPE_DOCK_DIVIDER,
+                    "mDockedDividerWindow");
+            mAppWindow = createCommonWindow(null, TYPE_BASE_APPLICATION, "mAppWindow");
+            mChildAppWindowAbove = createCommonWindow(mAppWindow,
+                    TYPE_APPLICATION_ATTACHED_DIALOG,
+                    "mChildAppWindowAbove");
+            mChildAppWindowBelow = createCommonWindow(mAppWindow,
+                    TYPE_APPLICATION_MEDIA_OVERLAY,
+                    "mChildAppWindowBelow");
+            mDisplayContent.getInsetsPolicy().setRemoteInsetsControllerControlsSystemBars(false);
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
 
         // Ensure letterbox aspect ratio is not overridden on any device target.
         // {@link com.android.internal.R.dimen.config_fixedOrientationLetterboxAspectRatio}, is set
@@ -765,6 +794,32 @@ class WindowTestsBase extends SystemServiceTestsBase {
     /** Creates and adds a {@link TestDisplayContent} to supervisor at the given position. */
     TestDisplayContent addNewDisplayContentAt(int position) {
         return new TestDisplayContent.Builder(mAtm, 1000, 1500).setPosition(position).build();
+    }
+
+    IDisplayWindowInsetsController createDisplayWindowInsetsController() {
+        return new IDisplayWindowInsetsController.Stub() {
+
+            @Override
+            public void insetsChanged(InsetsState insetsState) throws RemoteException {
+            }
+
+            @Override
+            public void insetsControlChanged(InsetsState insetsState,
+                    InsetsSourceControl[] insetsSourceControls) throws RemoteException {
+            }
+
+            @Override
+            public void showInsets(int i, boolean b) throws RemoteException {
+            }
+
+            @Override
+            public void hideInsets(int i, boolean b) throws RemoteException {
+            }
+
+            @Override
+            public void topFocusedWindowChanged(String packageName) {
+            }
+        };
     }
 
     /** Sets the default minimum task size to 1 so that tests can use small task sizes */

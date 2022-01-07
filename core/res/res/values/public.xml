@@ -3027,6 +3027,11 @@
     <public type="bool" name="config_assistantOnTopOfDream" id="0x01110005" />
     <!-- @hide @TestApi -->
     <public type="bool" name="config_remoteInsetsControllerControlsSystemBars" id="0x01110006" />
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
+=======
+  <!-- ===============================================================
+       Resources added in version S of the platform
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
 
     <!-- ===============================================================
      Resources added in version S of the platform

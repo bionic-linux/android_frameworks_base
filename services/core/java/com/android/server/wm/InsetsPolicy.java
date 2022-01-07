@@ -103,6 +103,10 @@ class InsetsPolicy {
     private BarWindow mStatusBar = new BarWindow(StatusBarManager.WINDOW_STATUS_BAR);
     private BarWindow mNavBar = new BarWindow(StatusBarManager.WINDOW_NAVIGATION_BAR);
     private boolean mAnimatingShown;
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
+=======
+
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
     /**
      * Let remote insets controller control system bars regardless of other settings.
      */
@@ -424,10 +428,17 @@ class InsetsPolicy {
                 .isRootTaskVisible(WINDOWING_MODE_FREEFORM);
         final boolean isResizing = mDisplayContent.getDockedDividerController().isResizing();
 
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
         // We need to force system bars when the docked root task is visible, when the freeform
         // root task is visible but also when we are resizing for the transitions when docked
         // root task visibility changes.
         return isDockedRootTaskVisible || isFreeformRootTaskVisible || isResizing;
+=======
+        // We need to force system bars when the docked stack is visible, when the freeform stack
+        // is visible but also when we are resizing for the transitions when docked stack
+        // visibility changes.
+        return isDockedStackVisible || isFreeformStackVisible || isResizing;
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
     }
 
     @VisibleForTesting

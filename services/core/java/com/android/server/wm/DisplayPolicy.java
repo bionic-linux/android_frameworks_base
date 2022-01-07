@@ -2642,10 +2642,18 @@ public class DisplayPolicy {
                 .isRootTaskVisible(WINDOWING_MODE_SPLIT_SCREEN_PRIMARY);
         final boolean resizing = mDisplayContent.getDockedDividerController().isResizing();
 
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
         // We need to force system bars when the docked root task is visible, when the freeform
         // root task is focused but also when we are resizing for the transitions when docked
         // root task visibility changes.
         mForceShowSystemBars = dockedRootTaskVisible || win.inFreeformWindowingMode() || resizing;
+=======
+        // We need to force system bars when the docked stack is visible, when the freeform stack
+        // is focused but also when we are resizing for the transitions when docked stack
+        // visibility changes.
+        mForceShowSystemBars = dockedStackVisible || win.inFreeformWindowingMode() || resizing;
+        final boolean forceOpaqueStatusBar = mForceShowSystemBars && !isKeyguardShowing();
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
 
         int appearance = APPEARANCE_OPAQUE_NAVIGATION_BARS | APPEARANCE_OPAQUE_STATUS_BARS;
 
@@ -2977,6 +2985,11 @@ public class DisplayPolicy {
         }
         pw.print(prefix); pw.print("mTopIsFullscreen="); pw.println(mTopIsFullscreen);
         pw.print(prefix); pw.print("mForceStatusBar="); pw.print(mForceStatusBar);
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
+=======
+        pw.print(prefix); pw.print("mRemoteInsetsControllerControlsSystemBars");
+        pw.print(mDisplayContent.getInsetsPolicy().getRemoteInsetsControllerControlsSystemBars());
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
         pw.print(" mAllowLockscreenWhenOn="); pw.println(mAllowLockscreenWhenOn);
         pw.print(prefix); pw.print("mRemoteInsetsControllerControlsSystemBars=");
         pw.println(mDisplayContent.getInsetsPolicy().getRemoteInsetsControllerControlsSystemBars());

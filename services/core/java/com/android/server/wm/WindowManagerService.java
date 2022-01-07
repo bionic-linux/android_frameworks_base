@@ -5960,6 +5960,7 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }
 
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
     @Override
     public void updateStaticPrivacyIndicatorBounds(int displayId,
             Rect[] staticBounds) {
@@ -5974,6 +5975,8 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }
 
+=======
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
     public void setNavBarVirtualKeyHapticFeedbackEnabled(boolean enabled) {
         if (mContext.checkCallingOrSelfPermission(android.Manifest.permission.STATUS_BAR)
                 != PackageManager.PERMISSION_GRANTED) {

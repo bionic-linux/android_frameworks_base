@@ -732,6 +732,7 @@ public class DisplayPolicyLayoutTests extends DisplayPolicyTestsBase {
     }
 
     @Test
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
     public void testFixedRotationInsetsSourceFrame() {
         doReturn((mDisplayContent.getRotation() + 1) % 4).when(mDisplayContent)
                 .rotationForActivityInDifferentOrientation(eq(mWindow.mActivityRecord));
@@ -745,6 +746,55 @@ public class DisplayPolicyLayoutTests extends DisplayPolicyTestsBase {
 
         assertEquals(DISPLAY_WIDTH, frame.width());
         assertEquals(DISPLAY_HEIGHT, rotatedFrame.width());
+=======
+    public void testScreenDecorWindows() {
+        final WindowState decorWindow = createWindow(null, TYPE_APPLICATION_OVERLAY, "decorWindow");
+        mWindow.mAttrs.flags = FLAG_NOT_FOCUSABLE | FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR
+                | FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
+        decorWindow.mAttrs.privateFlags |= PRIVATE_FLAG_IS_SCREEN_DECOR;
+        addWindow(decorWindow);
+        addWindow(mWindow);
+
+        // Decor on top
+        updateDecorWindow(decorWindow, MATCH_PARENT, DECOR_WINDOW_INSET, TOP);
+        mDisplayPolicy.beginLayoutLw(mFrames, 0 /* UI mode */);
+        mDisplayPolicy.layoutWindowLw(mWindow, null, mFrames);
+        assertInsetByTopBottom(mWindow.getContentFrameLw(), DECOR_WINDOW_INSET, NAV_BAR_HEIGHT);
+
+        // Decor on bottom
+        updateDecorWindow(decorWindow, MATCH_PARENT, DECOR_WINDOW_INSET, BOTTOM);
+        mDisplayPolicy.beginLayoutLw(mFrames, 0 /* UI mode */);
+        mDisplayPolicy.layoutWindowLw(mWindow, null, mFrames);
+        assertInsetByTopBottom(mWindow.getContentFrameLw(), STATUS_BAR_HEIGHT,
+                DECOR_WINDOW_INSET);
+
+        // Decor on the left
+        updateDecorWindow(decorWindow, DECOR_WINDOW_INSET, MATCH_PARENT, LEFT);
+        mDisplayPolicy.beginLayoutLw(mFrames, 0 /* UI mode */);
+        mDisplayPolicy.layoutWindowLw(mWindow, null, mFrames);
+        assertInsetBy(mWindow.getContentFrameLw(), DECOR_WINDOW_INSET, STATUS_BAR_HEIGHT, 0,
+                NAV_BAR_HEIGHT);
+
+        // Decor on the right
+        updateDecorWindow(decorWindow, DECOR_WINDOW_INSET, MATCH_PARENT, RIGHT);
+        mDisplayPolicy.beginLayoutLw(mFrames, 0 /* UI mode */);
+        mDisplayPolicy.layoutWindowLw(mWindow, null, mFrames);
+        assertInsetBy(mWindow.getContentFrameLw(), 0, STATUS_BAR_HEIGHT, DECOR_WINDOW_INSET,
+                NAV_BAR_HEIGHT);
+
+        // Decor not allowed as inset
+        updateDecorWindow(decorWindow, DECOR_WINDOW_INSET, DECOR_WINDOW_INSET, TOP);
+        mDisplayPolicy.beginLayoutLw(mFrames, 0 /* UI mode */);
+        mDisplayPolicy.layoutWindowLw(mWindow, null, mFrames);
+        assertInsetByTopBottom(mWindow.getContentFrameLw(), STATUS_BAR_HEIGHT, NAV_BAR_HEIGHT);
+    }
+
+    private void updateDecorWindow(WindowState decorWindow, int width, int height, int gravity) {
+        decorWindow.mAttrs.width = width;
+        decorWindow.mAttrs.height = height;
+        decorWindow.mAttrs.gravity = gravity;
+        decorWindow.setRequestedSize(width, height);
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
     }
 
     /**

@@ -121,7 +121,10 @@ import android.view.IDisplayWindowRotationCallback;
 import android.view.IDisplayWindowRotationController;
 import android.view.ISystemGestureExclusionListener;
 import android.view.IWindowManager;
+<<<<<<< HEAD   (2945ef Merge "Allow negative value for CorrelationVector#samplingSt)
 import android.view.InsetsState;
+=======
+>>>>>>> BRANCH (e5e9ac Merge "Added systemui controller to control system bars." in)
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceControl;
