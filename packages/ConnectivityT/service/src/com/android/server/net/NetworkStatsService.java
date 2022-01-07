@@ -792,6 +792,21 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             }
 
             @Override
+            public NetworkStats getTaggedSummaryForAllUid(
+                    NetworkTemplate template, long start, long end) {
+                enforceTemplatePermissions(template);
+                try {
+                    final NetworkStats tagStats = getUidTagComplete()
+                            .getSummary(template, start, end, mAccessLevel, mCallingUid);
+                    return tagStats;
+                } catch (NullPointerException e) {
+                    // TODO: Track down and fix the cause of this crash and remove this catch block.
+                    Log.wtf(TAG, "NullPointerException in getTaggedSummaryForAllUid", e);
+                    throw e;
+                }
+            }
+
+            @Override
             public NetworkStatsHistory getHistoryForUid(
                     NetworkTemplate template, int uid, int set, int tag, int fields) {
                 enforceTemplatePermissions(template);
