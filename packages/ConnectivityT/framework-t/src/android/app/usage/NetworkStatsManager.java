@@ -368,7 +368,7 @@ public class NetworkStatsManager {
      * @return Statistics which is described above.
      * @hide
      */
-    @Nullable
+    @NonNull
     // @SystemApi(client = MODULE_LIBRARIES)
     @WorkerThread
     public NetworkStats querySummary(@NonNull NetworkTemplate template, long startTime,
