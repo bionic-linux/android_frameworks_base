@@ -196,9 +196,10 @@ public class NetworkStatsManager {
      */
     @NonNull
     @WorkerThread
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     public Bucket querySummaryForDevice(@NonNull NetworkTemplate template,
             long startTime, long endTime) {
+        Objects.requireNonNull(template);
         try {
             NetworkStats stats =
                     new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
@@ -370,14 +371,49 @@ public class NetworkStatsManager {
      * @hide
      */
     @NonNull
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     @WorkerThread
     public NetworkStats querySummary(@NonNull NetworkTemplate template, long startTime,
             long endTime) throws SecurityException {
+        Objects.requireNonNull(template);
         try {
             NetworkStats result =
                     new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
             result.startSummaryEnumeration();
+            return result;
+        } catch (RemoteException e) {
+            e.rethrowFromSystemServer();
+        }
+        return null; // To make the compiler happy.
+    }
+
+    /**
+     * Query tagged network usage statistics summaries.
+     *
+     * The results will only include tagged traffic made by UIDs belonging to the calling user
+     * profile. The results are aggregated over time, so that all buckets will have the same
+     * start and end timestamps as the passed arguments. Not aggregated over state, uid,
+     * default network, metered, or roaming.
+     * This may take a long time, and apps should avoid calling this on their main thread.
+     *
+     * @param template Template used to match networks. See {@link NetworkTemplate}.
+     * @param startTime Start of period, in milliseconds since the Unix epoch, see
+     *            {@link System#currentTimeMillis}.
+     * @param endTime End of period, in milliseconds since the Unix epoch, see
+     *            {@link System#currentTimeMillis}.
+     * @return Statistics which is described above.
+     * @hide
+     */
+    @NonNull
+    @SystemApi(client = MODULE_LIBRARIES)
+    @WorkerThread
+    public NetworkStats queryTaggedSummary(@NonNull NetworkTemplate template, long startTime,
+            long endTime) throws SecurityException {
+        Objects.requireNonNull(template);
+        try {
+            NetworkStats result =
+                    new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
+            result.startTaggedSummaryEnumeration();
             return result;
         } catch (RemoteException e) {
             e.rethrowFromSystemServer();
@@ -403,10 +439,11 @@ public class NetworkStatsManager {
      * @hide
      */
     @NonNull
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     @WorkerThread
     public NetworkStats queryDetailsForNetwork(@NonNull NetworkTemplate template,
             long startTime, long endTime) {
+        Objects.requireNonNull(template);
         try {
             final NetworkStats result =
                     new NetworkStats(mContext, template, mFlags, startTime, endTime, mService);
@@ -527,10 +564,11 @@ public class NetworkStatsManager {
      * @hide
      */
     @NonNull
-    // @SystemApi(client = MODULE_LIBRARIES)
+    @SystemApi(client = MODULE_LIBRARIES)
     @WorkerThread
     public NetworkStats queryDetailsForUidTagState(@NonNull NetworkTemplate template,
             long startTime, long endTime, int uid, int tag, int state) throws SecurityException {
+        Objects.requireNonNull(template);
         try {
             final NetworkStats result = new NetworkStats(
                     mContext, template, mFlags, startTime, endTime, mService);
