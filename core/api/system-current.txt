@@ -2080,6 +2080,39 @@ package android.bluetooth {
     field @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT) public static final String ACTION_CONNECTION_STATE_CHANGED = "android.bluetooth.input.profile.action.CONNECTION_STATE_CHANGED";
   }
 
+  public final class BluetoothLeBroadcast implements android.bluetooth.BluetoothProfile {
+    field public static final int LE_AUDIO_BROADCAST_ENCRYPTION_KEY_128BIT = 17;
+    field public static final int LE_AUDIO_BROADCAST_ENCRYPTION_KEY_32BIT = 16;
+    field public static final int LE_AUDIO_BROADCAST_STATE_DISABLED = 10;
+    field public static final int LE_AUDIO_BROADCAST_STATE_DISABLING = 13;
+    field public static final int LE_AUDIO_BROADCAST_STATE_ENABLED = 12;
+    field public static final int LE_AUDIO_BROADCAST_STATE_ENABLING = 11;
+    field public static final int LE_AUDIO_BROADCAST_STATE_NOT_PLAYING = 15;
+    field public static final int LE_AUDIO_BROADCAST_STATE_PLAYING = 14;
+
+    method public int getConnectionState(android.bluetooth.BluetoothDevice);
+    method public List<android.bluetooth.BluetoothDevice> getDevicesMatchingConnectionStates(int[]);
+    method public List<android.bluetooth.BluetoothDevice> getConnectedDevices();
+    method public int enableBroadcastMode();
+    method public int disableBroadcastMode()
+    method public int getBroadcastState();
+    method public int enableEncryption(boolean, int);
+    method public int disableEncryption(boolean);
+    method public int setEncryptionKey(byte[], int);
+    method public byte[] getEncryptionKey();
+  }
+
+  public interface BluetoothLeBroadcast.Callback {
+    method void onBroadcastStateChange(int, int);
+    method void onEncryptionKeySet(boolean);
+  }
+
+  @IntDef(prefix={"LE_AUDIO_BROADCAST_STATE_"}, value={android.bluetooth.BluetoothLeBroadcast.LE_AUDIO_BROADCAST_STATE_DISABLED, android.bluetooth.BluetoothLeBroadcast.LE_AUDIO_BROADCAST_STATE_ENABLING, android.bluetooth.BluetoothLeBroadcast.LE_AUDIO_BROADCAST_STATE_ENABLED, android.bluetooth.BluetoothLeBroadcast.LE_AUDIO_BROADCAST_STATE_DISABLING, android.bluetooth.BluetoothLeBroadcast.LE_AUDIO_BROADCAST_STATE_PLAYING, android.bluetooth.BluetoothLeBroadcast.LE_AUDIO_BROADCAST_STATE_NOT_PLAYING}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) public @interface BluetoothLeBroadcast.LeAudioBroadcastState {
+  }
+
+  @IntDef(prefix={"LE_AUDIO_BROADCAST_ENCRYPTION_KEY_"}, value={android.bluetooth.BluetoothLeBroadcast.LE_AUDIO_BROADCAST_ENCRYPTION_KEY_32BIT, android.bluetooth.BluetoothLeBroadcast.LE_AUDIO_BROADCAST_ENCRYPTION_KEY_128BIT}) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) public @interface BluetoothLeBroadcast.LeAudioEncryptionKeyLength {
+  }
+
   public final class BluetoothMap implements java.lang.AutoCloseable android.bluetooth.BluetoothProfile {
     method public void close();
     method protected void finalize();
