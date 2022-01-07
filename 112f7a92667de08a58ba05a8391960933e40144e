@@ -206,6 +206,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a81a8dba_b157c259",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-07T03:58:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed3ae9f5_ae338f01",
+      "range": {
+        "startLine": 547,
+        "startChar": 60,
+        "endLine": 547,
+        "endChar": 67
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dde99d52_30e41d35",
@@ -243,6 +267,30 @@
       "side": 1,
       "message": "Updated l.556. I think it might be confusing to say that we will implicitly add an template at the end of the priority list. Callers may expect that implicitly added template when they call getVcnUnderlyingNetworkPriorities",
       "parentUuid": "dde99d52_30e41d35",
+      "range": {
+        "startLine": 561,
+        "startChar": 31,
+        "endLine": 562,
+        "endChar": 51
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06fb4964_8b8f382f",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-07T03:58:16Z",
+      "side": 1,
+      "message": "Fair enough. You may want to be a little bit more specific on what network is \"still selected\" – maybe at least to say that it will be a carrier-owned network, and possibly add \"if available\" because it\u0027s also actually possible there is no network at all.",
+      "parentUuid": "e6e8931e_001b4eef",
       "range": {
         "startLine": 561,
         "startChar": 31,
