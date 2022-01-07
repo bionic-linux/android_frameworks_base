@@ -2080,6 +2080,30 @@ package android.bluetooth {
     field @RequiresPermission(android.Manifest.permission.BLUETOOTH_CONNECT) public static final String ACTION_CONNECTION_STATE_CHANGED = "android.bluetooth.input.profile.action.CONNECTION_STATE_CHANGED";
   }
 
+  public final class BluetoothLeBroadcast implements android.bluetooth.BluetoothProfile {
+    method public int disableBroadcastMode();
+    method public int disableEncryption(boolean);
+    method public int enableBroadcastMode();
+    method public int enableEncryption();
+    method @Nullable public String getBroadcastCode();
+    method public int getBroadcastState();
+    method @NonNull public java.util.List<android.bluetooth.BluetoothDevice> getConnectedDevices();
+    method public int getConnectionState(@NonNull android.bluetooth.BluetoothDevice);
+    method @NonNull public java.util.List<android.bluetooth.BluetoothDevice> getDevicesMatchingConnectionStates(@NonNull int[]);
+    method public int setBroadcastCode(@Nullable String);
+    field public static final int LE_AUDIO_BROADCAST_STATE_DISABLED = 10; // 0xa
+    field public static final int LE_AUDIO_BROADCAST_STATE_DISABLING = 13; // 0xd
+    field public static final int LE_AUDIO_BROADCAST_STATE_ENABLED = 12; // 0xc
+    field public static final int LE_AUDIO_BROADCAST_STATE_ENABLING = 11; // 0xb
+    field public static final int LE_AUDIO_BROADCAST_STATE_NOT_PLAYING = 15; // 0xf
+    field public static final int LE_AUDIO_BROADCAST_STATE_PLAYING = 14; // 0xe
+  }
+
+  public static interface BluetoothLeBroadcast.Callback {
+    method public void onBroadcastCodeSet(int);
+    method public void onBroadcastStateChange(int, int);
+  }
+
   public final class BluetoothMap implements java.lang.AutoCloseable android.bluetooth.BluetoothProfile {
     method public void close();
     method protected void finalize();
