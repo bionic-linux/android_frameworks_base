@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a6705bb7_9489c969",
+        "filename": "core/api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 27326,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-07T07:30:54Z",
+      "side": 1,
+      "message": "Notes: This has only one subclass right now, but it /will/ have an additional one for packet loss once that can be implemented",
+      "range": {
+        "startLine": 27326,
+        "startChar": 24,
+        "endLine": 27326,
+        "endChar": 40
+      },
+      "revId": "284333db648af8753e27d02e65a948ae7de6dc25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "51f764b6_798e241b",
         "filename": "core/api/current.txt",
         "patchSetId": 5
@@ -14,6 +37,30 @@
       "writtenOn": "2022-01-05T02:20:42Z",
       "side": 1,
       "message": "I think we should have a way to specify this that\u0027s more consistent with the existing (getMetered() in particular). Either make everything a criterion, or explode this method into what it does today. I think the latter is the simpler way. You\u0027d have :\n\n  VcnUnderlyingNetworkTemplate {\n    int getMinimumUpstreamBandwidth()\n    int getMinimumDownstreamBandwidth()\n    int getMetered()\n  }",
+      "range": {
+        "startLine": 27357,
+        "startChar": 75,
+        "endLine": 27357,
+        "endChar": 90
+      },
+      "revId": "284333db648af8753e27d02e65a948ae7de6dc25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a86e7dd1_b8e0581a",
+        "filename": "core/api/current.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 27357,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-07T07:30:54Z",
+      "side": 1,
+      "message": "Done, and added entry/exit criteria as discussed offline.",
+      "parentUuid": "51f764b6_798e241b",
       "range": {
         "startLine": 27357,
         "startChar": 75,
