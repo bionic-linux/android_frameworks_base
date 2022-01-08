@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ae1cfeb_2adcd870",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 6011,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-01-08T01:02:41Z",
+      "side": 1,
+      "message": "I see error: out/soong/.intermediates/frameworks/base/doc-comment-check-docs/android_common/srcjars/android/telephony/CarrierConfigManager.java:3474: lint: Unresolved link/see tag \"android.Manifest.permission.TETHER_PRIVILEGED\" in android.telephony.CarrierConfigManager.Tethering [101]\n\nI think `android.Manifest.permission#TETHER_PRIVILEGED` should fix it.",
+      "range": {
+        "startLine": 6011,
+        "startChar": 18,
+        "endLine": 6011,
+        "endChar": 63
+      },
+      "revId": "38d1d09887054b663a414cc3b1eba5d8ceac86c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
