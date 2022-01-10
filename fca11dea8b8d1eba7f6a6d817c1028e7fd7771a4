@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2ccc697_a74eb0d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-01-10T18:43:50Z",
+      "side": 1,
+      "message": "Hi OWNERS,\n\nJust for a little more context this is a downstream experimental branch of AOSP\u0027s android12-dev. Previously for these types of branches you could use exempt-from-owner-approval, but that has been disabled by default. Apparently there is a process for allowing these on such downstream experimental branches. I\u0027ll see if that process makes sense for this branch.",
+      "revId": "fca11dea8b8d1eba7f6a6d817c1028e7fd7771a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
