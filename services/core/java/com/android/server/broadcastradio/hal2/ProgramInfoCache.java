@@ -189,9 +189,6 @@ class ProgramInfoCache {
                 removed.add(id);
             }
         }
-        if (modified.isEmpty() && removed.isEmpty() && mComplete == chunk.isComplete()) {
-            return null;
-        }
         mComplete = chunk.isComplete();
         return buildChunks(chunk.isPurge(), mComplete, modified, maxNumModifiedPerChunk, removed,
                 maxNumRemovedPerChunk);
@@ -247,7 +244,11 @@ class ProgramInfoCache {
             numChunks = Math.max(numChunks, roundUpFraction(removed.size(), maxNumRemovedPerChunk));
         }
         if (numChunks == 0) {
-            return new ArrayList<ProgramList.Chunk>();
+            List<ProgramList.Chunk> chunks = new ArrayList<ProgramList.Chunk>(1);
+            HashSet<RadioManager.ProgramInfo> modifiedChunk = new HashSet<>();
+            HashSet<ProgramSelector.Identifier> removedChunk = new HashSet<>();
+            chunks.add(new ProgramList.Chunk(purge, complete, modifiedChunk, removedChunk));
+            return chunks;
         }
 
         // Try to make similarly-sized chunks by evenly distributing elements from modified and
