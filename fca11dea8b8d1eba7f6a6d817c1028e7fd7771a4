@@ -51,6 +51,23 @@
       "parentUuid": "ca3917e3_3f0298ff",
       "revId": "fca11dea8b8d1eba7f6a6d817c1028e7fd7771a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b22e52_e9ce5351",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-01-10T19:02:56Z",
+      "side": 1,
+      "message": "Okay SG, +2 for the experiment branch, but not for master.",
+      "revId": "fca11dea8b8d1eba7f6a6d817c1028e7fd7771a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
