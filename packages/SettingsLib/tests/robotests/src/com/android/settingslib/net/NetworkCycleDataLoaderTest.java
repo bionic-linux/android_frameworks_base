@@ -16,24 +16,22 @@
 
 package com.android.settingslib.net;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.nullable;
+import static android.app.usage.NetworkStats.Bucket.UID_ALL;
+
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.annotation.NonNull;
+import android.app.usage.NetworkStats;
 import android.app.usage.NetworkStatsManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.INetworkStatsService;
-import android.net.INetworkStatsSession;
 import android.net.NetworkPolicy;
 import android.net.NetworkPolicyManager;
-import android.net.NetworkStatsHistory;
 import android.net.NetworkTemplate;
-import android.os.RemoteException;
 import android.text.format.DateUtils;
 import android.util.Range;
 
@@ -49,6 +47,8 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 @RunWith(RobolectricTestRunner.class)
 public class NetworkCycleDataLoaderTest {
@@ -63,8 +63,6 @@ public class NetworkCycleDataLoaderTest {
     private NetworkPolicy mPolicy;
     @Mock
     private Iterator<Range<ZonedDateTime>> mIterator;
-    @Mock
-    private INetworkStatsService mNetworkStatsService;
 
     private NetworkCycleDataTestLoader mLoader;
 
@@ -132,20 +130,24 @@ public class NetworkCycleDataLoaderTest {
         verify(mLoader).recordUsage(nowInMs, nowInMs);
     }
 
+    private NetworkStats.Bucket makeMockBucket(int uid, long rxBytes, long txBytes,
+            long start, long end) {
+        NetworkStats.Bucket ret = mock(NetworkStats.Bucket.class);
+        when(ret.getUid()).thenReturn(uid);
+        when(ret.getRxBytes()).thenReturn(rxBytes);
+        when(ret.getTxBytes()).thenReturn(txBytes);
+        when(ret.getStartTimeStamp()).thenReturn(start);
+        when(ret.getEndTimeStamp()).thenReturn(end);
+        return ret;
+    }
+
     @Test
-    public void loadFourWeeksData_shouldRecordUsageForLast4Weeks() throws RemoteException {
+    public void loadFourWeeksData_shouldRecordUsageForLast4Weeks() {
         mLoader = spy(new NetworkCycleDataTestLoader(mContext));
-        ReflectionHelpers.setField(mLoader, "mNetworkStatsService", mNetworkStatsService);
-        final INetworkStatsSession networkSession = mock(INetworkStatsSession.class);
-        when(mNetworkStatsService.openSession()).thenReturn(networkSession);
-        final NetworkStatsHistory networkHistory = mock(NetworkStatsHistory.class);
-        when(networkSession.getHistoryForNetwork(nullable(NetworkTemplate.class), anyInt()))
-            .thenReturn(networkHistory);
         final long now = System.currentTimeMillis();
         final long fourWeeksAgo = now - (DateUtils.WEEK_IN_MILLIS * 4);
         final long twoDaysAgo = now - (DateUtils.DAY_IN_MILLIS * 2);
-        when(networkHistory.getStart()).thenReturn(twoDaysAgo);
-        when(networkHistory.getEnd()).thenReturn(now);
+        mLoader.addBucket(makeMockBucket(UID_ALL, 123, 456, twoDaysAgo, now));
 
         mLoader.loadFourWeeksData();
 
@@ -174,9 +176,11 @@ public class NetworkCycleDataLoaderTest {
     }
 
     public class NetworkCycleDataTestLoader extends NetworkCycleDataLoader<List<NetworkCycleData>> {
+        private final Queue<NetworkStats.Bucket> mMockedBuckets = new LinkedBlockingQueue<>();
 
         private NetworkCycleDataTestLoader(Context context) {
-            super(NetworkCycleDataLoader.builder(mContext));
+            super(NetworkCycleDataLoader.builder(mContext)
+                    .setNetworkTemplate(mock(NetworkTemplate.class)));
             mContext = context;
         }
 
@@ -187,6 +191,20 @@ public class NetworkCycleDataLoaderTest {
         @Override
         List<NetworkCycleData> getCycleUsage() {
             return null;
+        }
+
+        public void addBucket(NetworkStats.Bucket bucket) {
+            mMockedBuckets.add(bucket);
+        }
+
+        @Override
+        public boolean hasNextBucket(@NonNull NetworkStats unused) {
+            return !mMockedBuckets.isEmpty();
+        }
+
+        @Override
+        public NetworkStats.Bucket getNextBucket(@NonNull NetworkStats unused) {
+            return mMockedBuckets.remove();
         }
     }
 }
