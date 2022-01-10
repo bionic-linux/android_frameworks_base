@@ -16,12 +16,14 @@
 
 package com.android.settingslib.net;
 
-import android.net.NetworkStatsHistory;
+import android.app.usage.NetworkStats;
+
+import java.util.List;
 
 public class ChartData {
-    public NetworkStatsHistory network;
+    public List<NetworkStats.Bucket> network;
 
-    public NetworkStatsHistory detail;
-    public NetworkStatsHistory detailDefault;
-    public NetworkStatsHistory detailForeground;
+    public List<NetworkStats.Bucket> detail;
+    public List<NetworkStats.Bucket> detailDefault;
+    public List<NetworkStats.Bucket> detailForeground;
 }
