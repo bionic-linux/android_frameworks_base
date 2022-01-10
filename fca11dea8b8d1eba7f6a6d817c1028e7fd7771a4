@@ -33,6 +33,24 @@
       "message": "You mean you don\u0027t intend to merge this to main branches? Then I can do a +1.",
       "revId": "fca11dea8b8d1eba7f6a6d817c1028e7fd7771a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac426de7_973fc9ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-01-10T19:01:38Z",
+      "side": 1,
+      "message": "Yeah, it is quite unlikely that this work will be merged to upstream branches.",
+      "parentUuid": "ca3917e3_3f0298ff",
+      "revId": "fca11dea8b8d1eba7f6a6d817c1028e7fd7771a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
