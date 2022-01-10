@@ -102,7 +102,7 @@ public abstract class NetworkCycleDataLoader<D> extends AsyncTaskLoader<D> {
     @VisibleForTesting
     void loadFourWeeksData() {
         if (mNetworkTemplate == null) return;
-        final NetworkStats stats = mNetworkStatsManager.queryDetailsForNetwork(
+        final NetworkStats stats = mNetworkStatsManager.queryDetailsForDevice(
                 mNetworkTemplate, Long.MIN_VALUE, Long.MAX_VALUE);
         try {
             final Range<Long> historyTimeRange = getTimeRangeOf(stats);
