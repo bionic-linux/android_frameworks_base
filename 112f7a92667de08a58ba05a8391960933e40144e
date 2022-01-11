@@ -301,6 +301,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8987506a_475e18d1",
+        "filename": "core/java/android/net/vcn/VcnGatewayConnectionConfig.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-11T21:32:27Z",
+      "side": 1,
+      "message": "Done in aosp/1945490",
+      "parentUuid": "06fb4964_8b8f382f",
+      "range": {
+        "startLine": 561,
+        "startChar": 31,
+        "endLine": 562,
+        "endChar": 51
+      },
+      "revId": "112f7a92667de08a58ba05a8391960933e40144e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd010958_dcfd42e2",
