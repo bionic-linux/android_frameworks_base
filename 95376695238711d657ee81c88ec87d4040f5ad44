@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4108976c_93547d90",
+        "filename": "core/java/android/bluetooth/BluetoothLeCallControl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1881060
+      },
+      "writtenOn": "2022-01-11T13:41:09Z",
+      "side": 1,
+      "message": "`Binder.allowBlocking` is a hidden API and is not allowed to be called .\nIf this CL is re-upload later, please remove the call to it.\nTo keep the same behavior(Allowing blocking call) You will need to add `oneway` to the aidl method. For method expecting a result, you can use the SynchronousResultReceiver to handle it.\nAll other Bluetooth profil has evolved with this new structure. You can find some exemple with the removing of allowBlocking in aosp/1927380.",
+      "range": {
+        "startLine": 877,
+        "startChar": 64,
+        "endLine": 877,
+        "endChar": 84
+      },
+      "revId": "95376695238711d657ee81c88ec87d4040f5ad44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
