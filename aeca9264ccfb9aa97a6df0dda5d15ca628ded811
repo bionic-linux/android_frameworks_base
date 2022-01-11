@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cb58429_e5456480",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-11T11:00:17Z",
+      "side": 1,
+      "message": "I find the concept of \"being selected\" a little bit difficult to grasp in this documentation ; in particular, IIUC, there is only one network selected at any given time, which means using \"the\" here would be much clearer.\n\nMaybe you want to expand a bit on what \"selected\" means in the context of this doc or replace with \"the underlying network\".\n\nYou may also want to give a slightly more mundane-worded example, e.g. \"In layman terms that means the VCN will not use a network that doesn\u0027t provide at least the bandwidth passed as the entry bandwidth, but once the network is being used it will be held onto unless the bandwidth drops under the exit bandwidth\".",
+      "range": {
+        "startLine": 393,
+        "startChar": 35,
+        "endLine": 393,
+        "endChar": 37
+      },
+      "revId": "aeca9264ccfb9aa97a6df0dda5d15ca628ded811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
