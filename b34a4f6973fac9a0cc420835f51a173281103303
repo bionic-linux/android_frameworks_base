@@ -16,6 +16,23 @@
       "message": "Add Keunyoung and Thomas to reviewer.",
       "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "153a1fe8_21b1f86a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2022-01-11T18:05:35Z",
+      "side": 1,
+      "message": "Doesn\u0027t setting `purge` flag work in such a case?",
+      "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
