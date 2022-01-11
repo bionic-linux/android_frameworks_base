@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dd15dd1_183710b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-11T02:38:21Z",
+      "side": 1,
+      "message": "Self -2 due to the following reason:\nIt seems to me we\u0027ll have to upload to internal master first:\n\nvendor/google_clockwork/packages/Settings/src/com/google/android/clockwork/settings/cellular/ChartDataLoader.java:94: error: incompatible types: NetworkStatsHistory cannot be converted to List\u003cBucket\u003e\n        data.network \u003d mSession.getHistoryForNetwork(template, fields);",
+      "revId": "351da222119a574f757c6c5ee17f2279ab3a6257",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
