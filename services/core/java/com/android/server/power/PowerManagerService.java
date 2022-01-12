@@ -37,12 +37,15 @@ import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.SynchronousUserSwitchObserver;
+import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManagerInternal;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.hardware.SensorManager;
@@ -293,6 +296,8 @@ public final class PowerManagerService extends SystemService
     private SettingsObserver mSettingsObserver;
     private DreamManagerInternal mDreamManager;
     private LogicalLight mAttentionLight;
+    private UiModeManager mUiModeManager;
+    private PackageManagerInternal mPMInternal;
 
     private InattentiveSleepWarningController mInattentiveSleepWarningOverlayController;
     private final AmbientDisplaySuppressionController mAmbientDisplaySuppressionController;
@@ -1138,6 +1143,8 @@ public final class PowerManagerService extends SystemService
             mDisplayManagerInternal = getLocalService(DisplayManagerInternal.class);
             mPolicy = getLocalService(WindowManagerPolicy.class);
             mBatteryManagerInternal = getLocalService(BatteryManagerInternal.class);
+            mUiModeManager = mContext.getSystemService(UiModeManager.class);
+            mPMInternal = getLocalService(PackageManagerInternal.class);
             mAttentionDetector.systemReady(mContext);
             mDisplayGroupPowerStateMapper = mInjector.createDisplayPowerRequestMapper(mLock,
                     mDisplayManagerInternal, new DisplayGroupPowerChangeListener());
@@ -5156,6 +5163,19 @@ public final class PowerManagerService extends SystemService
                 mContext.enforceCallingOrSelfPermission(
                         android.Manifest.permission.DEVICE_POWER, null);
             }
+
+            if (getWakefulnessLocked() == WAKEFULNESS_ASLEEP
+                    && (flags & PowerManager.ACQUIRE_CAUSES_WAKEUP) != 0
+                    && mPMInternal != null
+                    && !mPMInternal.isSystemPackage(packageName)
+                    && mUiModeManager != null
+                    && mUiModeManager.getCurrentModeType()
+                        == Configuration.UI_MODE_TYPE_TELEVISION) {
+                Slog.w(TAG, packageName
+                        + " tried to acquire WakeLock while device is sleeping, ignore.");
+                return;
+            }
+
             if (ws != null && !ws.isEmpty()) {
                 mContext.enforceCallingOrSelfPermission(
                         android.Manifest.permission.UPDATE_DEVICE_STATS, null);
