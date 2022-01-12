@@ -22,6 +22,30 @@
       },
       "revId": "aeca9264ccfb9aa97a6df0dda5d15ca628ded811",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3aadfbfc_d118bef4",
+        "filename": "core/java/android/net/vcn/VcnCellUnderlyingNetworkTemplate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-12T06:14:45Z",
+      "side": 1,
+      "message": "Done, thanks for pointing this out. I completely agree, and have removed most of the formally worded description in favor of a more concisely worded explanation of how this method affects the template matching.",
+      "parentUuid": "6cb58429_e5456480",
+      "range": {
+        "startLine": 393,
+        "startChar": 35,
+        "endLine": 393,
+        "endChar": 37
+      },
+      "revId": "aeca9264ccfb9aa97a6df0dda5d15ca628ded811",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

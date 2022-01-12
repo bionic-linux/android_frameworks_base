@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d624f449_70dbd3d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-12T06:14:45Z",
+      "side": 1,
+      "message": "Made quite a few changes in an attempt to simplify the javadoc.",
+      "revId": "85b345d82c2245e14902688349bb5e90c376f8b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
