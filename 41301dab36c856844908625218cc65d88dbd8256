@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019139462",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1944705?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a33eb2b1_4187f254",
+        "filename": "services/core/java/com/android/server/power/PowerManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-12T06:59:53Z",
+      "side": 1,
+      "message": "Prefer to use mContext.getSystemService(UiModeManager.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 1146,
+        "startChar": 29,
+        "endLine": 1146,
+        "endChar": 71
+      },
+      "revId": "41301dab36c856844908625218cc65d88dbd8256",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
