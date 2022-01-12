@@ -51,6 +51,29 @@
       "parentUuid": "153a1fe8_21b1f86a",
       "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "657cfd7f_93fc4d3d",
+        "filename": "services/core/java/com/android/server/broadcastradio/hal2/ProgramInfoCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2022-01-12T18:57:37Z",
+      "side": 1,
+      "message": "How about instead of this, initialize numChunks this way:\n```\nint numChunks \u003d purge ? 1 : 0;\n```\n\nand then add Math.max in modified if below it.",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 26
+      },
+      "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
