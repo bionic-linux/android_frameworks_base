@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "146a3c30_1f78be0e",
+        "filename": "core/res/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2022-01-12T03:09:46Z",
+      "side": 1,
+      "message": "Also res/xml/power_profile_test.xml?",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "f34c48af8957ec52656236685723640c27fbad1e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
