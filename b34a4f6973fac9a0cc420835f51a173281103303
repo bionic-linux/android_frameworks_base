@@ -33,6 +33,24 @@
       "message": "Doesn\u0027t setting `purge` flag work in such a case?",
       "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e4f9593_d88ee7b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1933323
+      },
+      "writtenOn": "2022-01-12T05:23:37Z",
+      "side": 1,
+      "message": "This did not work without this patch since empty lists were ignored.",
+      "parentUuid": "153a1fe8_21b1f86a",
+      "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
