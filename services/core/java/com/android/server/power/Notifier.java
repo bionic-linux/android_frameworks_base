@@ -675,7 +675,9 @@ public class Notifier {
             mUserActivityPending = false;
         }
         TelephonyManager tm = mContext.getSystemService(TelephonyManager.class);
-        tm.notifyUserActivity();
+        if ( tm != null ){
+            tm.notifyUserActivity();
+        }
         mPolicy.userActivity();
         mFaceDownDetector.userActivity(event);
         mScreenUndimDetector.userActivity();
