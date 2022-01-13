@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f13bb81_9a738a96",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-01-13T02:03:48Z",
+      "side": 1,
+      "message": "It\u0027s safe to insert into a collection in a loop?",
+      "range": {
+        "startLine": 492,
+        "startChar": 42,
+        "endLine": 492,
+        "endChar": 45
+      },
+      "revId": "66896667a6faf53d2175fd7b9b6e66d2f0e7d387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
