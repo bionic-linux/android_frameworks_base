@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76763cac_c8345cd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1098053
+      },
+      "writtenOn": "2022-01-13T00:04:08Z",
+      "side": 1,
+      "message": "please put both CLs in one topic so we can see they are logically related.",
+      "revId": "8b540d8ee4ab5a5bf626ee1c11017bd2845ec9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
