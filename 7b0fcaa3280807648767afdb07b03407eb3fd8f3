@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "341dae5a_93303daa",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-01-13T01:37:38Z",
+      "side": 1,
+      "message": "Definitely not a big deal, but how many HandlerExecutors do we need?",
+      "range": {
+        "startLine": 491,
+        "startChar": 55,
+        "endLine": 491,
+        "endChar": 70
+      },
+      "revId": "7b0fcaa3280807648767afdb07b03407eb3fd8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86bb1dcb_7edc5b88",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-01-13T01:37:38Z",
+      "side": 1,
+      "message": "This code would only get hit if a subscription was removed from the group, right? So this is going to be a rare event indeed, no?",
+      "range": {
+        "startLine": 497,
+        "startChar": 8,
+        "endLine": 497,
+        "endChar": 16
+      },
+      "revId": "7b0fcaa3280807648767afdb07b03407eb3fd8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6d9bf53_e7bb9b88",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-01-13T01:37:38Z",
+      "side": 1,
+      "message": "I believe that the data enabled flag has to be the same for all subscriptions in a group. Can you verify that? maybe add a log line in case it isn\u0027t?",
+      "range": {
+        "startLine": 542,
+        "startChar": 39,
+        "endLine": 542,
+        "endChar": 58
+      },
+      "revId": "7b0fcaa3280807648767afdb07b03407eb3fd8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
