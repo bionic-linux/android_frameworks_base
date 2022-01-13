@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e528a078_8560bdfa",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-13T01:58:58Z",
+      "side": 1,
+      "message": "42. Just kidding, cached.",
+      "parentUuid": "341dae5a_93303daa",
+      "range": {
+        "startLine": 491,
+        "startChar": 55,
+        "endLine": 491,
+        "endChar": 70
+      },
+      "revId": "7b0fcaa3280807648767afdb07b03407eb3fd8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "86bb1dcb_7edc5b88",
         "filename": "services/core/java/com/android/server/vcn/Vcn.java",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-13T01:37:38Z",
       "side": 1,
       "message": "This code would only get hit if a subscription was removed from the group, right? So this is going to be a rare event indeed, no?",
+      "range": {
+        "startLine": 497,
+        "startChar": 8,
+        "endLine": 497,
+        "endChar": 16
+      },
+      "revId": "7b0fcaa3280807648767afdb07b03407eb3fd8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cf9b667_f1193d5d",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-13T01:58:58Z",
+      "side": 1,
+      "message": "Yes. It should be a rare event, but removing from a collection while in a loop over the collection is generally considered dangerous, since it could throw concurrent modification exceptions:\n\n\"The iterators returned by this class\u0027s iterator and listIterator methods are fail-fast: if the list is structurally modified at any time after the iterator is created, in any way except through the iterator\u0027s own remove or add methods, the iterator will throw a ConcurrentModificationException. Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking arbitrary, non-deterministic behavior at an undetermined time in the future.\"\n\nhttps://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html",
+      "parentUuid": "86bb1dcb_7edc5b88",
       "range": {
         "startLine": 497,
         "startChar": 8,
@@ -60,6 +108,30 @@
       "writtenOn": "2022-01-13T01:37:38Z",
       "side": 1,
       "message": "I believe that the data enabled flag has to be the same for all subscriptions in a group. Can you verify that? maybe add a log line in case it isn\u0027t?",
+      "range": {
+        "startLine": 542,
+        "startChar": 39,
+        "endLine": 542,
+        "endChar": 58
+      },
+      "revId": "7b0fcaa3280807648767afdb07b03407eb3fd8f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "872e69c7_c2a4f361",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-13T01:58:58Z",
+      "side": 1,
+      "message": "Confirmed that they are kept in sync, but there ARE race cases in writing to the global settings. Marking closed for now.",
+      "parentUuid": "d6d9bf53_e7bb9b88",
       "range": {
         "startLine": 542,
         "startChar": 39,
