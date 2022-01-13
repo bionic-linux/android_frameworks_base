@@ -869,7 +869,7 @@ public class NetworkStatsManager {
      *
      * @hide
      */
-    // @SystemApi
+    @SystemApi
     @RequiresPermission(anyOf = {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
             android.Manifest.permission.NETWORK_STACK})
@@ -886,7 +886,7 @@ public class NetworkStatsManager {
      *
      * @hide
      */
-    // @SystemApi
+    @SystemApi
     @RequiresPermission(anyOf = {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
             android.Manifest.permission.NETWORK_STACK})
@@ -903,7 +903,7 @@ public class NetworkStatsManager {
      *
      * @hide
      */
-    // @SystemApi
+    @SystemApi
     @RequiresPermission(anyOf = {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
             android.Manifest.permission.NETWORK_STACK})
@@ -921,7 +921,7 @@ public class NetworkStatsManager {
      *
      * @hide
      */
-    // @SystemApi
+    @SystemApi
     @RequiresPermission(anyOf = {
             NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK,
             android.Manifest.permission.NETWORK_STACK})
