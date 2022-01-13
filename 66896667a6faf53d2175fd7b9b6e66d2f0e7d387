@@ -46,6 +46,30 @@
       },
       "revId": "66896667a6faf53d2175fd7b9b6e66d2f0e7d387",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "522668ab_13564081",
+        "filename": "services/core/java/com/android/server/vcn/Vcn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-01-13T02:08:04Z",
+      "side": 1,
+      "message": "Of course. Duh. Thanks",
+      "parentUuid": "c513f95b_e2ad4a8c",
+      "range": {
+        "startLine": 492,
+        "startChar": 42,
+        "endLine": 492,
+        "endChar": 45
+      },
+      "revId": "66896667a6faf53d2175fd7b9b6e66d2f0e7d387",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
