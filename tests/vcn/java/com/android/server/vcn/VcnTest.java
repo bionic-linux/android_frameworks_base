@@ -58,6 +58,7 @@ import android.util.ArraySet;
 import com.android.server.VcnManagementService.VcnCallback;
 import com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import com.android.server.vcn.Vcn.VcnGatewayStatusCallback;
+import com.android.server.vcn.Vcn.VcnUserMobileDataStateListener;
 import com.android.server.vcn.VcnNetworkProvider.NetworkRequestListener;
 
 import org.junit.Before;
@@ -208,6 +209,13 @@ public class VcnTest {
     }
 
     @Test
+    public void testMobileDataStateListenersRegistered() {
+        // Validate state from setUp()
+        verify(mTelephonyManager, times(3))
+                .registerTelephonyCallback(any(), any(VcnUserMobileDataStateListener.class));
+    }
+
+    @Test
     public void testMobileDataStateCheckedOnInitialization_enabled() {
         // Validate state from setUp()
         assertTrue(mVcn.isMobileDataEnabled());
@@ -261,6 +269,24 @@ public class VcnTest {
         mTestLooper.dispatchAll();
 
         assertFalse(mVcn.isMobileDataEnabled());
+    }
+
+    @Test
+    public void testSubscriptionSnapshotUpdatesMobileDataStateListeners() {
+        final TelephonySubscriptionSnapshot updatedSnapshot =
+                mock(TelephonySubscriptionSnapshot.class);
+
+        doReturn(new ArraySet<>(Arrays.asList(2, 4)))
+                .when(updatedSnapshot)
+                .getAllSubIdsInGroup(any());
+
+        mVcn.updateSubscriptionSnapshot(updatedSnapshot);
+        mTestLooper.dispatchAll();
+
+        verify(mTelephonyManager, times(4))
+                .registerTelephonyCallback(any(), any(VcnUserMobileDataStateListener.class));
+        verify(mTelephonyManager, times(2))
+                .unregisterTelephonyCallback(any(VcnUserMobileDataStateListener.class));
     }
 
     private void triggerVcnRequestListeners(NetworkRequestListener requestListener) {
