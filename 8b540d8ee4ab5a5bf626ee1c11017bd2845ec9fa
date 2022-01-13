@@ -16,6 +16,24 @@
       "message": "please put both CLs in one topic so we can see they are logically related.",
       "revId": "8b540d8ee4ab5a5bf626ee1c11017bd2845ec9fa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ca572d7_0a18f7c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1900897
+      },
+      "writtenOn": "2022-01-13T02:20:15Z",
+      "side": 1,
+      "message": "I tried to set topic\u003dImsReasonInfo_remap_message_wildcard for both changes\nHowever https://android-review.googlesource.com/c/platform/frameworks/opt/telephony/+/1861453 has been merged and I was unable to set its topic.\nWhat should I do to fix this?",
+      "parentUuid": "76763cac_c8345cd6",
+      "revId": "8b540d8ee4ab5a5bf626ee1c11017bd2845ec9fa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
