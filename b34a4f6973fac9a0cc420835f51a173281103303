@@ -91,6 +91,30 @@
       },
       "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a4dade7_b1355206",
+        "filename": "services/core/java/com/android/server/broadcastradio/hal2/ProgramInfoCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1933323
+      },
+      "writtenOn": "2022-01-13T12:28:23Z",
+      "side": 1,
+      "message": "As far as I can see, old code should work with the proposed initialization of numChunks without any additional modifications. I will try it (which will take some time) and commit if successful.",
+      "parentUuid": "657cfd7f_93fc4d3d",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 26
+      },
+      "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
