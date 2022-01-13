@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df123583_dc2cdc58",
+        "filename": "core/java/android/bluetooth/BluetoothAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1888950
+      },
+      "writtenOn": "2022-01-13T02:56:46Z",
+      "side": 1,
+      "message": "Can we add a TODO bug - for the  module_utils team to take a look.",
+      "revId": "088a3081274623aedf3f2158e6acca14580e81dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
