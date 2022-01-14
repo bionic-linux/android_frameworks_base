@@ -588,6 +588,9 @@ public final class ScanFilter implements Parcelable {
         private int mManufacturerId = -1;
         private byte[] mManufacturerData;
         private byte[] mManufacturerDataMask;
+        private int mAdType = -1;
+        private int mAdDataFilterLogic = -1;
+        private byte[] mAdDataMask;
 
         /**
          * Set filter on device name.
@@ -890,6 +893,19 @@ public final class ScanFilter implements Parcelable {
             mManufacturerId = manufacturerId;
             mManufacturerData = manufacturerData;
             mManufacturerDataMask = manufacturerDataMask;
+            return this;
+        }
+
+        /**
+         * 
+         * @hide
+         * 
+         */
+        @NonNull
+        public Builder setAdType(@NonNull int adType, @NonNull int adDataFilterLogic, @Nullable byte[] adDataMask) {
+            mAdType = adType;
+            mAdDataFilterLogic = adDataFilterLogic;
+            mAdDataMask = adDataMask;
             return this;
         }
 

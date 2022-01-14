@@ -272,6 +272,7 @@ public final class BluetoothLeScanner {
                         ScanCallback.SCAN_FAILED_FEATURE_UNSUPPORTED);
             }
             if (callback != null) {
+                Log.d(TAG, "CYDBG 1 start registeration");
                 BleScanCallbackWrapper wrapper = new BleScanCallbackWrapper(gatt, filters,
                         settings, workSource, callback);
                 wrapper.startRegistration();
@@ -478,7 +479,7 @@ public final class BluetoothLeScanner {
          */
         @Override
         public void onScannerRegistered(int status, int scannerId) {
-            Log.d(TAG, "onScannerRegistered() - status=" + status
+            Log.d(TAG, "CYDBG onScannerRegistered() - status=" + status
                     + " scannerId=" + scannerId + " mScannerId=" + mScannerId);
             synchronized (this) {
                 if (status == BluetoothGatt.GATT_SUCCESS) {
@@ -487,6 +488,7 @@ public final class BluetoothLeScanner {
                             // Registration succeeds after timeout, unregister scanner.
                             mBluetoothGatt.unregisterScanner(scannerId, mAttributionSource);
                         } else {
+                            Log.d(TAG, "CYDBG start scan");
                             mScannerId = scannerId;
                             mBluetoothGatt.startScan(mScannerId, mSettings, mFilters,
                                     mAttributionSource);
