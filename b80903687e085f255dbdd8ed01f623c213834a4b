@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7afd5b1d_7cd35096",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1933323
+      },
+      "writtenOn": "2022-01-14T14:54:02Z",
+      "side": 1,
+      "message": "Hello Tomasz, thanks for your suggestions. I have changed the fix accordingly. I have tested the changes and they work for me.",
+      "revId": "b80903687e085f255dbdd8ed01f623c213834a4b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

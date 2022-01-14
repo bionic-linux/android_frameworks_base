@@ -115,6 +115,30 @@
       },
       "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bddee8c3_afc9aad3",
+        "filename": "services/core/java/com/android/server/broadcastradio/hal2/ProgramInfoCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1933323
+      },
+      "writtenOn": "2022-01-14T14:54:02Z",
+      "side": 1,
+      "message": "I have changed the code according to your proposal. I noticed that the Math.max modification is required, too.",
+      "parentUuid": "7a4dade7_b1355206",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 26
+      },
+      "revId": "b34a4f6973fac9a0cc420835f51a173281103303",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
