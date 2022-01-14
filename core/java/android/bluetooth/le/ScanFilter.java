@@ -83,6 +83,24 @@ public final class ScanFilter implements Parcelable {
     @Nullable
     private final byte[] mManufacturerDataMask;
 
+    private int mAdType = -1;
+    private int mAdDataFilterLogic = -1;
+    @Nullable
+    private byte[] mAdDataMask;
+
+    /* matched when adData & mAdDataMask == mAdDataMask */
+    public static final int AD_DATA_FILTER_LOGIC_AND = 0;
+    /* matched when adData | mAdDataMask == mAdDataMask */
+    public static final int AD_DATA_FILTER_LOGIC_OR = 1;
+    /* matched when adData > mAdDataMask */
+    public static final int AD_DATA_FILTER_LOGIC_GREATER_THAN = 2;
+    /* matched when adData < mAdDataMask */
+    public static final int AD_DATA_FILTER_LOGIC_SMALLER_THAN = 3;
+    /* matched when adData == mAdDataMask */
+    public static final int AD_DATA_FILTER_LOGIC_EQUALS = 4;
+    /* matched when adData contains mAdDataMask */
+    public static final int AD_DATA_FILTER_LOGIC_CONTAINS = 5;
+
     /** @hide */
     public static final ScanFilter EMPTY = new ScanFilter.Builder().build();
 
@@ -91,7 +109,8 @@ public final class ScanFilter implements Parcelable {
             ParcelUuid solicitationUuidMask, ParcelUuid serviceDataUuid,
             byte[] serviceData, byte[] serviceDataMask,
             int manufacturerId, byte[] manufacturerData, byte[] manufacturerDataMask,
-            @AddressType int addressType, @Nullable byte[] irk) {
+            @AddressType int addressType, @Nullable byte[] irk, int adType, int adDataFilterLogic,
+            @Nullable byte[] adDataMask) {
         mDeviceName = name;
         mServiceUuid = uuid;
         mServiceUuidMask = uuidMask;
@@ -106,6 +125,9 @@ public final class ScanFilter implements Parcelable {
         mManufacturerDataMask = manufacturerDataMask;
         mAddressType = addressType;
         mIrk = irk;
+        mAdType = adType;
+        mAdDataFilterLogic = adDataFilterLogic;
+        mAdDataMask = adDataMask;
     }
 
     @Override
@@ -174,6 +196,15 @@ public final class ScanFilter implements Parcelable {
             if (mIrk != null) {
                 dest.writeByteArray(mIrk);
             }
+        }
+
+        // AD type filter
+        dest.writeInt(mAdType);
+        dest.writeInt(mAdDataFilterLogic);
+        dest.writeInt(mAdDataMask == null ? 0 : 1);
+        if (mAdDataMask != null) {
+            dest.writeInt(mAdDataMask.length);
+            dest.writeByteArray(mAdDataMask);
         }
     }
 
@@ -358,6 +389,19 @@ public final class ScanFilter implements Parcelable {
     @Nullable
     public byte[] getManufacturerDataMask() {
         return mManufacturerDataMask;
+    }
+
+    public int getAdType() {
+        return mAdType;
+    }
+
+    public int getAdDataFilterLogic() {
+        return mAdDataFilterLogic;
+    }
+
+    @Nullable
+    public byte[] getAdDataMask() {
+        return mAdDataMask;
     }
 
     /**
@@ -588,6 +632,9 @@ public final class ScanFilter implements Parcelable {
         private int mManufacturerId = -1;
         private byte[] mManufacturerData;
         private byte[] mManufacturerDataMask;
+        private int mAdType = -1;
+        private int mAdDataFilterLogic = -1;
+        private byte[] mAdDataMask;
 
         /**
          * Set filter on device name.
@@ -894,6 +941,26 @@ public final class ScanFilter implements Parcelable {
         }
 
         /**
+         * Set filter on advertising data type
+         *
+         * <p>This key is used to resolve a private address from a public address.
+         *
+         * @param adType The advertising data type for the filter.
+         * @param adDataFilterLogic Filter logic for the ad data
+         * e.g. {@link ScanFilter#AD_DATA_FILTER_LOGIC_AND}
+         * or {@link ScanFilter#AD_DATA_FILTER_LOGIC_OR}
+         * @param adDataMask indication of the type of address
+         *
+         */
+        @NonNull
+        public Builder setAdType(int adType, int adDataFilterLogic, @Nullable byte[] adDataMask) {
+            mAdType = adType;
+            mAdDataFilterLogic = adDataFilterLogic;
+            mAdDataMask = adDataMask;
+            return this;
+        }
+
+        /**
          * Build {@link ScanFilter}.
          *
          * @throws IllegalArgumentException If the filter cannot be built.
@@ -904,7 +971,7 @@ public final class ScanFilter implements Parcelable {
                     mServiceSolicitationUuidMask,
                     mServiceDataUuid, mServiceData, mServiceDataMask,
                     mManufacturerId, mManufacturerData, mManufacturerDataMask,
-                    mAddressType, mIrk);
+                    mAddressType, mIrk, mAdType, mAdDataFilterLogic, mAdDataMask);
         }
     }
 }
