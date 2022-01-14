@@ -57,6 +57,7 @@ import android.util.SparseArray;
 import android.util.proto.ProtoInputStream;
 import android.util.proto.ProtoOutputStream;
 import android.util.proto.WireTypeMismatchException;
+import android.util.proto.ProtoParseException;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
@@ -674,7 +675,7 @@ public final class AppExitInfoTracker {
                         break;
                 }
             }
-        } catch (IOException | IllegalArgumentException | WireTypeMismatchException e) {
+        } catch (IOException | IllegalArgumentException | ProtoParseException e) {
             Slog.w(TAG, "Error in loading historical app exit info from persistent storage: " + e);
         } finally {
             if (fin != null) {
