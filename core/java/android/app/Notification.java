@@ -6542,7 +6542,7 @@ public class Notification implements Parcelable
 
             mN.allPendingIntents = null;
 
-            return mN;
+            return mN.clone();
         }
 
         private boolean styleDisplaysCustomViewInline() {
