@@ -27,7 +27,6 @@ import static android.app.NotificationManager.Policy.PRIORITY_CATEGORY_REMINDERS
 import static android.app.NotificationManager.Policy.PRIORITY_CATEGORY_REPEAT_CALLERS;
 import static android.app.NotificationManager.Policy.PRIORITY_CATEGORY_SYSTEM;
 import static android.app.NotificationManager.Policy.PRIORITY_SENDERS_ANY;
-import static android.app.NotificationManager.Policy.PRIORITY_SENDERS_STARRED;
 import static android.app.NotificationManager.Policy.SUPPRESSED_EFFECT_BADGE;
 import static android.app.NotificationManager.Policy.SUPPRESSED_EFFECT_FULL_SCREEN_INTENT;
 import static android.app.NotificationManager.Policy.SUPPRESSED_EFFECT_LIGHTS;
@@ -66,8 +65,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import android.annotation.NonNull;
-import android.annotation.Nullable;
 import android.app.AppGlobals;
 import android.app.AppOpsManager;
 import android.app.AutomaticZenRule;
@@ -87,7 +84,6 @@ import android.media.AudioManagerInternal;
 import android.media.AudioSystem;
 import android.media.VolumePolicy;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Process;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -293,50 +289,6 @@ public class ZenModeHelperTest extends UiServiceTestCase {
                 AudioAttributes.USAGE_MEDIA);
     }
 
-    @Test
-    public void testZenOn_NotificationApplied() {
-        mZenModeHelperSpy.mZenMode = ZEN_MODE_IMPORTANT_INTERRUPTIONS;
-        // The most permissive policy
-        mZenModeHelperSpy.mConsolidatedPolicy = new Policy(Policy.PRIORITY_CATEGORY_ALARMS |
-                PRIORITY_CATEGORY_MEDIA | PRIORITY_CATEGORY_MESSAGES
-                | PRIORITY_CATEGORY_CONVERSATIONS | PRIORITY_CATEGORY_CALLS
-                | PRIORITY_CATEGORY_ALARMS | PRIORITY_CATEGORY_EVENTS | PRIORITY_CATEGORY_REMINDERS
-                | PRIORITY_CATEGORY_REPEAT_CALLERS | PRIORITY_CATEGORY_SYSTEM, PRIORITY_SENDERS_ANY,
-                PRIORITY_SENDERS_ANY, 0, CONVERSATION_SENDERS_ANYONE);
-        mZenModeHelperSpy.applyRestrictions();
-
-        doNothing().when(mZenModeHelperSpy).applyRestrictions(anyBoolean(), anyBoolean(), anyInt());
-        verify(mZenModeHelperSpy).applyRestrictions(true, true,
-                AudioAttributes.USAGE_NOTIFICATION);
-        verify(mZenModeHelperSpy).applyRestrictions(true, true,
-                AudioAttributes.USAGE_NOTIFICATION_EVENT);
-        verify(mZenModeHelperSpy).applyRestrictions(true, true,
-                AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_DELAYED);
-        verify(mZenModeHelperSpy).applyRestrictions(true, true,
-                AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT);
-    }
-
-    @Test
-    public void testZenOn_StarredCallers_CallTypesBlocked() {
-        mZenModeHelperSpy.mZenMode = ZEN_MODE_IMPORTANT_INTERRUPTIONS;
-        // The most permissive policy
-        mZenModeHelperSpy.mConsolidatedPolicy = new Policy(Policy.PRIORITY_CATEGORY_ALARMS |
-                PRIORITY_CATEGORY_MEDIA | PRIORITY_CATEGORY_MESSAGES
-                | PRIORITY_CATEGORY_CONVERSATIONS | PRIORITY_CATEGORY_CALLS
-                | PRIORITY_CATEGORY_ALARMS | PRIORITY_CATEGORY_EVENTS | PRIORITY_CATEGORY_REMINDERS
-                | PRIORITY_CATEGORY_SYSTEM,
-                PRIORITY_SENDERS_STARRED,
-                PRIORITY_SENDERS_ANY, 0, CONVERSATION_SENDERS_ANYONE);
-        mZenModeHelperSpy.applyRestrictions();
-
-        doNothing().when(mZenModeHelperSpy).applyRestrictions(anyBoolean(), anyBoolean(), anyInt());
-        verify(mZenModeHelperSpy).applyRestrictions(true, true,
-                AudioAttributes.USAGE_NOTIFICATION_RINGTONE);
-        verify(mZenModeHelperSpy).applyRestrictions(true, true,
-                AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_REQUEST);
-    }
-
-    @Test
     public void testZenOn_AllCallers_CallTypesAllowed() {
         mZenModeHelperSpy.mZenMode = ZEN_MODE_IMPORTANT_INTERRUPTIONS;
         // The most permissive policy

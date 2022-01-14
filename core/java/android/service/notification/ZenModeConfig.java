@@ -2050,8 +2050,8 @@ public class ZenModeConfig implements Parcelable {
                 & NotificationManager.Policy.PRIORITY_CATEGORY_EVENTS) != 0;
         boolean allowRepeatCallers = (policy.priorityCategories
                 & NotificationManager.Policy.PRIORITY_CATEGORY_REPEAT_CALLERS) != 0;
-        boolean allowConversations = (policy.priorityConversationSenders
-                & Policy.PRIORITY_CATEGORY_CONVERSATIONS) != 0;
+        boolean allowConversations = (policy.priorityCategories
+                & NotificationManager.Policy.PRIORITY_CATEGORY_CONVERSATIONS) != 0;
         boolean areChannelsBypassingDnd = (policy.state & Policy.STATE_CHANNELS_BYPASSING_DND) != 0;
         boolean allowSystem =  (policy.priorityCategories & Policy.PRIORITY_CATEGORY_SYSTEM) != 0;
         return !allowReminders && !allowCalls && !allowMessages && !allowEvents
