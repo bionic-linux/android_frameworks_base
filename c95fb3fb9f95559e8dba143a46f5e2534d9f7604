@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94c58b06_5f7912a4",
+        "filename": "core/java/android/bluetooth/BluetoothLeBroadcast.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T01:39:28Z",
+      "side": 1,
+      "message": "Need @param tag here",
+      "revId": "c95fb3fb9f95559e8dba143a46f5e2534d9f7604",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c96925f2_e4ba18c8",
+        "filename": "core/java/android/bluetooth/BluetoothLeBroadcast.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T01:39:28Z",
+      "side": 1,
+      "message": "This cannot be @SystemApi because it\u0027s package-private",
+      "revId": "c95fb3fb9f95559e8dba143a46f5e2534d9f7604",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b671cbbb_152c5a5e",
+        "filename": "core/java/android/bluetooth/BluetoothLeBroadcast.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T01:39:28Z",
+      "side": 1,
+      "message": "Need @return tags even if the return type is int \u0026 you have an IntDef",
+      "revId": "c95fb3fb9f95559e8dba143a46f5e2534d9f7604",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5078de8_85646be1",
+        "filename": "core/java/android/bluetooth/BluetoothLeBroadcast.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T01:39:28Z",
+      "side": 1,
+      "message": "First sentence of each method\u0027s JavaDoc should end with a period.",
+      "revId": "c95fb3fb9f95559e8dba143a46f5e2534d9f7604",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be4f5372_44823749",
+        "filename": "core/java/android/bluetooth/BluetoothLeBroadcast.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1546552
+      },
+      "writtenOn": "2022-01-14T01:39:28Z",
+      "side": 1,
+      "message": "Looks like this is missing \"broadcast code\"",
+      "revId": "c95fb3fb9f95559e8dba143a46f5e2534d9f7604",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
