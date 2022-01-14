@@ -2636,6 +2636,7 @@ public class Notification implements Parcelable
      * @hide
      */
     public void cloneInto(Notification that, boolean heavy) {
+        that.icon = this.icon;
         that.mAllowlistToken = this.mAllowlistToken;
         that.when = this.when;
         that.creationTime = this.creationTime;
@@ -6542,7 +6543,7 @@ public class Notification implements Parcelable
 
             mN.allPendingIntents = null;
 
-            return mN;
+            return mN.clone();
         }
 
         private boolean styleDisplaysCustomViewInline() {
