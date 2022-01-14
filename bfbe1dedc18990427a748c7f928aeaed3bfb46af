@@ -1,0 +1,134 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019242980",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1948920?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "5fc083e3_22620ad2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T06:19:40Z",
+      "side": 1,
+      "message": "Must include a \"Test:\" stanza indicating how you tested this change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "bfbe1dedc18990427a748c7f928aeaed3bfb46af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019242980",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1948920?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0dceef41_ea69a441",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T06:19:40Z",
+      "side": 1,
+      "message": "Change must include a \"Tag:\" stanza. Valid tags are #compatibility #stability #security #feature #floss #gd-refactor #refactor. See: go/managing-bluetooth-cl-risk",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "bfbe1dedc18990427a748c7f928aeaed3bfb46af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019242981",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1948920?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0b566a88_071b0fc8",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T06:19:40Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 900,
+        "startChar": 10,
+        "endLine": 900,
+        "endChar": 11
+      },
+      "revId": "bfbe1dedc18990427a748c7f928aeaed3bfb46af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019242981",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1948920?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "70db8395_45ce24da",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T06:19:40Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 902,
+        "startChar": 10,
+        "endLine": 902,
+        "endChar": 11
+      },
+      "revId": "bfbe1dedc18990427a748c7f928aeaed3bfb46af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019242981",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1948920?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "c78eb62e_506a298e",
+        "filename": "core/java/android/bluetooth/le/ScanFilter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-14T06:19:40Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 905,
+        "startChar": 0,
+        "endLine": 905,
+        "endChar": 116
+      },
+      "revId": "bfbe1dedc18990427a748c7f928aeaed3bfb46af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
