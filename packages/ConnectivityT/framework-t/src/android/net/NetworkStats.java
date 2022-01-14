@@ -41,6 +41,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -57,7 +58,7 @@ import java.util.function.Predicate;
  */
 // @NotThreadSafe
 @SystemApi
-public final class NetworkStats implements Parcelable {
+public final class NetworkStats implements Parcelable, Iterable<NetworkStats.Entry> {
     private static final String TAG = "NetworkStats";
 
     /**
@@ -675,6 +676,24 @@ public final class NetworkStats implements Parcelable {
         txBytes[i] = entry.txBytes;
         txPackets[i] = entry.txPackets;
         operations[i] = entry.operations;
+    }
+
+    /** @hide */
+    @SystemApi
+    @NonNull public Iterator<Entry> iterator() {
+        return new Iterator<Entry>() {
+            int mIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return mIndex < size;
+            }
+
+            @Override
+            public Entry next() {
+                return getValues(mIndex++, null);
+            }
+        };
     }
 
     /**
