@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3dd01df_ff7fba38",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 6007,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-01-15T00:23:43Z",
+      "side": 1,
+      "message": "Let\u0027s remove this.\n\nEven if we eventually use broadcast for result, this can be explained in the Javadoc of ACTION_TETHERING_ENTITLEMENT and not has to be here.",
+      "range": {
+        "startLine": 6006,
+        "startChar": 14,
+        "endLine": 6007,
+        "endChar": 89
+      },
+      "revId": "b16ca52f26c0bc94b047a692f524e7fcb245bcb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
