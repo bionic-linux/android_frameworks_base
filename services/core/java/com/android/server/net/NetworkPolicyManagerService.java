@@ -2097,7 +2097,7 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             // Policies matched by NPMS only match by subscriber ID or by network ID. Thus subtype
             // in the object created here is never used and its value doesn't matter, so use
             // NETWORK_TYPE_UNKNOWN.
-            final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(mContext, snapshot,
+            final NetworkIdentity ident = NetworkIdentity.buildNetworkIdentity(snapshot,
                     true, TelephonyManager.NETWORK_TYPE_UNKNOWN /* subType */);
             identified.put(snapshot, ident);
         }
