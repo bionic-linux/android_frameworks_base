@@ -19,6 +19,7 @@ package com.android.server.net;
 import static android.Manifest.permission.NETWORK_STATS_PROVIDER;
 import static android.Manifest.permission.READ_NETWORK_USAGE_HISTORY;
 import static android.Manifest.permission.UPDATE_DEVICE_STATS;
+import static android.app.usage.NetworkStatsManager.ACTION_NETWORK_STATS_UPDATED;
 import static android.content.Intent.ACTION_SHUTDOWN;
 import static android.content.Intent.ACTION_UID_REMOVED;
 import static android.content.Intent.ACTION_USER_REMOVED;
@@ -237,10 +238,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @VisibleForTesting
     public static final String ACTION_NETWORK_STATS_POLL =
             "com.android.server.action.NETWORK_STATS_POLL";
-    public static final String ACTION_NETWORK_STATS_UPDATED =
-            "com.android.server.action.NETWORK_STATS_UPDATED";
-
-    private PendingIntent mPollIntent;
 
     private static final String PREFIX_DEV = "dev";
     private static final String PREFIX_XT = "xt";
