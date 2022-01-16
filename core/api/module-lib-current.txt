@@ -227,6 +227,17 @@ package android.net {
     method public int getResourceId();
   }
 
+  public class NetworkIdentity implements java.lang.Comparable<android.net.NetworkIdentity> {
+    ctor public NetworkIdentity(int, int, @Nullable String, @Nullable String, boolean, boolean, boolean, int);
+    method @NonNull public static android.net.NetworkIdentity buildNetworkIdentity(@NonNull android.net.NetworkStateSnapshot, boolean, int);
+    method public int compareTo(@NonNull android.net.NetworkIdentity);
+  }
+
+  public class NetworkIdentitySet extends java.util.HashSet<android.net.NetworkIdentity> implements java.lang.Comparable<android.net.NetworkIdentitySet> {
+    ctor public NetworkIdentitySet();
+    method public int compareTo(@NonNull android.net.NetworkIdentitySet);
+  }
+
   public class NetworkPolicyManager {
     method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public int getMultipathPreference(@NonNull android.net.Network);
     method @RequiresPermission(android.net.NetworkStack.PERMISSION_MAINLINE_NETWORK_STACK) public int getRestrictBackgroundStatus(int);
@@ -250,6 +261,33 @@ package android.net {
     method @Nullable public String getSubscriberId();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStateSnapshot> CREATOR;
+  }
+
+  public class NetworkStatsCollection {
+    ctor public NetworkStatsCollection(long);
+    method public void recordCollection(@NonNull android.net.NetworkStatsCollection);
+    method public void recordHistory(@NonNull android.net.NetworkStatsCollection.Key, @NonNull android.net.NetworkStatsHistory);
+  }
+
+  public static class NetworkStatsCollection.Key implements java.lang.Comparable<android.net.NetworkStatsCollection.Key> {
+    ctor public NetworkStatsCollection.Key(@NonNull android.net.NetworkIdentitySet, int, int, int);
+    method public int compareTo(@NonNull android.net.NetworkStatsCollection.Key);
+  }
+
+  public final class NetworkStatsHistory implements android.os.Parcelable {
+    method public int describeContents();
+    method public void writeToParcel(@NonNull android.os.Parcel, int);
+    field @NonNull public static final android.os.Parcelable.Creator<android.net.NetworkStatsHistory> CREATOR;
+  }
+
+  public static final class NetworkStatsHistory.Builder {
+    ctor public NetworkStatsHistory.Builder(long, int);
+    method @NonNull public android.net.NetworkStatsHistory.Builder addEntry(@NonNull android.net.NetworkStatsHistory.Entry);
+    method @NonNull public android.net.NetworkStatsHistory build();
+  }
+
+  public static class NetworkStatsHistory.Entry {
+    ctor public NetworkStatsHistory.Entry(long, long, long, long, long, long, long);
   }
 
   public final class NetworkTemplate implements android.os.Parcelable {
