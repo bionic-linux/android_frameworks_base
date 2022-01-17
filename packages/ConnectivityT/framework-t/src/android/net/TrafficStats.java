@@ -210,6 +210,18 @@ public class TrafficStats {
     private static final String LOOPBACK_IFACE = "lo";
 
     /**
+     * Attach the socket tagger implementation to the current process, to
+     * get notified when a socket's {@link FileDescriptor} is assigned to
+     * a thread. See {@link SocketTagger#set(SocketTagger)}.
+     *
+     * @hide
+     */
+    @SystemApi
+    public static void attachSocketTagger() {
+        NetworkManagementSocketTagger.install();
+    }
+
+    /**
      * Set active tag to use when accounting {@link Socket} traffic originating
      * from the current thread. Only one active tag per thread is supported.
      * <p>
