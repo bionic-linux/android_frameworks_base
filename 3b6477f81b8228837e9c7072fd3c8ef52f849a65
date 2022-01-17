@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10c6800b_4ebfdabe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2022-01-17T10:48:06Z",
+      "side": 1,
+      "message": "I\u0027m on board with this change, but I would like to understand the use of the freed name a bit better, once it comes to it.",
+      "revId": "3b6477f81b8228837e9c7072fd3c8ef52f849a65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
