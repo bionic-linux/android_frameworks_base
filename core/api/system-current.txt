@@ -7583,6 +7583,7 @@ package android.net {
   }
 
   public class TrafficStats {
+    method public static void attachSocketTagger();
     method public static void setThreadStatsTagApp();
     method public static void setThreadStatsTagBackup();
     method public static void setThreadStatsTagRestore();
