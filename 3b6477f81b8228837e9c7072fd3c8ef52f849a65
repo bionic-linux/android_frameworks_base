@@ -16,6 +16,24 @@
       "message": "I\u0027m on board with this change, but I would like to understand the use of the freed name a bit better, once it comes to it.",
       "revId": "3b6477f81b8228837e9c7072fd3c8ef52f849a65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99a189f7_e1446e48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-17T11:31:20Z",
+      "side": 1,
+      "message": "Sent the follow-up change. Other modules name their source group framework-XXXX-sources (or variants thereof, I will unify them). Media uses \"updatable-media-sources\" which is not in line with the framework-media module. https://cs.android.com/android/platform/superproject/+/master:frameworks/base/ApiDocs.bp;l\u003d131\n\nJust doing this change separately so that no user of framework-media-sources accidentally starts using what is currently called updatable-media-sources.",
+      "parentUuid": "10c6800b_4ebfdabe",
+      "revId": "3b6477f81b8228837e9c7072fd3c8ef52f849a65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
