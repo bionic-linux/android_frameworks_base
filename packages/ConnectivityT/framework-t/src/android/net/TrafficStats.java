@@ -16,6 +16,8 @@
 
 package android.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
@@ -208,6 +210,18 @@ public class TrafficStats {
     private static Object sProfilingLock = new Object();
 
     private static final String LOOPBACK_IFACE = "lo";
+
+    /**
+     * Attach the socket tagger implementation to the current process, to
+     * get notified when a socket's {@link FileDescriptor} is assigned to
+     * a thread. See {@link SocketTagger#set(SocketTagger)}.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static void attachSocketTagger() {
+        NetworkManagementSocketTagger.install();
+    }
 
     /**
      * Set active tag to use when accounting {@link Socket} traffic originating
