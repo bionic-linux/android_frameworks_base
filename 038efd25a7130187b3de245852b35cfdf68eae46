@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5be4c3a4_7e82994f",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-18T17:07:51Z",
+      "side": 1,
+      "message": "IIUC this entry is never recycled?\nMaybe declare this inside the loop?",
+      "range": {
+        "startLine": 1200,
+        "startChar": 35,
+        "endLine": 1200,
+        "endChar": 59
+      },
+      "revId": "038efd25a7130187b3de245852b35cfdf68eae46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
