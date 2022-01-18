@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019374992",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1948617?revision\u003d16",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "7dffb9a1_3d00fd2a",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-18T17:19:23Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 776,
+        "startChar": 0,
+        "endLine": 776,
+        "endChar": 104
+      },
+      "revId": "3e13cc0e70e0f6f642120a2f298480f60cce916a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019374992",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1948617?revision\u003d16",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "bb9227f1_79061de4",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-18T17:19:23Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 783,
+        "startChar": 0,
+        "endLine": 783,
+        "endChar": 104
+      },
+      "revId": "3e13cc0e70e0f6f642120a2f298480f60cce916a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
