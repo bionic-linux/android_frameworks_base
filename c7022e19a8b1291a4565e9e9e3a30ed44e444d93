@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88a1e815_c59caa95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1933323
+      },
+      "writtenOn": "2022-01-18T14:54:54Z",
+      "side": 1,
+      "message": "I guess second-party review is missing before this can be merged, correct? If so, who can help me with that?",
+      "revId": "c7022e19a8b1291a4565e9e9e3a30ed44e444d93",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
