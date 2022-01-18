@@ -19,6 +19,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c845024_6db46828",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-18T07:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "767bbca1_7f603a6f",
+      "revId": "dad4e0ab5e7bb45f95d14d9b56a53680464cd98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6cb8945e_7357dffa",
@@ -32,6 +50,30 @@
       "writtenOn": "2022-01-18T01:50:39Z",
       "side": 1,
       "message": "IIUC formal javadoc is needed.",
+      "range": {
+        "startLine": 681,
+        "startChar": 4,
+        "endLine": 681,
+        "endChar": 8
+      },
+      "revId": "dad4e0ab5e7bb45f95d14d9b56a53680464cd98a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51904116_08834e74",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStats.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-18T07:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cb8945e_7357dffa",
       "range": {
         "startLine": 681,
         "startChar": 4,
