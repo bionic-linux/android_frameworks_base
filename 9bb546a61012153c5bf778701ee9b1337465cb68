@@ -16,6 +16,24 @@
       "message": "One more comment: mark KEY_REQUIRE_ENTITLEMENT_CHECKS_BOOL deprecated\n\n@deprecated use {@link Tethering#KEY_ENTITLEMENT_SERVICE_PACKAGE_STRING} instead",
       "revId": "9bb546a61012153c5bf778701ee9b1337465cb68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b73cde27_3a5d5a26",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 6009,
+      "author": {
+        "id": 1432429
+      },
+      "writtenOn": "2022-01-18T13:32:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "212e576e_f65a39fc",
+      "revId": "9bb546a61012153c5bf778701ee9b1337465cb68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
