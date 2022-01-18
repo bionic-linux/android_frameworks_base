@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a707653_26b68bbc",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-18T17:28:53Z",
+      "side": 1,
+      "message": "Also made all these (client \u003d MODULE_LIBRARIES).\nLorenzo:\nthe difference between plain system api and module-lib api is that some apps can call system api\n(e.g., gmscore)\nbut only the system or mainline modules can call module-lib api",
+      "range": {
+        "startLine": 880,
+        "startChar": 5,
+        "endLine": 880,
+        "endChar": 14
+      },
+      "revId": "4bd0421a2cd263e715e6e7b30197c9b1b5274bbf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
