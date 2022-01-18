@@ -500,6 +500,19 @@ public class CachedBluetoothDevice implements Comparable<CachedBluetoothDevice> 
     }
 
     /**
+     * Get identity address from remote device
+     * @return {@link BluetoothDevice#getIdentityAddress()} if
+     * {@link BluetoothDevice#getIdentityAddress()} is not null otherwise return
+     * {@link BluetoothDevice#getAddress()}
+     */
+    public String getIdentityAddress() {
+        if (mDevice.getIdentityAddress() != null) {
+            return mDevice.getIdentityAddress();
+        }
+        return mDevice.getAddress();
+    }
+
+    /**
      * Get name from remote device
      * @return {@link BluetoothDevice#getAlias()} if
      * {@link BluetoothDevice#getAlias()} is not null otherwise return
