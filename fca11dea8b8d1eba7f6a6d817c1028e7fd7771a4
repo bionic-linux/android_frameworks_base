@@ -138,6 +138,24 @@
       "parentUuid": "c2ccc697_a74eb0d6",
       "revId": "fca11dea8b8d1eba7f6a6d817c1028e7fd7771a4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd8ed9c2_e968fc21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-01-18T21:59:55Z",
+      "side": 1,
+      "message": "Looks like b/213903609 was resolved, and this does not need OWNERS approval any more. SFTN.",
+      "parentUuid": "1146667a_2fa4634d",
+      "revId": "fca11dea8b8d1eba7f6a6d817c1028e7fd7771a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
