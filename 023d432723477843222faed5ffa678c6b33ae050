@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2d01281_4593c0a8",
+        "filename": "services/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 2096,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-19T03:56:48Z",
+      "side": 1,
+      "message": "Maybe you want to rename this\n\nLater is fine",
+      "range": {
+        "startLine": 2096,
+        "startChar": 17,
+        "endLine": 2096,
+        "endChar": 38
+      },
+      "revId": "023d432723477843222faed5ffa678c6b33ae050",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
