@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a45b4bb7_ee79571d",
+        "filename": "core/proto/android/service/netstats.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-19T16:05:39Z",
+      "side": 0,
+      "message": "If so, is it ok to delete the entire line given that we don\u0027t fill it in the code as well?",
+      "parentUuid": "49b09dd7_2d69bf0e",
+      "range": {
+        "startLine": 73,
+        "startChar": 39,
+        "endLine": 73,
+        "endChar": 79
+      },
+      "revId": "a8eeddbf9eb708a15dd6d3a13b2d00b9a10fb279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e679880c_9988c183",
         "filename": "core/proto/android/service/netstats.proto",
         "patchSetId": 1
