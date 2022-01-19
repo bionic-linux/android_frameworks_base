@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e679880c_9988c183",
+        "filename": "core/proto/android/service/netstats.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-19T15:48:01Z",
+      "side": 0,
+      "message": "Could this be removed?\nThe file netstats.proto be used in Incident, we may need to check the part with WW.\n+zhouwenjie@google.com to have a look",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 55
+      },
+      "revId": "a8eeddbf9eb708a15dd6d3a13b2d00b9a10fb279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
