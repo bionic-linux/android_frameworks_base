@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d56b2a32_57a7aa3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-19T04:07:43Z",
+      "side": 1,
+      "message": "It\u0027s NetworkStats that\u0027s iterable right ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "56dcaf4c1e54993c52363d048c7f5837be5d1d21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edc979d2_d52b6a61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-19T04:07:43Z",
+      "side": 1,
+      "message": "LGTM when comments are addressed",
+      "revId": "56dcaf4c1e54993c52363d048c7f5837be5d1d21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0786781d_c92d0296",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-19T04:07:43Z",
+      "side": 1,
+      "message": "It\u0027s not values of the Entry but values of this object\n\nAlso this is @SystemApi so it should conform to regular java doc format, with a one-line description, then blank line, then detailed discussion. Example wording :\n\n /**\n  * Iterate over Entry objects.\n  *\n  * Return an iterator of this object that will iterate through all\n  * contained Entry objects.\n  * @hide\n  */",
+      "range": {
+        "startLine": 682,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 25
+      },
+      "revId": "56dcaf4c1e54993c52363d048c7f5837be5d1d21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
