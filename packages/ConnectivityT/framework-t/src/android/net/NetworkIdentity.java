@@ -185,11 +185,6 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
 
         // TODO: dump mRatType as well.
 
-        if (mSubscriberId != null) {
-            proto.write(NetworkIdentityProto.SUBSCRIBER_ID,
-                    NetworkIdentityUtils.scrubSubscriberId(mSubscriberId));
-        }
-        proto.write(NetworkIdentityProto.NETWORK_ID, mWifiNetworkKey);
         proto.write(NetworkIdentityProto.ROAMING, mRoaming);
         proto.write(NetworkIdentityProto.METERED, mMetered);
         proto.write(NetworkIdentityProto.DEFAULT_NETWORK, mDefaultNetwork);
