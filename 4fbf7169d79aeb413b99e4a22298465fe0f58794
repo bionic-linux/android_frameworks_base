@@ -16,6 +16,24 @@
       "message": "Javadoc here: \n\n  /** Prefix of all Tethering.KEY_* constants. */",
       "revId": "4fbf7169d79aeb413b99e4a22298465fe0f58794",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8cec0f4_a4866f9e",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 5993,
+      "author": {
+        "id": 1432429
+      },
+      "writtenOn": "2022-01-19T02:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb686e23_97440645",
+      "revId": "4fbf7169d79aeb413b99e4a22298465fe0f58794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
