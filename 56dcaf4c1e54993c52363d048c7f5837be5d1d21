@@ -62,6 +62,30 @@
       },
       "revId": "56dcaf4c1e54993c52363d048c7f5837be5d1d21",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4f0a894_2afa34ed",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/NetworkStats.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-19T05:58:02Z",
+      "side": 1,
+      "message": "Also let\u0027s add a comment about thread safety :\n\n  This iterator does not support concurrent modification and makes no\n  guarantee of fail-fast behavior. If any method that can mutate the\n  contents of this object is called while iteration is in progress,\n  either inside the loop or in another thread, then behavior is\n  undefined.\n\n  The remove() method is not implemented and will throw\n  UnsupportedOperationException.",
+      "parentUuid": "0786781d_c92d0296",
+      "range": {
+        "startLine": 682,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 25
+      },
+      "revId": "56dcaf4c1e54993c52363d048c7f5837be5d1d21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
