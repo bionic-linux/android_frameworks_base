@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49b09dd7_2d69bf0e",
+        "filename": "core/proto/android/service/netstats.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-01-19T15:54:19Z",
+      "side": 0,
+      "message": "As long as the field exists, EXPLICIT probably shouldn\u0027t be removed.",
+      "range": {
+        "startLine": 73,
+        "startChar": 39,
+        "endLine": 73,
+        "endChar": 79
+      },
+      "revId": "a8eeddbf9eb708a15dd6d3a13b2d00b9a10fb279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e679880c_9988c183",
         "filename": "core/proto/android/service/netstats.proto",
         "patchSetId": 1
