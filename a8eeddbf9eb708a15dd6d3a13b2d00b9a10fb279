@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f827955a_eb7223f1",
+        "filename": "core/proto/android/service/netstats.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-19T16:09:27Z",
+      "side": 0,
+      "message": "Removed, see if it works for you.",
+      "parentUuid": "a45b4bb7_ee79571d",
+      "range": {
+        "startLine": 73,
+        "startChar": 39,
+        "endLine": 73,
+        "endChar": 79
+      },
+      "revId": "a8eeddbf9eb708a15dd6d3a13b2d00b9a10fb279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e679880c_9988c183",
