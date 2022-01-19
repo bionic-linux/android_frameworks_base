@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edfcd6d5_03b75474",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1427525
+      },
+      "writtenOn": "2022-01-19T23:54:36Z",
+      "side": 1,
+      "message": "GTS tests are available on an internal patch",
+      "revId": "cb366ac33d31334e11b2f1a3f874dc14ed94db50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
