@@ -2795,6 +2795,20 @@ public final class BluetoothDevice implements Parcelable, Attributable {
     /**
      * Get a keyed metadata for this {@link BluetoothDevice} as {@link String}
      *
+     * @param isLowLatencyBufferSize if buffer size should be for low latency or not
+     * @hide
+     */
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.BLUETOOTH_CONNECT,
+            android.Manifest.permission.BLUETOOTH_PRIVILEGED,
+    })
+    public void switchBufferSize(boolean isLowLatencyBufferSize) {
+        // Send intent to fastpair
+    }
+
+    /**
+     * Get a keyed metadata for this {@link BluetoothDevice} as {@link String}
+     *
      * @param key must be within the list of BluetoothDevice.METADATA_*
      * @return Metadata of the key as byte array, null on error or not found
      * @hide
