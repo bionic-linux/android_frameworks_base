@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f886772_e5d90339",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1466695
+      },
+      "writtenOn": "2022-01-19T18:51:11Z",
+      "side": 1,
+      "message": "migrated from frameworks/base to packages/modules/Bluetooth, original at aosp/1944166",
+      "revId": "24af7f1d52b6bd2fe4a709a80ce771d0fa9e28a4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
