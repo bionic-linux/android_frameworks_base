@@ -305,4 +305,180 @@ public class NetworkIdentity implements Comparable<NetworkIdentity> {
         }
         return res;
     }
+
+    /**
+     * Builder class for {@link NetworkIdentity}.
+     */
+    public static final class Builder {
+        private int mLegacyType;
+        private int mRatType;
+        private String mSubscriberId;
+        private String mWifiNetworkKey;
+        private boolean mRoaming;
+        private boolean mMetered;
+        private boolean mDefaultNetwork;
+        private int mOemManaged;
+
+        /**
+         * Creates a new Builder.
+         */
+        public Builder() {
+            // Initialize with default values.
+            mLegacyType = ConnectivityManager.TYPE_NONE;
+            mRatType = NetworkTemplate.NETWORK_TYPE_ALL;
+            mSubscriberId = null;
+            mWifiNetworkKey = null;
+            mRoaming = false;
+            mMetered = true;
+            mDefaultNetwork = false;
+            mOemManaged = NetworkTemplate.OEM_MANAGED_NO;
+        }
+
+        /**
+         * Add an {@link NetworkStateSnapshot} into the {@link NetworkIdentity} instance.
+         *
+         * @param snapshot The target {@link NetworkStateSnapshot} object.
+         * @return The builder object.
+         */
+        @NonNull
+        public Builder setNetworkStateSnapshot(@NonNull NetworkStateSnapshot snapshot) {
+            setLegacyType(snapshot.getLegacyType());
+
+            setSubscriberId(snapshot.getSubscriberId());
+            setRoaming(!snapshot.getNetworkCapabilities().hasCapability(
+                    NetworkCapabilities.NET_CAPABILITY_NOT_ROAMING));
+            setMeteredness(!(snapshot.getNetworkCapabilities().hasCapability(
+                    NetworkCapabilities.NET_CAPABILITY_NOT_METERED)
+                    || snapshot.getNetworkCapabilities().hasCapability(
+                    NetworkCapabilities.NET_CAPABILITY_TEMPORARILY_NOT_METERED)));
+
+            setOemManaged(getOemBitfield(snapshot.getNetworkCapabilities()));
+
+            if (mLegacyType == TYPE_WIFI) {
+                final TransportInfo transportInfo = snapshot.getNetworkCapabilities()
+                        .getTransportInfo();
+                if (transportInfo instanceof WifiInfo) {
+                    final WifiInfo info = (WifiInfo) transportInfo;
+                    if (info != null) {
+                        setWifiNetworkKey(info.getCurrentNetworkKey());
+                    }
+                }
+            }
+            return this;
+        }
+
+        /**
+         * Set the legacy network type of the network.
+         *
+         * @param legacyType the legacy type. See {@link ConnectivityManager#TYPE_*}.
+         *
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setLegacyType(int legacyType) {
+            mLegacyType = legacyType;
+            return this;
+        }
+
+        /**
+         * Set the Radio Access Technology(RAT) type of the network.
+         *
+         * @param ratType the Radio Access Technology(RAT) type. See
+         *                {@code TelephonyManager.NETWORK_TYPE_*}. Or
+         *                {@link NetworkTemplate#NETWORK_TYPE_ALL} if not applicable.
+         *
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setRatType(@NetworkType int ratType) {
+            mRatType = ratType;
+            return this;
+        }
+
+        /**
+         * Set the Subscriber Id.
+         *
+         * @param subscriberId the Subscriber Id of the network. Or null if not applicable.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setSubscriberId(@Nullable String subscriberId) {
+            mSubscriberId = subscriberId;
+            return this;
+        }
+
+        /**
+         * Set the Wifi Network Key.
+         *
+         * @param wifiNetworkKey Wifi Network Key of the network,
+         *                        see {@link WifiInfo#getCurrentNetworkKey()}.
+         *                        Or null if not applicable.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setWifiNetworkKeys(@Nullable String wifiNetworkKey) {
+            mWifiNetworkKey = wifiNetworkKey;
+            return this;
+        }
+
+        /**
+         * Set the roaming.
+         *
+         * @param roaming the roaming status of the network.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setRoaming(boolean roaming) {
+            mRoaming = roaming;
+            return this;
+        }
+
+        /**
+         * Set the meteredness.
+         *
+         * @param metered the meteredness of the network.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setMeteredness(boolean metered) {
+            mMetered = metered;
+            return this;
+        }
+
+        /**
+         * Set the default network status.
+         *
+         * @param defaultNetwork the default network status of the network.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setDefaultNetworkStatus(boolean defaultNetwork) {
+            mDefaultNetwork = defaultNetwork;
+            return this;
+        }
+
+        /**
+         * Set the the OEM managed type.
+         *
+         * @param oemManaged Type of OEM managed network or unmanaged networks.
+         *                   See {@code NetworkTemplate#OEM_MANAGED_*}.
+         * @return this builder.
+         */
+        @NonNull
+        public Builder setOemManaged(@OemManaged int oemManaged) {
+            mOemManaged = oemManaged;
+            return this;
+        }
+
+        /**
+         * Builds the instance of the {@link NetworkIdentity}.
+         *
+         * @return the built instance of {@link NetworkIdentity}.
+         */
+        @NonNull
+        public NetworkStatsHistory build() {
+            return new NetworkIdentity(mLegacyType, mRatType, mSubscriberId, mWifiNetworkKey,
+                    mRoaming, mMetered, mDefaultNetwork, mOemManaged);
+        }
+    }
 }
