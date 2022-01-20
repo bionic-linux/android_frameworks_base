@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7545330e_255c33a6",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1076123
+      },
+      "writtenOn": "2022-01-20T21:59:23Z",
+      "side": 1,
+      "message": "Can we do this like getName() and avoid the second call?\n\nfinal String identity_address \u003d mDevice.getIdentityAddress();",
+      "range": {
+        "startLine": 509,
+        "startChar": 8,
+        "endLine": 509,
+        "endChar": 51
+      },
+      "revId": "4f4db183beb82f696024894aac8be2b72226aa3b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
