@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019493277",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/428002?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e86fef0d_65e2b5d2",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecLocalDeviceTv.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-20T13:35:07Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1691,
+        "startChar": 0,
+        "endLine": 1691,
+        "endChar": 103
+      },
+      "revId": "6694b42e3f1000b5c253eb1ac8756a6051d9a84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019493277",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/428002?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "95b5b733_8dea95d1",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiControlService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2126,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-20T13:35:07Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 2126,
+        "startChar": 73,
+        "endLine": 2126,
+        "endChar": 97
+      },
+      "revId": "6694b42e3f1000b5c253eb1ac8756a6051d9a84a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
