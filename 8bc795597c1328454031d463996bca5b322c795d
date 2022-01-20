@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76446298_4ddeb1ea",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done, using foreach loop.",
+      "parentUuid": "e553b150_bb52e855",
+      "range": {
+        "startLine": 1223,
+        "startChar": 8,
+        "endLine": 1223,
+        "endChar": 77
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79f178dd_316a38f0",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-01-18T17:07:51Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 1246,
+        "startChar": 7,
+        "endLine": 1246,
+        "endChar": 77
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "940a8e37_23519099",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done, using foreach loop.",
+      "parentUuid": "79f178dd_316a38f0",
       "range": {
         "startLine": 1246,
         "startChar": 7,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcecffa9_6a0c6166",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done, using foreach loop.",
+      "parentUuid": "821b527a_e9144be2",
+      "range": {
+        "startLine": 1268,
+        "startChar": 8,
+        "endLine": 1268,
+        "endChar": 77
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0980aa16_1f66b203",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-01-18T17:07:51Z",
       "side": 1,
       "message": "1. force update??\n2. IIUC the original TODO is not done?",
+      "range": {
+        "startLine": 1339,
+        "startChar": 12,
+        "endLine": 1339,
+        "endChar": 26
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06cac934_f4bf604a",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0980aa16_1f66b203",
       "range": {
         "startLine": 1339,
         "startChar": 12,
@@ -116,6 +212,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fb1f46c_d713f021",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done, using foreach loop.",
+      "parentUuid": "2aff4de4_0c4e9a4c",
+      "range": {
+        "startLine": 1356,
+        "startChar": 11,
+        "endLine": 1356,
+        "endChar": 64
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd6b81de_d27c1017",
@@ -129,6 +249,30 @@
       "writtenOn": "2022-01-18T17:07:51Z",
       "side": 1,
       "message": "1. IIUC this is not correct?\n\n2. Maybe you need to manual test if BYTES_TRANSFER_BY_TAG_AND_METERED is not broken?\n\n3, Maybe\n...\nif (!includeTags) return nonTaggedStats;\n\n...\nreturn nonTaggedStats.add(taggedStats)",
+      "range": {
+        "startLine": 1359,
+        "startChar": 16,
+        "endLine": 1359,
+        "endChar": 36
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ee36a7a_40d651ab",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd6b81de_d27c1017",
       "range": {
         "startLine": 1359,
         "startChar": 16,
@@ -156,6 +300,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "50f6519b_db8c9197",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be1ed8ea_887d1aa4",
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f460bee_81f6b929",
@@ -169,6 +331,30 @@
       "writtenOn": "2022-01-18T17:07:51Z",
       "side": 1,
       "message": "IIUC this can be renamed to sliceNetworkStatsByUid?",
+      "range": {
+        "startLine": 1387,
+        "startChar": 34,
+        "endLine": 1387,
+        "endChar": 46
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2df3db14_802956ff",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f460bee_81f6b929",
       "range": {
         "startLine": 1387,
         "startChar": 34,
@@ -202,6 +388,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7aeea5f_2de38630",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a742574_d9b357d9",
+      "range": {
+        "startLine": 1456,
+        "startChar": 48,
+        "endLine": 1456,
+        "endChar": 88
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab2905a4_dfcddedd",
@@ -215,6 +425,30 @@
       "writtenOn": "2022-01-18T17:07:51Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 1462,
+        "startChar": 8,
+        "endLine": 1462,
+        "endChar": 60
+      },
+      "revId": "8bc795597c1328454031d463996bca5b322c795d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb7fec29_2e7417aa",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1462,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done, using foreach loop.",
+      "parentUuid": "ab2905a4_dfcddedd",
       "range": {
         "startLine": 1462,
         "startChar": 8,

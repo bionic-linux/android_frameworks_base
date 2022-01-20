@@ -22,6 +22,30 @@
       },
       "revId": "038efd25a7130187b3de245852b35cfdf68eae46",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6309772d_65c6dd59",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Done, using foreach loop.",
+      "parentUuid": "5be4c3a4_7e82994f",
+      "range": {
+        "startLine": 1200,
+        "startChar": 35,
+        "endLine": 1200,
+        "endChar": 59
+      },
+      "revId": "038efd25a7130187b3de245852b35cfdf68eae46",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

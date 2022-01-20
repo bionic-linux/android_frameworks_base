@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c80c1e_9840ea75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-01-20T13:38:39Z",
+      "side": 1,
+      "message": "Update new patch first, the test failure needs to be addressed.",
+      "revId": "2485fd9f527a57f1c4eff33d431e1a577df42b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
