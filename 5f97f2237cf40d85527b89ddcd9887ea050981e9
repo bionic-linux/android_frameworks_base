@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "710ed638_184bcd18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934860
+      },
+      "writtenOn": "2022-01-20T20:19:49Z",
+      "side": 1,
+      "message": "apct/device_boot_health_check_extra and apct/device_boot_test_selinux_denials are flaky and not realted to this change.",
+      "revId": "5f97f2237cf40d85527b89ddcd9887ea050981e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
