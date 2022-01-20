@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a62c39b_d8672701",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2022-01-20T14:37:43Z",
+      "side": 1,
+      "message": "A `Depends-On: Ide41a217dcf4291a7d38836264f59e06967d9d91` doesn\u0027t hurt.",
+      "revId": "18c05b552c381340316d7a31b8e0e50e44f863c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61aa56d7_2ee49db9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2022-01-20T14:37:43Z",
+      "side": 1,
+      "message": "Looks good to me, just two tiny nits.\n\nI\u0027ve asked our team with access to the affected UVC device to test these commits; will get back to you when it\u0027s done.\n(I\u0027m pretty sure it will work just fine though, so I won\u0027t mind if you merge without waiting for the results.)",
+      "revId": "18c05b552c381340316d7a31b8e0e50e44f863c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c786bb62_f87c3759",
+        "filename": "services/core/jni/com_android_server_UsbDescriptorParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1041495
+      },
+      "writtenOn": "2022-01-20T14:37:43Z",
+      "side": 1,
+      "message": "This can be removed: the check is done in usb_jni_read_descriptors().",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "18c05b552c381340316d7a31b8e0e50e44f863c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
