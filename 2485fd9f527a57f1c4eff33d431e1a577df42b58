@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f01e063e_acf85a07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-20T16:59:08Z",
+      "side": 1,
+      "message": "Nit: For future readers to reference,\nmaybe comment the manual check steps here?\nFeel free to ignore.",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "2485fd9f527a57f1c4eff33d431e1a577df42b58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "47c80c1e_9840ea75",
