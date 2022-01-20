@@ -93,6 +93,30 @@
       },
       "revId": "a8eeddbf9eb708a15dd6d3a13b2d00b9a10fb279",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f61fc6cc_0539ce96",
+        "filename": "core/proto/android/service/netstats.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1331189
+      },
+      "writtenOn": "2022-01-20T01:25:46Z",
+      "side": 0,
+      "message": "It\u0027s ok to remove this given that there is no more explicit fields.",
+      "parentUuid": "e679880c_9988c183",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 55
+      },
+      "revId": "a8eeddbf9eb708a15dd6d3a13b2d00b9a10fb279",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
