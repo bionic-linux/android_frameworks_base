@@ -103,6 +103,7 @@ package android.content.pm {
 
   public abstract class PackageManager {
     method @NonNull public String getPermissionControllerPackageName();
+    method @RequiresPermission(allOf={android.Manifest.permission.INTERACT_ACROSS_USERS, android.Manifest.permission.CHANGE_COMPONENT_ENABLED_STATE}, conditional=true) public void setComponentEnabledSettingForUser(@NonNull android.content.ComponentName, int, int, @NonNull android.os.UserHandle);
   }
 
 }

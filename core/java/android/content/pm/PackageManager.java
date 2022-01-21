@@ -7638,6 +7638,27 @@ public abstract class PackageManager {
             @EnabledState int newState, @EnabledFlags int flags);
 
     /**
+     * Set the enabled setting for a package component (activity, receiver, service, provider).
+     * This setting will override any enabled state which may have been set by the component in its
+     * manifest.
+     *
+     * @param componentName The component to enable
+     * @param newState The new enabled state for the component.
+     * @param flags Optional behavior flags.
+     * @param userHandle user the settings is about
+     * {@hide}
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @RequiresPermission(allOf = {
+            android.Manifest.permission.INTERACT_ACROSS_USERS,
+            android.Manifest.permission.CHANGE_COMPONENT_ENABLED_STATE
+            }, conditional = true)
+    public void setComponentEnabledSettingForUser(@NonNull ComponentName componentName,
+            @EnabledState int newState, @EnabledFlags int flags, @NonNull UserHandle userHandle) {
+        throw new RuntimeException("Not implemented. Must override in a subclass");
+    }
+
+    /**
      * Return the enabled setting for a package component (activity,
      * receiver, service, provider).  This returns the last value set by
      * {@link #setComponentEnabledSetting(ComponentName, int, int)}; in most
