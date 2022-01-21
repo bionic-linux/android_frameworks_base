@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "040936e6_874f9cb4",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2022-01-21T07:43:04Z",
+      "side": 1,
+      "message": "nits: identityAddress",
+      "range": {
+        "startLine": 509,
+        "startChar": 21,
+        "endLine": 509,
+        "endChar": 37
+      },
+      "revId": "84adfabe6f47e3129d697d739d181c2df6d5d3b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d870e272_5c87a816",
+        "filename": "packages/SettingsLib/src/com/android/settingslib/bluetooth/CachedBluetoothDevice.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1320071
+      },
+      "writtenOn": "2022-01-21T07:43:04Z",
+      "side": 1,
+      "message": "Maybe we could make it simply as:  return TextUtils.isEmpty(identityAddress) ? getAddress() : identityAddress;",
+      "range": {
+        "startLine": 510,
+        "startChar": 8,
+        "endLine": 513,
+        "endChar": 36
+      },
+      "revId": "84adfabe6f47e3129d697d739d181c2df6d5d3b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
