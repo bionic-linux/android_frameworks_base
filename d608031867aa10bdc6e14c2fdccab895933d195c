@@ -16,6 +16,24 @@
       "message": "this should also be @SystemApi (and really so should traceCounter \u0026 the async tracing that also takes a traceTag).",
       "revId": "d608031867aa10bdc6e14c2fdccab895933d195c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2418a0f0_367df5d1",
+        "filename": "core/java/android/os/Trace.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-21T06:35:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4fdfdf5_c08bbde8",
+      "revId": "d608031867aa10bdc6e14c2fdccab895933d195c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
