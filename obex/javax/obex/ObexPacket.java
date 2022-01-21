@@ -20,6 +20,11 @@ package javax.obex;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * @deprecated this class is only used internally by the Bluetooth stack and its code has been
+ * moved to be part of the Bluetooth stack.
+ */
+@Deprecated
 public class ObexPacket {
     public int mHeaderId;
     public int mLength;
