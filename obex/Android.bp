@@ -45,7 +45,7 @@ license {
 }
 
 java_sdk_library {
-    name: "javax.obex",
+    name: "deprecated.javax.obex",
     srcs: ["javax/**/*.java"],
     api_packages: ["javax.obex"],
     dist_group: "android",
