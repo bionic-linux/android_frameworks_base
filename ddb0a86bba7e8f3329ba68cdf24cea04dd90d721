@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c4ac2be_667c4937",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 6004,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-01-21T19:44:24Z",
+      "side": 1,
+      "message": "Tom, I think you need to have this CL and the API change part of aosp/1936491 in one topic, otherwise the Javadoc here won\u0027t resolve.",
+      "range": {
+        "startLine": 6004,
+        "startChar": 29,
+        "endLine": 6004,
+        "endChar": 99
+      },
+      "revId": "ddb0a86bba7e8f3329ba68cdf24cea04dd90d721",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
