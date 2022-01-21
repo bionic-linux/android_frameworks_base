@@ -92,6 +92,30 @@
       },
       "revId": "eb5abc28ca635280b17096161df03c24d5ad3740",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7de6fa3b_b6810692",
+        "filename": "Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-21T17:02:33Z",
+      "side": 1,
+      "message": "oops, sorry, realized the followup CL had not been uploaded, so \"this should also\" didn\u0027t make much sense.",
+      "parentUuid": "a33b6253_067318f4",
+      "range": {
+        "startLine": 513,
+        "startChar": 11,
+        "endLine": 513,
+        "endChar": 35
+      },
+      "revId": "eb5abc28ca635280b17096161df03c24d5ad3740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
