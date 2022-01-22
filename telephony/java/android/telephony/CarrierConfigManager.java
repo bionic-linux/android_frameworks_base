@@ -3856,40 +3856,62 @@ public class CarrierConfigManager {
             "opportunistic_network_max_backoff_time_long";
 
     /**
-    * Controls SS-RSRP threshold in dBm at which 5G opportunistic network will be considered good
-    * enough for internet data.
-    *
-    * @hide
-    */
-    public static final String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRP_INT =
-            "opportunistic_network_entry_threshold_ss_rsrp_int";
+     * Controls SS-RSRP threshold in dBm at which 5G opportunistic network will be considered good
+     * enough for internet data. Note other factors may be considered to make the final decision.
+     *
+     * <p>Each string in the array has the following format <band>:<threshold>.
+     * "band" shall be a decimal number, as defined in {@code NgranBands.BAND_*} constants, or
+     * specially, band "*" means any unspecified band. "threshold" shall be an decimal integer
+     * that will be compared with {@link CellSignalStrengthNr#getSsRsrp}.
+     * For example, values ["48:-111", "*:-112"] means the threshold is -101 for
+     * {@code NgranBands.BAND_48}, or -102 otherwise.
+     *
+     * @hide
+     */
+    public static final String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRP_STRING_ARRAY =
+            "opportunistic_network_entry_threshold_ss_rsrp_string_array";
 
     /**
-    * Controls SS-RSRQ threshold in dB at which 5G opportunistic network will be considered good
-    * enough for internet data.
-    *
-    * @hide
-    */
-    public static final String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRQ_DOUBLE =
-            "opportunistic_network_entry_threshold_ss_rsrq_double";
+     * Controls SS-RSRQ threshold in dB at which 5G opportunistic network will be considered good
+     * enough for internet data. Note other factors may be considered to make the final decision.
+     *
+     * <p>Each string in the array has the following format <band>:<threshold>.
+     * "band" shall be a decimal number, as defined in {@code NgranBands.BAND_*} constants, or
+     * specially, band "*" means any unspecified band. "threshold" shall be an decimal double
+     * that will be compared with {@link CellSignalStrengthNr#getSsRsrq}.
+     * For example, values ["48:-18.5", "*:-19"] means the threshold is -18.5 for
+     * {@code NgranBands.BAND_48}, or -19 otherwise.
+     *
+     * @hide
+     */
+    public static final String KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRQ_STRING_ARRAY =
+            "opportunistic_network_entry_threshold_ss_rsrq_string_array";
 
     /**
-    * Controls SS-RSRP threshold in dBm below which 5G opportunistic network available will not
-    * be considered good enough for internet data.
-    *
-    * @hide
-    */
-    public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_SS_RSRP_INT =
-            "opportunistic_network_exit_threshold_ss_rsrp_int";
+     * Controls SS-RSRP threshold in dBm below which 5G opportunistic network available will not
+     * be considered good enough for internet data. Note other factors may be considered to make
+     * the final decision.
+     *
+     * The syntax of its value is similar to
+     * {@link #KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRP_STRING_ARRAY}.
+     *
+     * @hide
+     */
+    public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_SS_RSRP_STRING_ARRAY =
+            "opportunistic_network_exit_threshold_ss_rsrp_string_array";
 
     /**
-    * Controls SS-RSRQ threshold in dB below which 5G opportunistic network available will not
-    * be considered good enough for internet data.
-    *
-    * @hide
-    */
-    public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_SS_RSRQ_DOUBLE =
-            "opportunistic_network_exit_threshold_ss_rsrq_double";
+     * Controls SS-RSRQ threshold in dB below which 5G opportunistic network available will not
+     * be considered good enough for internet data. Note other factors may be considered to make
+     * the final decision.
+     *
+     * The syntax of its value is similar to
+     * {@link #KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRQ_STRING_ARRAY}.
+     *
+     * @hide
+     */
+    public static final String KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_SS_RSRQ_STRING_ARRAY =
+            "opportunistic_network_exit_threshold_ss_rsrq_string_array";
 
     /**
      * Controls back off time in milliseconds for switching back to
@@ -5834,14 +5856,22 @@ public class CarrierConfigManager {
         sDefaults.putLong(KEY_OPPORTUNISTIC_NETWORK_BACKOFF_TIME_LONG, 10000);
         /* Default value is 60 seconds. */
         sDefaults.putLong(KEY_OPPORTUNISTIC_NETWORK_MAX_BACKOFF_TIME_LONG, 60000);
-        /* Default value is -111 dBm. */
-        sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRP_INT, -111);
-        /* Default value is -18.5 dB. */
-        sDefaults.putDouble(KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRQ_DOUBLE, -18.5);
-        /* Default value is -120 dBm. */
-        sDefaults.putInt(KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_SS_RSRP_INT, -120);
-        /* Default value is -18.5 dB. */
-        sDefaults.putDouble(KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_SS_RSRQ_DOUBLE, -18.5);
+        /* Default value is -111 dBm for all bands. */
+        sDefaults.putStringArray(
+                KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRP_STRING_ARRAY,
+                new String[] {"*:-111"});
+        /* Default value is -18.5 dB for all bands. */
+        sDefaults.putStringArray(
+                KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRQ_STRING_ARRAY,
+                new String[] {"*:-18.5"});
+        /* Default value is -120 dBm for all bands. */
+        sDefaults.putStringArray(
+                KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_SS_RSRP_STRING_ARRAY,
+                new String[] {"*:-120"});
+        /* Default value is -18.5 dB for all bands. */
+        sDefaults.putStringArray(
+                KEY_OPPORTUNISTIC_NETWORK_EXIT_THRESHOLD_SS_RSRQ_STRING_ARRAY,
+                new String[] {"*:-18.5"});
         /* Default value is 10 seconds. */
         sDefaults.putLong(KEY_OPPORTUNISTIC_NETWORK_5G_BACKOFF_TIME_LONG, 10000);
         /* Default value is 60 seconds. */
