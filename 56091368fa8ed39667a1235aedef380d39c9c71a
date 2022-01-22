@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019588083",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "057fffa2_3b86c89c",
+          "description": "Change to \"telephony/java/android/telephony/CarrierConfigManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CarrierConfigManager.java",
+              "range": {
+                "startLine": 3895,
+                "startChar": 34,
+                "endLine": 3895,
+                "endChar": 42
+              },
+              "replacement": "similar"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "4f01448f_fdc86c03",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3895,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-22T01:03:15Z",
+      "side": 1,
+      "message": "Common typo found: \"similiar\" -- should it be \"similar\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3895,
+        "startChar": 34,
+        "endLine": 3895,
+        "endChar": 42
+      },
+      "revId": "56091368fa8ed39667a1235aedef380d39c9c71a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019588083",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "e85ce82a_439f5d9d",
+          "description": "Change to \"telephony/java/android/telephony/CarrierConfigManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CarrierConfigManager.java",
+              "range": {
+                "startLine": 3908,
+                "startChar": 34,
+                "endLine": 3908,
+                "endChar": 42
+              },
+              "replacement": "similar"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "53bd96c4_45d8a1bd",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3908,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-22T01:03:15Z",
+      "side": 1,
+      "message": "Common typo found: \"similiar\" -- should it be \"similar\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3908,
+        "startChar": 34,
+        "endLine": 3908,
+        "endChar": 42
+      },
+      "revId": "56091368fa8ed39667a1235aedef380d39c9c71a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
