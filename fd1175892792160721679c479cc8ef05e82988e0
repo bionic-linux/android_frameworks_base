@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8813201_5cd3489a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1130703
+      },
+      "writtenOn": "2022-01-22T17:34:27Z",
+      "side": 1,
+      "message": "Link to reverted commit: https://cs.android.com/android/_/android/platform/frameworks/base/+/6def6cda5f27ea96484b489d99455fef42ceec99\n\nTest: Add more than one language to AOSP keyboard. Switch between languages using the IME switcher. Without this patch: Secondary language won\u0027t work\nWith this patch: Secondary language does work",
+      "revId": "fd1175892792160721679c479cc8ef05e82988e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
