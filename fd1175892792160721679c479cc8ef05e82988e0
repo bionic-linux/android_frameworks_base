@@ -16,6 +16,23 @@
       "message": "Link to reverted commit: https://cs.android.com/android/_/android/platform/frameworks/base/+/6def6cda5f27ea96484b489d99455fef42ceec99\n\nTest: Add more than one language to AOSP keyboard. Switch between languages using the IME switcher. Without this patch: Secondary language won\u0027t work\nWith this patch: Secondary language does work",
       "revId": "fd1175892792160721679c479cc8ef05e82988e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65ed8a55_38969d13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042793
+      },
+      "writtenOn": "2022-01-22T18:57:00Z",
+      "side": 1,
+      "message": "Yeah, this is kind of predicted side effect, and I\u0027m really sorry to hear that this was bothering actual users.\n\nI saw that your own fork had already reverted that commit [1], but please keep in mind that that code I removed had contributed to severe performance regressions [2] and even dead locks [3] in the system_server in the past.  I really don\u0027t know whether that original code is still compatible with the latest version of AOSP.\n\nCurrently it\u0027s quite unlikely that we upstream would accept this revert commit.  The lock layering problem (calling into InputMethodManagerService while acquiring TextServicesManagerService#mLock really worries me) needs to be solved at the very least, then the performance concern should also be addressed (if app is calling int o this method from its UI thread, adding more logic here basically means it slows down the app).  Lastly, even if we succeeded to address all concerns above, only AOSP Keyboard would be benefited and there is going to be no visible improvements for other software keyboards...\n\nThose are why we cannot simply accept this revert commit.  The original commit was already a trade-off between above concerns and the benefit only in AOSP Keyboard.\n\nHope this helps you understand the context of the original commit.\n\n [1]: https://review.lineageos.org/c/LineageOS/android_frameworks_base/+/322479\n [2]: https://cs.android.com/android/_/android/platform/frameworks/base/+/ccb024aa2b985ddc7f65b53191a84f1891f31cf2\n [3]: https://cs.android.com/android/_/android/platform/frameworks/base/+/e3e31a880169a5d685ea4bf7efae81430a62b4fe",
+      "revId": "fd1175892792160721679c479cc8ef05e82988e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
