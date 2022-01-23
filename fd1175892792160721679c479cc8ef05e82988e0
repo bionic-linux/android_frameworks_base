@@ -51,6 +51,24 @@
       "parentUuid": "65ed8a55_38969d13",
       "revId": "fd1175892792160721679c479cc8ef05e82988e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7ac786a_2f74a917",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1130703
+      },
+      "writtenOn": "2022-01-23T22:56:32Z",
+      "side": 1,
+      "message": "I am sorry, but I am not familiar enough with this code and what all these performance regressions mean practically, since we neither see any slow performance with nor without this revert, but we DO see that it actually breaks functionality.\nWhat I can see from your referenced commits is, that you already addressed some issues and don\u0027t really see, where keeping this code is so much worse.\nAlso, I can\u0027t implement the proposed change since we aren\u0027t building master nor do I have enough time or knowhow about LatinIME in general to propose another solution.\n\nAnyway, I figured I should upload this to fix something that was broken (and I didn\u0027t see anywhere that this was a known drawback to this change, since the reverted patch says \"Test: Manually verified that spell checker still works\" - which is not the case, at least not as expected)",
+      "parentUuid": "c02acec9_eaaf7e8e",
+      "revId": "fd1175892792160721679c479cc8ef05e82988e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
