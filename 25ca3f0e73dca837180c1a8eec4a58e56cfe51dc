@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7823c3c_5772fbab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2022-01-24T22:59:41Z",
+      "side": 1,
+      "message": "Have you considered moving these pullers directly into NetworkStatsService? ",
+      "revId": "25ca3f0e73dca837180c1a8eec4a58e56cfe51dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb8240ee_ac823132",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1343,
+      "author": {
+        "id": 1286922
+      },
+      "writtenOn": "2022-01-24T22:59:41Z",
+      "side": 1,
+      "message": "typo:queryTaggedStats",
+      "range": {
+        "startLine": 1343,
+        "startChar": 45,
+        "endLine": 1343,
+        "endChar": 61
+      },
+      "revId": "25ca3f0e73dca837180c1a8eec4a58e56cfe51dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
