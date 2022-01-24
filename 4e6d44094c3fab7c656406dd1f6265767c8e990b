@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "777349b6_50d7709f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1061144
+      },
+      "writtenOn": "2022-01-24T17:50:52Z",
+      "side": 1,
+      "message": "Please use the existing Context#createContextAsUser(...).setComponentEnabledSetting(...) instead.",
+      "revId": "4e6d44094c3fab7c656406dd1f6265767c8e990b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
