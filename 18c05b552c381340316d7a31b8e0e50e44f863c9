@@ -54,6 +54,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d3b7deb8_3b87b93f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-01-24T20:10:34Z",
+      "side": 1,
+      "message": "+badhri for OWNERS.\n\n(other frameworks folks: if you think the newly factored-out code should be in frameworks rather than libusbhost, just let me know which file :-) for now, libusbhost seemed to make sense since ideally that should have been the only place that needed to be updated to support longer descriptors. but we could always export the constant that libusbhost uses itself from its headers and keep the code here to still get the benefit of removing the constant duplication...)",
+      "revId": "18c05b552c381340316d7a31b8e0e50e44f863c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c786bb62_f87c3759",
         "filename": "services/core/jni/com_android_server_UsbDescriptorParser.cpp",
         "patchSetId": 2
