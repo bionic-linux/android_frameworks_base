@@ -29,6 +29,7 @@ import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Objects;
 
 
 /**
@@ -80,6 +81,15 @@ public abstract class AttentionService extends Service {
     /** Camera permission is not granted. */
     public static final int ATTENTION_FAILURE_CAMERA_PERMISSION_ABSENT = 6;
 
+    /** Users’ proximity is close. */
+    public static final int PROXIMITY_SUCCESS_NEAR = 10;
+
+    /** Users’ proximity is far. */
+    public static final int PROXIMITY_SUCCESS_FAR = 11;
+
+    /** Unknown reasons for failing to determine users’ proximity. */
+    public static final int PROXIMITY_FAILURE_UNKNOWN = 12;
+
     /**
      * Result codes for when attention check was successful.
      *
@@ -103,6 +113,27 @@ public abstract class AttentionService extends Service {
     public @interface AttentionFailureCodes {
     }
 
+    /**
+     * Result codes for when proximity check was successful.
+     *
+     * @hide
+     */
+    @IntDef(prefix = {"PROXIMITY_SUCCESS_"}, value = {PROXIMITY_SUCCESS_NEAR,
+            PROXIMITY_SUCCESS_FAR})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ProximitySuccessCodes {
+    }
+
+    /**
+     * Result codes explaining why attention check was not successful.
+     *
+     * @hide
+     */
+    @IntDef(prefix = {"PROXIMITY_FAILURE_"}, value = {PROXIMITY_FAILURE_UNKNOWN})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ProximityFailureCodes {
+    }
+
     private final IAttentionService.Stub mBinder = new IAttentionService.Stub() {
 
         /** {@inheritDoc} */
@@ -117,6 +148,21 @@ public abstract class AttentionService extends Service {
         public void cancelAttentionCheck(IAttentionCallback callback) {
             Preconditions.checkNotNull(callback);
             AttentionService.this.onCancelAttentionCheck(new AttentionCallback(callback));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public void registerProximityUpdates(IProximityCallback callback) {
+            Objects.requireNonNull(callback);
+            AttentionService.this.registerProximityUpdates(new ProximityCallback(callback));
+
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public void unregisterProximityUpdates(IProximityCallback callback) {
+            Objects.requireNonNull(callback);
+            AttentionService.this.unregisterProximityUpdates(new ProximityCallback(callback));
         }
     };
 
@@ -143,6 +189,19 @@ public abstract class AttentionService extends Service {
      */
     public abstract void onCancelAttentionCheck(@NonNull AttentionCallback callback);
 
+    /**
+     * Requests the continuous updates of proximity signal via the provided callback,
+     * until the given callback is unregistered.
+     *
+     * @param callback the callback to return the result to
+     */
+    public abstract void registerProximityUpdates(@NonNull ProximityCallback callback);
+
+    /**
+     * Requests to stop providing continuous updates until the callback is registered.
+     */
+    public abstract void unregisterProximityUpdates(@NonNull ProximityCallback callback);
+
     /** Callbacks for AttentionService results. */
     public static final class AttentionCallback {
         @NonNull private final IAttentionCallback mCallback;
@@ -156,6 +215,37 @@ public abstract class AttentionService extends Service {
          *
          * @param timestamp of when the attention signal was computed; system throttles the requests
          *                  so this is useful to know how fresh the result is.
+         */
+        public void onSuccess(@AttentionSuccessCodes int result, long timestamp) {
+            try {
+                mCallback.onSuccess(result, timestamp);
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        }
+
+        /** Signals a failure and provides the error code. */
+        public void onFailure(@AttentionFailureCodes int error) {
+            try {
+                mCallback.onFailure(error);
+            } catch (RemoteException e) {
+                e.rethrowFromSystemServer();
+            }
+        }
+    }
+
+    /** Callbacks for AttentionService results. */
+    public static final class ProximityCallback {
+        @NonNull private final IProximityCallback mCallback;
+
+        private ProximityCallback(@NonNull IProximityCallback callback) {
+            mCallback = callback;
+        }
+
+        /**
+         * Signals a success and provides the result code.
+         *
+         * @param timestamp of when the proximity status was computed
          */
         public void onSuccess(@AttentionSuccessCodes int result, long timestamp) {
             try {

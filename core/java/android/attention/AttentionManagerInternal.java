@@ -46,6 +46,22 @@ public abstract class AttentionManagerInternal {
      */
     public abstract void cancelAttentionCheck(AttentionCallbackInternal callback);
 
+    /**
+     * Requests the continuous updates of proximity signal via the provided callback,
+     * until the given callback is unregistered.
+     *
+     * @param callback      a callback that receives the proximity updates
+     * @return {@code true} if the registration should succeed.
+     */
+    public abstract boolean registerProximityUpdates(ProximityCallbackInternal callback);
+
+    /**
+     * Cancels the specified proximity registration in case it's no longer needed.
+     *
+     * @param callback a callback that was used in {@link #registerProximityUpdates}
+     */
+    public abstract void unregisterProximityUpdates(ProximityCallbackInternal callback);
+
     /** Internal interface for attention callback. */
     public abstract static class AttentionCallbackInternal {
         /**
@@ -59,6 +75,25 @@ public abstract class AttentionManagerInternal {
 
         /**
          * Provides the explanation for why the attention check had failed.
+         *
+         * @param error       an int with the reason for failure
+         */
+        public abstract void onFailure(int error);
+    }
+
+    /** Internal interface for proximity callback. */
+    public abstract static class ProximityCallbackInternal {
+        /**
+         * Provides the update of the proximity state, if the check was successful.
+         *
+         * @param result      an int with the result of the check
+         * @param timestamp   a {@code SystemClock.uptimeMillis()} timestamp associated with the
+         *                    proximity update
+         */
+        public abstract void onSuccess(int result, long timestamp);
+
+        /**
+         * Provides the explanation for why the proximity update had failed.
          *
          * @param error       an int with the reason for failure
          */

@@ -22,6 +22,7 @@ import static android.content.Context.BIND_INCLUDE_CAPABILITIES;
 import static android.provider.DeviceConfig.NAMESPACE_ATTENTION_MANAGER_SERVICE;
 import static android.service.attention.AttentionService.ATTENTION_FAILURE_CANCELLED;
 import static android.service.attention.AttentionService.ATTENTION_FAILURE_UNKNOWN;
+import static android.service.attention.AttentionService.PROXIMITY_FAILURE_UNKNOWN;
 
 import android.Manifest;
 import android.annotation.NonNull;
@@ -29,6 +30,7 @@ import android.annotation.Nullable;
 import android.app.ActivityThread;
 import android.attention.AttentionManagerInternal;
 import android.attention.AttentionManagerInternal.AttentionCallbackInternal;
+import android.attention.AttentionManagerInternal.ProximityCallbackInternal;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -57,6 +59,7 @@ import android.service.attention.AttentionService.AttentionFailureCodes;
 import android.service.attention.AttentionService.AttentionSuccessCodes;
 import android.service.attention.IAttentionCallback;
 import android.service.attention.IAttentionService;
+import android.service.attention.IProximityCallback;
 import android.text.TextUtils;
 import android.util.Slog;
 
@@ -133,6 +136,10 @@ public class AttentionManagerService extends SystemService {
     @VisibleForTesting
     @GuardedBy("mLock")
     AttentionCheck mCurrentAttentionCheck;
+
+    @VisibleForTesting
+    @GuardedBy("mLock")
+    ProximityUpdate mCurrentProximityUpdate;
 
     public AttentionManagerService(Context context) {
         this(context, (PowerManager) context.getSystemService(Context.POWER_SERVICE),
@@ -315,6 +322,63 @@ public class AttentionManagerService extends SystemService {
         }
     }
 
+    /** Cancels the specified attention check. */
+    @VisibleForTesting
+    boolean registerProximityUpdates(ProximityCallbackInternal callbackInternal) {
+        Objects.requireNonNull(callbackInternal);
+
+        if (!mIsServiceEnabled) {
+            Slog.w(LOG_TAG, "Trying to call registerProximityUpdates() on an unsupported device.");
+            return false;
+        }
+
+        if (!isServiceAvailable()) {
+            Slog.w(LOG_TAG, "Service is not available at this moment.");
+            return false;
+        }
+
+        // don't allow proximity registration in screen off state.
+        // This behavior might change in the future.
+        if (!mPowerManager.isInteractive()) {
+            Slog.w(LOG_TAG, "Proximity Service is unavailable during screen off at this moment.");
+            return false;
+        }
+
+        synchronized (mLock) {
+            // schedule shutting down the connection if no one resets this timer
+            freeIfInactiveLocked();
+
+            // lazily start the service, which should be very lightweight to start
+            bindLocked();
+
+            /*
+            Prevent spamming with multiple requests, only one at a time is allowed.
+            If there are use-cases for keeping track of multiple registrations, we
+            can refactor ProximityUpdate object to keep track of multiple internal callbacks.
+             */
+            if (mCurrentProximityUpdate != null && mCurrentProximityUpdate.mStartedRegistration) {
+                return true;
+            }
+            mCurrentProximityUpdate = new ProximityUpdate(callbackInternal, this);
+            mCurrentProximityUpdate.startRegistration();
+            return true;
+        }
+    }
+
+    /** Cancels the specified attention check. */
+    @VisibleForTesting
+    void unregisterProximityUpdates(ProximityCallbackInternal callbackInternal) {
+        synchronized (mLock) {
+            if (mCurrentProximityUpdate == null
+                    || !mCurrentProximityUpdate.mCallbackInternal.equals(callbackInternal)
+                    || !mCurrentProximityUpdate.mStartedRegistration) {
+                Slog.w(LOG_TAG, "Cannot unregister a non-current callback");
+                return;
+            }
+            mCurrentProximityUpdate.cancelRegistration();
+        }
+    }
+
     @GuardedBy("mLock")
     @VisibleForTesting
     protected void freeIfInactiveLocked() {
@@ -416,6 +480,17 @@ public class AttentionManagerService extends SystemService {
         @Override
         public void cancelAttentionCheck(AttentionCallbackInternal callbackInternal) {
             AttentionManagerService.this.cancelAttentionCheck(callbackInternal);
+        }
+
+        @Override
+        public boolean registerProximityUpdates(
+                ProximityCallbackInternal callback) {
+            return AttentionManagerService.this.registerProximityUpdates(callback);
+        }
+
+        @Override
+        public void unregisterProximityUpdates(ProximityCallbackInternal callback) {
+            AttentionManagerService.this.unregisterProximityUpdates(callback);
         }
     }
 
@@ -536,6 +611,77 @@ public class AttentionManagerService extends SystemService {
         }
     }
 
+    @VisibleForTesting
+    static final class ProximityUpdate {
+        private final ProximityCallbackInternal mCallbackInternal;
+        private final IProximityCallback mIProximityCallback;
+        private final AttentionManagerService mAttentionManagerService;
+        private boolean mStartedRegistration;
+
+        ProximityUpdate(ProximityCallbackInternal callbackInternal,
+                AttentionManagerService service) {
+            mCallbackInternal = callbackInternal;
+            mIProximityCallback = new IProximityCallback.Stub() {
+                @Override
+                public void onSuccess(@AttentionSuccessCodes int result, long timestamp) {
+                    synchronized (service.mLock) {
+                        mCallbackInternal.onSuccess(result, timestamp);
+                        service.freeIfInactiveLocked();
+                    }
+                    logStats(result);
+                }
+
+                @Override
+                public void onFailure(@AttentionFailureCodes int error) {
+                    synchronized (service.mLock) {
+                        mCallbackInternal.onFailure(error);
+                        service.freeIfInactiveLocked();
+                    }
+                    logStats(error);
+                }
+
+                private void logStats(int result) {
+                    FrameworkStatsLog.write(
+                            FrameworkStatsLog.ATTENTION_MANAGER_SERVICE_RESULT_REPORTED,
+                            result);
+                }
+            };
+            mAttentionManagerService = service;
+        }
+
+        @GuardedBy("mLock")
+        void startRegistration() {
+            if (mStartedRegistration) {
+                Slog.w(LOG_TAG, "Already registered to a proximity service.");
+                return;
+            }
+            try {
+                mAttentionManagerService.mService.registerProximityUpdates(mIProximityCallback);
+                mStartedRegistration = true;
+            } catch (RemoteException e) {
+                Slog.e(LOG_TAG, "Cannot call into the AttentionService");
+            }
+        }
+
+        @GuardedBy("mLock")
+        void cancelRegistration() {
+            if (mStartedRegistration) {
+                if (mAttentionManagerService.mService == null) {
+                    mCallbackInternal.onFailure(PROXIMITY_FAILURE_UNKNOWN);
+                    return;
+                }
+                try {
+                    mAttentionManagerService.mService
+                            .unregisterProximityUpdates(mIProximityCallback);
+                    mStartedRegistration = false;
+                } catch (RemoteException e) {
+                    Slog.e(LOG_TAG, "Cannot call into the AttentionService");
+                    mCallbackInternal.onFailure(PROXIMITY_FAILURE_UNKNOWN);
+                }
+            }
+        }
+    }
+
     private void appendResultToAttentionCacheBuffer(AttentionCheckCache cache) {
         synchronized (mLock) {
             if (mAttentionCheckCacheBuffer == null) {
@@ -592,6 +738,10 @@ public class AttentionManagerService extends SystemService {
             } else {
                 mCurrentAttentionCheck.mCallbackInternal.onFailure(ATTENTION_FAILURE_UNKNOWN);
             }
+        }
+        if (mCurrentProximityUpdate != null && mCurrentProximityUpdate.mStartedRegistration
+                && mService == null) {
+            mCurrentProximityUpdate.cancelRegistration();
         }
     }
 
@@ -653,10 +803,15 @@ public class AttentionManagerService extends SystemService {
     @GuardedBy("mLock")
     private void cancelAndUnbindLocked() {
         synchronized (mLock) {
-            if (mCurrentAttentionCheck == null) {
+            if (mCurrentAttentionCheck == null && mCurrentProximityUpdate == null) {
                 return;
             }
-            cancel();
+            if (mCurrentAttentionCheck != null) {
+                cancel();
+            }
+            if (mCurrentProximityUpdate != null) {
+                mCurrentProximityUpdate.cancelRegistration();
+            }
             if (mService == null) {
                 return;
             }
@@ -730,8 +885,32 @@ public class AttentionManagerService extends SystemService {
             }
         }
 
+        class TestableProximityCallbackInternal extends ProximityCallbackInternal {
+            private int mLastCallbackCode = -1;
+
+            @Override
+            public void onSuccess(int result, long timestamp) {
+                mLastCallbackCode = result;
+            }
+
+            @Override
+            public void onFailure(int error) {
+                mLastCallbackCode = error;
+            }
+
+            public void reset() {
+                mLastCallbackCode = -1;
+            }
+
+            public int getLastCallbackCode() {
+                return mLastCallbackCode;
+            }
+        }
+
         final TestableAttentionCallbackInternal mTestableAttentionCallback =
                 new TestableAttentionCallbackInternal();
+        final TestableProximityCallbackInternal mTestableProximityCallback =
+                new TestableProximityCallbackInternal();
 
         @Override
         public int onCommand(@Nullable final String cmd) {
@@ -749,6 +928,10 @@ public class AttentionManagerService extends SystemService {
                                 return cmdCallCheckAttention();
                             case "cancelCheckAttention":
                                 return cmdCallCancelAttention();
+                            case "registerProximityUpdates":
+                                return cmdCallRegisterProximityUpdates();
+                            case "unregisterProximityUpdates":
+                                return cmdCallUnregisterProximityUpdates();
                             default:
                                 throw new IllegalArgumentException("Invalid argument");
                         }
@@ -796,6 +979,20 @@ public class AttentionManagerService extends SystemService {
         private int cmdCallCancelAttention() {
             final PrintWriter out = getOutPrintWriter();
             cancelAttentionCheck(mTestableAttentionCallback);
+            out.println("true");
+            return 0;
+        }
+
+        private int cmdCallRegisterProximityUpdates() {
+            final PrintWriter out = getOutPrintWriter();
+            boolean calledSuccessfully = registerProximityUpdates(mTestableProximityCallback);
+            out.println(calledSuccessfully ? "true" : "false");
+            return 0;
+        }
+
+        private int cmdCallUnregisterProximityUpdates() {
+            final PrintWriter out = getOutPrintWriter();
+            unregisterProximityUpdates(mTestableProximityCallback);
             out.println("true");
             return 0;
         }
