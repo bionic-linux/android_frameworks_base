@@ -1,0 +1,398 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657373",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "36e8d764_8ffe943a",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "This CL adds new API(s), but it doesn\u0027t include any CTS test to test them. Please add CTS test(s) in a change and include the change in the same topic. After adding that change, you may need to upload a new patchset such as updating commit message to rerun this presubmit test. If you are unable to add CTS test(s) now, please file a tracking bug via go/new-cts-coverage-bug and add \"CTS-Coverage-Bug: \u003cbug id\u003e\" in this CL\u0027s commit message to pass this presubmit. For more information, please refer to go/api-test-coverage.",
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657389",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d98276ef_de4daa02",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 17103,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027they\u0027, \u0027them\u0027, or \u0027person\u0027; see https://developers.google.com/style/word-list#gender for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 17103,
+        "startChar": 33,
+        "endLine": 17103,
+        "endChar": 37
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657389",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "46bb540b_fa6da7f4",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 26982,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 26982,
+        "startChar": 61,
+        "endLine": 26982,
+        "endChar": 70
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657391",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "af6232b9_2800dc8b",
+          "description": "Change to \"api/current.txt\"",
+          "replacements": [
+            {
+              "path": "api/current.txt",
+              "range": {
+                "startLine": 50890,
+                "startChar": 24,
+                "endLine": 50890,
+                "endChar": 34
+              },
+              "replacement": "JavaScript"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "9501235b_6bff4f5d",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 50890,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Common typo found: \"Javascript\" -- should it be \"JavaScript\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 50890,
+        "startChar": 24,
+        "endLine": 50890,
+        "endChar": 34
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657391",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "eb6bccff_7e6b370c",
+          "description": "Change to \"api/current.txt\"",
+          "replacements": [
+            {
+              "path": "api/current.txt",
+              "range": {
+                "startLine": 51341,
+                "startChar": 26,
+                "endLine": 51341,
+                "endChar": 36
+              },
+              "replacement": "JavaScript"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "f28f2846_d62c87af",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 51341,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Common typo found: \"Javascript\" -- should it be \"JavaScript\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 51341,
+        "startChar": 26,
+        "endLine": 51341,
+        "endChar": 36
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657391",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "49946cb4_7022a5e1",
+          "description": "Change to \"api/current.txt\"",
+          "replacements": [
+            {
+              "path": "api/current.txt",
+              "range": {
+                "startLine": 51363,
+                "startChar": 31,
+                "endLine": 51363,
+                "endChar": 41
+              },
+              "replacement": "JavaScript"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1b4cc386_09f4a88c",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 51363,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Common typo found: \"Javascript\" -- should it be \"JavaScript\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 51363,
+        "startChar": 31,
+        "endLine": 51363,
+        "endChar": 41
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657391",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "c667a47b_6988ca05",
+          "description": "Change to \"api/current.txt\"",
+          "replacements": [
+            {
+              "path": "api/current.txt",
+              "range": {
+                "startLine": 51413,
+                "startChar": 29,
+                "endLine": 51413,
+                "endChar": 39
+              },
+              "replacement": "JavaScript"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1fee4150_4e1c3467",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 51413,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Common typo found: \"Javascript\" -- should it be \"JavaScript\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 51413,
+        "startChar": 29,
+        "endLine": 51413,
+        "endChar": 39
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657389",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "27ea9f80_91485e48",
+        "filename": "api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 51433,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 51433,
+        "startChar": 45,
+        "endLine": 51433,
+        "endChar": 54
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657389",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ce537525_1ee0c965",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 479,
+        "startChar": 60,
+        "endLine": 479,
+        "endChar": 69
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657389",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ad9da34a_3acb6794",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 593,
+        "startChar": 51,
+        "endLine": 593,
+        "endChar": 60
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657389",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "0eb246e7_3921b5cc",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 594,
+        "startChar": 51,
+        "endLine": 594,
+        "endChar": 60
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657389",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "e6099d2c_6c9b74bc",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027deny list\u0027 or \u0027allow list\u0027; see https://developers.google.com/style/word-list#blacklist for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 723,
+        "startChar": 58,
+        "endLine": 723,
+        "endChar": 67
+      },
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019657373",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1959004?revision\u003d1",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "37c1640f_c31b9610",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-24T20:46:42Z",
+      "side": 1,
+      "message": "This CL adds new API(s), but it doesn\u0027t include any CTS test to test them. Please add CTS test(s) in a change and include the change in the same topic. After adding that change, you may need to upload a new patchset such as updating commit message to rerun this presubmit test. If you are unable to add CTS test(s) now, please file a tracking bug via go/new-cts-coverage-bug and add \"CTS-Coverage-Bug: \u003cbug id\u003e\" in this CL\u0027s commit message to pass this presubmit. For more information, please refer to go/api-test-coverage.",
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
