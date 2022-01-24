@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "875c03cb_372df50d",
+        "filename": "api/test-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1565664
+      },
+      "writtenOn": "2022-01-24T22:02:55Z",
+      "side": 1,
+      "message": "Remove this file from CL, as this file is not needed. I was wondering if this file was on master, it doesn\u0027t show delta so we can delete this file\n\nSame applies to current.txt I\u0027m unable to add comment for that file\nOnly core/api/current.txt needs to be present as part of CL",
+      "revId": "c34c27a95bf381cc77a2ac97f4fc222ab5587351",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
