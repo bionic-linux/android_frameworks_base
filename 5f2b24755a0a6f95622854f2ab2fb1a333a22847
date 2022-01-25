@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "078a3beb_c20b0c4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-25T18:19:00Z",
+      "side": 1,
+      "message": "Had to move the api database generation out of the defaults, it doesn\u0027t make sense for the non-monolithic ones. Should be temporary duplication anyhow, hopefully.",
+      "revId": "5f2b24755a0a6f95622854f2ab2fb1a333a22847",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
