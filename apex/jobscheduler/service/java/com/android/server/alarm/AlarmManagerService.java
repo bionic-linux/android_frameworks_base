@@ -142,6 +142,8 @@ import com.android.server.pm.permission.PermissionManagerServiceInternal;
 import com.android.server.usage.AppStandbyInternal;
 import com.android.server.usage.AppStandbyInternal.AppIdleStateChangeListener;
 
+import dalvik.annotation.optimization.NeverCompile;
+
 import libcore.util.EmptyArray;
 
 import java.io.FileDescriptor;
@@ -2697,6 +2699,7 @@ public class AlarmManagerService extends SystemService {
                 packageName, UserHandle.of(userId));
     }
 
+    @NeverCompile // Avoid size overhead of debugging code.
     void dumpImpl(IndentingPrintWriter pw) {
         synchronized (mLock) {
             pw.println("Current Alarm Manager state:");

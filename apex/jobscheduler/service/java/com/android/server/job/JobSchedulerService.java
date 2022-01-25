@@ -116,6 +116,8 @@ import com.android.server.utils.quota.Categorizer;
 import com.android.server.utils.quota.Category;
 import com.android.server.utils.quota.CountQuotaTracker;
 
+import dalvik.annotation.optimization.NeverCompile;
+
 import libcore.util.EmptyArray;
 
 import java.io.FileDescriptor;
@@ -3279,6 +3281,7 @@ public class JobSchedulerService extends com.android.server.SystemService
         });
     }
 
+    @NeverCompile // Avoid size overhead of debugging code.
     void dumpInternal(final IndentingPrintWriter pw, int filterUid) {
         final int filterAppId = UserHandle.getAppId(filterUid);
         final long now = sSystemClock.millis();
