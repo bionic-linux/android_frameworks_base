@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb156cce_7adc1e45",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1432579
+      },
+      "writtenOn": "2022-01-25T17:27:34Z",
+      "side": 1,
+      "message": "Why is this on the client (BugreportManager) side? Each client will have it\u0027s own instance of BugreportManager",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "b7b5c26fb7b0478c055d9a5c75ee245ba599d5cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
