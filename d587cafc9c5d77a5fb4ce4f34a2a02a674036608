@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eb9be96_1ed004dc",
+        "filename": "ApiDocs.bp",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1060959
+      },
+      "writtenOn": "2022-01-25T18:32:03Z",
+      "side": 1,
+      "message": "Renamed this to android-non-updatable-doc-stubs-default instead since we don\u0027t need two different ones anymore.",
+      "revId": "d587cafc9c5d77a5fb4ce4f34a2a02a674036608",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
