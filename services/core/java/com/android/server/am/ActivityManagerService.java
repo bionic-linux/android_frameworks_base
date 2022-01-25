@@ -399,6 +399,7 @@ import com.android.server.wm.WindowManagerInternal;
 import com.android.server.wm.WindowManagerService;
 import com.android.server.wm.WindowProcessController;
 
+import dalvik.annotation.optimization.NeverCompile;
 import dalvik.system.VMRuntime;
 
 import libcore.util.EmptyArray;
@@ -8793,6 +8794,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     /**
      * Wrapper function to print out debug data filtered by specified arguments.
     */
+    @NeverCompile // Avoid size overhead of debugging code.
     private void doDump(FileDescriptor fd, PrintWriter pw, String[] args, boolean useProto) {
         if (!DumpUtils.checkDumpAndUsageStatsPermission(mContext, TAG, pw)) return;
 
@@ -9325,6 +9327,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         return needSep;
     }
 
+    @NeverCompile // Avoid size overhead of debugging code.
     @GuardedBy({"this", "mProcLock"})
     void dumpOtherProcessesInfoLSP(FileDescriptor fd, PrintWriter pw,
             boolean dumpAll, String dumpPackage, int dumpAppId, int numPers, boolean needSep) {
@@ -10441,6 +10444,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         boolean dumpProto;
     }
 
+    @NeverCompile // Avoid size overhead of debugging code.
     final void dumpApplicationMemoryUsage(FileDescriptor fd, PrintWriter pw, String prefix,
             String[] args, boolean brief, PrintWriter categoryPw, boolean asProto) {
         MemoryUsageDumpOptions opts = new MemoryUsageDumpOptions();
@@ -10523,6 +10527,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    @NeverCompile // Avoid size overhead of debugging code.
     private final void dumpApplicationMemoryUsage(FileDescriptor fd, PrintWriter pw, String prefix,
             MemoryUsageDumpOptions opts, final String[] innerArgs, boolean brief,
             ArrayList<ProcessRecord> procs, PrintWriter categoryPw) {
@@ -11172,6 +11177,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    @NeverCompile // Avoid size overhead of debugging code.
     private final void dumpApplicationMemoryUsage(FileDescriptor fd,
             MemoryUsageDumpOptions opts, final String[] innerArgs, boolean brief,
             ArrayList<ProcessRecord> procs) {
