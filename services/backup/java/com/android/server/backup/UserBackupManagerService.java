@@ -135,6 +135,8 @@ import com.android.server.backup.utils.BackupManagerMonitorUtils;
 import com.android.server.backup.utils.BackupObserverUtils;
 import com.android.server.backup.utils.SparseArrayUtils;
 
+import dalvik.annotation.optimization.NeverCompile;
+
 import com.google.android.collect.Sets;
 
 import java.io.BufferedInputStream;
@@ -4264,6 +4266,7 @@ public class UserBackupManagerService {
         }
     }
 
+    @NeverCompile // Avoid size overhead of debugging code.
     private void dumpInternal(PrintWriter pw) {
         // Add prefix for only non-system users so that system user dumpsys is the same as before
         String userPrefix = mUserId == UserHandle.USER_SYSTEM ? "" : "User " + mUserId + ":";
