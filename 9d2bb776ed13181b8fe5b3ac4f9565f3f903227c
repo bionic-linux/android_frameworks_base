@@ -16,6 +16,29 @@
       "message": "This is a clean cherry-pick from internal master.",
       "revId": "9d2bb776ed13181b8fe5b3ac4f9565f3f903227c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77056c07_773d4376",
+        "filename": "services/core/java/com/android/server/StorageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3623,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2022-01-25T13:45:11Z",
+      "side": 1,
+      "message": "Thanks Eric. I\u0027m ok with rethrowing as Runtime for prepareUserStorage, but not sure we should for if the tryMountDataMirror() call fails. That is related to app-data dir hiding, and if that fails not necessarily a reason to wipe.",
+      "range": {
+        "startLine": 3623,
+        "startChar": 17,
+        "endLine": 3623,
+        "endChar": 32
+      },
+      "revId": "9d2bb776ed13181b8fe5b3ac4f9565f3f903227c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
