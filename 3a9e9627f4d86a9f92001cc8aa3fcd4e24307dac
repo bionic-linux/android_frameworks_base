@@ -22,6 +22,30 @@
       },
       "revId": "3a9e9627f4d86a9f92001cc8aa3fcd4e24307dac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e2f019e_03799fb1",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-01-25T02:34:01Z",
+      "side": 1,
+      "message": "There will be a build breakage if we only change the return type.\n\nThe build error message:\n```\n******************************\nYou have tried to change the API from what has been previously released in\nan SDK.  Please fix the errors listed above.\n******************************\n```",
+      "parentUuid": "8aea374f_ca72a324",
+      "range": {
+        "startLine": 325,
+        "startChar": 44,
+        "endLine": 325,
+        "endChar": 51
+      },
+      "revId": "3a9e9627f4d86a9f92001cc8aa3fcd4e24307dac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
