@@ -3,6 +3,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9f9b969_55240b9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2022-01-26T16:04:22Z",
+      "side": 1,
+      "message": "the tracking bug says \"but the consent dialog is deferred until the user wishes to share the bugreport.\"\n\nis that right?\n\ni\u0027m reading the current implementation as, 1) a consent is first shown on requestbugreport() 2) then another one is shown on retrievebugreport(). is that so?\n\nasking to understand not necessarily because there\u0027s an issue with double consent",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "b7b5c26fb7b0478c055d9a5c75ee245ba599d5cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "250e0703_edb7c6d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2022-01-26T16:04:22Z",
+      "side": 1,
+      "message": "tl;dr - I don\u0027t think we can rely on the broadcast, unfortunately",
+      "revId": "b7b5c26fb7b0478c055d9a5c75ee245ba599d5cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cb156cce_7adc1e45",
         "filename": "core/java/android/os/BugreportManager.java",
         "patchSetId": 3
@@ -19,6 +59,75 @@
         "startChar": 0,
         "endLine": 72,
         "endChar": 0
+      },
+      "revId": "b7b5c26fb7b0478c055d9a5c75ee245ba599d5cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f7282c1_8e2c064c",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2022-01-26T16:04:22Z",
+      "side": 1,
+      "message": "this is the api documentation, so we need to be a lot more descriptive. what does \"previously generated\" mean? who is allowed to call this api? after how long? how do we match caller to the \"previous\" bugreport?",
+      "range": {
+        "startLine": 239,
+        "startChar": 7,
+        "endLine": 239,
+        "endChar": 50
+      },
+      "revId": "b7b5c26fb7b0478c055d9a5c75ee245ba599d5cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6da12b86_83116003",
+        "filename": "core/java/android/os/BugreportManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2022-01-26T16:04:22Z",
+      "side": 1,
+      "message": "I don\u0027t think we can conclude this file belongs to the calling app. The broadcast is not part of the \"requestbugreport\" api, so it\u0027s not reliable to tie up like this. An example where this fails is\n\n1) app A requests a bugreport\n2) app B requests a bugreport\n3) line 386 registers a received for finished broadcast\n4) app A finishes bugreport and broadcast is sent\n5) line 401 registers the finished file belonging to A under B\u0027s UID",
+      "range": {
+        "startLine": 398,
+        "startChar": 23,
+        "endLine": 398,
+        "endChar": 36
+      },
+      "revId": "b7b5c26fb7b0478c055d9a5c75ee245ba599d5cc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e592ff5_271c558c",
+        "filename": "services/core/java/com/android/server/os/BugreportManagerServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1336554
+      },
+      "writtenOn": "2022-01-26T16:04:22Z",
+      "side": 1,
+      "message": "this is a bit unfortunate that retrieving is blocked when a bugreport generation is active",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 74
       },
       "revId": "b7b5c26fb7b0478c055d9a5c75ee245ba599d5cc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
