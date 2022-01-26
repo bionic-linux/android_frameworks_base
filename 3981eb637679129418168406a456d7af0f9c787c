@@ -16,6 +16,92 @@
       "message": "Building necessary parameters for constructing a IkeTunnelConnectionParams takes more time. I will prepare it later.",
       "revId": "3981eb637679129418168406a456d7af0f9c787c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a7aacb7_6b9d2713",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:57:55Z",
+      "side": 1,
+      "message": "LGTM. Ben, does this look good to you ?",
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b67b80c1_f22a06e6",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:57:55Z",
+      "side": 1,
+      "message": "s/message/field/",
+      "range": {
+        "startLine": 662,
+        "startChar": 28,
+        "endLine": 662,
+        "endChar": 35
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59c86b2b_bee20f0e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:57:55Z",
+      "side": 1,
+      "message": "field + \" can\u0027t be set with IkeTunnelConnectionParams builder\"",
+      "range": {
+        "startLine": 664,
+        "startChar": 47,
+        "endLine": 665,
+        "endChar": 49
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "401b2122_36e2067b",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-26T11:57:55Z",
+      "side": 1,
+      "message": "final, since you can\u0027t reset it\n\nOr, add a setter for it",
+      "range": {
+        "startLine": 784,
+        "startChar": 18,
+        "endLine": 784,
+        "endChar": 25
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
