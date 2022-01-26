@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f55c737_63b4f254",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-26T13:56:22Z",
+      "side": 1,
+      "message": "Sorry for misleading, please use Remove the implementation of ...",
+      "range": {
+        "startLine": 1303,
+        "startChar": 11,
+        "endLine": 1303,
+        "endChar": 18
+      },
+      "revId": "fd92c6ffde660307b5feb34cb437450bba1d129d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
