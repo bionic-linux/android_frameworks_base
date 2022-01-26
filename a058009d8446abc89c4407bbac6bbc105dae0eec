@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b5ea7d6_9e36d328",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903913
+      },
+      "writtenOn": "2022-01-26T02:22:47Z",
+      "side": 1,
+      "message": "Copied from master to AOSP master",
+      "revId": "a058009d8446abc89c4407bbac6bbc105dae0eec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
