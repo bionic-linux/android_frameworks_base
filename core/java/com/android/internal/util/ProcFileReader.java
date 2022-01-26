@@ -30,6 +30,8 @@ import java.nio.charset.StandardCharsets;
  * <p>
  * Currently doesn't support formats based on {@code \0}, tabs.
  * Consecutive spaces are treated as a single delimiter.
+ *
+ * @hide
  */
 public class ProcFileReader implements Closeable {
     private final InputStream mStream;
