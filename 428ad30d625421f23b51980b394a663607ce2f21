@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c678744f_bd597874",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-01-26T09:39:09Z",
+      "side": 1,
+      "message": "As discussed on the bug: a different solution is required for S and above, due to the addition of the HdmiCecNetwork class.",
+      "revId": "428ad30d625421f23b51980b394a663607ce2f21",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "545c905a_ce319918",
