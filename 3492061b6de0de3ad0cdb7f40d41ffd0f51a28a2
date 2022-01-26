@@ -16,6 +16,23 @@
       "message": "nice!",
       "revId": "3492061b6de0de3ad0cdb7f40d41ffd0f51a28a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bf2aa2d_aa141296",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2022-01-26T00:21:07Z",
+      "side": 1,
+      "message": "This still needs Owner approval for the one-line change in ActivtyTransitionState.",
+      "revId": "3492061b6de0de3ad0cdb7f40d41ffd0f51a28a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
