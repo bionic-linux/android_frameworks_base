@@ -3530,6 +3530,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             remove = false;
         }
         if (remove) {
+            // The process may be gone, but the stats not update!
+            mAtmService.updateBatteryStats(this, false);
             ProtoLog.i(WM_DEBUG_ADD_REMOVE, "Removing activity %s hasSavedState=%b "
                     + "stateNotNeeded=%s finishing=%b state=%s callers=%s", this,
                     mHaveState, stateNotNeeded, finishing, mState, Debug.getCallers(5));
