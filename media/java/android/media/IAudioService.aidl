@@ -150,6 +150,8 @@ interface IAudioService {
 
     int getMode();
 
+    int getBluetoothContextualVolumeStream();
+
     oneway void playSoundEffect(int effectType);
 
     oneway void playSoundEffectVolume(int effectType, float volume);

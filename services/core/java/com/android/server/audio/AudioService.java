@@ -3328,10 +3328,6 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
-    /*package*/ int getBluetoothContextualVolumeStream() {
-        return getBluetoothContextualVolumeStream(mMode.get());
-    }
-
     private int getBluetoothContextualVolumeStream(int mode) {
         switch (mode) {
             case AudioSystem.MODE_IN_COMMUNICATION:
@@ -4887,6 +4883,11 @@ public class AudioService extends IAudioService.Stub
             }
             return AudioSystem.MODE_NORMAL;
         }
+    }
+
+    /** @see AudioManager#getBluetoothContextualVolumeStream() */
+    public int getBluetoothContextualVolumeStream() {
+        return getBluetoothContextualVolumeStream(mMode.get());
     }
 
     /** cached value read from audiopolicy manager after initialization. */
