@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87d231f2_57e5624e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-26T13:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788ce5f2_5c228713",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "0b7c95aca0aec8650729c0d375384af202d6fc20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91bc8782_ccc21372",
@@ -71,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e58bb1d_3ae5ec6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-26T13:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91bc8782_ccc21372",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "0b7c95aca0aec8650729c0d375384af202d6fc20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "630a346a_699b8cb7",
@@ -84,6 +132,30 @@
       "writtenOn": "2022-01-26T12:50:02Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 1290,
+        "startChar": 12,
+        "endLine": 1291,
+        "endChar": 63
+      },
+      "revId": "0b7c95aca0aec8650729c0d375384af202d6fc20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d3f533a_e3281d9f",
+        "filename": "services/core/java/com/android/server/NetworkManagementService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-01-26T13:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630a346a_699b8cb7",
       "range": {
         "startLine": 1290,
         "startChar": 12,
