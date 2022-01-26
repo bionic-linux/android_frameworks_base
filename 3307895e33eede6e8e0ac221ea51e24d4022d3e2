@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41c5c11e_7a76c565",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112679
+      },
+      "writtenOn": "2022-01-26T09:45:36Z",
+      "side": 1,
+      "message": "This will be merged after ag/16724904 is merged.",
+      "revId": "3307895e33eede6e8e0ac221ea51e24d4022d3e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
