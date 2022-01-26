@@ -34,10 +34,6 @@ import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_POWERSAVE;
 import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_RESTRICTED;
 import static android.net.NetworkPolicyManager.FIREWALL_CHAIN_NAME_STANDBY;
 import static android.net.NetworkPolicyManager.FIREWALL_RULE_DEFAULT;
-import static android.net.NetworkStats.SET_DEFAULT;
-import static android.net.NetworkStats.STATS_PER_UID;
-import static android.net.NetworkStats.TAG_NONE;
-import static android.net.TrafficStats.UID_TETHERING;
 
 import static com.android.net.module.util.NetworkStatsUtils.LIMIT_GLOBAL_ALERT;
 
@@ -57,7 +53,6 @@ import android.net.NetworkPolicyManager;
 import android.net.NetworkStack;
 import android.net.NetworkStats;
 import android.net.RouteInfo;
-import android.net.TetherStatsParcel;
 import android.net.UidRangeParcel;
 import android.net.util.NetdService;
 import android.os.BatteryStats;
@@ -1292,40 +1287,9 @@ public class NetworkManagementService extends INetworkManagementService.Stub {
     private class NetdTetheringStatsProvider extends ITetheringStatsProvider.Stub {
         @Override
         public NetworkStats getTetherStats(int how) {
-            // We only need to return per-UID stats. Per-device stats are already counted by
-            // interface counters.
-            if (how != STATS_PER_UID) {
-                return new NetworkStats(SystemClock.elapsedRealtime(), 0);
-            }
-
-            final TetherStatsParcel[] tetherStatsVec;
-            try {
-                tetherStatsVec = mNetdService.tetherGetStats();
-            } catch (RemoteException | ServiceSpecificException e) {
-                throw new IllegalStateException("problem parsing tethering stats: ", e);
-            }
-
-            final NetworkStats stats = new NetworkStats(SystemClock.elapsedRealtime(),
-                tetherStatsVec.length);
-            final NetworkStats.Entry entry = new NetworkStats.Entry();
-
-            for (TetherStatsParcel tetherStats : tetherStatsVec) {
-                try {
-                    entry.iface = tetherStats.iface;
-                    entry.uid = UID_TETHERING;
-                    entry.set = SET_DEFAULT;
-                    entry.tag = TAG_NONE;
-                    entry.rxBytes   = tetherStats.rxBytes;
-                    entry.rxPackets = tetherStats.rxPackets;
-                    entry.txBytes   = tetherStats.txBytes;
-                    entry.txPackets = tetherStats.txPackets;
-                    stats.combineValues(entry);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    throw new IllegalStateException("invalid tethering stats " + e);
-                }
-            }
-
-            return stats;
+            // The method is replaced by NetworkStatsService.getNetworkStatsTethering.
+            // All the caller are removed, no longer supported.
+            throw new UnsupportedOperationException();
         }
 
         @Override
