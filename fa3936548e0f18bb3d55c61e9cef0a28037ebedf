@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b65fe92_b40412ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-26T16:05:54Z",
+      "side": 1,
+      "message": "Actually... why do you need this? The fact that you need the @hide suggests that you\u0027re putting it in a location that generates API stubs. Does that mean that this class is going to be the bootclasspath? That seems inadvisable? At least, have you checked that the right jarjar rules are in place to ensure that this class does not interfere with OEM classes?\n\nAlso: per chat it looks like this is needed for NetworkStatsFactory to read xt_qtaguid data. But isn\u0027t xt_qtaguid totally gone at this point? I think maze deleted the native code that reads the qtaguid proc file and also we recently deleted the library that talks to qtaguid to tag sockets.",
+      "revId": "fa3936548e0f18bb3d55c61e9cef0a28037ebedf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
