@@ -2851,6 +2851,22 @@ public class AudioManager {
     }
 
     /**
+     * @hide
+     * Returns the contextual volume stream for bluetooth.
+     *
+     * @return the contextual volume stream.
+     */
+    @SystemApi
+    public int getBluetoothContextualVolumeStream() {
+        final IAudioService service = getService();
+        try {
+            return service.getBluetoothContextualVolumeStream();
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
+
+    /**
      * Interface definition of a callback that is notified when the audio mode changes
      */
     public interface OnModeChangedListener {
