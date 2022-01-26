@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21204c1a_fdad0e0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-01-26T06:58:50Z",
+      "side": 1,
+      "message": "Building necessary parameters for constructing a IkeTunnelConnectionParams takes more time. I will prepare it later.",
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
