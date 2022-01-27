@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e39d3ef_898ad558",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-01-27T07:23:07Z",
+      "side": 1,
+      "message": "LGTM if UidCounterSet part is removed to avoid breaking current unit test.",
+      "revId": "7029634becd0793d3f4dfa92ff9d164ab1d3a9d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01c507ee_8abfca53",
+        "filename": "services/core/jni/com_android_server_net_NetworkStatsService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-01-27T07:23:07Z",
+      "side": 1,
+      "message": "This seems also not be used. Should remove this but not necessary in this change.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "7029634becd0793d3f4dfa92ff9d164ab1d3a9d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9334e6f6_68b4ea3a",
+        "filename": "services/core/jni/com_android_server_net_NetworkStatsService.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-01-27T07:23:07Z",
+      "side": 1,
+      "message": "I believe this is not used, should remove this. Not necessary in this change.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "7029634becd0793d3f4dfa92ff9d164ab1d3a9d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
