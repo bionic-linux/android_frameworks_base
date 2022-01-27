@@ -37,6 +37,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a9504f48_fd293c46",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-27T02:42:03Z",
+      "side": 1,
+      "message": "Maybe this can pull directly from the IkeTunnelConnectionParams object if it exists?",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 5
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a365dd68_4d18787e",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-27T02:42:03Z",
+      "side": 1,
+      "message": "Hmm, there\u0027s fields here that we actually don\u0027t parcel as part of the IkeTunnelConnectionParams, such as IKE options, like MOBIKE.\n\nSuggest the following:\n\ntoVpnProfile also conditions on the presence of the IkeTunnelConnectionParams, and if it exists, leave all the standard items as null (or throw), and then parcel the IkeTunnelConnectionParams using in a binary-stable form:\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/vcn/persistablebundleutils/TunnelConnectionParamsUtils.java;drc\u003dmaster;bpv\u003d0;bpt\u003d1;l\u003d31\n\nThis can then be converted to xml, and base64.\n\nThis would guarantee that the resultant IkeTunnelConnectionParams are identical to the one passed in (for fields understood at this platform release version)",
+      "range": {
+        "startLine": 475,
+        "startChar": 15,
+        "endLine": 475,
+        "endChar": 22
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b67b80c1_f22a06e6",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 2
@@ -99,6 +145,29 @@
         "startChar": 18,
         "endLine": 784,
         "endChar": 25
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7afdb5b6_668f5a78",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-01-27T02:42:03Z",
+      "side": 1,
+      "message": "This is configured in the IkeSession, can throw exceptions.",
+      "range": {
+        "startLine": 1034,
+        "startChar": 23,
+        "endLine": 1034,
+        "endChar": 43
       },
       "revId": "3981eb637679129418168406a456d7af0f9c787c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
