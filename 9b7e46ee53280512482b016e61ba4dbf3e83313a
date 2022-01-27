@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6e6884_55921d0e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T06:16:59Z",
+      "side": 1,
+      "message": "kernel",
+      "range": {
+        "startLine": 9,
+        "startChar": 52,
+        "endLine": 9,
+        "endChar": 58
+      },
+      "revId": "9b7e46ee53280512482b016e61ba4dbf3e83313a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19d02fed_55aef9d6",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T06:16:59Z",
+      "side": 1,
+      "message": "getNetworkStatsDetails ?\n\n(at least, \"get read\" makes no sense, and this function is not native and we only have stats from native now)",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 84,
+        "endChar": 59
+      },
+      "revId": "9b7e46ee53280512482b016e61ba4dbf3e83313a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e90918f7_bd9872ef",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsFactory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T06:16:59Z",
+      "side": 1,
+      "message": "Likewise, \"getNetworkStatsDev\" sounds better",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "9b7e46ee53280512482b016e61ba4dbf3e83313a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
