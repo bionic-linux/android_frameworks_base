@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecfd7a9e_3ede26e5",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-27T07:20:38Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 338,
+        "startChar": 56,
+        "endLine": 338,
+        "endChar": 70
+      },
+      "revId": "8ef01816c2d2af7b48cac1348b74ff73372b81c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30824108_39bdec49",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-27T07:20:38Z",
+      "side": 1,
+      "message": "You could avoid this allocation by adding constants.\n\n    private static final U8 SET_FOREGROUND_U8 \u003d new U8(SET_FOREGROUND);\n\nthen here:\n\n    if (set !\u003d SET_FOREGROUND) {\n        throw new IllegalArgumentException(\n            \"Invalid counterset, must be SET_FOREGROUND or SET_DEFAULT\");\n    }\n\n    try {\n        mUidCounterSetMap.updateEntry(new U32(uid), SET_FOREGROUND_U8);\n    } catch ...",
+      "range": {
+        "startLine": 1122,
+        "startChar": 56,
+        "endLine": 1122,
+        "endChar": 75
+      },
+      "revId": "8ef01816c2d2af7b48cac1348b74ff73372b81c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
