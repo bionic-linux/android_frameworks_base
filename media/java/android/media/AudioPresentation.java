@@ -49,7 +49,7 @@ import java.util.Objects;
  * Applications that parse media streams and extract presentation information on their own
  * can create instances of AudioPresentation by using {@link AudioPresentation.Builder} class.
  */
-public final class AudioPresentation {
+public class AudioPresentation {
     private final int mPresentationId;
     private final int mProgramId;
     private final ULocale mLanguage;
@@ -161,9 +161,25 @@ public final class AudioPresentation {
     public static final int MASTERED_FOR_HEADPHONE          = 4;
 
     /**
-     * This ID is reserved. No items can be explicitly assigned this ID.
+     * Unknown audio presentation ID, this indicates audio presentation ID is not selected.
      */
-    private static final int UNKNOWN_ID = -1;
+    public static final int PRESENTATION_ID_UNKNOWN = -1;
+
+    /**
+     * Unknown audio program ID, this indicates audio program ID is not selected.
+     */
+    public static final int PROGRAM_ID_UNKNOWN = -1;
+
+    protected AudioPresentation() {
+        mPresentationId = PRESENTATION_ID_UNKNOWN;
+        mProgramId = PROGRAM_ID_UNKNOWN;
+        mLanguage = new ULocale("");
+        mMasteringIndication = MASTERING_NOT_INDICATED;
+        mAudioDescriptionAvailable = false;
+        mSpokenSubtitlesAvailable = false;
+        mDialogueEnhancementAvailable = false;
+        mLabels = new HashMap<ULocale, CharSequence>();
+    }
 
     /**
      * This allows an application developer to construct an AudioPresentation object with all the
@@ -232,8 +248,22 @@ public final class AudioPresentation {
         return localeLabels;
     }
 
-    private Map<ULocale, CharSequence> getULabels() {
+    private Map<ULocale, CharSequence> getLabelsWithULocale() {
         return mLabels;
+    }
+
+    /**
+     * @return a map of available text labels for this presentation. Each label is indexed by its
+     * locale corresponding to the language code as specified by ISO 639-2. Either ISO 639-2/B
+     * or ISO 639-2/T could be used.
+     */
+    @NonNull
+    public Map<ULocale, String> getULabels() {
+        Map<ULocale, String> localeLabels = new HashMap<ULocale, String>(mLabels.size());
+        for (Map.Entry<ULocale, CharSequence> entry : mLabels.entrySet()) {
+            localeLabels.put(entry.getKey(), entry.getValue().toString());
+        }
+        return localeLabels;
     }
 
     /**
@@ -243,7 +273,11 @@ public final class AudioPresentation {
         return mLanguage.toLocale();
     }
 
-    private ULocale getULocale() {
+    /**
+     * @return the ULocale corresponding to audio presentation's ISO 639-1/639-2 language code.
+     */
+    @NonNull
+    public ULocale getULocale() {
         return mLanguage;
     }
 
@@ -300,7 +334,7 @@ public final class AudioPresentation {
                 && mAudioDescriptionAvailable == obj.hasAudioDescription()
                 && mSpokenSubtitlesAvailable == obj.hasSpokenSubtitles()
                 && mDialogueEnhancementAvailable == obj.hasDialogueEnhancement()
-                && mLabels.equals(obj.getULabels());
+                && mLabels.equals(obj.getLabelsWithULocale());
     }
 
     @Override
@@ -334,9 +368,9 @@ public final class AudioPresentation {
     /**
      * A builder class for creating {@link AudioPresentation} objects.
      */
-    public static final class Builder {
+    public static class Builder {
         private final int mPresentationId;
-        private int mProgramId = UNKNOWN_ID;
+        private int mProgramId = PROGRAM_ID_UNKNOWN;
         private ULocale mLanguage = new ULocale("");
         private int mMasteringIndication = MASTERING_NOT_INDICATED;
         private boolean mAudioDescriptionAvailable = false;
