@@ -1675,6 +1675,7 @@ public final class TvInputManager {
      *
      * @hide
      */
+    @SystemApi
     @RequiresPermission(android.Manifest.permission.TUNER_RESOURCE_ACCESS)
     public int getClientPid(@NonNull String sessionId) {
         return getClientPidInternal(sessionId);
