@@ -32,7 +32,6 @@
 #include <utils/Log.h>
 #include <utils/misc.h>
 
-#include "android-base/unique_fd.h"
 #include "bpf/BpfUtils.h"
 #include "netdbpf/BpfNetworkStats.h"
 
