@@ -313,6 +313,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79539369_916ff7a1",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-27T22:35:53Z",
+      "side": 1,
+      "message": "IkeAuthEapConfig contains a EapSessionConfig and EapSessionConfig can be configured with multiple EAP methods which include: EAP-MSCHAPV2, EAP-AKA, EAP-AKA`, EAP-SIM and EAP-TTLS.  The way to know if EapSessionConfig contains a specific EAP method is to call the specific getter. For example, EapSessionConfig#getEapMsChapV2Config(). If this getter returns null, it means caller does not want to use EAP-MSCHAPV2.",
+      "parentUuid": "ce137c63_77e8fd93",
+      "range": {
+        "startLine": 674,
+        "startChar": 19,
+        "endLine": 674,
+        "endChar": 45
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "401b2122_36e2067b",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 2
