@@ -81,7 +81,9 @@ import android.net.ipsec.ike.ChildSessionParams;
 import android.net.ipsec.ike.IkeSession;
 import android.net.ipsec.ike.IkeSessionCallback;
 import android.net.ipsec.ike.IkeSessionParams;
+import android.net.ipsec.ike.exceptions.IkeNetworkLostException;
 import android.net.ipsec.ike.exceptions.IkeProtocolException;
+import android.net.ipsec.ike.exceptions.IkeTimeoutException;
 import android.os.Binder;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -130,12 +132,9 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.ConnectException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
@@ -2868,13 +2867,10 @@ public class Vpn {
                         VpnManager.ERROR_CODE_NETWORK_UNKNOWN_HOST);
                 markFailedAndDisconnect(exception);
                 return;
-            } else if (isException(exception, SocketTimeoutException.class)) {
+            } else if (isException(exception, IkeTimeoutException.class)) {
                 sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_NETWORK,
                         VpnManager.ERROR_RECOVERABLE, VpnManager.ERROR_CODE_NETWORK_TIMEOUT);
-            } else if (isException(exception, ConnectException.class)) {
-                sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_NETWORK,
-                        VpnManager.ERROR_RECOVERABLE, VpnManager.ERROR_CODE_NETWORK_CONNECT);
-            } else if (isException(exception, SocketException.class)) {
+            } else if (isException(exception, IkeNetworkLostException.class)) {
                 sendEventToVpnManagerApp(VpnManager.CATEGORY_ERROR_NETWORK,
                         VpnManager.ERROR_RECOVERABLE, VpnManager.ERROR_CODE_NETWORK_RESET);
             } else if (isException(exception, IOException.class)) {
