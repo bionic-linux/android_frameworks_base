@@ -16,6 +16,23 @@
       "message": "Copied from master to AOSP master",
       "revId": "a058009d8446abc89c4407bbac6bbc105dae0eec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8202132d_4ed01f55",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903913
+      },
+      "writtenOn": "2022-01-27T00:55:04Z",
+      "side": 1,
+      "message": "Hi Tyler\nCould review this CL, which is cherry-picked from master to AOSP master?",
+      "revId": "a058009d8446abc89c4407bbac6bbc105dae0eec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
