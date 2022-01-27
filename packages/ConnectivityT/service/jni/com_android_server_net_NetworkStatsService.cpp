@@ -23,13 +23,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "core_jni_helpers.h"
 #include <jni.h>
 #include <nativehelper/ScopedUtfChars.h>
 #include <utils/misc.h>
 #include <utils/Log.h>
 
-#include "android-base/unique_fd.h"
 #include "bpf/BpfUtils.h"
 #include "netdbpf/BpfNetworkStats.h"
 
