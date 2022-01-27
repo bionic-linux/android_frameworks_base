@@ -46,6 +46,30 @@
       },
       "revId": "3a9e9627f4d86a9f92001cc8aa3fcd4e24307dac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c98f114c_767b0143",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T11:23:05Z",
+      "side": 1,
+      "message": "It\u0027s a binary compatibility break. Bytecode from the caller :\n\n  invokestatic android/net/VpnManager.startProvisionedVpnProfile:()V\n\nThis call will not find the method because of the V at the end ; there only exists an android/net/VpnManager.startProvisionedVpnProfile:()[Ljava/lang/String;\n\nIt\u0027s confusing because the return type is not part of the signature, but it\u0027s part of the binary description of the method.",
+      "parentUuid": "4e2f019e_03799fb1",
+      "range": {
+        "startLine": 325,
+        "startChar": 44,
+        "endLine": 325,
+        "endChar": 51
+      },
+      "revId": "3a9e9627f4d86a9f92001cc8aa3fcd4e24307dac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
