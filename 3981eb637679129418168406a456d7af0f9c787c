@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d99dfba_b680a28c",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-01-27T03:22:40Z",
+      "side": 1,
+      "message": "Yes, we do. If Ikev2VpnProfile is built from an IkeTunnelConnectionParams, these two field will get from the object.",
+      "parentUuid": "a9504f48_fd293c46",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 5
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a365dd68_4d18787e",
@@ -71,6 +95,30 @@
       "writtenOn": "2022-01-27T02:42:03Z",
       "side": 1,
       "message": "Hmm, there\u0027s fields here that we actually don\u0027t parcel as part of the IkeTunnelConnectionParams, such as IKE options, like MOBIKE.\n\nSuggest the following:\n\ntoVpnProfile also conditions on the presence of the IkeTunnelConnectionParams, and if it exists, leave all the standard items as null (or throw), and then parcel the IkeTunnelConnectionParams using in a binary-stable form:\n\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/core/java/android/net/vcn/persistablebundleutils/TunnelConnectionParamsUtils.java;drc\u003dmaster;bpv\u003d0;bpt\u003d1;l\u003d31\n\nThis can then be converted to xml, and base64.\n\nThis would guarantee that the resultant IkeTunnelConnectionParams are identical to the one passed in (for fields understood at this platform release version)",
+      "range": {
+        "startLine": 475,
+        "startChar": 15,
+        "endLine": 475,
+        "endChar": 22
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6798771a_a506aa8c",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-01-27T03:22:40Z",
+      "side": 1,
+      "message": "Sorry, I am not quite understand the comment here. The fields that should be gotten from IkeTunnelConnectionParams are expected to be assigned in the Builder and build a Ikev2VpnProfile(). The other method in Ikev2VpnProfile should not care about IkeTunnelConnectionParams.\n\nIdeally, we do not need to update here. IkeTunnelConnectionParams end up in the Builder. If the fields are expected coming from IkeTunnelConnectionParams, we should stop the users using the related setters in the Builder and built it from IkeTunnelConnectionParams in the Builder. \n\nDo you mean some other fields should also come from IkeTunnelConnectionParams but not, except the AllowedAlgorithms mentioned below?",
+      "parentUuid": "a365dd68_4d18787e",
       "range": {
         "startLine": 475,
         "startChar": 15,
