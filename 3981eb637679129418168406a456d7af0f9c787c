@@ -129,6 +129,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bae53b6b_c10f581b",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-27T03:14:42Z",
+      "side": 1,
+      "message": "What happen if getEapMsChapV2Config is null? Maybe throw a UnsupportedOperation?",
+      "range": {
+        "startLine": 674,
+        "startChar": 19,
+        "endLine": 674,
+        "endChar": 45
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "401b2122_36e2067b",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 2
@@ -145,6 +168,29 @@
         "startChar": 18,
         "endLine": 784,
         "endChar": 25
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0ac9c03_6bcee1a3",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-01-27T03:14:42Z",
+      "side": 1,
+      "message": "repeated code?",
+      "range": {
+        "startLine": 820,
+        "startChar": 12,
+        "endLine": 820,
+        "endChar": 84
       },
       "revId": "3981eb637679129418168406a456d7af0f9c787c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
