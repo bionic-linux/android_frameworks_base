@@ -16,6 +16,23 @@
       "message": "Hello Patrick, Michael, and Guang Zhu\n\nAs http://b/215431363#comment12, Guang recommends to cherry-pick to aosp/android12-tests-dev.\n\nCould you please help to review this patch just the same with ag/16709491?\n\nThank you very much for your help.",
       "revId": "8d0a4f9145d4a48d314b0f45e7586997b3168d67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49a61b3b_94274fa5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014491
+      },
+      "writtenOn": "2022-01-27T18:28:07Z",
+      "side": 1,
+      "message": "Sorry my bad, this change didn\u0027t touch on the CTS test just the test mapping control files which isn\u0027t included in CTS release, so it\u0027s not needed in this branch.",
+      "revId": "8d0a4f9145d4a48d314b0f45e7586997b3168d67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
