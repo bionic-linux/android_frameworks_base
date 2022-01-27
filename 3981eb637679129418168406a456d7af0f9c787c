@@ -265,6 +265,30 @@
       },
       "revId": "3981eb637679129418168406a456d7af0f9c787c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab2807f8_ca59e54d",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:40:48Z",
+      "side": 1,
+      "message": "Remedy is : let\u0027s use checkBuilderSetter in this method too.",
+      "parentUuid": "7afdb5b6_668f5a78",
+      "range": {
+        "startLine": 1034,
+        "startChar": 23,
+        "endLine": 1034,
+        "endChar": 43
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
