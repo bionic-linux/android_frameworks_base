@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0f17a15_88ec6566",
+        "filename": "core/api/current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 22089,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2022-01-27T01:05:03Z",
+      "side": 1,
+      "message": "It turns out this was added manually...",
+      "range": {
+        "startLine": 22087,
+        "startChar": 0,
+        "endLine": 22089,
+        "endChar": 71
+      },
+      "revId": "841bd368d39eaf80ba00aa64635630bb72292894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "480940d9_a6623295",
+        "filename": "media/java/android/media/MediaCodecInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3989,
+      "author": {
+        "id": 1021605
+      },
+      "writtenOn": "2022-01-27T01:05:03Z",
+      "side": 1,
+      "message": "Lint suppressions are missing",
+      "range": {
+        "startLine": 3989,
+        "startChar": 32,
+        "endLine": 3989,
+        "endChar": 54
+      },
+      "revId": "841bd368d39eaf80ba00aa64635630bb72292894",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
