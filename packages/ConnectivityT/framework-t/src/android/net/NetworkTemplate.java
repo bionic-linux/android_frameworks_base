@@ -46,7 +46,6 @@ import android.net.wifi.WifiInfo;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.telephony.Annotation.NetworkType;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -214,7 +213,7 @@ public final class NetworkTemplate implements Parcelable {
      * @hide
      */
     public static NetworkTemplate buildTemplateMobileWithRatType(@Nullable String subscriberId,
-            @NetworkType int ratType, int metered) {
+            int ratType, int metered) {
         if (TextUtils.isEmpty(subscriberId)) {
             return new NetworkTemplate(MATCH_MOBILE_WILDCARD, null /* subscriberId */,
                     null /* matchSubscriberIds */,
@@ -1125,7 +1124,7 @@ public final class NetworkTemplate implements Parcelable {
          * @return this builder.
          */
         @NonNull
-        public Builder setRatType(@NetworkType int ratType) {
+        public Builder setRatType(int ratType) {
             // Input will be validated with the match rule when building the template.
             mRatType = ratType;
             return this;
