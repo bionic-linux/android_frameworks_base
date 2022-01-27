@@ -35,6 +35,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfe216ee_9054b95c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:44:57Z",
+      "side": 1,
+      "message": "We think this should work for now ; will address comments soon.",
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9504f48_fd293c46",
@@ -131,6 +148,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3b43fb4a_4031c599",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:44:57Z",
+      "side": 1,
+      "message": "Will address in a followup.",
+      "parentUuid": "6798771a_a506aa8c",
+      "range": {
+        "startLine": 475,
+        "startChar": 15,
+        "endLine": 475,
+        "endChar": 22
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b67b80c1_f22a06e6",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 2
@@ -142,6 +183,30 @@
       "writtenOn": "2022-01-26T11:57:55Z",
       "side": 1,
       "message": "s/message/field/",
+      "range": {
+        "startLine": 662,
+        "startChar": 28,
+        "endLine": 662,
+        "endChar": 35
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "497a5857_07afa249",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:44:57Z",
+      "side": 1,
+      "message": "Will address in a followup",
+      "parentUuid": "b67b80c1_f22a06e6",
       "range": {
         "startLine": 662,
         "startChar": 28,
@@ -177,6 +242,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3edaa9f_fe5102fc",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:44:57Z",
+      "side": 1,
+      "message": "Will address in a followup",
+      "parentUuid": "59c86b2b_bee20f0e",
+      "range": {
+        "startLine": 664,
+        "startChar": 47,
+        "endLine": 665,
+        "endChar": 49
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bae53b6b_c10f581b",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 2
@@ -188,6 +277,30 @@
       "writtenOn": "2022-01-27T03:14:42Z",
       "side": 1,
       "message": "What happen if getEapMsChapV2Config is null? Maybe throw a UnsupportedOperation?",
+      "range": {
+        "startLine": 674,
+        "startChar": 19,
+        "endLine": 674,
+        "endChar": 45
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce137c63_77e8fd93",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:44:57Z",
+      "side": 1,
+      "message": "Not too sure what you mean ; do you mean that getLocalAuthConfig can return null ? In that case it will return IllegalStateException I think ?\n\nPending clarification – will address in a followup.",
+      "parentUuid": "bae53b6b_c10f581b",
       "range": {
         "startLine": 674,
         "startChar": 19,
@@ -223,6 +336,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "402694b5_8ba86e08",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:44:57Z",
+      "side": 1,
+      "message": "Will address in a followup",
+      "parentUuid": "401b2122_36e2067b",
+      "range": {
+        "startLine": 784,
+        "startChar": 18,
+        "endLine": 784,
+        "endChar": 25
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a0ac9c03_6bcee1a3",
         "filename": "core/java/android/net/Ikev2VpnProfile.java",
         "patchSetId": 2
@@ -234,6 +371,30 @@
       "writtenOn": "2022-01-27T03:14:42Z",
       "side": 1,
       "message": "repeated code?",
+      "range": {
+        "startLine": 820,
+        "startChar": 12,
+        "endLine": 820,
+        "endChar": 84
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "135b5697_b7c80075",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:44:57Z",
+      "side": 1,
+      "message": "Will address in a followup",
+      "parentUuid": "a0ac9c03_6bcee1a3",
       "range": {
         "startLine": 820,
         "startChar": 12,
@@ -281,6 +442,30 @@
       "side": 1,
       "message": "Remedy is : let\u0027s use checkBuilderSetter in this method too.",
       "parentUuid": "7afdb5b6_668f5a78",
+      "range": {
+        "startLine": 1034,
+        "startChar": 23,
+        "endLine": 1034,
+        "endChar": 43
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f110f6a7_c04f74f7",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-27T09:44:57Z",
+      "side": 1,
+      "message": "Will address in a followup.",
+      "parentUuid": "ab2807f8_ca59e54d",
       "range": {
         "startLine": 1034,
         "startChar": 23,
