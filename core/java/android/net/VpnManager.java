@@ -204,32 +204,26 @@ public class VpnManager {
     public static final int ERROR_CODE_NETWORK_UNKNOWN_HOST = 0;
 
     /**
-     * An error code to indicate that there is a SocketTimeoutException.
+     * An error code to indicate that there is a IkeTimeoutException.
      *
      * @hide
      */
     public static final int ERROR_CODE_NETWORK_TIMEOUT = 1;
 
     /**
-     * An error code to indicate that the connection is refused.
+     * An error code to indicate the connection was reset due to losing underlying network.
+     * (e.g. IkeNetworkLostException)
      *
      * @hide
      */
-    public static final int ERROR_CODE_NETWORK_CONNECT = 2;
-
-    /**
-     * An error code to indicate the connection was reset. (e.g. SocketException)
-     *
-     * @hide
-     */
-    public static final int ERROR_CODE_NETWORK_RESET = 3;
+    public static final int ERROR_CODE_NETWORK_RESET = 2;
 
     /**
      * An error code to indicate that there is an IOException.
      *
      * @hide
      */
-    public static final int ERROR_CODE_NETWORK_IO = 4;
+    public static final int ERROR_CODE_NETWORK_IO = 3;
 
     /** @hide */
     @IntDef(value = {TYPE_VPN_NONE, TYPE_VPN_SERVICE, TYPE_VPN_PLATFORM, TYPE_VPN_LEGACY,
