@@ -59,8 +59,6 @@ import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 import static com.android.net.module.util.NetworkCapabilitiesUtils.getDisplayTransport;
 import static com.android.net.module.util.NetworkStatsUtils.LIMIT_GLOBAL_ALERT;
-import static com.android.server.NetworkManagementSocketTagger.resetKernelUidStats;
-import static com.android.server.NetworkManagementSocketTagger.setKernelCounterSet;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -121,6 +119,7 @@ import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.service.NetworkInterfaceProto;
 import android.service.NetworkStatsServiceDumpProto;
+import android.system.Os;
 import android.telephony.PhoneStateListener;
 import android.telephony.SubscriptionPlan;
 import android.text.TextUtils;
@@ -1085,7 +1084,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             final int oldSet = mActiveUidCounterSet.get(uid, SET_DEFAULT);
             if (oldSet != set) {
                 mActiveUidCounterSet.put(uid, set);
-                setKernelCounterSet(uid, set);
+                final int ret = nativeSetCounterSet(set, uid);
+                if (ret < 0) {
+                    Log.w(TAG, "nativeSetCounterSet(" + set + ", " + uid + ") failed: "
+                            + Os.strerror(-ret));
+                }
             }
         }
     }
@@ -1752,7 +1755,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         // Clear kernel stats associated with UID
         for (int uid : uids) {
-            resetKernelUidStats(uid);
+            final int ret = nativeDeleteTagData(uid);
+            if (ret < 0) {
+                Log.w(TAG, "problem clearing counters for uid " + uid + ": " + Os.strerror(-ret));
+            }
         }
     }
 
@@ -2331,4 +2337,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private static native long nativeGetTotalStat(int type);
     private static native long nativeGetIfaceStat(String iface, int type);
     private static native long nativeGetUidStat(int uid, int type);
+    private static native int nativeDeleteTagData(int uid);
+    private static native int nativeSetCounterSet(int counterSet, int uid);
 }
