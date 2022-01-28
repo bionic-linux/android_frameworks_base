@@ -65,6 +65,7 @@ import android.annotation.Nullable;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.usage.NetworkStatsManager;
+import android.content.ApexEnvironment;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -98,6 +99,7 @@ import android.net.TrafficStats;
 import android.net.UnderlyingNetworkInfo;
 import android.net.Uri;
 import android.net.netstats.IUsageCallback;
+import android.net.netstats.NetworkStatsDataMigrationUtils;
 import android.net.netstats.provider.INetworkStatsProvider;
 import android.net.netstats.provider.INetworkStatsProviderCallback;
 import android.net.netstats.provider.NetworkStatsProvider;
@@ -115,6 +117,7 @@ import android.os.ServiceSpecificException;
 import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
+import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.service.NetworkInterfaceProto;
@@ -215,6 +218,18 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private static final String UID_COUNTERSET_MAP_PATH =
             "/sys/fs/bpf/map_netd_uid_counterset_map";
 
+    /**
+     * DeviceConfig flag used to indicate whether the legacy files need to be imported, and
+     * retry count before giving up.
+     */
+    static final String NETSTATS_IMPORT_LEGACY_FILE_NEEDED = "netstats_import_legacy_file_needed";
+    static final int MAXIMUM_NETSTATS_IMPORT_LEGACY_FILE_RETRY_COUNT = 3;
+
+    /**
+     * Connectivity apex name.
+     */
+    private static final String CONNECTIVITY_APEX_NAME = "com.android.tethering";
+
     private final Context mContext;
     private final NetworkStatsFactory mStatsFactory;
     private final AlarmManager mAlarmManager;
@@ -222,8 +237,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private final NetworkStatsSettings mSettings;
     private final NetworkStatsObservers mStatsObservers;
 
-    private final File mSystemDir;
-    private final File mBaseDir;
+    private final File mStatsDir;
 
     private final PowerManager.WakeLock mWakeLock;
 
@@ -374,16 +388,6 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @NonNull
     private final BpfInterfaceMapUpdater mInterfaceMapUpdater;
 
-    private static @NonNull File getDefaultSystemDir() {
-        return new File(Environment.getDataDirectory(), "system");
-    }
-
-    private static @NonNull File getDefaultBaseDir() {
-        File baseDir = new File(getDefaultSystemDir(), "netstats");
-        baseDir.mkdirs();
-        return baseDir;
-    }
-
     private static @NonNull Clock getDefaultClock() {
         return new BestClock(ZoneOffset.UTC, SystemClock.currentNetworkTimeClock(),
                 Clock.systemUTC());
@@ -437,8 +441,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 INetd.Stub.asInterface((IBinder) context.getSystemService(Context.NETD_SERVICE)),
                 alarmManager, wakeLock, getDefaultClock(),
                 new DefaultNetworkStatsSettings(), new NetworkStatsFactory(context),
-                new NetworkStatsObservers(), getDefaultSystemDir(), getDefaultBaseDir(),
-                new Dependencies());
+                new NetworkStatsObservers(), new Dependencies());
 
         return service;
     }
@@ -448,8 +451,8 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     @VisibleForTesting
     NetworkStatsService(Context context, INetd netd, AlarmManager alarmManager,
             PowerManager.WakeLock wakeLock, Clock clock, NetworkStatsSettings settings,
-            NetworkStatsFactory factory, NetworkStatsObservers statsObservers, File systemDir,
-            File baseDir, @NonNull Dependencies deps) {
+            NetworkStatsFactory factory, NetworkStatsObservers statsObservers,
+            @NonNull Dependencies deps) {
         mContext = Objects.requireNonNull(context, "missing Context");
         mNetd = Objects.requireNonNull(netd, "missing Netd");
         mAlarmManager = Objects.requireNonNull(alarmManager, "missing AlarmManager");
@@ -458,9 +461,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mWakeLock = Objects.requireNonNull(wakeLock, "missing WakeLock");
         mStatsFactory = Objects.requireNonNull(factory, "missing factory");
         mStatsObservers = Objects.requireNonNull(statsObservers, "missing NetworkStatsObservers");
-        mSystemDir = Objects.requireNonNull(systemDir, "missing systemDir");
-        mBaseDir = Objects.requireNonNull(baseDir, "missing baseDir");
         mDeps = Objects.requireNonNull(deps, "missing Dependencies");
+        mStatsDir = mDeps.getStatsDir();
+        if (!mStatsDir.exists()) {
+            throw new IllegalStateException("Persist data directory does not exist: " + mStatsDir);
+        }
 
         final HandlerThread handlerThread = mDeps.makeHandlerThread();
         handlerThread.start();
@@ -482,6 +487,59 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     // TODO: Move more stuff into dependencies object.
     @VisibleForTesting
     public static class Dependencies {
+        /**
+         * Get the directory that stores the persisted data usage.
+         */
+        @NonNull
+        public File getStatsDir() {
+            final File apexDataDir = ApexEnvironment.getApexEnvironment(CONNECTIVITY_APEX_NAME)
+                    .getDeviceProtectedDataDir();
+            final File apexStatsDir = new File(apexDataDir, "netstats");
+            if (apexStatsDir.mkdirs()) {
+                return apexStatsDir;
+            }
+
+            final File systemDir = new File(Environment.getDataDirectory(), "system");
+            final File platformStatsDir = new File(systemDir, "netstats");
+            if (platformStatsDir.mkdirs()) {
+                return platformStatsDir;
+            }
+            throw new IllegalStateException("Cannot find a valid persist data directory");
+        }
+
+        public boolean isInPlatform(@NonNull File baseDir) {
+            return baseDir.getPath().startsWith(Environment.getDataDirectory().getPath());
+        }
+
+        /**
+         * Get integer DeviceConfigProperty for connectivity namespace device config.
+         */
+        public int getDeviceConfigPropertyInt(@NonNull String name, int defaultValue) {
+            String value = DeviceConfig.getProperty(DeviceConfig.NAMESPACE_CONNECTIVITY, name);
+            try {
+                return (value != null) ? Integer.parseInt(value) : defaultValue;
+            } catch (NumberFormatException e) {
+                return defaultValue;
+            }
+        }
+
+        /**
+         * Set integer DeviceConfigProperty for connectivity namespace device config.
+         */
+        public void setDeviceConfigPropertyInt(@NonNull String name, int value) {
+            DeviceConfig.setProperty(DeviceConfig.NAMESPACE_CONNECTIVITY,
+                    name, Integer.toString(value), false /* makeDefault */);
+        }
+
+        /**
+         * Read legacy persisted network stats from disk.
+         */
+        @NonNull
+        public NetworkStatsCollection readPlatformCollection(
+                @NonNull String prefix, long bucketDuration) throws IOException {
+            return NetworkStatsDataMigrationUtils.readPlatformCollection(prefix, bucketDuration);
+        }
+
         /**
          * Create a HandlerThread to use in NetworkStatsService.
          */
@@ -648,7 +706,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         final DropBoxManager dropBox = (DropBoxManager) mContext.getSystemService(
                 Context.DROPBOX_SERVICE);
         return new NetworkStatsRecorder(new FileRotator(
-                mBaseDir, prefix, config.rotateAgeMillis, config.deleteAgeMillis),
+                mStatsDir, prefix, config.rotateAgeMillis, config.deleteAgeMillis),
                 mNonMonotonicObserver, dropBox, prefix, config.bucketDuration, includeTags);
     }
 
@@ -680,30 +738,60 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
     @GuardedBy("mStatsLock")
     private void maybeUpgradeLegacyStatsLocked() {
-        File file;
-        try {
-            file = new File(mSystemDir, "netstats.bin");
-            if (file.exists()) {
-                mDevRecorder.importLegacyNetworkLocked(file);
-                file.delete();
-            }
-
-            file = new File(mSystemDir, "netstats_xt.bin");
-            if (file.exists()) {
-                file.delete();
-            }
-
-            file = new File(mSystemDir, "netstats_uid.bin");
-            if (file.exists()) {
-                mUidRecorder.importLegacyUidLocked(file);
-                mUidTagRecorder.importLegacyUidLocked(file);
-                file.delete();
-            }
-        } catch (IOException e) {
-            Log.wtf(TAG, "problem during legacy upgrade", e);
-        } catch (OutOfMemoryError e) {
-            Log.wtf(TAG, "problem during legacy upgrade", e);
+        if (mDeps.isInPlatform(mStatsDir)) {
+            return;
         }
+        // TODO: Add systrace tags.
+        long maxEndMillis = Long.MIN_VALUE;
+        int importNeeded = MAXIMUM_NETSTATS_IMPORT_LEGACY_FILE_RETRY_COUNT;
+
+        try {
+            importNeeded = mDeps.getDeviceConfigPropertyInt(
+                    NETSTATS_IMPORT_LEGACY_FILE_NEEDED,
+                    MAXIMUM_NETSTATS_IMPORT_LEGACY_FILE_RETRY_COUNT);
+            if (importNeeded <= 0) return;
+
+            maxEndMillis = maybeApplyImportCollectionLocked(mDevRecorder, maxEndMillis);
+            maxEndMillis = maybeApplyImportCollectionLocked(mXtRecorder, maxEndMillis);
+            maxEndMillis = maybeApplyImportCollectionLocked(mUidRecorder, maxEndMillis);
+            maxEndMillis = maybeApplyImportCollectionLocked(mUidTagRecorder, maxEndMillis);
+
+            mDeps.setDeviceConfigPropertyInt(NETSTATS_IMPORT_LEGACY_FILE_NEEDED, 0);
+        } catch (IOException | OutOfMemoryError e) {
+            try {
+                // Delete any possible data which is earlier than the end of the imported
+                // data, which could only be previously imported ones. Note that the bucket which
+                // is currently recording data could also be erased if the last imported bucket is
+                // overlapped with currently recording one.
+                mDevRecorder.removeDataBefore(maxEndMillis);
+                mXtRecorder.removeDataBefore(maxEndMillis);
+                mUidRecorder.removeDataBefore(maxEndMillis);
+                mUidTagRecorder.removeDataBefore(maxEndMillis);
+            } catch (IOException ioException) {
+                Log.d(TAG, "problem during clean up", ioException);
+            }
+            Log.wtf(TAG, "problem during legacy upgrade", e);
+
+            // For release build, only retry limited times.
+            mDeps.setDeviceConfigPropertyInt(NETSTATS_IMPORT_LEGACY_FILE_NEEDED, importNeeded - 1);
+        }
+    }
+
+    private long maybeApplyImportCollectionLocked(@NonNull NetworkStatsRecorder recorder,
+            long maxEndMillis) throws IOException, OutOfMemoryError {
+
+        final NetworkStatsCollection collection = mDeps.readPlatformCollection(
+                        recorder.getCookie(), recorder.getBucketDuration());
+        Objects.requireNonNull(collection);
+        if (collection.isEmpty()) {
+            return maxEndMillis;
+        }
+
+        recorder.removeDataBefore(collection.getEndMillis());
+        recorder.importCollectionLocked(collection);
+
+        // Keep tracking the maximum possible end timestamp among all imports.
+        return Math.max(collection.getEndMillis(), maxEndMillis);
     }
 
     /**
@@ -1907,6 +1995,11 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 }
                 return;
             }
+
+            pw.println("Directory:");
+            pw.increaseIndent();
+            pw.println(mStatsDir);
+            pw.decreaseIndent();
 
             pw.println("Configs:");
             pw.increaseIndent();
