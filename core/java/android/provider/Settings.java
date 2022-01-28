@@ -5800,9 +5800,11 @@ public final class Settings {
         }
 
         /** @hide */
-        @UnsupportedAppUsage
-        public static String getStringForUser(ContentResolver resolver, String name,
-                int userHandle) {
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        @Nullable
+        @SuppressLint("VisiblySynchronized")
+        public static String getStringForUser(@NonNull ContentResolver resolver,
+                @NonNull String name, int userHandle) {
             if (MOVED_TO_GLOBAL.contains(name)) {
                 Log.w(TAG, "Setting " + name + " has moved from android.provider.Settings.Secure"
                         + " to android.provider.Settings.Global.");
@@ -6034,8 +6036,10 @@ public final class Settings {
         }
 
         /** @hide */
-        @UnsupportedAppUsage
-        public static int getIntForUser(ContentResolver cr, String name, int def, int userHandle) {
+        @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+        @Nullable
+        public static int getIntForUser(@NonNull ContentResolver cr, @NonNull String name,
+                int def, int userHandle) {
             String v = getStringForUser(cr, name, userHandle);
             try {
                 return v != null ? Integer.parseInt(v) : def;
