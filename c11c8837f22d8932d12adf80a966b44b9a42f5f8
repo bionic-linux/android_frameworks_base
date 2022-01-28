@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32b27cce_e7d1fba3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-01-28T03:46:02Z",
+      "side": 1,
+      "message": "Can\u0027t solve merge conflict in AOSP, and moved it internally.\nGot approval and merged it.\nYou may abandon this CL and CTS CL as well.",
+      "revId": "c11c8837f22d8932d12adf80a966b44b9a42f5f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
