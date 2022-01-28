@@ -16,6 +16,23 @@
       "message": "Let\u0027s make it public? I\u0027m surprised it\u0027s not exposed already. I\u0027m checking on the FW chatroom if there was any reason though.",
       "revId": "f03ccbed1a8fff86e153b510778d07b0e669dd16",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfee75ca_78a26b5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-01-28T22:33:03Z",
+      "side": 1,
+      "message": "Okay there was an idea that it should throw an OOM instead, but I\u0027m not sure if that\u0027s worth doing.\n\nSo... Not super sure, but let\u0027s just make it public? (instead of @SystemApi)\n\nJust one thing though, we seem to throw it if someone passes a negative window size to nativeCreate().\n\nCould you add an argument check to the java CursorWindow ctor herre [http://cs/android/frameworks/base/core/java/android/database/CursorWindow.java;l\u003d140;rcl\u003d82118d26a02e6db1fff71768016e46d78babea42] and throw an IllegalArgumentException instead if the window size is \u003c 0? (we seem to accept 0... not sure how the native side would handle it, but I don\u0027t want to introduce unnecessary potential compat changes.)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+      "revId": "f03ccbed1a8fff86e153b510778d07b0e669dd16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
