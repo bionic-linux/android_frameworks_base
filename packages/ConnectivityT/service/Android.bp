@@ -28,6 +28,9 @@ filegroup {
         "src/com/android/server/net/NetworkStats*.java",
         "src/com/android/server/net/BpfInterfaceMapUpdater.java",
         "src/com/android/server/net/InterfaceMapValue.java",
+        "src/com/android/server/net/StatsKey.java",
+        "src/com/android/server/net/StatsValue.java",
+        "src/com/android/server/net/UidTagValue.java",
     ],
     path: "src",
     visibility: [

@@ -145,7 +145,9 @@ import com.android.net.module.util.IBpfMap;
 import com.android.net.module.util.LocationPermissionChecker;
 import com.android.net.module.util.NetworkStatsUtils;
 import com.android.net.module.util.PermissionUtils;
+import com.android.net.module.util.Struct;
 import com.android.net.module.util.Struct.U32;
+import com.android.net.module.util.Struct.S64;
 import com.android.net.module.util.Struct.U8;
 
 import java.io.File;
@@ -164,6 +166,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiPredicate;
 
 /**
  * Collect and persist detailed network statistics, and provide this data to
@@ -218,6 +221,14 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     // This is current path but may be changed soon.
     private static final String UID_COUNTERSET_MAP_PATH =
             "/sys/fs/bpf/map_netd_uid_counterset_map";
+    private static final String COOKIE_TAG_MAP_PATH =
+            "/sys/fs/bpf/map_netd_cookie_tag_map";
+    private static final String APP_UID_STATS_MAP_PATH =
+            "/sys/fs/bpf/map_netd_app_uid_stats_map";
+    private static final String STATS_MAP_A_PATH =
+            "/sys/fs/bpf/map_netd_stats_map_A";
+    private static final String STATS_MAP_B_PATH =
+            "/sys/fs/bpf/map_netd_stats_map_B";
 
     private final Context mContext;
     private final NetworkStatsFactory mStatsFactory;
@@ -345,6 +356,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      */
     private SparseIntArray mActiveUidCounterSet = new SparseIntArray();
     private final IBpfMap<U32, U8> mUidCounterSetMap;
+    private final IBpfMap<S64, UidTagValue> mCookieTagMap;
+    private final IBpfMap<StatsKey, StatsValue> mStatsMapA;
+    private final IBpfMap<StatsKey, StatsValue> mStatsMapB;
+    private final IBpfMap<U32, StatsValue> mAppUidStatsMap;
 
     /** Data layer operation counters for splicing into other structures. */
     private NetworkStats mUidOperations = new NetworkStats(0L, 10);
@@ -478,6 +493,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mInterfaceMapUpdater = mDeps.makeBpfInterfaceMapUpdater(mContext, mHandler);
         mInterfaceMapUpdater.start();
         mUidCounterSetMap = mDeps.getUidCounterSetMap();
+        mCookieTagMap = mDeps.getCookieTagMap();
+        mStatsMapA = mDeps.getStatsMapA();
+        mStatsMapB = mDeps.getStatsMapB();
+        mAppUidStatsMap = mDeps.getAppUidStatsMap();
     }
 
     /**
@@ -551,8 +570,44 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             }
         }
 
-        public TagStatsDeleter getTagStatsDeleter() {
-            return NetworkStatsService::nativeDeleteTagData;
+        public IBpfMap<S64, UidTagValue> getCookieTagMap() {
+            try {
+                return new BpfMap<S64, UidTagValue>(COOKIE_TAG_MAP_PATH,
+                        BpfMap.BPF_F_RDWR, S64.class, UidTagValue.class);
+            } catch (ErrnoException e) {
+                Log.wtf(TAG, "Cannot create cookie tag map: " + e);
+                return null;
+            }
+        }
+
+        public IBpfMap<StatsKey, StatsValue> getStatsMapA() {
+            try {
+                return new BpfMap<StatsKey, StatsValue>(STATS_MAP_A_PATH,
+                        BpfMap.BPF_F_RDWR, StatsKey.class, StatsValue.class);
+            } catch (ErrnoException e) {
+                Log.wtf(TAG, "Cannot create stats map A: " + e);
+                return null;
+            }
+        }
+
+        public IBpfMap<StatsKey, StatsValue> getStatsMapB() {
+            try {
+                return new BpfMap<StatsKey, StatsValue>(STATS_MAP_B_PATH,
+                        BpfMap.BPF_F_RDWR, StatsKey.class, StatsValue.class);
+            } catch (ErrnoException e) {
+                Log.wtf(TAG, "Cannot create stats map B: " + e);
+                return null;
+            }
+        }
+
+        public IBpfMap<U32, StatsValue> getAppUidStatsMap() {
+            try {
+                return new BpfMap<U32, StatsValue>(APP_UID_STATS_MAP_PATH,
+                        BpfMap.BPF_F_RDWR, U32.class, StatsValue.class);
+            } catch (ErrnoException e) {
+                Log.wtf(TAG, "Cannot create app uid stats map: " + e);
+                return null;
+            }
         }
     }
 
@@ -1794,6 +1849,34 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 currentTime);
     }
 
+    private <K extends Struct, V extends Struct> void clearEntries(IBpfMap<K, V> map,
+            String mapName, BiPredicate<K, V> shouldDelete, int uid) {
+        try {
+            map.forEach((key, value) -> {
+                if (shouldDelete.test(key, value)) {
+                    try {
+                        map.deleteEntry(key);
+                    } catch (ErrnoException e) {
+                        Log.e(TAG, "Failed to clear " + mapName
+                                + " entry (" + key + ", " + value + "): " + e);
+                    }
+                }
+            });
+        } catch (ErrnoException e) {
+            Log.e(TAG, "Failed to clear " + mapName + " for UID " + uid + ": " + e);
+        }
+    }
+
+    private void deleteTagData(int uid) {
+        final U32 uidStruct = new U32(uid);
+        clearEntries(mCookieTagMap, "cookie_tag_map", (k, v) -> v.uid == uid, uid);
+        final BiPredicate<StatsKey, StatsValue> matchStatsKey = (k, v) -> k.uid == uid;
+        clearEntries(mStatsMapA, "stats_map_A", matchStatsKey, uid);
+        clearEntries(mStatsMapB, "stats_map_B", matchStatsKey, uid);
+        clearEntries(mAppUidStatsMap, "app_uid_stats_map", (k, v) -> k.equals(uidStruct), uid);
+        setKernelCounterSet(uid, SET_DEFAULT);
+    }
+
     /**
      * Clean up {@link #mUidRecorder} after UID is removed.
      */
@@ -1809,10 +1892,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         // Clear kernel stats associated with UID
         for (int uid : uids) {
-            final int ret = mDeps.getTagStatsDeleter().deleteTagData(uid);
-            if (ret < 0) {
-                Log.w(TAG, "problem clearing counters for uid " + uid + ": " + Os.strerror(-ret));
-            }
+            deleteTagData(uid);
         }
     }
 
@@ -2391,12 +2471,4 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private static native long nativeGetTotalStat(int type);
     private static native long nativeGetIfaceStat(String iface, int type);
     private static native long nativeGetUidStat(int uid, int type);
-
-    // TODO: use BpfNetMaps to delete tag data and remove this.
-    @VisibleForTesting
-    interface TagStatsDeleter {
-        int deleteTagData(int uid);
-    }
-
-    private static native int nativeDeleteTagData(int uid);
 }
