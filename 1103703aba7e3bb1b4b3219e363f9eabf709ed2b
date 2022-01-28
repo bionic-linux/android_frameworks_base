@@ -33,6 +33,24 @@
       "message": "TH sees the same test failure:\n\nhttps://android-build.googleplex.com/builds/tests/view?invocationId\u003dI62000010012610461\u0026testResultId\u003dTR25027873982768016",
       "revId": "1103703aba7e3bb1b4b3219e363f9eabf709ed2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96973f17_ec0f5330",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-28T03:56:18Z",
+      "side": 1,
+      "message": "This should be fixed in the latest patchset via the TagStatsDeleter interface. It\u0027s a big ugly but we plan to delete it soon anyway.",
+      "parentUuid": "b6d2bc84_ff25c316",
+      "revId": "1103703aba7e3bb1b4b3219e363f9eabf709ed2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
