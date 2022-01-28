@@ -1,0 +1,108 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019875936",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1965319?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ff0f7fba_803bfd0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-28T16:21:33Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 7,
+        "startChar": 95,
+        "endLine": 7,
+        "endChar": 96
+      },
+      "revId": "800b2d3990c0d36ab879654f53e936c44df2f399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019875936",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1965319?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "628f4751_9a970106",
+        "filename": "core/java/android/widget/AutoCompleteTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-28T16:21:33Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 902,
+        "startChar": 0,
+        "endLine": 902,
+        "endChar": 12
+      },
+      "revId": "800b2d3990c0d36ab879654f53e936c44df2f399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019875936",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1965319?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "477a7ca0_024de60e",
+        "filename": "core/java/android/widget/AutoCompleteTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-28T16:21:33Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 1431,
+        "startChar": 5,
+        "endLine": 1431,
+        "endChar": 9
+      },
+      "revId": "800b2d3990c0d36ab879654f53e936c44df2f399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019875936",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1965319?revision\u003d2",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "9264b3ff_5bfa6435",
+        "filename": "core/java/android/widget/AutoCompleteTextView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1464,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-28T16:21:33Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 1464,
+        "startChar": 0,
+        "endLine": 1464,
+        "endChar": 108
+      },
+      "revId": "800b2d3990c0d36ab879654f53e936c44df2f399",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
