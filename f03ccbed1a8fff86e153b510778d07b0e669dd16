@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc1abbe9_fcb2c780",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-01-28T21:33:44Z",
+      "side": 1,
+      "message": "Let\u0027s make it public? I\u0027m surprised it\u0027s not exposed already. I\u0027m checking on the FW chatroom if there was any reason though.",
+      "revId": "f03ccbed1a8fff86e153b510778d07b0e669dd16",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
