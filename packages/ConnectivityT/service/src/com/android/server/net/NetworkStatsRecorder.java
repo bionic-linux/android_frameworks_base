@@ -21,6 +21,7 @@ import static android.net.TrafficStats.KB_IN_BYTES;
 import static android.net.TrafficStats.MB_IN_BYTES;
 import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 
+import android.annotation.NonNull;
 import android.net.NetworkIdentitySet;
 import android.net.NetworkStats;
 import android.net.NetworkStats.NonMonotonicObserver;
@@ -154,6 +155,15 @@ public class NetworkStatsRecorder {
 
     public NetworkStatsCollection getSinceBoot() {
         return mSinceBoot;
+    }
+
+    public long getBucketDuration() {
+        return mBucketDuration;
+    }
+
+    @NonNull
+    public String getCookie() {
+        return mCookie;
     }
 
     /**
@@ -347,8 +357,7 @@ public class NetworkStatsRecorder {
 
     /**
      * Rewriter that will combine current {@link NetworkStatsCollection} values
-     * with anything read from disk, and write combined set to disk. Clears the
-     * original {@link NetworkStatsCollection} when finished writing.
+     * with anything read from disk, and write combined set to disk.
      */
     private static class CombiningRewriter implements FileRotator.Rewriter {
         private final NetworkStatsCollection mCollection;
@@ -375,7 +384,6 @@ public class NetworkStatsRecorder {
         @Override
         public void write(OutputStream out) throws IOException {
             mCollection.write(out);
-            mCollection.reset();
         }
     }
 
@@ -452,6 +460,21 @@ public class NetworkStatsRecorder {
             // using end time to possibly trigger rotation.
             mRotator.rewriteActive(new CombiningRewriter(collection), startMillis);
             mRotator.maybeRotate(endMillis);
+        }
+    }
+
+    public void importCollectionLocked(@NonNull NetworkStatsCollection collection)
+            throws IOException {
+        if (mRotator != null) {
+            mRotator.rewriteSingle(new CombiningRewriter(collection), collection.getStartMillis(),
+                    collection.getEndMillis());
+        }
+
+        // Also record against complete dataset when present. Since the imported traffic occurs
+        // before this boot cycle, there is no need to update SinceBoot and Pending set.
+        final NetworkStatsCollection complete = mComplete != null ? mComplete.get() : null;
+        if (complete != null) {
+            complete.recordCollection(collection);
         }
     }
 
