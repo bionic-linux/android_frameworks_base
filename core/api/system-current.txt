@@ -2702,6 +2702,14 @@ package android.content.rollback {
 
 }
 
+package android.database {
+
+  public class CursorWindowAllocationException extends java.lang.RuntimeException {
+    ctor public CursorWindowAllocationException(@NonNull String);
+  }
+
+}
+
 package android.debug {
 
   public class AdbManager {
