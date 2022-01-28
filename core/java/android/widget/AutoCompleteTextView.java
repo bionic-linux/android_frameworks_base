@@ -135,6 +135,7 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
 
     // Set to true when text is set directly and no filtering shall be performed
     private boolean mBlockCompletion;
+    private String mTextForCompletion;
 
     // When set, an update in the underlying adapter will update the result list popup.
     // Set to false when the list is hidden to prevent asynchronous updates to popup the list again.
@@ -899,6 +900,8 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
         public void afterTextChanged(Editable s) {
             if (mBlockCompletion) return;
 
+            mTextForCompletion = getText().toString();
+
             // if the list was open before the keystroke, but closed afterwards,
             // then something in the keystroke processing (an input filter perhaps)
             // called performCompletion() and we shouldn't do any more processing.
@@ -1417,6 +1420,67 @@ public class AutoCompleteTextView extends EditText implements Filter.FilterListe
     private class DropDownItemClickListener implements AdapterView.OnItemClickListener {
         public void onItemClick(AdapterView parent, View v, int position, long id) {
             performCompletion(v, position, id);
+        }
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        AutoCompleteSavedState savedState = new AutoCompleteSavedState(super.onSaveInstanceState());
+        savedState.mTextForCompletion = mTextForCompletion;
+        return savedState;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof AutoCompleteSavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        AutoCompleteSavedState savedState = (AutoCompleteSavedState) state);
+        mTextForCompletion = savedState.mTextForCompletion;
+        CharSequence savedText =  null;
+        if (savedState.getSuperState() instanceof SavedState) {
+            savedText = ((SavedState) savedState.getSuperState()).mText;
+            ((SavedState) savedState.getSuperState()).mText = mTextForCompletion;
+        }
+
+        super.onRestoreInstanceState(savedState.getSuperState());
+
+        // Restore saved text, with no completion performed.
+        if (savedText != null) {
+          setText(savedText, false);
+        }
+    }
+
+    public static class AutoCompleteSavedState extends BaseSavedState {
+        String mTextForCompletion;
+
+        AutoCompleteSavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeString(mTextForCompletion);
+        }
+
+        @SuppressWarnings("hiding")
+        public static final @android.annotation.NonNull Parcelable.Creator<AutoCompleteSavedState>
+                CREATOR = new Parcelable.Creator<AutoCompleteSavedState>() {
+                    public AutoCompleteSavedState createFromParcel(Parcel in) {
+                        return new AutoCompleteSavedState(in);
+                    }
+
+                    public AutoCompleteSavedState[] newArray(int size) {
+                        return new AutoCompleteSavedState[size];
+                    }
+                };
+
+        private AutoCompleteSavedState(Parcel in) {
+            super(in);
+            mTextForCompletion = in.readString();
         }
     }
 
