@@ -70,6 +70,30 @@
       },
       "revId": "3a9e9627f4d86a9f92001cc8aa3fcd4e24307dac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8512e5dd_eb74693e",
+        "filename": "core/java/android/net/VpnManager.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-01-28T03:15:54Z",
+      "side": 1,
+      "message": "Full technical explanation, from a vacuum :\n\n $ cat Foo.java\n class Foo {\n     public void foo() {\n         System.out.println(\"foo\");\n     }\n }\n $ cat Bar.java \n class Bar {\n     static public void main(String arg[]) {\n         new Foo().foo();\n     }\n }\n $ javac Foo.java Bar.java\n $ java Bar\n foo\n $ cat \u003e Foo.java\n class Foo {\n     public String foo() {\n         System.out.println(\"foo\");\n         return \"foo\";\n     }\n }\n $ cat Foo.java\n class Foo {\n     public String foo() {\n         System.out.println(\"foo\");\n         return \"foo\";\n     }\n }\n $ javac Foo.java\n $ java Bar\n Exception in thread \"main\" java.lang.NoSuchMethodError: \u0027void Foo.foo()\u0027\n\tat Bar.main(Bar.java:3)\n $ javap -c Bar.class\n Compiled from \"Bar.java\"\n class Bar {\n   Bar();\n     Code:\n        0: aload_0\n        1: invokespecial #1                  // Method java/lang/Object.\"\u003cinit\u003e\":()V\n        4: return\n   \n   public static void main(java.lang.String[]);\n     Code:\n        0: new           #2                  // class Foo\n        3: dup\n        4: invokespecial #3                  // Method Foo.\"\u003cinit\u003e\":()V\n        7: invokevirtual #4                  // Method Foo.foo:()V\n       10: return\n }\n $",
+      "parentUuid": "c98f114c_767b0143",
+      "range": {
+        "startLine": 325,
+        "startChar": 44,
+        "endLine": 325,
+        "endChar": 51
+      },
+      "revId": "3a9e9627f4d86a9f92001cc8aa3fcd4e24307dac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
