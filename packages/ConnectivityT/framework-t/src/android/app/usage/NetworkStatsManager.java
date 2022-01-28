@@ -737,8 +737,8 @@ public class NetworkStatsManager {
      * {@link #unregisterUsageCallback} is called.
      *
      * @param template Template used to match networks. See {@link NetworkTemplate}.
-     * @param thresholdBytes Threshold in bytes to be notified on. The provided value that lower
-     *                       than 2MiB will be clamped for non-privileged callers.
+     * @param thresholdBytes Threshold in bytes to be notified on. Provided values lower than
+     *                       2MiB will be clamped for @RequiresPermission(optional = true) callers.
      * @param executor The executor on which callback will be invoked. The provided {@link Executor}
      *                 must run callback sequentially, otherwise the order of callbacks cannot be
      *                 guaranteed.

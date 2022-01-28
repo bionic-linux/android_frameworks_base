@@ -284,6 +284,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.IntConsumer;
 
@@ -1006,10 +1007,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
             mContext.registerReceiver(mUserReceiver, userFilter, null, mHandler);
 
             // listen for stats updated callbacks for interested network types.
+            final Executor executor = new HandlerExecutor(mHandler);
             mNetworkStats.registerUsageCallback(new NetworkTemplate.Builder(MATCH_MOBILE).build(),
-                    0 /* thresholdBytes */, new HandlerExecutor(mHandler), mStatsCallback);
+                    0 /* thresholdBytes */, executor, mStatsCallback);
             mNetworkStats.registerUsageCallback(new NetworkTemplate.Builder(MATCH_WIFI).build(),
-                    0 /* thresholdBytes */, new HandlerExecutor(mHandler), mStatsCallback);
+                    0 /* thresholdBytes */, executor, mStatsCallback);
 
             // listen for restrict background changes from notifications
             final IntentFilter allowFilter = new IntentFilter(ACTION_ALLOW_BACKGROUND);
@@ -1237,6 +1239,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
          * Used to determine if NetworkStatsService is ready.
          */
         public boolean isAnyCallbackReceived() {
+            // TODO: Call it on the handler thread. The constructor is not called on the
+            //       handler thread, so this works only because the default value is false.
             return mIsAnyCallbackReceived;
         }
     };
