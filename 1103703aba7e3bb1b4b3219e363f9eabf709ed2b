@@ -16,6 +16,23 @@
       "message": "I think this CL can\u0027t be merged because it fails NetworkStatsServiceTest with:\n\n[6/24] com.android.server.net.NetworkStatsServiceTest#testUidRemovedIsMoved: FAILED (178ms)\n\nSTACKTRACE:\njava.lang.UnsatisfiedLinkError: No implementation found for int com.android.server.net.NetworkStatsService.nativeDeleteTagData(int) (tried Java_com_android_server_net_NetworkStatsService_nativeDeleteTagData and Java_com_android_server_net_NetworkStatsService_nativeDeleteTagData__I)\n\tat com.android.server.net.NetworkStatsService.nativeDeleteTagData(Native Method)\n\tat com.android.server.net.NetworkStatsService.removeUidsLocked(NetworkStatsService.java:1804)\n\tat com.android.server.net.NetworkStatsService.-$$Nest$mremoveUidsLocked(Unknown Source:0)\n\tat com.android.server.net.NetworkStatsService$4.onReceive(NetworkStatsService.java:1354)\n\tat com.android.internal.util.test.BroadcastInterceptingContext$BroadcastInterceptor.dispatchBroadcast(BroadcastInterceptingContext.java:80)\n\tat com.android.internal.util.test.BroadcastInterceptingContext.sendBroadcast(BroadcastInterceptingContext.java:181)\n\tat com.android.server.net.NetworkStatsServiceTest.testUidRemovedIsMoved(NetworkStatsServiceTest.java:698)\n",
       "revId": "1103703aba7e3bb1b4b3219e363f9eabf709ed2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6d2bc84_ff25c316",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-28T03:38:25Z",
+      "side": 1,
+      "message": "TH sees the same test failure:\n\nhttps://android-build.googleplex.com/builds/tests/view?invocationId\u003dI62000010012610461\u0026testResultId\u003dTR25027873982768016",
+      "revId": "1103703aba7e3bb1b4b3219e363f9eabf709ed2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
