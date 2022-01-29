@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000019911709",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1964905?revision\u003d2",
+      "fixSuggestions": [
+        {
+          "fixId": "b7f6ae9b_c3629736",
+          "description": "Change to \"packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java\"",
+          "replacements": [
+            {
+              "path": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+              "range": {
+                "startLine": 528,
+                "startChar": 64,
+                "endLine": 528,
+                "endChar": 70
+              },
+              "replacement": "Default"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "d98f5898_d301dbeb",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-01-29T17:19:43Z",
+      "side": 1,
+      "message": "Common typo found: \"Defaut\" -- should it be \"Default\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 528,
+        "startChar": 64,
+        "endLine": 528,
+        "endChar": 70
+      },
+      "revId": "0b72d36d045fd93cfb7862ec99c6c00b6b7988d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
