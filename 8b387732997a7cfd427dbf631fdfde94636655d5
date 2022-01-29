@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b1e5792_03e91ebe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-29T18:11:51Z",
+      "side": 1,
+      "message": "Maybe just \n[MS68.3] Address comments at aosp/1958144.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "8b387732997a7cfd427dbf631fdfde94636655d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65408094_27a608f2",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-29T18:11:51Z",
+      "side": 1,
+      "message": "Provided values lower than 2MiB will be clamped for callers except callers with the NETWORK_STACK permission.",
+      "range": {
+        "startLine": 745,
+        "startChar": 54,
+        "endLine": 745,
+        "endChar": 90
+      },
+      "revId": "8b387732997a7cfd427dbf631fdfde94636655d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffcb7474_0f36df11",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-29T18:11:51Z",
+      "side": 1,
+      "message": "@RequiresPermission(anyOf \u003d {NETWORKSTACK, MAINLINE_NETWORKSTACK}, conditional \u003d true)",
+      "revId": "8b387732997a7cfd427dbf631fdfde94636655d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
