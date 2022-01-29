@@ -470,6 +470,19 @@ public class NetworkStatsFactory {
     }
 
     /**
+     * Convert {@code /proc/} tag format to {@link Integer}. Assumes incoming
+     * format like {@code 0x7fffffff00000000}.
+     */
+    public static int kernelToTag(String string) {
+        int length = string.length();
+        if (length > 10) {
+            return Long.decode(string.substring(0, length - 8)).intValue();
+        } else {
+            return 0;
+        }
+    }
+
+    /**
      * Parse statistics from file into given {@link NetworkStats} object. Values
      * are expected to monotonically increase since device boot.
      */
