@@ -22,8 +22,6 @@ import static android.net.NetworkStats.TAG_ALL;
 import static android.net.NetworkStats.TAG_NONE;
 import static android.net.NetworkStats.UID_ALL;
 
-import static com.android.server.NetworkManagementSocketTagger.kernelToTag;
-
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.content.Context;
