@@ -1172,6 +1172,31 @@ static void relabelAllDirs(const char* path, const char* context, fail_fn_t fail
   closedir(dir);
 }
 
+static void WaitUntilDirReady(const std::string& target, fail_fn_t fail_fn) {
+  unsigned int sleepIntervalUs = STORAGE_DIR_CHECK_INIT_INTERVAL_US;
+
+  // This is just an approximate value as it doesn't need to be very accurate.
+  unsigned int sleepTotalUs = 0;
+
+  const char* dir_path = target.c_str();
+  while (sleepTotalUs < STORAGE_DIR_CHECK_TIMEOUT_US) {
+    if (access(dir_path, F_OK) == 0) {
+      return;
+    }
+    // Failed, so we add exponential backoff and retry
+    usleep(sleepIntervalUs);
+    sleepTotalUs += sleepIntervalUs;
+    sleepIntervalUs = std::min<unsigned int>(
+        sleepIntervalUs * STORAGE_DIR_CHECK_RETRY_MULTIPLIER,
+        STORAGE_DIR_CHECK_MAX_INTERVAL_US);
+  }
+  // Last chance and get the latest errno if it fails.
+  if (access(dir_path, F_OK) == 0) {
+    return;
+  }
+  fail_fn(CREATE_ERROR("Error dir is not ready %s: %s", dir_path, strerror(errno)));
+}
+
 /**
  * Make other apps data directory not visible in CE, DE storage.
  *
@@ -1451,31 +1476,6 @@ static void isolateJitProfile(JNIEnv* env, jobjectArray pkg_data_info_list,
     PrepareDir(actualRefPackageProfile, DEFAULT_DATA_DIR_PERMISSION, uid, uid, fail_fn);
     BindMount(mirrorRefPackageProfile, actualRefPackageProfile, fail_fn);
   }
-}
-
-static void WaitUntilDirReady(const std::string& target, fail_fn_t fail_fn) {
-  unsigned int sleepIntervalUs = STORAGE_DIR_CHECK_INIT_INTERVAL_US;
-
-  // This is just an approximate value as it doesn't need to be very accurate.
-  unsigned int sleepTotalUs = 0;
-
-  const char* dir_path = target.c_str();
-  while (sleepTotalUs < STORAGE_DIR_CHECK_TIMEOUT_US) {
-    if (access(dir_path, F_OK) == 0) {
-      return;
-    }
-    // Failed, so we add exponential backoff and retry
-    usleep(sleepIntervalUs);
-    sleepTotalUs += sleepIntervalUs;
-    sleepIntervalUs = std::min<unsigned int>(
-        sleepIntervalUs * STORAGE_DIR_CHECK_RETRY_MULTIPLIER,
-        STORAGE_DIR_CHECK_MAX_INTERVAL_US);
-  }
-  // Last chance and get the latest errno if it fails.
-  if (access(dir_path, F_OK) == 0) {
-    return;
-  }
-  fail_fn(CREATE_ERROR("Error dir is not ready %s: %s", dir_path, strerror(errno)));
 }
 
 static void BindMountStorageToLowerFs(const userid_t user_id, const uid_t uid,
