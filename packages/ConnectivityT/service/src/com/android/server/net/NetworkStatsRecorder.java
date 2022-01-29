@@ -455,6 +455,74 @@ public class NetworkStatsRecorder {
         }
     }
 
+    /**
+     * Rewriter that will remove any {@link NetworkStatsHistory} attributed to
+     * the requested UID, only writing data back when modified.
+     */
+    public static class RemoveDataBeforeRewriter implements FileRotator.Rewriter {
+        private final NetworkStatsCollection mTemp;
+        private final long mCutoffMills;
+
+        public RemoveDataBeforeRewriter(long bucketDuration, long cutoffMills) {
+            mTemp = new NetworkStatsCollection(bucketDuration);
+            mCutoffMills = cutoffMills;
+        }
+
+        @Override
+        public void reset() {
+            mTemp.reset();
+        }
+
+        @Override
+        public void read(InputStream in) throws IOException {
+            mTemp.read(in);
+            mTemp.clearDirty();
+            mTemp.removeHistoryBefore(mCutoffMills);
+        }
+
+        @Override
+        public boolean shouldWrite() {
+            return mTemp.isDirty();
+        }
+
+        @Override
+        public void write(OutputStream out) throws IOException {
+            mTemp.write(out);
+        }
+    }
+
+    /**
+     * Remove data which contains or is before the cutoff timestamp.
+     */
+    public void removeDataBefore(long cutoffMillis)
+            throws IOException {
+        if (mRotator != null) {
+            try {
+                mRotator.rewriteAll(new RemoveDataBeforeRewriter(
+                        mBucketDuration, cutoffMillis));
+            } catch (IOException e) {
+                Log.wtf(TAG, "problem importing netstats", e);
+                recoverFromWtf();
+            } catch (OutOfMemoryError e) {
+                Log.wtf(TAG, "problem importing netstats", e);
+                recoverFromWtf();
+            }
+        }
+
+        // Clean up any pending stats
+        if (mPending != null) {
+            mPending.removeHistoryBefore(cutoffMillis);
+        }
+        if (mSinceBoot != null) {
+            mSinceBoot.removeHistoryBefore(cutoffMillis);
+        }
+
+        final NetworkStatsCollection complete = mComplete != null ? mComplete.get() : null;
+        if (complete != null) {
+            complete.removeHistoryBefore(cutoffMillis);
+        }
+    }
+
     public void dumpLocked(IndentingPrintWriter pw, boolean fullHistory) {
         if (mPending != null) {
             pw.print("Pending bytes: "); pw.println(mPending.getTotalBytes());

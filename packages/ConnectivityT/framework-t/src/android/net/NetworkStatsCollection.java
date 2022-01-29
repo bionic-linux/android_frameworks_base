@@ -693,6 +693,26 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
         }
     }
 
+    /**
+     * Remove histories which contains or is before the cutoff timestamp.
+     * @hide
+     */
+    public void removeHistoryBefore(long cutoffMillis) {
+        final ArrayList<Key> knownKeys = new ArrayList<>();
+        knownKeys.addAll(mStats.keySet());
+
+        for (Key key : knownKeys) {
+            final NetworkStatsHistory history = mStats.get(key);
+            if (!history.intersects(Long.MIN_VALUE, cutoffMillis)) continue;
+
+            history.removeBucketsBefore(cutoffMillis);
+            if (history.size() == 0) {
+                mStats.remove(key);
+            }
+            mDirty = true;
+        }
+    }
+
     private void noteRecordedHistory(long startMillis, long endMillis, long totalBytes) {
         if (startMillis < mStartMillis) mStartMillis = startMillis;
         if (endMillis > mEndMillis) mEndMillis = endMillis;
