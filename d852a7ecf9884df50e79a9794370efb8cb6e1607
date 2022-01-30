@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4c397ef_94cb99c1",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "TvAudioPresentation information",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41b510a9_e3d133bf",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "How do I know which fields \"should\" be included?",
+      "range": {
+        "startLine": 154,
+        "startChar": 52,
+        "endLine": 154,
+        "endChar": 58
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eaf41ca5_2001bcbd",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "program ID",
+      "range": {
+        "startLine": 164,
+        "startChar": 20,
+        "endLine": 164,
+        "endChar": 29
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db2ac985_c5c55f70",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "or",
+      "range": {
+        "startLine": 198,
+        "startChar": 11,
+        "endLine": 198,
+        "endChar": 14
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af7bd5ef_c80424ef",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "Set to true if audio description for the visually impaired is available.",
+      "range": {
+        "startLine": 225,
+        "startChar": 44,
+        "endLine": 225,
+        "endChar": 50
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55a12e52_30ad140e",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "Set to true if spoken subtitles for the visually impaired is available.",
+      "range": {
+        "startLine": 238,
+        "startChar": 43,
+        "endLine": 238,
+        "endChar": 86
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d84fcafc_32effb93",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "Set to true if dialogue enhancement is available.",
+      "range": {
+        "startLine": 251,
+        "startChar": 47,
+        "endLine": 251,
+        "endChar": 67
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68c638f2_96c72b4a",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2342,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "presentation",
+      "range": {
+        "startLine": 2342,
+        "startChar": 28,
+        "endLine": 2342,
+        "endChar": 40
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b58fd70c_bad0d867",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2383,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "presentations are",
+      "range": {
+        "startLine": 2383,
+        "startChar": 56,
+        "endLine": 2383,
+        "endChar": 71
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "794f9451_fe6cfb9f",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2398,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "if no",
+      "range": {
+        "startLine": 2398,
+        "startChar": 66,
+        "endLine": 2398,
+        "endChar": 69
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72be54e8_96ecc986",
+        "filename": "media/java/android/media/tv/TvInputManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2412,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-30T21:06:51Z",
+      "side": 1,
+      "message": "if no",
+      "range": {
+        "startLine": 2412,
+        "startChar": 72,
+        "endLine": 2412,
+        "endChar": 74
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
