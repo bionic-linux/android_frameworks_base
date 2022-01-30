@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aa102aa_15069c20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-01-30T02:53:36Z",
+      "side": 1,
+      "message": "There are untracked SELinux denials on boot:\nThere are untracked SELinux denials on boot:\ngo/how-to-track-an-selinux-denial\n01-30 01:44:32.395   687   687 I auditd  : type\u003d1400 audit(0.0:93): avc: denied { write } for comm\u003d\"system_server\" name\u003d\"com.android.tethering\" dev\u003d\"dm-56\" ino\u003d218 scontext\u003du:r:system_server:s0 tcontext\u003du:object_r:apex_module_data_file:s0 tclass\u003ddir permissive\u003d0\n01-30 01:44:32.399   687   687 I auditd  : type\u003d1400 audit(0.0:94): avc: denied { write } for comm\u003d\"system_server\" name\u003d\"com.android.tethering\" dev\u003d\"dm-56\" ino\u003d218 scontext\u003du:r:system_server:s0 tcontext\u003du:object_r:apex_module_data_file:s0 tclass\u003ddir permissive\u003d0",
+      "revId": "4854628ed45e3ed6eebd72349036234d82cc3a36",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
