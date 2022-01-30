@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aedc859e_270869b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-30T07:02:25Z",
+      "side": 1,
+      "message": "Yup. This took me a while to figure out.\n\nWhat is happening is that bootanimation depends on the new library (not sure exactly via which dependency, but..). But libnativehelper is not in /system/lib64, it\u0027s shipped in the ART apex, and bootanimation should use it. Platform code should use libnativehelper_lazy, and that\u0027s how the current NetworkManagementSocketTagger JNI gets access to libnativehelper today (I think libandroid or libandroid-runtime depends on libnativehelper_lazy).\n\nWhen this code is moved to the APEX, it will no longer be able to depend on libnativehelper_lazy because only the platform is allowed to use that. Instead I made this depend on libnativehelper_compat_libc++, which is what we use elsewhere. I linked it statically because it\u0027s small and I didn\u0027t want it to bring in any other dependencies.\n\nUploaded aosp/1965463 to make libnativehelper_compat_c++ available to this code.",
+      "parentUuid": "8c9994fb_2784c5bc",
+      "revId": "3f9416dfaf0a4bef96f59b788f8d1ad2313b703d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed506d1b_c5479bed",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-01-29T19:34:08Z",
       "side": 1,
       "message": "nit: should these be sorted alphabetically?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "3f9416dfaf0a4bef96f59b788f8d1ad2313b703d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10b24e63_08feabdb",
+        "filename": "packages/ConnectivityT/framework-t/jni/onload.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-01-30T07:02:25Z",
+      "side": 1,
+      "message": "I don\u0027t know, but done.",
+      "parentUuid": "ed506d1b_c5479bed",
       "range": {
         "startLine": 19,
         "startChar": 0,
