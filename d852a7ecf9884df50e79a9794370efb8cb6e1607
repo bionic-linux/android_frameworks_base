@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c03c599_41e260da",
+        "filename": "media/java/android/media/tv/TvAudioPresentation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1692997
+      },
+      "writtenOn": "2022-01-31T21:11:49Z",
+      "side": 1,
+      "message": "I think I misread the sentence. I think no change is required here.",
+      "parentUuid": "1304b911_fcb6cde8",
+      "range": {
+        "startLine": 154,
+        "startChar": 52,
+        "endLine": 154,
+        "endChar": 58
+      },
+      "revId": "d852a7ecf9884df50e79a9794370efb8cb6e1607",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eaf41ca5_2001bcbd",
