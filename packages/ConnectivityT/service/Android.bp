@@ -111,7 +111,7 @@ cc_library_shared {
         "-Wthread-safety",
     ],
     srcs: [
-        "jni/onload.cpp",
+        "jni/com_android_net_module_util/onload.cpp",
     ],
     stl: "libc++_static",
     static_libs: [
