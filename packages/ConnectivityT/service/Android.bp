@@ -101,6 +101,20 @@ filegroup {
     ],
 }
 
+// For test code only.
+filegroup {
+    name: "lib_networkStatsFactory_native",
+    srcs: [
+        "jni/com_android_server_net_NetworkStatsFactory.cpp",
+    ],
+}
+
+
+// TODO: when the NetworkStats java files move to the APEX, delete this and depend on
+// libcom_android_connectivity_com_android_net_module_util_jni instead, which is jarjard to the
+// right packages. This library exists only because NetworkStats is currently run in
+// libservices.core, which has no jarjar rules, and thus uses the BpfMap class in the non-jarjard
+// package com.android.net.module.util.
 cc_library_shared {
     name: "libcom_android_net_module_util_jni",
     min_sdk_version: "30",
@@ -113,13 +127,52 @@ cc_library_shared {
     srcs: [
         "jni/com_android_net_module_util/onload.cpp",
     ],
-    stl: "libc++_static",
+    stl: "none",
     static_libs: [
         "libnet_utils_device_common_bpfjni",
     ],
     shared_libs: [
         "liblog",
         "libnativehelper",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+    ],
+}
+
+
+// TODO: this library exists only because the code is in frameworks/base. When the code moves to
+// packages/modules/Connectivity, delete it and move the code to libservice-connectivity.
+// This is preferable to using filegroups because it lets the build system track dependencies and
+// enforce mainline code requirements such as min_sdk_version.
+cc_library_shared {
+    name: "libservice-connectivity-tiramisu",
+    min_sdk_version: "30",
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-parameter",
+        "-Wthread-safety",
+    ],
+    srcs: [
+        "jni/com_android_server_net_NetworkStatsFactory.cpp",
+        "jni/com_android_server_net_NetworkStatsService.cpp",
+        "jni/onload.cpp",
+    ],
+    stl: "libc++_static",
+    header_libs: [
+        "bpf_connectivity_headers",
+        "libbase_headers", // For unique_fd.
+    ],
+    static_libs: [
+        "libnet_utils_device_common_bpfjni",
+    ],
+    shared_libs: [
+        "libcom_android_net_module_util_jni",
+        "libcutils",  // For qtaguid_deletetagdata. TODO: reimplement in Java.
+        "liblog",
+        "libnativehelper_compat_libc++",
+        "libnetworkstats",
     ],
     apex_available: [
         "//apex_available:platform",
