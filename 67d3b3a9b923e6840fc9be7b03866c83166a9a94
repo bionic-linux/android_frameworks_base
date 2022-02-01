@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53475441_6737582a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903265
+      },
+      "writtenOn": "2022-02-01T17:37:08Z",
+      "side": 1,
+      "message": "Trying again. This time I completely reinitialized my local system.",
+      "revId": "67d3b3a9b923e6840fc9be7b03866c83166a9a94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
