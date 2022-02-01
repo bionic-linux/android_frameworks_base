@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e04f5e4_a219a601",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2022-02-01T18:25:41Z",
+      "side": 1,
+      "message": "Is there any reason these OEMs can\u0027t put their APKs in /system_ext/app or priv-app? Why do the apps have to be specifically in /system_ext/framework? If you have a real world example that may help.",
+      "revId": "f41b9271b6fe6a60b72beba802bdbe35c24958d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
