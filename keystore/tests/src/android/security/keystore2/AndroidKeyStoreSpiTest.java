@@ -49,7 +49,7 @@ public class AndroidKeyStoreSpiTest {
     @Test
     public void testEngineAliasesReturnsEmptySetOnKeyStoreError() throws Exception {
         when(mKeystore2.list(anyInt(), anyLong()))
-                .thenThrow(new KeyStoreException(6, "Some Error"));
+                .thenThrow(new KeyStoreException(6, "Some Error", null));
         AndroidKeyStoreSpi spi = new AndroidKeyStoreSpi();
         spi.initForTesting(mKeystore2);
 

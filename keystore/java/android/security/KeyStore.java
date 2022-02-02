@@ -152,6 +152,6 @@ public class KeyStore {
      */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public static KeyStoreException getKeyStoreException(int errorCode) {
-        return new KeyStoreException(-10000, "Should not be called.");
+        return new KeyStoreException(-10000, "Should not be called.", null);
     }
 }

@@ -2196,7 +2196,7 @@ package android.security {
   }
 
   public class KeyStoreException extends java.lang.Exception {
-    ctor public KeyStoreException(int, String);
+    ctor public KeyStoreException(int, @Nullable String, @Nullable String);
     method public int getErrorCode();
   }
 

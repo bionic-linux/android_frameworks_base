@@ -34,7 +34,7 @@ public class StrongBoxUnavailableException extends ProviderException {
     public StrongBoxUnavailableException(String message) {
         super(message,
                 new KeyStoreException(KeymasterDefs.KM_ERROR_HARDWARE_TYPE_UNAVAILABLE,
-                        "No StrongBox available")
+                        "No StrongBox available", null)
         );
     }
 

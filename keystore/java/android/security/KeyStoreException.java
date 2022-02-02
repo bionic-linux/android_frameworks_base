@@ -16,6 +16,7 @@
 
 package android.security;
 
+import android.annotation.Nullable;
 import android.annotation.TestApi;
 
 /**
@@ -29,8 +30,10 @@ public class KeyStoreException extends Exception {
 
     private final int mErrorCode;
 
-    public KeyStoreException(int errorCode, String message) {
-        super(message);
+    public KeyStoreException(int errorCode, @Nullable String message,
+            @Nullable String keystoreErrorMessage) {
+        super(message + " (internal Keystore code: " + errorCode + " message: "
+                + keystoreErrorMessage + ")");
         mErrorCode = errorCode;
     }
 

@@ -32,7 +32,7 @@ public class SecureKeyImportUnavailableException extends ProviderException {
 
     public SecureKeyImportUnavailableException(String message) {
         super(message, new KeyStoreException(KeymasterDefs.KM_ERROR_HARDWARE_TYPE_UNAVAILABLE,
-                "Secure Key Import not available"));
+                "Secure Key Import not available", null));
     }
 
     public SecureKeyImportUnavailableException(String message, Throwable cause) {

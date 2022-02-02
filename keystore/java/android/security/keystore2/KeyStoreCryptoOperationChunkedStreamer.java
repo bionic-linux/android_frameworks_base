@@ -127,7 +127,7 @@ class KeyStoreCryptoOperationChunkedStreamer implements KeyStoreCryptoOperationS
         }
         if (inputLength < 0 || inputOffset < 0 || (inputOffset + inputLength) > input.length) {
             throw new KeyStoreException(KeymasterDefs.KM_ERROR_UNKNOWN_ERROR,
-                    "Input offset and length out of bounds of input array");
+                    "Input offset and length out of bounds of input array", null);
         }
 
         byte[] output = EmptyArray.BYTE;
