@@ -87,6 +87,30 @@
       },
       "revId": "f4a0c5014462f7f66e877d37e0dbc566e1ca92c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0895717_277ebe3d",
+        "filename": "native/android/libandroid.map.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-02-02T12:27:55Z",
+      "side": 1,
+      "message": "Ack, thanks. Uploaded aosp/1967261 to do that. Not sure what to do about the comments that say \"Available since API level 33.\" I guess we can discuss on that CL.",
+      "parentUuid": "1f5cb897_d9c34bd9",
+      "range": {
+        "startLine": 303,
+        "startChar": 46,
+        "endLine": 303,
+        "endChar": 48
+      },
+      "revId": "f4a0c5014462f7f66e877d37e0dbc566e1ca92c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
