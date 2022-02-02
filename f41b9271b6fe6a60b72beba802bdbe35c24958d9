@@ -34,6 +34,24 @@
       "parentUuid": "3e04f5e4_a219a601",
       "revId": "f41b9271b6fe6a60b72beba802bdbe35c24958d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "349a4699_3a332fc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1414465
+      },
+      "writtenOn": "2022-02-02T23:24:57Z",
+      "side": 1,
+      "message": "Sorry, I need some further clarification.\n\n\u003e We want to avoid aapt trying to load framework resources\n\nI\u0027m not sure what this means, because AAPT2 is not run on the device at runtime, so this wouldn\u0027t be possible.\n\n\u003e as framework-res is cached internally,\n\nThis is true, but it\u0027s cached as the \"android\" package, of which there can only be 1. If you just add a new directory to scan like this, any result will be treated the same as any other system app.\n\n\u003e In short we don\u0027t want any other thing to attempt to load it\n\nResources are loaded dynamically at runtime through AssetManager, and this statement seems to imply we don\u0027t want that to happen? That should be done automatically since the system will not inject non-framework resources/overlays into AssetManager unless the app requests them, like for using a static shared library or ResourceLoader. System apps (of which these result would be, see previous paragraph) are not automatically loaded into an app\u0027s process.\n\nMaybe you could describe the full end to end use case with some real world examples for me?",
+      "parentUuid": "49ee32d8_7d2489e3",
+      "revId": "f41b9271b6fe6a60b72beba802bdbe35c24958d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
