@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9840660d_bf8b4624",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-02-02T05:14:16Z",
+      "side": 1,
+      "message": "Michael, could you take a look for NDK API review? These functions went through NDK API review a few weeks ago as aosp/1938795, but as discussed in the commit message, we forgot to expose them in libandroid.",
+      "revId": "f4a0c5014462f7f66e877d37e0dbc566e1ca92c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
