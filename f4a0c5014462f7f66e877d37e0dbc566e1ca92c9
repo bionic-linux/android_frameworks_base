@@ -39,6 +39,30 @@
       },
       "revId": "f4a0c5014462f7f66e877d37e0dbc566e1ca92c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36a4b606_cf02aca5",
+        "filename": "native/android/libandroid.map.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-02-02T11:59:29Z",
+      "side": 1,
+      "message": "Done. Do we need to change 33 to tiramisu in the header file as well? Currently we have things like:\n\nint android_tag_socket_with_uid(int sockfd, int tag, uid_t uid) __INTRODUCED_IN(33);",
+      "parentUuid": "92b19dbc_2111ec83",
+      "range": {
+        "startLine": 303,
+        "startChar": 46,
+        "endLine": 303,
+        "endChar": 48
+      },
+      "revId": "f4a0c5014462f7f66e877d37e0dbc566e1ca92c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
