@@ -214,6 +214,14 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     // This is current path but may be changed soon.
     private static final String UID_COUNTERSET_MAP_PATH =
             "/sys/fs/bpf/map_netd_uid_counterset_map";
+    private static final String COOKIE_TAG_MAP_PATH =
+            "/sys/fs/bpf/map_netd_cookie_tag_map";
+    private static final String APP_UID_STATS_MAP_PATH =
+            "/sys/fs/bpf/map_netd_app_uid_stats_map";
+    private static final String STATS_MAP_A_PATH =
+            "/sys/fs/bpf/map_netd_stats_map_A";
+    private static final String STATS_MAP_B_PATH =
+            "/sys/fs/bpf/map_netd_stats_map_B";
 
     private final Context mContext;
     private final NetworkStatsFactory mStatsFactory;
@@ -341,6 +349,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
      */
     private SparseIntArray mActiveUidCounterSet = new SparseIntArray();
     private final IBpfMap<U32, U8> mUidCounterSetMap;
+    private final IBpfMap<CookieTagMapKey, CookieTagMapValue> mCookieTagMap;
+    private final IBpfMap<StatsMapKey, StatsMapValue> mStatsMapA;
+    private final IBpfMap<StatsMapKey, StatsMapValue> mStatsMapB;
+    private final IBpfMap<UidStatsMapKey, StatsMapValue> mAppUidStatsMap;
 
     /** Data layer operation counters for splicing into other structures. */
     private NetworkStats mUidOperations = new NetworkStats(0L, 10);
@@ -474,6 +486,10 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
         mInterfaceMapUpdater = mDeps.makeBpfInterfaceMapUpdater(mContext, mHandler);
         mInterfaceMapUpdater.start();
         mUidCounterSetMap = mDeps.getUidCounterSetMap();
+        mCookieTagMap = mDeps.getCookieTagMap();
+        mStatsMapA = mDeps.getStatsMapA();
+        mStatsMapB = mDeps.getStatsMapB();
+        mAppUidStatsMap = mDeps.getAppUidStatsMap();
     }
 
     /**
