@@ -16,6 +16,23 @@
       "message": "Supersedes https://partner-android-review.googlesource.com/c/platform/frameworks/base/+/1195654",
       "revId": "d50efa8d97e0d75f4b1b8574d9e4b5650f756b6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb790235_ca5e1f20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1443524
+      },
+      "writtenOn": "2022-02-02T18:39:56Z",
+      "side": 1,
+      "message": "New API for Android T is closed.",
+      "revId": "d50efa8d97e0d75f4b1b8574d9e4b5650f756b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
