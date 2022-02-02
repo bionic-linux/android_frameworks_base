@@ -63,6 +63,30 @@
       },
       "revId": "f4a0c5014462f7f66e877d37e0dbc566e1ca92c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f5cb897_d9c34bd9",
+        "filename": "native/android/libandroid.map.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2022-02-02T12:17:52Z",
+      "side": 1,
+      "message": "Yeah, should be `__INTRODUCED_IN(__ANDROID_API_T__)`",
+      "parentUuid": "36a4b606_cf02aca5",
+      "range": {
+        "startLine": 303,
+        "startChar": 46,
+        "endLine": 303,
+        "endChar": 48
+      },
+      "revId": "f4a0c5014462f7f66e877d37e0dbc566e1ca92c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
