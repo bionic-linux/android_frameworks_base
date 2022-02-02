@@ -16,6 +16,24 @@
       "message": "Is there any reason these OEMs can\u0027t put their APKs in /system_ext/app or priv-app? Why do the apps have to be specifically in /system_ext/framework? If you have a real world example that may help.",
       "revId": "f41b9271b6fe6a60b72beba802bdbe35c24958d9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49ee32d8_7d2489e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1112368
+      },
+      "writtenOn": "2022-02-02T20:56:55Z",
+      "side": 1,
+      "message": "Talking to luca, looks like:\n\n\"We want to avoid aapt trying to load framework resources, as framework-res is cached internally, don\u0027t want them loaded 2*.\n\nIn short we don\u0027t want any other thing to attempt to load it, using framework would eliminate all possible entry points.\"\n\nFrom my side, there\u0027s nothing inherently wrong about doing this in /system_ext/framework, better that than /system/framework - regardless of our current usecase.",
+      "parentUuid": "3e04f5e4_a219a601",
+      "revId": "f41b9271b6fe6a60b72beba802bdbe35c24958d9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
