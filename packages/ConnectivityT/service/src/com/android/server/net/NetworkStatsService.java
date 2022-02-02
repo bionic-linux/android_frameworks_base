@@ -51,6 +51,7 @@ import static android.net.netstats.NetworkStatsDataMigrationUtils.PREFIX_UID;
 import static android.net.netstats.NetworkStatsDataMigrationUtils.PREFIX_UID_TAG;
 import static android.net.netstats.NetworkStatsDataMigrationUtils.PREFIX_XT;
 import static android.os.Trace.TRACE_TAG_NETWORK;
+import static android.system.OsConstants.ENOENT;
 import static android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
@@ -563,8 +564,48 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
             }
         }
 
-        public TagStatsDeleter getTagStatsDeleter() {
-            return NetworkStatsService::nativeDeleteTagData;
+        /** Gets the cookie tag map */
+        public IBpfMap<CookieTagMapKey, CookieTagMapValue> getCookieTagMap() {
+            try {
+                return new BpfMap<CookieTagMapKey, CookieTagMapValue>(COOKIE_TAG_MAP_PATH,
+                        BpfMap.BPF_F_RDWR, CookieTagMapKey.class, CookieTagMapValue.class);
+            } catch (ErrnoException e) {
+                Log.wtf(TAG, "Cannot create cookie tag map: " + e);
+                return null;
+            }
+        }
+
+        /** Gets stats map A */
+        public IBpfMap<StatsMapKey, StatsMapValue> getStatsMapA() {
+            try {
+                return new BpfMap<StatsMapKey, StatsMapValue>(STATS_MAP_A_PATH,
+                        BpfMap.BPF_F_RDWR, StatsMapKey.class, StatsMapValue.class);
+            } catch (ErrnoException e) {
+                Log.wtf(TAG, "Cannot create stats map A: " + e);
+                return null;
+            }
+        }
+
+        /** Gets stats map B */
+        public IBpfMap<StatsMapKey, StatsMapValue> getStatsMapB() {
+            try {
+                return new BpfMap<StatsMapKey, StatsMapValue>(STATS_MAP_B_PATH,
+                        BpfMap.BPF_F_RDWR, StatsMapKey.class, StatsMapValue.class);
+            } catch (ErrnoException e) {
+                Log.wtf(TAG, "Cannot create stats map B: " + e);
+                return null;
+            }
+        }
+
+        /** Gets the uid stats map */
+        public IBpfMap<UidStatsMapKey, StatsMapValue> getAppUidStatsMap() {
+            try {
+                return new BpfMap<UidStatsMapKey, StatsMapValue>(APP_UID_STATS_MAP_PATH,
+                        BpfMap.BPF_F_RDWR, UidStatsMapKey.class, StatsMapValue.class);
+            } catch (ErrnoException e) {
+                Log.wtf(TAG, "Cannot create app uid stats map: " + e);
+                return null;
+            }
         }
     }
 
@@ -1806,6 +1847,65 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
                 currentTime);
     }
 
+    // deleteKernelTagData can ignore ENOENT; otherwise we should log an error
+    private void logErrorIfNotErrNoent(final ErrnoException e, final String msg) {
+        if (e.errno != ENOENT) {
+            Log.e(TAG, msg, e);
+        }
+    }
+
+    private <K extends StatsMapKey, V extends StatsMapValue> void deleteStatsMapTagData(
+            IBpfMap<K, V> statsMap, int uid) {
+        try {
+            statsMap.forEach((key, value) -> {
+                if (key.uid == uid) {
+                    try {
+                        statsMap.deleteEntry(key);
+                    } catch (ErrnoException e) {
+                        logErrorIfNotErrNoent(e, "Failed to delete data(uid = " + key.uid + ")");
+                    }
+                }
+            });
+        } catch (ErrnoException e) {
+            Log.e(TAG, "FAILED to delete tag data from stats map", e);
+        }
+    }
+
+    /**
+     * Deletes uid tag data from CookieTagMap, StatsMapA, StatsMapB, and UidStatsMap
+     * @param uid
+     */
+    private void deleteKernelTagData(int uid) {
+        try {
+            mCookieTagMap.forEach((key, value) -> {
+                if (value.uid == uid) {
+                    try {
+                        mCookieTagMap.deleteEntry(key);
+                    } catch (ErrnoException e) {
+                        logErrorIfNotErrNoent(e, "Failed to delete data(cookie = " + key + ")");
+                    }
+                }
+            });
+        } catch (ErrnoException e) {
+            Log.e(TAG, "Failed to delete tag data from cookie tag map", e);
+        }
+
+        deleteStatsMapTagData(mStatsMapA, uid);
+        deleteStatsMapTagData(mStatsMapB, uid);
+
+        try {
+            mUidCounterSetMap.deleteEntry(new U32(uid));
+        } catch (ErrnoException e) {
+            logErrorIfNotErrNoent(e, "Failed to delete tag data from uid counter set map");
+        }
+
+        try {
+            mAppUidStatsMap.deleteEntry(new UidStatsMapKey(uid));
+        } catch (ErrnoException e) {
+            logErrorIfNotErrNoent(e, "Failed to delete tag data from app uid stats map");
+        }
+    }
+
     /**
      * Clean up {@link #mUidRecorder} after UID is removed.
      */
@@ -1821,10 +1921,7 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
 
         // Clear kernel stats associated with UID
         for (int uid : uids) {
-            final int ret = mDeps.getTagStatsDeleter().deleteTagData(uid);
-            if (ret < 0) {
-                Log.w(TAG, "problem clearing counters for uid " + uid + ": " + Os.strerror(-ret));
-            }
+            deleteKernelTagData(uid);
         }
     }
 
@@ -2403,12 +2500,4 @@ public class NetworkStatsService extends INetworkStatsService.Stub {
     private static native long nativeGetTotalStat(int type);
     private static native long nativeGetIfaceStat(String iface, int type);
     private static native long nativeGetUidStat(int uid, int type);
-
-    // TODO: use BpfNetMaps to delete tag data and remove this.
-    @VisibleForTesting
-    interface TagStatsDeleter {
-        int deleteTagData(int uid);
-    }
-
-    private static native int nativeDeleteTagData(int uid);
 }
