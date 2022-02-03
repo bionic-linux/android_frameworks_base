@@ -50,6 +50,23 @@
       "message": "Treehugger doesn\u0027t seem to be working, this was recently verified by Treehugger, and I checked some builds manually.",
       "revId": "3492061b6de0de3ad0cdb7f40d41ffd0f51a28a2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7450d99_de257960",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1042828
+      },
+      "writtenOn": "2022-02-03T18:00:14Z",
+      "side": 1,
+      "message": "The problem here appears to be that at least one frameworks test seems to be running against an older version of libcore that excludes aosp/1954879. Is that a problem with this CL or the test infrastructure? Are updates such as this expected to work?",
+      "revId": "3492061b6de0de3ad0cdb7f40d41ffd0f51a28a2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
