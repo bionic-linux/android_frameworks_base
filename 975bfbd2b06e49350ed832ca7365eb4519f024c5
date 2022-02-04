@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b801d7d_fbddc88e",
+        "filename": "core/java/android/widget/AutoCompleteTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2022-02-04T19:35:56Z",
+      "side": 1,
+      "message": "it feels like this line belongs to refreshAutoCompleteResults. Can you please check if that is the case? \n\nThis way anytime refreshAutoCompleteResults is called we would have the correct data.",
+      "range": {
+        "startLine": 903,
+        "startChar": 12,
+        "endLine": 903,
+        "endChar": 30
+      },
+      "revId": "975bfbd2b06e49350ed832ca7365eb4519f024c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4f7cb1f_2785ccfa",
+        "filename": "core/java/android/widget/AutoCompleteTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2022-02-04T19:35:56Z",
+      "side": 1,
+      "message": "in refreshAutoCompleteResults performFiltering uses getText(); it will be better not to use toString() on this call. \n\nCurrently I am not sure if there is any challenge of serializing the CharSequence but as far as I remember there were at least utility functions or it is done automatically.\n\nlet\u0027s not call toString",
+      "range": {
+        "startLine": 903,
+        "startChar": 42,
+        "endLine": 903,
+        "endChar": 54
+      },
+      "revId": "975bfbd2b06e49350ed832ca7365eb4519f024c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfbf9a30_8d584bbb",
+        "filename": "core/java/android/widget/AutoCompleteTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2022-02-04T19:35:56Z",
+      "side": 1,
+      "message": "Q: is it possible to write this code on AppCompat version as well? (Or only on AppCompat version) \n\nThe issues with Material or any user using TextView or AppCompatTextView will stay for a long time.\n\nWriting in AppCompat possibly will have more impact at the begining.",
+      "range": {
+        "startLine": 1427,
+        "startChar": 22,
+        "endLine": 1427,
+        "endChar": 41
+      },
+      "revId": "975bfbd2b06e49350ed832ca7365eb4519f024c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "350eb363_e53df164",
+        "filename": "core/java/android/widget/AutoCompleteTextView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2022-02-04T19:35:56Z",
+      "side": 1,
+      "message": "nit: can you please add a /* {param name} */ to here. it is hard to read.",
+      "range": {
+        "startLine": 1452,
+        "startChar": 29,
+        "endLine": 1452,
+        "endChar": 34
+      },
+      "revId": "975bfbd2b06e49350ed832ca7365eb4519f024c5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
