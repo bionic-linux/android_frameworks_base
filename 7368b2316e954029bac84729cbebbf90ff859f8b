@@ -22,6 +22,30 @@
       },
       "revId": "7368b2316e954029bac84729cbebbf90ff859f8b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5ba378c_29246d67",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-02-04T12:16:25Z",
+      "side": 1,
+      "message": "Uploaded a follow up to fix all 5 usages (including the one that was already there). That way this CL stays consistent with existing code.",
+      "parentUuid": "e27ff0c3_62729ea4",
+      "range": {
+        "startLine": 606,
+        "startChar": 37,
+        "endLine": 606,
+        "endChar": 43
+      },
+      "revId": "7368b2316e954029bac84729cbebbf90ff859f8b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
