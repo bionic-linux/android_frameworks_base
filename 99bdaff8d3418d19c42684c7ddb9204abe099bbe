@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcf1a759_f1de4ee3",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/CookieTagMapKey.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-02-04T12:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1699170e_f184d992",
+      "revId": "99bdaff8d3418d19c42684c7ddb9204abe099bbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9609eb32_87928973",
@@ -31,6 +49,30 @@
       "writtenOn": "2022-02-02T21:47:36Z",
       "side": 1,
       "message": "in practice we could probably just use S64 here too... ?\n\nwe\u0027ll never hit 2**63 packets nor bytes before phone dies...\n(it\u0027s 272 years at 1 GiB/s)",
+      "range": {
+        "startLine": 32,
+        "startChar": 34,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "99bdaff8d3418d19c42684c7ddb9204abe099bbe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "839b3415_ac01ad84",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/StatsMapValue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-02-04T12:16:31Z",
+      "side": 1,
+      "message": "That\u0027s a lot of years. I guess I can use U63 for these then.",
+      "parentUuid": "9609eb32_87928973",
       "range": {
         "startLine": 32,
         "startChar": 34,
