@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68de2f27_9b0039d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-02-05T07:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b1e5792_03e91ebe",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "8b387732997a7cfd427dbf631fdfde94636655d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "65408094_27a608f2",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca35b0ed_f1f246ca",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-02-05T07:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65408094_27a608f2",
+      "range": {
+        "startLine": 745,
+        "startChar": 54,
+        "endLine": 745,
+        "endChar": 90
+      },
+      "revId": "8b387732997a7cfd427dbf631fdfde94636655d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffcb7474_0f36df11",
@@ -60,6 +108,24 @@
       "writtenOn": "2022-01-29T18:11:51Z",
       "side": 1,
       "message": "@RequiresPermission(anyOf \u003d {NETWORKSTACK, MAINLINE_NETWORKSTACK}, conditional \u003d true)",
+      "revId": "8b387732997a7cfd427dbf631fdfde94636655d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbac57b8_5805446c",
+        "filename": "packages/ConnectivityT/framework-t/src/android/app/usage/NetworkStatsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-02-05T07:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffcb7474_0f36df11",
       "revId": "8b387732997a7cfd427dbf631fdfde94636655d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

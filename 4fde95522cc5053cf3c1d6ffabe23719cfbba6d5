@@ -16,6 +16,24 @@
       "message": "1. Not done for:\nservices/tests/servicestests/src/com/android/server/net/NetworkPolicyManagerServiceTest.java \n#505\n Jean Chalard\nPatchset 7\nJan 25\nLet\u0027s add a comment to explain it doesn\u0027t matter which of the observers is returned here\n\n2. IIUC we\u0027ll also need to change\nhttps://osscs.corp.google.com/android/platform/superproject/+/master:frameworks/base/packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsObservers.java;l\u003d200?ss\u003dandroid\u0026q\u003dNetworkStatsObserver",
       "revId": "4fde95522cc5053cf3c1d6ffabe23719cfbba6d5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e361797_22db7a6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1364839
+      },
+      "writtenOn": "2022-02-05T07:13:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3a73cc8_fcd3f114",
+      "revId": "4fde95522cc5053cf3c1d6ffabe23719cfbba6d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
