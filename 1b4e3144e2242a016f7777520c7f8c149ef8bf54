@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e6dc20d_2c937832",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-02-06T11:02:25Z",
+      "side": 1,
+      "message": "I know you\u0027re not changing this but as long as you\u0027re touching this line adding final would be nice",
+      "range": {
+        "startLine": 204,
+        "startChar": 8,
+        "endLine": 204,
+        "endChar": 12
+      },
+      "revId": "1b4e3144e2242a016f7777520c7f8c149ef8bf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75a47f43_a45ba70b",
+        "filename": "packages/ConnectivityT/service/src/com/android/server/net/NetworkStatsObservers.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-02-06T11:02:25Z",
+      "side": 1,
+      "message": "Nit : double space",
+      "range": {
+        "startLine": 206,
+        "startChar": 52,
+        "endLine": 206,
+        "endChar": 54
+      },
+      "revId": "1b4e3144e2242a016f7777520c7f8c149ef8bf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48f9fa91_4afb9a06",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-02-06T11:02:25Z",
+      "side": 1,
+      "message": "Suggested rewording :\n\n // Warning : threading for this member is broken. It should only be read\n // and written on the handler thread ; furthermore, the constructor\n // is called on a different thread, so this stops working if the default\n // value is not false or if this member ever goes back to false after\n // being set to true.\n // TODO : fix threading for this member",
+      "range": {
+        "startLine": 1245,
+        "startChar": 26,
+        "endLine": 1245,
+        "endChar": 28
+      },
+      "revId": "1b4e3144e2242a016f7777520c7f8c149ef8bf54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
