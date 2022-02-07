@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc68693c_bac2ccf4",
+        "filename": "services/profcollect/src/com/android/server/profcollect/ProfcollectForwardingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1087625
+      },
+      "writtenOn": "2022-02-07T07:42:32Z",
+      "side": 1,
+      "message": "The function name is a bit confusing, since it also registers observers. Maybe just leave it inlined in L174?",
+      "range": {
+        "startLine": 154,
+        "startChar": 17,
+        "endLine": 154,
+        "endChar": 35
+      },
+      "revId": "27e3f50384da63564334f149b9cb23a639f042b8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
