@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd784ab1_bdf2878e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2022-02-08T22:21:12Z",
+      "side": 1,
+      "message": "If you can address Chris\u0027 comments, the change also lgtm",
+      "revId": "1f32f32200b2b2547f45f4f0deab3f6d1fdb5cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "22538aa2_ae9dac71",
