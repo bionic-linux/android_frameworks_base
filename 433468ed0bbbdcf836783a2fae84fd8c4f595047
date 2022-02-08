@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c66d5a3_172ece65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903913
+      },
+      "writtenOn": "2022-02-08T07:02:56Z",
+      "side": 1,
+      "message": "Hi Brad.\nI hope you\u0027re doing well.\nPlease review this CL. as I\u0027ve fixed rollbacked code when rebase was performed\n\nThanks ",
+      "revId": "433468ed0bbbdcf836783a2fae84fd8c4f595047",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
