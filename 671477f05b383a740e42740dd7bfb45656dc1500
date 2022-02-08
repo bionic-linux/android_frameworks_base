@@ -33,6 +33,24 @@
       "message": "Could you add above this line:\n if (mVisible || mVisibleRequested) {\n     // The app may be died while visible (no PAUSED state).\n     mAtmService.updateBatteryStats(this, false);\n }\n\n(centralize all call entries at setState)",
       "revId": "671477f05b383a740e42740dd7bfb45656dc1500",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "859554f0_66ed7104",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4937,
+      "author": {
+        "id": 1935752
+      },
+      "writtenOn": "2022-02-08T09:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4e4ea1e_bbc4286c",
+      "revId": "671477f05b383a740e42740dd7bfb45656dc1500",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
