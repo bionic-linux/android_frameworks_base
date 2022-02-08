@@ -22,6 +22,30 @@
       },
       "revId": "81ddbb80c17e8c1043a70a637902bd292b43a41a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "881e0c47_feaf9d22",
+        "filename": "keystore/java/android/security/keystore/StrongBoxUnavailableException.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-02-08T14:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed2ae1fa_44dbe6f7",
+      "range": {
+        "startLine": 37,
+        "startChar": 48,
+        "endLine": 37,
+        "endChar": 54
+      },
+      "revId": "81ddbb80c17e8c1043a70a637902bd292b43a41a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
