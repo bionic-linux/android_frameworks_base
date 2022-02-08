@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d5d3373_3092bce3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-02-08T18:50:51Z",
+      "side": 1,
+      "message": "This is CP from internal master. Could you +2 this?",
+      "revId": "3d0db6a08b15d2cb8d7022dfecf38b133ea7c343",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
