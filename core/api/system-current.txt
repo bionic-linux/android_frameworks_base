@@ -4986,7 +4986,7 @@ package android.media {
     field public static final int CONTENT_ID_NONE = 0; // 0x0
   }
 
-  public class HwAudioSource {
+  @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING) public class HwAudioSource {
     method public boolean isPlaying();
     method public void start();
     method public void stop();
@@ -4994,7 +4994,7 @@ package android.media {
 
   public static final class HwAudioSource.Builder {
     ctor public HwAudioSource.Builder();
-    method @NonNull public android.media.HwAudioSource build();
+    method @NonNull @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING) public android.media.HwAudioSource build() throws java.lang.SecurityException;
     method @NonNull public android.media.HwAudioSource.Builder setAudioAttributes(@NonNull android.media.AudioAttributes);
     method @NonNull public android.media.HwAudioSource.Builder setAudioDeviceInfo(@NonNull android.media.AudioDeviceInfo);
   }
