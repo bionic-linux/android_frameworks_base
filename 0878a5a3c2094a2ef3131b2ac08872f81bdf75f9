@@ -1,0 +1,306 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238921",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "a10cd0a8_7e35b141",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3857,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 3857,
+        "startChar": 0,
+        "endLine": 3857,
+        "endChar": 2
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238923",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [
+        {
+          "fixId": "5336766d_dcb74488",
+          "description": "Change to \"telephony/java/android/telephony/CarrierConfigManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CarrierConfigManager.java",
+              "range": {
+                "startLine": 3871,
+                "startChar": 66,
+                "endLine": 3871,
+                "endChar": 76
+              },
+              "replacement": "specified"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "82eebdfe_9e402ddc",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3871,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Common typo found: \"specificed\" -- should it be \"specified\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3871,
+        "startChar": 66,
+        "endLine": 3871,
+        "endChar": 76
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238921",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "79876ed1_ddbd5acc",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3882,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 3882,
+        "startChar": 0,
+        "endLine": 3882,
+        "endChar": 4
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238921",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "b482a9ef_728b5a52",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3893,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 3893,
+        "startChar": 0,
+        "endLine": 3893,
+        "endChar": 2
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238923",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [
+        {
+          "fixId": "613447bd_e2778b3b",
+          "description": "Change to \"telephony/java/android/telephony/CarrierConfigManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CarrierConfigManager.java",
+              "range": {
+                "startLine": 3896,
+                "startChar": 66,
+                "endLine": 3896,
+                "endChar": 76
+              },
+              "replacement": "specified"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "04d99027_fac1728b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3896,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Common typo found: \"specificed\" -- should it be \"specified\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3896,
+        "startChar": 66,
+        "endLine": 3896,
+        "endChar": 76
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238921",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "90bf10d6_4dd2add2",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3907,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 3907,
+        "startChar": 0,
+        "endLine": 3907,
+        "endChar": 2
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238923",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [
+        {
+          "fixId": "24cde87d_61b9e610",
+          "description": "Change to \"telephony/java/android/telephony/CarrierConfigManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CarrierConfigManager.java",
+              "range": {
+                "startLine": 3920,
+                "startChar": 66,
+                "endLine": 3920,
+                "endChar": 76
+              },
+              "replacement": "specified"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "aab3460a_cb249307",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3920,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Common typo found: \"specificed\" -- should it be \"specified\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3920,
+        "startChar": 66,
+        "endLine": 3920,
+        "endChar": 76
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238921",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "d407c547_55dc953c",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3940,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 3940,
+        "startChar": 0,
+        "endLine": 3940,
+        "endChar": 2
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020238923",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d5",
+      "fixSuggestions": [
+        {
+          "fixId": "e416b186_04045365",
+          "description": "Change to \"telephony/java/android/telephony/CarrierConfigManager.java\"",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/CarrierConfigManager.java",
+              "range": {
+                "startLine": 3943,
+                "startChar": 66,
+                "endLine": 3943,
+                "endChar": 76
+              },
+              "replacement": "specified"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "1789035f_b50b68bd",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 3943,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-09T00:27:02Z",
+      "side": 1,
+      "message": "Common typo found: \"specificed\" -- should it be \"specified\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 3943,
+        "startChar": 66,
+        "endLine": 3943,
+        "endChar": 76
+      },
+      "revId": "0878a5a3c2094a2ef3131b2ac08872f81bdf75f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
