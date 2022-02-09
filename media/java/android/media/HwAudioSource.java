@@ -18,10 +18,12 @@ package android.media;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
 import android.content.Context;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.SecurityException;
 import android.os.ServiceManager;
 import android.util.Log;
 
@@ -34,10 +36,12 @@ import java.util.ArrayList;
  * It currently supports {@link HwAudioSource#start()} and {@link HwAudioSource#stop()} only
  * corresponding to {@link AudioSystem#startAudioSource(AudioPortConfig, AudioAttributes)}
  * and {@link AudioSystem#stopAudioSource(int)}.
+ * Requires {@link android.Manifest.permission#MODIFY_AUDIO_ROUTING} permission.
  *
  * @hide
  */
 @SystemApi
+@RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
 public class HwAudioSource extends PlayerBase {
     private static final String TAG = "AudioManager.HwAudioSource";
 
@@ -60,6 +64,8 @@ public class HwAudioSource extends PlayerBase {
      *
      * @param device {@link AudioDeviceInfo} instance of the source audio device.
      * @param attributes {@link AudioAttributes} instance for this player.
+     *
+     * @throws SecurityException if the caller doesn't have MODIFY_AUDIO_ROUTING permission.
      */
     private HwAudioSource(@NonNull AudioDeviceInfo device, @NonNull AudioAttributes attributes) {
         super(attributes, AudioPlaybackConfiguration.PLAYER_TYPE_HW_SOURCE);
@@ -277,7 +283,12 @@ public class HwAudioSource extends PlayerBase {
          * Builds an {@link HwAudioSource} instance initialized with all the parameters set
          * on this <code>Builder</code>.
          * @return a new successfully initialized {@link HwAudioSource} instance.
+         *
+         * @throws SecurityException if the caller doesn't have MODIFY_AUDIO_ROUTING permission.
+         *         Thrown when validating AudioAttributes (if using system usage).
+         *         Thrown while trying to listen to AudioService state.
          */
+        @RequiresPermission(android.Manifest.permission.MODIFY_AUDIO_ROUTING)
         public @NonNull HwAudioSource build() {
             Preconditions.checkNotNull(mAudioDeviceInfo);
             if (mAudioAttributes == null) {
