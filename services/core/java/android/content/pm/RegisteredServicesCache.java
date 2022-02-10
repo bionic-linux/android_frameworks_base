@@ -17,7 +17,6 @@
 package android.content.pm;
 
 import android.Manifest;
-import android.compat.annotation.UnsupportedAppUsage;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -146,7 +145,6 @@ public abstract class RegisteredServicesCache<V> {
     private RegisteredServicesCacheListener<V> mListener;
     private Handler mHandler;
 
-    @UnsupportedAppUsage
     public RegisteredServicesCache(Context context, String interfaceName, String metaDataName,
             String attributeName, XmlSerializerAndParser<V> serializerAndParser) {
         mContext = context;
@@ -305,12 +303,9 @@ public abstract class RegisteredServicesCache<V> {
      * to bind to the service.
      */
     public static class ServiceInfo<V> {
-        @UnsupportedAppUsage
         public final V type;
         public final ComponentInfo componentInfo;
-        @UnsupportedAppUsage
         public final ComponentName componentName;
-        @UnsupportedAppUsage
         public final int uid;
 
         /** @hide */
