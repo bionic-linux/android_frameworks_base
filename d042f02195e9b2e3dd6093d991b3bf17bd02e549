@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020305079",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1906212?revision\u003d5",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fbe81652_a235ba75",
+        "filename": "services/core/java/com/android/server/wm/DisplayAreaOrganizerController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-10T06:51:55Z",
+      "side": 1,
+      "message": "Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 71,
+        "startChar": 70,
+        "endLine": 71,
+        "endChar": 71
+      },
+      "revId": "d042f02195e9b2e3dd6093d991b3bf17bd02e549",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
