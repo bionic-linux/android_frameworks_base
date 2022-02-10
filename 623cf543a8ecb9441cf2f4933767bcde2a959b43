@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d8c59c5_924ab1d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135107
+      },
+      "writtenOn": "2022-02-10T18:49:24Z",
+      "side": 1,
+      "message": "BroadcastRadio changes LGTM",
+      "revId": "623cf543a8ecb9441cf2f4933767bcde2a959b43",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
