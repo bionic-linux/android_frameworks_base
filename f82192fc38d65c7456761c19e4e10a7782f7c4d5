@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61392fc7_f8b23e1b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3886,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-02-10T22:12:39Z",
+      "side": 1,
+      "message": "As it is the first time we are hacing a bundle, and we are going to have a uniform type in this bundle, I think the name can be changed to KEY_OPPORTUNISTIC_NETWORK_ENTRY_THRESHOLD_SS_RSRP_INT_BUNDLE",
+      "range": {
+        "startLine": 3886,
+        "startChar": 31,
+        "endLine": 3886,
+        "endChar": 87
+      },
+      "revId": "f82192fc38d65c7456761c19e4e10a7782f7c4d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02776ff2_dc93a158",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3886,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-02-10T22:12:39Z",
+      "side": 1,
+      "message": "Let us move all of these to a name space like APN.",
+      "range": {
+        "startLine": 3886,
+        "startChar": 31,
+        "endLine": 3886,
+        "endChar": 87
+      },
+      "revId": "f82192fc38d65c7456761c19e4e10a7782f7c4d5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
