@@ -217,6 +217,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "914b3724_2f10d7ef",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-10T02:39:55Z",
+      "side": 1,
+      "message": "Done in aosp/1978249",
+      "parentUuid": "497a5857_07afa249",
+      "range": {
+        "startLine": 662,
+        "startChar": 28,
+        "endLine": 662,
+        "endChar": 35
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59c86b2b_bee20f0e",
@@ -254,6 +278,30 @@
       "side": 1,
       "message": "Will address in a followup",
       "parentUuid": "59c86b2b_bee20f0e",
+      "range": {
+        "startLine": 664,
+        "startChar": 47,
+        "endLine": 665,
+        "endChar": 49
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed4cc01a_d6cb666f",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-10T02:39:55Z",
+      "side": 1,
+      "message": "Done in aosp/1978249",
+      "parentUuid": "f3edaa9f_fe5102fc",
       "range": {
         "startLine": 664,
         "startChar": 47,
@@ -382,6 +430,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a311e73a_8629f512",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-10T02:39:55Z",
+      "side": 1,
+      "message": "Done in aosp/1978249",
+      "parentUuid": "402694b5_8ba86e08",
+      "range": {
+        "startLine": 784,
+        "startChar": 18,
+        "endLine": 784,
+        "endChar": 25
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0ac9c03_6bcee1a3",
@@ -419,6 +491,30 @@
       "side": 1,
       "message": "Will address in a followup",
       "parentUuid": "a0ac9c03_6bcee1a3",
+      "range": {
+        "startLine": 820,
+        "startChar": 12,
+        "endLine": 820,
+        "endChar": 84
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef20bd91_3cc9d81a",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-10T02:39:55Z",
+      "side": 1,
+      "message": "Done in aosp/1978249",
+      "parentUuid": "135b5697_b7c80075",
       "range": {
         "startLine": 820,
         "startChar": 12,
@@ -490,6 +586,30 @@
       "side": 1,
       "message": "Will address in a followup.",
       "parentUuid": "ab2807f8_ca59e54d",
+      "range": {
+        "startLine": 1034,
+        "startChar": 23,
+        "endLine": 1034,
+        "endChar": 43
+      },
+      "revId": "3981eb637679129418168406a456d7af0f9c787c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83acef62_ca3a6cd8",
+        "filename": "core/java/android/net/Ikev2VpnProfile.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-02-10T02:39:55Z",
+      "side": 1,
+      "message": "Done in aosp/1978249. See if it\u0027s aligned with the suggestion.",
+      "parentUuid": "f110f6a7_c04f74f7",
       "range": {
         "startLine": 1034,
         "startChar": 23,
