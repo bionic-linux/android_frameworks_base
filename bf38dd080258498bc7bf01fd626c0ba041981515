@@ -16,6 +16,24 @@
       "message": "Looks good to me. Thanks for fixing this issue.",
       "revId": "bf38dd080258498bc7bf01fd626c0ba041981515",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afde134e_8af92027",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1905200
+      },
+      "writtenOn": "2022-02-11T03:42:04Z",
+      "side": 1,
+      "message": "Hi, can you help me submit this? It says I don\u0027t have the permission. Thanks.",
+      "parentUuid": "e76e7c56_cfacecc1",
+      "revId": "bf38dd080258498bc7bf01fd626c0ba041981515",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
