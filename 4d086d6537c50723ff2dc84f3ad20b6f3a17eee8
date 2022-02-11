@@ -16,6 +16,23 @@
       "message": "Ohh, this CL couldn\u0027t be merged individually, it couldn\u0027t build. Let\u0027s don\u0027t do this. Either combine this change with follow up CL or make this builable individually.",
       "revId": "4d086d6537c50723ff2dc84f3ad20b6f3a17eee8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "798f1b88_5dd5166b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-02-11T06:54:50Z",
+      "side": 1,
+      "message": "I already move this change into https://android-review.googlesource.com/c/platform/frameworks/base/+/1969203\n\n-1 to prevent this change be submit.",
+      "revId": "4d086d6537c50723ff2dc84f3ad20b6f3a17eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
