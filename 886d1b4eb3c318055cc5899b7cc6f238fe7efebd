@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "908093aa_8d37cc7b",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 3867,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-02-11T20:15:43Z",
+      "side": 1,
+      "message": "opportunistic. so that  it is in line with previous configs and oems who are already testing with these  configs don\u0027t have  to  change",
+      "range": {
+        "startLine": 3867,
+        "startChar": 45,
+        "endLine": 3867,
+        "endChar": 49
+      },
+      "revId": "886d1b4eb3c318055cc5899b7cc6f238fe7efebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
