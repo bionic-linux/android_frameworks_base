@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b4cf3dd_bcbce316",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-02-11T05:01:03Z",
+      "side": 1,
+      "message": "Ohh, this CL couldn\u0027t be merged individually, it couldn\u0027t build. Let\u0027s don\u0027t do this. Either combine this change with follow up CL or make this builable individually.",
+      "revId": "4d086d6537c50723ff2dc84f3ad20b6f3a17eee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
