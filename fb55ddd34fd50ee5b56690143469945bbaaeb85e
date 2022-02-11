@@ -33,6 +33,23 @@
       "message": "+1 since aosp/1981648 was just submitted",
       "revId": "fb55ddd34fd50ee5b56690143469945bbaaeb85e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b243ac8e_8f419932",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1308504
+      },
+      "writtenOn": "2022-02-11T15:03:57Z",
+      "side": 1,
+      "message": "-1 to prevent this to be submitted, lets discuss next Monday and figure out where to go.",
+      "revId": "fb55ddd34fd50ee5b56690143469945bbaaeb85e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
