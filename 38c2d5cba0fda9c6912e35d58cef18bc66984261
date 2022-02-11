@@ -1,0 +1,30 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000020343642",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1957308?revision\u003d15",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "712908a4_a9d4f9bc",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 4003,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2022-02-11T01:04:11Z",
+      "side": 1,
+      "message": "Lines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details.",
+      "range": {
+        "startLine": 4003,
+        "startChar": 0,
+        "endLine": 4003,
+        "endChar": 103
+      },
+      "revId": "38c2d5cba0fda9c6912e35d58cef18bc66984261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
