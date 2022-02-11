@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c53d3a7c_deadc0f1",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 3866,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-02-11T20:21:02Z",
+      "side": 1,
+      "message": "this should probably next line",
+      "range": {
+        "startLine": 3866,
+        "startChar": 20,
+        "endLine": 3866,
+        "endChar": 24
+      },
+      "revId": "886d1b4eb3c318055cc5899b7cc6f238fe7efebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "908093aa_8d37cc7b",
         "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
         "patchSetId": 16
@@ -38,6 +61,30 @@
       "side": 1,
       "message": "`opportunistic.` sounds fine. \n\nBut they keys are changed anyways. Originally it\u0027s `opportunistic_network_\u003cbla\u003e` and now it\u0027s `opportunistic.\u003cbla\u003e`: note the dot (`.`).",
       "parentUuid": "908093aa_8d37cc7b",
+      "range": {
+        "startLine": 3867,
+        "startChar": 45,
+        "endLine": 3867,
+        "endChar": 49
+      },
+      "revId": "886d1b4eb3c318055cc5899b7cc6f238fe7efebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8ccd859_693e24c6",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 3867,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-02-11T20:21:02Z",
+      "side": 1,
+      "message": "do we really need the \u0027.\u0027. Can we keep it  opportunistic_network_",
+      "parentUuid": "c7a61f7d_b189db8b",
       "range": {
         "startLine": 3867,
         "startChar": 45,
