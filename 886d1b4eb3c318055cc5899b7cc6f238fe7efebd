@@ -93,6 +93,30 @@
       },
       "revId": "886d1b4eb3c318055cc5899b7cc6f238fe7efebd",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de673f31_e6b69d10",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 3867,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-02-11T20:31:53Z",
+      "side": 1,
+      "message": "I think that would defect the purpose of namespace. With the convention that \".\" is not used in key names but just the namespace prefix, we can prevent collisions.\n\nMeanwhile I don\u0027t feel changing names is bad. This is just the right time to rename it before it\u0027s too late.",
+      "parentUuid": "b8ccd859_693e24c6",
+      "range": {
+        "startLine": 3867,
+        "startChar": 45,
+        "endLine": 3867,
+        "endChar": 49
+      },
+      "revId": "886d1b4eb3c318055cc5899b7cc6f238fe7efebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
