@@ -50,6 +50,23 @@
       "message": "-1 to prevent this to be submitted, lets discuss next Monday and figure out where to go.",
       "revId": "fb55ddd34fd50ee5b56690143469945bbaaeb85e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7846e019_85f8c70e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003247
+      },
+      "writtenOn": "2022-02-11T16:51:44Z",
+      "side": 1,
+      "message": "so... a -1 doesn\u0027t actually prevent submission, and I almost submitted the topic.\n\nwhich btw. has a +2 from TH.  So what\u0027s missing...?  Why shouldn\u0027t this be merged?",
+      "revId": "fb55ddd34fd50ee5b56690143469945bbaaeb85e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
