@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a271394_430ab365",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 3866,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-02-12T01:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53d3a7c_deadc0f1",
+      "range": {
+        "startLine": 3866,
+        "startChar": 20,
+        "endLine": 3866,
+        "endChar": 24
+      },
+      "revId": "886d1b4eb3c318055cc5899b7cc6f238fe7efebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "908093aa_8d37cc7b",
@@ -133,6 +157,30 @@
       "side": 1,
       "message": "OK, then we need to inform the carrier and samsung along with the scone release",
       "parentUuid": "de673f31_e6b69d10",
+      "range": {
+        "startLine": 3867,
+        "startChar": 45,
+        "endLine": 3867,
+        "endChar": 49
+      },
+      "revId": "886d1b4eb3c318055cc5899b7cc6f238fe7efebd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a5ea2dd_ad44568f",
+        "filename": "telephony/java/android/telephony/CarrierConfigManager.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 3867,
+      "author": {
+        "id": 1138358
+      },
+      "writtenOn": "2022-02-12T01:06:06Z",
+      "side": 1,
+      "message": "Sure. Moved a few more hidden keys related to 5G into the namespace.",
+      "parentUuid": "7b860e12_4e53d0fb",
       "range": {
         "startLine": 3867,
         "startChar": 45,
