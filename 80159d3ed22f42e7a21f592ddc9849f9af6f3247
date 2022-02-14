@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08f2ec45_41c26011",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2022-02-14T18:50:43Z",
+      "side": 1,
+      "message": "RS cl since it was approved by Tiger.",
+      "revId": "80159d3ed22f42e7a21f592ddc9849f9af6f3247",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
