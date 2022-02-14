@@ -140,7 +140,7 @@ public class DisplayDeviceConfig {
      * @return A configuration instance for the specified display.
      */
     public static DisplayDeviceConfig create(Context context, long physicalDisplayId,
-            boolean isDefaultDisplay) {
+            boolean isFirstDisplay) {
         DisplayDeviceConfig config;
 
         config = loadConfigFromDirectory(context, Environment.getProductDirectory(),
@@ -158,7 +158,7 @@ public class DisplayDeviceConfig {
         // If no config can be loaded from any ddc xml at all,
         // prepare a whole config using the global config.xml.
         // Guaranteed not null
-        return create(context, isDefaultDisplay);
+        return create(context, isFirstDisplay);
     }
 
     /**
