@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d417a305_d0e047a2",
+        "filename": "services/core/java/com/android/server/wm/WindowContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2577,
+      "author": {
+        "id": 1033561
+      },
+      "writtenOn": "2022-02-15T18:35:35Z",
+      "side": 1,
+      "message": "isn\u0027t this doing what updateSurfacePositionNonOrganized is doing? It seems like you don\u0027t need updateSurfacePositionNonOrganized with the isOrganized() return check here already.",
+      "range": {
+        "startLine": 2577,
+        "startChar": 0,
+        "endLine": 2577,
+        "endChar": 34
+      },
+      "revId": "0739e22437eab81d5f1a4ff086d4627ef79b124b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
