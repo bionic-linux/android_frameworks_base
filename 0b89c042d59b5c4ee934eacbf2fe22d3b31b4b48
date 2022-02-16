@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8ef16db_de05ad90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T23:35:22Z",
+      "side": 1,
+      "message": "Code mostly LG, just some random comments.",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18eeaf19_22f5696f",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T23:35:22Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we normally mention it in javadoc? (since we say since which version the replacement API has existed.)",
+      "range": {
+        "startLine": 904,
+        "startChar": 75,
+        "endLine": 905,
+        "endChar": 48
+      },
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ad5f36a_962af492",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T23:35:22Z",
+      "side": 1,
+      "message": "Have you considered throwing an exception in this case? Probably BadParcelableException?\n\nI can imagine a situation where null is a valid expected value but want to reject \"bad\" bundles.",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e69f7f5_6f6819d8",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T23:35:22Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4419778a_653ffa43",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4493,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T23:35:22Z",
+      "side": 1,
+      "message": "Should it throw IllegalArgumentException if itemTypes is non-null but the length is less than 2? Because that\u0027s very likely a bug, isn\u0027t it?\n\nOtherwise, if someone accidentally passes only the key type, they wouldn\u0027t be aware they\u0027re actually protecting themselves from bad parcels.",
+      "range": {
+        "startLine": 4493,
+        "startChar": 67,
+        "endLine": 4493,
+        "endChar": 68
+      },
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a4061e1_f1dede1a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4528,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T23:35:22Z",
+      "side": 1,
+      "message": "Ditto, if someone passes Object[0], then that\u0027s probably a bug.",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e99b84ed_8468ed08",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4669,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-16T23:35:22Z",
+      "side": 1,
+      "message": "This case isn\u0027t about whether the target parcel is bad or not, but whether the argument is valid or not, right? If so, let\u0027s use IllegalArgumentException?",
+      "range": {
+        "startLine": 4669,
+        "startChar": 26,
+        "endLine": 4669,
+        "endChar": 48
+      },
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
