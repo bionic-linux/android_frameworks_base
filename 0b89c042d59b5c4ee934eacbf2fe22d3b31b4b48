@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3adb5354_1acc3b4e",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-17T10:15:19Z",
+      "side": 1,
+      "message": "That\u0027s the wording we\u0027ve put forward for `Parcel` and got merged, eg. https://android.devsite.corp.google.com/reference/android/os/Parcel#readArray(java.lang.ClassLoader), I\u0027d like to keep for consistency, unless you feel strongly about it. WDYT?",
+      "parentUuid": "18eeaf19_22f5696f",
+      "range": {
+        "startLine": 904,
+        "startChar": 75,
+        "endLine": 905,
+        "endChar": 48
+      },
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8ad5f36a_962af492",
         "filename": "core/java/android/os/Bundle.java",
         "patchSetId": 3
@@ -54,6 +78,24 @@
       "writtenOn": "2022-02-16T23:35:22Z",
       "side": 1,
       "message": "Have you considered throwing an exception in this case? Probably BadParcelableException?\n\nI can imagine a situation where null is a valid expected value but want to reject \"bad\" bundles.",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "274af79c_09d39bb6",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-17T10:15:19Z",
+      "side": 1,
+      "message": "Yes, I have. But this would be inconsistent with the rest of the Bundle APIs. They all catch and return null in case the object is of an unexpected type, eg:\n* getSizeF(): http://cs/android/frameworks/base/core/java/android/os/Bundle.java;l\u003d862-865;rcl\u003d385b8ea145795d3f9a8bec23659eec8d5949bdc2\n* getBundle(): http://cs/android/frameworks/base/core/java/android/os/Bundle.java;l\u003d885-888;rcl\u003d385b8ea145795d3f9a8bec23659eec8d5949bdc2\n* etc.\n\nEven getParcelable() in its original from did this, but in a limited fashion since the generic type gets erased to Parcelable (its bound) at runtime:\n```\npublic \u003cT extends Parcelable\u003e T getParcelable(String key) {\n    ...\n    try {\n        return (T) o;\n    } catch (ClassCastException e) {\n        return null;\n    }\n}\n```\nIn practice that `T` becomes `Parcelable` at runtime and if the item is not a `Parcelable` (could be `String`, `Integer`, etc), we\u0027ll return null.\n\nWhile I agree with your general principle, I think being locally consistent here matters. LMK what you think.",
+      "parentUuid": "8ad5f36a_962af492",
       "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -77,6 +119,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8913a943_e884c4f1",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-17T10:15:19Z",
+      "side": 1,
+      "message": "The reason I can\u0027t quite distinguish between deserialization errors involving the object and different class type written on the wire is because we\u0027re throwing `BadParcelableException` in both cases from Parcel. \n\nThere was a lengthy discussion on this here (https://android-review.googlesource.com/c/platform/frameworks/base/+/1832336/15..19/core/java/android/os/Parcel.java#b3373) and here (https://android-review.googlesource.com/c/platform/frameworks/base/+/1832336/15..19/core/java/android/os/Parcel.java#b3561). I was in the camp that wanted to throw CCE from there, but ended up agreeing with BPE since it\u0027s coming from Parcel and for the caller it\u0027s a payload that doesn\u0027t conform to its \"protocol\". \n\n@smoreland can probably speak more about it.\n\nNote that deserialization errors that happen outside deserialization of this object will still throw BPE in `unparcel()` inside `get()` called here.\n\nIf you accept my previous reply to comment above, I think returning null for different types vs returning null for deserialization errors involving the object shouldn\u0027t really be different, since for the Bundle caller, they are both situations that don\u0027t conform to its \"protocol\" (the type they agreed that the value of that key would have and the fact that that type is correctly parceled).\n\nLMK your thoughts.",
+      "parentUuid": "9e69f7f5_6f6819d8",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4419778a_653ffa43",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 3
@@ -88,6 +148,30 @@
       "writtenOn": "2022-02-16T23:35:22Z",
       "side": 1,
       "message": "Should it throw IllegalArgumentException if itemTypes is non-null but the length is less than 2? Because that\u0027s very likely a bug, isn\u0027t it?\n\nOtherwise, if someone accidentally passes only the key type, they wouldn\u0027t be aware they\u0027re actually protecting themselves from bad parcels.",
+      "range": {
+        "startLine": 4493,
+        "startChar": 67,
+        "endLine": 4493,
+        "endChar": 68
+      },
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9df69d1_d197ce81",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4493,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-17T10:15:19Z",
+      "side": 1,
+      "message": "I think length 0 is possible, see explanation to comment below. However, I do agree that length 1, or having keyType \u003d null \u0026 valueType !\u003d null (and vice-versa) doesn\u0027t make sense, so added that check here.",
+      "parentUuid": "4419778a_653ffa43",
       "range": {
         "startLine": 4493,
         "startChar": 67,
@@ -117,6 +201,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2615924c_4b063f58",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4528,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-17T10:15:19Z",
+      "side": 1,
+      "message": "You can have zero-length varargs with supported APIs, for example if the caller calls `Bundle.get(\"key\", List.class)`, then that\u0027s only going to verify that it\u0027s a list, not its inner items. Ofc, the caller should call `Bundle.get{Parcelable|Integer|String|...}ArrayList(\"key\", ItemType.class)` instead, but since we have the generic `get(String key)`, I feel like we should provide a safer(-but-not-entirely-safe-in-the-case-of-containers) `get(String key, Class\u003cT\u003e clazz)`. I updated the javadocs of these classes to recommend the specific type-safe methods in those cases.\n\nAnother case is within parcel itself. For better or worse, we\u0027ve supported things like:\n```\nParcel p \u003d Parcel.obtain();\nList\u003cList\u003cIntent\u003e\u003e matrix \u003d new ArrayList\u003c\u003e();\nmatrix.add(Arrays.asList(new Intent()));\np.writeList(matrix);\n\np.setDataPosition(0);\nList\u003cList\u003cIntent\u003e\u003e out \u003d new ArrayList\u003c\u003e();\np.readList(out, null); // or the new p.readList(out, null, List.class); \nSystem.out.println(out);\n```\nIn those cases, we\u0027re limited to 1-depth and the internal `readValue()` call (which now is called for the items of the root container, which in the example are themselves lists) only specifies `List.class` (http://cs/android/frameworks/base/core/java/android/os/Parcel.java;l\u003d5196;rcl\u003d99bfcae0c0b814d3c73ee42ca9618baf5e487baf), so the varargs are empty. \n\nOur javadocs of `writeList()` and `readList()` do allow these nested structures, so the usage above isn\u0027t \"illegal\", despite being a bit weird.\n\nIf I threw in case `clazz !\u003d null \u0026\u0026 ArrayUtils.isEmpty(itemTypes)`, then it would be impossible for the caller that uses those nested structures to migrate to safer methods. It would also be a weird exception message that would propagate to `Bundle.get(\"key\", List.class)` since there is no way to provide extra args for item types in that API (and I don\u0027t think having an API with varargs **in case** of containers is a good idea), so `Bundle.get(String, Class)` would have to check the Class type to make sure it\u0027s not a container type and if it\u0027s throw IAE with a better error message directing the caller to a proper container method, but I think having these extra checks in that API don\u0027t scale very well and can eventually become out-of-sync. This would also prevent the automated migration from these use-cases to the safer ones (I have the desire to do something like ag/16639043 in the future).\n\nLMK your thoughts.",
+      "parentUuid": "8a4061e1_f1dede1a",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e99b84ed_8468ed08",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 3
@@ -128,6 +230,30 @@
       "writtenOn": "2022-02-16T23:35:22Z",
       "side": 1,
       "message": "This case isn\u0027t about whether the target parcel is bad or not, but whether the argument is valid or not, right? If so, let\u0027s use IllegalArgumentException?",
+      "range": {
+        "startLine": 4669,
+        "startChar": 26,
+        "endLine": 4669,
+        "endChar": 48
+      },
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7ded3cf_5ce19a89",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4669,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-17T10:15:19Z",
+      "side": 1,
+      "message": "Not really, the argument passed from the caller - the required type - is always right. The caller could be expecting an `ArrayList\u003cIntent\u003e` but the thing on the wire is a plain java array `Intent[]`, in which case we say that the data on the payload is wrong, not that the caller specified the wrong type.",
+      "parentUuid": "e99b84ed_8468ed08",
       "range": {
         "startLine": 4669,
         "startChar": 26,
