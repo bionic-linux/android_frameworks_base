@@ -16,6 +16,29 @@
       "message": "Here you go Thomas; your first code review. :)",
       "revId": "a2406d33145ffc4056c3539f86e266ca9fcf8bec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e508354f_e0c83a87",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1927275
+      },
+      "writtenOn": "2022-02-17T22:34:17Z",
+      "side": 1,
+      "message": "Nitpick:\n\nafter reading your comment in https://b.corp.google.com/issues/216608696#comment21 it\u0027s not immediately apparent to me this is only a user-initiated request function.\n\nIt\u0027d be nice to explicitly add \"can only be invoked via a user initiated request\" but this might be implied by how session modification requests are made or something.\n\nleaving it up to you on whether you want to add it.",
+      "range": {
+        "startLine": 1480,
+        "startChar": 62,
+        "endLine": 1480,
+        "endChar": 63
+      },
+      "revId": "a2406d33145ffc4056c3539f86e266ca9fcf8bec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
