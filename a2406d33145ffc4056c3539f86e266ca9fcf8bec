@@ -39,6 +39,30 @@
       },
       "revId": "a2406d33145ffc4056c3539f86e266ca9fcf8bec",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5567a41a_114252a4",
+        "filename": "telecomm/java/android/telecom/Call.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-02-17T23:57:13Z",
+      "side": 1,
+      "message": "That\u0027s a good point.  I\u0027ll clarify this.",
+      "parentUuid": "e508354f_e0c83a87",
+      "range": {
+        "startLine": 1480,
+        "startChar": 62,
+        "endLine": 1480,
+        "endChar": 63
+      },
+      "revId": "a2406d33145ffc4056c3539f86e266ca9fcf8bec",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
