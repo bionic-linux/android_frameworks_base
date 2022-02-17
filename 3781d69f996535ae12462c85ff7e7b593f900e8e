@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6358941_1a1cc867",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-17T20:15:48Z",
+      "side": 1,
+      "message": "- Okay, then I think the API surface makes sense, except I still have one suggestion on the \"invalid type\" case.\n\n- I still have a comment on the internal type check.\n\nOtherwise LG, thanks!",
+      "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

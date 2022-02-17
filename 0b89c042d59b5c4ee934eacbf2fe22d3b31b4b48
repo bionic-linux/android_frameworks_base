@@ -65,6 +65,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4126c66_9e08022e",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-17T20:15:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3adb5354_1acc3b4e",
+      "range": {
+        "startLine": 904,
+        "startChar": 75,
+        "endLine": 905,
+        "endChar": 48
+      },
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8ad5f36a_962af492",
@@ -102,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bfbe1d84_e309314d",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-17T20:15:48Z",
+      "side": 1,
+      "message": "Hmm I see. Okay then I think this API makes sense, but I still wonder if we should provide any mechanisms to the caller if the bundle is \"broken\" -- if it contains something unexpected, in which case the caller may want to just ignore the entire bundle.\n\nIsn\u0027t there such use cases from the security PoV?\n\nFor example, maybe we can add \"setInvalidTypePolicy(@IntDef of USE_NULL|THROW)\" and/or \"setOnInvalidTypeCallback(...)\".\n\nI don\u0027t think you need to add it in this CL, but that\u0027s something to think about.",
+      "parentUuid": "274af79c_09d39bb6",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9e69f7f5_6f6819d8",
         "filename": "core/java/android/os/Bundle.java",
         "patchSetId": 3
@@ -131,6 +173,24 @@
       "side": 1,
       "message": "The reason I can\u0027t quite distinguish between deserialization errors involving the object and different class type written on the wire is because we\u0027re throwing `BadParcelableException` in both cases from Parcel. \n\nThere was a lengthy discussion on this here (https://android-review.googlesource.com/c/platform/frameworks/base/+/1832336/15..19/core/java/android/os/Parcel.java#b3373) and here (https://android-review.googlesource.com/c/platform/frameworks/base/+/1832336/15..19/core/java/android/os/Parcel.java#b3561). I was in the camp that wanted to throw CCE from there, but ended up agreeing with BPE since it\u0027s coming from Parcel and for the caller it\u0027s a payload that doesn\u0027t conform to its \"protocol\". \n\n@smoreland can probably speak more about it.\n\nNote that deserialization errors that happen outside deserialization of this object will still throw BPE in `unparcel()` inside `get()` called here.\n\nIf you accept my previous reply to comment above, I think returning null for different types vs returning null for deserialization errors involving the object shouldn\u0027t really be different, since for the Bundle caller, they are both situations that don\u0027t conform to its \"protocol\" (the type they agreed that the value of that key would have and the fact that that type is correctly parceled).\n\nLMK your thoughts.",
       "parentUuid": "9e69f7f5_6f6819d8",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7777c2c_e915c4b5",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-17T20:15:48Z",
+      "side": 1,
+      "message": "(see above)",
+      "parentUuid": "8913a943_e884c4f1",
       "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -219,6 +279,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a239af3e_480d7690",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4528,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-17T20:15:48Z",
+      "side": 1,
+      "message": "I see. I think I get it. Then I think my question is if we can make it more explicit. Because it\u0027s a security feature, I wanted to minimize the risk where \"a caller misused this API, thinking they were doing it safe, when in fact they were not doing it right because they didn\u0027t pass the correct argument\". So, so if a caller wants to accept any type, I think I\u0027d be better if they have to say it explicitly.\n\n- For the first case, can we force the caller to use `Bundle.get(\"key\", List.class, Object.class)` instead or something like that? So the caller will really have to say \"I know I know, I should pass a type, but this can be of any type, so I\u0027m waving the check\".\n\n- For the second case too (which I\u0027m not sure if I fully get it but just a rough idea), can we make the caller explicitly wave the check? I realize you used a vararg here to avoid having to change all the existing callers, right? What if we do:\n\n```\nprivate \u003cT\u003e T readValue(int type, @Nullable ClassLoader loader, @Nullable Class\u003cT\u003e clazz) {\n    readValue(type, loader, clazz, null);\n}\n\nprivate \u003cT\u003e T readValue(int type, @Nullable ClassLoader loader, @Nullable Class\u003cT\u003e clazz,\n            @Nullable Class\u003c?\u003e[] itemTypes) {\n  :\n}\n\n```\n?\n\nThis will allow you to distinguish \"existing callers who don\u0027t know the item types\" and \"new callers who know the item types\", so you can force the later to be explicit...? And if a new caller doesn\u0027t know the item type, they\u0027ll explicitly have to pass null, or something like that?\n\nThis has an added benefit of avoiding allocation of an empty array for existing callers, so I think you probably should do (or something similar) either way... WDYT?",
+      "parentUuid": "2615924c_4b063f58",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e99b84ed_8468ed08",
         "filename": "core/java/android/os/Parcel.java",
         "patchSetId": 3
@@ -254,6 +332,30 @@
       "side": 1,
       "message": "Not really, the argument passed from the caller - the required type - is always right. The caller could be expecting an `ArrayList\u003cIntent\u003e` but the thing on the wire is a plain java array `Intent[]`, in which case we say that the data on the payload is wrong, not that the caller specified the wrong type.",
       "parentUuid": "e99b84ed_8468ed08",
+      "range": {
+        "startLine": 4669,
+        "startChar": 26,
+        "endLine": 4669,
+        "endChar": 48
+      },
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97c1da87_c035191a",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4669,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-17T20:15:48Z",
+      "side": 1,
+      "message": "Ah I see, okay, so the type comes from the payload. Makes sense.",
+      "parentUuid": "b7ded3cf_5ce19a89",
       "range": {
         "startLine": 4669,
         "startChar": 26,
