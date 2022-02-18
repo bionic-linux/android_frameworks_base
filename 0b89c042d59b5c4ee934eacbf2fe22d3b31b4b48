@@ -178,6 +178,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f74c0a3a_45b433b9",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-18T18:31:46Z",
+      "side": 1,
+      "message": "As discussed offline, keeping specific subtype to keep this change as narrow as possible at this time in T. The discussion about the toggle for differentiating null will be separate from this. Marking as resolved.",
+      "parentUuid": "9107ab0e_abff3a69",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e69f7f5_6f6819d8",
@@ -345,6 +363,24 @@
       "side": 1,
       "message": "For your first point, I\u0027m not a fan of the existing `get(String key)` or even the new one `get(String key, Class\u003cT\u003e clazz)`, I only created the new version because it\u0027s a net positive over the existing one, but still has the risks you mentioned (caller using it instead of the specialized `readArrayList()`, the latter forcing the caller to specify the item type). We might just deprecate that one providing no new direct alternative and tell the caller to use the specialized ones. I don\u0027t feel strongly either way.\n\nFor your second point, I think for callers of readValue() (that\u0027s only internals of Bundle and Parcel, so we are the developers) it would have the same effect of the current APIs, they\u0027d be able to call the API without `itemTypes` (your top function), or have to create an array themselves (your second option). If anything the current API allows them to see the documentation in one method and understand what happens vs having to do 2 lookups. I chose varargs because of the recursive nature of readValue() and its usage as the one gate for other objects. Honestly, I\u0027m not too keen on switching to 2 functions with and without `itemTypes`, I don\u0027t think it buys us much, especially because this is all internals and we seem to have agreed on the API surface, but if you feel strongly about it, I can make the change.\n\nI scheduled a meeting for us to discuss this.",
       "parentUuid": "a239af3e_480d7690",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38e8af3f_8d8a6fc7",
+        "filename": "core/java/android/os/Parcel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4528,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-18T18:31:46Z",
+      "side": 1,
+      "message": "As discussed offline, made get(String, Class) package-protected and created no-vararg that passes `null` to avoid allocating empty array.",
+      "parentUuid": "fc53f1c0_15b6491f",
       "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
