@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0a01570_2d89c490",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1939440
+      },
+      "writtenOn": "2022-02-18T04:32:24Z",
+      "side": 1,
+      "message": "if we are introducing new safer api, maybe it\u0027s a good time to change this behavior and return Optional Nullable T?",
+      "parentUuid": "bfbe1d84_e309314d",
+      "revId": "0b89c042d59b5c4ee934eacbf2fe22d3b31b4b48",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9e69f7f5_6f6819d8",
         "filename": "core/java/android/os/Bundle.java",
         "patchSetId": 3

@@ -16,6 +16,57 @@
       "message": "- Okay, then I think the API surface makes sense, except I still have one suggestion on the \"invalid type\" case.\n\n- I still have a comment on the internal type check.\n\nOtherwise LG, thanks!",
       "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9507a24b_e2da0171",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1939440
+      },
+      "writtenOn": "2022-02-18T04:32:24Z",
+      "side": 1,
+      "message": "\"b/210800751\"?",
+      "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb5090d2_54acfac0",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1939440
+      },
+      "writtenOn": "2022-02-18T04:32:24Z",
+      "side": 1,
+      "message": "are we sure there is absolutely no use-case not type-safe functionality? would it be safer to just add a type-safe alternative in T and thing about deprecation later?",
+      "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a8ca027_7b3dbe6b",
+        "filename": "core/java/com/android/internal/util/ArrayUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1939440
+      },
+      "writtenOn": "2022-02-18T04:32:24Z",
+      "side": 1,
+      "message": "can you please consider to make getOrNull and firstOrNull consistent? they have so similar name that it\u0027s expected that they have similar requirements for their arguments",
+      "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
