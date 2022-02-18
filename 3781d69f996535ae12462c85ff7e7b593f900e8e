@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d4dead4d_5a9c7d31",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-18T14:57:20Z",
+      "side": 1,
+      "message": "Sorry, what do you mean?",
+      "parentUuid": "9507a24b_e2da0171",
+      "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb5090d2_54acfac0",
         "filename": "core/java/android/os/Bundle.java",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2022-02-18T04:32:24Z",
       "side": 1,
       "message": "are we sure there is absolutely no use-case not type-safe functionality? would it be safer to just add a type-safe alternative in T and thing about deprecation later?",
+      "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "633450a0_c8085aa6",
+        "filename": "core/java/android/os/Bundle.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-18T14:57:20Z",
+      "side": 1,
+      "message": "Everything that can be done with this API can be done with the other, at the extreme, the caller can just call `getParcelableArray(\"key\", Parcelable.class)`, obviously we want them to be more narrow.",
+      "parentUuid": "eb5090d2_54acfac0",
       "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2022-02-18T04:32:24Z",
       "side": 1,
       "message": "can you please consider to make getOrNull and firstOrNull consistent? they have so similar name that it\u0027s expected that they have similar requirements for their arguments",
+      "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20980c52_3a4108db",
+        "filename": "core/java/com/android/internal/util/ArrayUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-18T14:57:20Z",
+      "side": 1,
+      "message": "I\u0027m not too keen on doing that. I do need to handle the null case graciously. There are a few usages of `firstOrNull()` scattered throughout and I wouldn\u0027t be confident migrating those to non-null enforcement (especially in this CL). In this class there are some methods that accept a nullable array (eg. cloneOrNul()), so it isn\u0027t unprecedented. I do sympathize with the consistency argument, but this isn\u0027t API surface, it\u0027s an utility internal class, so I think the `@Nullabble` annotation should be sufficient in this context. If you feel strongly about it I could rename `getOrNull` to `getOrNullFromNullable`, but note that that would become inconsistent with other methods in the same class that accept nullable but don\u0027t reflect that in the method name - in other words, this class is already a bit inconsistent :)",
+      "parentUuid": "6a8ca027_7b3dbe6b",
       "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

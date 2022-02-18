@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e25783ed_10fc21a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-02-18T14:57:20Z",
+      "side": 1,
+      "message": "PS5: Now we don\u0027t return null for generic BPE errors during unparcel of items, only if the error is due to a type mismatch, following more strictly the existing Bundle APIs.",
+      "revId": "820e3efbe0d705b71e78cb776079623235ed95d2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
