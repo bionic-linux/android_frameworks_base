@@ -121,6 +121,24 @@
       "parentUuid": "6a8ca027_7b3dbe6b",
       "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40f5bd70_715e4868",
+        "filename": "core/java/com/android/internal/util/ArrayUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-02-18T18:54:55Z",
+      "side": 1,
+      "message": "Hm, I think Alexander has a good point though. I\u0027d expect \"getOrNull(ar, 0)\" to be equivalent to \"firstOrNul(ar)\".\n\nBut I understand Bernardo\u0027s point to. I\u0027d want to keep getOrNull() as is, and I wouldn\u0027t want to change firstOrNull().\n\nSo why don\u0027t you explicitly add @NonNull to firstOrNull() and leave a TODO? \"TODO Change to @Nullable to be consistent with getOrNull(), after making sure all the callers are okay with that.\"",
+      "parentUuid": "20980c52_3a4108db",
+      "revId": "3781d69f996535ae12462c85ff7e7b593f900e8e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
