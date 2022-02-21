@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3777c706_e0a4d63a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934155
+      },
+      "writtenOn": "2022-02-21T12:51:14Z",
+      "side": 1,
+      "message": "Please let me know the reason I got a code-review score -1.\nIt looks like a bug to me.",
+      "revId": "03763e5edd3345eea26908a3255454358468678e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
