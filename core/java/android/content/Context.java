@@ -3480,11 +3480,11 @@ public abstract class Context {
      *          <li>{@link #BIND_INCLUDE_CAPABILITIES}
      *      </ul>
      *
-      * @return {@code true} if the system is in the process of bringing up a
-     *         service that your client has permission to bind to; {@code false}
-     *         if the system couldn't find the service or if your client doesn't
-     *         have permission to bind to it. You should call {@link #unbindService}
-     *         to release the connection even if this method returned {@code false}.
+     * @return {@code true} if the system is in the process of bringing up a
+     *      service that your client has permission to bind to; {@code false}
+     *      if the system couldn't find the service or if your client doesn't
+     *      have permission to bind to it. You should call {@link #unbindService}
+     *      to release the connection even if this method returned {@code false}.
      *
      * @throws SecurityException If the caller does not have permission to
      *      access the service or the service cannot be found. Call
