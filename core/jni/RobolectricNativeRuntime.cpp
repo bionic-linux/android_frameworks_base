@@ -8,15 +8,13 @@
 static JavaVM* javaVM;
 
 extern int register_android_graphics_Graphics(JNIEnv* env);
-extern int register_android_graphics_Typeface(JNIEnv* env);
 
 namespace android {
 
 extern int register_android_database_CursorWindow(JNIEnv* env);
 extern int register_android_database_SQLiteConnection(JNIEnv* env);
 extern int register_android_graphics_Matrix(JNIEnv* env);
-extern int register_android_graphics_Paint(JNIEnv* env);
-extern int register_android_graphics_FontFamily(JNIEnv* env);
+extern int register_android_graphics_Path(JNIEnv* env);
 
 #define REG_JNI(name) \
     { name }
@@ -30,11 +28,9 @@ static const RegJNIRec sqliteJNI[] = {
 };
 
 static const RegJNIRec graphicsJNI[] = {
-        REG_JNI(register_android_graphics_FontFamily),
         REG_JNI(register_android_graphics_Graphics),
         REG_JNI(register_android_graphics_Matrix),
-        REG_JNI(register_android_graphics_Paint),
-        REG_JNI(register_android_graphics_Typeface),
+        REG_JNI(register_android_graphics_Path),
 };
 
 JNIEnv* AndroidRuntime::getJNIEnv() {
