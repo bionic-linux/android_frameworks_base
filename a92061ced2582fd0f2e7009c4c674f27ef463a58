@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "355ca8b4_9d2735ed",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 7060,
+      "author": {
+        "id": 1015428
+      },
+      "writtenOn": "2022-02-22T06:01:44Z",
+      "side": 1,
+      "message": "Let\u0027s use IpConfiguration instead.\n\nThe reason for this is, we decided to remove setConfiguration from EthernetManager\u0027s public API, so we need to support that case. AFAIK the code for Railway actually supports this anyway, and it\u0027s also fine if we reject non-static IpConfigurations when FEATURE_AUTO is present.",
+      "range": {
+        "startLine": 7060,
+        "startChar": 116,
+        "endLine": 7060,
+        "endChar": 137
+      },
+      "revId": "a92061ced2582fd0f2e7009c4c674f27ef463a58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
