@@ -22,6 +22,30 @@
       },
       "revId": "341580a6993abc3f4b8ef450d4095a96efad2246",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae4693f0_20763fc1",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2022-02-22T04:05:46Z",
+      "side": 1,
+      "message": "Ah, yes. Good point. Done.",
+      "parentUuid": "ba32ee0c_7f3add43",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 16
+      },
+      "revId": "341580a6993abc3f4b8ef450d4095a96efad2246",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
