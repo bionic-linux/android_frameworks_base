@@ -3480,11 +3480,11 @@ public abstract class Context {
      *          <li>{@link #BIND_INCLUDE_CAPABILITIES}
      *      </ul>
      *
-      * @return {@code true} if the system is in the process of bringing up a
-     *         service that your client has permission to bind to; {@code false}
-     *         if the system couldn't find the service or if your client doesn't
-     *         have permission to bind to it. You should call {@link #unbindService}
-     *         to release the connection even if this method returned {@code false}.
+     * @return {@code true} if the system is in the process of bringing up a
+     *      service that your client has permission to bind to; {@code false}
+     *      if the system couldn't find the service or if your client doesn't
+     *      have permission to bind to it. Regardless of the return value, you
+     *      should later call {@link #unbindService} to release the connection.
      *
      * @throws SecurityException If the caller does not have permission to
      *      access the service or the service cannot be found. Call
@@ -3500,8 +3500,15 @@ public abstract class Context {
     /**
      * Same as {@link #bindService(Intent, ServiceConnection, int)} with executor to control
      * ServiceConnection callbacks.
+     *
      * @param executor Callbacks on ServiceConnection will be called on executor. Must use same
      *      instance for the same instance of ServiceConnection.
+     *
+     * @return {@code true} if the system is in the process of bringing up a
+     *      service that your client has permission to bind to; {@code false}
+     *      if the system couldn't find the service or if your client doesn't
+     *      have permission to bind to it. Regardless of the return value, you
+     *      should later call {@link #unbindService} to release the connection.
      */
     public boolean bindService(@RequiresPermission @NonNull Intent service,
             @BindServiceFlags int flags, @NonNull @CallbackExecutor Executor executor,
