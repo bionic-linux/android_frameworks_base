@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ffe22c0_2e3b18ed",
+        "filename": "core/res/res/values/vendor_required_attestation_certificates.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1858130
+      },
+      "writtenOn": "2022-02-23T22:11:51Z",
+      "side": 1,
+      "message": "Should we refer to https://developer.android.com/training/articles/security-key-attestation#certificate_status similar to above?",
+      "range": {
+        "startLine": 33,
+        "startChar": 75,
+        "endLine": 41,
+        "endChar": 7
+      },
+      "revId": "d403d46181f22181124c3a46ef72f70eaf0d8b56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
