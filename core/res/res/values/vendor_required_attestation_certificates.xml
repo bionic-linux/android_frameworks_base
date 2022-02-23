@@ -29,4 +29,16 @@
   -->
     <string-array translatable="false" name="vendor_required_attestation_certificates">
     </string-array>
+
+    <!-- Url to mapping of revoked certificate hex encoded serial numbers. Expected format is:
+      {
+        "entries" : {
+          "lowerCaseHexOfCertificatesSerialNumber" : {
+            "status": "REVOKED",
+            "reason": "KEY_COMPRISED"
+          }
+        }
+      }
+    -->
+    <string translatable="false" name="vendor_required_attestation_revocation_list_url"></string>
 </resources>
