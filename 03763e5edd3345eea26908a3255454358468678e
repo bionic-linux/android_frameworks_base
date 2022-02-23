@@ -16,6 +16,24 @@
       "message": "Please let me know the reason I got a code-review score -1.\nIt looks like a bug to me.",
       "revId": "03763e5edd3345eea26908a3255454358468678e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f55ecce4_08f7940d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1868441
+      },
+      "writtenOn": "2022-02-23T16:36:39Z",
+      "side": 1,
+      "message": "Hi HoonIk, sorry for the lack of clarity here and thank you for bringing these issues to our attention.\n\nWhile some of these behaviors are likely to be bugs, it is risky to upstream a wide-reaching change without thorough unit tests, and as this change only removes and does not add unit tests, it is difficult to verify that it does not have unexpected broader side-effects.\n\nTo address some specifics on the issues:\n- Regarding the ringer issue, I commented on the filed bug -- rather than changing the mute conditions, please look into adding the appropriate dialer apps for the device in the list \"config_priorityOnlyDndExemptPackages\". This is how dialer apps are exempted from being muted during DND, and thus can correctly make sounds when calls occur.\n\n- Regarding the other conditions, your fixes may be right but I would like to check this change more specifically on my end and add testing to make sure these issues are caught via unit tests as well. If so I can add the change on our end and let you know.",
+      "parentUuid": "3777c706_e0a4d63a",
+      "revId": "03763e5edd3345eea26908a3255454358468678e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
