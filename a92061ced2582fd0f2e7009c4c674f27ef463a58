@@ -22,6 +22,30 @@
       },
       "revId": "a92061ced2582fd0f2e7009c4c674f27ef463a58",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb06257b_1a6b350f",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 7060,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2022-02-24T21:48:50Z",
+      "side": 1,
+      "message": "Sure, NP and makes sense. Also, no requirement for Automotive to reject non-static IP configs so I\u0027ll hold off on adding any logic for that now as we\u0027re adding support to the API for IpConfiguration in any case.",
+      "parentUuid": "355ca8b4_9d2735ed",
+      "range": {
+        "startLine": 7060,
+        "startChar": 116,
+        "endLine": 7060,
+        "endChar": 137
+      },
+      "revId": "a92061ced2582fd0f2e7009c4c674f27ef463a58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
