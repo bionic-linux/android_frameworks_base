@@ -39,6 +39,30 @@
       },
       "revId": "c056412ef5ef2dbc57141d6dc6e16b3f796d2f65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6df5149_3730c024",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3537,
+      "author": {
+        "id": 1903265
+      },
+      "writtenOn": "2022-02-24T16:41:25Z",
+      "side": 1,
+      "message": "The @return in bindIsolatedService should come after the @param tags. Javadoc can handle it either way, but moving it is better form.\n\nGood point about not duplicating the return description. We should maintain single source where possible. You might notice that I referenced bindService like this: {@link #bindService(Intent, ServiceConnection, int) bindService(Intent, ServiceConnection, int)}. That\u0027s to disambiguate the overloaded methods. Otherwise, Javadoc chooses which one to link to. The second signature (without the #) is the link label -- how it will appear on the page. Without the label, the package identifiers are added to the parameter types. Compare the current page, https://developer.android.com/reference/android/content/Context#bindServiceAsUser(android.content.Intent,%20android.content.ServiceConnection,%20int,%20android.os.UserHandle), with the staged page, https://android.devsite.corp.google.com/reference/android/content/Context#bindServiceAsUser(android.content.Intent,%20android.content.ServiceConnection,%20int,%20android.os.UserHandle). Links in other methods use just {@link #bindService}, but I think that\u0027s okay, and Javadoc seems to always choose bindService(Intent, ServiceConnection, int).",
+      "parentUuid": "996d6302_bbdfad62",
+      "range": {
+        "startLine": 3537,
+        "startChar": 7,
+        "endLine": 3537,
+        "endChar": 70
+      },
+      "revId": "c056412ef5ef2dbc57141d6dc6e16b3f796d2f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
