@@ -63,6 +63,30 @@
       },
       "revId": "c056412ef5ef2dbc57141d6dc6e16b3f796d2f65",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ca9906e_e62831c2",
+        "filename": "core/java/android/content/Context.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3537,
+      "author": {
+        "id": 1877855
+      },
+      "writtenOn": "2022-02-24T21:49:20Z",
+      "side": 1,
+      "message": "Sounds good, thank you for making the changes and for the explanation! I didn\u0027t know about the second signature label to hide the package identifiers, that\u0027s pretty neat!",
+      "parentUuid": "b6df5149_3730c024",
+      "range": {
+        "startLine": 3537,
+        "startChar": 7,
+        "endLine": 3537,
+        "endChar": 70
+      },
+      "revId": "c056412ef5ef2dbc57141d6dc6e16b3f796d2f65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
