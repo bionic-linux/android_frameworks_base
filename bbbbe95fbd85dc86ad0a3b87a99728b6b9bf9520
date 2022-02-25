@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6b0cc18_c78f0d9b",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-02-25T18:57:12Z",
+      "side": 1,
+      "message": "FTR: Looks like we can survive a negative here. To be defensive we could (after pulling out a variable \"intervalMillis\"), do:\n\nlong intervalMillis \u003d Math.max(0, mPollingIntervalMs - cachedNtpResult.getAgeMillis(currentElapsedRealtimeMillis));\n\n... but with the current implementation it\u0027s not strictly necessary. So, entirely up to you.",
+      "range": {
+        "startLine": 193,
+        "startChar": 23,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "bbbbe95fbd85dc86ad0a3b87a99728b6b9bf9520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
