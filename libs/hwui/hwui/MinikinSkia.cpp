@@ -25,7 +25,6 @@
 #include <SkStream.h>
 #include <SkTypeface.h>
 #include <log/log.h>
-
 #include <minikin/Font.h>
 #include <minikin/MinikinExtent.h>
 #include <minikin/MinikinPaint.h>

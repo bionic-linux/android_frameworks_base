@@ -16,19 +16,18 @@
 
 #undef LOG_TAG
 #define LOG_TAG "Bitmap"
-#include <log/log.h>
-
-#include "android/graphics/bitmap.h"
-#include "TypeCast.h"
-#include "GraphicsJNI.h"
-
 #include <GraphicsJNI.h>
-#include <hwui/Bitmap.h>
 #include <SkColorSpace.h>
 #include <SkImageInfo.h>
 #include <SkRefCnt.h>
 #include <SkStream.h>
+#include <hwui/Bitmap.h>
+#include <log/log.h>
 #include <utils/Color.h>
+
+#include "GraphicsJNI.h"
+#include "TypeCast.h"
+#include "android/graphics/bitmap.h"
 
 using namespace android;
 
