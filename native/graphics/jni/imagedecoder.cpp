@@ -14,16 +14,7 @@
  * limitations under the License.
  */
 
-#include "aassetstreamadaptor.h"
-
-#include <android/asset_manager.h>
-#include <android/bitmap.h>
-#include <android/data_space.h>
-#include <android/imagedecoder.h>
 #include <MimeType.h>
-#include <android/rect.h>
-#include <hwui/ImageDecoder.h>
-#include <log/log.h>
 #include <SkAndroidCodec.h>
 #include <SkCodec.h>
 #include <SkColorSpace.h>
@@ -31,14 +22,23 @@
 #include <SkRect.h>
 #include <SkSize.h>
 #include <SkStream.h>
-#include <utils/Color.h>
-
+#include <android/asset_manager.h>
+#include <android/bitmap.h>
+#include <android/data_space.h>
+#include <android/imagedecoder.h>
+#include <android/rect.h>
 #include <fcntl.h>
-#include <limits>
-#include <optional>
+#include <hwui/ImageDecoder.h>
+#include <log/log.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <utils/Color.h>
+
+#include <limits>
+#include <optional>
+
+#include "aassetstreamadaptor.h"
 
 using namespace android;
 

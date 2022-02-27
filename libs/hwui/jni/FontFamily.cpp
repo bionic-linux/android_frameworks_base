@@ -17,8 +17,16 @@
 #undef LOG_TAG
 #define LOG_TAG "Minikin"
 
+#include <hwui/MinikinSkia.h>
+#include <hwui/Typeface.h>
+#include <minikin/FontFamily.h>
+#include <minikin/LocaleList.h>
 #include <nativehelper/ScopedPrimitiveArray.h>
 #include <nativehelper/ScopedUtfChars.h>
+#include <ui/FatVector.h>
+
+#include <memory>
+
 #include "FontUtils.h"
 #include "GraphicsJNI.h"
 #include "SkData.h"
@@ -28,14 +36,6 @@
 #include "SkTypeface.h"
 #include "Utils.h"
 #include "fonts/Font.h"
-
-#include <hwui/MinikinSkia.h>
-#include <hwui/Typeface.h>
-#include <minikin/FontFamily.h>
-#include <minikin/LocaleList.h>
-#include <ui/FatVector.h>
-
-#include <memory>
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //

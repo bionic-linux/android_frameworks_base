@@ -1,11 +1,12 @@
+#include "YuvToJpegEncoder.h"
+
+#include <hardware/hardware.h>
+#include <ui/PixelFormat.h>
+
 #include "CreateJavaOutputStreamAdaptor.h"
 #include "SkJPEGWriteUtility.h"
 #include "SkStream.h"
 #include "SkTypes.h"
-#include "YuvToJpegEncoder.h"
-#include <ui/PixelFormat.h>
-#include <hardware/hardware.h>
-
 #include "graphics_jni_helpers.h"
 
 YuvToJpegEncoder* YuvToJpegEncoder::create(int format, int* strides) {

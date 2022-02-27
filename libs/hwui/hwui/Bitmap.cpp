@@ -44,6 +44,7 @@
 #include <SkRect.h>
 #include <SkStream.h>
 #include <SkWebpEncoder.h>
+
 #include <limits>
 
 namespace android {

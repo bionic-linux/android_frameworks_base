@@ -37,11 +37,11 @@
 #include <SkString.h>
 #include <SkTypeface.h>
 #include <android-base/properties.h>
+#include <gui/TraceUtils.h>
 #include <unistd.h>
 
 #include <sstream>
 
-#include <gui/TraceUtils.h>
 #include "LightingInfo.h"
 #include "VectorDrawable.h"
 #include "thread/CommonPool.h"

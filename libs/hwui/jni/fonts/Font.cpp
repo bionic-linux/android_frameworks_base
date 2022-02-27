@@ -18,6 +18,21 @@
 #define LOG_TAG "Minikin"
 
 #include "Font.h"
+
+#include <hwui/MinikinSkia.h>
+#include <hwui/Paint.h>
+#include <hwui/Typeface.h>
+#include <minikin/FontFamily.h>
+#include <minikin/FontFileParser.h>
+#include <minikin/LocaleList.h>
+#include <minikin/SystemFonts.h>
+#include <nativehelper/ScopedUtfChars.h>
+#include <ui/FatVector.h>
+
+#include <memory>
+
+#include "FontUtils.h"
+#include "GraphicsJNI.h"
 #include "SkData.h"
 #include "SkFont.h"
 #include "SkFontMetrics.h"
@@ -27,21 +42,7 @@
 #include "SkScalar.h"
 #include "SkStream.h"
 #include "SkTypeface.h"
-#include "GraphicsJNI.h"
-#include <nativehelper/ScopedUtfChars.h>
 #include "Utils.h"
-#include "FontUtils.h"
-
-#include <hwui/MinikinSkia.h>
-#include <hwui/Paint.h>
-#include <hwui/Typeface.h>
-#include <minikin/FontFamily.h>
-#include <minikin/FontFileParser.h>
-#include <minikin/LocaleList.h>
-#include <minikin/SystemFonts.h>
-#include <ui/FatVector.h>
-
-#include <memory>
 
 namespace android {
 
