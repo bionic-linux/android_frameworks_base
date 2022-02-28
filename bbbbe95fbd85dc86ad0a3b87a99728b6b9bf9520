@@ -70,6 +70,30 @@
       },
       "revId": "bbbbe95fbd85dc86ad0a3b87a99728b6b9bf9520",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fabbc79_e542bc50",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1940460
+      },
+      "writtenOn": "2022-02-28T11:58:22Z",
+      "side": 1,
+      "message": "No worries! Better safe than sorry.\n\nPTAL",
+      "parentUuid": "56a71090_e5553937",
+      "range": {
+        "startLine": 193,
+        "startChar": 23,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "bbbbe95fbd85dc86ad0a3b87a99728b6b9bf9520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
