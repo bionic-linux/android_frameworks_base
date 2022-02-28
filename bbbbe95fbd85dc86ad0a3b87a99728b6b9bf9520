@@ -46,6 +46,30 @@
       },
       "revId": "bbbbe95fbd85dc86ad0a3b87a99728b6b9bf9520",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56a71090_e5553937",
+        "filename": "services/core/java/com/android/server/NetworkTimeUpdateService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1038039
+      },
+      "writtenOn": "2022-02-28T11:07:55Z",
+      "side": 1,
+      "message": "Oh sorry - I was being a fool.\n\nWe know ageMillis \u003c mPollingIntervalMs from the condition above, so we don\u0027t need the Math.max(), the calculation has to produce a positive value. Please remove the Math.max(). My mistake, sorry!",
+      "parentUuid": "42383c56_b4cc4c02",
+      "range": {
+        "startLine": 193,
+        "startChar": 23,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "bbbbe95fbd85dc86ad0a3b87a99728b6b9bf9520",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
