@@ -140,6 +140,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
@@ -11185,8 +11186,51 @@ public class TelephonyManager {
         if (SubscriptionManager.isValidPhoneId(phoneId)) {
             List<String> newList = updateTelephonyProperty(
                     TelephonyProperties.operator_alpha(), phoneId, name);
-            TelephonyProperties.operator_alpha(newList);
+            try {
+                TelephonyProperties.operator_alpha(newList);
+            } catch (IllegalArgumentException e) { //property value is longer than the byte limit
+                String originalOperatorAlpha = concatListToString(newList);
+
+                Log.e(TAG, "setNetworkOperatorNameForPhone", e);
+
+                //truncate and retry
+                String truncatedOperatorAlpha = TextUtils
+                        .truncateStringForUtf8Storage(originalOperatorAlpha,
+                                SystemProperties.PROP_VALUE_MAX);
+                TelephonyProperties.operator_alpha(
+                        Collections.singletonList(truncatedOperatorAlpha));
+                Log.e(TAG, "successfully set truncated operator_alpha: "
+                        + truncatedOperatorAlpha);
+            }
         }
+    }
+
+    /**
+     * copied from generated android.sysprop.TelephonyProperties.java#escape for consistency
+     * @param str string to be processed
+     * @return processed string
+     *
+     * @hide
+     */
+    private String escape(String str) {
+        return str.replaceAll("([\\\\,])", "\\\\$1");
+    }
+
+    /**
+     * copied from generated android.sysprop.TelephonyProperties.java#formatList for consistency
+     * @param list
+     * @return Elements concat by {@code ","}.
+     *
+     * @hide
+     */
+    private <T> String concatListToString(List<T> list) {
+        StringJoiner joiner = new StringJoiner(",");
+
+        for (T element : list) {
+            joiner.add(element == null ? "" : escape(element.toString()));
+        }
+
+        return joiner.toString();
     }
 
     /**
