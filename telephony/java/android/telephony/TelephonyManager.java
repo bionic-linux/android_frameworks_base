@@ -11185,7 +11185,25 @@ public class TelephonyManager {
         if (SubscriptionManager.isValidPhoneId(phoneId)) {
             List<String> newList = updateTelephonyProperty(
                     TelephonyProperties.operator_alpha(), phoneId, name);
-            TelephonyProperties.operator_alpha(newList);
+            try {
+                TelephonyProperties.operator_alpha(newList);
+            } catch (IllegalArgumentException e) { //property value is longer than the byte limit
+                Log.e(TAG, "setNetworkOperatorNameForPhone", e);
+
+                int maxNumberOfPhones = newList.size();
+                int maxOperatorLength = //save 1 byte for joiner " , "
+                        (SystemProperties.PROP_VALUE_MAX - maxNumberOfPhones) / maxNumberOfPhones;
+
+                //examine and truncate every operator and retry
+                for (int i = 0; i < newList.size(); i++) {
+                    if (newList.get(i) != null) {
+                        newList.set(i, TextUtils
+                                .truncateStringForUtf8Storage(newList.get(i), maxOperatorLength));
+                    }
+                }
+                TelephonyProperties.operator_alpha(newList);
+                Log.e(TAG, "successfully set truncated operator_alpha: ");
+            }
         }
     }
 
