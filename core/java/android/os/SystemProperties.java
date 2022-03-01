@@ -225,9 +225,13 @@ public class SystemProperties {
      */
     @UnsupportedAppUsage
     public static void set(@NonNull String key, @Nullable String val) {
-        if (val != null && !val.startsWith("ro.") && val.length() > PROP_VALUE_MAX) {
+        Log.d("linggm", val);
+        Log.d("linggm", "!key.startsWith(\"ro.\")" + !key.startsWith("ro."));
+        Log.d("linggm", "len:" + val.getBytes(StandardCharsets.UTF_8).length);
+        if (val != null && !key.startsWith("ro.") && val.getBytes(StandardCharsets.UTF_8).length
+                > PROP_VALUE_MAX) {
             throw new IllegalArgumentException("value of system property '" + key
-                    + "' is longer than " + PROP_VALUE_MAX + " characters: " + val);
+                    + "' is longer than " + PROP_VALUE_MAX + " bytes: " + val);
         }
         if (TRACK_KEY_ACCESS) onKeyAccess(key);
         native_set(key, val);
