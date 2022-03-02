@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef3bcf17_26b8c953",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 11201,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2022-03-02T22:56:27Z",
+      "side": 1,
+      "message": "This might be a cleaner solution:\n```\nString truncatedOperatorAlpha \u003d TextUtils.truncateStringForUtf8Storage(name, SystemProperties.PROP_VALUE_MAX);\nnewList \u003d updateTelephonyProperty(TelephonyProperties.operator_alpha(), phoneId, truncatedOperatorAlpha);\nTelephonyProperties.operator_alpha(new_list);\n```\n\nThen you won\u0027t need to modify the actual list and can reuse the existing implementation.",
+      "range": {
+        "startLine": 11197,
+        "startChar": 0,
+        "endLine": 11201,
+        "endChar": 75
+      },
+      "revId": "2f61297ef56374572a9d2f4f57984b07d741c480",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
