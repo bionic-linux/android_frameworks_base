@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e14b91db_8651ff90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2022-03-02T23:46:21Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t super clear the first time -- updated comments.",
+      "revId": "0995dc86a95137c5ad5099c22f210cc266f44fcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48fa2136_857070d8",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 11192,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2022-03-02T23:46:21Z",
+      "side": 1,
+      "message": "This and the helper methods below can be removed.",
+      "range": {
+        "startLine": 11192,
+        "startChar": 0,
+        "endLine": 11192,
+        "endChar": 75
+      },
+      "revId": "0995dc86a95137c5ad5099c22f210cc266f44fcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f360ccd9_f3029de9",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 11198,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2022-03-02T23:46:21Z",
+      "side": 1,
+      "message": "This can be name instead.",
+      "range": {
+        "startLine": 11198,
+        "startChar": 54,
+        "endLine": 11198,
+        "endChar": 75
+      },
+      "revId": "0995dc86a95137c5ad5099c22f210cc266f44fcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
