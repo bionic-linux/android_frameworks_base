@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc8708bb_1bdad348",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-03-02T21:34:17Z",
+      "side": 1,
+      "message": "If it\u0027s only used by the above method, it doesn\u0027t have to be a vararg. I\u0027m worried if we use a vararg here, someone might accidentally use it in the future and allocate an unnecessary array... \n\nBut this method only uses the first element anyway, why don\u0027t you take a single type here?",
+      "range": {
+        "startLine": 397,
+        "startChar": 30,
+        "endLine": 397,
+        "endChar": 33
+      },
+      "revId": "8df1a66a99801521af5252d8807b84714c4f61e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
