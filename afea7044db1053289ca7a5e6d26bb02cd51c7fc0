@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d3c5951_0093c0ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-03-02T19:58:46Z",
+      "side": 1,
+      "message": "Overriding open-source -1 because it\u0027s due to the word \u0027agree\u0027 on commit message, which is a false positive (I\u0027ve hit this before and had consulted with the proper team)",
+      "revId": "afea7044db1053289ca7a5e6d26bb02cd51c7fc0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
