@@ -62,6 +62,30 @@
       },
       "revId": "0995dc86a95137c5ad5099c22f210cc266f44fcc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66d87ca9_2168e537",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 11198,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-03-02T23:57:33Z",
+      "side": 1,
+      "message": "could there be a case that newList is different from name, e.g. getProperty is \"phone0,phone1\" while the method is called with(phoneId\u003d0, name\u003d\"newPhone0\")?",
+      "parentUuid": "f360ccd9_f3029de9",
+      "range": {
+        "startLine": 11198,
+        "startChar": 54,
+        "endLine": 11198,
+        "endChar": 75
+      },
+      "revId": "0995dc86a95137c5ad5099c22f210cc266f44fcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
