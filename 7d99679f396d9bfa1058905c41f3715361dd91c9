@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "142399d8_05dad8a0",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11193,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2022-03-03T03:29:40Z",
+      "side": 1,
+      "message": "nit: Maybe this should be renamed numberOfEntries since it\u0027s not necessarily the max number of phones, just the current max that has been set so far.",
+      "range": {
+        "startLine": 11193,
+        "startChar": 20,
+        "endLine": 11193,
+        "endChar": 37
+      },
+      "revId": "7d99679f396d9bfa1058905c41f3715361dd91c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd0374d9_066cd355",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11205,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2022-03-03T03:29:40Z",
+      "side": 1,
+      "message": "`\"Successfully truncated operator_alpha: \" + newList);`",
+      "range": {
+        "startLine": 11205,
+        "startChar": 27,
+        "endLine": 11205,
+        "endChar": 72
+      },
+      "revId": "7d99679f396d9bfa1058905c41f3715361dd91c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
