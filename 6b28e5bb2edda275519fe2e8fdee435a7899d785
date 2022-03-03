@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3581cfaf_7dc7491f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-03-03T09:57:30Z",
+      "side": 1,
+      "message": "PS7: Add check for SparseArray as well that was missing",
+      "revId": "6b28e5bb2edda275519fe2e8fdee435a7899d785",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
