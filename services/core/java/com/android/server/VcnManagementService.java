@@ -52,6 +52,7 @@ import android.net.vcn.VcnManager.VcnStatusCode;
 import android.net.vcn.VcnUnderlyingNetworkPolicy;
 import android.net.wifi.WifiInfo;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -82,9 +83,11 @@ import com.android.server.vcn.VcnContext;
 import com.android.server.vcn.VcnNetworkProvider;
 import com.android.server.vcn.util.PersistableBundleUtils;
 
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -161,7 +164,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     public static final boolean VDBG = false; // STOPSHIP: if true
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
-    static final String VCN_CONFIG_FILE = "/data/system/vcn/configs.xml";
+    static final String VCN_CONFIG_FILE = "vcn/configs.xml";
 
     /* Binder context for this service */
     @NonNull private final Context mContext;
@@ -215,8 +218,9 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         mTelephonySubscriptionTracker = mDeps.newTelephonySubscriptionTracker(
                 mContext, mLooper, mTelephonySubscriptionTrackerCb);
 
-        mConfigDiskRwHelper = mDeps.newPersistableBundleLockingReadWriteHelper(VCN_CONFIG_FILE);
-
+        mConfigDiskRwHelper =
+                mDeps.newPersistableBundleLockingReadWriteHelper(
+                        new File(mDeps.getDataSystemDeDirectory(), VCN_CONFIG_FILE).getPath());
         mPkgChangeReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -244,6 +248,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         mHandler.post(() -> {
             PersistableBundle configBundle = null;
             try {
+                migrateOldVcnConfigs();
                 configBundle = mConfigDiskRwHelper.readFromDisk();
             } catch (IOException e1) {
                 logErr("Failed to read configs from disk; retrying", e1);
@@ -279,6 +284,24 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 }
             }
         });
+    }
+
+    private void migrateOldVcnConfigs() throws IOException {
+        final File oldConfigFile = new File(mDeps.getDataSystemDirectory(), VCN_CONFIG_FILE);
+        final File newConfigFile = new File(mDeps.getDataSystemDeDirectory(), VCN_CONFIG_FILE);
+        final File oldConfigDir = oldConfigFile.getParentFile();
+
+        if (oldConfigFile.exists()) {
+            // Do not overwrite; if new file exists, use that instead.
+            if (!newConfigFile.exists()) {
+                newConfigFile.getParentFile().mkdirs();
+                Files.copy(oldConfigFile.toPath(), newConfigFile.toPath());
+            }
+
+            // Delete old file and directory
+            oldConfigFile.delete();
+            oldConfigDir.delete();
+        }
     }
 
     // Package-visibility for SystemServer to create instances.
@@ -362,6 +385,14 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         /** Creates a new LocationPermissionChecker for the provided Context. */
         public LocationPermissionChecker newLocationPermissionChecker(@NonNull Context context) {
             return new LocationPermissionChecker(context);
+        }
+
+        public File getDataSystemDirectory() {
+            return Environment.getDataSystemDirectory();
+        }
+
+        public File getDataSystemDeDirectory() {
+            return Environment.getDataSystemDeDirectory();
         }
     }
 

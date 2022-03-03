@@ -26,6 +26,7 @@ import static android.net.vcn.VcnManager.VCN_STATUS_CODE_SAFE_MODE;
 import static android.telephony.TelephonyManager.CARRIER_PRIVILEGE_STATUS_HAS_ACCESS;
 import static android.telephony.TelephonyManager.CARRIER_PRIVILEGE_STATUS_NO_ACCESS;
 
+import static com.android.server.VcnManagementService.VCN_CONFIG_FILE;
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionSnapshot;
 import static com.android.server.vcn.TelephonySubscriptionTracker.TelephonySubscriptionTrackerCallback;
 import static com.android.server.vcn.VcnTestUtils.setupSystemService;
@@ -99,7 +100,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -280,7 +283,7 @@ public class VcnManagementServiceTest {
         VcnManagementService.Dependencies deps = new VcnManagementService.Dependencies();
         PersistableBundleUtils.LockingReadWriteHelper configReadWriteHelper =
                 deps.newPersistableBundleLockingReadWriteHelper(
-                        VcnManagementService.VCN_CONFIG_FILE);
+                        new File(deps.getDataSystemDeDirectory(), VCN_CONFIG_FILE).getPath());
 
         // Even tests should not be able to read/write configs from disk; SELinux policies restrict
         // it to only the system server.
@@ -301,6 +304,35 @@ public class VcnManagementServiceTest {
 
         assertEquals(TEST_VCN_CONFIG_MAP, mVcnMgmtSvc.getConfigs());
         verify(mConfigReadWriteHelper).readFromDisk();
+    }
+
+    @Test
+    public void testConfigsMigrated() throws Exception {
+        File testConfigSystemDir =
+                Files.createTempDirectory("testDataSystemDir" + System.currentTimeMillis())
+                        .toFile();
+        File oldConfig = new File(testConfigSystemDir, VCN_CONFIG_FILE);
+        oldConfig.getParentFile().mkdirs();
+        oldConfig.createNewFile();
+
+        File testConfigDeSystemDir =
+                Files.createTempDirectory("testDataDeSystemDir" + System.currentTimeMillis())
+                        .toFile();
+        File newConfig = new File(testConfigDeSystemDir, VCN_CONFIG_FILE);
+
+        assertTrue(oldConfig.exists());
+        assertFalse(newConfig.exists());
+
+        doReturn(testConfigSystemDir).when(mMockDeps).getDataSystemDirectory();
+        doReturn(testConfigDeSystemDir).when(mMockDeps).getDataSystemDeDirectory();
+
+        // Run startup config loader & migration
+        new VcnManagementService(mMockContext, mMockDeps);
+        mTestLooper.dispatchAll();
+
+        // Verify the config was moved, and parent directory was removed.
+        assertFalse(oldConfig.exists());
+        assertTrue(newConfig.exists());
     }
 
     private TelephonySubscriptionSnapshot triggerSubscriptionTrackerCbAndGetSnapshot(
