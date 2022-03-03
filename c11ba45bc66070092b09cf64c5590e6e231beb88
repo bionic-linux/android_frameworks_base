@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14e2e82d_7feee2c0",
+        "filename": "identity/java/android/security/identity/CredentialDataRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-03-03T19:12:59Z",
+      "side": 1,
+      "message": "This is really subjective, and I\u0027m not sure we should say privacy risk is \"significantly smaller\".\n\nMaybe explain that application authors should weigh the privacy of users against the inconvenience?",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 62
+      },
+      "revId": "c11ba45bc66070092b09cf64c5590e6e231beb88",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
