@@ -22,6 +22,30 @@
       },
       "revId": "8df1a66a99801521af5252d8807b84714c4f61e9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70e57ee2_3fe53a0d",
+        "filename": "core/java/android/os/BaseBundle.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-03-03T09:22:41Z",
+      "side": 1,
+      "message": "Converted vararg to array. \n\nTaking a single type would just mean I\u0027d move the line 399 (`ArrayUtils.getOrNull()`) below from `checkType()` to `getValueAt()`, I think it makes more sense in `checkType()` (the one that \"knows\" how to unpack the arguments) and for both methods to have the same signature (well, similar signatures after moving away from vararg).\n\nMarking as resolved, please re-open if you\u0027d prefer a single type argument.",
+      "parentUuid": "fc8708bb_1bdad348",
+      "range": {
+        "startLine": 397,
+        "startChar": 30,
+        "endLine": 397,
+        "endChar": 33
+      },
+      "revId": "8df1a66a99801521af5252d8807b84714c4f61e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
