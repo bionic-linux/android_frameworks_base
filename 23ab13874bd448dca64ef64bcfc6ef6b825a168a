@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6108a7cb_d23ead83",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 11191,
+      "author": {
+        "id": 1542950
+      },
+      "writtenOn": "2022-03-03T18:57:29Z",
+      "side": 1,
+      "message": "nit: \"setNetworkOperatorNameForPhone: \"",
+      "range": {
+        "startLine": 11191,
+        "startChar": 28,
+        "endLine": 11191,
+        "endChar": 58
+      },
+      "revId": "23ab13874bd448dca64ef64bcfc6ef6b825a168a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
