@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d581c4_2739c23b",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11193,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-03-03T18:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c71cf0_1276c2e5",
+      "range": {
+        "startLine": 11193,
+        "startChar": 20,
+        "endLine": 11193,
+        "endChar": 37
+      },
+      "revId": "7d99679f396d9bfa1058905c41f3715361dd91c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd0374d9_066cd355",
@@ -85,6 +109,30 @@
       "writtenOn": "2022-03-03T03:29:40Z",
       "side": 1,
       "message": "`\"Successfully truncated operator_alpha: \" + newList);`",
+      "range": {
+        "startLine": 11205,
+        "startChar": 27,
+        "endLine": 11205,
+        "endChar": 72
+      },
+      "revId": "7d99679f396d9bfa1058905c41f3715361dd91c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5087d930_e31cee5e",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11205,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-03-03T18:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd0374d9_066cd355",
       "range": {
         "startLine": 11205,
         "startChar": 27,
