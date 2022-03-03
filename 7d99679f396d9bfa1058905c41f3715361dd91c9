@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02bb6abb_a3a14751",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 11193,
+      "author": {
+        "id": 1929200
+      },
+      "writtenOn": "2022-03-03T04:32:37Z",
+      "side": 1,
+      "message": "(is what\u0027s been set so far the same as currently active modem count?)",
+      "parentUuid": "142399d8_05dad8a0",
+      "range": {
+        "startLine": 11193,
+        "startChar": 20,
+        "endLine": 11193,
+        "endChar": 37
+      },
+      "revId": "7d99679f396d9bfa1058905c41f3715361dd91c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dd0374d9_066cd355",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 9
