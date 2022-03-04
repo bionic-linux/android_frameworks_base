@@ -38,6 +38,7 @@ applications that come with the platform
         <permission name="android.permission.CRYPT_KEEPER"/>
     </privapp-permissions>
 
+<<<<<<< HEAD
     <privapp-permissions package="com.android.cellbroadcastreceiver.module">
         <permission name="android.permission.BROADCAST_CLOSE_SYSTEM_DIALOGS"/>
         <permission name="android.permission.INTERACT_ACROSS_USERS"/>
@@ -55,6 +56,8 @@ applications that come with the platform
         <permission name="android.permission.RECEIVE_EMERGENCY_BROADCAST"/>
     </privapp-permissions>
 
+=======
+>>>>>>> 1ce3acc30f59 (Revert^2 "Move out allowlists for com.android.cellbroadcast")
     <privapp-permissions package="com.android.externalstorage">
         <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
         <permission name="android.permission.WRITE_MEDIA_STORAGE"/>
