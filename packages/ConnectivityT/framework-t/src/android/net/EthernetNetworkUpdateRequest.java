@@ -27,33 +27,33 @@ import java.util.Objects;
 /** @hide */
 @SystemApi
 public final class EthernetNetworkUpdateRequest implements Parcelable {
-    @NonNull
+    @Nullable
     private final IpConfiguration mIpConfig;
-    @NonNull
+    @Nullable
     private final NetworkCapabilities mNetworkCapabilities;
 
-    @NonNull
+    @Nullable
     public IpConfiguration getIpConfiguration() {
-        return new IpConfiguration(mIpConfig);
+        return mIpConfig;
     }
 
-    @NonNull
+    @Nullable
     public NetworkCapabilities getNetworkCapabilities() {
-        return new NetworkCapabilities(mNetworkCapabilities);
+        return mNetworkCapabilities;
     }
 
-    private EthernetNetworkUpdateRequest(@NonNull final IpConfiguration ipConfig,
-            @NonNull final NetworkCapabilities networkCapabilities) {
-        Objects.requireNonNull(ipConfig);
-        Objects.requireNonNull(networkCapabilities);
-        mIpConfig = new IpConfiguration(ipConfig);
-        mNetworkCapabilities = new NetworkCapabilities(networkCapabilities);
+    private EthernetNetworkUpdateRequest(@Nullable final IpConfiguration ipConfig,
+            @Nullable final NetworkCapabilities networkCapabilities) {
+        mIpConfig = ipConfig;
+        mNetworkCapabilities = networkCapabilities;
     }
 
     private EthernetNetworkUpdateRequest(@NonNull final Parcel source) {
         Objects.requireNonNull(source);
-        mIpConfig = IpConfiguration.CREATOR.createFromParcel(source);
-        mNetworkCapabilities = NetworkCapabilities.CREATOR.createFromParcel(source);
+        mIpConfig = source.readParcelable(IpConfiguration.class.getClassLoader(),
+                IpConfiguration.class);
+        mNetworkCapabilities = source.readParcelable(NetworkCapabilities.class.getClassLoader(),
+                NetworkCapabilities.class);
     }
 
     /**
@@ -74,8 +74,10 @@ public final class EthernetNetworkUpdateRequest implements Parcelable {
          */
         public Builder(@NonNull final EthernetNetworkUpdateRequest request) {
             Objects.requireNonNull(request);
-            mBuilderIpConfig = new IpConfiguration(request.mIpConfig);
-            mBuilderNetworkCapabilities = new NetworkCapabilities(request.mNetworkCapabilities);
+            mBuilderIpConfig = null == request.mNetworkCapabilities
+                    ? null : new IpConfiguration(request.mIpConfig);
+            mBuilderNetworkCapabilities = null == request.mNetworkCapabilities
+                    ? null : new NetworkCapabilities(request.mNetworkCapabilities);
         }
 
         /**
@@ -84,9 +86,8 @@ public final class EthernetNetworkUpdateRequest implements Parcelable {
          * @return The builder to facilitate chaining.
          */
         @NonNull
-        public Builder setIpConfiguration(@NonNull final IpConfiguration ipConfig) {
-            Objects.requireNonNull(ipConfig);
-            mBuilderIpConfig = new IpConfiguration(ipConfig);
+        public Builder setIpConfiguration(@Nullable final IpConfiguration ipConfig) {
+            mBuilderIpConfig = ipConfig == null ? null : new IpConfiguration(ipConfig);
             return this;
         }
 
@@ -96,9 +97,8 @@ public final class EthernetNetworkUpdateRequest implements Parcelable {
          * @return The builder to facilitate chaining.
          */
         @NonNull
-        public Builder setNetworkCapabilities(@NonNull final NetworkCapabilities nc) {
-            Objects.requireNonNull(nc);
-            mBuilderNetworkCapabilities = new NetworkCapabilities(nc);
+        public Builder setNetworkCapabilities(@Nullable final NetworkCapabilities nc) {
+            mBuilderNetworkCapabilities = nc == null ? null : new NetworkCapabilities(nc);
             return this;
         }
 
@@ -135,8 +135,8 @@ public final class EthernetNetworkUpdateRequest implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        mIpConfig.writeToParcel(dest, flags);
-        mNetworkCapabilities.writeToParcel(dest, flags);
+        dest.writeParcelable(mIpConfig, flags);
+        dest.writeParcelable(mNetworkCapabilities, flags);
     }
 
     @Override
