@@ -50,6 +50,24 @@
       "message": "Is the problem here if an app tries to retrieve a key with one type, and then later retrieve it as a different type?  Or I am trying to understand this...  I thought our main concern was not to unparcel a different class type than the app is expecting, and I\u0027m not sure how this change improves that?  We\u0027ve already unparceled the object when we come on here a second time with a different type, right?",
       "revId": "6b28e5bb2edda275519fe2e8fdee435a7899d785",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c402667f_c5121275",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133744
+      },
+      "writtenOn": "2022-03-04T18:28:01Z",
+      "side": 1,
+      "message": "You\u0027re right, this change is not trying to prevent that. This change is to address the possibility that developers might find unexpected that if they call the new methods a 2nd, 3rd time with different types (the app can be a big app for example), we\u0027re not going to check the item types (this is only a problem for item types of containers).",
+      "parentUuid": "7eea2ac0_2a0fe468",
+      "revId": "6b28e5bb2edda275519fe2e8fdee435a7899d785",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
