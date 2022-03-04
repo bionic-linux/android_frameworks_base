@@ -29,7 +29,7 @@ import java.util.Objects;
 public final class EthernetNetworkUpdateRequest implements Parcelable {
     @NonNull
     private final IpConfiguration mIpConfig;
-    @NonNull
+    @Nullable
     private final NetworkCapabilities mNetworkCapabilities;
 
     @NonNull
@@ -37,17 +37,18 @@ public final class EthernetNetworkUpdateRequest implements Parcelable {
         return new IpConfiguration(mIpConfig);
     }
 
-    @NonNull
+    @Nullable
     public NetworkCapabilities getNetworkCapabilities() {
-        return new NetworkCapabilities(mNetworkCapabilities);
+        return mNetworkCapabilities == null
+                ? null : new NetworkCapabilities(mNetworkCapabilities);
     }
 
     private EthernetNetworkUpdateRequest(@NonNull final IpConfiguration ipConfig,
-            @NonNull final NetworkCapabilities networkCapabilities) {
+            @Nullable final NetworkCapabilities networkCapabilities) {
         Objects.requireNonNull(ipConfig);
-        Objects.requireNonNull(networkCapabilities);
         mIpConfig = new IpConfiguration(ipConfig);
-        mNetworkCapabilities = new NetworkCapabilities(networkCapabilities);
+        mNetworkCapabilities = null == networkCapabilities
+                ? null : new NetworkCapabilities(networkCapabilities);
     }
 
     private EthernetNetworkUpdateRequest(@NonNull final Parcel source) {
@@ -75,7 +76,8 @@ public final class EthernetNetworkUpdateRequest implements Parcelable {
         public Builder(@NonNull final EthernetNetworkUpdateRequest request) {
             Objects.requireNonNull(request);
             mBuilderIpConfig = new IpConfiguration(request.mIpConfig);
-            mBuilderNetworkCapabilities = new NetworkCapabilities(request.mNetworkCapabilities);
+            mBuilderNetworkCapabilities = null == request.mNetworkCapabilities
+                    ? null : new NetworkCapabilities(request.mNetworkCapabilities);
         }
 
         /**
