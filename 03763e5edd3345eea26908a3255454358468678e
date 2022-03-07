@@ -34,6 +34,24 @@
       "parentUuid": "3777c706_e0a4d63a",
       "revId": "03763e5edd3345eea26908a3255454358468678e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e878459_3baf1fcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1934155
+      },
+      "writtenOn": "2022-03-07T12:26:53Z",
+      "side": 1,
+      "message": "Thank you for your opinion.\nbut, Your answers to my changes seem to be different, so I\u0027ll explain each of them in detail for adding tests.\n\n1) Changed the to make a call sound not only when \"anyone\" but also \"starred\" and \"favourite\".\n-        final boolean allowCalls \u003d mConsolidatedPolicy.allowCalls()\n-                \u0026\u0026 mConsolidatedPolicy.allowCallsFrom() \u003d\u003d PRIORITY_SENDERS_ANY;\n+        final boolean allowCalls \u003d mConsolidatedPolicy.allowCalls();\n\n\u003d\u003e It doesn\u0027t mean what I want dialer apps are exempted from being muted during DND .\n    I think when the \"Calls\" is set to \"anyone\" or \"starred\", the phone doesn\u0027t seem to sound.\n    Is there any problem when It is set to \"anyone\" or \"starred\"?\n\n\n2) Changed conversation condition to allow conversations sound.\n-        boolean allowConversations \u003d (policy.priorityConversationSenders\n-                \u0026 Policy.PRIORITY_CATEGORY_CONVERSATIONS) !\u003d 0;\n+        boolean allowConversations \u003d (policy.priorityCategories\n+                \u0026 NotificationManager.Policy.PRIORITY_CATEGORY_CONVERSATIONS) !\u003d 0;\n\n\u003d\u003e I think this is an obvious error.\n\n\n3) Remove ZenOn condition because it is duplicated. nms checked this condition already\n-        final boolean muteNotifications \u003d zenOn\n-                || (mSuppressedEffects \u0026 SUPPRESSED_EFFECT_NOTIFICATIONS) !\u003d 0;\n+        final boolean muteNotifications \u003d (mSuppressedEffects \u0026 SUPPRESSED_EFFECT_NOTIFICATIONS)\n                !\u003d 0;\n\n\u003d\u003e If ringer mode is \"vibrate\", Do not disturb is \"ON\" and Messages is \"Anyone\", if the message notification, when you receive a message notification, it will not vibrate.\n    Can you guarantee normal operation for the above conditions?\n\nIf the above problems are definitely bugs, and there is no unit test for the problem, I can add a test.\nI\u0027m looking forward to your reply.",
+      "parentUuid": "f55ecce4_08f7940d",
+      "revId": "03763e5edd3345eea26908a3255454358468678e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
