@@ -52,6 +52,24 @@
       "parentUuid": "f55ecce4_08f7940d",
       "revId": "03763e5edd3345eea26908a3255454358468678e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d80fdbb_4f5263a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1868441
+      },
+      "writtenOn": "2022-03-07T21:05:52Z",
+      "side": 1,
+      "message": "Hi HoonIk, I\u0027ve looked into this a bit further. It turns out the implementations of #1 and #3 as they currently stand -- to mute everything on the notification and ringer channels and to delegate exceptions to packages in config_priorityOnlyDndExemptPackages -- are intentional. They are meant to prevent certain patterns of apps misbehaving, which we have observed in the past. On our end, this means notifications during Do Not Disturb work correctly because the apps generating notifications or ringer sounds (system UI, dialer/telecom) are exempted, and whether or not the notification is permitted at all is handled by the DND interception logic.\n\nPlease consider adding the relevant apps for your devices to the config exemptions list and see if that handles your issue.\n\nI agree that #2 looks like a fairly clear error. If you want to send a change for only that case, with unit tests, I can review that, or I am happy to make the change myself upstream and send you a pointer to a diff when it\u0027s ready.",
+      "parentUuid": "9e878459_3baf1fcf",
+      "revId": "03763e5edd3345eea26908a3255454358468678e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
