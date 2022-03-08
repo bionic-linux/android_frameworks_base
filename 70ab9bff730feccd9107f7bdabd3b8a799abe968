@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3cbd4e85_6db31523",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-08T15:46:39Z",
+      "side": 1,
+      "message": "Represents a request to update an existing Ethernet interface.\n\n@see EthernetManager#updateConfiguration",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 72
+      },
+      "revId": "70ab9bff730feccd9107f7bdabd3b8a799abe968",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f47ee7ed_39a40ef7",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
         "patchSetId": 5
