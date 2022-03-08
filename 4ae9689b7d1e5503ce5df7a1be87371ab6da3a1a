@@ -45,6 +45,29 @@
       },
       "revId": "4ae9689b7d1e5503ce5df7a1be87371ab6da3a1a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "535e43b3_d559ad47",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-03-08T08:19:06Z",
+      "side": 1,
+      "message": "This will throw an NPE",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 56
+      },
+      "revId": "4ae9689b7d1e5503ce5df7a1be87371ab6da3a1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
