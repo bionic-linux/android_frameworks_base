@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ad12fcb0_9dbbf8ca",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7054,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-08T08:18:03Z",
+      "side": 1,
+      "message": "Might want to make this nullable since it\u0027s nullable in the built object.",
+      "range": {
+        "startLine": 7054,
+        "startChar": 11,
+        "endLine": 7054,
+        "endChar": 19
+      },
+      "revId": "4ae9689b7d1e5503ce5df7a1be87371ab6da3a1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b72fed9a_e1795e1c",
         "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
         "patchSetId": 1
