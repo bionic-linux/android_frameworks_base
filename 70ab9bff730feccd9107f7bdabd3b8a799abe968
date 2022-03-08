@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f47ee7ed_39a40ef7",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1470463
+      },
+      "writtenOn": "2022-03-08T15:43:04Z",
+      "side": 1,
+      "message": "mIpConfig is guaranteed to never be null (l.60) in which case this null check doesn\u0027t appear to be needed?",
+      "range": {
+        "startLine": 91,
+        "startChar": 31,
+        "endLine": 91,
+        "endChar": 56
+      },
+      "revId": "70ab9bff730feccd9107f7bdabd3b8a799abe968",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
