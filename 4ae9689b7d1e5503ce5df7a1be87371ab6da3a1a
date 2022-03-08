@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "085ebc10_46d30b68",
+        "filename": "core/api/system-current.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 7054,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-03-08T11:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad12fcb0_9dbbf8ca",
+      "range": {
+        "startLine": 7054,
+        "startChar": 11,
+        "endLine": 7054,
+        "endChar": 19
+      },
+      "revId": "4ae9689b7d1e5503ce5df7a1be87371ab6da3a1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b72fed9a_e1795e1c",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af37eb6b_c4a87f5a",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-03-08T11:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b72fed9a_e1795e1c",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 86
+      },
+      "revId": "4ae9689b7d1e5503ce5df7a1be87371ab6da3a1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "535e43b3_d559ad47",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-03-08T08:19:06Z",
       "side": 1,
       "message": "This will throw an NPE",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 56
+      },
+      "revId": "4ae9689b7d1e5503ce5df7a1be87371ab6da3a1a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cee92ef5_03445632",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1594463
+      },
+      "writtenOn": "2022-03-08T11:18:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "535e43b3_d559ad47",
       "range": {
         "startLine": 141,
         "startChar": 8,
