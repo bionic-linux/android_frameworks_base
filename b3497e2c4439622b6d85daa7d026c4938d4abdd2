@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "568e94de_e64a5716",
+        "filename": "packages/ConnectivityT/framework-t/src/android/net/EthernetNetworkUpdateRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-03-08T15:32:01Z",
+      "side": 1,
+      "message": "Generally speaking you need to be careful when removing defensive copies like this. Java doesn\u0027t have an equivalent of const, so defensive copies are very important. Giving a caller access to a mutable object allows them to mutate that object at any time in the future. This can cause validation checks to be bypassed (modify the object once validation as done, i.e., TOCTOU).\n\nIt can also cause hard-to-find bugs. I think a past example was something like: there is code in connectivityservice that sends an update if a mutable object (e.g., linkproperties) has changed. The linkproperties come from wifi via binder call (but within the same process, binder calls don\u0027t cause parceling, they just pass a pointer to the object). Connectivityservice didn\u0027t make a defensive copy, so when wifi mutated the linkproperties and sent the new ones to connectivityservice, and connectivityservice would think that nothing has changed because the linkproperties it stores are the same as the linkproperties it got from wifi.\n\nWould suggest making this change in a separate CL and for now doing the defensive copy iff the original is not null.",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "b3497e2c4439622b6d85daa7d026c4938d4abdd2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
