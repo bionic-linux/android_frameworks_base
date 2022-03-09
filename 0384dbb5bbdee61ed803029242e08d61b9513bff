@@ -33,6 +33,23 @@
       "message": "CTS was added prior this change",
       "revId": "0384dbb5bbdee61ed803029242e08d61b9513bff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99692b54_d0f31164",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1942765
+      },
+      "writtenOn": "2022-03-09T10:36:57Z",
+      "side": 1,
+      "message": "git clone \"platform/frameworks/base\"",
+      "revId": "0384dbb5bbdee61ed803029242e08d61b9513bff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
