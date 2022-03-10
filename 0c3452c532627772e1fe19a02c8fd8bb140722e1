@@ -22,6 +22,30 @@
       },
       "revId": "0c3452c532627772e1fe19a02c8fd8bb140722e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4e50860_d4148c67",
+        "filename": "services/core/java/com/android/server/pm/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1884045
+      },
+      "writtenOn": "2022-03-10T15:01:04Z",
+      "side": 1,
+      "message": "IIUC, the \"per-file\" rule only adds owners rather than overriding existing ones. Patrick, is it the case?",
+      "parentUuid": "3c86f810_6e4b59f7",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "0c3452c532627772e1fe19a02c8fd8bb140722e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
