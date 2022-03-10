@@ -46,6 +46,30 @@
       },
       "revId": "0c3452c532627772e1fe19a02c8fd8bb140722e1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ba0cc3d_9fa00c22",
+        "filename": "services/core/java/com/android/server/pm/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2022-03-10T16:52:13Z",
+      "side": 1,
+      "message": "That\u0027s correct: go/gerrit-code-owners-syntax",
+      "parentUuid": "f4e50860_d4148c67",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "0c3452c532627772e1fe19a02c8fd8bb140722e1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
