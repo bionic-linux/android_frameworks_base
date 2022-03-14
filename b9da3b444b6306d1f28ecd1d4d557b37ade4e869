@@ -22,6 +22,30 @@
       },
       "revId": "b9da3b444b6306d1f28ecd1d4d557b37ade4e869",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ffccdf6_342b4736",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/legacysplitscreen/LegacySplitScreenController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1868468
+      },
+      "writtenOn": "2022-03-14T11:20:45Z",
+      "side": 1,
+      "message": "Hello\n\nI have tried to delay the onKeyguardVisibilityChanged callback by setting the flag,\nand then continue enter this callback method according to the flag at the end of the animation.\nBut after many tests, this method does not cover all scenarios, and black areas will still appear.",
+      "parentUuid": "1938ba4d_f3b58aee",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 60
+      },
+      "revId": "b9da3b444b6306d1f28ecd1d4d557b37ade4e869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
