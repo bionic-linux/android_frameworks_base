@@ -16,6 +16,24 @@
       "message": "Please provide an example app with reproduce steps in the bug.\nAlso, it would be helpful if you can upload a reproduce video in the bug as well.",
       "revId": "fe6c23d6313eb1b23f42f09034e830cab5da41d7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad6db83b_aa9e602d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1868468
+      },
+      "writtenOn": "2022-03-14T08:49:57Z",
+      "side": 1,
+      "message": "Thanks for your advice!\nThe reproduce video and steps has uploaded.",
+      "parentUuid": "95c2e922_07a20de8",
+      "revId": "fe6c23d6313eb1b23f42f09034e830cab5da41d7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
