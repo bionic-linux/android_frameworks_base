@@ -4464,14 +4464,15 @@ public class AudioService extends IAudioService.Stub
             if (isMuted == shouldMute) continue;
             if (!shouldMute) {
                 // unmute
-                // ring and notifications volume should never be 0 when not silenced
-                if (mStreamVolumeAlias[streamType] == AudioSystem.STREAM_RING) {
+                // ring volume should never be 0 when not silenced
+                if (streamType == AudioSystem.STREAM_RING) {
                     synchronized (VolumeStreamState.class) {
                         final VolumeStreamState vss = mStreamStates[streamType];
                         for (int i = 0; i < vss.mIndexMap.size(); i++) {
                             int device = vss.mIndexMap.keyAt(i);
                             int value = vss.mIndexMap.valueAt(i);
                             if (value == 0) {
+                                // Apply change to all streams using this one as alias
                                 vss.setIndex(10, device, TAG, true /*hasModifyAudioSettings*/);
                             }
                         }
