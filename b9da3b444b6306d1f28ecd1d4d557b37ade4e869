@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1938ba4d_f3b58aee",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/legacysplitscreen/LegacySplitScreenController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1315793
+      },
+      "writtenOn": "2022-03-14T09:35:51Z",
+      "side": 1,
+      "message": "hmm, I don\u0027t know if only check this in  onKeyguardVisibilityChanged is the best. \n\nSince according to the commit message said:\n\n```\nwhen the screen is quickly turned off and then turned on, it will enter the keyguard, which will trigger\nthe callback of the keyguard visibility change.\n\nIt will change the mSurfaceHidden value of DividerView, thus interrupting the ime hidden animation.\nTherefore,some black areas will appear on the secondary screen.\n```\n\nI feel if onIme{Start, End}Positioning being affected by isDividerHidden() is true, \nthen we should prevent the case happens in the IME positioning callback rather than doing the fallback resize split surface in some where.\n\nJerry,\n\nWDYT ?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 60
+      },
+      "revId": "b9da3b444b6306d1f28ecd1d4d557b37ade4e869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
