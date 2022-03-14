@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90b1b3a5_d0eb12a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1422811
+      },
+      "writtenOn": "2022-03-14T12:01:17Z",
+      "side": 1,
+      "message": "Just need to set and persist the volume of the ring.\nOther streams in the ring alias set the volume through the setindex interface.",
+      "revId": "3011bbf7f06ef3b746e25316219f7ad7150039b6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
