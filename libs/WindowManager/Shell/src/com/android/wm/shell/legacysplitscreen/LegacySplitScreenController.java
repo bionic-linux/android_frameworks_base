@@ -236,6 +236,13 @@ public class LegacySplitScreenController implements DisplayController.OnDisplays
         }
         mView.setHidden(showing);
         mIsKeyguardShowing = showing;
+        if (!mIsKeyguardShowing && (mImeController.isImeShowing(mContext.getDisplayId())
+                != mImePositionProcessor.getImeWasShown())){
+            SurfaceControl.Transaction t = mTransactionPool.acquire();
+            mView.resizeSplitSurfaces(t, mSplitLayout.mPrimary, mSplitLayout.mSecondary);
+            t.apply();
+            mTransactionPool.release(t);
+        }
     }
 
     @Override

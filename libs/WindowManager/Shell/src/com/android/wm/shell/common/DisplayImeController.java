@@ -121,7 +121,7 @@ public class DisplayImeController implements DisplayController.OnDisplaysChanged
         mImePerDisplay.remove(displayId);
     }
 
-    private boolean isImeShowing(int displayId) {
+    public boolean isImeShowing(int displayId) {
         PerDisplay pd = mImePerDisplay.get(displayId);
         if (pd == null) {
             return false;

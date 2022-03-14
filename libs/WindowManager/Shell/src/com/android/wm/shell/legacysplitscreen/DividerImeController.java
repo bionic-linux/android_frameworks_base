@@ -415,4 +415,8 @@ class DividerImeController implements DisplayImeController.ImePositionProcessor 
             startAsyncAnimation();
         });
     }
+
+    public boolean getImeWasShown() {
+        return mImeWasShown;
+    }
 }
