@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "891a0d09_2d3bf2dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2022-03-15T12:54:17Z",
+      "side": 1,
+      "message": "Couple high level thoughts, but will defer the actual review to Santos and Fiona:\n\n1) This should probably be called `config_defaultDreamScreenBrightness`; dreams can still override the value on LayoutParams themselves.\n\n2) This is going to implicitly disable auto-brightness during dreams when set. We should probably make that clear given the rename to \"default\", or move the reading of the property into `DisplayPowerController` so this is only used if auto-brightness wouldn\u0027t be. DPC would then have to understand dreaming though.",
+      "revId": "c6cf0cd825ec24ba50d987d6cddccf8e5b393915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
