@@ -107,15 +107,6 @@ filegroup {
 }
 
 // Connectivity-T common libraries.
-
-// TODO: remove this empty filegroup.
-filegroup {
-    name: "services.connectivity-tiramisu-sources",
-    srcs: [],
-    path: "src",
-    visibility: ["//frameworks/base/services/core"],
-}
-
 filegroup {
     name: "services.connectivity-tiramisu-updatable-sources",
     srcs: [
