@@ -70,6 +70,30 @@
       },
       "revId": "b9da3b444b6306d1f28ecd1d4d557b37ade4e869",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "210a88b7_089307ee",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/legacysplitscreen/LegacySplitScreenController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1868468
+      },
+      "writtenOn": "2022-03-16T05:59:27Z",
+      "side": 1,
+      "message": "okay，I got it！",
+      "parentUuid": "d69bd859_551291b7",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 60
+      },
+      "revId": "b9da3b444b6306d1f28ecd1d4d557b37ade4e869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
