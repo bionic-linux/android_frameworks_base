@@ -46,6 +46,30 @@
       },
       "revId": "b9da3b444b6306d1f28ecd1d4d557b37ade4e869",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d69bd859_551291b7",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/legacysplitscreen/LegacySplitScreenController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2022-03-16T04:21:08Z",
+      "side": 1,
+      "message": "Hi Wei, thanks a lot for reporting and submitting this fix.\n\nWould like to inform you that we\u0027ve deprecated the legacy split screen and migrated to com.android.wm.shell.splitscreen as a default Android split screen implementation. And keyguard visibility change won\u0027t interrupt the shifting animation in shell.splitscreen.",
+      "parentUuid": "9ffccdf6_342b4736",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 60
+      },
+      "revId": "b9da3b444b6306d1f28ecd1d4d557b37ade4e869",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
