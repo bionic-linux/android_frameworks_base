@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ac23f9f_c09f2a1d",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3415,
+      "author": {
+        "id": 1078064
+      },
+      "writtenOn": "2022-03-17T13:56:59Z",
+      "side": 1,
+      "message": "Nit: Name it \u0027REQUEST_UNIQUE_ID_IN_ATTESTATION\u0027 or something that implies an action/operation?",
+      "range": {
+        "startLine": 3415,
+        "startChar": 49,
+        "endLine": 3415,
+        "endChar": 70
+      },
+      "revId": "413a5e7162c2f3619d497672232af31ddaec6261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
