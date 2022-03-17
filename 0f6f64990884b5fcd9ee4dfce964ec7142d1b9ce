@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9ec3940_076984fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2022-03-17T21:43:47Z",
+      "side": 1,
+      "message": "Please update this commit message with the following format:\n\n\n  Title of the commit (1 line)\n  \n  Description of the commit (a paragraph)\n  \n  Test: describe how you tested it\n  Bug: 215096348",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "0f6f64990884b5fcd9ee4dfce964ec7142d1b9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec020dd3_cda9c369",
+        "filename": "data/keyboards/Vendor_0e6f_Product_f501.idc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2022-03-17T21:43:47Z",
+      "side": 1,
+      "message": "do we actually need this file? what happens if you remove it?",
+      "revId": "0f6f64990884b5fcd9ee4dfce964ec7142d1b9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f40589d_242b4590",
+        "filename": "data/keyboards/Vendor_0e6f_Product_f501.kl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2022-03-17T21:43:47Z",
+      "side": 1,
+      "message": "2022",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 20
+      },
+      "revId": "0f6f64990884b5fcd9ee4dfce964ec7142d1b9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "addc0e62_9fd49a13",
+        "filename": "data/keyboards/Vendor_0e6f_Product_f501.kl",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2022-03-17T21:43:47Z",
+      "side": 1,
+      "message": "this is not a genuine \"XBox 360\" controller, so let\u0027s not call it that. Maybe call it \"XBox-compatible USB Controller\"? Is there any name on the box for this controller?",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "0f6f64990884b5fcd9ee4dfce964ec7142d1b9ce",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
