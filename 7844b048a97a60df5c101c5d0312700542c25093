@@ -22,6 +22,30 @@
       },
       "revId": "7844b048a97a60df5c101c5d0312700542c25093",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5ec021b_46329e1c",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2022-03-18T19:29:53Z",
+      "side": 1,
+      "message": "LGTM!",
+      "parentUuid": "785a17f4_7c3ee239",
+      "range": {
+        "startLine": 399,
+        "startChar": 82,
+        "endLine": 399,
+        "endChar": 93
+      },
+      "revId": "7844b048a97a60df5c101c5d0312700542c25093",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
