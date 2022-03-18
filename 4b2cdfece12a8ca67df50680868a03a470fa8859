@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02f2e1c4_f4833735",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1056478
+      },
+      "writtenOn": "2022-03-18T20:53:55Z",
+      "side": 1,
+      "message": "Note to pod reviewing this change:\nThis API is present in its complete final shape in TM-DEV (it was introduced in a slightly different shape earlier in TM).\nThe NetworkStack module uses this API in its former deprecated-at-creation shape and need to be transitioned to the new shape so that the deprecated-at-creation code can be removed prior to API finalization.\nNetworkStack is AOSP-first and there are significant merge conflicts present which prevent a clean merge of the final API shape here, hence the stubs.  This work is done so that the NetworkStack module changes can be merged now (and automerge into tm-dev).\nThe POR is to cherry-pick the rest of the required changes to AOSP after that occurs.",
+      "revId": "4b2cdfece12a8ca67df50680868a03a470fa8859",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
