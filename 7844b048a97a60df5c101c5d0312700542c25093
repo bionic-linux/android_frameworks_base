@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "785a17f4_7c3ee239",
+        "filename": "core/jni/android_util_Binder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-03-18T01:41:49Z",
+      "side": 1,
+      "message": "There isn\u0027t a repro on this bug - Martijn/Chris, is this your recollection?",
+      "range": {
+        "startLine": 399,
+        "startChar": 82,
+        "endLine": 399,
+        "endChar": 93
+      },
+      "revId": "7844b048a97a60df5c101c5d0312700542c25093",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
