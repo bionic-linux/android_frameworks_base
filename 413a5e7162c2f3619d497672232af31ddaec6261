@@ -22,6 +22,30 @@
       },
       "revId": "413a5e7162c2f3619d497672232af31ddaec6261",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ceb6a580_dd9e274b",
+        "filename": "core/res/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3415,
+      "author": {
+        "id": 1833664
+      },
+      "writtenOn": "2022-03-18T23:41:44Z",
+      "side": 1,
+      "message": "I\u0027ve fixed this in ag/17261306\n\nI\u0027ll merge it once that change is in. I may also have to abandon and restart this review so that the Change-Id matches (I couldn\u0027t get gerrit to accept the same Change-Id as this change).",
+      "parentUuid": "7ac23f9f_c09f2a1d",
+      "range": {
+        "startLine": 3415,
+        "startChar": 49,
+        "endLine": 3415,
+        "endChar": 70
+      },
+      "revId": "413a5e7162c2f3619d497672232af31ddaec6261",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
