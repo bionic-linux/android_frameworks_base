@@ -33,6 +33,23 @@
       "message": "+1 for the lint warning. The iccCloseLogicalChannel is intended to be internal only, it should not be used by applications. ",
       "revId": "749cd1b187a04483e14097a978023bea2ab046d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "620e0c8f_7fb4e87f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2022-03-22T23:19:18Z",
+      "side": 1,
+      "message": "+2 to lint warning instead.",
+      "revId": "749cd1b187a04483e14097a978023bea2ab046d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
