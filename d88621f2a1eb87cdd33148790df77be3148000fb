@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88b43998_05deddf7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1301101
+      },
+      "writtenOn": "2022-03-23T21:51:26Z",
+      "side": 1,
+      "message": "Need owner approval on file ActivityTaskSupervisorTests.java from Andrii or Riddle. ",
+      "revId": "d88621f2a1eb87cdd33148790df77be3148000fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
