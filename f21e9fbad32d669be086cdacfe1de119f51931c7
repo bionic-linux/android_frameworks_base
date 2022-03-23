@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "878a18e3_73f550af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1301101
+      },
+      "writtenOn": "2022-03-23T00:38:32Z",
+      "side": 1,
+      "message": "There are build failures, deletePendingTopUid() is called from ActivityTaskSupervisorTests.java file. \n\naosp_bramble-userdebug on git_master\n\nError: the build failed.\n```\nBuildbot Version: androidbuild_buildbot_20220314.00_RC00\nMachine: prod27-gpln\n...IANT\u003duserdebug droid dist DIST_DIR\u003d/buildbot/dist_dirs/git_master-linux-aosp_bramble-userdebug/P31783272 checkbuild continuous_instrumentation_tests continuous_native_tests device-tests platform_tests\nFAILED: out/soong/.intermediates/frameworks/base/services/tests/wmtests/WmTests/android_common/javac/WmTests.jar\n...termediates/frameworks/base/services/tests/wmtests/WmTests/android_common/javac/classes \u0026\u0026 rm -rf \"out/soong/.intermediates/frameworks/base/services/tests/wmtests/WmTests/android_common/javac/srcjars\"\n...meworks/base/services/tests/wmtests/src/com/android/server/wm/ActivityTaskSupervisorTests.java:287: error: method deletePendingTopUid in class ActivityManagerInternal cannot be applied to given types;\n        mAtm.mAmInternal.deletePendingTopUid(activity1.getUid());\n                        ^\n  required: int,long\n  found: int\n  reason: actual and formal argument lists differ in length\n1 error\n\n```\nmore detailed logs are available at: https://android-build.googleplex.com/builds/pending/P31783272/aosp_bramble-userdebug/latest/view/logs/build.log\nREFERENCE BUILD ID: 8339129\nNOTE: This is a checkbuild(go/checkbuild). It takes longer and could uncover errors not found in other builds.",
+      "revId": "f21e9fbad32d669be086cdacfe1de119f51931c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
