@@ -16,6 +16,23 @@
       "message": "Pure cherry-pick from internal to aosp.",
       "revId": "0aff5099d52dd83aa1a1226a3f1ebcbe1048a0ac",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85739a13_50d2061e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1609802
+      },
+      "writtenOn": "2022-03-24T19:48:16Z",
+      "side": 1,
+      "message": "Lint +2 to ignore the \"Bloat Buster\" warning. This is clean up CL, it doesn\u0027t make sense believe this Cl is the root cause of img size increase.\n",
+      "revId": "0aff5099d52dd83aa1a1226a3f1ebcbe1048a0ac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
