@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8de1a5d_d27ee4dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1301101
+      },
+      "writtenOn": "2022-03-24T05:55:56Z",
+      "side": 1,
+      "message": "apct/device_boot_health_check_extra is previous presubmit run is already broken. \n\nNeed this fix for sc-qpr3 release. ",
+      "revId": "2da542d3685d9e4971823ef1b6b9c38479da6506",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
