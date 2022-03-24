@@ -3,7 +3,10 @@
 mstogaitis@google.com
 wyattriley@google.com
 etn@google.com
-weiwa@google.com
+dnchrist@google.com
+sooniln@google.com
+lifu@google.com
+yuhany@google.com
 
 # ContextHub team
 per-file *ContextHub*,*NanoApp* = file:platform/system/chre:/OWNERS
