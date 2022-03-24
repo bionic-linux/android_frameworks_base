@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc75b6c2_eda139eb",
+        "filename": "services/core/java/com/android/server/am/PendingStartActivityUids.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1895640
+      },
+      "writtenOn": "2022-03-24T02:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f25394e_52821ef9",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 15
+      },
+      "revId": "d88621f2a1eb87cdd33148790df77be3148000fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "729c1886_da657c40",
@@ -58,6 +82,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf131487_f7a3bea8",
+        "filename": "services/core/java/com/android/server/am/PendingStartActivityUids.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1895640
+      },
+      "writtenOn": "2022-03-24T02:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "729c1886_da657c40",
+      "revId": "d88621f2a1eb87cdd33148790df77be3148000fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2226cbcc_07698a1a",
@@ -71,6 +113,30 @@
       "writtenOn": "2022-03-24T01:18:28Z",
       "side": 1,
       "message": "Simply use Long.MAX_VALUE",
+      "range": {
+        "startLine": 287,
+        "startChar": 65,
+        "endLine": 287,
+        "endChar": 105
+      },
+      "revId": "d88621f2a1eb87cdd33148790df77be3148000fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c84fa08_56e1aad8",
+        "filename": "services/tests/wmtests/src/com/android/server/wm/ActivityTaskSupervisorTests.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1895640
+      },
+      "writtenOn": "2022-03-24T02:54:52Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "2226cbcc_07698a1a",
       "range": {
         "startLine": 287,
         "startChar": 65,
