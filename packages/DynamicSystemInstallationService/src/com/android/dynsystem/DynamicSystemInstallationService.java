@@ -486,9 +486,26 @@ public class DynamicSystemInstallationService extends Service
 
         switch (status) {
             case STATUS_IN_PROGRESS:
-                builder.setContentText(getString(R.string.notification_install_inprogress));
+                String msgInProgress = getString(R.string.notification_install_inprogress);
 
-                if (mInstallTaskProgress != null) {
+                if (mInstallTaskProgress == null) {
+                    builder.setContentText(msgInProgress);
+                } else {
+                    if (mInstallTaskProgress.totalPartitionNumber > 0) {
+                        builder.setContentText(
+                                String.format(
+                                        "%s: %s partition [%d/%d]",
+                                        msgInProgress,
+                                        mInstallTaskProgress.partitionName,
+                                        mInstallTaskProgress.partitionNumber,
+                                        mInstallTaskProgress.totalPartitionNumber));
+                    } else {
+                        builder.setContentText(
+                                String.format(
+                                        "%s: %s partition",
+                                        msgInProgress, mInstallTaskProgress.partitionName));
+                    }
+
                     if (mInstallTaskProgress.totalPartitionNumber > 0) {
                         // totalProgressPercentage is defined iff totalPartitionNumber is defined
                         builder.setProgress(
