@@ -113,22 +113,25 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
 
     static class Progress {
         public final String partitionName;
-        public final long installedSize;
-        public final long partitionSize;
+        public final long installedBytes;
+        public final long totalBytes;
         public final int partitionNumber;
         public final int totalPartitionNumber;
+        public final int totalProgressPercentage;
 
         Progress(
                 String partitionName,
-                long installedSize,
-                long partitionSize,
+                long installedBytes,
+                long totalBytes,
                 int partitionNumber,
-                int totalPartitionNumber) {
+                int totalPartitionNumber,
+                int totalProgressPercentage) {
             this.partitionName = partitionName;
-            this.installedSize = installedSize;
-            this.partitionSize = partitionSize;
+            this.installedBytes = installedBytes;
+            this.totalBytes = totalBytes;
             this.partitionNumber = partitionNumber;
             this.totalPartitionNumber = totalPartitionNumber;
+            this.totalProgressPercentage = totalProgressPercentage;
         }
     }
 
@@ -149,16 +152,25 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
     private final ProgressListener mListener;
     private final boolean mIsNetworkUrl;
     private final boolean mIsDeviceBootloaderUnlocked;
+    private final boolean mWantScratchPartition;
     private DynamicSystemManager.Session mInstallationSession;
     private KeyRevocationList mKeyRevocationList;
 
     private boolean mIsZip;
     private boolean mIsCompleted;
 
-    private String mPartitionName;
-    private long mPartitionSize;
-    private int mPartitionNumber;
-    private int mTotalPartitionNumber;
+    private String mProgressPartitionName;
+    private long mProgressTotalBytes;
+    private int mProgressPartitionNumber;
+    private boolean mProgressPartitionIsReadonly;
+    private int mProgressCompletedReadonlyPartitions;
+    private int mProgressCompletedWritablePartitions;
+    private static final double PROGRESS_READONLY_PARTITION_WEIGHT = 0.8;
+    private static final double PROGRESS_WRITABLE_PARTITION_WEIGHT = 0.2;
+
+    private boolean mHasTotalPartitionNumber;
+    private int mTotalReadonlyPartitions;
+    private int mTotalWritablePartitions;
 
     private InputStream mStream;
     private ZipFile mZipFile;
@@ -193,21 +205,18 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
                 (pdbManager != null)
                         && (pdbManager.getFlashLockState()
                                 == PersistentDataBlockManager.FLASH_LOCK_UNLOCKED);
+        mWantScratchPartition = Build.IS_DEBUGGABLE;
     }
 
     @Override
     protected Throwable doInBackground(String... voids) {
         Log.d(TAG, "Start doInBackground(), URL: " + mUrl);
 
-        final boolean wantScratchPartition = Build.IS_DEBUGGABLE;
         try {
             // call DynamicSystemManager to cleanup stuff
             mDynSystem.remove();
 
             verifyAndPrepare();
-            if (wantScratchPartition) {
-                ++mTotalPartitionNumber;
-            }
 
             mDynSystem.startInstallation(mDsuSlot);
 
@@ -226,7 +235,7 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
                 return null;
             }
 
-            if (wantScratchPartition) {
+            if (mWantScratchPartition) {
                 // If host is debuggable, then install a scratch partition so that we can do
                 // adb remount in the guest system.
                 try {
@@ -290,14 +299,65 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
     }
 
     @Override
-    protected void onProgressUpdate(Long... installedSize) {
+    protected void onProgressUpdate(Long... progress) {
+        final long installedBytes = progress[0];
+        int totalPartitions = 0;
+        int totalProgressPercentage = 0;
+        if (mHasTotalPartitionNumber) {
+            totalPartitions = mTotalReadonlyPartitions + mTotalWritablePartitions;
+            double totalProgress = 0.0;
+            if (mProgressTotalBytes > 0 && mTotalReadonlyPartitions > 0) {
+                if (mProgressPartitionIsReadonly) {
+                    totalProgress +=
+                            PROGRESS_READONLY_PARTITION_WEIGHT
+                                    * installedBytes
+                                    / mProgressTotalBytes
+                                    / mTotalReadonlyPartitions;
+                } else {
+                    totalProgress +=
+                            PROGRESS_WRITABLE_PARTITION_WEIGHT
+                                    * installedBytes
+                                    / mProgressTotalBytes
+                                    / mTotalWritablePartitions;
+                }
+            }
+            if (mTotalReadonlyPartitions > 0) {
+                totalProgress +=
+                        PROGRESS_READONLY_PARTITION_WEIGHT
+                                * mProgressCompletedReadonlyPartitions
+                                / mTotalReadonlyPartitions;
+            }
+            if (mTotalWritablePartitions > 0) {
+                totalProgress +=
+                        PROGRESS_WRITABLE_PARTITION_WEIGHT
+                                * mProgressCompletedWritablePartitions
+                                / mTotalWritablePartitions;
+            }
+            totalProgressPercentage = (int) (totalProgress * 100);
+        }
         mListener.onProgressUpdate(
                 new Progress(
-                        mPartitionName,
-                        installedSize[0],
-                        mPartitionSize,
-                        mPartitionNumber,
-                        mTotalPartitionNumber));
+                        mProgressPartitionName,
+                        installedBytes,
+                        mProgressTotalBytes,
+                        mProgressPartitionNumber,
+                        totalPartitions,
+                        totalProgressPercentage));
+    }
+
+    private void initPartitionProgress(String partitionName, long totalBytes, boolean readonly) {
+        if (mProgressPartitionNumber > 0) {
+            // Assume previous partition completed successfully.
+            if (mProgressPartitionIsReadonly) {
+                ++mProgressCompletedReadonlyPartitions;
+            } else {
+                ++mProgressCompletedWritablePartitions;
+            }
+        }
+        mProgressPartitionName = partitionName;
+        mProgressTotalBytes = totalBytes;
+        mProgressPartitionIsReadonly = readonly;
+        ++mProgressPartitionNumber;
     }
 
     private void verifyAndPrepare() throws Exception {
@@ -314,16 +374,12 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
             throw new UnsupportedFormatException(
                 String.format(Locale.US, "Unsupported file format: %s", mUrl));
         }
-        // At least two partitions, {system, userdata}
-        mTotalPartitionNumber = 2;
 
         if (mIsNetworkUrl) {
             mStream = new URL(mUrl).openStream();
         } else if (URLUtil.isFileUrl(mUrl)) {
             if (mIsZip) {
                 mZipFile = new ZipFile(new File(new URL(mUrl).toURI()));
-                // {*.img in zip} + {userdata}
-                mTotalPartitionNumber = calculateNumberOfImagesInLocalZip(mZipFile) + 1;
             } else {
                 mStream = new URL(mUrl).openStream();
             }
@@ -332,6 +388,29 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
         } else {
             throw new UnsupportedUrlException(
                     String.format(Locale.US, "Unsupported URL: %s", mUrl));
+        }
+
+        mHasTotalPartitionNumber = false;
+        if (mIsZip) {
+            if (mZipFile != null) {
+                // {*.img in zip} + {userdata}
+                mHasTotalPartitionNumber = true;
+                mTotalReadonlyPartitions = calculateNumberOfImagesInLocalZip(mZipFile);
+                mTotalWritablePartitions = 1;
+            } else {
+                // TODO: Come up with a way to retrieve the number of total partitions from
+                // network URL.
+            }
+        } else {
+            // gzip has exactly two partitions, {system, userdata}
+            mHasTotalPartitionNumber = true;
+            mTotalReadonlyPartitions = 1;
+            mTotalWritablePartitions = 1;
+        }
+
+        if (mHasTotalPartitionNumber && mWantScratchPartition) {
+            // {scratch}
+            ++mTotalWritablePartitions;
         }
 
         try {
@@ -370,9 +449,7 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
             }
         };
 
-        mPartitionName = partitionName;
-        mPartitionSize = partitionSize;
-        ++mPartitionNumber;
+        initPartitionProgress(partitionName, partitionSize, /* readonly = */ false);
         publishProgress(/* installedSize = */ 0L);
 
         long prevInstalledSize = 0;
@@ -394,6 +471,10 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
             } catch (InterruptedException e) {
                 // Ignore the error.
             }
+        }
+
+        if (prevInstalledSize != partitionSize) {
+            publishProgress(partitionSize);
         }
 
         if (mInstallationSession == null) {
@@ -559,9 +640,7 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
 
         mInstallationSession.setAshmem(pfd, memoryFile.length());
 
-        mPartitionName = partitionName;
-        mPartitionSize = partitionSize;
-        ++mPartitionNumber;
+        initPartitionProgress(partitionName, partitionSize, /* readonly = */ true);
         publishProgress(/* installedSize = */ 0L);
 
         long prevInstalledSize = 0;
@@ -586,6 +665,10 @@ class InstallationAsyncTask extends AsyncTask<String, Long, Throwable> {
                 publishProgress(installedSize);
                 prevInstalledSize = installedSize;
             }
+        }
+
+        if (prevInstalledSize != partitionSize) {
+            publishProgress(partitionSize);
         }
 
         AvbPublicKey avbPublicKey = new AvbPublicKey();
