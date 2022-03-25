@@ -22,6 +22,30 @@
       },
       "revId": "51ff633a75d3ce8929523912e9e8d3cb1a143793",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93063fe9_772a58dd",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-03-25T16:23:23Z",
+      "side": 1,
+      "message": "good catch! Although only for a short while, the progress do start at zero, so there is a short while when totalProgressPercentage \u003d\u003d 0 but totalPartitionNumber \u003e 0.",
+      "parentUuid": "77218385_a56da07a",
+      "range": {
+        "startLine": 492,
+        "startChar": 24,
+        "endLine": 492,
+        "endChar": 72
+      },
+      "revId": "51ff633a75d3ce8929523912e9e8d3cb1a143793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
