@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77218385_a56da07a",
+        "filename": "packages/DynamicSystemInstallationService/src/com/android/dynsystem/DynamicSystemInstallationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2022-03-25T15:47:09Z",
+      "side": 1,
+      "message": "check (mInstallTaskProgress.totalPartitionNumber \u003e 0) instead?",
+      "range": {
+        "startLine": 492,
+        "startChar": 24,
+        "endLine": 492,
+        "endChar": 72
+      },
+      "revId": "51ff633a75d3ce8929523912e9e8d3cb1a143793",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
