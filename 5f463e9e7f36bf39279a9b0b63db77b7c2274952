@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab5dea10_eaaf8ef0",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2022-03-25T09:07:18Z",
+      "side": 1,
+      "message": "Note for Jean-Michel: it seems that we do not need the fromA2dp arguement any more. both MSG_REPORT_NEW_ROUTES and MSG_REPORT_NEW_ROUTES_A2DP are doing the same thing.",
+      "range": {
+        "startLine": 1105,
+        "startChar": 55,
+        "endLine": 1105,
+        "endChar": 63
+      },
+      "revId": "5f463e9e7f36bf39279a9b0b63db77b7c2274952",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
