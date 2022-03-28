@@ -16,6 +16,46 @@
       "message": "Updating per previous discussion. Please lmk if you want a different set of people (can\u0027t remember exactly who we discussed).",
       "revId": "b19d08e17333a2f7283ee7af2ac60ad72ba2f2a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2db5fef_567f1810",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1105161
+      },
+      "writtenOn": "2022-03-28T15:06:33Z",
+      "side": 1,
+      "message": "lgtm.  Optionally sort the names.",
+      "revId": "b19d08e17333a2f7283ee7af2ac60ad72ba2f2a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d547ce0a_3a74488f",
+        "filename": "core/java/android/hardware/location/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1105161
+      },
+      "writtenOn": "2022-03-28T15:06:33Z",
+      "side": 1,
+      "message": "nit: I\u0027ve often seen these alphabetized (manually) presumably so it\u0027s easier to find a name?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 8
+      },
+      "revId": "b19d08e17333a2f7283ee7af2ac60ad72ba2f2a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
