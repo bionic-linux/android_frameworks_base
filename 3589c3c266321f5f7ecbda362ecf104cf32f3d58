@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "29a893c9_57e183a2",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13934,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2022-03-28T17:22:54Z",
+      "side": 1,
+      "message": "\"port\"?",
+      "range": {
+        "startLine": 13934,
+        "startChar": 11,
+        "endLine": 13934,
+        "endChar": 15
+      },
+      "revId": "3589c3c266321f5f7ecbda362ecf104cf32f3d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3e998daf_c0498c78",
         "filename": "telephony/java/android/telephony/TelephonyManager.java",
         "patchSetId": 1
