@@ -56,6 +56,30 @@
       },
       "revId": "b19d08e17333a2f7283ee7af2ac60ad72ba2f2a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e000d09_1266de4f",
+        "filename": "core/java/android/hardware/location/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1019174
+      },
+      "writtenOn": "2022-03-28T16:27:11Z",
+      "side": 1,
+      "message": "Done I was wondering if the fact that they weren\u0027t alphabetized meant in Android it\u0027s a priority system. Though Marc probably doesn\u0027t want to get all the bugs and CLs anyway. :)",
+      "parentUuid": "d547ce0a_3a74488f",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 8
+      },
+      "revId": "b19d08e17333a2f7283ee7af2ac60ad72ba2f2a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
