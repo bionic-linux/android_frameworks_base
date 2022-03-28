@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "674aa134_006ee170",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13934,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-03-28T18:34:06Z",
+      "side": 1,
+      "message": "what is sim index? SIM port?",
+      "range": {
+        "startLine": 13934,
+        "startChar": 7,
+        "endLine": 13934,
+        "endChar": 16
+      },
+      "revId": "9fe530bbf2743c106dc64c25b962729d239e20af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
