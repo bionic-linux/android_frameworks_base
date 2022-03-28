@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e998daf_c0498c78",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13936,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2022-03-28T17:22:32Z",
+      "side": 1,
+      "message": "Please add a TODO(b/###) so we don\u0027t forget to expose this as public in U. Or better yet, immediately follow this up on internal master (which is already U) to expose it as a constant now",
+      "range": {
+        "startLine": 13936,
+        "startChar": 5,
+        "endLine": 13936,
+        "endChar": 7
+      },
+      "revId": "3589c3c266321f5f7ecbda362ecf104cf32f3d58",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
