@@ -46,6 +46,30 @@
       },
       "revId": "5d7e50b822aca32199664c148d57a365b59edaef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "311d0739_36953b35",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13937,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-03-28T19:57:52Z",
+      "side": 1,
+      "message": "Bug will be to remove @hide ..not for public modifier",
+      "parentUuid": "4aac9421_9c363c83",
+      "range": {
+        "startLine": 13937,
+        "startChar": 4,
+        "endLine": 13937,
+        "endChar": 10
+      },
+      "revId": "5d7e50b822aca32199664c148d57a365b59edaef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
