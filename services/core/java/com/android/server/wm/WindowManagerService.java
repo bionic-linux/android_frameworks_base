@@ -1241,8 +1241,9 @@ public class WindowManagerService extends IWindowManager.Stub
                 com.android.internal.R.integer.config_drawLockTimeoutMillis);
         mAllowAnimationsInLowPowerMode = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_allowAnimationsInLowPowerMode);
-        mMaxUiWidth = context.getResources().getInteger(
-                com.android.internal.R.integer.config_maxUiWidth);
+        mMaxUiWidth = SystemProperties.getInt("ro.vendor.max_ui_width", 
+                context.getResources().getInteger(com.android.internal.R.integer.config_maxUiWidth));
+
         mDisableTransitionAnimation = context.getResources().getBoolean(
                 com.android.internal.R.bool.config_disableTransitionAnimation);
         mPerDisplayFocusEnabled = context.getResources().getBoolean(
