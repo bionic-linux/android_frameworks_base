@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d336ef0_9bc40459",
+        "filename": "telephony/java/android/telephony/TelephonyManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 13937,
+      "author": {
+        "id": 1124543
+      },
+      "writtenOn": "2022-03-28T18:46:34Z",
+      "side": 1,
+      "message": "// TODO(b/...) expose as public API in a future release",
+      "range": {
+        "startLine": 13937,
+        "startChar": 4,
+        "endLine": 13937,
+        "endChar": 10
+      },
+      "revId": "5d7e50b822aca32199664c148d57a365b59edaef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
