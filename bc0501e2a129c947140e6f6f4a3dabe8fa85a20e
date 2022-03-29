@@ -22,6 +22,30 @@
       },
       "revId": "bc0501e2a129c947140e6f6f4a3dabe8fa85a20e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "663847b9_876085c7",
+        "filename": "services/core/java/com/android/server/stats/pull/StatsPullAtomService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1638,
+      "author": {
+        "id": 1880948
+      },
+      "writtenOn": "2022-03-29T19:22:50Z",
+      "side": 1,
+      "message": "You\u0027re right, I\u0027ll make the change in a follow-up CL just so this topic can be merged for the deadline, thanks for catching it!",
+      "parentUuid": "ba83a14a_1fc320e4",
+      "range": {
+        "startLine": 1637,
+        "startChar": 28,
+        "endLine": 1638,
+        "endChar": 87
+      },
+      "revId": "bc0501e2a129c947140e6f6f4a3dabe8fa85a20e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
