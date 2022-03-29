@@ -674,6 +674,38 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         });
     }
 
+    private void enforceCarrierPrivilegeOrProvisioningPackage(
+            @NonNull ParcelUuid subscriptionGroup, @NonNull String pkg) {
+        // Only apps running in the primary (system) user are allowed to configure the VCN. This is
+        // in line with Telephony's behavior with regards to binding to a Carrier App provided
+        // CarrierConfigService.
+        enforcePrimaryUser();
+
+        // Try-finally to return early if matching owned subscription found.
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            if (isProvisioningPackageForConfig(subscriptionGroup, pkg)) {
+                return;
+            }
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
+
+        enforceCallingUserAndCarrierPrivilege(subscriptionGroup, pkg);
+    }
+
+    private boolean isProvisioningPackageForConfig(
+            @NonNull ParcelUuid subscriptionGroup, @NonNull String pkg) {
+        synchronized (mLock) {
+            final VcnConfig config = mConfigs.get(subscriptionGroup);
+            if (config != null && pkg.equals(config.getProvisioningPackageName())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Clears the VcnManagementService for a given subscription group.
      *
@@ -687,7 +719,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), opPkgName);
-        enforceCallingUserAndCarrierPrivilege(subscriptionGroup, opPkgName);
+        enforceCarrierPrivilegeOrProvisioningPackage(subscriptionGroup, opPkgName);
 
         Binder.withCleanCallingIdentity(() -> {
             synchronized (mLock) {
@@ -711,7 +743,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     /**
      * Retrieves the list of subscription groups with configured VcnConfigs
      *
-     * <p>Limited to subscription groups for which the caller is carrier privileged.
+     * <p>Limited to subscription groups for which the caller had configured.
      *
      * <p>Implements the IVcnManagementService Binder interface.
      */
@@ -727,7 +759,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         final List<ParcelUuid> result = new ArrayList<>();
         synchronized (mLock) {
             for (ParcelUuid subGrp : mConfigs.keySet()) {
-                if (mLastSnapshot.packageHasPermissionsForSubscriptionGroup(subGrp, opPkgName)) {
+                if (mLastSnapshot.packageHasPermissionsForSubscriptionGroup(subGrp, opPkgName)
+                        || isProvisioningPackageForConfig(subGrp, opPkgName)) {
                     result.add(subGrp);
                 }
             }
