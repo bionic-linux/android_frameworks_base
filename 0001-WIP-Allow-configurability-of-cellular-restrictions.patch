@@ -1,0 +1,353 @@
+From f2efc474d1d2984956c44bcad6f0b35339fa2108 Mon Sep 17 00:00:00 2001
+From: Benedict Wong <benedictwong@google.com>
+Date: Fri, 8 Apr 2022 01:07:06 +0000
+Subject: [PATCH] WIP Allow configurability of cellular restrictions
+
+Change-Id: I46a926b0c8ca396c6e08fd8cf34a4a7ff9b58ff7
+---
+ core/java/android/net/vcn/VcnManager.java     | 25 ++++++++--
+ .../android/server/VcnManagementService.java  | 27 ++++++++--
+ .../vcn/TelephonySubscriptionTracker.java     | 49 ++++++++++++++++---
+ .../UnderlyingNetworkController.java          | 23 ++-------
+ .../vcn/TelephonySubscriptionTrackerTest.java | 17 +++++--
+ .../vcn/VcnGatewayConnectionTestBase.java     |  1 +
+ 6 files changed, 105 insertions(+), 37 deletions(-)
+
+diff --git a/core/java/android/net/vcn/VcnManager.java b/core/java/android/net/vcn/VcnManager.java
+index 390c3b9453c2..f4d9d3d55a31 100644
+--- a/core/java/android/net/vcn/VcnManager.java
++++ b/core/java/android/net/vcn/VcnManager.java
+@@ -80,8 +80,6 @@ public class VcnManager {
+      * <p>The VCN will only migrate to a Carrier WiFi network that has a signal strength greater
+      * than, or equal to this threshold.
+      *
+-     * <p>WARNING: The VCN does not listen for changes to this key made after VCN startup.
+-     *
+      * @hide
+      */
+     @NonNull
+@@ -94,8 +92,6 @@ public class VcnManager {
+      * <p>If the VCN's selected Carrier WiFi network has a signal strength less than this threshold,
+      * the VCN will attempt to migrate away from the Carrier WiFi network.
+      *
+-     * <p>WARNING: The VCN does not listen for changes to this key made after VCN startup.
+-     *
+      * @hide
+      */
+     @NonNull
+@@ -104,6 +100,27 @@ public class VcnManager {
+ 
+     // TODO: Add separate signal strength thresholds for 2.4 GHz and 5GHz
+ 
++    /**
++     * Key to enable marking cellular, internet-providing networks as restricted
++     *
++     * <p>If enabled, the VCN will configure internet-providing underlying cellular networks as
++     * RESTRICTED. This forces apps to use the VCN instead of the underlying network. Defaults to
++     * {@code false}
++     *
++     * @hide
++     */
++    @NonNull
++    public static final String VCN_UNDERLYING_CELLULAR_FORCE_RESTRICTED_KEY =
++            "vcn_underlying_cellular_force_restricted";
++
++    /**
++     * Default value for the VCN_UNDERLYING_CELLULAR_FORCE_RESTRICTED_KEY key.
++     *
++     * @hide
++     */
++    @NonNull
++    public static final boolean DEFAULT_VCN_UNDERLYING_CELLULAR_FORCE_RESTRICTED_KEY = false;
++
+     private static final Map<
+                     VcnNetworkPolicyChangeListener, VcnUnderlyingNetworkPolicyListenerBinder>
+             REGISTERED_POLICY_LISTENERS = new ConcurrentHashMap<>();
+diff --git a/services/core/java/com/android/server/VcnManagementService.java b/services/core/java/com/android/server/VcnManagementService.java
+index 2d328d8b0949..b87fc66b46bf 100644
+--- a/services/core/java/com/android/server/VcnManagementService.java
++++ b/services/core/java/com/android/server/VcnManagementService.java
+@@ -47,6 +47,7 @@ import android.net.vcn.IVcnManagementService;
+ import android.net.vcn.IVcnStatusCallback;
+ import android.net.vcn.IVcnUnderlyingNetworkPolicyListener;
+ import android.net.vcn.VcnConfig;
++import android.net.vcn.VcnManager;
+ import android.net.vcn.VcnManager.VcnErrorCode;
+ import android.net.vcn.VcnManager.VcnStatusCode;
+ import android.net.vcn.VcnUnderlyingNetworkPolicy;
+@@ -836,6 +837,17 @@ public class VcnManagementService extends IVcnManagementService.Stub {
+         return subGrp;
+     }
+ 
++    private boolean shouldRestrictCellularInternetForSubGrp(@NonNull ParcelUuid subGrp) {
++        final PersistableBundle carrierConfig = mLastSnapshot.getCarrierConfigForSubGrp(subGrp);
++        if (carrierConfig != null) {
++            return carrierConfig.getBoolean(
++                VcnManager.VCN_UNDERLYING_CELLULAR_FORCE_RESTRICTED_KEY,
++                VcnManager.DEFAULT_VCN_UNDERLYING_CELLULAR_FORCE_RESTRICTED_KEY);
++        }
++
++        return VcnManager.DEFAULT_VCN_UNDERLYING_CELLULAR_FORCE_RESTRICTED_KEY;
++    }
++
+     /**
+      * Gets the UnderlyingNetworkPolicy as determined by the provided NetworkCapabilities and
+      * LinkProperties.
+@@ -870,17 +882,24 @@ public class VcnManagementService extends IVcnManagementService.Stub {
+ 
+             final ParcelUuid subGrp = getSubGroupForNetworkCapabilities(ncCopy);
+             boolean isVcnManagedNetwork = false;
+-            boolean isRestrictedCarrierWifi = false;
++            boolean isRestricted = false;
+             synchronized (mLock) {
++                final boolean shouldRestrictCellularInternet =
++                        shouldRestrictCellularInternetForSubGrp(subGrp);
++
+                 final Vcn vcn = mVcns.get(subGrp);
+                 if (vcn != null) {
+                     if (vcn.getStatus() == VCN_STATUS_CODE_ACTIVE) {
+                         isVcnManagedNetwork = true;
+                     }
+ 
+-                    if (ncCopy.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
++                    if (ncCopy.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
++                            || (shouldRestrictCellularInternet
++                                    && ncCopy.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
++                                    && ncCopy.hasCapability(
++                                                NetworkCapabilities.NET_CAPABILITY_INTERNET))) {
+                         // Carrier WiFi always restricted if VCN exists (even in safe mode).
+-                        isRestrictedCarrierWifi = true;
++                        isRestricted = true;
+                     }
+                 }
+             }
+@@ -894,7 +913,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
+                 ncBuilder.addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VCN_MANAGED);
+             }
+ 
+-            if (isRestrictedCarrierWifi) {
++            if (isRestricted) {
+                 ncBuilder.removeCapability(
+                         NetworkCapabilities.NET_CAPABILITY_NOT_RESTRICTED);
+             }
+diff --git a/services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java b/services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java
+index 89470ec00a6c..312d6aa654fc 100644
+--- a/services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java
++++ b/services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java
+@@ -95,6 +95,7 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
+ 
+     // TODO (Android T+): Add ability to handle multiple subIds per slot.
+     @NonNull private final Map<Integer, Integer> mReadySubIdsBySlotId = new HashMap<>();
++    @NonNull private final Map<Integer, PersistableBundle> mCarrierConfigsBySubId = new HashMap<>();
+     @NonNull private final OnSubscriptionsChangedListener mSubscriptionChangedListener;
+ 
+     @NonNull
+@@ -250,7 +251,7 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
+ 
+         final TelephonySubscriptionSnapshot newSnapshot =
+                 new TelephonySubscriptionSnapshot(
+-                        mDeps.getActiveDataSubscriptionId(), newSubIdToInfoMap, privilegedPackages);
++                        mDeps.getActiveDataSubscriptionId(), newSubIdToInfoMap, privilegedPackages, mCarrierConfigsBySubId);
+ 
+         // If snapshot was meaningfully updated, fire the callback
+         if (!newSnapshot.equals(mCurrentSnapshot)) {
+@@ -311,13 +312,17 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
+         }
+ 
+         if (SubscriptionManager.isValidSubscriptionId(subId)) {
+-            final PersistableBundle carrierConfigs = mCarrierConfigManager.getConfigForSubId(subId);
+-            if (mDeps.isConfigForIdentifiedCarrier(carrierConfigs)) {
++            final PersistableBundle carrierConfig = mCarrierConfigManager.getConfigForSubId(subId);
++            if (mDeps.isConfigForIdentifiedCarrier(carrierConfig)) {
+                 mReadySubIdsBySlotId.put(slotId, subId);
++                mCarrierConfigsBySubId.put(subId, carrierConfig);
+                 handleSubscriptionsChanged();
+             }
+         } else {
+-            mReadySubIdsBySlotId.remove(slotId);
++            final Integer oldSubid = mReadySubIdsBySlotId.remove(slotId);
++            if (oldSubid != null) {
++                mCarrierConfigsBySubId.remove(oldSubid);
++            }
+             handleSubscriptionsChanged();
+         }
+     }
+@@ -337,19 +342,22 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
+         private final int mActiveDataSubId;
+         private final Map<Integer, SubscriptionInfo> mSubIdToInfoMap;
+         private final Map<ParcelUuid, Set<String>> mPrivilegedPackages;
++        private final Map<Integer, PersistableBundle> mCarrierConfigsBySubId;
+ 
+         public static final TelephonySubscriptionSnapshot EMPTY_SNAPSHOT =
+                 new TelephonySubscriptionSnapshot(
+-                        INVALID_SUBSCRIPTION_ID, Collections.emptyMap(), Collections.emptyMap());
++                        INVALID_SUBSCRIPTION_ID, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
+ 
+         @VisibleForTesting(visibility = Visibility.PRIVATE)
+         TelephonySubscriptionSnapshot(
+                 int activeDataSubId,
+                 @NonNull Map<Integer, SubscriptionInfo> subIdToInfoMap,
+-                @NonNull Map<ParcelUuid, Set<String>> privilegedPackages) {
++                @NonNull Map<ParcelUuid, Set<String>> privilegedPackages,
++                @NonNull Map<Integer, PersistableBundle> carrierConfigsBySubId) {
+             mActiveDataSubId = activeDataSubId;
+             Objects.requireNonNull(subIdToInfoMap, "subIdToInfoMap was null");
+             Objects.requireNonNull(privilegedPackages, "privilegedPackages was null");
++            Objects.requireNonNull(carrierConfigsBySubId, "carrierConfigsBySubId was null");
+ 
+             mSubIdToInfoMap = Collections.unmodifiableMap(subIdToInfoMap);
+ 
+@@ -359,6 +367,8 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
+                         entry.getKey(), Collections.unmodifiableSet(entry.getValue()));
+             }
+             mPrivilegedPackages = Collections.unmodifiableMap(unmodifiableInnerSets);
++
++            mCarrierConfigsBySubId = Collections.unmodifiableMap(carrierConfigsBySubId);
+         }
+ 
+         /** Returns the active subscription ID. May be INVALID_SUBSCRIPTION_ID */
+@@ -423,6 +433,33 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
+                     : false;
+         }
+ 
++        /**
++         * Retrieves a carrier config for a subscription in the provided group.
++         *
++         * <p>This method will prioritize non-opportunistic subscriptions, but will use the
++         * a carrier config for an opportunistic subscription if no other subscriptions are found.
++         */
++        @Nullable
++        public PersistableBundle getCarrierConfigForSubGrp(@NonNull ParcelUuid subGrp) {
++            PersistableBundle result = null;
++
++            for (int subId : getAllSubIdsInGroup(subGrp)) {
++                final PersistableBundle config = mCarrierConfigsBySubId.get(subId);
++                if (config != null) {
++                    result = config;
++
++                    // Attempt to use (any) non-opportunistic subscription. If this subscription is
++                    // opportunistic, continue and try to find a non-opportunistic subscription, using
++                    // the opportunistic ones as a last resort.
++                    if (!isOpportunistic(subId)) {
++                        return config;
++                    }
++                }
++            }
++
++            return result;
++        }
++
+         @Override
+         public int hashCode() {
+             return Objects.hash(mActiveDataSubId, mSubIdToInfoMap, mPrivilegedPackages);
+diff --git a/services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkController.java b/services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkController.java
+index ca2e449ffc25..7a0cfcd2fae4 100644
+--- a/services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkController.java
++++ b/services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkController.java
+@@ -123,25 +123,7 @@ public class UnderlyingNetworkController {
+                 .getSystemService(TelephonyManager.class)
+                 .registerTelephonyCallback(new HandlerExecutor(mHandler), mActiveDataSubIdListener);
+ 
+-        // TODO: Listen for changes in carrier config that affect this.
+-        for (int subId : mLastSnapshot.getAllSubIdsInGroup(mSubscriptionGroup)) {
+-            PersistableBundle config =
+-                    mVcnContext
+-                            .getContext()
+-                            .getSystemService(CarrierConfigManager.class)
+-                            .getConfigForSubId(subId);
+-
+-            if (config != null) {
+-                mCarrierConfig = config;
+-
+-                // Attempt to use (any) non-opportunistic subscription. If this subscription is
+-                // opportunistic, continue and try to find a non-opportunistic subscription, using
+-                // the opportunistic ones as a last resort.
+-                if (!isOpportunistic(mLastSnapshot, Collections.singleton(subId))) {
+-                    break;
+-                }
+-            }
+-        }
++        mCarrierConfig = mLastSnapshot.getCarrierConfigForSubGrp(mSubscriptionGroup);
+ 
+         registerOrUpdateNetworkRequests();
+     }
+@@ -333,6 +315,9 @@ public class UnderlyingNetworkController {
+         final TelephonySubscriptionSnapshot oldSnapshot = mLastSnapshot;
+         mLastSnapshot = newSnapshot;
+ 
++        // Update carrier config
++        mCarrierConfig = mLastSnapshot.getCarrierConfigForSubGrp(mSubscriptionGroup);
++
+         // Only trigger re-registration if subIds in this group have changed
+         if (oldSnapshot
+                 .getAllSubIdsInGroup(mSubscriptionGroup)
+diff --git a/tests/vcn/java/com/android/server/vcn/TelephonySubscriptionTrackerTest.java b/tests/vcn/java/com/android/server/vcn/TelephonySubscriptionTrackerTest.java
+index 5f606e1dab0c..635b56fd5f5e 100644
+--- a/tests/vcn/java/com/android/server/vcn/TelephonySubscriptionTrackerTest.java
++++ b/tests/vcn/java/com/android/server/vcn/TelephonySubscriptionTrackerTest.java
+@@ -53,6 +53,7 @@ import android.content.IntentFilter;
+ import android.os.Handler;
+ import android.os.HandlerExecutor;
+ import android.os.ParcelUuid;
++import android.os.PersistableBundle;
+ import android.os.test.TestLooper;
+ import android.telephony.CarrierConfigManager;
+ import android.telephony.SubscriptionInfo;
+@@ -227,14 +228,22 @@ public class TelephonySubscriptionTrackerTest {
+     private TelephonySubscriptionSnapshot buildExpectedSnapshot(
+             Map<Integer, SubscriptionInfo> subIdToInfoMap,
+             Map<ParcelUuid, Set<String>> privilegedPackages) {
+-        return new TelephonySubscriptionSnapshot(0, subIdToInfoMap, privilegedPackages);
++        return buildExpectedSnapshot(0, subIdToInfoMap, privilegedPackages);
+     }
+ 
+     private TelephonySubscriptionSnapshot buildExpectedSnapshot(
+             int activeSubId,
+             Map<Integer, SubscriptionInfo> subIdToInfoMap,
+             Map<ParcelUuid, Set<String>> privilegedPackages) {
+-        return new TelephonySubscriptionSnapshot(activeSubId, subIdToInfoMap, privilegedPackages);
++        return buildExpectedSnapshot(activeSubId, subIdToInfoMap, privilegedPackages, Collections.emptyMap());
++    }
++
++    private TelephonySubscriptionSnapshot buildExpectedSnapshot(
++            int activeSubId,
++            Map<Integer, SubscriptionInfo> subIdToInfoMap,
++            Map<ParcelUuid, Set<String>> privilegedPackages,
++            Map<Integer, PersistableBundle> carrierConfigsBySubId) {
++        return new TelephonySubscriptionSnapshot(activeSubId, subIdToInfoMap, privilegedPackages, carrierConfigsBySubId);
+     }
+ 
+     private void verifyNoActiveSubscriptions() {
+@@ -493,7 +502,7 @@ public class TelephonySubscriptionTrackerTest {
+     public void testTelephonySubscriptionSnapshotGetGroupForSubId() throws Exception {
+         final TelephonySubscriptionSnapshot snapshot =
+                 new TelephonySubscriptionSnapshot(
+-                        TEST_SUBSCRIPTION_ID_1, TEST_SUBID_TO_INFO_MAP, emptyMap());
++                        TEST_SUBSCRIPTION_ID_1, TEST_SUBID_TO_INFO_MAP, emptyMap(), emptyMap());
+ 
+         assertEquals(TEST_PARCEL_UUID, snapshot.getGroupForSubId(TEST_SUBSCRIPTION_ID_1));
+         assertEquals(TEST_PARCEL_UUID, snapshot.getGroupForSubId(TEST_SUBSCRIPTION_ID_2));
+@@ -503,7 +512,7 @@ public class TelephonySubscriptionTrackerTest {
+     public void testTelephonySubscriptionSnapshotGetAllSubIdsInGroup() throws Exception {
+         final TelephonySubscriptionSnapshot snapshot =
+                 new TelephonySubscriptionSnapshot(
+-                        TEST_SUBSCRIPTION_ID_1, TEST_SUBID_TO_INFO_MAP, emptyMap());
++                        TEST_SUBSCRIPTION_ID_1, TEST_SUBID_TO_INFO_MAP, emptyMap(), emptyMap());
+ 
+         assertEquals(
+                 new ArraySet<>(Arrays.asList(TEST_SUBSCRIPTION_ID_1, TEST_SUBSCRIPTION_ID_2)),
+diff --git a/tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTestBase.java b/tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTestBase.java
+index 5628321b5975..4d2568443885 100644
+--- a/tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTestBase.java
++++ b/tests/vcn/java/com/android/server/vcn/VcnGatewayConnectionTestBase.java
+@@ -129,6 +129,7 @@ public class VcnGatewayConnectionTestBase {
+             new TelephonySubscriptionSnapshot(
+                     TEST_SUB_ID,
+                     Collections.singletonMap(TEST_SUB_ID, TEST_SUB_INFO),
++                    Collections.EMPTY_MAP,
+                     Collections.EMPTY_MAP);
+ 
+     @NonNull protected final Context mContext;
+-- 
+2.35.1.1178.g4f1659d476-goog
+
