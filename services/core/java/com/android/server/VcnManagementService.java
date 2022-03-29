@@ -90,6 +90,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -175,7 +176,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
     @NonNull private final VcnNetworkProvider mNetworkProvider;
     @NonNull private final TelephonySubscriptionTrackerCallback mTelephonySubscriptionTrackerCb;
     @NonNull private final TelephonySubscriptionTracker mTelephonySubscriptionTracker;
-    @NonNull private final BroadcastReceiver mPkgChangeReceiver;
+    @NonNull private final BroadcastReceiver mVcnBroadcastReceiver;
 
     @NonNull
     private final TrackingNetworkCallback mTrackingNetworkCallback = new TrackingNetworkCallback();
@@ -221,28 +222,17 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         mConfigDiskRwHelper =
                 mDeps.newPersistableBundleLockingReadWriteHelper(
                         new File(mDeps.getDataSystemDeDirectory(), VCN_CONFIG_FILE).getPath());
-        mPkgChangeReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                final String action = intent.getAction();
-
-                if (Intent.ACTION_PACKAGE_ADDED.equals(action)
-                        || Intent.ACTION_PACKAGE_REPLACED.equals(action)
-                        || Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
-                    mTelephonySubscriptionTracker.handleSubscriptionsChanged();
-                } else {
-                    Log.wtf(TAG, "received unexpected intent: " + action);
-                }
-            }
-        };
+        mVcnBroadcastReceiver = new VcnBroadcastReceiver();
 
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
         intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_DATA_CLEARED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_FULLY_REMOVED);
         intentFilter.addDataScheme("package");
         mContext.registerReceiver(
-                mPkgChangeReceiver, intentFilter, null /* broadcastPermission */, mHandler);
+                mVcnBroadcastReceiver, intentFilter, null /* broadcastPermission */, mHandler);
 
         // Run on handler to ensure I/O does not block system server startup
         mHandler.post(() -> {
@@ -474,6 +464,53 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         return Objects.equals(subGrp, snapshot.getActiveDataSubscriptionGroup());
     }
 
+    private class VcnBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            switch (action) {
+                case Intent.ACTION_PACKAGE_ADDED: // Fallthrough
+                case Intent.ACTION_PACKAGE_REPLACED: // Fallthrough
+                case Intent.ACTION_PACKAGE_REMOVED:
+                    // Reevaluate subscriptions
+                    mTelephonySubscriptionTracker.handleSubscriptionsChanged();
+
+                    break;
+                case Intent.ACTION_PACKAGE_FULLY_REMOVED:
+                case Intent.ACTION_PACKAGE_DATA_CLEARED:
+                    final String pkgName = intent.getData().getSchemeSpecificPart();
+
+                    if (pkgName == null) {
+                        logWtf("Package name was null for intent with action" + action);
+                        return;
+                    }
+
+                    // Clear configs for the packages that had data cleared, or removed.
+                    synchronized (mLock) {
+                        boolean shouldWrite = false;
+                        final Iterator<Entry<ParcelUuid, VcnConfig>> configsIterator =
+                                mConfigs.entrySet().iterator();
+                        while (configsIterator.hasNext()) {
+                            final Entry<ParcelUuid, VcnConfig> entry = configsIterator.next();
+                            if (pkgName.equals(entry.getValue().getProvisioningPackageName())) {
+                                configsIterator.remove();
+                                shouldWrite = true;
+                            }
+                        }
+
+                        if (shouldWrite) {
+                            writeConfigsToDiskLocked();
+                        }
+                    }
+
+                    break;
+                default:
+                    Slog.wtf(TAG, "received unexpected intent: " + action);
+            }
+        }
+    }
+
     private class VcnSubscriptionTrackerCallback implements TelephonySubscriptionTrackerCallback {
         /**
          * Handles subscription group changes, as notified by {@link TelephonySubscriptionTracker}
@@ -535,6 +572,7 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 final Map<ParcelUuid, Set<Integer>> currSubGrpMappings =
                         getSubGroupToSubIdMappings(mLastSnapshot);
                 if (!currSubGrpMappings.equals(oldSubGrpMappings)) {
+                    garbageCollectAndWriteVcnConfigsLocked(false /* forceWrite */);
                     notifyAllPolicyListenersLocked();
                 }
             }
@@ -669,9 +707,42 @@ public class VcnManagementService extends IVcnManagementService.Stub {
                 mConfigs.put(subscriptionGroup, config);
                 startOrUpdateVcnLocked(subscriptionGroup, config);
 
-                writeConfigsToDiskLocked();
+                garbageCollectAndWriteVcnConfigsLocked(true /* forceWrite */);
             }
         });
+    }
+
+    private void enforceCarrierPrivilegeOrProvisioningPackage(
+            @NonNull ParcelUuid subscriptionGroup, @NonNull String pkg) {
+        // Only apps running in the primary (system) user are allowed to configure the VCN. This is
+        // in line with Telephony's behavior with regards to binding to a Carrier App provided
+        // CarrierConfigService.
+        enforcePrimaryUser();
+
+        if (isProvisioningPackageForConfig(subscriptionGroup, pkg)) {
+            return;
+        }
+
+        // Must NOT be called from cleared binder identity, since this checks user calling identity
+        enforceCallingUserAndCarrierPrivilege(subscriptionGroup, pkg);
+    }
+
+    private boolean isProvisioningPackageForConfig(
+            @NonNull ParcelUuid subscriptionGroup, @NonNull String pkg) {
+        // Try-finally to return early if matching owned subscription found.
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            synchronized (mLock) {
+                final VcnConfig config = mConfigs.get(subscriptionGroup);
+                if (config != null && pkg.equals(config.getProvisioningPackageName())) {
+                    return true;
+                }
+            }
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
+
+        return false;
     }
 
     /**
@@ -687,31 +758,62 @@ public class VcnManagementService extends IVcnManagementService.Stub {
 
         mContext.getSystemService(AppOpsManager.class)
                 .checkPackage(mDeps.getBinderCallingUid(), opPkgName);
-        enforceCallingUserAndCarrierPrivilege(subscriptionGroup, opPkgName);
+        enforceCarrierPrivilegeOrProvisioningPackage(subscriptionGroup, opPkgName);
 
         Binder.withCleanCallingIdentity(() -> {
-            synchronized (mLock) {
-                mConfigs.remove(subscriptionGroup);
-                final boolean vcnExists = mVcns.containsKey(subscriptionGroup);
-
-                stopVcnLocked(subscriptionGroup);
-
-                if (vcnExists) {
-                    // TODO(b/181789060): invoke asynchronously after Vcn notifies through
-                    // VcnCallback
-                    notifyAllPermissionedStatusCallbacksLocked(
-                            subscriptionGroup, VCN_STATUS_CODE_NOT_CONFIGURED);
-                }
-
-                writeConfigsToDiskLocked();
-            }
+            clearVcnConfigInternal(subscriptionGroup, opPkgName);
         });
+    }
+
+    private void clearVcnConfigInternal(
+            @NonNull ParcelUuid subscriptionGroup, @NonNull String opPkgName) {
+        synchronized (mLock) {
+            mConfigs.remove(subscriptionGroup);
+            final boolean vcnExists = mVcns.containsKey(subscriptionGroup);
+
+            stopVcnLocked(subscriptionGroup);
+
+            if (vcnExists) {
+                // TODO(b/181789060): invoke asynchronously after Vcn notifies through
+                // VcnCallback
+                notifyAllPermissionedStatusCallbacksLocked(
+                        subscriptionGroup, VCN_STATUS_CODE_NOT_CONFIGURED);
+            }
+
+            garbageCollectAndWriteVcnConfigsLocked(true /* forceWrite */);
+        }
+    }
+
+    private void garbageCollectAndWriteVcnConfigsLocked(boolean forceWrite) {
+        final SubscriptionManager subMgr = mContext.getSystemService(SubscriptionManager.class);
+
+        boolean shouldWrite = forceWrite;
+
+        final Iterator<ParcelUuid> configsIterator = mConfigs.keySet().iterator();
+        while (configsIterator.hasNext()) {
+            final ParcelUuid subGrp = configsIterator.next();
+            if (mLastSnapshot.getActiveSubscriptionGroups().contains(subGrp)) {
+                // Known active group; impossible to not have subscriptions in this group.
+                continue;
+            }
+
+            final List<SubscriptionInfo> subscriptions = subMgr.getSubscriptionsInGroup(subGrp);
+            if (subscriptions == null || subscriptions.isEmpty()) {
+                // Trim subGrps with no more subscriptions; must have moved to another subGrp
+                configsIterator.remove();
+                shouldWrite = true;
+            }
+        }
+
+        if (shouldWrite) {
+            writeConfigsToDiskLocked();
+        }
     }
 
     /**
      * Retrieves the list of subscription groups with configured VcnConfigs
      *
-     * <p>Limited to subscription groups for which the caller is carrier privileged.
+     * <p>Limited to subscription groups for which the caller had configured.
      *
      * <p>Implements the IVcnManagementService Binder interface.
      */
@@ -727,7 +829,8 @@ public class VcnManagementService extends IVcnManagementService.Stub {
         final List<ParcelUuid> result = new ArrayList<>();
         synchronized (mLock) {
             for (ParcelUuid subGrp : mConfigs.keySet()) {
-                if (mLastSnapshot.packageHasPermissionsForSubscriptionGroup(subGrp, opPkgName)) {
+                if (mLastSnapshot.packageHasPermissionsForSubscriptionGroup(subGrp, opPkgName)
+                        || isProvisioningPackageForConfig(subGrp, opPkgName)) {
                     result.add(subGrp);
                 }
             }
