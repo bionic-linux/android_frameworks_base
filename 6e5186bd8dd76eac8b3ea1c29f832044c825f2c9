@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a8e67e0_a8ca5f18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2022-03-30T12:32:18Z",
+      "side": 1,
+      "message": "This change shouldn\u0027t be affect by or affect presubmit results",
+      "revId": "6e5186bd8dd76eac8b3ea1c29f832044c825f2c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
