@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa3bbe3e_c1ee8c9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1670415
+      },
+      "writtenOn": "2022-04-03T13:08:25Z",
+      "side": 1,
+      "message": "Hi Googler, I have rebased and tested it on latest master branch. Could you help to review it again? Thanks.",
+      "revId": "fc855b4983a62acd54ec72665768b7029ae83cca",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
