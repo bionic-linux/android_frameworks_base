@@ -68,6 +68,78 @@
       },
       "revId": "b3431e17c611b17a8db02a8210253b0ff1dbbec2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2db9b081_bf3f21c6",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1543914
+      },
+      "writtenOn": "2022-04-06T16:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ce660fa_3e01da7a",
+      "range": {
+        "startLine": 201,
+        "startChar": 60,
+        "endLine": 201,
+        "endChar": 66
+      },
+      "revId": "b3431e17c611b17a8db02a8210253b0ff1dbbec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ed0986a_51090a38",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1543914
+      },
+      "writtenOn": "2022-04-06T16:51:34Z",
+      "side": 1,
+      "message": "Agree, for STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN, the user_id is always USER_ALL.\nBut when we want to support more reasons later, the user_id is not necessarily always USER_ALL.\nI prefer to keep the option.\nBut I can remove it if you\u0027d like to remove it.:)",
+      "parentUuid": "aa2ffeed_fa6e1795",
+      "range": {
+        "startLine": 201,
+        "startChar": 42,
+        "endLine": 201,
+        "endChar": 58
+      },
+      "revId": "b3431e17c611b17a8db02a8210253b0ff1dbbec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5851ac1_5bcfda12",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1543914
+      },
+      "writtenOn": "2022-04-06T16:51:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ce602f_c40807d4",
+      "range": {
+        "startLine": 201,
+        "startChar": 26,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "b3431e17c611b17a8db02a8210253b0ff1dbbec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
