@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ce660fa_3e01da7a",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-04-06T15:40:35Z",
+      "side": 1,
+      "message": "Document valid values.",
+      "range": {
+        "startLine": 201,
+        "startChar": 60,
+        "endLine": 201,
+        "endChar": 66
+      },
+      "revId": "b3431e17c611b17a8db02a8210253b0ff1dbbec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0ce602f_c40807d4",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-04-06T15:40:35Z",
+      "side": 1,
+      "message": "nit: require-strong-auth so it\u0027s consistent with the method name?",
+      "range": {
+        "startLine": 201,
+        "startChar": 26,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "b3431e17c611b17a8db02a8210253b0ff1dbbec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa2ffeed_fa6e1795",
+        "filename": "services/core/java/com/android/server/locksettings/LockSettingsShellCommand.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-04-06T15:40:35Z",
+      "side": 1,
+      "message": "you always set this to USER_ALL in the implementation, so just remove this option.",
+      "range": {
+        "startLine": 201,
+        "startChar": 42,
+        "endLine": 201,
+        "endChar": 58
+      },
+      "revId": "b3431e17c611b17a8db02a8210253b0ff1dbbec2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
