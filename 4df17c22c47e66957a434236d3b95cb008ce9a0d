@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e052faf_445ce563",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-04-07T07:20:57Z",
+      "side": 1,
+      "message": "Venkat, this CL reverts parts of a CL you had prepared previously. Can you please review it as well?",
+      "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
