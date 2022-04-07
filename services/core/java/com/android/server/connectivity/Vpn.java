@@ -2204,9 +2204,22 @@ public class Vpn {
             throw new SecurityException("Restricted users cannot establish VPNs");
         }
 
-        final RouteInfo ipv4DefaultRoute = findIPv4DefaultRoute(egress);
-        final String gateway = ipv4DefaultRoute.getGateway().getHostAddress();
-        final String iface = ipv4DefaultRoute.getInterface();
+        final RouteInfo ipv4DefaultRoute;
+        final String gateway;
+        final String iface;
+
+        // Platform VPNs manage their own underlying networks; do this only for Legacy VPN.
+        // Specifically, Platform VPNs support IPv6 connectivity, and dynamically picks underlying
+        // networks based on NetworkCallbacks.
+        if (!isPlatformVpnProfileType(profile.type)) {
+            ipv4DefaultRoute = findIPv4DefaultRoute(egress);
+            gateway = ipv4DefaultRoute.getGateway().getHostAddress();
+            iface = ipv4DefaultRoute.getInterface();
+        } else {
+            ipv4DefaultRoute = null;
+            gateway = null;
+            iface = null;
+        }
 
         // Load certificates.
         String privateKey = "";
@@ -2366,6 +2379,13 @@ public class Vpn {
     @VisibleForTesting
     protected void startLegacyVpnRunner() {
         mVpnRunner.start();
+    }
+
+    /**
+     * Checks if the currently running VPN is a Legacy VPN.
+     */
+    public synchronized boolean isLegacyVpn() {
+        return mVpnRunner instanceof LegacyVpnRunner;
     }
 
     /**
@@ -3234,6 +3254,18 @@ public class Vpn {
     @VisibleForTesting
     String getProfileNameForPackage(String packageName) {
         return Credentials.PLATFORM_VPN + mUserId + "_" + packageName;
+    }
+
+    private boolean isPlatformVpnProfileType(int vpnProfileType) {
+        switch (vpnProfileType) {
+            case VpnProfile.TYPE_IKEV2_IPSEC_USER_PASS: // fallthrough
+            case VpnProfile.TYPE_IKEV2_IPSEC_PSK: // fallthrough
+            case VpnProfile.TYPE_IKEV2_IPSEC_RSA: // fallthrough
+            case VpnProfile.TYPE_IKEV2_FROM_IKE_TUN_CONN_PARAMS: // fallthrough
+                return true;
+            default:
+                return false;
+        }
     }
 
     @VisibleForTesting
