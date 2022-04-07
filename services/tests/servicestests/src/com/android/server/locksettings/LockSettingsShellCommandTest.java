@@ -25,6 +25,7 @@ import static android.app.admin.DevicePolicyManager.PASSWORD_QUALITY_NUMERIC;
 import static android.app.admin.DevicePolicyManager.PASSWORD_QUALITY_SOMETHING;
 import static android.app.admin.DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED;
 
+import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_NOT_REQUIRED;
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN;
 
 import static junit.framework.Assert.assertEquals;
@@ -384,6 +385,31 @@ public class LockSettingsShellCommandTest {
         verify(mLockPatternUtils).requireStrongAuth(
                 STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN,
                 UserHandle.USER_ALL);
+    }
+
+    @Test
+    public void testRequireStrongAuth_STRONG_AUTH_NOT_REQUIRED() throws Exception {
+        when(mLockPatternUtils.isSecure(mUserId)).thenReturn(true);
+
+        assertEquals(0, mCommand.exec(new Binder(), in, out, err,
+                new String[] { "require-strong-auth", "STRONG_AUTH_NOT_REQUIRED"},
+                mShellCallback, mResultReceiver));
+
+        verify(mLockPatternUtils).requireStrongAuth(
+                STRONG_AUTH_NOT_REQUIRED,
+                UserHandle.USER_ALL);
+    }
+
+    @Test
+    public void testRequireStrongAuth_unsupported_reason() throws Exception {
+        when(mLockPatternUtils.isSecure(mUserId)).thenReturn(true);
+
+        assertEquals(0, mCommand.exec(new Binder(), in, out, err,
+                new String[] { "require-strong-auth", "unsupported"},
+                mShellCallback, mResultReceiver));
+
+        verify(mLockPatternUtils, never()).requireStrongAuth(
+                anyInt(), anyInt());
     }
 
     private List<LockPatternView.Cell> stringToPattern(String str) {

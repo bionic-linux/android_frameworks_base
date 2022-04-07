@@ -18,6 +18,7 @@ package com.android.server.locksettings;
 
 import static com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_NONE;
 import static com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_PATTERN;
+import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_NOT_REQUIRED;
 import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN;
 
 import android.app.ActivityManager;
@@ -201,7 +202,7 @@ class LockSettingsShellCommand extends ShellCommand {
             pw.println("");
             pw.println("  require-strong-auth [--user USER_ID] <reason>");
             pw.println("    Requires the strong authentication. The current supported reasons: "
-                    + "STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN.");
+                    + "STRONG_AUTH_NOT_REQUIRED and STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN.");
             pw.println("");
         }
     }
@@ -303,6 +304,10 @@ class LockSettingsShellCommand extends ShellCommand {
         final String reason = mNew;
         int strongAuthReason;
         switch (reason) {
+            case "STRONG_AUTH_NOT_REQUIRED":
+                strongAuthReason = STRONG_AUTH_NOT_REQUIRED;
+                mCurrentUserId = UserHandle.USER_ALL;
+                break;
             case "STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN":
                 strongAuthReason = STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN;
                 mCurrentUserId = UserHandle.USER_ALL;
