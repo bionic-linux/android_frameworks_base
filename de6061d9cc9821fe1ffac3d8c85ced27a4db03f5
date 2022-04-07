@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15e0a47a_e6256696",
+        "filename": "core/java/android/net/vcn/VcnUnderlyingNetworkTemplate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-04-07T22:36:03Z",
+      "side": 1,
+      "message": "DEFAULT_METERED_MATCH_CRITERIA?",
+      "range": {
+        "startLine": 243,
+        "startChar": 37,
+        "endLine": 243,
+        "endChar": 46
+      },
+      "revId": "de6061d9cc9821fe1ffac3d8c85ced27a4db03f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f212bb7_76be03bf",
+        "filename": "core/java/android/net/vcn/VcnWifiUnderlyingNetworkTemplate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-04-07T22:36:03Z",
+      "side": 1,
+      "message": "indentation",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "de6061d9cc9821fe1ffac3d8c85ced27a4db03f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f715b07_b8a590a0",
+        "filename": "services/core/java/com/android/server/vcn/routeselection/UnderlyingNetworkController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1297255
+      },
+      "writtenOn": "2022-04-07T22:36:03Z",
+      "side": 1,
+      "message": "Do we want to use \"(\" to be consistent with VcnGatewayConnection#getLogPrefix?",
+      "range": {
+        "startLine": 495,
+        "startChar": 16,
+        "endLine": 495,
+        "endChar": 17
+      },
+      "revId": "de6061d9cc9821fe1ffac3d8c85ced27a4db03f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
