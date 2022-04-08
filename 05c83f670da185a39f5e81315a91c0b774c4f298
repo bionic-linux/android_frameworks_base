@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "321e0e3e_d8dc771f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2022-04-08T09:04:38Z",
+      "side": 1,
+      "message": "Chad, it seems risky to allow resetting strong auth via adb to me. Should this be limited to only clearing the LOCKDOWN bit and not other strong auth reasons? ",
+      "revId": "05c83f670da185a39f5e81315a91c0b774c4f298",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
