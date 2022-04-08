@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df7924b0_5d69c19b",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-08T23:48:04Z",
+      "side": 1,
+      "message": "I\u0027m confused. I thought the old location was only available after unlock?\n\nIn that case, wouldn\u0027t the migrate always fail if it happens before unlock, meaning that we migrate nothing?\n\nI was expecting that migrate would wait for USER_UNLOCKED or something and then check to see if there was a non-empty config.\n\nFuture configs would all be written to the new location, but the first reboot after upgrade would probably still have to wait for unlock...\n\nWhat am I missing?",
+      "range": {
+        "startLine": 251,
+        "startChar": 16,
+        "endLine": 251,
+        "endChar": 36
+      },
+      "revId": "ad2fc1ae1541c434396efa0a64221dc9254f4e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c5acb24_24302650",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-08T23:48:04Z",
+      "side": 1,
+      "message": "was this always guaranteed to be /data/system?\n\nIf not, what would have happened on an old device if we hard-coded a path that wasn\u0027t correct/accessible?",
+      "range": {
+        "startLine": 290,
+        "startChar": 50,
+        "endLine": 290,
+        "endChar": 72
+      },
+      "revId": "ad2fc1ae1541c434396efa0a64221dc9254f4e2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
