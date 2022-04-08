@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e02dea5_a7db9e57",
+        "filename": "core/java/android/net/vcn/VcnWifiUnderlyingNetworkTemplate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-08T18:08:44Z",
+      "side": 1,
+      "message": "Done. Hmm, surprising. autoformatter doesn\u0027t catch this.",
+      "parentUuid": "3f212bb7_76be03bf",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "de6061d9cc9821fe1ffac3d8c85ced27a4db03f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f715b07_b8a590a0",
