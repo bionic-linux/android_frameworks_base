@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fefec3e4_ff3903de",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T00:14:18Z",
+      "side": 1,
+      "message": "I presume this is trying to say (hasVcnConfig \u0026\u0026 (callerIsCarrierPrivileged || callerIsProvisioningPackage)), in which case...\n\nnit: exists and either",
+      "range": {
+        "startLine": 200,
+        "startChar": 24,
+        "endLine": 200,
+        "endChar": 25
+      },
+      "revId": "9257526d85965daaa62816c8a8b7714b310bb815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "918a22ba_b39586e8",
+        "filename": "core/java/android/net/vcn/VcnManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T00:14:18Z",
+      "side": 1,
+      "message": "nit delete",
+      "range": {
+        "startLine": 200,
+        "startChar": 94,
+        "endLine": 200,
+        "endChar": 95
+      },
+      "revId": "9257526d85965daaa62816c8a8b7714b310bb815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c56a4226_691f13e9",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T00:14:18Z",
+      "side": 1,
+      "message": "ok, it has been too long since I reviewed code in this area. Why do we have to hold a lock if this is work is being done on mHandler?",
+      "range": {
+        "startLine": 490,
+        "startChar": 34,
+        "endLine": 490,
+        "endChar": 39
+      },
+      "revId": "9257526d85965daaa62816c8a8b7714b310bb815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e47543f7_cd837a20",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T00:14:18Z",
+      "side": 1,
+      "message": "I\u0027m trying to figure out what the case is where in the force\u003dtrue cases, there will ALSO ever be a delta between the subscriptions in a group themselves... if these are mutually exclusive events then rather than running the package-removed/data-cleared case or the new-config-added case through garbageCollect...() you could just go straight to writeConfigsToDiskLocked() in those cases and the garbage collect case will do what it does best: figure out what happens when the subscriptions in a group change.",
+      "range": {
+        "startLine": 500,
+        "startChar": 24,
+        "endLine": 500,
+        "endChar": 62
+      },
+      "revId": "9257526d85965daaa62816c8a8b7714b310bb815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93c8685f_2d0da934",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T00:14:18Z",
+      "side": 1,
+      "message": "There\u0027s actually a plot afoot to separate the system user from the primary user to better support non-phone form factors and have the overall system architecture be consistent with phones (this is already the way it is on Tablets and Auto). We should make sure we don\u0027t get caught flat-footed if that happens. Maybe file a bug to follow up on that in U?",
+      "range": {
+        "startLine": 716,
+        "startChar": 8,
+        "endLine": 716,
+        "endChar": 26
+      },
+      "revId": "9257526d85965daaa62816c8a8b7714b310bb815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb1d1918_8baa8ed8",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T00:14:18Z",
+      "side": 1,
+      "message": "premature optimization \u003d__\u003d",
+      "range": {
+        "startLine": 792,
+        "startChar": 47,
+        "endLine": 792,
+        "endChar": 59
+      },
+      "revId": "9257526d85965daaa62816c8a8b7714b310bb815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
