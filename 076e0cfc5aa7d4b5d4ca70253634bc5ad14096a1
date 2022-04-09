@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d384f5f6_45811f9d",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T01:22:49Z",
+      "side": 1,
+      "message": "should this be inside vcnExists() and also call directly to writeConfigsToDiskLocked()?\n\nare there any other call sites that would prevent us from removing bool forceWrite?",
+      "range": {
+        "startLine": 783,
+        "startChar": 12,
+        "endLine": 783,
+        "endChar": 50
+      },
+      "revId": "076e0cfc5aa7d4b5d4ca70253634bc5ad14096a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

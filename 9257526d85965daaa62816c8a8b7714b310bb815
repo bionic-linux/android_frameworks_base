@@ -142,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "657c075e_9fb961c0",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T01:22:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5795f8a8_f996192c",
+      "range": {
+        "startLine": 490,
+        "startChar": 34,
+        "endLine": 490,
+        "endChar": 39
+      },
+      "revId": "9257526d85965daaa62816c8a8b7714b310bb815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e47543f7_cd837a20",
@@ -273,6 +297,30 @@
       "side": 1,
       "message": "Clarified comment, but there\u0027s very little reason to query for a subscription group we know is active (and thus by definition has a subId). \n\nAlso I seem to recall you mentioning that this historically has hit the subscription database itself, so that\u0027d be pretty expensive.",
       "parentUuid": "cb1d1918_8baa8ed8",
+      "range": {
+        "startLine": 792,
+        "startChar": 47,
+        "endLine": 792,
+        "endChar": 59
+      },
+      "revId": "9257526d85965daaa62816c8a8b7714b310bb815",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ed27705_26e9b972",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-09T01:22:49Z",
+      "side": 1,
+      "message": "It definitely isn\u0027t free, but there are two things:\n1) Someone (possibly Sooraj) actually added a cache so the penalty is less.\n2) This is just not going to happen that often or for an especially large number of calls, so it\u0027s kind of a meh sort of situation.\n\nThat said, I don\u0027t have a strong feeling in this case: but if you find yourself writing an \"optimization\" that hasn\u0027t cropped up due to a profiler or some other thing, it\u0027s generally preferable to have a strong/clear reason why... either that it\u0027s in the hot path or a very latency-sensitive control path.",
+      "parentUuid": "c6e3e398_f4918a47",
       "range": {
         "startLine": 792,
         "startChar": 47,
