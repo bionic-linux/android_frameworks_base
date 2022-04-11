@@ -33,7 +33,6 @@ gensrcs {
         "&& $(location soong_zip) -jar -o $(out) -C $(genDir)/$(in) -D $(genDir)/$(in)",
 
     srcs: [
-        ":framework-connectivity-protos",
         ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         ":libstats_atom_message_protos",
@@ -64,7 +63,6 @@ gensrcs {
         "  $(in)",
 
     srcs: [
-        ":framework-connectivity-protos",
         ":ipconnectivity-proto-src",
         ":libstats_atom_enum_protos",
         ":libstats_atom_message_protos",
