@@ -16,6 +16,23 @@
       "message": "PTAL, this syncs the test owners with the source owners:\n\nhttps://source.corp.google.com/android/frameworks/base/core/java/android/net/OWNERS\n\nThanks!",
       "revId": "c7db718ddaaec08d4b45bf762326ca10b0bc1017",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cec04418_08fc52cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-04-11T09:37:10Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "c7db718ddaaec08d4b45bf762326ca10b0bc1017",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
