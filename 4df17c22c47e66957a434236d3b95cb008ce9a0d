@@ -33,6 +33,24 @@
       "message": "After merging this on aosp, please verify that it makes it into tm-dev as well.\n\nAFAIK there\u0027s still an automerger between these branches but that may change soon.",
       "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d74dca4d_24ba57be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2022-04-11T07:23:07Z",
+      "side": 1,
+      "message": "The old CL brought in a change that let playback devices respond to FEATURE_ABORT when in standby (added FEATURE_ABORT handler as bypasser). This change still retains the same behaviour.",
+      "parentUuid": "5e052faf_445ce563",
+      "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
