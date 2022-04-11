@@ -77,7 +77,9 @@ public class BatteryMeterViewController extends ViewController<BatteryMeterView>
             new BatteryController.BatteryStateChangeCallback() {
                 @Override
                 public void onBatteryLevelChanged(int level, boolean pluggedIn, boolean charging) {
-                    mView.onBatteryLevelChanged(level, pluggedIn);
+                    // pass charging status to get correct behavior when the device stopped
+                    // charging due to over heating, it can still be plugged-in
+                    mView.onBatteryLevelChanged(level, charging);
                 }
 
                 @Override
