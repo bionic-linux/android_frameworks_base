@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d852b70a_66228f5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-04-11T09:05:34Z",
+      "side": 1,
+      "message": "PTAL, this syncs the test owners with the source owners:\n\nhttps://source.corp.google.com/android/frameworks/base/core/java/android/net/OWNERS\n\nThanks!",
+      "revId": "c7db718ddaaec08d4b45bf762326ca10b0bc1017",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
