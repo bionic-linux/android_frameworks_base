@@ -115,6 +115,30 @@
       },
       "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce6d5d65_d2d94ffa",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecStandbyModeHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1068291
+      },
+      "writtenOn": "2022-04-11T09:10:57Z",
+      "side": 1,
+      "message": "I couldn\u0027t find it in the spec. I\u0027m sorry for the confusion. I couldn\u0027t find anything that says how it should be handled in standby mode either. UserControlPressedHandler needs to be in common handlers for sure. This could be moved back, if it causes issues with any of your tests.",
+      "parentUuid": "be5b03e9_c134a623",
+      "range": {
+        "startLine": 131,
+        "startChar": 1,
+        "endLine": 131,
+        "endChar": 84
+      },
+      "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
