@@ -163,6 +163,30 @@
       },
       "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "124278ed_16d4eb9e",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecStandbyModeHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2022-04-11T14:36:54Z",
+      "side": 1,
+      "message": "For clarification, since it\u0027s not in the spec - could you give the reason for making the handler for MESSAGE_VENDOR_COMMAND_WITH_ID common?",
+      "parentUuid": "4e93957c_6533962d",
+      "range": {
+        "startLine": 131,
+        "startChar": 1,
+        "endLine": 131,
+        "endChar": 84
+      },
+      "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
