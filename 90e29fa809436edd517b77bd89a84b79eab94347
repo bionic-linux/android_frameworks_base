@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7df2fac6_70b333d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2022-04-11T16:53:44Z",
+      "side": 1,
+      "message": "Giving Global Approval since this is a mechanical transformation",
+      "revId": "90e29fa809436edd517b77bd89a84b79eab94347",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
