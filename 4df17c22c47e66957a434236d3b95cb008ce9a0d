@@ -187,6 +187,30 @@
       },
       "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76ce635f_bffa51a5",
+        "filename": "services/core/java/com/android/server/hdmi/HdmiCecStandbyModeHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1851100
+      },
+      "writtenOn": "2022-04-12T14:32:24Z",
+      "side": 1,
+      "message": "Removed the MESSAGE_VENDOR_COMMAND_WITH_ID handler from common handlers for now. Let me know if there\u0027s a reason to include it.",
+      "parentUuid": "124278ed_16d4eb9e",
+      "range": {
+        "startLine": 131,
+        "startChar": 1,
+        "endLine": 131,
+        "endChar": 84
+      },
+      "revId": "4df17c22c47e66957a434236d3b95cb008ce9a0d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
