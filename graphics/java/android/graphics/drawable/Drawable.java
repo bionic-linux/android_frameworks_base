@@ -473,6 +473,7 @@ public abstract class Drawable {
      */
     public void invalidateSelf() {
         final Callback callback = getCallback();
+        System.err.println("Callbca: " + callback);
         if (callback != null) {
             callback.invalidateDrawable(this);
         }

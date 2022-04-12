@@ -107,6 +107,7 @@ static jint draw(JNIEnv* env, jobject, jlong treePtr, jlong canvasPtr,
     VectorDrawable::Tree* tree = reinterpret_cast<VectorDrawable::Tree*>(treePtr);
     Canvas* canvas = reinterpret_cast<Canvas*>(canvasPtr);
     SkRect rect;
+    std::cout << "JULIA VECTOR DRAWABLe: " << tree << " " << canvas << std::endl;
     GraphicsJNI::jrect_to_rect(env, jrect, &rect);
     SkColorFilter* colorFilter = reinterpret_cast<SkColorFilter*>(colorFilterPtr);
     return tree->draw(canvas, colorFilter, rect, needsMirroring, canReuseCache);

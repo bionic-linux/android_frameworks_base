@@ -207,6 +207,7 @@ jobject createBitmap(JNIEnv* env, Bitmap* bitmap,
     bool fromMalloc = bitmap->pixelStorageType() == PixelStorageType::Heap;
     BitmapWrapper* bitmapWrapper = new BitmapWrapper(bitmap);
     if (!isMutable) {
+        std::cout << "JULIA Setting to Immutable" << std::endl;
         bitmapWrapper->bitmap().setImmutable();
     }
     int robolectricApiLevel = GetRobolectricApiLevel(env);
@@ -219,10 +220,10 @@ jobject createBitmap(JNIEnv* env, Bitmap* bitmap,
                              bitmap->height(), density, isPremultiplied, ninePatchChunk,
                              ninePatchInsets, fromMalloc);
     } else {
-        obj = env->NewObject(
-                gBitmap_class, gBitmap_constructorMethodID, reinterpret_cast<jlong>(bitmapWrapper),
-                bitmap->width(), bitmap->height(), density,
-                /* mutable= */ false, isPremultiplied, ninePatchChunk, ninePatchInsets);
+        obj = env->NewObject(gBitmap_class, gBitmap_constructorMethodID,
+                             reinterpret_cast<jlong>(bitmapWrapper), bitmap->width(),
+                             bitmap->height(), density, isMutable, isPremultiplied, ninePatchChunk,
+                             ninePatchInsets);
     }
 
     if (env->ExceptionCheck() != 0) {
@@ -295,7 +296,11 @@ bool GraphicsJNI::SetPixels(JNIEnv* env, jintArray srcColors, int srcOffset, int
 
 static int getPremulBitmapCreateFlags(bool isMutable) {
     int flags = android::bitmap::kBitmapCreateFlag_Premultiplied;
-    if (isMutable) flags |= android::bitmap::kBitmapCreateFlag_Mutable;
+    std::cout << "JULIA getPremul is called." << std::endl;
+    if (isMutable) {
+        std::cout << "JULIA getPremul was " << isMutable << std::endl;
+        flags |= android::bitmap::kBitmapCreateFlag_Mutable;
+    }
     return flags;
 }
 
@@ -338,7 +343,8 @@ static jobject Bitmap_creator(JNIEnv* env, jobject, jintArray jColors,
     if (jColors != NULL) {
         GraphicsJNI::SetPixels(env, jColors, offset, stride, 0, 0, width, height, &bitmap);
     }
-
+    std::cout << "Julia the bitmap creator had this value for mutable " << (int)isMutable
+              << std::endl;
     return createBitmap(env, nativeBitmap.release(), getPremulBitmapCreateFlags(isMutable));
 }
 
@@ -389,6 +395,8 @@ static jobject Bitmap_copy(JNIEnv* env, jobject, jlong srcHandle,
         if (!bitmap.get()) {
             return NULL;
         }
+        std::cout << "JUlia we in the hardware stuff. Mutabilities is " << (int)isMutable
+                  << std::endl;
         return createBitmap(env, bitmap.release(), getPremulBitmapCreateFlags(isMutable));
     }
 
@@ -400,6 +408,7 @@ static jobject Bitmap_copy(JNIEnv* env, jobject, jlong srcHandle,
         return NULL;
     }
     auto bitmap = allocator.getStorageObjAndReset();
+    std::cout << "JUlia the copy is " << (int)isMutable << std::endl;
     return createBitmap(env, bitmap, getPremulBitmapCreateFlags(isMutable));
 }
 
@@ -1232,8 +1241,9 @@ static jobject Bitmap_getHardwareBuffer(JNIEnv* env, jobject, jlong bitmapPtr) {
 
 static jboolean Bitmap_isImmutable(CRITICAL_JNI_PARAMS_COMMA jlong bitmapHandle) {
     LocalScopedBitmap bitmapHolder(bitmapHandle);
+    std::cout << "Julia isImmutable is valid? : " << !bitmapHolder.valid() << std::endl;
     if (!bitmapHolder.valid()) return JNI_FALSE;
-
+    std::cout << "Julia L " << bitmapHolder->bitmap().isImmutable() << std::endl;
     return bitmapHolder->bitmap().isImmutable() ? JNI_TRUE : JNI_FALSE;
 }
 
@@ -1248,6 +1258,7 @@ static jboolean Bitmap_isBackedByAshmem(CRITICAL_JNI_PARAMS_COMMA jlong bitmapHa
 static void Bitmap_setImmutable(JNIEnv* env, jobject, jlong bitmapHandle) {
     LocalScopedBitmap bitmapHolder(bitmapHandle);
     if (!bitmapHolder.valid()) return;
+    std::cout << "Julia setting it to immutable in cpp" << std::endl;
 
     return bitmapHolder->bitmap().setImmutable();
 }

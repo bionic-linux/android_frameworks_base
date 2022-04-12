@@ -60,9 +60,11 @@ static jlong getNativeFinalizer(JNIEnv* env, jobject clazz) {
 // Native wrapper constructor used by Canvas(Bitmap)
 static jlong initRaster(JNIEnv* env, jobject, jlong bitmapHandle) {
     SkBitmap bitmap;
+    std::cout << "It's called initRaster" << std::endl;
     if (bitmapHandle != 0) {
         bitmap::toBitmap(bitmapHandle).getSkBitmap(&bitmap);
     }
+    std::cout << "Bitmaphandle: " << bitmapHandle << std::endl;
     return reinterpret_cast<jlong>(Canvas::create_canvas(bitmap));
 }
 

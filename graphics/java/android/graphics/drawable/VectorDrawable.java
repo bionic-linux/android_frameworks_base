@@ -427,6 +427,7 @@ public class VectorDrawable extends Drawable {
         final long colorFilterNativeInstance = colorFilter == null ? 0 :
                 colorFilter.getNativeInstance();
         boolean canReuseCache = mVectorState.canReuseCache();
+        System.err.println("JULIA VECTORDRAWABLE JAVA: " + mVectorState.getNativeRenderer() + " " + canvas.getNativeCanvasWrapper());
         int pixelCount = nDraw(mVectorState.getNativeRenderer(), canvas.getNativeCanvasWrapper(),
                 colorFilterNativeInstance, mTmpBounds, needMirroring(),
                 canReuseCache);
@@ -464,7 +465,7 @@ public class VectorDrawable extends Drawable {
 
     @Override
     public void setAlpha(int alpha) {
-        if (mVectorState.setAlpha(alpha / 255f)) {
+      if (mVectorState.setAlpha(alpha / 255f)) {
             invalidateSelf();
         }
     }

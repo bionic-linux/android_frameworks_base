@@ -970,7 +970,8 @@ public final class Bitmap implements Parcelable {
      *         Config is Config.HARDWARE, because hardware bitmaps are always immutable
      */
     public static Bitmap createBitmap(int width, int height, @NonNull Config config) {
-        return createBitmap(width, height, config, true);
+      System.err.println("It does infact go here Julia");  
+      return createBitmap(width, height, config, true);
     }
 
     /**
@@ -1103,7 +1104,7 @@ public final class Bitmap implements Parcelable {
 
         Bitmap bm = nativeCreate(null, 0, width, width, height, config.nativeInt, true,
                 colorSpace == null ? 0 : colorSpace.getNativeInstance());
-
+        System.err.println("Julia it goes here");
         if (display != null) {
             bm.mDensity = display.densityDpi;
         }
@@ -1436,7 +1437,8 @@ public final class Bitmap implements Parcelable {
      * Returns true if the bitmap is marked as mutable (i.e.&nbsp;can be drawn into)
      */
     public final boolean isMutable() {
-        return !nativeIsImmutable(mNativePtr);
+      System.err.println("Julia isMutable: " + !nativeIsImmutable(mNativePtr));
+      return !nativeIsImmutable(mNativePtr);
     }
 
     /**
