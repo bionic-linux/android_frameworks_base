@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include <android/graphics/jni_runtime.h>
 #include "core_jni_helpers.h"
 #include "jni.h"
 
@@ -43,30 +44,6 @@ struct RegJNIRec {
 static const RegJNIRec sqliteJNI[] = {
         REG_JNI(register_android_database_CursorWindow),
         REG_JNI(register_android_database_SQLiteConnection),
-};
-
-static const RegJNIRec graphicsJNI[] = {
-        REG_JNI(register_android_graphics_Bitmap),
-        REG_JNI(register_android_graphics_BitmapFactory),
-        REG_JNI(register_android_graphics_ColorFilter),
-        REG_JNI(register_android_graphics_ColorSpace),
-        REG_JNI(register_android_graphics_CreateJavaOutputStreamAdaptor),
-        REG_JNI(register_android_graphics_FontFamily),
-        REG_JNI(register_android_graphics_Graphics),
-        REG_JNI(register_android_graphics_MaskFilter),
-        REG_JNI(register_android_graphics_Matrix),
-        REG_JNI(register_android_graphics_Paint),
-        REG_JNI(register_android_graphics_Path),
-        REG_JNI(register_android_graphics_PathEffect),
-        REG_JNI(register_android_graphics_PathMeasure),
-        REG_JNI(register_android_graphics_Region),
-        REG_JNI(register_android_graphics_RenderEffect),
-        REG_JNI(register_android_graphics_Shader),
-        REG_JNI(register_android_graphics_Typeface),
-        REG_JNI(register_android_graphics_fonts_Font),
-        REG_JNI(register_android_graphics_fonts_FontFamily),
-        REG_JNI(register_android_graphics_text_LineBreaker),
-        REG_JNI(register_android_graphics_text_MeasuredText),
 };
 
 JNIEnv* AndroidRuntime::getJNIEnv() {
@@ -120,7 +97,8 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
 
     // Native graphics currently supports SDK 26 and above
     if (apiLevel >= 26) {
-        if (register_jni_procs(graphicsJNI, NELEM(graphicsJNI), env) < 0) {
+        init_android_graphics();
+        if (register_android_graphics_classes(env) < 0) {
             return JNI_ERR;
         }
     }
