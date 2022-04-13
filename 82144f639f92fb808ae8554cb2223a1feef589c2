@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4241cfa_d22d15b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2022-04-13T10:58:22Z",
+      "side": 1,
+      "message": "Just found that this issue could be fixed by https://android-review.googlesource.com/c/platform/frameworks/av/+/1880175 \n\n-_-||",
+      "revId": "82144f639f92fb808ae8554cb2223a1feef589c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
