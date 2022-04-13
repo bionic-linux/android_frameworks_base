@@ -93,6 +93,30 @@
       },
       "revId": "b5d6478f1f45bc73580e612f8931c897e9875fe0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fbc62b2_7796a67c",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-13T23:04:37Z",
+      "side": 1,
+      "message": "I always forget about this footgun. Thanks for the reminder.",
+      "parentUuid": "4d092d69_a71d0a5f",
+      "range": {
+        "startLine": 460,
+        "startChar": 47,
+        "endLine": 460,
+        "endChar": 55
+      },
+      "revId": "b5d6478f1f45bc73580e612f8931c897e9875fe0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
