@@ -16,6 +16,23 @@
       "message": "Just found that this issue could be fixed by https://android-review.googlesource.com/c/platform/frameworks/av/+/1880175 \n\n-_-||",
       "revId": "82144f639f92fb808ae8554cb2223a1feef589c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beda5dd6_902d1d86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102879
+      },
+      "writtenOn": "2022-04-13T11:03:27Z",
+      "side": 1,
+      "message": "Inside checkRuntimePermission(), a RegisteredAttribution object is created then put into sRunningAttributionSources before the `if (next \u003d\u003d null || next.getNext() \u003d\u003d null)` condition check, so I think inside finishDataDelivery, sRunningAttributionSources.remove(token) should called before `if (next \u003d\u003d null || next.getNext() \u003d\u003d null)` as well.",
+      "revId": "82144f639f92fb808ae8554cb2223a1feef589c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
