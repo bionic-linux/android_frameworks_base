@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a5dfaec_d69b9fdb",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-13T21:53:02Z",
+      "side": 1,
+      "message": "Maybe a weird nit, but should this check TextUtils.isEmpty()? If this is non-null is it guaranteed to be non-empty?",
+      "range": {
+        "startLine": 453,
+        "startChar": 24,
+        "endLine": 453,
+        "endChar": 31
+      },
+      "revId": "b5d6478f1f45bc73580e612f8931c897e9875fe0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e540f5d_0ef8126a",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-13T21:53:02Z",
+      "side": 1,
+      "message": "I don\u0027t _think_ you need to build a list here... instead... how about:\n\n1) make this \"boolean shouldWrite\"\n2) In the loop, instead of toRemove.add() just stopAndClear().+ set shouldWrite \u003d true;\n\nThen, if (shouldWrite) writeConfigsLocked();\n\nIt\u0027s basically the same pattern as in garbageCollect(). It\u0027s just \"entrySet\" instead of \"keySet\"...",
+      "range": {
+        "startLine": 460,
+        "startChar": 47,
+        "endLine": 460,
+        "endChar": 55
+      },
+      "revId": "b5d6478f1f45bc73580e612f8931c897e9875fe0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
