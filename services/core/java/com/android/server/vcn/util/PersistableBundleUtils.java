@@ -28,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -353,5 +354,153 @@ public class PersistableBundleUtils {
                 mDiskLock.writeLock().unlock();
             }
         }
+    }
+
+    /**
+     * Returns a copy of the persistable bundle with only the specified keys
+     *
+     * <p>This allows for holding minimized copies for memory-saving purposes.
+     */
+    public static PersistableBundle minimizeBundle(
+            @NonNull PersistableBundle bundle, String... keys) {
+        final PersistableBundle minimized = new PersistableBundle();
+
+        if (bundle == null) {
+            return minimized;
+        }
+
+        for (String key : keys) {
+            if (bundle.containsKey(key)) {
+                final Object value = bundle.get(key);
+                if (value == null) {
+                    continue;
+                }
+
+                if (value instanceof Boolean) {
+                    minimized.putBoolean(key, (Boolean) value);
+                } else if (value instanceof boolean[]) {
+                    minimized.putBooleanArray(key, (boolean[]) value);
+                } else if (value instanceof Double) {
+                    minimized.putDouble(key, (Double) value);
+                } else if (value instanceof double[]) {
+                    minimized.putDoubleArray(key, (double[]) value);
+                } else if (value instanceof Integer) {
+                    minimized.putInt(key, (Integer) value);
+                } else if (value instanceof int[]) {
+                    minimized.putIntArray(key, (int[]) value);
+                } else if (value instanceof Long) {
+                    minimized.putLong(key, (Long) value);
+                } else if (value instanceof long[]) {
+                    minimized.putLongArray(key, (long[]) value);
+                } else if (value instanceof String) {
+                    minimized.putString(key, (String) value);
+                } else if (value instanceof String[]) {
+                    minimized.putStringArray(key, (String[]) value);
+                } else if (value instanceof PersistableBundle) {
+                    minimized.putPersistableBundle(key, (PersistableBundle) value);
+                } else {
+                    continue;
+                }
+            }
+        }
+
+        return minimized;
+    }
+
+    /**
+     * Builds a stable hashcode
+     *
+     * <p>Since PersistableBundle itself does not implement hashcode(), this is effectively our best
+     * way to generate a hashcode - from the XML.
+     */
+    public static int getHashcode(@Nullable PersistableBundle bundle) {
+        if (bundle == null) {
+            return -1;
+        }
+
+        int iterativeHashcode = 0;
+        for (String key : bundle.keySet()) {
+            Object val = bundle.get(key);
+            if (val instanceof PersistableBundle) {
+                iterativeHashcode =
+                        Objects.hash(iterativeHashcode, key, getHashcode((PersistableBundle) val));
+            } else {
+                iterativeHashcode = Objects.hash(iterativeHashcode, key, val);
+            }
+        }
+
+        return iterativeHashcode;
+    }
+
+    /**
+     * Checks for persistable bundle equality based on XML output
+     *
+     * <p>Since PersistableBundle itself does not implement equals(), this is effectively our best
+     * way to compare persistable bundles, especially when there is potential for nested persistable
+     * bundles (PersistableBundle#kindOfEquals does a direct map equality, which will fail in if
+     * there is nested bundles of any kind).
+     */
+    public static boolean isEqual(
+            @Nullable PersistableBundle left, @Nullable PersistableBundle right) {
+        // Check for pointer equality & null equality
+        if (Objects.equals(left, right)) {
+            return true;
+        }
+
+        // If only one of the two is null, but not the other, not equal by definition.
+        if (Objects.isNull(left) != Objects.isNull(right)) {
+            return false;
+        }
+
+        if (!left.keySet().equals(right.keySet())) {
+            return false;
+        }
+
+        for (String key : left.keySet()) {
+            Object leftVal = left.get(key);
+            Object rightVal = right.get(key);
+
+            // Check for pointer equality & null equality
+            if (Objects.equals(left, right)) {
+                continue;
+            } else if (Objects.isNull(left) != Objects.isNull(right)) {
+                // If only one of the two is null, but not the other, not equal by definition.
+                return false;
+            } else if (!Objects.equals(leftVal.getClass(), rightVal.getClass())) {
+                // If classes are different, not equal by definition.
+                return false;
+            }
+            if (leftVal instanceof PersistableBundle) {
+                if (!isEqual((PersistableBundle) leftVal, (PersistableBundle) rightVal)) {
+                    return false;
+                }
+            } else if (leftVal.getClass().isArray()) {
+                if (leftVal instanceof boolean[]) {
+                    if (!Arrays.equals((boolean[]) leftVal, (boolean[]) rightVal)) {
+                        return false;
+                    }
+                } else if (leftVal instanceof double[]) {
+                    if (!Arrays.equals((double[]) leftVal, (double[]) rightVal)) {
+                        return false;
+                    }
+                } else if (leftVal instanceof int[]) {
+                    if (!Arrays.equals((int[]) leftVal, (int[]) rightVal)) {
+                        return false;
+                    }
+                } else if (leftVal instanceof long[]) {
+                    if (!Arrays.equals((long[]) leftVal, (long[]) rightVal)) {
+                        return false;
+                    }
+                } else if (!Arrays.equals((Object[]) leftVal, (Object[]) rightVal)) {
+                    return false;
+                }
+            } else {
+                if (!Objects.equals(leftVal, rightVal)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

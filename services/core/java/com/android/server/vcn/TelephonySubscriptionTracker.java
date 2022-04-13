@@ -29,6 +29,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.vcn.VcnManager;
 import android.os.Handler;
 import android.os.HandlerExecutor;
 import android.os.ParcelUuid;
@@ -47,6 +48,7 @@ import android.util.Slog;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.annotations.VisibleForTesting.Visibility;
 import com.android.internal.util.IndentingPrintWriter;
+import com.android.server.vcn.util.PersistableBundleUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -95,6 +97,10 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
 
     // TODO (Android T+): Add ability to handle multiple subIds per slot.
     @NonNull private final Map<Integer, Integer> mReadySubIdsBySlotId = new HashMap<>();
+
+    @NonNull
+    private final Map<Integer, PersistableBundle> mSubIdToCarrierConfigMap = new HashMap<>();
+
     @NonNull private final OnSubscriptionsChangedListener mSubscriptionChangedListener;
 
     @NonNull
@@ -250,7 +256,10 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
 
         final TelephonySubscriptionSnapshot newSnapshot =
                 new TelephonySubscriptionSnapshot(
-                        mDeps.getActiveDataSubscriptionId(), newSubIdToInfoMap, privilegedPackages);
+                        mDeps.getActiveDataSubscriptionId(),
+                        newSubIdToInfoMap,
+                        mSubIdToCarrierConfigMap,
+                        privilegedPackages);
 
         // If snapshot was meaningfully updated, fire the callback
         if (!newSnapshot.equals(mCurrentSnapshot)) {
@@ -311,20 +320,34 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
         }
 
         if (SubscriptionManager.isValidSubscriptionId(subId)) {
-            final PersistableBundle carrierConfigs = mCarrierConfigManager.getConfigForSubId(subId);
-            if (mDeps.isConfigForIdentifiedCarrier(carrierConfigs)) {
+            final PersistableBundle carrierConfig = mCarrierConfigManager.getConfigForSubId(subId);
+            if (mDeps.isConfigForIdentifiedCarrier(carrierConfig)) {
                 mReadySubIdsBySlotId.put(slotId, subId);
+                mSubIdToCarrierConfigMap.put(
+                        subId,
+                        PersistableBundleUtils.minimizeBundle(
+                                carrierConfig, VcnManager.VCN_RELATED_CARRIER_CONFIG_KEYS));
                 handleSubscriptionsChanged();
             }
         } else {
-            mReadySubIdsBySlotId.remove(slotId);
+            final Integer oldSubid = mReadySubIdsBySlotId.remove(slotId);
+            if (oldSubid != null) {
+                mSubIdToCarrierConfigMap.remove(oldSubid);
+            }
             handleSubscriptionsChanged();
         }
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
     void setReadySubIdsBySlotId(Map<Integer, Integer> readySubIdsBySlotId) {
+        mReadySubIdsBySlotId.clear();
         mReadySubIdsBySlotId.putAll(readySubIdsBySlotId);
+    }
+
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    void setSubIdToCarrierConfigMap(Map<Integer, PersistableBundle> subIdToCarrierConfigMap) {
+        mSubIdToCarrierConfigMap.clear();
+        mSubIdToCarrierConfigMap.putAll(subIdToCarrierConfigMap);
     }
 
     @VisibleForTesting(visibility = Visibility.PRIVATE)
@@ -332,26 +355,38 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
         return Collections.unmodifiableMap(mReadySubIdsBySlotId);
     }
 
+    @VisibleForTesting(visibility = Visibility.PRIVATE)
+    Map<Integer, PersistableBundle> getSubIdToCarrierConfigMap() {
+        return Collections.unmodifiableMap(mSubIdToCarrierConfigMap);
+    }
+
     /** TelephonySubscriptionSnapshot is a class containing info about active subscriptions */
     public static class TelephonySubscriptionSnapshot {
         private final int mActiveDataSubId;
         private final Map<Integer, SubscriptionInfo> mSubIdToInfoMap;
+        private final Map<Integer, PersistableBundle> mSubIdToCarrierConfigMap;
         private final Map<ParcelUuid, Set<String>> mPrivilegedPackages;
 
         public static final TelephonySubscriptionSnapshot EMPTY_SNAPSHOT =
                 new TelephonySubscriptionSnapshot(
-                        INVALID_SUBSCRIPTION_ID, Collections.emptyMap(), Collections.emptyMap());
+                        INVALID_SUBSCRIPTION_ID,
+                        Collections.emptyMap(),
+                        Collections.emptyMap(),
+                        Collections.emptyMap());
 
         @VisibleForTesting(visibility = Visibility.PRIVATE)
         TelephonySubscriptionSnapshot(
                 int activeDataSubId,
                 @NonNull Map<Integer, SubscriptionInfo> subIdToInfoMap,
+                @NonNull Map<Integer, PersistableBundle> subIdToCarrierConfigMap,
                 @NonNull Map<ParcelUuid, Set<String>> privilegedPackages) {
             mActiveDataSubId = activeDataSubId;
             Objects.requireNonNull(subIdToInfoMap, "subIdToInfoMap was null");
             Objects.requireNonNull(privilegedPackages, "privilegedPackages was null");
+            Objects.requireNonNull(subIdToCarrierConfigMap, "subIdToCarrierConfigMap was null");
 
             mSubIdToInfoMap = Collections.unmodifiableMap(subIdToInfoMap);
+            mSubIdToCarrierConfigMap = Collections.unmodifiableMap(subIdToCarrierConfigMap);
 
             final Map<ParcelUuid, Set<String>> unmodifiableInnerSets = new ArrayMap<>();
             for (Entry<ParcelUuid, Set<String>> entry : privilegedPackages.entrySet()) {
@@ -423,9 +458,40 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
                     : false;
         }
 
+        /**
+         * Retrieves a carrier config for a subscription in the provided group.
+         *
+         * <p>This method will prioritize non-opportunistic subscriptions, but will use the a
+         * carrier config for an opportunistic subscription if no other subscriptions are found.
+         */
+        @Nullable
+        public PersistableBundle getCarrierConfigForSubGrp(@NonNull ParcelUuid subGrp) {
+            PersistableBundle result = null;
+
+            for (int subId : getAllSubIdsInGroup(subGrp)) {
+                final PersistableBundle config = mSubIdToCarrierConfigMap.get(subId);
+                if (config != null) {
+                    result = config;
+
+                    // Attempt to use (any) non-opportunistic subscription. If this subscription is
+                    // opportunistic, continue and try to find a non-opportunistic subscription,
+                    // using the opportunistic ones as a last resort.
+                    if (!isOpportunistic(subId)) {
+                        return config;
+                    }
+                }
+            }
+
+            return result;
+        }
+
         @Override
         public int hashCode() {
-            return Objects.hash(mActiveDataSubId, mSubIdToInfoMap, mPrivilegedPackages);
+            return Objects.hash(
+                    mActiveDataSubId,
+                    mSubIdToInfoMap,
+                    getSubIdToCarrierConfigMapHashcode(mSubIdToCarrierConfigMap),
+                    mPrivilegedPackages);
         }
 
         @Override
@@ -438,7 +504,53 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
 
             return mActiveDataSubId == other.mActiveDataSubId
                     && mSubIdToInfoMap.equals(other.mSubIdToInfoMap)
+                    && areSubIdToCarrierConfigMapsEqual(
+                            mSubIdToCarrierConfigMap, other.mSubIdToCarrierConfigMap)
                     && mPrivilegedPackages.equals(other.mPrivilegedPackages);
+        }
+
+        private static int getSubIdToCarrierConfigMapHashcode(
+                @Nullable Map<Integer, PersistableBundle> map) {
+            if (map == null) {
+                return -1;
+            }
+
+            int iterativeHashcode = 0;
+            for (Entry<Integer, PersistableBundle> entry : map.entrySet()) {
+                iterativeHashcode =
+                        Objects.hash(
+                                iterativeHashcode,
+                                entry.getKey(),
+                                PersistableBundleUtils.getHashcode(entry.getValue()));
+            }
+
+            return iterativeHashcode;
+        }
+
+        private static boolean areSubIdToCarrierConfigMapsEqual(
+                @Nullable Map<Integer, PersistableBundle> left,
+                @Nullable Map<Integer, PersistableBundle> right) {
+            // Check for pointer equality & null equality
+            if (Objects.equals(left, right)) {
+                return true;
+            }
+
+            // If only one of the two is null, but not the other, not equal by definition.
+            if (Objects.isNull(left) != Objects.isNull(right)) {
+                return false;
+            }
+
+            if (!left.keySet().equals(right.keySet())) {
+                return false;
+            }
+
+            for (int key : left.keySet()) {
+                if (!PersistableBundleUtils.isEqual(left.get(key), right.get(key))) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /** Dumps the state of this snapshot for logging and debugging purposes. */
@@ -448,6 +560,7 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
 
             pw.println("mActiveDataSubId: " + mActiveDataSubId);
             pw.println("mSubIdToInfoMap: " + mSubIdToInfoMap);
+            pw.println("mSubIdToCarrierConfigMap: " + mSubIdToCarrierConfigMap);
             pw.println("mPrivilegedPackages: " + mPrivilegedPackages);
 
             pw.decreaseIndent();
@@ -458,6 +571,7 @@ public class TelephonySubscriptionTracker extends BroadcastReceiver {
             return "TelephonySubscriptionSnapshot{ "
                     + "mActiveDataSubId=" + mActiveDataSubId
                     + ", mSubIdToInfoMap=" + mSubIdToInfoMap
+                    + ", mSubIdToCarrierConfigMap=" + mSubIdToCarrierConfigMap
                     + ", mPrivilegedPackages=" + mPrivilegedPackages
                     + " }";
         }
