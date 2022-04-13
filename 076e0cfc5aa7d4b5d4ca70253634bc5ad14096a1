@@ -22,6 +22,30 @@
       },
       "revId": "076e0cfc5aa7d4b5d4ca70253634bc5ad14096a1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cdd6925_1486ebf1",
+        "filename": "services/core/java/com/android/server/VcnManagementService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-13T01:05:45Z",
+      "side": 1,
+      "message": "Done. However, this can\u0027t be in the vcnExists, since we need to write to disk regardless of whether the VCN is already running.\n\nThe second is probably safe, along the same logic as the previous discussion that the subscription mappings aren\u0027t changing here (would be caught by the subscription snapshot change listener anyways).",
+      "parentUuid": "d384f5f6_45811f9d",
+      "range": {
+        "startLine": 783,
+        "startChar": 12,
+        "endLine": 783,
+        "endChar": 50
+      },
+      "revId": "076e0cfc5aa7d4b5d4ca70253634bc5ad14096a1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
