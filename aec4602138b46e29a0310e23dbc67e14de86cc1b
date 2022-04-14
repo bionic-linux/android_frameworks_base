@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c3ee330_2ef84b20",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-14T00:05:08Z",
+      "side": 1,
+      "message": "So... I am wondering if we really need to save the whole CC bundle. over the last few releases it has gotten absolutely humongous. Can we filter the bundle and grab only the keys that we need? I want to get a head of the system health problem. (If for some unforeseeable reason this is a bunch of work LMK... but holy smokes, go check out CarrierConfigManager, it\u0027s a nightmare).",
+      "range": {
+        "startLine": 100,
+        "startChar": 31,
+        "endLine": 100,
+        "endChar": 48
+      },
+      "revId": "aec4602138b46e29a0310e23dbc67e14de86cc1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
