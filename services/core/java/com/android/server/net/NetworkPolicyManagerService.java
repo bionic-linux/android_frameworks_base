@@ -168,6 +168,7 @@ import android.net.ConnectivityManager.NetworkCallback;
 import android.net.INetworkManagementEventObserver;
 import android.net.INetworkPolicyListener;
 import android.net.INetworkPolicyManager;
+import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkIdentity;
@@ -230,6 +231,7 @@ import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 import android.util.SparseLongArray;
+import android.util.SparseSetArray;
 import android.util.TypedXmlPullParser;
 import android.util.TypedXmlSerializer;
 import android.util.Xml;
@@ -607,6 +609,8 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
     /** Map from network ID to last observed roaming state */
     @GuardedBy("mNetworkPoliciesSecondLock")
     private final SparseBooleanArray mNetworkRoaming = new SparseBooleanArray();
+    @GuardedBy("mNetworkPoliciesSecondLock")
+    private SparseSetArray<String> mNetworkIfaces = new SparseSetArray<>();
 
     /** Map from netId to subId as of last update */
     @GuardedBy("mNetworkPoliciesSecondLock")
@@ -1324,6 +1328,19 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         return changed;
     }
 
+    private static boolean updateLinkPropertiesChange(SparseSetArray lastValues,
+            ArraySet<String> newValue, Network network) {
+        final ArraySet<String> lastValue = lastValues.get(network.getNetId());
+        final boolean changed = lastValue == null ? true : !lastValue.equals(newValue);
+
+        if (changed) {
+            for (String value : newValue) {
+                lastValues.add(network.getNetId(), value);
+            }
+        }
+        return changed;
+    }
+
     private final NetworkCallback mNetworkCallback = new NetworkCallback() {
         @Override
         public void onCapabilitiesChanged(Network network,
@@ -1347,6 +1364,22 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
                 }
             }
         }
+
+        @Override
+        public void onLinkPropertiesChanged(Network network, LinkProperties lp) {
+            if (network == null || lp == null) return;
+
+            synchronized (mNetworkPoliciesSecondLock) {
+                final ArraySet<String> newIfaces = new ArraySet<>();
+                newIfaces.addAll(lp.getAllInterfaceNames());
+                final boolean ifaceChanged =
+                        updateLinkPropertiesChange(mNetworkIfaces, newIfaces, network);
+                if (ifaceChanged) {
+                    updateNetworkRulesNL();
+                }
+            }
+        }
+
     };
 
     /**
