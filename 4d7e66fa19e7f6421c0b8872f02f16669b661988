@@ -33,6 +33,23 @@
       "message": "Please review it and restart the presubmit，thank you.",
       "revId": "4d7e66fa19e7f6421c0b8872f02f16669b661988",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6be3645d_d6f0b066",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1947716
+      },
+      "writtenOn": "2022-04-14T07:16:06Z",
+      "side": 1,
+      "message": "TreeHugger had 1 failed item. Retry it.",
+      "revId": "4d7e66fa19e7f6421c0b8872f02f16669b661988",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
