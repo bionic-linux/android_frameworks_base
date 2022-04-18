@@ -285,6 +285,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2150123_212e3e06",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-04-18T18:48:17Z",
+      "side": 1,
+      "message": "Hm, there is this addAll() http://cs/android/frameworks/base/core/java/android/util/SparseSetArray.java;l\u003d68;rcl\u003d80775832484cdefa80b0d3e21c934ed8572cc128, no?\n\nAlso, while removing and adding the elements again works, we should be able to replace the value for a given key. Could you add a TODO here to add such facility (SparseSetArray.put(key, value)). SparseArray already supports this, so it shouldn\u0027t be too difficult to add this to SparseSetArray.",
+      "parentUuid": "02462597_8a72802c",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1339,
+        "endChar": 13
+      },
+      "revId": "2ec91be3720d96b20a1f407c3b2550826dfedb5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b4ea7141_654b15c7",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 2
