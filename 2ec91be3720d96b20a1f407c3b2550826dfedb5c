@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fa245d0e_7097fa77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-18T03:37:24Z",
+      "side": 1,
+      "message": "will not be called if data usage is not updated.",
+      "range": {
+        "startLine": 10,
+        "startChar": 52,
+        "endLine": 11,
+        "endChar": 36
+      },
+      "revId": "2ec91be3720d96b20a1f407c3b2550826dfedb5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "04d1f2ef_749653c3",
         "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
         "patchSetId": 2
@@ -19,6 +42,29 @@
         "startChar": 4,
         "endLine": 613,
         "endChar": 50
+      },
+      "revId": "2ec91be3720d96b20a1f407c3b2550826dfedb5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e592b8c3_30e4c9ff",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-18T03:37:24Z",
+      "side": 1,
+      "message": "Maybe mNetworkToIfaces since we have mNetIdToSubId?",
+      "range": {
+        "startLine": 613,
+        "startChar": 35,
+        "endLine": 613,
+        "endChar": 49
       },
       "revId": "2ec91be3720d96b20a1f407c3b2550826dfedb5c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
