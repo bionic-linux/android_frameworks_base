@@ -23,6 +23,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.Nullable;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -772,7 +773,11 @@ public final class FloatingToolbar {
             int rootViewTopOnWindow = mTmpCoords[1];
             int windowLeftOnScreen = rootViewLeftOnScreen - rootViewLeftOnWindow;
             int windowTopOnScreen = rootViewTopOnScreen - rootViewTopOnWindow;
-            mCoordsOnWindow.set(
+            if (mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+                    && windowTopOnScreen > (mContext.getResources().getDisplayMetrics().heightPixels / 2)) {
+                mCoordsOnWindow.set(
+                        Math.max(0, x - windowLeftOnScreen), y - windowTopOnScreen);
+            } else mCoordsOnWindow.set(
                     Math.max(0, x - windowLeftOnScreen), Math.max(0, y - windowTopOnScreen));
         }
 
