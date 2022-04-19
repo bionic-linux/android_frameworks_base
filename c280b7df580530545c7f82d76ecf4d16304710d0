@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ca155ba_ad19d290",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-19T23:31:22Z",
+      "side": 1,
+      "message": "A few comments to start.",
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d909dfba_65f4c7fe",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-19T23:31:22Z",
+      "side": 1,
+      "message": "How much change would it be to just create a small inner class for this thing that serves to effectively override the .equals() and .hashCode() methods?\n\nThen you wouldn\u0027t have these janky sorts of sharp edges floating around (waiting to bite someone else), and it would give the geteSubIdToCarrierConfigMapHashCode() method and areSubIdToCarrierConfigMapsEqual method a nice little home.",
+      "range": {
+        "startLine": 493,
+        "startChar": 20,
+        "endLine": 493,
+        "endChar": 54
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7003eafb_63ba362a",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-19T23:31:22Z",
+      "side": 1,
+      "message": "nit: by convention, HashCode()",
+      "range": {
+        "startLine": 512,
+        "startChar": 57,
+        "endLine": 512,
+        "endChar": 58
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "396e1962_9322da0c",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-19T23:31:22Z",
+      "side": 1,
+      "message": "nit: looks like the retval is also NonNull?",
+      "range": {
+        "startLine": 364,
+        "startChar": 18,
+        "endLine": 364,
+        "endChar": 35
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e3757dc_414322be",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-19T23:31:22Z",
+      "side": 1,
+      "message": "que?",
+      "range": {
+        "startLine": 413,
+        "startChar": 0,
+        "endLine": 414,
+        "endChar": 49
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddca0bcb_328fe5c8",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-19T23:31:22Z",
+      "side": 1,
+      "message": "Is the set guaranteed to maintain sort order? I\u0027m terrified.",
+      "range": {
+        "startLine": 422,
+        "startChar": 33,
+        "endLine": 422,
+        "endChar": 39
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5de6497_64a6d81d",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-19T23:31:22Z",
+      "side": 1,
+      "message": "I don\u0027t see any XML here.",
+      "range": {
+        "startLine": 436,
+        "startChar": 37,
+        "endLine": 436,
+        "endChar": 65
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "024da2ad_00b93b96",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-19T23:31:22Z",
+      "side": 1,
+      "message": "Objects.equals(a, b) will call a.equals(b).. so this will do more than pointer+nullable equality. Since equals() is an overridden method, internally it should check whether \"b instanceof a\" and cast appropriately, right?\n\nThis will also cover the null case AIUI. Likewise, if getClass() doesn\u0027t match, then would it catch that?",
+      "range": {
+        "startLine": 464,
+        "startChar": 24,
+        "endLine": 464,
+        "endChar": 30
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
