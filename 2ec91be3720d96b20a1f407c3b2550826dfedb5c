@@ -307,6 +307,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c65e6291_8d7292b2",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-04-19T08:46:41Z",
+      "side": 1,
+      "message": "Ah, AOSP doesn\u0027t support this yet.\nAdd TODO.",
+      "parentUuid": "e2150123_212e3e06",
+      "range": {
+        "startLine": 1337,
+        "startChar": 12,
+        "endLine": 1339,
+        "endChar": 13
+      },
+      "revId": "2ec91be3720d96b20a1f407c3b2550826dfedb5c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4ea7141_654b15c7",

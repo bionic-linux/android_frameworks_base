@@ -71,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78d221f0_b088cb54",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-04-19T08:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "525b5a62_6d98f35d",
+      "range": {
+        "startLine": 1379,
+        "startChar": 44,
+        "endLine": 1379,
+        "endChar": 60
+      },
+      "revId": "e93e823ed5c16fd60816655b317f3f42cea010c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a54f7603_06f9f9bd",
@@ -84,6 +108,30 @@
       "writtenOn": "2022-04-19T02:53:05Z",
       "side": 1,
       "message": "It seems to me the variable needs to be protected by mNetworkPoliciesSecondLock",
+      "range": {
+        "startLine": 1388,
+        "startChar": 12,
+        "endLine": 1388,
+        "endChar": 28
+      },
+      "revId": "e93e823ed5c16fd60816655b317f3f42cea010c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17b3bced_15d8d64b",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-04-19T08:46:41Z",
+      "side": 1,
+      "message": "Oops, thanks!",
+      "parentUuid": "a54f7603_06f9f9bd",
       "range": {
         "startLine": 1388,
         "startChar": 12,
