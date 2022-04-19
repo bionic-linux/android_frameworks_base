@@ -3487,7 +3487,6 @@ public class MediaPlayer extends PlayerBase
 
             case MEDIA_PLAYBACK_COMPLETE:
                 {
-                    mOnCompletionInternalListener.onCompletion(mMediaPlayer);
                     OnCompletionListener onCompletionListener = mOnCompletionListener;
                     if (onCompletionListener != null)
                         onCompletionListener.onCompletion(mMediaPlayer);
@@ -3553,7 +3552,6 @@ public class MediaPlayer extends PlayerBase
                     error_was_handled = onErrorListener.onError(mMediaPlayer, msg.arg1, msg.arg2);
                 }
                 {
-                    mOnCompletionInternalListener.onCompletion(mMediaPlayer);
                     OnCompletionListener onCompletionListener = mOnCompletionListener;
                     if (onCompletionListener != null && ! error_was_handled) {
                         onCompletionListener.onCompletion(mMediaPlayer);
@@ -3801,7 +3799,11 @@ public class MediaPlayer extends PlayerBase
                 mp.mDrmInfoResolved = true;
             }
             break;
-
+        case MEDIA_PLAYBACK_COMPLETE:
+        case MEDIA_ERROR:
+            // update internal status first
+            mp.mOnCompletionInternalListener.onCompletion(mp);
+            break;
         }
 
         if (mp.mEventHandler != null) {
