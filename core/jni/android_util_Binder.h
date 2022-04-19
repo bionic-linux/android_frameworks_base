@@ -24,8 +24,13 @@
 
 namespace android {
 
-// Converstion to/from Java IBinder Object and C++ IBinder instance.
+/**
+ * Conversion to Java IBinder Object from C++ IBinder instance.
+ *
+ * WARNING: this function returns global and local references.
+ */
 extern jobject javaObjectForIBinder(JNIEnv* env, const sp<IBinder>& val);
+/** Conversion from Java IBinder Object to C++ IBinder instance. */
 extern sp<IBinder> ibinderForJavaObject(JNIEnv* env, jobject obj);
 
 extern jobject newParcelFileDescriptor(JNIEnv* env, jobject fileDesc);
