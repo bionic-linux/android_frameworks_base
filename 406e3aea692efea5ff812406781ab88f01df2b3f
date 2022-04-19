@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f12ef6e2_5fea8970",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-04-19T22:09:57Z",
+      "side": 1,
+      "message": "Thank you for addressing all the comments so far.",
+      "revId": "406e3aea692efea5ff812406781ab88f01df2b3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23d54cae_257d6d6e",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1335,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2022-04-19T22:09:57Z",
+      "side": 1,
+      "message": "nit: Instead of accessing network.getNetId() everywhere, I\u0027d suggest passing just network.getNetId() as an argument to this method instead of network.",
+      "range": {
+        "startLine": 1335,
+        "startChar": 65,
+        "endLine": 1335,
+        "endChar": 83
+      },
+      "revId": "406e3aea692efea5ff812406781ab88f01df2b3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
