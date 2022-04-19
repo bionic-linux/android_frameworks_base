@@ -22,6 +22,30 @@
       },
       "revId": "aec4602138b46e29a0310e23dbc67e14de86cc1b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25a91365_06057cc3",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-19T22:01:32Z",
+      "side": 1,
+      "message": "Done. It actually exposed a bug in our equality comparisons of the persistable bundles. \n\nIt ended up being nasty, but this is the right thing to do...",
+      "parentUuid": "4c3ee330_2ef84b20",
+      "range": {
+        "startLine": 100,
+        "startChar": 31,
+        "endLine": 100,
+        "endChar": 48
+      },
+      "revId": "aec4602138b46e29a0310e23dbc67e14de86cc1b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
