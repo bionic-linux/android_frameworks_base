@@ -85,7 +85,7 @@ public class DynamicSystemService extends IDynamicSystemService.Stub {
             final int userId = UserHandle.myUserId();
             final StorageManager sm = mContext.getSystemService(StorageManager.class);
             for (VolumeInfo volume : sm.getVolumes()) {
-                if (volume.getType() != volume.TYPE_PUBLIC) {
+                if (volume.getType() != volume.TYPE_PUBLIC || !"vfat".equalsIgnoreCase(volume.fsType)) {
                     continue;
                 }
                 if (!volume.isMountedWritable()) {
