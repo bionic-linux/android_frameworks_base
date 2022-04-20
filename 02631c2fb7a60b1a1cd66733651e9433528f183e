@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c163f362_24b54756",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-04-20T22:40:02Z",
+      "side": 1,
+      "message": "LGTM - Makoto, could you please confirm / OWNER +1?\n\n(we\u0027d prefer to fix it here, but master is fine as well - we\u0027ll need to CP to our internal car branch regardless)",
+      "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
