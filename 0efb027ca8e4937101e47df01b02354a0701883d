@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afb83dcc_4e416d84",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2022-04-20T17:34:47Z",
+      "side": 1,
+      "message": "I think this means this callback was called after the FilterCallback\u0027s destructor was called. This change is more like a workaround, and it has risk because FilterCallback has been destroyed.\n\nI think we should improve this part by two changes,\n1. In the HAL, I think ideally when closing the filter, the filter callbacks should be flushed before closing.\n2. Because the callback is oneway, in frameworks, we also need a mutex to ensure all callbacks are handled before destroy FilterCallback (we could add a mFilterCallback in to Filter to hold the FilterCallback and destroy it in FilterC\u0027s destructor).",
+      "range": {
+        "startLine": 657,
+        "startChar": 0,
+        "endLine": 662,
+        "endChar": 5
+      },
+      "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
