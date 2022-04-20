@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9458915_29d1663a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-20T06:28:32Z",
+      "side": 1,
+      "message": "LGTM with previous nits that commented on patchset 6.\nBut that does not block this CL.\nWait for Sudheer to take a look.",
+      "revId": "2e45e16ca58ad568f1bce9b1fbb8d07b02a36ee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
