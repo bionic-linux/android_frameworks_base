@@ -39,6 +39,46 @@
       },
       "revId": "406e3aea692efea5ff812406781ab88f01df2b3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7437dace_1f49164a",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-20T03:17:56Z",
+      "side": 1,
+      "message": "Maybe not for this CL.\n1. nit: This also runs if roamingChanged, the method name is not super accurate.\n2. Maybe similar event log is also needed for interfaceChanged below.",
+      "range": {
+        "startLine": 1368,
+        "startChar": 20,
+        "endLine": 1368,
+        "endChar": 79
+      },
+      "revId": "406e3aea692efea5ff812406781ab88f01df2b3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eb1f6d6_42cb64c1",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4028,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-04-20T03:17:56Z",
+      "side": 1,
+      "message": "Maybe not for this CL？\nIIUC we might want to dump mNetworkToIfaces here?",
+      "revId": "406e3aea692efea5ff812406781ab88f01df2b3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
