@@ -16,6 +16,29 @@
       "message": "Hi Jing Ji, Dmitri Plotnikov and Varun Shah, please help to review the updated change, thanks!",
       "revId": "1383a22ce754b8b00235c9eeaa5c3341e440dbb6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f278d735_f9fe8bd9",
+        "filename": "services/core/java/com/android/server/am/ContentProviderHelper.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2022-04-20T22:07:26Z",
+      "side": 1,
+      "message": "Does this compile?  It appears that cpr is used out-of-scope.",
+      "range": {
+        "startLine": 946,
+        "startChar": 28,
+        "endLine": 946,
+        "endChar": 31
+      },
+      "revId": "1383a22ce754b8b00235c9eeaa5c3341e440dbb6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
