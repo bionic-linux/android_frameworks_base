@@ -674,7 +674,8 @@ Return<void> FilterCallback::onFilterStatus(const DemuxFilterStatus status) {
 
 void FilterCallback::setFilter(const sp<Filter> filter) {
     ALOGD("FilterCallback::setFilter");
-    mFilter = filter->mFilterObj;
+    JNIEnv *env = AndroidRuntime::getJNIEnv();
+    mFilter = env->NewWeakGlobalRef(filter->mFilterObj);
     mIFilter = filter->mFilterSp;
 }
 
@@ -688,7 +689,7 @@ FilterCallback::~FilterCallback() {
 
 /////////////// Filter ///////////////////////
 
-Filter::Filter(sp<IFilter> sp, jobject obj) : mFilterSp(sp) {
+Filter::Filter(sp<IFilter> sp, jobject obj) : mFilterSp(sp),  mFilterMQEventFlag(nullptr) {
     JNIEnv *env = AndroidRuntime::getJNIEnv();
     mFilterObj = env->NewWeakGlobalRef(obj);
 }
