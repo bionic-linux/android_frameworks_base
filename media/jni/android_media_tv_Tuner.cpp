@@ -654,10 +654,12 @@ Return<void> FilterCallback::onFilterEvent(const DemuxFilterEvent& filterEvent) 
             }
         }
     }
-    env->CallVoidMethod(
-            mFilter,
-            gFields.onFilterEventID,
-            array);
+    if (mFilter != nullptr) {
+        env->CallVoidMethod(
+                mFilter,
+                gFields.onFilterEventID,
+                array);
+    }
     return Void();
 }
 
@@ -665,10 +667,12 @@ Return<void> FilterCallback::onFilterEvent(const DemuxFilterEvent& filterEvent) 
 Return<void> FilterCallback::onFilterStatus(const DemuxFilterStatus status) {
     ALOGD("FilterCallback::onFilterStatus");
     JNIEnv *env = AndroidRuntime::getJNIEnv();
-    env->CallVoidMethod(
-            mFilter,
-            gFields.onFilterStatusID,
-            (jint)status);
+    if (mFilter != nullptr) {
+        env->CallVoidMethod(
+                mFilter,
+                gFields.onFilterStatusID,
+                (jint)status);
+    }
     return Void();
 }
 
@@ -688,16 +692,13 @@ FilterCallback::~FilterCallback() {
 
 /////////////// Filter ///////////////////////
 
-Filter::Filter(sp<IFilter> sp, jobject obj) : mFilterSp(sp) {
+Filter::Filter(sp<IFilter> sp, jobject obj)
+    :mFilterSp(sp), mFilterMQEventFlag(nullptr) {
     JNIEnv *env = AndroidRuntime::getJNIEnv();
     mFilterObj = env->NewWeakGlobalRef(obj);
 }
 
 Filter::~Filter() {
-    JNIEnv *env = AndroidRuntime::getJNIEnv();
-
-    env->DeleteWeakGlobalRef(mFilterObj);
-    mFilterObj = NULL;
 }
 
 int Filter::close() {
