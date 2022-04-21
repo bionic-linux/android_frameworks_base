@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "047c626d_d3017223",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T17:40:20Z",
+      "side": 1,
+      "message": "It\u0027s technically already returning an empty bundle.",
+      "parentUuid": "bf90d02d_5e7d4387",
+      "range": {
+        "startLine": 331,
+        "startChar": 20,
+        "endLine": 331,
+        "endChar": 29
+      },
+      "revId": "52629838cb5d1aef54236eb517ed929bcbd1ccdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7f6b786e_d2ea8f76",
         "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
         "patchSetId": 3
@@ -60,6 +84,30 @@
       "writtenOn": "2022-04-21T02:41:50Z",
       "side": 1,
       "message": "was this an \"oops\"?",
+      "range": {
+        "startLine": 347,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 28
+      },
+      "revId": "52629838cb5d1aef54236eb517ed929bcbd1ccdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7abdeb4c_98bdfe5e",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T17:40:20Z",
+      "side": 1,
+      "message": "Yeah this was technically a bug, but only affects tests, and only in the case where there was already something set (which there never was)",
+      "parentUuid": "bb62e3da_4c05757b",
       "range": {
         "startLine": 347,
         "startChar": 8,
