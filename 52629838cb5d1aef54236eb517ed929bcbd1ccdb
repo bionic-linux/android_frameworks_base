@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "caeac819_8b71ec93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T17:40:50Z",
+      "side": 1,
+      "message": "Infra error, tests already passing on all othe rbranches.",
+      "revId": "52629838cb5d1aef54236eb517ed929bcbd1ccdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf90d02d_5e7d4387",
