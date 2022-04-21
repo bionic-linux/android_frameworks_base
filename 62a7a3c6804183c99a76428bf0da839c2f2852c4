@@ -46,6 +46,30 @@
       },
       "revId": "62a7a3c6804183c99a76428bf0da839c2f2852c4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c43e8486_2c6073ed",
+        "filename": "core/jni/android_util_Binder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1013030
+      },
+      "writtenOn": "2022-04-21T15:39:49Z",
+      "side": 1,
+      "message": "Yeah; that happened in b/225287201 so maybe worth documenting here?",
+      "parentUuid": "e686e497_b9c557b8",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 62
+      },
+      "revId": "62a7a3c6804183c99a76428bf0da839c2f2852c4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
