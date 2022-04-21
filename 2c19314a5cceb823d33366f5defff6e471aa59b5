@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5be4ed2_64f3f431",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1135739
+      },
+      "writtenOn": "2022-04-21T05:21:38Z",
+      "side": 1,
+      "message": "Hi Tim, \n\nThere\u0027s a warning message about line length. Would you refine it accordingly?",
+      "revId": "2c19314a5cceb823d33366f5defff6e471aa59b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
