@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9655ae3e_245d4a59",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T01:25:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d909dfba_65f4c7fe",
+      "range": {
+        "startLine": 493,
+        "startChar": 20,
+        "endLine": 493,
+        "endChar": 54
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7003eafb_63ba362a",
@@ -54,6 +78,30 @@
       "writtenOn": "2022-04-19T23:31:22Z",
       "side": 1,
       "message": "nit: by convention, HashCode()",
+      "range": {
+        "startLine": 512,
+        "startChar": 57,
+        "endLine": 512,
+        "endChar": 58
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "564f3a0a_7ad6bac7",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T01:25:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7003eafb_63ba362a",
       "range": {
         "startLine": 512,
         "startChar": 57,
@@ -87,6 +135,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bc6d396_ca0fba1c",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T01:25:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396e1962_9322da0c",
+      "range": {
+        "startLine": 364,
+        "startChar": 18,
+        "endLine": 364,
+        "endChar": 35
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e3757dc_414322be",
@@ -100,6 +172,30 @@
       "writtenOn": "2022-04-19T23:31:22Z",
       "side": 1,
       "message": "que?",
+      "range": {
+        "startLine": 413,
+        "startChar": 0,
+        "endLine": 414,
+        "endChar": 49
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a03a1a1_c406187e",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T01:25:25Z",
+      "side": 1,
+      "message": "Legacy of a past patch. removed.",
+      "parentUuid": "9e3757dc_414322be",
       "range": {
         "startLine": 413,
         "startChar": 0,
@@ -133,6 +229,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f1059a5_871914ab",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T01:25:25Z",
+      "side": 1,
+      "message": "Done, stabilized using a treeset",
+      "parentUuid": "ddca0bcb_328fe5c8",
+      "range": {
+        "startLine": 422,
+        "startChar": 33,
+        "endLine": 422,
+        "endChar": 39
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a5de6497_64a6d81d",
@@ -156,6 +276,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b334a79_83a17315",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T01:25:25Z",
+      "side": 1,
+      "message": "Oops, legacy of a previous version.",
+      "parentUuid": "a5de6497_64a6d81d",
+      "range": {
+        "startLine": 436,
+        "startChar": 37,
+        "endLine": 436,
+        "endChar": 65
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "024da2ad_00b93b96",
@@ -169,6 +313,30 @@
       "writtenOn": "2022-04-19T23:31:22Z",
       "side": 1,
       "message": "Objects.equals(a, b) will call a.equals(b).. so this will do more than pointer+nullable equality. Since equals() is an overridden method, internally it should check whether \"b instanceof a\" and cast appropriately, right?\n\nThis will also cover the null case AIUI. Likewise, if getClass() doesn\u0027t match, then would it catch that?",
+      "range": {
+        "startLine": 464,
+        "startChar": 24,
+        "endLine": 464,
+        "endChar": 30
+      },
+      "revId": "c280b7df580530545c7f82d76ecf4d16304710d0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b24309c4_4a17866c",
+        "filename": "services/core/java/com/android/server/vcn/util/PersistableBundleUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-04-21T01:25:25Z",
+      "side": 1,
+      "message": "Yes, but if it fails any of those checks, it\u0027s indistinguishable between class checks failing, null checks failing or equality checks failing, so we\u0027ll need to check after anyways.",
+      "parentUuid": "024da2ad_00b93b96",
       "range": {
         "startLine": 464,
         "startChar": 24,
