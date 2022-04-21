@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd18adc4_d8967cab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2022-04-21T23:07:48Z",
+      "side": 1,
+      "message": "-1 As this upload is meant for sharing and not merging.",
+      "revId": "f7c9f341263b9087f848731aa517c5b6fcc91f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
