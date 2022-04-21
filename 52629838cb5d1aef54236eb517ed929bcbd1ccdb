@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf90d02d_5e7d4387",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-21T02:41:50Z",
+      "side": 1,
+      "message": "Is it better for minimizeBundle() to return a null or an empty bundle? If there\u0027s an advantage to this sharp edge, it\u0027s not obvious.",
+      "range": {
+        "startLine": 331,
+        "startChar": 20,
+        "endLine": 331,
+        "endChar": 29
+      },
+      "revId": "52629838cb5d1aef54236eb517ed929bcbd1ccdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f6b786e_d2ea8f76",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-21T02:41:50Z",
+      "side": 1,
+      "message": "nit I",
+      "range": {
+        "startLine": 337,
+        "startChar": 32,
+        "endLine": 337,
+        "endChar": 33
+      },
+      "revId": "52629838cb5d1aef54236eb517ed929bcbd1ccdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb62e3da_4c05757b",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-21T02:41:50Z",
+      "side": 1,
+      "message": "was this an \"oops\"?",
+      "range": {
+        "startLine": 347,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 28
+      },
+      "revId": "52629838cb5d1aef54236eb517ed929bcbd1ccdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c2587cb_7a580d85",
+        "filename": "services/core/java/com/android/server/vcn/TelephonySubscriptionTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1060151
+      },
+      "writtenOn": "2022-04-21T02:41:50Z",
+      "side": 1,
+      "message": "this seems dangerous, but I know why it\u0027s here. I think, essentially, there is a missing concept in telephony, which is keys that have \"group scope\". File bug plz that we can discuss for U?",
+      "range": {
+        "startLine": 473,
+        "startChar": 40,
+        "endLine": 473,
+        "endChar": 65
+      },
+      "revId": "52629838cb5d1aef54236eb517ed929bcbd1ccdb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
