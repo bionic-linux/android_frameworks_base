@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1734f26d_33c111e5",
+        "filename": "services/core/java/com/android/server/DynamicSystemService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1337669
+      },
+      "writtenOn": "2022-04-21T06:00:40Z",
+      "side": 1,
+      "message": "I think just make this it\u0027s own line to match the style like L92:\n\n```\n// gsid supports only vfat external storage.\nif (!\"vfat\".equalsIgnoreCase(volume.fsType)) {\n  continue;\n}\n```",
+      "range": {
+        "startLine": 89,
+        "startChar": 24,
+        "endLine": 89,
+        "endChar": 63
+      },
+      "revId": "6e019d8f5cbc50d4d8289f05075b07d0ead760f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
