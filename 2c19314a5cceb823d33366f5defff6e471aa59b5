@@ -33,6 +33,42 @@
       "message": "I\u0027d like to have more information about how this CL is being tested.\n",
       "revId": "2c19314a5cceb823d33366f5defff6e471aa59b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1bd5b7c_617ff42f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1758183
+      },
+      "writtenOn": "2022-04-21T05:47:48Z",
+      "side": 1,
+      "message": "I have a device running master branch that supports exFAT on external sdcard, if I try to install a GSI built from master branch as DSU without this change installation fails due to gsid not allowing installation on anything other than vfat (and libfiemap not supporting it currently either).",
+      "parentUuid": "fbd3a7fd_7a97d8ce",
+      "revId": "2c19314a5cceb823d33366f5defff6e471aa59b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93913c94_f9890073",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1758183
+      },
+      "writtenOn": "2022-04-21T05:47:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5be4ed2_64f3f431",
+      "revId": "2c19314a5cceb823d33366f5defff6e471aa59b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
