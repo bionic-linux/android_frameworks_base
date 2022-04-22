@@ -22,6 +22,30 @@
       },
       "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a42e558f_09ca2773",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1889050
+      },
+      "writtenOn": "2022-04-22T13:10:07Z",
+      "side": 1,
+      "message": "1, In the tuner hal, it has ensured the FilterCallback is called before FilterCallback is destoryed;\n2,In Tuner framework, the FilterCallback is passed to tuner hal, tuner hal has ensured all callbacks are handles before FilterCallback is destroyed. so we don\u0027t think it needs to add a mutex in frameworks.",
+      "parentUuid": "afb83dcc_4e416d84",
+      "range": {
+        "startLine": 657,
+        "startChar": 0,
+        "endLine": 662,
+        "endChar": 5
+      },
+      "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
