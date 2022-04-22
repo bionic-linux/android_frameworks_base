@@ -16,6 +16,24 @@
       "message": "-1 As this upload is meant for sharing and not merging.",
       "revId": "f7c9f341263b9087f848731aa517c5b6fcc91f68",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1181a2b7_a2e313f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2022-04-22T10:02:15Z",
+      "side": 1,
+      "message": "Why are we not merging the change?\n\nSomeone\u0027s asking if we can publish this in a public domain: https://b.corp.google.com/issues/204285172#comment63\nHow do we do that?",
+      "parentUuid": "cd18adc4_d8967cab",
+      "revId": "f7c9f341263b9087f848731aa517c5b6fcc91f68",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
