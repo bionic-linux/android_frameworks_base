@@ -46,6 +46,30 @@
       },
       "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8eedfcc7_f18902bc",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2022-04-22T17:25:28Z",
+      "side": 1,
+      "message": "As I said, the callback is \"oneway\", it may have some callbacks on the fly which have been sent out by HAL when you close the filter.\n\nAnd if your changes in HAL could fix this problem, why was this check in the FilterCallback still needed?",
+      "parentUuid": "a42e558f_09ca2773",
+      "range": {
+        "startLine": 657,
+        "startChar": 0,
+        "endLine": 662,
+        "endChar": 5
+      },
+      "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
