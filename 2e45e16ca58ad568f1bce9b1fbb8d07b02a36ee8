@@ -34,6 +34,23 @@
       "parentUuid": "e9458915_29d1663a",
       "revId": "2e45e16ca58ad568f1bce9b1fbb8d07b02a36ee8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "783e6841_06512f72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-04-22T15:10:07Z",
+      "side": 1,
+      "message": "For the warning, I uploaded a same change with a different Change-Id at aosp/2073269 and did not meet the same warning after TH. So merge this CL first. ",
+      "revId": "2e45e16ca58ad568f1bce9b1fbb8d07b02a36ee8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
