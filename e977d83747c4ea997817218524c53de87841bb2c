@@ -22,6 +22,30 @@
       },
       "revId": "e977d83747c4ea997817218524c53de87841bb2c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53282245_5cc720a6",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1889050
+      },
+      "writtenOn": "2022-04-24T09:25:45Z",
+      "side": 0,
+      "message": "fixed",
+      "parentUuid": "200f2dc2_900e1c95",
+      "range": {
+        "startLine": 697,
+        "startChar": 0,
+        "endLine": 700,
+        "endChar": 22
+      },
+      "revId": "e977d83747c4ea997817218524c53de87841bb2c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

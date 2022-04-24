@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abc21e2f_72e644e9",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1889050
+      },
+      "writtenOn": "2022-04-24T09:25:45Z",
+      "side": 1,
+      "message": "In tuner hal, I add a mutex to ensure filtercallback and close filter sequence.\nso I removed the modification.",
+      "parentUuid": "8eedfcc7_f18902bc",
+      "range": {
+        "startLine": 657,
+        "startChar": 0,
+        "endLine": 662,
+        "endChar": 5
+      },
+      "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e5674bf_191e0289",
@@ -89,6 +113,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5446326b_e5979428",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1889050
+      },
+      "writtenOn": "2022-04-24T09:25:45Z",
+      "side": 1,
+      "message": "Thanks， We have followed your modifcation.",
+      "parentUuid": "1e5674bf_191e0289",
+      "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3490dfc_cf12a917",
@@ -102,6 +144,30 @@
       "writtenOn": "2022-04-24T05:17:42Z",
       "side": 1,
       "message": "Please add a space after \":\".",
+      "range": {
+        "startLine": 696,
+        "startChar": 4,
+        "endLine": 696,
+        "endChar": 5
+      },
+      "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c0f2292_952440f5",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1889050
+      },
+      "writtenOn": "2022-04-24T09:25:45Z",
+      "side": 1,
+      "message": "fixed",
+      "parentUuid": "d3490dfc_cf12a917",
       "range": {
         "startLine": 696,
         "startChar": 4,
