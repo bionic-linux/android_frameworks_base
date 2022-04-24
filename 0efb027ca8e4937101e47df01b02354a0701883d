@@ -70,6 +70,46 @@
       },
       "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e5674bf_191e0289",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2022-04-24T05:17:42Z",
+      "side": 1,
+      "message": "I think we should add \"NewWeakGlobalRef;\" here, just like \"DvrCallback::setDvr()\"\n\n\nvoid FilterCallback::setFilter(const sp\u003cFilter\u003e filter) {\n    ALOGD(\"FilterCallback::setFilter\");\n    JNIEnv *env \u003d AndroidRuntime::getJNIEnv();\n    mFilter \u003d env-\u003eNewWeakGlobalRef(filter-\u003emFilterObj);\n    mIFilter \u003d filter-\u003emFilterSp;\n}",
+      "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3490dfc_cf12a917",
+        "filename": "media/jni/android_media_tv_Tuner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1608690
+      },
+      "writtenOn": "2022-04-24T05:17:42Z",
+      "side": 1,
+      "message": "Please add a space after \":\".",
+      "range": {
+        "startLine": 696,
+        "startChar": 4,
+        "endLine": 696,
+        "endChar": 5
+      },
+      "revId": "0efb027ca8e4937101e47df01b02354a0701883d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
