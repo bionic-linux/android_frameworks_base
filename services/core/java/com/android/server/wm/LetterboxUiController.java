@@ -167,7 +167,9 @@ final class LetterboxUiController {
             final Rect spaceToFill = transformedBounds != null
                     ? transformedBounds
                     : mActivityRecord.inMultiWindowMode()
-                            ? mActivityRecord.getRootTask().getBounds()
+                            ? (mActivityRecord.getWindowingMode() == WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW
+                                ? mActivityRecord.getTask().getBounds()
+                                : mActivityRecord.getRootTask().getBounds())
                             : mActivityRecord.getRootTask().getParent().getBounds();
             mLetterbox.layout(spaceToFill, w.getFrame(), mTmpPoint);
         } else if (mLetterbox != null) {
