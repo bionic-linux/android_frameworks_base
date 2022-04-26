@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09d72958_aaee04df",
+        "filename": "services/core/java/com/android/server/wm/LetterboxUiController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1456881
+      },
+      "writtenOn": "2022-04-26T22:04:30Z",
+      "side": 1,
+      "message": "Jerry, do I understand correctly that this check isn\u0027t need here and we can just replace `mActivityRecord.getRootTask().getBounds()` with `mActivityRecord.getTask().getBounds()` or do I miss something?",
+      "range": {
+        "startLine": 170,
+        "startChar": 28,
+        "endLine": 170,
+        "endChar": 116
+      },
+      "revId": "d9a3cdfaf994a60b87856231b524a7c0fbf2bcb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
