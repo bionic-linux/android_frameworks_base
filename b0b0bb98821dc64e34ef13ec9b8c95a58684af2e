@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edee8b53_7dd9db22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010050
+      },
+      "writtenOn": "2022-04-26T00:58:13Z",
+      "side": 1,
+      "message": "Assuming it\u0027s fine to have two different API constants at CUR_DEVELOPMENT, API+1",
+      "revId": "b0b0bb98821dc64e34ef13ec9b8c95a58684af2e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
