@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a5b7f6c_a79edaba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-04-27T23:03:54Z",
+      "side": 1,
+      "message": "I\u0027m assuming Felipe is right that is was supposed to say \"stopping\". If so, I guess the cl sounds plausible, although I don\u0027t know much about AccountManager inner workings.",
+      "parentUuid": "c8cb7ab6_1ecf82e2",
+      "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c163f362_24b54756",
