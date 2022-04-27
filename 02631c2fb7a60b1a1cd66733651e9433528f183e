@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "59681ca6_2deb0be7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1948576
+      },
+      "writtenOn": "2022-04-27T23:39:04Z",
+      "side": 1,
+      "message": "Yes, it\u0027s still in the final phase of stopping, but from UserState side, it is STATE_SHUTDOWN, at that time, stopUser is not called, so all the processes under that user are still running\n49      // User is in the final phase of stopping, sending Intent.ACTION_SHUTDOWN.\n50      public final static int STATE_SHUTDOWN \u003d 5;",
+      "parentUuid": "3a5b7f6c_a79edaba",
+      "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c163f362_24b54756",
