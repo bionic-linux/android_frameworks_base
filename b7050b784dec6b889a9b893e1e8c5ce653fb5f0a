@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bed439a_ce6e640a",
+        "filename": "core/java/android/permission/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1895503
+      },
+      "writtenOn": "2022-04-27T23:18:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0dff967_7eb4db09",
+      "revId": "b7050b784dec6b889a9b893e1e8c5ce653fb5f0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0a3eb8e_c15c592d",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-04-27T23:01:14Z",
       "side": 1,
       "message": "Sergey is currently assigned to CDM and not in Privacy Controls: https://moma.corp.google.com/team/1115499441219 - Erik, do you know if we should add him to permission owners?",
+      "revId": "b7050b784dec6b889a9b893e1e8c5ce653fb5f0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b424cf74_7e5a4ea0",
+        "filename": "core/java/android/permission/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1895503
+      },
+      "writtenOn": "2022-04-27T23:18:15Z",
+      "side": 1,
+      "message": "I added Sergey (and also Raphael) because we had other CDM folks already added to this file as well to keep it consistent.",
+      "parentUuid": "b0a3eb8e_c15c592d",
       "revId": "b7050b784dec6b889a9b893e1e8c5ce653fb5f0a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
