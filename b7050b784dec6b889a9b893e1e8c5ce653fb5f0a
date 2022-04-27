@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0dff967_7eb4db09",
+        "filename": "core/java/android/permission/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-04-27T23:01:14Z",
+      "side": 1,
+      "message": "Please sort alphabetically",
+      "revId": "b7050b784dec6b889a9b893e1e8c5ce653fb5f0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0a3eb8e_c15c592d",
+        "filename": "core/java/android/permission/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2022-04-27T23:01:14Z",
+      "side": 1,
+      "message": "Sergey is currently assigned to CDM and not in Privacy Controls: https://moma.corp.google.com/team/1115499441219 - Erik, do you know if we should add him to permission owners?",
+      "revId": "b7050b784dec6b889a9b893e1e8c5ce653fb5f0a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
