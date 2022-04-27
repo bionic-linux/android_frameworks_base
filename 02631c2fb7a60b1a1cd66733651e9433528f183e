@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8cb7ab6_1ecf82e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-04-27T21:44:20Z",
+      "side": 1,
+      "message": "I think this comment is wrong - Catherine, did you mean \"stopping\" instead of \"shutdown\"? \n\nAlso, it might be better to use the UserState  constants, like \"from STATE_STOPPING to STATE_BOOTING\") to be clearer.",
+      "parentUuid": "8865574c_173c0b3d",
+      "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c163f362_24b54756",
