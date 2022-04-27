@@ -138,6 +138,24 @@
       "message": "Actually, either way:\n- This is not on the right branch\n- If we merge it in master, it\u0027d go to tm-dev, but I don\u0027t think we should have it for T? It\u0027s not regression, I believe it\u0027s been like this forever, so I don\u0027t think it\u0027d qualify as a P1 bug, so aosp/master isn\u0027t the right branch either, at this moment.\n\nMaybe for Felipe or Adam to cherry-pick it onto goog/master?",
       "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8789610_c522980a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-04-27T23:57:13Z",
+      "side": 1,
+      "message": "Can we do it on AOSP master with [DO NOT MERGE ANYWHERE]? Then I can cherry-pick internally on our internal branches (master, rvc-car-dev, and sc-car-dev)",
+      "parentUuid": "8e690107_ebcaa8c8",
+      "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
