@@ -156,6 +156,24 @@
       "parentUuid": "8e690107_ebcaa8c8",
       "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52e2f713_55455cb4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003801
+      },
+      "writtenOn": "2022-04-28T00:18:18Z",
+      "side": 1,
+      "message": "The way DO NOT MERGE works is super obscure. I\u0027d really avoid it.\n\nIf you download the patch using gerrit\u0027s cherry-pick, I believe that\u0027ll keep the \"author\" name as is, but the \"committer\" will be you. (or something like that.) So it\u0027s not like \"li.shi@gm.com\" will be gone from the git history. Would that work for GM?",
+      "parentUuid": "f8789610_c522980a",
+      "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
