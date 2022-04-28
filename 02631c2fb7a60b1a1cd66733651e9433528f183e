@@ -192,6 +192,41 @@
       "parentUuid": "52e2f713_55455cb4",
       "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fff496ab_d250935c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-04-28T17:08:25Z",
+      "side": 1,
+      "message": "We figured out the merging, please repo upload this CL again in the master branch (then I\u0027ll cherry-pick it to rvc-car-dev / sc-car-dev)",
+      "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12dec7c7_f68aad2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-04-28T17:08:25Z",
+      "side": 1,
+      "message": "We figured out the merging, please repo upload this CL again in the master branch (then I\u0027ll cherry-pick it to rvc-car-dev / sc-car-dev)\n\n(also, please update / fix the commit message about states)",
+      "parentUuid": "8192df0d_d3bd3a56",
+      "revId": "02631c2fb7a60b1a1cd66733651e9433528f183e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
