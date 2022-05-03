@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b8c0f30_5d8b13fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2022-05-03T14:32:56Z",
+      "side": 1,
+      "message": "Glad to see varhandle benchmarks finally becoming proper benchmarks!\n\nOn the wishlist, it would be good to have a notification when a benchmark gets too slow.",
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18cc9001_38a46eae",
+        "filename": "apct-tests/perftests/core/src/android/libcore/varhandles/generate_java.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2022-05-03T14:32:56Z",
+      "side": 1,
+      "message": "Do you plan to delete the test in art? Otherwise I am worried that this adds code duplication. I understand it would be hard to avoid, but if you plan to keep art test for a long time, add a comment here and there that the code is duplicated.",
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "884a4141_09aa4519",
+        "filename": "apct-tests/perftests/core/src/android/libcore/varhandles/generate_java.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2022-05-03T14:32:56Z",
+      "side": 1,
+      "message": "You need to adjust these values for a benchmark. If you plan to keep the art test, you can make the script accept an obligatory argument which can either be \u0027test\u0027 or \u0027benchmark\u0027 and set the values based on that. Otherwise just increase the values and remove TODO.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 36
+      },
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
