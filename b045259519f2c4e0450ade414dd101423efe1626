@@ -54,6 +54,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a479de8_c1fef3df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-05-03T15:13:32Z",
+      "side": 1,
+      "message": "I might need to dig a bit deeper to make sure that part actually works, but from my understanding it alerts if there is a performance increase of more than 3 percent with respect to the last 8 test runs (those are seemingly standard numbers used elsewhere, I didn\u0027t just make them up)",
+      "parentUuid": "d1ad0d32_3a512cdd",
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18cc9001_38a46eae",
