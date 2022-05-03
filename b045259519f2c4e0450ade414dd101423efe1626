@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "862138a4_852eef12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-05-03T14:57:54Z",
+      "side": 1,
+      "message": "cl/444191690 should take care of that already",
+      "parentUuid": "3b8c0f30_5d8b13fe",
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18cc9001_38a46eae",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7850c35_40bf9e94",
+        "filename": "apct-tests/perftests/core/src/android/libcore/varhandles/generate_java.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-05-03T14:57:54Z",
+      "side": 1,
+      "message": "I\u0027ve added the comment, but I\u0027m also happy to delete the other one once this is working.",
+      "parentUuid": "18cc9001_38a46eae",
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "884a4141_09aa4519",
@@ -48,6 +84,30 @@
       "writtenOn": "2022-05-03T14:32:56Z",
       "side": 1,
       "message": "You need to adjust these values for a benchmark. If you plan to keep the art test, you can make the script accept an obligatory argument which can either be \u0027test\u0027 or \u0027benchmark\u0027 and set the values based on that. Otherwise just increase the values and remove TODO.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 36
+      },
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a15b76c_a09bc9b4",
+        "filename": "apct-tests/perftests/core/src/android/libcore/varhandles/generate_java.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-05-03T14:57:54Z",
+      "side": 1,
+      "message": "So, the way benchmarking works within this new framework is that we don\u0027t actually need to set the number of iterations/repeats for a piece of code, but rather contain the code within a while (state.keepRunning() {} block and the framework will iterate until it deems it has enough information. Iterations is unused now since we no longer set that, but I think we can stick with Repeat\u003d2 if you think that\u0027s fine. I\u0027ve updated the code to reflect that",
+      "parentUuid": "884a4141_09aa4519",
       "range": {
         "startLine": 137,
         "startChar": 0,
