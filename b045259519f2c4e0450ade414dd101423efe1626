@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1ad0d32_3a512cdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2022-05-03T15:09:10Z",
+      "side": 1,
+      "message": "What I don\u0027t understand is, where are the reference timings? The baseline? Perhaps I don\u0027t understand how Crystallball works.",
+      "parentUuid": "862138a4_852eef12",
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18cc9001_38a46eae",
@@ -108,6 +126,30 @@
       "side": 1,
       "message": "So, the way benchmarking works within this new framework is that we don\u0027t actually need to set the number of iterations/repeats for a piece of code, but rather contain the code within a while (state.keepRunning() {} block and the framework will iterate until it deems it has enough information. Iterations is unused now since we no longer set that, but I think we can stick with Repeat\u003d2 if you think that\u0027s fine. I\u0027ve updated the code to reflect that",
       "parentUuid": "884a4141_09aa4519",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 36
+      },
+      "revId": "b045259519f2c4e0450ade414dd101423efe1626",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52eac70d_6a4ed34b",
+        "filename": "apct-tests/perftests/core/src/android/libcore/varhandles/generate_java.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1550939
+      },
+      "writtenOn": "2022-05-03T15:09:10Z",
+      "side": 1,
+      "message": "Thanks! I didn\u0027t see your modifications to the generator. `REPEAT \u003d 2` is fine (it needs to be even).",
+      "parentUuid": "5a15b76c_a09bc9b4",
       "range": {
         "startLine": 137,
         "startChar": 0,
