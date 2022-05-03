@@ -39,6 +39,30 @@
       },
       "revId": "c30d209f5feefea10c70f4315bb28f505bc0ea89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f45c692_7ea79517",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1176763
+      },
+      "writtenOn": "2022-05-03T15:23:35Z",
+      "side": 1,
+      "message": "https://r.android.com/2085723",
+      "parentUuid": "e86fbcba_c2ee8474",
+      "range": {
+        "startLine": 462,
+        "startChar": 8,
+        "endLine": 475,
+        "endChar": 9
+      },
+      "revId": "c30d209f5feefea10c70f4315bb28f505bc0ea89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
