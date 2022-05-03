@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "628f5bd6_a437021b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2022-05-03T02:06:44Z",
+      "side": 1,
+      "message": "I see some potential improvements, but this by itself is an improvement!",
+      "revId": "c30d209f5feefea10c70f4315bb28f505bc0ea89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e86fbcba_c2ee8474",
+        "filename": "services/core/java/com/android/server/BootReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2022-05-03T02:06:44Z",
+      "side": 1,
+      "message": "The log from fsck.f2fs would never make uploadNeeded \u003d true and therefore the log wouldn\u0027t be added to dropbox. Can we amend this code to recognize the log from fsck.f2fs (e.g. by suffix in file name or by a f2fs-specific marker in the log)?",
+      "range": {
+        "startLine": 462,
+        "startChar": 8,
+        "endLine": 475,
+        "endChar": 9
+      },
+      "revId": "c30d209f5feefea10c70f4315bb28f505bc0ea89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
