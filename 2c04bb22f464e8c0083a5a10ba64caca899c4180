@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec78b673_626d9ed7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1741425
+      },
+      "writtenOn": "2022-05-04T16:50:23Z",
+      "side": 1,
+      "message": "You probably want to add someone in libcore/OWNERS to include AndroidManifest.xml",
+      "revId": "2c04bb22f464e8c0083a5a10ba64caca899c4180",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
