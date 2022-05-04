@@ -16,6 +16,24 @@
       "message": "You probably want to add someone in libcore/OWNERS to include AndroidManifest.xml",
       "revId": "2c04bb22f464e8c0083a5a10ba64caca899c4180",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d821b6f_9148418d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-05-04T16:55:03Z",
+      "side": 1,
+      "message": "Thanks, but I think this is fine, we don\u0027t intent to touch that often. It just happened that one of the test required that extra permission.",
+      "parentUuid": "ec78b673_626d9ed7",
+      "revId": "2c04bb22f464e8c0083a5a10ba64caca899c4180",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
