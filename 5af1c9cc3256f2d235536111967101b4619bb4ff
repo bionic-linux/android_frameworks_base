@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "177bd631_0dda3550",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1017430
+      },
+      "writtenOn": "2022-05-04T01:10:26Z",
+      "side": 1,
+      "message": "given that there are already users of this API, it\u0027s probably better to split this into three (ugh) CLs:\n\n1. add a new API with the same name that drops the unnecessary arg and marks the existing API as deprecated\n2. change the existing users of the API to the new API by dropping the extra parameter\n3. drop the old API",
+      "revId": "5af1c9cc3256f2d235536111967101b4619bb4ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
