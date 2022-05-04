@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69143c98_72f29996",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/DateFormatPerfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-05-04T10:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfada947_6a8342ff",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "b5497c51021fe510876c4b5482e67b57cda6b925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9414518_ade2a19c",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19b1b4cc_1c488b1f",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/DecimalFormatPerfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-05-04T10:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9414518_ade2a19c",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "b5497c51021fe510876c4b5482e67b57cda6b925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b9a29ba_c639b0d1",
@@ -60,6 +108,24 @@
       "writtenOn": "2022-05-04T09:55:45Z",
       "side": 1,
       "message": "spare line",
+      "revId": "b5497c51021fe510876c4b5482e67b57cda6b925",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1407d13_d795f27a",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/DecimalFormatPerfTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-05-04T10:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b9a29ba_c639b0d1",
       "revId": "b5497c51021fe510876c4b5482e67b57cda6b925",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
