@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e3d11e5_19d2af09",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1886292
+      },
+      "writtenOn": "2022-05-06T05:02:45Z",
+      "side": 1,
+      "message": "Hi Jack,\nCould you review this CL to add string value for new data state \u0027handover in progress\u0027?",
+      "revId": "11ebef7072a5b7fe7f1ca7534d9b0628e3e70d79",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
