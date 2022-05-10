@@ -22,6 +22,30 @@
       },
       "revId": "d9a3cdfaf994a60b87856231b524a7c0fbf2bcb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f38af737_b18ae8fa",
+        "filename": "services/core/java/com/android/server/wm/LetterboxUiController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1381718
+      },
+      "writtenOn": "2022-05-10T07:49:58Z",
+      "side": 1,
+      "message": "Yes +1, this check isn\u0027t needed, we can just apply leaf task level bounds whenever mActivityRecord.inMultiWindowMode().",
+      "parentUuid": "09d72958_aaee04df",
+      "range": {
+        "startLine": 170,
+        "startChar": 28,
+        "endLine": 170,
+        "endChar": 116
+      },
+      "revId": "d9a3cdfaf994a60b87856231b524a7c0fbf2bcb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
