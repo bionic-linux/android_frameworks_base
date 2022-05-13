@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbcb0636_3700cf94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1659539
+      },
+      "writtenOn": "2022-05-13T13:58:24Z",
+      "side": 1,
+      "message": "Hi,\n\nWe have a similar patch already done for the next Android release, and the bug was marked as fixed already. Do you still need a change in AOSP for this before the release?",
+      "revId": "e4b9b85daa80ca206ddb300d62ce09246756a9e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
