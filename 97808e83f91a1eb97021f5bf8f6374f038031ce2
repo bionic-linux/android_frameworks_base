@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "12b31f54_5ed89745",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-05-15T11:44:07Z",
+      "side": 1,
+      "message": "The commit message should say what the CL actually does. So maybe say something like:\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nDon\u0027t throw in socket_read if socket_read_all returns \u003c 0.\n\nAll codepaths in socket_read_all that return a negative value have\nalready thrown an exception. socket_read should not throw again.\n\nThis causes debuggagle apps to crash with a JNI failure if\nLocalSocket#read gets an error.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "97808e83f91a1eb97021f5bf8f6374f038031ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "40753efd_b2c27684",
@@ -14,6 +37,23 @@
       "writtenOn": "2022-05-13T16:50:52Z",
       "side": 1,
       "message": "Hi Lorenzo, \nptal",
+      "revId": "97808e83f91a1eb97021f5bf8f6374f038031ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fffa4279_7aa2c5ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-05-15T11:44:07Z",
+      "side": 1,
+      "message": "This looks correct to me. The current code seems to have an obvious bug. But... socket_read hasn\u0027t been touched since 2009, has it really had this bug since then?\n\nElliott, could you take a look?",
       "revId": "97808e83f91a1eb97021f5bf8f6374f038031ce2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
