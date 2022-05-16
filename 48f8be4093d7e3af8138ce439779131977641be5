@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8df114c6_058f56aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-05-16T07:03:46Z",
+      "side": 1,
+      "message": "This commit doesn\u0027t migrate any data and isn\u0027t specific to network stats. Suggest rewpording the commit message to explain what it does. Something like:\n \n\nAdd a rewriteSingle method that takes two timestamps.\n\nThis CL provides a public method in FileRotator to\nallow caller to write data to a specified standalone file.",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "48f8be4093d7e3af8138ce439779131977641be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1115c48_fca31705",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-05-16T07:03:46Z",
+      "side": 1,
+      "message": "No tests?",
+      "revId": "48f8be4093d7e3af8138ce439779131977641be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24c162df_87c47bd3",
+        "filename": "core/java/com/android/internal/util/FileRotator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-05-16T07:03:46Z",
+      "side": 1,
+      "message": ". If a file with these exact start and end timestamps does not exist, a new empty file will be written.",
+      "range": {
+        "startLine": 286,
+        "startChar": 80,
+        "endLine": 286,
+        "endChar": 81
+      },
+      "revId": "48f8be4093d7e3af8138ce439779131977641be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
