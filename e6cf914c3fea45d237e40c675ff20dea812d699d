@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1fe0ad3_445ae27e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000835
+      },
+      "writtenOn": "2022-05-16T12:40:25Z",
+      "side": 1,
+      "message": "Actually, thinking about this some more, I guess it\u0027s possible that such a bug could have gone unfixed for so long. The impact is pretty low: basically, a debuggable app that uses the LocalSocket API and gets an error reading from a socket will crash. It\u0027s possible that such a bug went unreported or unfixed.\n\nMaybe merge this now and upload a cherry-pick to tm-dev but don\u0027t merge it until tomorrow? In the meantime, if Elliott points out a problem or suggests a better fix we can revert in AOSP.",
+      "revId": "e6cf914c3fea45d237e40c675ff20dea812d699d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
