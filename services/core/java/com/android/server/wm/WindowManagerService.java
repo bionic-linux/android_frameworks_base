@@ -3958,14 +3958,30 @@ public class WindowManagerService extends IWindowManager.Stub
         }
     }
 
-    boolean getIgnoreOrientationRequest(int displayId) {
+    boolean getIgnoreOrientationRequest(int displayId, boolean fromFocusedDisplayArea) {
         synchronized (mGlobalLock) {
             final DisplayContent display = mRoot.getDisplayContent(displayId);
             if (display == null) {
                 Slog.w(TAG, "Trying to getIgnoreOrientationRequest() for a missing display.");
                 return false;
             }
-            return display.getIgnoreOrientationRequest();
+
+            if (fromFocusedDisplayArea) {
+                final Task focusedRootTask = display.getFocusedRootTask();
+                if (focusedRootTask == null) {
+                    Slog.w(TAG, "Trying to getIgnoreOrientationRequest() for a missing task.");
+                    return false;
+                }
+                final TaskDisplayArea tda = focusedRootTask.getTaskDisplayArea();
+                if (tda == null) {
+                    Slog.w(TAG,
+                            "Trying to getIgnoreOrientationRequest() for a missing display area.");
+                    return false;
+                }
+                return tda.getIgnoreOrientationRequest();
+            } else {
+                return display.getIgnoreOrientationRequest();
+            }
         }
     }
 
