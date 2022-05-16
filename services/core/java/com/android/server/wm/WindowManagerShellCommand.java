@@ -496,11 +496,19 @@ public class WindowManagerShellCommand extends ShellCommand {
         String arg = getNextArg();
         if ("-d".equals(arg)) {
             displayId = Integer.parseInt(getNextArgRequired());
+            arg = getNextArg();
         }
 
-        final boolean ignoreOrientationRequest = mInternal.getIgnoreOrientationRequest(displayId);
+        boolean fromFocusedDisplayArea = false;
+        if ("--fromFocusedDisplayArea".equals(arg)) {
+            fromFocusedDisplayArea = true;
+        }
+
+        final boolean ignoreOrientationRequest =
+                mInternal.getIgnoreOrientationRequest(displayId, fromFocusedDisplayArea);
         pw.println("ignoreOrientationRequest " + ignoreOrientationRequest
-                + " for displayId=" + displayId);
+                + " for displayId=" + displayId
+                + (fromFocusedDisplayArea ? " from focused display area" : ""));
         return 0;
     }
 
@@ -678,7 +686,7 @@ public class WindowManagerShellCommand extends ShellCommand {
         pw.println("  fixed-to-user-rotation [-d DISPLAY_ID] [enabled|disabled|default]");
         pw.println("    Print or set rotating display for app requested orientation.");
         pw.println("  set-ignore-orientation-request [-d DISPLAY_ID] [true|1|false|0]");
-        pw.println("  get-ignore-orientation-request [-d DISPLAY_ID] ");
+        pw.println("  get-ignore-orientation-request [-d DISPLAY_ID] [--fromFocusedDisplayArea]");
         pw.println("    If app requested orientation should be ignored.");
 
         printMultiWindowConfigHelp(pw);
