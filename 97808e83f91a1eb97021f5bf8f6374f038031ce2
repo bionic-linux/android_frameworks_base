@@ -80,6 +80,24 @@
       "message": "This looks correct to me. The current code seems to have an obvious bug. But... socket_read hasn\u0027t been touched since 2009, has it really had this bug since then?\n\nElliott, could you take a look?",
       "revId": "97808e83f91a1eb97021f5bf8f6374f038031ce2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "521569c2_72977672",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-05-16T15:10:36Z",
+      "side": 1,
+      "message": "from what i recall of my time on Java, LocalSocket was full of other bugs that made it hard to use, and it was a popular API for folks to reimplement with their own JNI anyway, so it sounds sadly plausible to me...",
+      "parentUuid": "fffa4279_7aa2c5ca",
+      "revId": "97808e83f91a1eb97021f5bf8f6374f038031ce2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
