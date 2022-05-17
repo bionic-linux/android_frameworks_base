@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9bc55a53_6b53f32b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-05-17T08:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8df114c6_058f56aa",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "48f8be4093d7e3af8138ce439779131977641be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "d1115c48_fca31705",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -71,6 +95,30 @@
       "writtenOn": "2022-05-16T07:03:46Z",
       "side": 1,
       "message": ". If a file with these exact start and end timestamps does not exist, a new empty file will be written.",
+      "range": {
+        "startLine": 286,
+        "startChar": 80,
+        "endLine": 286,
+        "endChar": 81
+      },
+      "revId": "48f8be4093d7e3af8138ce439779131977641be5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd3bcfdc_df076681",
+        "filename": "core/java/com/android/internal/util/FileRotator.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-05-17T08:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c162df_87c47bd3",
       "range": {
         "startLine": 286,
         "startChar": 80,
