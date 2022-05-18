@@ -139,6 +139,24 @@
       "parentUuid": "a9a23359_a9ecc04e",
       "revId": "e04feb9192e4a611fd5391e716189801703bb27a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b9923c8_443f722d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1561214
+      },
+      "writtenOn": "2022-05-18T23:36:47Z",
+      "side": 1,
+      "message": "Yeah that looks better. Although actually the framework does kill the whole process group on getting binder died notification as of today.",
+      "parentUuid": "3cf05b1d_41f161c3",
+      "revId": "e04feb9192e4a611fd5391e716189801703bb27a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
