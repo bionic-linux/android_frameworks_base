@@ -69,6 +69,24 @@
       "parentUuid": "319bfb75_5cee06da",
       "revId": "e04feb9192e4a611fd5391e716189801703bb27a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8aee9d3_3b77ad3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1120458
+      },
+      "writtenOn": "2022-05-18T16:43:40Z",
+      "side": 1,
+      "message": "Li Li, see also b/232904068 (another problem, where I believe this solution may be related).",
+      "parentUuid": "397661fb_bc64dd66",
+      "revId": "e04feb9192e4a611fd5391e716189801703bb27a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
