@@ -90,6 +90,16 @@ static jlong BitmapShader_constructor(JNIEnv* env, jobject o, jlong matrixPtr, j
     return reinterpret_cast<jlong>(shader.release());
 }
 
+static jlong BitmapShader_constructor_O_P(JNIEnv* env, jobject o, jlong matrixPtr, jobject bitmap,
+                                          jint tileModeX, jint tileModeY) {
+    return BitmapShader_constructor(env, o, matrixPtr, (jlong)&bitmap, tileModeX, tileModeY, false);
+}
+
+static jlong BitmapShader_constructor_Q_R(JNIEnv* env, jobject o, jlong matrixPtr, jlong bitmapPtr,
+                                          jint tileModeX, jint tileModeY) {
+    return BitmapShader_constructor(env, o, matrixPtr, bitmapPtr, tileModeX, tileModeY, false);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 static std::vector<SkColor4f> convertColorLongs(JNIEnv* env, jlongArray colorArray) {
@@ -315,7 +325,9 @@ static const JNINativeMethod gShaderMethods[] = {
 };
 
 static const JNINativeMethod gBitmapShaderMethods[] = {
-    { "nativeCreate",      "(JJIIZ)J",  (void*)BitmapShader_constructor },
+        {"nativeCreate", "(JLandroid/graphics/Bitmap;II)J", (void*)BitmapShader_constructor_O_P},
+        {"nativeCreate", "(JJII)J", (void*)BitmapShader_constructor_Q_R},
+        {"nativeCreate", "(JJIIZ)J", (void*)BitmapShader_constructor},
 };
 
 static const JNINativeMethod gLinearGradientMethods[] = {
@@ -348,8 +360,8 @@ int register_android_graphics_Shader(JNIEnv* env)
                                   NELEM(gColorMethods));
     android::RegisterMethodsOrDie(env, "android/graphics/Shader", gShaderMethods,
                                   NELEM(gShaderMethods));
-    android::RegisterMethodsOrDie(env, "android/graphics/BitmapShader", gBitmapShaderMethods,
-                                  NELEM(gBitmapShaderMethods));
+    android::RegisterMethodsOrDie(env, "org/robolectric/nativeruntime/BitmapShaderNatives",
+                                  gBitmapShaderMethods, NELEM(gBitmapShaderMethods));
     android::RegisterMethodsOrDie(env, "android/graphics/LinearGradient", gLinearGradientMethods,
                                   NELEM(gLinearGradientMethods));
     android::RegisterMethodsOrDie(env, "android/graphics/RadialGradient", gRadialGradientMethods,
