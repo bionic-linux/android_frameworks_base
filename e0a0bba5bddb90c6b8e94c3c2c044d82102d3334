@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cead2adb_0b1fef0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-05-18T06:00:05Z",
+      "side": 1,
+      "message": "232904062",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "e0a0bba5bddb90c6b8e94c3c2c044d82102d3334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faa2ad7f_d65b1f00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-05-18T06:00:05Z",
+      "side": 1,
+      "message": "Please test with the existing CEC unit tests as well",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "e0a0bba5bddb90c6b8e94c3c2c044d82102d3334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec109d38_1dd11afe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-05-18T06:00:05Z",
+      "side": 1,
+      "message": "The code change looks good to me.",
+      "revId": "e0a0bba5bddb90c6b8e94c3c2c044d82102d3334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
