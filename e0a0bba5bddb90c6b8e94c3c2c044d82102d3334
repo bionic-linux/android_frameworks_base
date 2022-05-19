@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "527d28d8_ae1c0a1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-05-19T09:18:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cead2adb_0b1fef0d",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "e0a0bba5bddb90c6b8e94c3c2c044d82102d3334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "faa2ad7f_d65b1f00",
@@ -61,6 +85,30 @@
       "side": 1,
       "message": "The Cts result looks good, update comment",
       "parentUuid": "faa2ad7f_d65b1f00",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 4
+      },
+      "revId": "e0a0bba5bddb90c6b8e94c3c2c044d82102d3334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "444ed84a_2f09247a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-05-19T09:18:15Z",
+      "side": 1,
+      "message": "Thanks. unit tests will be run in presubmit then.",
+      "parentUuid": "16d779b6_1123599f",
       "range": {
         "startLine": 11,
         "startChar": 0,
