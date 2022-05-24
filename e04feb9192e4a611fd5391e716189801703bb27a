@@ -211,6 +211,24 @@
       "parentUuid": "ca2c900b_34eaa70c",
       "revId": "e04feb9192e4a611fd5391e716189801703bb27a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a10ffd41_b38f6d27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1840920
+      },
+      "writtenOn": "2022-05-24T02:02:14Z",
+      "side": 1,
+      "message": "Yes, the change linked here has fixed the issue, and this change will not be needed. Thanks!",
+      "parentUuid": "2b7186bf_211394c6",
+      "revId": "e04feb9192e4a611fd5391e716189801703bb27a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
