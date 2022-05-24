@@ -56,6 +56,7 @@ import com.android.internal.util.dump.DualDumpOutputStream;
 import com.android.server.FgThread;
 import com.android.server.LocalServices;
 import com.android.server.SystemService;
+import com.android.server.testharness.TestHarnessModeService;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -163,18 +164,8 @@ public class AdbService extends IAdbManager.Stub {
         }
     }
 
-    private void initAdbState() {
+    private void registerContentResolvers() {
         try {
-            /*
-             * Use the normal bootmode persistent prop to maintain state of adb across
-             * all boot modes.
-             */
-            mIsAdbUsbEnabled = containsFunction(
-                    SystemProperties.get(USB_PERSISTENT_CONFIG_PROPERTY, ""),
-                    UsbManager.USB_FUNCTION_ADB);
-            mIsAdbWifiEnabled = "1".equals(
-                    SystemProperties.get(WIFI_PERSISTENT_CONFIG_PROPERTY, "0"));
-
             // register observer to listen for settings changes
             mObserver = new AdbSettingsObserver();
             mContentResolver.registerContentObserver(
@@ -248,7 +239,7 @@ public class AdbService extends IAdbManager.Stub {
         mContentResolver = context.getContentResolver();
         mDebuggingManager = new AdbDebuggingManager(context);
 
-        initAdbState();
+        registerContentResolvers();
         LocalServices.addService(AdbManagerInternal.class, new AdbManagerInternalImpl());
     }
 
@@ -259,12 +250,25 @@ public class AdbService extends IAdbManager.Stub {
     public void systemReady() {
         if (DEBUG) Slog.d(TAG, "systemReady");
 
+        /*
+         * Use the normal bootmode persistent prop to maintain state of adb across
+         * all boot modes.
+         */
+        boolean shouldEnableAdbUsb =
+                containsFunction(
+                        SystemProperties.get(USB_PERSISTENT_CONFIG_PROPERTY, ""),
+                        UsbManager.USB_FUNCTION_ADB)
+                || SystemProperties.getBoolean(
+                        TestHarnessModeService.TEST_HARNESS_MODE_PROPERTY, false);
+        boolean shouldEnableAdbWifi = "1".equals(
+                SystemProperties.get(WIFI_PERSISTENT_CONFIG_PROPERTY, "0"));
+
         // make sure the ADB_ENABLED setting value matches the current state
         try {
             Settings.Global.putInt(mContentResolver,
-                    Settings.Global.ADB_ENABLED, mIsAdbUsbEnabled ? 1 : 0);
+                    Settings.Global.ADB_ENABLED, shouldEnableAdbUsb ? 1 : 0);
             Settings.Global.putInt(mContentResolver,
-                    Settings.Global.ADB_WIFI_ENABLED, mIsAdbWifiEnabled ? 1 : 0);
+                    Settings.Global.ADB_WIFI_ENABLED, shouldEnableAdbWifi ? 1 : 0);
         } catch (SecurityException e) {
             // If UserManager.DISALLOW_DEBUGGING_FEATURES is on, that this setting can't be changed.
             Slog.d(TAG, "ADB_ENABLED is restricted.");

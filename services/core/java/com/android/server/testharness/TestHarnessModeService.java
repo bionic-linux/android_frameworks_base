@@ -70,7 +70,7 @@ import java.util.Set;
  */
 public class TestHarnessModeService extends SystemService {
     private static final String TAG = TestHarnessModeService.class.getSimpleName();
-    private static final String TEST_HARNESS_MODE_PROPERTY = "persist.sys.test_harness";
+    public static final String TEST_HARNESS_MODE_PROPERTY = "persist.sys.test_harness";
 
     private PersistentDataBlockManagerInternal mPersistentDataBlockManagerInternal;
 
@@ -170,7 +170,6 @@ public class TestHarnessModeService extends SystemService {
 
         // Disable the TTL for ADB keys before enabling ADB
         Settings.Global.putLong(cr, Settings.Global.ADB_ALLOWED_CONNECTION_TIME, 0);
-        Settings.Global.putInt(cr, Settings.Global.ADB_ENABLED, 1);
         Settings.Global.putInt(cr, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 1);
         Settings.Global.putInt(cr, Settings.Global.PACKAGE_VERIFIER_INCLUDE_ADB, 0);
         Settings.Global.putInt(
