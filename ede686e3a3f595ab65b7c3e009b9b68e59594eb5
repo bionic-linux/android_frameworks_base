@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61eb918b_8c4c9bcd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1431994
+      },
+      "writtenOn": "2022-05-25T13:27:21Z",
+      "side": 1,
+      "message": "Cherry-picking to address http://b/233590234",
+      "revId": "ede686e3a3f595ab65b7c3e009b9b68e59594eb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
