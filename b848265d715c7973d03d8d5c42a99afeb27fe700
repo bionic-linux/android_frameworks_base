@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b6e1f95_5942c90c",
+        "filename": "services/core/java/com/android/server/testharness/TestHarnessModeService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-25T21:19:49Z",
+      "side": 1,
+      "message": "Update the comment?",
+      "range": {
+        "startLine": 171,
+        "startChar": 40,
+        "endLine": 171,
+        "endChar": 55
+      },
+      "revId": "b848265d715c7973d03d8d5c42a99afeb27fe700",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
