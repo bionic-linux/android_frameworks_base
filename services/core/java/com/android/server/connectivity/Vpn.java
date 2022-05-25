@@ -3735,6 +3735,18 @@ public class Vpn {
             @NonNull List<String> excludedApps) {
         enforceNotRestrictedUser();
         if (!storeAppExclusionList(packageName, excludedApps)) return false;
+
+        updateAppExclusionList(excludedApps);
+
+        return true;
+    }
+
+    /**
+     * Update the application exclusion list for the specified VPN profile to the NetworkAgent.
+     *
+     * @param excludedApps the list of excluded packages
+     */
+    public synchronized void updateAppExclusionList(@NonNull List<String> excludedApps) {
         // Re-build and update NetworkCapabilities via NetworkAgent.
         if (mNetworkAgent != null) {
             // Only update the platform VPN
@@ -3747,8 +3759,6 @@ public class Vpn {
                 mNetworkAgent.sendNetworkCapabilities(mNetworkCapabilities);
             }
         }
-
-        return true;
     }
 
     /**
