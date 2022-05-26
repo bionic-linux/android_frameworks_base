@@ -4225,6 +4225,43 @@
 
   <java-symbol type="array" name="config_notificationMsgPkgsAllowedAsConvos" />
 
+  <!-- doze parameters -->
+  <java-symbol type="integer" name="def_flex_time_short" />
+  <java-symbol type="integer" name="def_light_after_inactive_to" />
+  <java-symbol type="integer" name="def_light_pre_idle_to" />
+  <java-symbol type="integer" name="def_light_idle_to" />
+  <java-symbol type="integer" name="def_light_idle_to_initial_flex" />
+  <java-symbol type="integer" name="def_light_max_idle_to_flex" />
+  <java-symbol type="integer" name="def_light_idle_factor" />
+  <java-symbol type="integer" name="def_light_max_idle_to" />
+  <java-symbol type="integer" name="def_light_idle_maintenance_min_budget" />
+  <java-symbol type="integer" name="def_light_idle_maintenance_max_budget" />
+  <java-symbol type="integer" name="def_min_light_maintenance_time" />
+  <java-symbol type="integer" name="def_min_deep_maintenance_time" />
+  <java-symbol type="integer" name="def_inactive_to" />
+  <java-symbol type="integer" name="def_sensing_to" />
+  <java-symbol type="integer" name="def_locating_to" />
+  <java-symbol type="integer" name="def_location_accuracy" />
+  <java-symbol type="integer" name="def_motion_inactive_to" />
+  <java-symbol type="integer" name="def_motion_inactive_to_flex" />
+  <java-symbol type="integer" name="def_idle_after_inactive_to" />
+  <java-symbol type="integer" name="def_idle_pending_to" />
+  <java-symbol type="integer" name="def_max_idle_pending_to" />
+  <java-symbol type="integer" name="def_idle_pending_factor" />
+  <java-symbol type="integer" name="def_quick_doze_delay_to" />
+  <java-symbol type="integer" name="def_idle_to" />
+  <java-symbol type="integer" name="def_max_idle_to" />
+  <java-symbol type="integer" name="def_idle_factor" />
+  <java-symbol type="integer" name="def_min_time_to_alarm" />
+  <java-symbol type="integer" name="def_max_temp_app_allowlist_duration_ms" />
+  <java-symbol type="integer" name="def_mms_temp_app_allowlist_duration_ms" />
+  <java-symbol type="integer" name="def_sms_temp_app_allowlist_duration_ms" />
+  <java-symbol type="integer" name="def_notification_allowlist_duration_ms" />
+  <java-symbol type="bool" name="def_wait_for_unlock" />
+  <java-symbol type="integer" name="def_pre_idle_factor_long" />
+  <java-symbol type="integer" name="def_pre_idle_factor_short" />
+  <java-symbol type="bool" name="def_use_window_alarms" />
+
   <!-- Binder heavy hitter watcher configs -->
   <java-symbol type="bool" name="config_defaultBinderHeavyHitterWatcherEnabled" />
   <java-symbol type="integer" name="config_defaultBinderHeavyHitterWatcherBatchSize" />
