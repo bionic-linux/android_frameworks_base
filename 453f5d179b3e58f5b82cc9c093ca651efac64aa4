@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2636561_463d3a88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-05-26T16:05:02Z",
+      "side": 1,
+      "message": "Robin, didn\u0027t we resolve this for TVs?",
+      "revId": "453f5d179b3e58f5b82cc9c093ca651efac64aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80fe0d7b_c86acdb6",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-05-26T16:05:02Z",
+      "side": 1,
+      "message": "Please remove",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 34
+      },
+      "revId": "453f5d179b3e58f5b82cc9c093ca651efac64aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8248a43_b84a2a69",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-05-26T16:05:02Z",
+      "side": 1,
+      "message": "This has to be the standard Android copyright",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 40
+      },
+      "revId": "453f5d179b3e58f5b82cc9c093ca651efac64aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
