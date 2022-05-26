@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d2acebc_9658edcf",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-26T23:06:08Z",
+      "side": 1,
+      "message": "Nit: registerContentObservers() might be more accurate?",
+      "range": {
+        "startLine": 167,
+        "startChar": 17,
+        "endLine": 167,
+        "endChar": 41
+      },
+      "revId": "591b2a213c925088f722c8aaa4170d2b733ce8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f45fc274_648502f9",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-26T23:06:08Z",
+      "side": 1,
+      "message": "Update this log message?",
+      "range": {
+        "startLine": 178,
+        "startChar": 34,
+        "endLine": 178,
+        "endChar": 46
+      },
+      "revId": "591b2a213c925088f722c8aaa4170d2b733ce8f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
