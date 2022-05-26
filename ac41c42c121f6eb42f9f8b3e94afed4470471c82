@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f543cef_4f055985",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-05-26T00:00:09Z",
+      "side": 1,
+      "message": "Oof, we really shouldn\u0027t need to reach into the VPN to turn around and tell it to update the app exclusion list.\n\nCan we keep this encapsulated in the VPN.java class itself?\n\nMaybe a \"refreshPlatformVpnAppExclusionList\" method?",
+      "range": {
+        "startLine": 894,
+        "startChar": 39,
+        "endLine": 894,
+        "endChar": 80
+      },
+      "revId": "ac41c42c121f6eb42f9f8b3e94afed4470471c82",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
