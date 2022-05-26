@@ -62,6 +62,30 @@
       },
       "revId": "453f5d179b3e58f5b82cc9c093ca651efac64aa4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "153cd781_7e681418",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1059872
+      },
+      "writtenOn": "2022-05-26T16:05:42Z",
+      "side": 1,
+      "message": "*license",
+      "parentUuid": "a8248a43_b84a2a69",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 40
+      },
+      "revId": "453f5d179b3e58f5b82cc9c093ca651efac64aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
