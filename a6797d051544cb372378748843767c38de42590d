@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "73fd66b3_bb7fc053",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T23:15:48Z",
+      "side": 1,
+      "message": "Re-opening - in case you missed the TODO(b/\u003c\u003e) suggestion.",
+      "parentUuid": "1af0445c_a6c650d2",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e88e5cb5_f34b99ea",
         "filename": "services/core/java/com/android/server/adb/AdbService.java",
         "patchSetId": 3
