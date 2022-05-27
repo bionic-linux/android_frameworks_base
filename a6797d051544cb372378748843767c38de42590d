@@ -68,6 +68,30 @@
       },
       "revId": "a6797d051544cb372378748843767c38de42590d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49410a75_ce0af1b9",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T17:06:58Z",
+      "side": 1,
+      "message": "Unrelated to your CL :) but figured you (as the owner) might clean up.",
+      "parentUuid": "6731c535_b1da5df3",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 14
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
