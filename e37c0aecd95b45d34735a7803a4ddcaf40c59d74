@@ -88,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22eef0ee_5e89e574",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1156333
+      },
+      "writtenOn": "2022-05-27T22:57:00Z",
+      "side": 1,
+      "message": "Ah! Sorry. Good catch.",
+      "parentUuid": "6b15acc3_3881df1d",
+      "range": {
+        "startLine": 271,
+        "startChar": 54,
+        "endLine": 271,
+        "endChar": 70
+      },
+      "revId": "e37c0aecd95b45d34735a7803a4ddcaf40c59d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f38587b_5bdf37ec",
