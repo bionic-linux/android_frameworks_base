@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fecac1df_4d368464",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T10:25:49Z",
+      "side": 1,
+      "message": "Do we have any tests for this interface? If not, it might be useful to add them.\nAlso applicable to public bootCompleted().",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e88e5cb5_f34b99ea",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T10:25:49Z",
+      "side": 1,
+      "message": "I suspect we might still need to maintain these state?",
+      "range": {
+        "startLine": 231,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 38
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6731c535_b1da5df3",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T10:25:49Z",
+      "side": 1,
+      "message": "Nit: typo?",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 14
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
