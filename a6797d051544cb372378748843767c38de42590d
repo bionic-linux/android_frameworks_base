@@ -119,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5358a06b_7973a90e",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T21:31:46Z",
+      "side": 1,
+      "message": "agreed - some unit tests or mocks that tweak the states would be a nice addition (I have a TODO suggestion elsewhere).",
+      "parentUuid": "cd403128_21443113",
+      "range": {
+        "startLine": 231,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 38
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6731c535_b1da5df3",

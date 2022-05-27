@@ -1,6 +1,46 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d8c4fb1_6b1a4ced",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T21:31:46Z",
+      "side": 1,
+      "message": "Looking good - just a few more nits (mostly because I\u0027m not even building your CL).",
+      "revId": "e37c0aecd95b45d34735a7803a4ddcaf40c59d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0b5c87d_18519450",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T21:31:46Z",
+      "side": 1,
+      "message": "I notice we hoisted these out of the try{} - are we comfortable assuming no-fail (or need for recovery)?",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 264,
+        "endChar": 76
+      },
+      "revId": "e37c0aecd95b45d34735a7803a4ddcaf40c59d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b15acc3_3881df1d",
@@ -19,6 +59,29 @@
         "startChar": 54,
         "endLine": 271,
         "endChar": 70
+      },
+      "revId": "e37c0aecd95b45d34735a7803a4ddcaf40c59d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f38587b_5bdf37ec",
+        "filename": "services/core/java/com/android/server/testharness/TestHarnessModeService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T21:31:46Z",
+      "side": 1,
+      "message": "Suggestion: Front-load the public member (since users of TestHarnessModeService are interested in first seeing the public interfaces)? (I shall leave it up to you, though)",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 10
       },
       "revId": "e37c0aecd95b45d34735a7803a4ddcaf40c59d74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
