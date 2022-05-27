@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b15acc3_3881df1d",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-27T20:51:06Z",
+      "side": 1,
+      "message": "An error that crept in from PS #4?",
+      "range": {
+        "startLine": 271,
+        "startChar": 54,
+        "endLine": 271,
+        "endChar": 70
+      },
+      "revId": "e37c0aecd95b45d34735a7803a4ddcaf40c59d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
