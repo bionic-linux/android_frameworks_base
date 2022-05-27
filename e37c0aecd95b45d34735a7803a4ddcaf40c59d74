@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8a26d56_c7618fed",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1156333
+      },
+      "writtenOn": "2022-05-27T21:49:39Z",
+      "side": 1,
+      "message": "I\u0027m fairly comfortable with this. SystemProperties.get should never fail. If it does, something else has likely gone horribly wrong.",
+      "parentUuid": "a0b5c87d_18519450",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 264,
+        "endChar": 76
+      },
+      "revId": "e37c0aecd95b45d34735a7803a4ddcaf40c59d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b15acc3_3881df1d",
@@ -77,6 +101,30 @@
       "writtenOn": "2022-05-27T21:31:46Z",
       "side": 1,
       "message": "Suggestion: Front-load the public member (since users of TestHarnessModeService are interested in first seeing the public interfaces)? (I shall leave it up to you, though)",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 10
+      },
+      "revId": "e37c0aecd95b45d34735a7803a4ddcaf40c59d74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0840df15_34c4da39",
+        "filename": "services/core/java/com/android/server/testharness/TestHarnessModeService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1156333
+      },
+      "writtenOn": "2022-05-27T21:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f38587b_5bdf37ec",
       "range": {
         "startLine": 72,
         "startChar": 4,
