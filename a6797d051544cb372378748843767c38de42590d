@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce5f7aea_2f50bde1",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1156333
+      },
+      "writtenOn": "2022-05-27T19:02:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but that feels out of scope for this CL. Tests would be great, but adding them just for this relatively minor change seems like a lot.",
+      "parentUuid": "fecac1df_4d368464",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e88e5cb5_f34b99ea",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-05-27T10:25:49Z",
       "side": 1,
       "message": "I suspect we might still need to maintain these state?",
+      "range": {
+        "startLine": 231,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 38
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd403128_21443113",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1156333
+      },
+      "writtenOn": "2022-05-27T19:02:22Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. I misunderstood what they were being used for in the case of sending the settings. It should be right now.\n\nJust to note: It\u0027s a bit unfortunate that these even exist, since what they really are is a proxy for querying if the \"adbd\" service is running. (Though I\u0027m not sure if there\u0027s a way to actually query that.)\n\nThese feel *very* error prone to me, since they can quite easily fall out of sync with the actual state. I\u0027d like to clean these up in the future.",
+      "parentUuid": "e88e5cb5_f34b99ea",
       "range": {
         "startLine": 231,
         "startChar": 19,
@@ -84,6 +132,30 @@
       "side": 1,
       "message": "Unrelated to your CL :) but figured you (as the owner) might clean up.",
       "parentUuid": "6731c535_b1da5df3",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 14
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e685a7fe_34c4c002",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1156333
+      },
+      "writtenOn": "2022-05-27T19:02:22Z",
+      "side": 1,
+      "message": "Done.\n\nThere are many other cleanups I want to make in this file too. 😊 I\u0027ll save those for another day though.",
+      "parentUuid": "49410a75_ce0af1b9",
       "range": {
         "startLine": 279,
         "startChar": 7,
