@@ -196,6 +196,28 @@ public class TaskLaunchParamsModifierTests extends WindowTestsBase {
     }
 
     @Test
+    public void testUsesOptionsDisplayAreaFeatureIdIfSet() {
+        final TestDisplayContent freeformDisplay = createNewDisplayContent(
+                WINDOWING_MODE_FREEFORM);
+        final TestDisplayContent fullscreenDisplay = createNewDisplayContent(
+                WINDOWING_MODE_FULLSCREEN);
+
+        mCurrent.mPreferredTaskDisplayArea = freeformDisplay.getDefaultTaskDisplayArea();
+        ActivityRecord source = createSourceActivity(freeformDisplay);
+
+        ActivityOptions options = ActivityOptions.makeBasic();
+        options.setLaunchDisplayId(fullscreenDisplay.mDisplayId);
+        options.setLaunchTaskDisplayAreaFeature(
+                fullscreenDisplay.getDefaultTaskDisplayArea().mFeatureId);
+
+        assertEquals(RESULT_CONTINUE,
+                new CalculateRequestBuilder().setSource(source).setOptions(options).calculate());
+
+        assertEquals(fullscreenDisplay.getDefaultTaskDisplayArea(),
+                mResult.mPreferredTaskDisplayArea);
+    }
+
+    @Test
     public void testUsesSourcesDisplayAreaIdPriorToTaskIfSet() {
         final TestDisplayContent freeformDisplay = createNewDisplayContent(
                 WINDOWING_MODE_FREEFORM);
@@ -453,7 +475,7 @@ public class TaskLaunchParamsModifierTests extends WindowTestsBase {
     }
 
     @Test
-    public void testNotOverrideDisplayAreaWhenActivityOptionsHasDisplayArea() {
+    public void testNotOverrideDisplayAreaWhenActivityOptionsHasDisplayAreaToken() {
         final TaskDisplayArea secondaryDisplayArea = createTaskDisplayArea(mDefaultDisplay,
                 mWm, "SecondaryDisplayArea", FEATURE_RUNTIME_TASK_CONTAINER_FIRST);
         final Task launchRoot = createTask(secondaryDisplayArea, WINDOWING_MODE_FULLSCREEN,
@@ -466,6 +488,28 @@ public class TaskLaunchParamsModifierTests extends WindowTestsBase {
         ActivityOptions options = ActivityOptions.makeBasic();
         options.setLaunchTaskDisplayArea(
                 mDefaultDisplay.getDefaultTaskDisplayArea().mRemoteToken.toWindowContainerToken());
+
+        assertEquals(RESULT_CONTINUE,
+                new CalculateRequestBuilder().setOptions(options).calculate());
+
+        assertEquals(
+                mDefaultDisplay.getDefaultTaskDisplayArea(), mResult.mPreferredTaskDisplayArea);
+    }
+
+    @Test
+    public void testNotOverrideDisplayAreaWhenActivityOptionsHasDisplayAreaFeatureId() {
+        final TaskDisplayArea secondaryDisplayArea = createTaskDisplayArea(mDefaultDisplay,
+                mWm, "SecondaryDisplayArea", FEATURE_RUNTIME_TASK_CONTAINER_FIRST);
+        final Task launchRoot = createTask(secondaryDisplayArea, WINDOWING_MODE_FULLSCREEN,
+                ACTIVITY_TYPE_STANDARD);
+        launchRoot.mCreatedByOrganizer = true;
+
+        secondaryDisplayArea.setLaunchRootTask(launchRoot, new int[] { WINDOWING_MODE_FULLSCREEN },
+                new int[] { ACTIVITY_TYPE_STANDARD });
+
+        ActivityOptions options = ActivityOptions.makeBasic();
+        options.setLaunchTaskDisplayAreaFeature(
+                mDefaultDisplay.getDefaultTaskDisplayArea().mFeatureId);
 
         assertEquals(RESULT_CONTINUE,
                 new CalculateRequestBuilder().setOptions(options).calculate());
