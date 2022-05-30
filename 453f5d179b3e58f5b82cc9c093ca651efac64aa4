@@ -41,6 +41,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8f05215_ac03402a",
+        "filename": "apex/jobscheduler/service/java/com/android/server/DeviceIdleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2022-05-30T00:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80fe0d7b_c86acdb6",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 34
+      },
+      "revId": "453f5d179b3e58f5b82cc9c093ca651efac64aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a8248a43_b84a2a69",
@@ -78,6 +102,30 @@
       "side": 1,
       "message": "*license",
       "parentUuid": "a8248a43_b84a2a69",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 40
+      },
+      "revId": "453f5d179b3e58f5b82cc9c093ca651efac64aa4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3a03c4b_7f97f787",
+        "filename": "core/res/res/values/doze_parameters.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1238642
+      },
+      "writtenOn": "2022-05-30T00:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "153cd781_7e681418",
       "range": {
         "startLine": 2,
         "startChar": 0,
