@@ -391,6 +391,16 @@ public class FocusRequester {
                     return;
                 }
 
+                if (ignoreFocusRequest()) {
+                    if (DEBUG) {
+                        Log.v(TAG, "NOT dispatching " + focusChangeToString(mFocusLossReceived)
+                                + " to " + mClientId + ", to be handled externally");
+                    }
+                    mFocusController.notifyExtPolicyFocusLoss_syncAf(
+                            toAudioFocusInfo(), false /* wasDispatched */);
+                    return;
+                }
+
                 // check enforcement by the framework
                 boolean handled = false;
                 if (frWinner != null) {
@@ -423,6 +433,25 @@ public class FocusRequester {
             Log.e(TAG, "Failure to signal loss of audio focus due to:", e);
         }
     }
+
+    /**
+     * ignore request audio focus if possible
+     * @return true, do not notify the focus loser
+     */
+    @GuardedBy("MediaFocusControl.mAudioFocusLock")
+    private boolean ignoreFocusRequest() {
+        IBinder b = ServiceManager.getService(Context.AUDIO_SERVICE);
+        IAudioService audioService = IAudioService.Stub.asInterface(b);
+
+        final boolean hasMediaDynamicPolicy = audioService.hasMediaDynamicPolicy();
+        int musicDevice = audioService.getDeviceForStream(AudioSystem.STREAM_MUSIC);
+        int communicateDevice = audioService.getDeviceForStream(AudioSystem.STREAM_VOICE_CALL);
+        return audioService.isInCommunication() && hasMediaDynamicPolicy
+                && (musicDevice == AudioSystem.DEVICE_OUT_REMOTE_SUBMIX)
+                && (communicateDevice != AudioSystem.DEVICE_OUT_REMOTE_SUBMIX);
+
+    }
+
 
     /**
      * Let the framework handle the focus loss if possible
