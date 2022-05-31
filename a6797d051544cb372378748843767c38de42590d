@@ -144,6 +144,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eb9e085_3522c7a8",
+        "filename": "services/core/java/com/android/server/adb/AdbService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1579231
+      },
+      "writtenOn": "2022-05-31T19:41:03Z",
+      "side": 1,
+      "message": "Was suggesting a TODO here - but cool with revisiting the task informally (as long as we get to it eventually :) \nMarking this resolved.",
+      "parentUuid": "9a95b75f_c7f9660e",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "a6797d051544cb372378748843767c38de42590d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e88e5cb5_f34b99ea",
