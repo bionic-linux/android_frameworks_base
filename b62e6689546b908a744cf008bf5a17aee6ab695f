@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c17e5bd_97915311",
+        "filename": "core/java/android/app/ActivityOptions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-05-31T09:44:43Z",
+      "side": 1,
+      "message": "Would you mind also add Javadoc here? e.x\n```\nSets the TaskDisplayArea feature Id the activity should launch into.\n```",
+      "range": {
+        "startLine": 1491,
+        "startChar": 4,
+        "endLine": 1491,
+        "endChar": 16
+      },
+      "revId": "b62e6689546b908a744cf008bf5a17aee6ab695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3ae83f7_87a44e04",
+        "filename": "services/core/java/com/android/server/wm/SafeActivityOptions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-05-31T09:44:43Z",
+      "side": 1,
+      "message": "nit: optionLaunchDisplayId",
+      "range": {
+        "startLine": 262,
+        "startChar": 26,
+        "endLine": 262,
+        "endChar": 40
+      },
+      "revId": "b62e6689546b908a744cf008bf5a17aee6ab695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "019e00ce_23d898ee",
+        "filename": "services/core/java/com/android/server/wm/TaskLaunchParamsModifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-05-31T09:44:43Z",
+      "side": 1,
+      "message": "nit: final to match the pattern",
+      "range": {
+        "startLine": 386,
+        "startChar": 0,
+        "endLine": 386,
+        "endChar": 93
+      },
+      "revId": "b62e6689546b908a744cf008bf5a17aee6ab695f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
