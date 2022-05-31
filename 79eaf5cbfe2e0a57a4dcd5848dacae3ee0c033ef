@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3371156_1d6668ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-05-31T09:45:34Z",
+      "side": 1,
+      "message": "I don\u0027t think we can have API change in 12L.",
+      "revId": "79eaf5cbfe2e0a57a4dcd5848dacae3ee0c033ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
