@@ -22,6 +22,8 @@ import android.media.AudioAttributes;
 import android.media.AudioFocusInfo;
 import android.media.AudioManager;
 import android.media.IAudioFocusDispatcher;
+import android.content.Context;
+import android.os.ServiceManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -390,6 +392,15 @@ public class FocusRequester {
                             toAudioFocusInfo(), false /* wasDispatched */);
                     return;
                 }
+                if (ignoreFocusRequest()) {
+                    if (DEBUG) {
+                        Log.v(TAG, "NOT dispatching " + focusChangeToString(mFocusLossReceived)
+                                + " to " + mClientId + ", to be handled externally");
+                    }
+                    mFocusController.notifyExtPolicyFocusLoss_syncAf(
+                            toAudioFocusInfo(), false /* wasDispatched */);
+                    return;
+                }
 
                 // check enforcement by the framework
                 boolean handled = false;
@@ -422,6 +433,23 @@ public class FocusRequester {
         } catch (android.os.RemoteException e) {
             Log.e(TAG, "Failure to signal loss of audio focus due to:", e);
         }
+    }
+
+    /**
+     * ignore request audio focus if possible
+     * @return true, do not notify the focus loser
+     */
+    @GuardedBy("MediaFocusControl.mAudioFocusLock")
+    private boolean ignoreFocusRequest() {
+        IBinder b = ServiceManager.getService(Context.AUDIO_SERVICE);
+        IAudioService audioService = IAudioService.Stub.asInterface(b);
+
+        final boolean hasMediaDynamicPolicy = audioService.hasMediaDynamicPolicy();
+        int musicDevice = audioService.getDeviceForStream(AudioSystem.STREAM_MUSIC);
+        int communicateDevice = audioService.getDeviceForStream(AudioSystem.STREAM_VOICE_CALL);
+        return audioService.isInCommunication() && hasMediaDynamicPolicy
+                && (musicDevice == AudioSystem.DEVICE_OUT_REMOTE_SUBMIX)
+                && (communicateDevice != AudioSystem.DEVICE_OUT_REMOTE_SUBMIX);
     }
 
     /**

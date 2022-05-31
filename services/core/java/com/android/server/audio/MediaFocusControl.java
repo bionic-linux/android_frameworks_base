@@ -871,6 +871,7 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
      *                otherwise the UID being injected for testing
      * @return
      */
+    @GuardedBy("AudioService.mAudioPolicies")
     protected int requestAudioFocus(@NonNull AudioAttributes aa, int focusChangeHint, IBinder cb,
             IAudioFocusDispatcher fd, @NonNull String clientId, @NonNull String callingPackageName,
             int flags, int sdk, boolean forceDuck, int testUid) {
