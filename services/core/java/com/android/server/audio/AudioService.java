@@ -8232,9 +8232,11 @@ public class AudioService extends IAudioService.Stub
             return AudioManager.AUDIOFOCUS_REQUEST_FAILED;
         }
         mmi.record();
-        return mMediaFocusControl.requestAudioFocus(aa, durationHint, cb, fd,
-                clientId, callingPackageName, flags, sdk,
-                forceFocusDuckingForAccessibility(aa, durationHint, uid), -1 /*testUid, ignored*/);
+        synchronized (mAudioPolicies) {
+            return mMediaFocusControl.requestAudioFocus(aa, durationHint, cb, fd,
+                    clientId, callingPackageName, flags, sdk,
+                    forceFocusDuckingForAccessibility(aa, durationHint, uid), -1 /*testUid, ignored*/);
+        }
     }
 
     /** see {@link AudioManager#requestAudioFocusForTest(AudioFocusRequest, String, int, int)} */
@@ -8249,9 +8251,11 @@ public class AudioService extends IAudioService.Stub
             Log.e(TAG, reason);
             return AudioManager.AUDIOFOCUS_REQUEST_FAILED;
         }
-        return mMediaFocusControl.requestAudioFocus(aa, durationHint, cb, fd,
-                clientId, callingPackageName, AudioManager.AUDIOFOCUS_FLAG_TEST,
-                sdk, false /*forceDuck*/, fakeUid);
+        synchronized (mAudioPolicies) {
+            return mMediaFocusControl.requestAudioFocus(aa, durationHint, cb, fd,
+                    clientId, callingPackageName, AudioManager.AUDIOFOCUS_FLAG_TEST,
+                    sdk, false /*forceDuck*/, fakeUid);
+        }
     }
 
     public int abandonAudioFocus(IAudioFocusDispatcher fd, String clientId, AudioAttributes aa,
