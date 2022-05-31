@@ -16,6 +16,24 @@
       "message": "I don\u0027t think we can have API change in 12L.",
       "revId": "79eaf5cbfe2e0a57a4dcd5848dacae3ee0c033ef",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "198595a5_88cbf5a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1952761
+      },
+      "writtenOn": "2022-05-31T10:08:29Z",
+      "side": 1,
+      "message": "Thank you, Chris.\nI\u0027ll abandon this CL and continue updating the CL on master branch.",
+      "parentUuid": "a3371156_1d6668ad",
+      "revId": "79eaf5cbfe2e0a57a4dcd5848dacae3ee0c033ef",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
