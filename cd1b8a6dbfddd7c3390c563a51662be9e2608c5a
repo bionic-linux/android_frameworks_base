@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7b7f7e5_17bcce5b",
+        "filename": "services/core/java/com/android/server/wm/TaskLaunchParamsModifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-05-31T15:05:36Z",
+      "side": 1,
+      "message": "nit: can we use the same naming in this two classes (SafeActivityOptions and TaskLaunchParamsModifier)?\n\nso launchTaskDisplayAreaFeatureId + launchDisplayId",
+      "range": {
+        "startLine": 386,
+        "startChar": 22,
+        "endLine": 386,
+        "endChar": 54
+      },
+      "revId": "cd1b8a6dbfddd7c3390c563a51662be9e2608c5a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
