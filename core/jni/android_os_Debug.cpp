@@ -943,6 +943,26 @@ static jlong android_os_Debug_getGpuTotalUsageKb(JNIEnv* env, jobject clazz) {
     return sizeKb;
 }
 
+static jlong android_os_Debug_getTotalPssShmemKb(JNIEnv* env, jobject clazz) {
+    jlong ret = -1;
+    uint64_t pssShmemKb = 0;
+
+    const meminfo::PidCallback pss_shmem_cb = [&](int pid) {
+        std::string path = base::StringPrintf("/proc/%d/smaps_rollup", pid);
+        meminfo::MemUsage stats;
+
+        if (!SmapsOrRollupFromFile(path, &stats))
+            return;
+
+        pssShmemKb += stats.pss_shmem;
+    };
+
+    if (meminfo::ForEachPid(pss_shmem_cb))
+        ret = pssShmemKb;
+
+    return ret;
+}
+
 static jboolean android_os_Debug_isVmapStack(JNIEnv *env, jobject clazz)
 {
     static enum {
@@ -1021,6 +1041,8 @@ static const JNINativeMethod gMethods[] = {
             (void*)android_os_Debug_getDmabufHeapPoolsSizeKb },
     { "getGpuTotalUsageKb", "()J",
             (void*)android_os_Debug_getGpuTotalUsageKb },
+    { "getTotalPssShmem", "()J",
+            (void*)android_os_Debug_getTotalPssShmemKb },
     { "isVmapStack", "()Z",
             (void*)android_os_Debug_isVmapStack },
 };
