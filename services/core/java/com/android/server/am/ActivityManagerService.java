@@ -11133,12 +11133,21 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
             }
 
-             // Note: ION/DMA-BUF heap pools are reclaimable and hence, they are included as part of
-             // memInfo.getCachedSizeKb().
+            // shmem PSS is included in total PSS. kernelUsed also includes the
+            // total shmem usage from /proc/meminfo.
+            // The total shmem pss gets double subtraced from lostRAM so re-add
+            // it to correct the lostRAM accounting.
+            long totalPssShmem = Debug.getTotalPssShmemKb();
+            if (totalPssShmem < 0)
+                totalPssShmem = 0;
+
+            // Note: ION/DMA-BUF heap pools are reclaimable and hence, they are included as part of
+            // memInfo.getCachedSizeKb().
             final long lostRAM = memInfo.getTotalSizeKb()
                     - (ss[INDEX_TOTAL_PSS] - ss[INDEX_TOTAL_SWAP_PSS])
                     - memInfo.getFreeSizeKb() - memInfo.getCachedSizeKb()
-                    - kernelUsed - memInfo.getZramTotalSizeKb();
+                    - kernelUsed - memInfo.getZramTotalSizeKb() + totalPssShmem;
+
             if (!opts.isCompact) {
                 pw.print(" Used RAM: "); pw.print(stringifyKBSize(ss[INDEX_TOTAL_PSS] - cachedPss
                         + kernelUsed)); pw.print(" (");
