@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50ba0c20_d99c06b3",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-06-01T05:28:48Z",
+      "side": 1,
+      "message": "Nit, if it\u0027s replacing it, we don\u0027t need to update:\n\nhttps://developer.android.com/reference/android/content/Intent#ACTION_PACKAGE_REMOVED",
+      "range": {
+        "startLine": 875,
+        "startChar": 0,
+        "endLine": 875,
+        "endChar": 53
+      },
+      "revId": "43826c3ab89c9272019350a1410af28ba3463deb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4439396c_e39a8275",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-06-01T05:28:48Z",
+      "side": 1,
+      "message": "Ditto, ACTION_PACKAGE_ADDED also has an EXTRA_REPLACING",
+      "range": {
+        "startLine": 893,
+        "startChar": 0,
+        "endLine": 893,
+        "endChar": 53
+      },
+      "revId": "43826c3ab89c9272019350a1410af28ba3463deb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec036c92_5eac9fe2",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3748,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-06-01T05:28:48Z",
+      "side": 1,
+      "message": "This is a separate call to a synchronized method. If we are doing a read-modify-write, it MUST be in the same synchronized block. Otherwise, we have the potential to do a read, another thread writes, and then we overwrite it incorrectly.\n\n```\nSetAppExclusionList(A)\nupdateAppExclusionList(A)\n\n... app installed\n\nrefreshPlatformVpnAppExclusionList() -\u003e getAppExclusionList() -\u003e A\n\n... thread A loses lock, thread B gains lock\n\nSetAppExclusionList(B)\nupdateAppExclusionList(B)\n\n... thread B releases lock, thread A gains lock\n\nrefreshPlatformVpnAppExclusionList() -\u003e updateAppExclusionList(A)\n```\n\nWhen locking, consider the following:\n- Always lock on the /smallest/ possible chunk\n- But always make sure related operations are atomic, as a single unit. (in this case, the read-update must both be locked). Otherwise you leave the potential for races.",
+      "range": {
+        "startLine": 3748,
+        "startChar": 31,
+        "endLine": 3748,
+        "endChar": 50
+      },
+      "revId": "43826c3ab89c9272019350a1410af28ba3463deb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
