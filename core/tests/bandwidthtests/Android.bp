@@ -32,5 +32,4 @@ android_test {
         "android.test.base",
     ],
     static_libs: ["junit"],
-    platform_apis: true,
 }
