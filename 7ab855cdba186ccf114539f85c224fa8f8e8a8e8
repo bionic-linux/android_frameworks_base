@@ -22,6 +22,30 @@
       },
       "revId": "7ab855cdba186ccf114539f85c224fa8f8e8a8e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90f0bdb6_42c108d3",
+        "filename": "libs/hwui/jni/android_graphics_Canvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1396566
+      },
+      "writtenOn": "2022-06-03T23:20:41Z",
+      "side": 1,
+      "message": "In Q and above, there is already an nDrawTextRun that is registered with the exact same signature (\"(J[CIIIIFFZJJ)V\"). The last `long` param of nDrawTextRun was changed from a Typeface Pointer to a MeasuredText pointer. So we need a way to differentiate them, which is why I just renamed it for Q. In Java land it will also use the name `nDrawTextRunTypeface`.",
+      "parentUuid": "07175b4a_2c1bfba7",
+      "range": {
+        "startLine": 850,
+        "startChar": 9,
+        "endLine": 850,
+        "endChar": 32
+      },
+      "revId": "7ab855cdba186ccf114539f85c224fa8f8e8a8e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
