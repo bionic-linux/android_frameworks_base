@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f42e6030_c79da3b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1952761
+      },
+      "writtenOn": "2022-06-03T09:21:40Z",
+      "side": 1,
+      "message": "Moving this to work in progress until of Microsoft work finalized and all the CTS CL are linked",
+      "revId": "101e32182a60d7a7b53471fa04c87de727c5a2f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
