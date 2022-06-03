@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07175b4a_2c1bfba7",
+        "filename": "libs/hwui/jni/android_graphics_Canvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1938931
+      },
+      "writtenOn": "2022-06-03T17:14:02Z",
+      "side": 1,
+      "message": "I think this is just supposed to be nDrawTextRun:\n\nhttp://shortn/_bUtosv4BE3",
+      "range": {
+        "startLine": 850,
+        "startChar": 9,
+        "endLine": 850,
+        "endChar": 32
+      },
+      "revId": "7ab855cdba186ccf114539f85c224fa8f8e8a8e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
