@@ -46,6 +46,30 @@
       },
       "revId": "7ab855cdba186ccf114539f85c224fa8f8e8a8e8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7acfc932_247e4bd8",
+        "filename": "libs/hwui/jni/android_graphics_Canvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1938931
+      },
+      "writtenOn": "2022-06-04T01:15:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90f0bdb6_42c108d3",
+      "range": {
+        "startLine": 850,
+        "startChar": 9,
+        "endLine": 850,
+        "endChar": 32
+      },
+      "revId": "7ab855cdba186ccf114539f85c224fa8f8e8a8e8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
