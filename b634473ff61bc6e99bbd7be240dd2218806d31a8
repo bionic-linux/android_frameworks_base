@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ada9633_9ed17d50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2022-06-07T09:40:35Z",
+      "side": 1,
+      "message": "Jeff, could you help owner-review this CL? AFAIK, this local script is only used by me, and not used in the buildbot, and needs to be upgraded to use Python 3.",
+      "revId": "b634473ff61bc6e99bbd7be240dd2218806d31a8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
