@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77614857_c1d983ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-06-08T01:54:38Z",
+      "side": 1,
+      "message": "Good idea!",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cd28494_47d44d6f",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-06-08T01:54:38Z",
+      "side": 1,
+      "message": "Why are we talking about pre-created users? Was there any reason to ever think they would have worked differently? It\u0027s a little confusing, since it makes it sound like there\u0027s something special about them. In reality, there are other weird categories of users too (say, ephemeral or partial). This array includes all of them.\n\nMaybe trim down and de-emphasize this last sentence a bit by changing it to\n```\nThis array applies to any type of user (including pre-created users) when they are removed.\n```\nor something.",
+      "range": {
+        "startLine": 414,
+        "startChar": 7,
+        "endLine": 414,
+        "endChar": 18
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f1216f9_f268063b",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-06-08T01:54:38Z",
+      "side": 1,
+      "message": "I think you may as well keep the original\n```\nUse {@link #addRemovingUserIdLocked(int)} to add elements to this array.\n```\nsentence.",
+      "range": {
+        "startLine": 415,
+        "startChar": 5,
+        "endLine": 415,
+        "endChar": 6
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
