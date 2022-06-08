@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c3146903_20c23e51",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-06-08T02:14:42Z",
+      "side": 1,
+      "message": "Pre-created users are very special, and removing them works differently; the ACTION_USER_REMOVED intent is never sent, and the onUserRemoved callback(s) are not called.  Which sort of makes sense, because a pre-created user was sort of never added in the first place, so they don\u0027t need to be \"removed\".  So yes, it could be expected that removing a pre-created user doesn\u0027t count as a removal here.",
+      "parentUuid": "4cd28494_47d44d6f",
+      "range": {
+        "startLine": 414,
+        "startChar": 7,
+        "endLine": 414,
+        "endChar": 18
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f1216f9_f268063b",
         "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
         "patchSetId": 2
