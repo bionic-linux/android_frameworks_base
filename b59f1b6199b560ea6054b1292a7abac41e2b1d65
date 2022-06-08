@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "969eee08_210b8efc",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-06-08T03:03:33Z",
+      "side": 1,
+      "message": "Actually, can we say \"userId\" or \"user ID\" rather than just ID. We almost never call it just an ID on its own, even if it\u0027s clear from the context.",
+      "range": {
+        "startLine": 410,
+        "startChar": 88,
+        "endLine": 410,
+        "endChar": 91
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4cd28494_47d44d6f",
         "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
         "patchSetId": 2
@@ -61,6 +84,30 @@
       "side": 1,
       "message": "Pre-created users are very special, and removing them works differently; the ACTION_USER_REMOVED intent is never sent, and the onUserRemoved callback(s) are not called.  Which sort of makes sense, because a pre-created user was sort of never added in the first place, so they don\u0027t need to be \"removed\".  So yes, it could be expected that removing a pre-created user doesn\u0027t count as a removal here.",
       "parentUuid": "4cd28494_47d44d6f",
+      "range": {
+        "startLine": 414,
+        "startChar": 7,
+        "endLine": 414,
+        "endChar": 18
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fed27cf5_154630e2",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2022-06-08T03:03:33Z",
+      "side": 1,
+      "message": "Okay. But personally I still think we should make it a bit shorter.\n\n(From my UserManagerService perspective, a pre-created user has a userId, and therefore when it is removed, that userId has to be added to this list. So I certainly wouldn\u0027t find it surprising that pre-created users are treated the same way here. But we can mention them if you think it\u0027ll help others.)",
+      "parentUuid": "c3146903_20c23e51",
       "range": {
         "startLine": 414,
         "startChar": 7,
