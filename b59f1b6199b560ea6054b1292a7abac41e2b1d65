@@ -47,6 +47,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36437cbb_2fbc3c64",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-06-08T17:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969eee08_210b8efc",
+      "range": {
+        "startLine": 410,
+        "startChar": 88,
+        "endLine": 410,
+        "endChar": 91
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4cd28494_47d44d6f",
@@ -118,6 +142,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e646f63_098aead1",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-06-08T17:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fed27cf5_154630e2",
+      "range": {
+        "startLine": 414,
+        "startChar": 7,
+        "endLine": 414,
+        "endChar": 18
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f1216f9_f268063b",
@@ -131,6 +179,30 @@
       "writtenOn": "2022-06-08T01:54:38Z",
       "side": 1,
       "message": "I think you may as well keep the original\n```\nUse {@link #addRemovingUserIdLocked(int)} to add elements to this array.\n```\nsentence.",
+      "range": {
+        "startLine": 415,
+        "startChar": 5,
+        "endLine": 415,
+        "endChar": 6
+      },
+      "revId": "b59f1b6199b560ea6054b1292a7abac41e2b1d65",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58331a3e_bb076ca4",
+        "filename": "services/core/java/com/android/server/pm/UserManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-06-08T17:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f1216f9_f268063b",
       "range": {
         "startLine": 415,
         "startChar": 5,
