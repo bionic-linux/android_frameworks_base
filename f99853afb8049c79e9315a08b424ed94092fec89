@@ -16,6 +16,63 @@
       "message": "Hey Andrii, can you please give an API review?",
       "revId": "f99853afb8049c79e9315a08b424ed94092fec89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "457ed2ee_fd4d7047",
+        "filename": "services/core/java/com/android/server/wm/SafeActivityOptions.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2022-06-10T02:16:18Z",
+      "side": 1,
+      "message": "nit: this comment seems unnecessary",
+      "revId": "f99853afb8049c79e9315a08b424ed94092fec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98513e70_a9c81726",
+        "filename": "services/core/java/com/android/server/wm/SafeActivityOptions.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2022-06-10T02:16:18Z",
+      "side": 1,
+      "message": "\"If we\", since the comment is outside of the block.",
+      "range": {
+        "startLine": 257,
+        "startChar": 11,
+        "endLine": 257,
+        "endChar": 13
+      },
+      "revId": "f99853afb8049c79e9315a08b424ed94092fec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d098934_214c64e2",
+        "filename": "services/tests/wmtests/src/com/android/server/wm/TaskLaunchParamsModifierTests.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2022-06-10T02:16:18Z",
+      "side": 1,
+      "message": "Please also add a test that verifies the case when launch display ID is not set.",
+      "revId": "f99853afb8049c79e9315a08b424ed94092fec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
