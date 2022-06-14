@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fe1d413_30ba8777",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-06-14T05:05:41Z",
+      "side": 1,
+      "message": "First paragraph should generally have a short description of what the change is, so it\u0027s easily readable when scrolling through history.\n\nIn general, suggest:\n```\n\u003c\u003cTITLE\u003e\u003e\n\nThis commit \u003cDESCRIPTION OF WHAT COMMIT DOES\u003e\u003e\n\n\u003c\u003cCONTEXT\u003e\u003e\n```\n\neg:\n```\nUpdate VPN app exclusion list when packages are added or removed\n\nThis commit passes through package added/removed broadcasts, triggering the VPN to update the allowed/excluded UIDs.\n\nThis is required because...\n\n```",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "a98280107d7f5b002161d163a84e5e35bee08efb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
