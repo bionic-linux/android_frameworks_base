@@ -35,6 +35,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "36b0b2d9_58e5fd8b",
+        "filename": "services/core/java/com/android/server/wm/SafeActivityOptions.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1952761
+      },
+      "writtenOn": "2022-06-14T12:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457ed2ee_fd4d7047",
+      "revId": "f99853afb8049c79e9315a08b424ed94092fec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98513e70_a9c81726",
@@ -58,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "072107fe_1431b516",
+        "filename": "services/core/java/com/android/server/wm/SafeActivityOptions.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1952761
+      },
+      "writtenOn": "2022-06-14T12:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98513e70_a9c81726",
+      "range": {
+        "startLine": 257,
+        "startChar": 11,
+        "endLine": 257,
+        "endChar": 13
+      },
+      "revId": "f99853afb8049c79e9315a08b424ed94092fec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d098934_214c64e2",
@@ -71,6 +113,24 @@
       "writtenOn": "2022-06-10T02:16:18Z",
       "side": 1,
       "message": "Please also add a test that verifies the case when launch display ID is not set.",
+      "revId": "f99853afb8049c79e9315a08b424ed94092fec89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1998286_3b9fe051",
+        "filename": "services/tests/wmtests/src/com/android/server/wm/TaskLaunchParamsModifierTests.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1952761
+      },
+      "writtenOn": "2022-06-14T12:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d098934_214c64e2",
       "revId": "f99853afb8049c79e9315a08b424ed94092fec89",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
