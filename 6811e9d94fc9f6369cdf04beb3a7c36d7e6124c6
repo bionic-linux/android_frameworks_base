@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74f3cd10_e14a5999",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/StringEqualsPerfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-06-15T10:39:59Z",
+      "side": 1,
+      "message": "The strings here have been reformatted and the words run together from line breaks that were in the original. Can we keep the same literals?",
+      "revId": "6811e9d94fc9f6369cdf04beb3a7c36d7e6124c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d15291e_c53972d4",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/StringEqualsPerfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-06-15T10:39:59Z",
+      "side": 1,
+      "message": "here",
+      "revId": "6811e9d94fc9f6369cdf04beb3a7c36d7e6124c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a68944c_caeea1ef",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/StringEqualsPerfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-06-15T10:39:59Z",
+      "side": 1,
+      "message": "here",
+      "revId": "6811e9d94fc9f6369cdf04beb3a7c36d7e6124c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bbfb11c_f0868037",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/StringEqualsPerfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-06-15T10:39:59Z",
+      "side": 1,
+      "message": "here",
+      "revId": "6811e9d94fc9f6369cdf04beb3a7c36d7e6124c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e402a806_2a322efd",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/StringEqualsPerfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1071150
+      },
+      "writtenOn": "2022-06-15T10:39:59Z",
+      "side": 1,
+      "message": "here",
+      "revId": "6811e9d94fc9f6369cdf04beb3a7c36d7e6124c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
