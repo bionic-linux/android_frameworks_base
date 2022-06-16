@@ -1934,12 +1934,19 @@ public final class Display {
          */
         public static final int HDR_TYPE_HDR10_PLUS = 4;
 
+        /**
+         * HDR Vivid display.
+         */
+        public static final int HDR_TYPE_HDR_VIVID = 5;
+
+
         /** @hide */
         public static final int[] HDR_TYPES = {
                 HDR_TYPE_DOLBY_VISION,
                 HDR_TYPE_HDR10,
                 HDR_TYPE_HLG,
-                HDR_TYPE_HDR10_PLUS
+                HDR_TYPE_HDR10_PLUS,
+                HDR_TYPE_HDR_VIVID
         };
 
         /** @hide */
@@ -1948,6 +1955,7 @@ public final class Display {
                 HDR_TYPE_HDR10,
                 HDR_TYPE_HLG,
                 HDR_TYPE_HDR10_PLUS,
+                HDR_TYPE_HDR_VIVID,
         })
         @Retention(RetentionPolicy.SOURCE)
         public @interface HdrType {}
