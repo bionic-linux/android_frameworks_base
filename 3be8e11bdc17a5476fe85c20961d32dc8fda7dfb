@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ba760ea_92c36a9f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2022-06-16T04:11:40Z",
+      "side": 1,
+      "message": "nit: adding comments for why this cp is needed.",
+      "revId": "3be8e11bdc17a5476fe85c20961d32dc8fda7dfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
