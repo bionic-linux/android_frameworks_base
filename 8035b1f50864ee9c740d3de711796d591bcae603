@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c1b658c_668f0fa9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2022-06-16T15:09:20Z",
+      "side": 1,
+      "message": "Hey Andrii,\nCan you please give API review for this?",
+      "revId": "8035b1f50864ee9c740d3de711796d591bcae603",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
