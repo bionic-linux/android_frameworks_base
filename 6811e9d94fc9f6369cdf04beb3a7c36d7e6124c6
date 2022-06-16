@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "fac86500_009f3b27",
+        "filename": "apct-tests/perftests/core/src/android/libcore/regression/StringEqualsPerfTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1893966
+      },
+      "writtenOn": "2022-06-16T14:00:57Z",
+      "side": 1,
+      "message": "The automatic linter has disappointed me once again, but done.",
+      "parentUuid": "74f3cd10_e14a5999",
+      "revId": "6811e9d94fc9f6369cdf04beb3a7c36d7e6124c6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "0d15291e_c53972d4",
         "filename": "apct-tests/perftests/core/src/android/libcore/regression/StringEqualsPerfTest.java",
         "patchSetId": 2
