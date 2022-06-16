@@ -16,6 +16,24 @@
       "message": "nit: adding comments for why this cp is needed.",
       "revId": "3be8e11bdc17a5476fe85c20961d32dc8fda7dfb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17f79d72_e339f766",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2022-06-16T14:44:43Z",
+      "side": 1,
+      "message": "Ah looks like this got merged before this comment.\n\nFor posterity, the cp greatly simplifies landing of this topic https://android-review.googlesource.com/q/topic:foreground_madvise in AOSP, which has both a framework and ART change.",
+      "parentUuid": "1ba760ea_92c36a9f",
+      "revId": "3be8e11bdc17a5476fe85c20961d32dc8fda7dfb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
