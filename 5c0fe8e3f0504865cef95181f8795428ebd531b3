@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f44388bf_308e88ad",
+        "filename": "services/core/java/com/android/server/am/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1013984
+      },
+      "writtenOn": "2022-06-16T01:12:51Z",
+      "side": 1,
+      "message": "can\u0027t you point to the existing / canonical file?",
+      "range": {
+        "startLine": 40,
+        "startChar": 39,
+        "endLine": 40,
+        "endChar": 80
+      },
+      "revId": "5c0fe8e3f0504865cef95181f8795428ebd531b3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
