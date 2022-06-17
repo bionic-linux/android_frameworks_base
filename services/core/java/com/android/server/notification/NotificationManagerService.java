@@ -10650,9 +10650,18 @@ public class NotificationManagerService extends SystemService {
                 }
 
                 BackgroundThread.getHandler().post(() -> {
-                    if (info.isSystem
-                            || hasCompanionDevice(info)
-                            || mAssistants.isServiceTokenValidLocked(info.service)) {
+                    // Both hasCompanionDevice and notifyNotificationChannelChanged contain
+                    // binder call. So do not invoke them with lock held.
+                    if (info.isSystem || hasCompanionDevice(info)) {
+                        notifyNotificationChannelChanged(
+                                info, pkg, user, channel, modificationType);
+                        return;
+                    }
+                    boolean isValid = false;
+                    synchronized (mNotificationLock) {
+                        isValid = mAssistants.isServiceTokenValidLocked(info.service);
+                    }
+                    if (isValid) {
                         notifyNotificationChannelChanged(
                                 info, pkg, user, channel, modificationType);
                     }
