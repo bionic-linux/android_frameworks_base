@@ -33,6 +33,24 @@
       "message": "Can you file a bug with repro steps and the (un)expected result?",
       "revId": "d65404d39ba2dc9a938a7c00e11afd4d344a1e7f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bf55a67_30db66fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902133
+      },
+      "writtenOn": "2022-06-20T01:40:02Z",
+      "side": 1,
+      "message": "OK. I\u0027ve filed a bug here with more information:\nhttps://issuetracker.google.com/u/1/issues/236512598\n\nPlease check it.",
+      "parentUuid": "ca9f2ced_8c874f21",
+      "revId": "d65404d39ba2dc9a938a7c00e11afd4d344a1e7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
