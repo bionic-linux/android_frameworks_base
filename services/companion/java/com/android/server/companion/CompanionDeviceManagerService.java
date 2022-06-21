@@ -375,7 +375,8 @@ public class CompanionDeviceManagerService extends SystemService implements Bind
                 + mOngoingDeviceDiscovery + ", request = " + mRequest);
         synchronized (mLock) {
             AndroidFuture<Association> ongoingDeviceDiscovery = mOngoingDeviceDiscovery;
-            if (ongoingDeviceDiscovery != null && !ongoingDeviceDiscovery.isDone()) {
+            if (ongoingDeviceDiscovery != null && !ongoingDeviceDiscovery.isDone()
+                    && !ongoingDeviceDiscovery.isCancelled()) {
                 ongoingDeviceDiscovery.cancel(true);
             }
             mFindDeviceCallback = unlinkToDeath(mFindDeviceCallback, this, 0);
