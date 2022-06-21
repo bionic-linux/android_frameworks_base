@@ -147,8 +147,13 @@
              rather than "Arabic (Egypt)". If you're an OEM supporting multiple
              Arabic locales, you should remove this entry so that ar_EG is shown
              as "Arabic (Egypt)" in Settings. -->
-        <item>ar_EG</item>
-
+        <!-- We feel like the below item isn't necessary, since the country appears
+             only when there are two or more countries used for that particular language. -->
+        <!-- <item>ar_EG</item> -->
+        
+        <!-- For Chinese, if two or more countries are enabled, ensure that the list of languages
+             says "Chinese (Simplified)" and "Chinese (Traditional)"
+             rather than "Chinese (China)" and "Chinese (Taiwan)", respectively. -->
         <item>zh_CN</item>
         <item>zh_TW</item>
     </string-array>
@@ -159,8 +164,14 @@
              rather than "Arabic (Egypt)". If you're an OEM supporting multiple
              Arabic locales, you should remove this entry so that ar_EG is shown
              as "Arabic (Egypt)" in Settings. -->
-        <item>العربية</item>
+            
+        <!-- We feel like the below item isn't necessary, since the country appears
+             only when there are two or more countries used for that particular language. -->
+        <!-- <item>العربية</item> -->
 
+        <!-- For Chinese, if two or more countries are enabled, ensure that the list of languages
+             says "Chinese (Simplified)" and "Chinese (Traditional)"
+             rather than "Chinese (China)" and "Chinese (Taiwan)", respectively. -->
         <item>中文 (简体)</item>
         <item>中文 (繁體)</item>
     </string-array>
