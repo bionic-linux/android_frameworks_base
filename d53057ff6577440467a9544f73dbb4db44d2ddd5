@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f77b1354_ad985401",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-22T21:52:53Z",
+      "side": 1,
+      "message": "We need to fix the language bug ASAP since the current implementation only works on phones and tablets but not TVs.",
+      "revId": "d53057ff6577440467a9544f73dbb4db44d2ddd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
