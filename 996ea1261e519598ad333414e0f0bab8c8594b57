@@ -16,6 +16,24 @@
       "message": "Hi William,\n\nI need you to take a look at the locale folders I have renamed in the core/res/res/ folder, since they caused a problem with language selection in the Android TV UI for TVs and captions for all devices. In this case, missing countries for each locale folder is the root cause.\n\nPlease let me know if you have any questions or concerns.\n\nKelvin Dean",
       "revId": "996ea1261e519598ad333414e0f0bab8c8594b57",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "406d6fee_a6d4085e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1156333
+      },
+      "writtenOn": "2022-06-22T00:25:10Z",
+      "side": 1,
+      "message": "Are you sure I\u0027m the right person to review this?",
+      "parentUuid": "755d64ad_cfdd589d",
+      "revId": "996ea1261e519598ad333414e0f0bab8c8594b57",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
