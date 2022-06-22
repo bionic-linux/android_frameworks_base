@@ -16,6 +16,23 @@
       "message": "I am trying to find code reviewers for my first ever commit to resolve an issue with the language selection screen not showing all the languages for the UI language on Android TVs and the caption language on all devices (which include Pixel devices, the ADT-3 Android TV Developer Kit, and the Chromecast with Google TV). Please let me know if you are willing to review the renamed folders.",
       "revId": "b2310958ad9b2e6e635ec46d08bd046e6effdfe3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41b8f793_0f608314",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-22T02:55:46Z",
+      "side": 1,
+      "message": "For each of the values folders in core/res/res/, keep the renamed folders in the format values-xx-rYY/, where xx is the language code and YY is the country code (all caps). For Serbian (Latin), keep the renamed folder values-b+sr+Latn+RS/. A language is not displayed in the locale picker if it does not have a corresponding country.",
+      "revId": "b2310958ad9b2e6e635ec46d08bd046e6effdfe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
