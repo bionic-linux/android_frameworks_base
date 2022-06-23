@@ -68,6 +68,24 @@
       "parentUuid": "af77b346_f22c9cbf",
       "revId": "1cf534732aa42db072c90eb6c956d7530b9e32c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a158f121_93fa531e",
+        "filename": "core/res/res/values/arrays.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-23T23:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e31bf941_476f02ce",
+      "revId": "1cf534732aa42db072c90eb6c956d7530b9e32c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
