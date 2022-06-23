@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6ad0592_e427f6a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-06-23T12:38:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c782c706_97df1876",
+      "range": {
+        "startLine": 14,
+        "startChar": 47,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "99d413a6bfc74c4251a6b2dbef20717b03701a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8361213a_b75a9f11",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-06-23T06:26:28Z",
       "side": 1,
       "message": "Nit name; presumably this should be onPackageAdded?",
+      "range": {
+        "startLine": 886,
+        "startChar": 54,
+        "endLine": 886,
+        "endChar": 61
+      },
+      "revId": "99d413a6bfc74c4251a6b2dbef20717b03701a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d3c5e06_40253658",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-06-23T12:38:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8361213a_b75a9f11",
       "range": {
         "startLine": 886,
         "startChar": 54,
@@ -70,6 +118,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9f92629_6de3db12",
+        "filename": "services/core/java/com/android/server/VpnManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-06-23T12:38:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b907ca3c_77bf1aab",
+      "range": {
+        "startLine": 894,
+        "startChar": 23,
+        "endLine": 897,
+        "endChar": 31
+      },
+      "revId": "99d413a6bfc74c4251a6b2dbef20717b03701a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "184073c2_338382c2",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-06-23T06:26:28Z",
       "side": 1,
       "message": "Triggers an update of the VPN network\u0027s excluded UIDs if a VPN is running.",
+      "range": {
+        "startLine": 4100,
+        "startChar": 7,
+        "endLine": 4100,
+        "endChar": 45
+      },
+      "revId": "99d413a6bfc74c4251a6b2dbef20717b03701a0b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c72a1511_03a3eb88",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4100,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-06-23T12:38:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "184073c2_338382c2",
       "range": {
         "startLine": 4100,
         "startChar": 7,
