@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5470a66a_04a244d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2022-06-23T20:34:39Z",
+      "side": 1,
+      "message": "Except for one comment / question, LGTM\n(but not a nitpick, not not approved yet :-)\n\nThank you very much for fixing this!\nMihai\n",
+      "revId": "1cf534732aa42db072c90eb6c956d7530b9e32c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af77b346_f22c9cbf",
+        "filename": "core/res/res/values/arrays.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2022-06-23T20:34:39Z",
+      "side": 1,
+      "message": "Was this tested with the old locale selector?\n\nI don\u0027t know the code, but it looks like this was explicitly added to fix a bug.",
+      "revId": "1cf534732aa42db072c90eb6c956d7530b9e32c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
