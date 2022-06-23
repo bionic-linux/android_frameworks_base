@@ -68,6 +68,24 @@
       "message": "New API for Android T is closed.",
       "revId": "d50efa8d97e0d75f4b1b8574d9e4b5650f756b6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a108de0b_b29dbf9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132402
+      },
+      "writtenOn": "2022-06-23T00:29:52Z",
+      "side": 1,
+      "message": "Can this patch be reviewed now. Is there anything else which needs to be addressed as part of this patch-set ?",
+      "parentUuid": "fb790235_ca5e1f20",
+      "revId": "d50efa8d97e0d75f4b1b8574d9e4b5650f756b6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
