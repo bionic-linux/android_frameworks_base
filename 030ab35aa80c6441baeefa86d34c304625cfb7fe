@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a15c39e_a300004d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-23T07:49:30Z",
+      "side": 1,
+      "message": "Glad to hear that! This critical moment will help many Android customers get their native language for the UI language on Android TV/Google TV (particularly the ADT-3 and the Chromecast with Google TV), and the captions language ok all devices. This will greatly benefit customers in Europe, India, and the Asia Pacific.",
+      "revId": "030ab35aa80c6441baeefa86d34c304625cfb7fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
