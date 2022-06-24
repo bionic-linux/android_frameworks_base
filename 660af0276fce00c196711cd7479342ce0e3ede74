@@ -33,6 +33,23 @@
       "message": "Moving on to the Code Review phase! Hoping to hear from you soon!",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9eab834_ce4bb1cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-24T06:34:08Z",
+      "side": 1,
+      "message": "Still waiting for your code reviews. We\u0027re making sure that we find the right reviewers to fix this important bug to ensure all system languages are displayed as expected for the Google TV UI and the captions language.",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
