@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b210891_48e0b451",
+        "filename": "services/core/java/com/android/server/pm/PackageManagerService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21612,
+      "author": {
+        "id": 1060347
+      },
+      "writtenOn": "2022-06-24T16:31:31Z",
+      "side": 1,
+      "message": "Line is too long",
+      "range": {
+        "startLine": 21612,
+        "startChar": 12,
+        "endLine": 21612,
+        "endChar": 111
+      },
+      "revId": "f5b9b05590bb418887cc0f3e5b236229abb663a5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
