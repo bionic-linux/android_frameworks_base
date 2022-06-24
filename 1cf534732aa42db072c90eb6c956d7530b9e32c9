@@ -86,6 +86,24 @@
       "parentUuid": "e31bf941_476f02ce",
       "revId": "1cf534732aa42db072c90eb6c956d7530b9e32c9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2919e9b1_7c62ba81",
+        "filename": "core/res/res/values/arrays.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2022-06-24T05:17:05Z",
+      "side": 1,
+      "message": "I don\u0027t think that is the case.\n\nEven if there is a `values-ar-rIL` folder, it will be excluded from the apk if ar-IL is not listed in the PRODUCT_LOCALES list.\nAnd since you just added that a few days ago, I think it is very likely that a lot of OEM .mk files (product specific) don\u0027t list ar-IL.\n\nAlso, just by reading the code it looks that if ar-IL is present in the apk then this workaround is not used, and it will show ar-EG and ar-IL.\n\n\u003d\u003d\u003d\n\nAll of this is only true for the old style locale picker.\nThe new one will show Arabic in the first step, and 20+ regions in step two.\n\n\u003d\u003d\u003d\n\nTLDR: I don\u0027t think this should be commented out.\nSame for the translation below, in `special_locale_names`",
+      "parentUuid": "a158f121_93fa531e",
+      "revId": "1cf534732aa42db072c90eb6c956d7530b9e32c9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
