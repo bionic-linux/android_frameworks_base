@@ -84,6 +84,23 @@
       "message": "We\u0027re trying to find the right code owners to complete the Code Owners and Code Review steps in the Submit Requirements section.",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99df4ce9_75aec9c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-24T22:12:07Z",
+      "side": 1,
+      "message": "Can you please take a look once more at the code additions needed to re-add the missing languages back in the Settings Menu? Your prompt response would be greatly appreciated.",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
