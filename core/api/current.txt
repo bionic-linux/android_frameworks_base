@@ -37992,6 +37992,7 @@ package android.security.keystore {
     field @Deprecated public static final String KEY_ALGORITHM_3DES = "DESede";
     field public static final String KEY_ALGORITHM_AES = "AES";
     field public static final String KEY_ALGORITHM_EC = "EC";
+    field public static final String KEY_ALGORITHM_EDDSA = "1.3.101.112";
     field public static final String KEY_ALGORITHM_HMAC_SHA1 = "HmacSHA1";
     field public static final String KEY_ALGORITHM_HMAC_SHA224 = "HmacSHA224";
     field public static final String KEY_ALGORITHM_HMAC_SHA256 = "HmacSHA256";

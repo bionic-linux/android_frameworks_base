@@ -43,7 +43,8 @@ abstract class AndroidKeyStoreECDSASignatureSpi extends AndroidKeyStoreSignature
     private static final Set<String> ACCEPTED_SIGNING_SCHEMES = Set.of(
             KeyProperties.KEY_ALGORITHM_EC.toLowerCase(),
             NamedParameterSpec.ED25519.getName().toLowerCase(),
-            "eddsa");
+            "eddsa",
+            "1.3.101.112");
 
     public final static class NONE extends AndroidKeyStoreECDSASignatureSpi {
         public NONE() {

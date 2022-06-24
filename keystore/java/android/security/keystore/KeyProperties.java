@@ -197,6 +197,7 @@ public abstract class KeyProperties {
         KEY_ALGORITHM_RSA,
         KEY_ALGORITHM_EC,
         KEY_ALGORITHM_XDH,
+        KEY_ALGORITHM_EDDSA,
         KEY_ALGORITHM_AES,
         KEY_ALGORITHM_HMAC_SHA1,
         KEY_ALGORITHM_HMAC_SHA224,
@@ -219,6 +220,9 @@ public abstract class KeyProperties {
 
     /** Advanced Encryption Standard (AES) key. */
     public static final String KEY_ALGORITHM_AES = "AES";
+
+    /** Curve 25519 based Signature key. */
+    public static final String KEY_ALGORITHM_EDDSA = "1.3.101.112";
 
     /**
      * Triple Data Encryption Algorithm (3DES) key.
@@ -253,6 +257,7 @@ public abstract class KeyProperties {
         public static int toKeymasterAsymmetricKeyAlgorithm(
                 @NonNull @KeyAlgorithmEnum String algorithm) {
             if (KEY_ALGORITHM_EC.equalsIgnoreCase(algorithm)
+                    || KEY_ALGORITHM_EDDSA.equalsIgnoreCase(algorithm)
                     || KEY_ALGORITHM_XDH.equalsIgnoreCase(algorithm)) {
                 return KeymasterDefs.KM_ALGORITHM_EC;
             } else if (KEY_ALGORITHM_RSA.equalsIgnoreCase(algorithm)) {
