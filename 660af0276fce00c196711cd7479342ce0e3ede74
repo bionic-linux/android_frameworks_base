@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ab1b784_e2f8bcfe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2022-06-24T05:32:53Z",
+      "side": 1,
+      "message": "Sorry, didn\u0027t notice that it is missing in the list, just checked the answer to the comment. And that was still showing Patchset 16.\n\nApproved, thank you!\nMihai\n",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
