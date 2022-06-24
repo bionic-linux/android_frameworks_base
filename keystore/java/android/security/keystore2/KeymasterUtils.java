@@ -16,6 +16,7 @@
 
 package android.security.keystore2;
 
+import android.hardware.security.keymint.EcCurve;
 import android.security.keymaster.KeymasterArguments;
 import android.security.keymaster.KeymasterDefs;
 import android.security.keystore.KeyProperties;
@@ -119,6 +120,28 @@ public abstract class KeymasterUtils {
                 }
                 args.addUnsignedInt(KeymasterDefs.KM_TAG_MIN_MAC_LENGTH, digestOutputSizeBits);
                 break;
+        }
+    }
+
+    /**
+     * Return a key size in bits based on EC curve.
+     *
+     * @hide
+     */
+    static int getEcKeySizeBitsForCurve(int ecCurve) {
+        switch (ecCurve) {
+            case EcCurve.P_224:
+                return 224;
+            case EcCurve.P_256:
+                return 256;
+            case EcCurve.P_384:
+                return 384;
+            case EcCurve.P_521:
+                return 521;
+            case EcCurve.CURVE_25519:
+                return 256;
+            default:
+                throw new IllegalArgumentException("Unknown EC curve: " + ecCurve);
         }
     }
 }

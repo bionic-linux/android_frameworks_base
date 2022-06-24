@@ -88,7 +88,7 @@ public class AndroidKeyStoreEdECPublicKey extends AndroidKeyStorePublicKey
                 getUserKeyDescriptor(),
                 getKeyIdDescriptor().nspace,
                 getAuthorizations(),
-                "EdDSA",
+                "1.3.101.112",
                 getSecurityLevel());
     }
 
