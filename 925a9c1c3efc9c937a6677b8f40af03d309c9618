@@ -16,6 +16,23 @@
       "message": "Hello, Siyamed:\nCould you please approve this HDR Vivid patch? or give me some more info?\nWe (UWA) need Android to support HDR Vivid because many Video platforms need the Android devices to support it. and this is the first step to achieve it.\nThank you very much!\nHouxiang ZHU",
       "revId": "925a9c1c3efc9c937a6677b8f40af03d309c9618",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e2721d0_572961dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014391
+      },
+      "writtenOn": "2022-06-26T08:54:56Z",
+      "side": 1,
+      "message": "hello,ALan and John:\nThis HDR Vivid patch is the first one I submitted. Would you please help me to review it or give me any help?\nThank you very much!\nHouxiang ZHU",
+      "revId": "925a9c1c3efc9c937a6677b8f40af03d309c9618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
