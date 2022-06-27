@@ -5689,15 +5689,19 @@ public class PermissionManagerService extends IPermissionManager.Stub {
                     appOpsManager.finishProxyOp(AppOpsManager.opToPublicName(op),
                             resolvedAttributionSource, skipCurrentFinish);
                 }
-
-                if (next == null || next.getNext() == null) {
-                    return;
-                }
-
                 RegisteredAttribution registered =
                         sRunningAttributionSources.remove(current.getToken());
-                if (registered != null) {
+                if (registered != null && next != null && next.getNext() != null) {
+                    // We need to investigate whether to unregister attribution sources,but for
+                    // now we are keeping the existing behavior since Android S.
                     registered.unregister();
+                }
+
+                if (next == null || next.getNext() == null) {
+                    if (next != null) {
+                        sRunningAttributionSources.remove(next.getToken());
+                    }
+                    return;
                 }
                 current = next;
             }
