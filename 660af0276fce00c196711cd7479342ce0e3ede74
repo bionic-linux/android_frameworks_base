@@ -136,6 +136,23 @@
       "parentUuid": "f68a1f3b_84965e9a",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ee04d58_481aa709",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-27T22:46:15Z",
+      "side": 1,
+      "message": "Amith and Patrick, can you please a look at the proposed additions to the code, so that we can fix the language bug present in Android TV devices as well as the caption language on all devices? If you don\u0027t, then it is going to cause problems for Chromecast users in India. We don\u0027t want Indian customers be limited to English and Hindi for the language settings!\n(All we wanted is to find the right code owners that can help review my proposed changes and get them approved as soon as possible.)\n\nWe are still missing the following code votes:\n* Code Review: At least one +2 vote\n* Code Owners: Have at least one code owner enter a +2 vote\n* Presubmit Verified: Still waiting for the Treehugger Robot...",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
