@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c480c5e5_2cb11797",
+        "filename": "services/accessibility/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1092253
+      },
+      "writtenOn": "2022-06-27T19:10:38Z",
+      "side": 1,
+      "message": "Let\u0027s remove Svet and Rhed while we\u0027re at it, and add Sally as well.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 25
+      },
+      "revId": "d231091d4709901e965b2338da4b7621f35d35b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
