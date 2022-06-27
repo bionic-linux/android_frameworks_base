@@ -33,6 +33,23 @@
       "message": "hello,ALan and John:\nThis HDR Vivid patch is the first one I submitted. Would you please help me to review it or give me any help?\nThank you very much!\nHouxiang ZHU",
       "revId": "925a9c1c3efc9c937a6677b8f40af03d309c9618",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b06056a_b717c56a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1044446
+      },
+      "writtenOn": "2022-06-27T19:51:38Z",
+      "side": 1,
+      "message": "Need to run `make update-api` to generate API files",
+      "revId": "925a9c1c3efc9c937a6677b8f40af03d309c9618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
