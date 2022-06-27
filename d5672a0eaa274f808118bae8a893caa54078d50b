@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fdbc6da_446942ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2022-06-27T14:54:05Z",
+      "side": 1,
+      "message": "I will cherry-pick it to the internal branch. Oli, does this need to be backported?",
+      "revId": "d5672a0eaa274f808118bae8a893caa54078d50b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
