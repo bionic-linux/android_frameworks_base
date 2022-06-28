@@ -153,6 +153,23 @@
       "message": "Amith and Patrick, can you please a look at the proposed additions to the code, so that we can fix the language bug present in Android TV devices as well as the caption language on all devices? If you don\u0027t, then it is going to cause problems for Chromecast users in India. We don\u0027t want Indian customers be limited to English and Hindi for the language settings!\n(All we wanted is to find the right code owners that can help review my proposed changes and get them approved as soon as possible.)\n\nWe are still missing the following code votes:\n* Code Review: At least one +2 vote\n* Code Owners: Have at least one code owner enter a +2 vote\n* Presubmit Verified: Still waiting for the Treehugger Robot...",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8597cd57_88e12b10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-28T21:15:43Z",
+      "side": 1,
+      "message": "Hi all,\n\nThis crucial change still requires the following votes:\n* Code Review: At least one +2 vote\n* Code Owners: At least one +2 vote from Code Review, from the code owners themselves\n* Presubmit Verified: Still waiting after the above two steps are completed...\n\n(Please don\u0027t remove yourself from the reviewer set. When you are the code owner and remove yourself from the reviewer set, this could hamper our submission progress. You might that I\u0027m crazy, but this change is to help the world have more access to products in their native languages.)\n\nFACTS TO KNOW\n* As of 2017, English is spoken by only a quarter of the population in India. There are 22 other languages recognized as official and are spoken by a larger part of the population.\n* An Indian user who doesn\u0027t speak English won\u0027t have access to all the English written knowledge online and to any products that any company develops in that particular language, not just Google.\n\nWith that being said, if you don\u0027t hurry up and approve this milestone change, then this could make Indian users that don\u0027t speak English or Hindi unable to watch TV in their native language on their Chromecast devices.\n\nKindly review this change as soon as possible.",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
