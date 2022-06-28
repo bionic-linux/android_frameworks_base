@@ -16,6 +16,23 @@
       "message": "I will cherry-pick it to the internal branch. Oli, does this need to be backported?",
       "revId": "d5672a0eaa274f808118bae8a893caa54078d50b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "832f234b_549b7000",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1652709
+      },
+      "writtenOn": "2022-06-28T06:14:42Z",
+      "side": 1,
+      "message": "Hi Fan, need your +2 and now presubmit-verified still fails. Maybe a new patch should be released since this code has been released to many versions as safety patch.",
+      "revId": "d5672a0eaa274f808118bae8a893caa54078d50b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
