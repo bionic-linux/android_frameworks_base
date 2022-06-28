@@ -998,6 +998,7 @@ public class AppTransitionController {
         final int appsCount = closingApps.size();
 
         for (int i = 0; i < appsCount; i++) {
+            if (i >= closingApps.size()) continue;
             final ActivityRecord app = closingApps.valueAt(i);
             ProtoLog.v(WM_DEBUG_APP_TRANSITIONS, "Now closing app %s", app);
 
