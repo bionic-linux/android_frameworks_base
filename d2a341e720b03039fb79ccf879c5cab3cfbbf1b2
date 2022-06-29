@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50b1fe4c_0852be7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1106808
+      },
+      "writtenOn": "2022-06-29T18:09:31Z",
+      "side": 1,
+      "message": "+1 owner review for Android.bp\n\n",
+      "revId": "d2a341e720b03039fb79ccf879c5cab3cfbbf1b2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
