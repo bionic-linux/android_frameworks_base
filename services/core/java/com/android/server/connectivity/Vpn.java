@@ -4090,7 +4090,20 @@ public class Vpn {
         // To stop the VPN profile, the caller must be the current prepared package and must be
         // running an Ikev2VpnProfile.
         if (isCurrentIkev2VpnLocked(packageName)) {
-            prepareInternal(VpnConfig.LEGACY_VPN);
+            mVpnRunner.exit();
+            mAppOpsManager.finishOp(
+                    AppOpsManager.OPSTR_ESTABLISH_VPN_MANAGER, mOwnerUID, packageName, null);
+            // The underlying network, NetworkCapabilities and LinkProperties are not
+            // necessary to send to VPN app since the purpose of this event is to notify
+            // VPN app that VPN is deactivated by the user.
+            // TODO(b/230548427): Remove SDK check once VPN related stuff are decoupled from
+            //  ConnectivityServiceTest.
+            if (SdkLevel.isAtLeastT()) {
+                sendEventToVpnManagerApp(VpnManager.CATEGORY_EVENT_DEACTIVATED_BY_USER,
+                        -1 /* errorClass */, -1 /* errorCode*/, packageName,
+                        getSessionKeyLocked(), makeVpnProfileStateLocked(),
+                        null /* underlyingNetwork */, null /* nc */, null /* lp */);
+            }
         }
     }
 
