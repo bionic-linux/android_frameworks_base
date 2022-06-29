@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4e76e87_90139065",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1725686
+      },
+      "writtenOn": "2022-06-29T07:33:11Z",
+      "side": 1,
+      "message": "Looks good. Other APIs in this project don\u0027t allow null callbacks, either.",
+      "revId": "d9b319e0d2769f5125a88389e37799811acdb9fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
