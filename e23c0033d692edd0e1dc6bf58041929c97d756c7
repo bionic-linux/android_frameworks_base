@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5b3503e_ef09f636",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1097438
+      },
+      "writtenOn": "2022-06-29T03:26:45Z",
+      "side": 1,
+      "message": "nit: drop \"launch-\" for consistency with other option names here.",
+      "range": {
+        "startLine": 414,
+        "startChar": 41,
+        "endLine": 414,
+        "endChar": 48
+      },
+      "revId": "e23c0033d692edd0e1dc6bf58041929c97d756c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
