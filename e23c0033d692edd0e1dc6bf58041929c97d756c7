@@ -22,6 +22,30 @@
       },
       "revId": "e23c0033d692edd0e1dc6bf58041929c97d756c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d26907f_75213a54",
+        "filename": "services/core/java/com/android/server/am/ActivityManagerShellCommand.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1952761
+      },
+      "writtenOn": "2022-06-29T07:14:06Z",
+      "side": 1,
+      "message": "Done, also updated renamed mLaunchTaskDisplayAreaFeatureId to mTaskDisplayAreaFeatureId for the same reason.",
+      "parentUuid": "b5b3503e_ef09f636",
+      "range": {
+        "startLine": 414,
+        "startChar": 41,
+        "endLine": 414,
+        "endChar": 48
+      },
+      "revId": "e23c0033d692edd0e1dc6bf58041929c97d756c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
