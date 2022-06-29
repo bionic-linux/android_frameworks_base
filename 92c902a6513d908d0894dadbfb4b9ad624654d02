@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d0945ec_4acbbdd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-06-29T04:34:37Z",
+      "side": 1,
+      "message": "VpnService",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "92c902a6513d908d0894dadbfb4b9ad624654d02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8de4435_0c40dafb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-06-29T04:34:37Z",
+      "side": 1,
+      "message": "manually",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "92c902a6513d908d0894dadbfb4b9ad624654d02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d84a471_9390fbd0",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 4093,
+      "author": {
+        "id": 1308163
+      },
+      "writtenOn": "2022-06-29T04:34:37Z",
+      "side": 1,
+      "message": "Suggest move this to the end, otherwise getSessionKeyLocked() \u0026 makeVpnProfileStateLocked() will get null since mVpnRunner is cleared.",
+      "range": {
+        "startLine": 4093,
+        "startChar": 12,
+        "endLine": 4093,
+        "endChar": 30
+      },
+      "revId": "92c902a6513d908d0894dadbfb4b9ad624654d02",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
