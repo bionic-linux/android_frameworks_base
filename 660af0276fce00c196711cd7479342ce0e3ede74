@@ -204,6 +204,24 @@
       "message": "Hi reviewers,\n\nTLDR: if you have the right to review with +2, please consider doing so.\nI don\u0027t have that right, so I gave my +1.\n\nI am part of the i18n team, but did quite a bit of work in the Android i18n, so I am familiar with this area.\n\nWhy do this (I will try to be short)\n\nAndroid N changed the language picker in Settings and SetupWizard\nI\u0027ll call these \"old picker\" and \"new picker\"\nThe old picker is still used by some types of devices (TV, Chromecast, Auto)\n\nWithout this change:\n- The old picker will not show these locales\n- The old picker will not show the parent locale (the one without a country)\n  So even if we have a Bengali translation, it will not show unless we also have a Bengali+\u003cREGION\u003e folder.\n- The new picker will show ALL regions using Bengali (Bangladesh \u0026 India)\n  But the map data in the region folder is still useful.\n  It contains latitude, longitude, and zoom level for the region.\n  So even devices with new pickers will benefit.\n\nIf an OEM wants to disable some of these locales, they can do that in the `PRODUCT_LOCALES` variable defined in the corresponding vendor / device .mk file\n(default being build/make/target/product/languages_default.mk)\n\n\nThank you very much,\nMihai\n",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fb244fd_a52dfc66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-30T19:47:32Z",
+      "side": 1,
+      "message": "Thank you, Mihai for assisting me! I hope to hear from the code owners soon!\nIn case you forgot, the new picker will still show these locales, but in the All Regions header instead of the Suggested header. For example, Serbian (Latin, Serbia) is shown as the last region in Serbian (Latin), not the first.\n(Correction: Android Automotive uses the new locale picker, not the old one.)",
+      "parentUuid": "7ae40359_6a91b13d",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
