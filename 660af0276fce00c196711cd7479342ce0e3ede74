@@ -240,6 +240,24 @@
       "parentUuid": "9fb244fd_a52dfc66",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb38ca33_36acbf80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-30T20:35:13Z",
+      "side": 1,
+      "message": "\u003e Correction: the locales in \"Suggested\" are not based on this list, and not on the  PRODUCT_LOCALES list.\n\nTLDR: Locales from PRODUCT_LOCALES appear in the Suggested header if and only if a corresponding values-\u003clanguage\u003e-r\u003cREGION\u003e/ folder exists for each particular locale.\n\nHere are our findings on the new locale picker behavior.\n* Locale in PRODUCT_LOCALES AND a values-\u003clanguage\u003e-r\u003cREGION\u003e/ folder exists: Locale goes in the Suggested header\n* Locale in PRODUCT_LOCALES but a values-\u003clanguage\u003e-r\u003cREGION\u003e/ folder does NOT exist: Locale goes in the Suggested header if the SIM card is from the same region. If not, it goes in the All Regions header.\n\nSuppose we use a SIM card from Serbia, and we want to set Serbian (Latin) as our display language. Normally, Serbian (Latin, Serbia) goes in the All Regions header because core/res/res/values-b+sr+Latn+RS/ does not currently exist, even though sr_Latn_RS exists in PRODUCT_LOCALES, but because we have a Serbian SIM, it goes in the Suggested header instead. On the other hand, Serbian (Cyrillic, Serbia) goes in the Suggested header, regardless of whether or not the SIM card is from Serbia.",
+      "parentUuid": "afcf8d4b_5d16b59e",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
