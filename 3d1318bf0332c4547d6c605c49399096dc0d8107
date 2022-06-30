@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50c573be_04489447",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-06-30T01:44:05Z",
+      "side": 1,
+      "message": "Why is this safe? It\u0027s worth discussing here 😊",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "3d1318bf0332c4547d6c605c49399096dc0d8107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1da25a6_e9e2dbc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-06-30T01:44:05Z",
+      "side": 1,
+      "message": "The actual change should always come first:\n\n```\nCOMMIT TITLE\n\nSummary of changes \u0026 any justification needed...\n\nContext...\n```",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 61
+      },
+      "revId": "3d1318bf0332c4547d6c605c49399096dc0d8107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a77367e0_be21f613",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4105,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-06-30T01:44:05Z",
+      "side": 1,
+      "message": "Looks like this is copied; can we improve code reuse by creating a helper method?",
+      "range": {
+        "startLine": 4093,
+        "startChar": 0,
+        "endLine": 4105,
+        "endChar": 13
+      },
+      "revId": "3d1318bf0332c4547d6c605c49399096dc0d8107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "039542a6_3c225cae",
+        "filename": "services/core/java/com/android/server/connectivity/Vpn.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 4106,
+      "author": {
+        "id": 1221725
+      },
+      "writtenOn": "2022-06-30T01:44:05Z",
+      "side": 1,
+      "message": "extra line break after closing a code block :)\n\nIt\u0027ll be much easier to read at a glance.",
+      "range": {
+        "startLine": 4106,
+        "startChar": 12,
+        "endLine": 4106,
+        "endChar": 22
+      },
+      "revId": "3d1318bf0332c4547d6c605c49399096dc0d8107",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
