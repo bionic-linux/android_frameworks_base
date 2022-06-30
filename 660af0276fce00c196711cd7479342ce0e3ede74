@@ -293,6 +293,24 @@
       "parentUuid": "bb38ca33_36acbf80",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0f6fda4_bad7e1bc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-30T22:41:51Z",
+      "side": 1,
+      "message": "Sorry about that. All I wanted is to resolve the language bug and add the map data from the values-\u003clanguage\u003e-r\u003cREGION\u003e/ folder for each of the affected languages. I want the code owners to review those folders and files. That is the top priority.",
+      "parentUuid": "11fec301_d9cbcb47",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
