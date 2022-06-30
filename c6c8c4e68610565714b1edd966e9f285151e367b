@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccfe6ca7_c89ba640",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1069528
+      },
+      "writtenOn": "2022-06-30T17:53:13Z",
+      "side": 1,
+      "message": "Not on a release branch. Thanks.",
+      "revId": "c6c8c4e68610565714b1edd966e9f285151e367b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
