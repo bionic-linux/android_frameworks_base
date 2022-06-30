@@ -222,6 +222,24 @@
       "parentUuid": "7ae40359_6a91b13d",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afcf8d4b_5d16b59e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2022-06-30T20:09:09Z",
+      "side": 1,
+      "message": "\u003e the new picker will still show these locales\n\nI think I said that :-)\n\n---\n\n\u003e but in the All Regions header instead of the Suggested header\n \nCorrection: the locales in \"Suggested\" are not based on this list, and not on the `PRODUCT_LOCALES`.\n\nIt is based the reunion of these countries:\n* the country of the SIM radio tower (currently connected)\n* the country of the SIM provider\n* the country of the first locale already in the preference list\n\nThat list of countries generates a list of languages (spoken in all of those countries), and those go in \"Suggested\"\n\nIn the special case of SetupWizard without a SIM (where all of the above signals are missing) the wizard defaults to the first language in the `PRODUCT_LOCALES`\n\nI wrote that code, years ago :-)\n\n---\n\n\u003e Correction: Android Automotive uses the new locale picker, not the old one.\n\nAck. Thanks.",
+      "parentUuid": "9fb244fd_a52dfc66",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
