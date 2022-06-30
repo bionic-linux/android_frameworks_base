@@ -22,6 +22,30 @@
       },
       "revId": "83050a70e0d9091c75d613a1a9427649fcdb05b4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee8b3e1c_bacbed87",
+        "filename": "telephony/java/android/telephony/AccessNetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1890690
+      },
+      "writtenOn": "2022-06-30T18:18:40Z",
+      "side": 1,
+      "message": "Ah, so the way I was thinking it\u0027s because there\u0027s 2 intervals that are possible, I took the lowest and the highest, something like combining both, because both intervals will represent the same band. WDYT?",
+      "parentUuid": "7079895e_7d9e0b74",
+      "range": {
+        "startLine": 285,
+        "startChar": 9,
+        "endLine": 286,
+        "endChar": 38
+      },
+      "revId": "83050a70e0d9091c75d613a1a9427649fcdb05b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
