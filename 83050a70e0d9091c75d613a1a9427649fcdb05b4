@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7079895e_7d9e0b74",
+        "filename": "telephony/java/android/telephony/AccessNetworkUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1112039
+      },
+      "writtenOn": "2022-06-30T18:11:45Z",
+      "side": 1,
+      "message": "https://5g-tools.com/5g-nr-arfcn-calculator/\n\nsays there is more range for b48..please all conditions again",
+      "range": {
+        "startLine": 285,
+        "startChar": 9,
+        "endLine": 286,
+        "endChar": 38
+      },
+      "revId": "83050a70e0d9091c75d613a1a9427649fcdb05b4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
