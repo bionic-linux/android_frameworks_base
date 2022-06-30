@@ -16,6 +16,24 @@
       "message": "To make the language picker supported on all devices (not just Android phones/tablets, but TVs also), we readded the language+country resource folder for each affected language (only the languages that are missing countries). This is important so that every aspect of Android works in every language, particularly the UI language for Android TV/Google TV and the caption language on all devices.",
       "revId": "768ee8314163b61bb9a7a6a18d1b73dcc2239237",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f4529fb_36dd5f65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-30T18:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4442656c_6e4a6355",
+      "revId": "768ee8314163b61bb9a7a6a18d1b73dcc2239237",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

@@ -33,6 +33,24 @@
       "message": "For each of the values folders in core/res/res/, keep the renamed folders in the format values-xx-rYY/, where xx is the language code and YY is the country code (all caps). For Serbian (Latin), keep the renamed folder values-b+sr+Latn+RS/. A language is not displayed in the locale picker if it does not have a corresponding country.",
       "revId": "b2310958ad9b2e6e635ec46d08bd046e6effdfe3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3226726e_ffa47e69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-30T18:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b8f793_0f608314",
+      "revId": "b2310958ad9b2e6e635ec46d08bd046e6effdfe3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [

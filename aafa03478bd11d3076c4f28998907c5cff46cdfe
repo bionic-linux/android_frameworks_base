@@ -16,6 +16,24 @@
       "message": "Votes got outdated and were removed, so we re-added the votes. Sorry about that.",
       "revId": "aafa03478bd11d3076c4f28998907c5cff46cdfe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9a1e0ab_d14c9f77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-30T18:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85bc4eae_9c464377",
+      "revId": "aafa03478bd11d3076c4f28998907c5cff46cdfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

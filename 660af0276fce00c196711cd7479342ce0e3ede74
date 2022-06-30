@@ -170,6 +170,23 @@
       "message": "Hi all,\n\nThis crucial change still requires the following votes:\n* Code Review: At least one +2 vote\n* Code Owners: At least one +2 vote from Code Review, from the code owners themselves\n* Presubmit Verified: Still waiting after the above two steps are completed...\n\n(Please don\u0027t remove yourself from the reviewer set. When you are the code owner and remove yourself from the reviewer set, this could hamper our submission progress. You might that I\u0027m crazy, but this change is to help the world have more access to products in their native languages.)\n\nFACTS TO KNOW\n* As of 2017, English is spoken by only a quarter of the population in India. There are 22 other languages recognized as official and are spoken by a larger part of the population.\n* An Indian user who doesn\u0027t speak English won\u0027t have access to all the English written knowledge online and to any products that any company develops in that particular language, not just Google.\n\nWith that being said, if you don\u0027t hurry up and approve this milestone change, then this could make Indian users that don\u0027t speak English or Hindi unable to watch TV in their native language on their Chromecast devices.\n\nKindly review this change as soon as possible.",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b277fbd0_9a60e507",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-06-30T18:57:28Z",
+      "side": 1,
+      "message": "We\u0027re cleaning up old comments from older patchsets, only leaving those from the current patchset.\n\nTo be clear, we are not submitting new community translations; we are just fixing a critical bug that caused some languages to disappear from the UI language settings on Android TVs and the captions language settings on all devices.\n\nOnce again, kindly review this commit as soon as possible. Your prompt response would be greatly appreciated.",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
