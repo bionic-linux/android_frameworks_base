@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a23802f8_a9c9596b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014391
+      },
+      "writtenOn": "2022-07-01T01:03:24Z",
+      "side": 1,
+      "message": "I run \"make update-api\" successfully and re uploaded the changes.",
+      "revId": "0fae353b3f02467a9dcb0b131643df40d30c1285",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

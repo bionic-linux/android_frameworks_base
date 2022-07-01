@@ -50,6 +50,24 @@
       "message": "Need to run `make update-api` to generate API files",
       "revId": "925a9c1c3efc9c937a6677b8f40af03d309c9618",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af6a3711_0107cd23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014391
+      },
+      "writtenOn": "2022-07-01T01:03:24Z",
+      "side": 1,
+      "message": "I run \"make update-api\" successfully and re uploaded the changes.",
+      "parentUuid": "3b06056a_b717c56a",
+      "revId": "925a9c1c3efc9c937a6677b8f40af03d309c9618",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
