@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbfe1c7a_bf3fc022",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-07-01T02:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a7f1a67_a91eb8d2",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "9b975263e4e16bda05cf7c10a95262ba8cd20637",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6615a74b_05f1fe4b",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-07-01T02:00:25Z",
       "side": 1,
       "message": "nit: that VpnServices are disconnected",
+      "range": {
+        "startLine": 11,
+        "startChar": 25,
+        "endLine": 11,
+        "endChar": 53
+      },
+      "revId": "9b975263e4e16bda05cf7c10a95262ba8cd20637",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0cc939f_cb7c6039",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1304263
+      },
+      "writtenOn": "2022-07-01T02:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6615a74b_05f1fe4b",
       "range": {
         "startLine": 11,
         "startChar": 25,
