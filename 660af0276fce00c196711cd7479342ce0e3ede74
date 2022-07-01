@@ -311,6 +311,78 @@
       "parentUuid": "11fec301_d9cbcb47",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19a19616_f069eedc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-01T03:54:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dbfb7283_ff98bdc5",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b63ea4b_ad55b45d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-01T03:54:15Z",
+      "side": 1,
+      "message": "\u003e I will mark it as Resolved, so that other reviewers can ignore it.\nThis bug fix is far from resolved. The only thing resolved is the new locale picker with region, which is working normally and does not require any modifications. Let\u0027s recap what we found so far.\n\nCLASSIC LOCALE PICKER\nWith Android 7.0 Nougat, the language picker in Settings has changed (Vanilla Android devices use the new picker in the setup wizard, while Samsung devices use the old picker). However, not all devices use the new picker (TV and Chromecast devices, not even Google\u0027s own Nexus Player or Chromecast with Google TV).\n\nWithout this important bug fix:\n* The old picker will not show these languages. Having just a language folder with at least a strings.xml file is insufficient.\n* The parent language will not be selectable. Even though most languages are just shown as a language (without the country) to the user, it will not be displayed without a language+region folder. What if people are not familiar with developer tools like ADB?!\n\n\u003e But the map data in the region folder is still useful, because it contains latitude, longitude, and zoom level for the region.\nAcknowledged. We don\u0027t want an empty language+region folder just to add the language in the classic locale picker. Either a donottranslate-maps.xml or donottranslate-cldr.xml needs to be placed in that folder.\n\nNEW LOCALE PICKER (WITH REGION)\nThe new Locale Picker has no problems and does not require any modifications, like I\u0027ve said above. Sorry for any previous confusion.\n\nMihai, once again, this is far from over, and we cannot leave this bug unpatched. Please kindly ask the code owners to give a +2 rating at least so that we can move forward. We\u0027re still 3 steps away from a meaningful moment!\n(If only there was an option in Gerrit to expedite a code review, that would be better, especially when the language bug is left undiscovered for more than 5 years.)",
+      "parentUuid": "b0f6fda4_bad7e1bc",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "795bed59_8306221c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-01T03:54:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5ee04d58_481aa709",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ec34fed_6f631725",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-01T03:54:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b277fbd0_9a60e507",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
