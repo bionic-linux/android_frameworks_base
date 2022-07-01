@@ -16,6 +16,23 @@
       "message": "I run \"make update-api\" successfully and re uploaded the changes.",
       "revId": "0fae353b3f02467a9dcb0b131643df40d30c1285",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b05b0ff_572e55e0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2022-07-01T15:58:12Z",
+      "side": 1,
+      "message": "This patch is not sufficient for reporting a new HDR type, since support must be reported to the framework by the hardware composer HAL.\n\nCan you provide more details on HDR Vivid? Is there a public specification? What are the supported primaries and encoding for the source content? What are the expected requirements for the sink display? Is there metadata associated with the content to assist with tone-mapping or color-volume transformations? Etc.",
+      "revId": "0fae353b3f02467a9dcb0b131643df40d30c1285",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
