@@ -383,6 +383,24 @@
       "parentUuid": "b277fbd0_9a60e507",
       "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e48d1148_aed50308",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2022-07-01T19:57:10Z",
+      "side": 1,
+      "message": "I marked THIS COMMENT THREAD as over to help with the review, not the PR.\n\nPeople might get swamped when they see too many comments back and forth, especially unresolved ones. And they wait to see them resolved before approving.\nSo I was trying to reduce the noise in this review to help it pass.\n\n---\n\nI agree that this change is needed.\n\nI\u0027ve pinged the reviewers directly asking if there are any concerns.",
+      "parentUuid": "6b63ea4b_ad55b45d",
+      "revId": "660af0276fce00c196711cd7479342ce0e3ede74",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
