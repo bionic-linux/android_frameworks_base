@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "477be0f6_245604ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-05T22:35:17Z",
+      "side": 1,
+      "message": "\u003e Patch Set 18:\n\u003e \n\u003e This change is ready for review.\n\nHi all,\nHere\u0027s the response from Robin Lee.\n\u003e Nothing more to communicate at the moment except that we don\u0027t plan to merge this patch since we know the bug is in the setup app and can be fixed there.\nActually, this bug is also present in the Settings app. Robin meant the Setup Wizard app (when turning on a device for the first time). Here are some implications that we found for internal bug b/232443481.\n\nMULTIPLE LOCALES OR NOT?\nWith the new Locale Picker, how will users select which language to use? Android TVs do not have touch screens, so how will users drag the locales in the order that they prefer? Using a mouse pointer from a remote similar to LG\u0027s Magic Remote?! That would require lots of tweaking to the Java implementation of the Locale Picker. If two or more languages are added, we could face inconsistencies, such as the audio language not being the same as the menu language by default.\n\nWHAT HAPPENS\nIf the internal bug fix (aka b/232443481) is approved and submitted instead of this one, the Language option on Android TVs will become Language \u0026 Region. Two additional options will appear.\n* Language is where one sets the display language to be used.\n* Region is where one sets their geographic location, which varies depending on the language. The Region setting is grayed out if only one region exists for a language, and not all regions are available in all languages. For example, Taiwan cannot be set as the region when Simplified Chinese is the display language.\n(Side note: Android Automotive doesn\u0027t support multiple locales at the same time, even though they already use the new locale picker.)\n\nLONG-TERM EFFECTS\n(For TVs, let\u0027s choose Sony as an example, since it is the only known TV brand to support all menu languages in the Americas and worldwide.)\nWe also need to consider what the long-term effects will be after the bug fix is applied. For example, in the current setup, Sony is showing all supported display languages on their 2020 and newer Bravia TVs (models ending in H, J, or K), which partially removes regional restrictions. However, the region selection only shows the countries made for a particular market, instead of being dependent on the menu language. If the internal bug fix is approved, it could make Sony change their mind and fully reinstate regional restrictions on any future TVs released.\n(Since Sony already has their implementation on the Region setting, internal bug fix b/232443481 would be infeasible. Their Setup Wizard DOES have the region setting after the language setting.)\n\nBEFORE AND AFTER\nSuppose we have a Sony TV from the United States. The region settings are: USA, Canada, Mexico, Belize, Dominican Republic, and Puerto Rico. If the internal bug fix is applied (not this bug fix on this page), the region settings would have been different.\n* English (US): USA, Puerto Rico\n* English (UK): Belize\n* English (Canada): Canada\n* Spanish (US): USA, Puerto Rico\n* Spanish (Mexico): Mexico, Belize, Dominican Republic\n* French: Canada\n* Language not listed above: Other\n(While Other is set as a region on Sony TVs, some online services may not work correctly.)\n\nWHICH IS MOST EFFECTIVE?\nWhich is the most effective way to resolve this issue?\n1. Adding values-\u003clanguage\u003e-r\u003cREGION\u003e folders with donotttranslate-maps.xml files (this issue)\n2. Implementing the new locale picker (b/232443481)\n\nTo me, simply adding resource folders would do the trick. No code or implementation modifications are required.\nBut what if the new locale picker is implemented?! We worry a lot about the message \"May not be available in some apps\" nagging us, even if the language IS in fact supported.",
+      "revId": "883b7eb1acaaf4c47c4c10af54044cc3eec25cc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
