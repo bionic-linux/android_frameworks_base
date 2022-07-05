@@ -275,7 +275,8 @@ public class AudioSystem
     /** @hide */
     @IntDef(flag = false, prefix = "DEVICE_", value = {
             DEVICE_OUT_BLUETOOTH_A2DP,
-            DEVICE_OUT_BLE_HEADSET}
+            DEVICE_OUT_BLE_HEADSET,
+            DEVICE_OUT_BLE_BROADCAST}
     )
     @Retention(RetentionPolicy.SOURCE)
     public @interface DeviceType {}
