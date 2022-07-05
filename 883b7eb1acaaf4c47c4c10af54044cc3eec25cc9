@@ -34,6 +34,24 @@
       "parentUuid": "477be0f6_245604ac",
       "revId": "883b7eb1acaaf4c47c4c10af54044cc3eec25cc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2078a0d5_09ed4b67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-05T22:51:47Z",
+      "side": 1,
+      "message": "The meaning of \"Any other country\" refers to countries that speak that particular language, according to locale_config.xml.",
+      "parentUuid": "dbfd483d_12dab458",
+      "revId": "883b7eb1acaaf4c47c4c10af54044cc3eec25cc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
