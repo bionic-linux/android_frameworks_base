@@ -16,6 +16,23 @@
       "message": "Hi, is there any update?",
       "revId": "4e1f2103373adec8fd97c8f98695fcc425290fc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "944a9d02_63104a9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902133
+      },
+      "writtenOn": "2022-07-06T07:08:41Z",
+      "side": 1,
+      "message": "Hi, any suggestion about the patch?",
+      "revId": "4e1f2103373adec8fd97c8f98695fcc425290fc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
