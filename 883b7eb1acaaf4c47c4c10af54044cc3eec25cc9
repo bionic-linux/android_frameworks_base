@@ -70,6 +70,24 @@
       "parentUuid": "2078a0d5_09ed4b67",
       "revId": "883b7eb1acaaf4c47c4c10af54044cc3eec25cc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba8a2332_ca31b81d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065394
+      },
+      "writtenOn": "2022-07-06T17:51:35Z",
+      "side": 1,
+      "message": "There is no real benefit for that kind of split per larger regions.\n\nThere are two areas affected by the region:\n - translation (if there are different translations for all regional variants)\n - date/time/number formatting, first day of week, etc.\n\nWe don\u0027t have translations for all of those variants, so what\u0027s left is formatting.\nAnd there is no rule saying that the formatting for \"all countries from Oceania and its territories\" use the same conventions as Australia. Or \"any other country not in the above 4 categories\" uses the same conventions as UK.\n\nThe proper fix is moving to the new picker.\n\n\u003d\u003d\u003d\n\nPlease check the behavior of a current phone with stock Android (or in emulator) for the behavior of the current picker.\nDon\u0027t describe things that are not actually happening.\n\n\u003d\u003d\u003d\n\n\u003e The Region setting is grayed out if only one region exists for a language\n\nThat is not true.\nThere are no grayed out regions.\n\nIf the language is only supported for one region, the region list is not displayed, the locale (lang + region) is added to settings immediately.\n\nFor example you select Japanese, then Japanese-Japan is added immediately, no region list displayed.\n\nIf more than a region is supported , then they are all in the list, selectable, no gray out.\n\nIf one selected Chinese Simplified, Taiwan is not in the list.\n\n\u003d\u003d\u003d\n\n\u003e MULTIPLE LOCALES OR NOT?\n\nMultiple locales and new picker are orthogonal concerns.\nAs you already noticed about Android Auto.\nTrying to discuss it here only confuses the issue.\n\n\u003d\u003d\u003d\n \n\u003e \"May not be available in some apps\" nagging us, even if the language IS in fact supported.\n\nI don\u0027t think that can happen.\n\nIf it is supported, that message is not displayed.\n\nBecause the decision for supported or now does not look at the region, only at language + script.\nIf there are French resources (or French-France, or any French variant, like Swiss), then French Algeria (for example) is also considered supported.\n\n\u003d\u003d\u003d\n\nNote: all of the above does NOT make this PR useless.\n\nIt is still a good thing to have map info for regions, even with the new picker.\n\nThis is why I approved it, and I would also encourage other reviewers to give it a +2.\nIt does not hurt, and can help a bit even with the new picker.",
+      "parentUuid": "98710478_45a51571",
+      "revId": "883b7eb1acaaf4c47c4c10af54044cc3eec25cc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
