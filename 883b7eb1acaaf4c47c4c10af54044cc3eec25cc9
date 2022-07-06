@@ -52,6 +52,24 @@
       "parentUuid": "dbfd483d_12dab458",
       "revId": "883b7eb1acaaf4c47c4c10af54044cc3eec25cc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98710478_45a51571",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-06T10:16:31Z",
+      "side": 1,
+      "message": "Adding the donottranslate-maps.xml file in each of the values folders did the trick. Here\u0027s what we found up to this moment.\n* This fix: Easy. Difficulty level: 1/5\n* Internal bug fix (b/232443481): Medium, may require implementation tweaking. Difficulty level: 3/5",
+      "parentUuid": "2078a0d5_09ed4b67",
+      "revId": "883b7eb1acaaf4c47c4c10af54044cc3eec25cc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
