@@ -5197,6 +5197,16 @@
 
     <integer name="config_chooser_max_targets_per_row">4</integer>
 
+<<<<<<< HEAD   (fe752f Merge "Update doc for audio-coupled-haptic related stuff.")
     <!-- Whether this device should support taking app snapshots on closure -->
     <bool name="config_disableTaskSnapshots">false</bool>
+=======
+    <!-- List of system components which are allowed to receive ServiceState entries in an
+         un-sanitized form, even if the location toggle is off. This is intended ONLY for system
+         components, such as the telephony stack, which require access to the full ServiceState for
+         tasks such as network registration. -->
+    <string-array name="config_serviceStateLocationAllowedPackages">
+        <item>"com.android.phone"</item>
+    </string-array>
+>>>>>>> BRANCH (7920f8 Merge cherrypicks of [18231932, 18699572] into sc-qpr3-relea)
 </resources>

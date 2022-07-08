@@ -125,8 +125,16 @@ class UserDataPreparer {
                     flags | StorageManager.FLAG_STORAGE_DE, false);
             } else {
                 try {
+<<<<<<< HEAD   (fe752f Merge "Update doc for audio-coupled-haptic related stuff.")
                     Log.e(TAG, "prepareUserData failed", e);
                     RecoverySystem.rebootPromptAndWipeUserData(mContext, "prepareUserData failed");
+=======
+                    Log.wtf(TAG, "prepareUserData failed for user " + userId, e);
+                    if (userId == UserHandle.USER_SYSTEM) {
+                        RecoverySystem.rebootPromptAndWipeUserData(mContext,
+                                "prepareUserData failed for system user");
+                    }
+>>>>>>> BRANCH (7920f8 Merge cherrypicks of [18231932, 18699572] into sc-qpr3-relea)
                 } catch (IOException e2) {
                     throw new RuntimeException("error rebooting into recovery", e2);
                 }
