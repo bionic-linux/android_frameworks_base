@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6159cd89_bf0a6d76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1306902
+      },
+      "writtenOn": "2022-07-08T05:55:55Z",
+      "side": 1,
+      "message": "Need to wait for ag/18568748.\nKeep this in internal and merged it after 2022-12 QPR.\nGo internal review first in ag/19144786",
+      "revId": "7813bcef42c153a2ecc9793e5e40ba3f77f5a48c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
