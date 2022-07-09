@@ -33,6 +33,24 @@
       "message": "Michael is this correct?  I\u0027m wondering if calling destroyLocked() rather than stopLocked() makes more sense if we\u0027re going to remove the display from the main Array.  I looked at your original CL, but wasn\u0027t sure why we did stopLocked() instead of destroy at that time.",
       "revId": "45939e7eaa25393301f4a2eed135ea31f6d9a635",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b440dc89_790b4217",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2022-07-09T23:55:42Z",
+      "side": 1,
+      "message": "Just saw this comment on the onDisplayStopped callbacks. \"It is still the responsibility of the application to release() the virtual display.\"\n\nSo, this CL makes sense to me.",
+      "parentUuid": "16c2a8e9_1aa4469d",
+      "revId": "45939e7eaa25393301f4a2eed135ea31f6d9a635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
