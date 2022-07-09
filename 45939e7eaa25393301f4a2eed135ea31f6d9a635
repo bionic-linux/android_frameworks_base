@@ -16,6 +16,23 @@
       "message": "Please help review the change, thanks!",
       "revId": "45939e7eaa25393301f4a2eed135ea31f6d9a635",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16c2a8e9_1aa4469d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2022-07-09T23:42:21Z",
+      "side": 1,
+      "message": "Michael is this correct?  I\u0027m wondering if calling destroyLocked() rather than stopLocked() makes more sense if we\u0027re going to remove the display from the main Array.  I looked at your original CL, but wasn\u0027t sure why we did stopLocked() instead of destroy at that time.",
+      "revId": "45939e7eaa25393301f4a2eed135ea31f6d9a635",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
