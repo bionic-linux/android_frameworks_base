@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cfb77c5_95bcffc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003224
+      },
+      "writtenOn": "2022-07-11T15:18:01Z",
+      "side": 1,
+      "message": "i think you\u0027ll have a merge conflict with this, since cferris already fixed this (and several other leaks) internally for tm-dev. this one was fixed by https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/17917124.\n\n",
+      "revId": "6f5159791a3b93ae36fd0694b319d878dc3ec939",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
