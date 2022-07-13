@@ -16,6 +16,24 @@
       "message": "Maybe also address other comments in aosp/2063315 ?",
       "revId": "309257255ab06e2210ad317c27888ba9a5413db8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37ab5528_7c86037c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-07-13T07:55:53Z",
+      "side": 1,
+      "message": "Well, it needs to check the implement of NetworkPolicyLogger to know how to add the event log. Thus I\u0027d like to have another CL for it.",
+      "parentUuid": "8af65366_682b4c71",
+      "revId": "309257255ab06e2210ad317c27888ba9a5413db8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
