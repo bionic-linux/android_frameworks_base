@@ -50,6 +50,23 @@
       "message": "Hi, any suggestion about the patch?",
       "revId": "4e1f2103373adec8fd97c8f98695fcc425290fc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77094992_adc9d730",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060062
+      },
+      "writtenOn": "2022-07-13T23:13:35Z",
+      "side": 1,
+      "message": "This code section is outside my area of expertise, sadly. Julia, does the updated bug have the details you were looking for? (unfortunately it looks like Yuri is OoO for a while)",
+      "revId": "4e1f2103373adec8fd97c8f98695fcc425290fc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
