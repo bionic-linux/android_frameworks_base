@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2415b90c_2d63b590",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 21
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-13T20:51:06Z",
+      "side": 1,
+      "message": "Good afternoon, everyone! We\u0027re almost wrapping things up here. With the launch of Beta 4 for Android 13 out now, we\u0027re reaching a critical point. This special patch needs to be reviewed within the next few days in order for it to be included in the final release next month or so. To recap, here\u0027s what we added:\n* We added a values-\u003clanguage\u003e-r\u003cREGION\u003e folder for each of the languages in build/target/product/languages_default.mk, then we added a donottranslate-maps.xml file into each of them.\n* If a values-\u003clanguage\u003e-r\u003cREGION\u003e folder already exists, but a donottranslate-maps.xml file is missing, we add one. To ensure full functionality, at least one file must be in a values-\u003clanguage\u003e-r\u003cREGION\u003e folder (usually donottranslate-maps.xml or donottranslate-cldr.xml).\n* Finally, we add any languages from Chrome that may be useful, such as Romanian (Moldova) (values-ro-rMD).\n\nThe Chromecast did not get an update to Android 12/13 yet, so this change may need to be cherrypicked to Android 8-12 devices.\n\nIf you\u0027re thinking about internal bug fix b/232443481 being possibly submitted, that could make TV OEMs raise concerns, causing them to possibly reinstate region locking on its TVs, particularly with Sony for its 2020 and newer TVs.",
+      "revId": "f8311af947efd0cc2045902a2d1b8d14ca89d613",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
