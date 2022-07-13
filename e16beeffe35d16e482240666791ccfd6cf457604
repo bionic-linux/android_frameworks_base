@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57f18a20_3eae21b7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1958917
+      },
+      "writtenOn": "2022-07-13T09:17:13Z",
+      "side": 1,
+      "message": "#LagingSapol #RolandoLGopez #77",
+      "revId": "e16beeffe35d16e482240666791ccfd6cf457604",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
