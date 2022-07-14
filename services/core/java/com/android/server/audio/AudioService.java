@@ -352,6 +352,7 @@ public class AudioService extends IAudioService.Stub
     private SettingsObserver mSettingsObserver;
 
     private AtomicInteger mMode = new AtomicInteger(AudioSystem.MODE_NORMAL);
+    private AtomicInteger mPhoneStateUid = new AtomicInteger(0);
 
     // protects mRingerMode
     private final Object mSettingsLock = new Object();
@@ -4887,7 +4888,7 @@ public class AudioService extends IAudioService.Stub
             Log.v(TAG, "onUpdateAudioMode() new mode: " + mode + ", current mode: "
                     + mMode.get() + " requested mode: " + requestedMode);
         }
-        if (mode != mMode.get() || force) {
+        if (mode != mMode.get() || force || (uid != 0 && uid != mPhoneStateUid.get())) {
             final long identity = Binder.clearCallingIdentity();
             int status = mAudioSystem.setPhoneState(mode, uid);
             Binder.restoreCallingIdentity(identity);
@@ -4898,6 +4899,7 @@ public class AudioService extends IAudioService.Stub
                 sendMsg(mAudioHandler, MSG_DISPATCH_AUDIO_MODE, SENDMSG_REPLACE, mode, 0,
                         /*obj*/ null, /*delay*/ 0);
                 int previousMode = mMode.getAndSet(mode);
+                mPhoneStateUid.set(uid);
                 // Note: newModeOwnerPid is always 0 when actualMode is MODE_NORMAL
                 mModeLogger.log(new PhoneStateEvent(requesterPackage, requesterPid,
                         requestedMode, pid, mode));
