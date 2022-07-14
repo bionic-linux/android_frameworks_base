@@ -79,6 +79,7 @@ public class NetworkPolicyLogger {
     private static final int EVENT_APP_IDLE_WL_CHANGED = 14;
     private static final int EVENT_METERED_ALLOWLIST_CHANGED = 15;
     private static final int EVENT_METERED_DENYLIST_CHANGED = 16;
+    private static final int EVENT_INTERFACES_CHANGED = 17;
 
     private final LogBuffer mNetworkBlockedBuffer = new LogBuffer(MAX_NETWORK_BLOCKED_LOG_SIZE);
     private final LogBuffer mUidStateChangeBuffer = new LogBuffer(MAX_LOG_SIZE);
@@ -139,6 +140,16 @@ public class NetworkPolicyLogger {
                         getMeterednessChangedLog(netId, newMetered));
             }
             mEventsBuffer.meterednessChanged(netId, newMetered);
+        }
+    }
+
+    void interfacesChanged(int netId, String newIfaces) {
+        synchronized (mLock) {
+            if (LOGD || mDebugUid != INVALID_UID) {
+                Slog.d(TAG,
+                        getInterfacesChangedLog(netId, newIfaces));
+            }
+            mEventsBuffer.interfacesChanged(netId, newIfaces);
         }
     }
 
@@ -348,6 +359,10 @@ public class NetworkPolicyLogger {
         return "metered-denylist for " + uid + " changed to " + added;
     }
 
+    private static String getInterfacesChangedLog(int netId, String newIfaces) {
+        return "Interfaces of netId=" + netId + " changed to " + newIfaces;
+    }
+
     private static String getFirewallChainName(int chain) {
         switch (chain) {
             case FIREWALL_CHAIN_DOZABLE:
@@ -445,6 +460,17 @@ public class NetworkPolicyLogger {
             data.type = EVENT_METEREDNESS_CHANGED;
             data.ifield1 = netId;
             data.bfield1 = newMetered;
+            data.timeStamp = System.currentTimeMillis();
+        }
+
+        public void interfacesChanged(int netId, String newIfaces) {
+            final Data data = getNextSlot();
+            if (data == null) return;
+
+            data.reset();
+            data.type = EVENT_INTERFACES_CHANGED;
+            data.ifield1 = netId;
+            data.sfield1 = newIfaces;
             data.timeStamp = System.currentTimeMillis();
         }
 
@@ -621,6 +647,8 @@ public class NetworkPolicyLogger {
                     return getMeteredAllowlistChangedLog(data.ifield1, data.bfield1);
                 case EVENT_METERED_DENYLIST_CHANGED:
                     return getMeteredDenylistChangedLog(data.ifield1, data.bfield1);
+                case EVENT_INTERFACES_CHANGED:
+                    return getInterfacesChangedLog(data.ifield1, data.sfield1);
                 default:
                     return String.valueOf(data.type);
             }
