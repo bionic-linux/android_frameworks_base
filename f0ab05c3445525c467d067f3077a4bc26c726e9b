@@ -34,6 +34,24 @@
       "parentUuid": "abe1229f_3d57188d",
       "revId": "f0ab05c3445525c467d067f3077a4bc26c726e9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec653999_6d7e5f5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-15T23:00:53Z",
+      "side": 1,
+      "message": "Victor, this language issue is also present in Settings \u003e Accessibility \u003e Caption Preferences \u003e More Options \u003e Language on AOSP phones and tablets, and in Settings \u003e System \u003e Accessibility \u003e Captions \u003e Language on Google TV devices, including Pixel and Chromecast devices. Here\u0027s what we also know so far.\n\nLANGUAGE SETTINGS\n\u003e Android TV team is working to fix their Android TV language settings.\nI see this internal fix as reasonable for Google\u0027s own Android TV devices (Chromecast 4). In fact, Apple is working on multiple locale support for tvOS 16, according to the Xcode simulators.\n\nREGION SETTINGS\nAn alternative way to keep the normal region behavior is that the region setting should be split into multiple options.\n* System region: Select the region for the language chosen in the previous step.\n* Broadcast region: Select the broadcast region for the electronic program guide. For example, Sony TVs sold for the North American market have USA, Canada, Mexico, Belize, the Dominican Republic, and Puerto Rico as available broadcast regions.\n* Zip/postal code: Enter the zip or postal code for the above broadcast region. This is used for TV program guide information from supported service providers (over the air/cable/satellite/streaming). The virtual keyboard for code entry can be alphanumerical or numerical, depending on the region.",
+      "parentUuid": "4d015024_1574d672",
+      "revId": "f0ab05c3445525c467d067f3077a4bc26c726e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
