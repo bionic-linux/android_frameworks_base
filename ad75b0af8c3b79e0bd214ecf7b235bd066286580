@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4ba8715_9912a767",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-07-15T02:24:01Z",
+      "side": 1,
+      "message": "style: can fit in 1 line?",
+      "range": {
+        "startLine": 274,
+        "startChar": 24,
+        "endLine": 274,
+        "endChar": 65
+      },
+      "revId": "ad75b0af8c3b79e0bd214ecf7b235bd066286580",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b384f056_110cf34c",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-07-15T02:24:01Z",
+      "side": 1,
+      "message": "This could be errorprone.\nShould this be a set or array?",
+      "range": {
+        "startLine": 280,
+        "startChar": 45,
+        "endLine": 280,
+        "endChar": 54
+      },
+      "revId": "ad75b0af8c3b79e0bd214ecf7b235bd066286580",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bf11c78_2aa3bdab",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1306837
+      },
+      "writtenOn": "2022-07-15T02:24:01Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 284,
+        "startChar": 24,
+        "endLine": 284,
+        "endChar": 47
+      },
+      "revId": "ad75b0af8c3b79e0bd214ecf7b235bd066286580",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
