@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abe1229f_3d57188d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1189505
+      },
+      "writtenOn": "2022-07-15T08:15:00Z",
+      "side": 1,
+      "message": "Hello?! Anybody here? We can\u0027t let this bug be sitting there! If someone can give me a +2 for the Code Review (preferably from the Code Owners at least), that will make us proceed one step further. But if this commit gets a -2 in the Code Review, it\u0027s game over! Think about it.\n\nTARGET DATE\nI recommend that you review and approve this code within the next week or so to get it approved for the final Android 13 release in the next month or two (the build date is approximately three weeks before the date it was released; for example, the most recent build number for Android 13 is TPB4.220624.005, released on 7/13/22). There\u0027s no more time to waste!\n\nOnce again, no more -2\u0027s in Code Review or else it\u0027s game over! You need to seriously consider the fact that one of Android 13\u0027s key features is having per-app language preferences, and that Android TV does not currently support multiple locales. This bug fix, rather than internal bug fix b/232443481, is the only way to impress the TV OEMs and stop them from reimplementing region locking, particularly with Sony TVs.",
+      "revId": "f0ab05c3445525c467d067f3077a4bc26c726e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
