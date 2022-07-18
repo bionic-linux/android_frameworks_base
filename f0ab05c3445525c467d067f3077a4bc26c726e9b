@@ -69,6 +69,24 @@
       "message": "Remember, no more -2\u0027s in Code Review or else it\u0027s game over! There\u0027s no time to waste here!",
       "revId": "f0ab05c3445525c467d067f3077a4bc26c726e9b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8874d95a_12915b00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1047684
+      },
+      "writtenOn": "2022-07-18T08:00:44Z",
+      "side": 1,
+      "message": "Thanks for explaining the urgency and impact of this bug. Add rgl@ to the thread, and I think Android TV team has more visibility how to land this fix and various OEM devices.",
+      "parentUuid": "ec653999_6d7e5f5b",
+      "revId": "f0ab05c3445525c467d067f3077a4bc26c726e9b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
