@@ -365,7 +365,7 @@ public final class PermissionPolicyService extends SystemService {
             return;
         }
 
-        grantOrUpgradeDefaultRuntimePermissionsIfNeeded(userId);
+        boolean permChanged = grantOrUpgradeDefaultRuntimePermissionsIfNeeded(userId);
 
         final OnInitializedCallback callback;
 
@@ -379,7 +379,11 @@ public final class PermissionPolicyService extends SystemService {
 
         // Tell observers we are initialized for this user.
         if (callback != null) {
-            callback.onInitialized(userId);
+            if (permChanged) {
+                callback.onInitialized(userId);
+            } else {
+                Slog.d(LOG_TAG, "skip update when no permission changes, user " + userId);
+            }
         }
     }
 
@@ -392,7 +396,7 @@ public final class PermissionPolicyService extends SystemService {
         }
     }
 
-    private void grantOrUpgradeDefaultRuntimePermissionsIfNeeded(@UserIdInt int userId) {
+    private boolean grantOrUpgradeDefaultRuntimePermissionsIfNeeded(@UserIdInt int userId) {
         if (DEBUG) Slog.i(LOG_TAG, "grantOrUpgradeDefaultPermsIfNeeded(" + userId + ")");
 
         final PackageManagerInternal packageManagerInternal =
@@ -434,7 +438,9 @@ public final class PermissionPolicyService extends SystemService {
             permissionControllerManager.updateUserSensitive();
 
             packageManagerInternal.updateRuntimePermissionsFingerprint(userId);
+            return true;
         }
+        return false;
     }
 
     private static @Nullable Context getUserContext(@NonNull Context context,

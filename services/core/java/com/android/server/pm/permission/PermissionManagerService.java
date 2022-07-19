@@ -2966,7 +2966,7 @@ public class PermissionManagerService extends IPermissionManager.Stub {
                                     || (!hardRestricted || restrictionExempt)) {
                                 if ((origPermState != null && origPermState.isGranted())
                                         || legacyActivityRecognitionPermission != null) {
-                                    if (!uidState.grantPermission(bp)) {
+                                    if (uidState.grantPermission(bp)) {
                                         wasChanged = true;
                                     }
                                 }
