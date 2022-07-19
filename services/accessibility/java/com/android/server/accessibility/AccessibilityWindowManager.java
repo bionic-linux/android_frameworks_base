@@ -196,6 +196,7 @@ public class AccessibilityWindowManager {
 
         /**
          * Returns accessibility windows.
+         *
          * @return accessibility windows.
          */
         @Nullable
@@ -294,10 +295,10 @@ public class AccessibilityWindowManager {
         /**
          * Computes partial interactive region of given windowId.
          *
-         * @param windowId The windowId
+         * @param windowId           The windowId
          * @param forceComputeRegion set outRegion when the windowId matches one on the screen even
          *                           though the region is not covered by other windows above it.
-         * @param outRegion The output to which to write the bounds.
+         * @param outRegion          The output to which to write the bounds.
          * @return {@code true} if outRegion is not empty.
          */
         boolean computePartialInteractiveRegionForWindowLocked(int windowId,
@@ -358,10 +359,11 @@ public class AccessibilityWindowManager {
         /**
          * Callbacks from window manager when there's an accessibility change in windows.
          *
-         * @param forceSend Send the windows for accessibility even if they haven't changed.
-         * @param topFocusedDisplayId The display Id which has the top focused window.
+         * @param forceSend             Send the windows for accessibility even if they haven't
+         *                              changed.
+         * @param topFocusedDisplayId   The display Id which has the top focused window.
          * @param topFocusedWindowToken The window token of top focused window.
-         * @param windows The windows for accessibility.
+         * @param windows               The windows for accessibility.
          */
         @Override
         public void onWindowsForAccessibilityChanged(boolean forceSend, int topFocusedDisplayId,
@@ -523,7 +525,7 @@ public class AccessibilityWindowManager {
         /**
          * Updates windows info according to specified userId and windows.
          *
-         * @param userId The userId to update
+         * @param userId  The userId to update
          * @param windows The windows to update
          */
         private void updateWindowsLocked(int userId, @NonNull List<WindowInfo> windows) {
@@ -575,7 +577,7 @@ public class AccessibilityWindowManager {
             // accessibility services.
             if (isAccessibilityFocusedDisplay) {
                 shouldClearAccessibilityFocus = mAccessibilityFocusedWindowId
-                    != AccessibilityWindowInfo.UNDEFINED_WINDOW_ID;
+                        != AccessibilityWindowInfo.UNDEFINED_WINDOW_ID;
             }
             if (windowCount > 0) {
                 for (int i = 0; i < windowCount; i++) {
@@ -671,7 +673,7 @@ public class AccessibilityWindowManager {
                             newWindow.getId(), AccessibilityEvent.WINDOWS_CHANGE_ADDED));
                 } else {
                     int changes = newWindow.differenceFrom(oldWindow);
-                    if (changes !=  0) {
+                    if (changes != 0) {
                         events.add(AccessibilityEvent.obtainWindowsChangedEvent(
                                 newWindow.getId(), changes));
                     }
@@ -811,6 +813,7 @@ public class AccessibilityWindowManager {
             }
         }
     }
+
     /**
      * Interface to send {@link AccessibilityEvent}.
      */
@@ -844,7 +847,7 @@ public class AccessibilityWindowManager {
         }
 
         int getUid() {
-            return  mUid;
+            return mUid;
         }
 
         String getPackageName() {
@@ -974,13 +977,12 @@ public class AccessibilityWindowManager {
      * Adds accessibility interaction connection according to given window token, package name and
      * window token.
      *
-     * @param window The window token of accessibility interaction connection
-     * @param leashToken The leash token of accessibility interaction connection
-     * @param connection The accessibility interaction connection
+     * @param window      The window token of accessibility interaction connection
+     * @param leashToken  The leash token of accessibility interaction connection
+     * @param connection  The accessibility interaction connection
      * @param packageName The package name
-     * @param userId The userId
+     * @param userId      The userId
      * @return The windowId of added connection
-     * @throws RemoteException
      */
     public int addAccessibilityInteractionConnection(@NonNull IWindow window,
             @NonNull IBinder leashToken, @NonNull IAccessibilityInteractionConnection connection,
@@ -1098,9 +1100,8 @@ public class AccessibilityWindowManager {
     /**
      * Resolves a connection wrapper for a window id.
      *
-     * @param userId The user id for any user-specific windows
+     * @param userId   The user id for any user-specific windows
      * @param windowId The id of the window of interest
-     *
      * @return a connection to the window
      */
     @Nullable
@@ -1123,7 +1124,7 @@ public class AccessibilityWindowManager {
 
     private int removeAccessibilityInteractionConnectionInternalLocked(IBinder windowToken,
             SparseArray<IBinder> windowTokens, SparseArray<RemoteAccessibilityConnection>
-                    interactionConnections) {
+            interactionConnections) {
         final int count = windowTokens.size();
         for (int i = 0; i < count; i++) {
             if (windowTokens.valueAt(i) == windowToken) {
@@ -1142,7 +1143,7 @@ public class AccessibilityWindowManager {
      * Removes accessibility interaction connection according to given windowId and userId.
      *
      * @param windowId The windowId of accessibility interaction connection
-     * @param userId The userId to remove
+     * @param userId   The userId to remove
      */
     private void removeAccessibilityInteractionConnectionLocked(int windowId, int userId) {
         IBinder window = null;
@@ -1169,7 +1170,7 @@ public class AccessibilityWindowManager {
      * Invoked when accessibility interaction connection of window is removed.
      *
      * @param windowId Removed windowId
-     * @param binder Removed window token
+     * @param binder   Removed window token
      */
     private void onAccessibilityInteractionConnectionRemovedLocked(
             int windowId, @Nullable IBinder binder) {
@@ -1192,7 +1193,7 @@ public class AccessibilityWindowManager {
     /**
      * Gets window token according to given userId and windowId.
      *
-     * @param userId The userId
+     * @param userId   The userId
      * @param windowId The windowId
      * @return The window token
      */
@@ -1223,7 +1224,7 @@ public class AccessibilityWindowManager {
      * Returns windowId of given userId and window token.
      *
      * @param userId The userId
-     * @param token The window token
+     * @param token  The window token
      * @return The windowId
      */
     public int findWindowIdLocked(int userId, @NonNull IBinder token) {
@@ -1243,7 +1244,7 @@ public class AccessibilityWindowManager {
     /**
      * Establish the relationship between the host and the embedded view hierarchy.
      *
-     * @param host The token of host hierarchy
+     * @param host     The token of host hierarchy
      * @param embedded The token of the embedded hierarchy
      */
     public void associateEmbeddedHierarchyLocked(@NonNull IBinder host, @NonNull IBinder embedded) {
@@ -1287,7 +1288,7 @@ public class AccessibilityWindowManager {
     /**
      * Computes partial interactive region of given windowId.
      *
-     * @param windowId The windowId
+     * @param windowId  The windowId
      * @param outRegion The output to which to write the bounds.
      * @return true if outRegion is not empty.
      */
@@ -1309,10 +1310,10 @@ public class AccessibilityWindowManager {
      * Updates active windowId and accessibility focused windowId according to given accessibility
      * event and action.
      *
-     * @param userId The userId
-     * @param windowId The windowId of accessibility event
-     * @param nodeId The accessibility node id of accessibility event
-     * @param eventType The accessibility event type
+     * @param userId      The userId
+     * @param windowId    The windowId of accessibility event
+     * @param nodeId      The accessibility node id of accessibility event
+     * @param eventType   The accessibility event type
      * @param eventAction The accessibility event action
      */
     public void updateActiveAndAccessibilityFocusedWindowLocked(int userId, int windowId,
@@ -1341,7 +1342,8 @@ public class AccessibilityWindowManager {
                         }
                     }
                 }
-            } break;
+            }
+            break;
 
             case AccessibilityEvent.TYPE_VIEW_HOVER_ENTER: {
                 // Do not allow delayed hover events to confuse us
@@ -1351,7 +1353,8 @@ public class AccessibilityWindowManager {
                         setActiveWindowLocked(windowId);
                     }
                 }
-            } break;
+            }
+            break;
 
             case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED: {
                 synchronized (mLock) {
@@ -1361,7 +1364,8 @@ public class AccessibilityWindowManager {
                     }
                     mAccessibilityFocusNodeId = nodeId;
                 }
-            } break;
+            }
+            break;
 
             case AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED: {
                 synchronized (mLock) {
@@ -1377,7 +1381,8 @@ public class AccessibilityWindowManager {
                         mAccessibilityFocusedDisplayId = Display.INVALID_DISPLAY;
                     }
                 }
-            } break;
+            }
+            break;
         }
     }
 
@@ -1513,7 +1518,7 @@ public class AccessibilityWindowManager {
      * Returns focused windowId or accessibility focused windowId according to given focusType.
      *
      * @param focusType {@link AccessibilityNodeInfo#FOCUS_INPUT} or
-     * {@link AccessibilityNodeInfo#FOCUS_ACCESSIBILITY}
+     *                  {@link AccessibilityNodeInfo#FOCUS_ACCESSIBILITY}
      * @return The focused windowId
      */
     public int getFocusedWindowId(int focusType) {
@@ -1612,7 +1617,7 @@ public class AccessibilityWindowManager {
     /**
      * Returns the display ID according to given userId and windowId.
      *
-     * @param userId The userId
+     * @param userId   The userId
      * @param windowId The windowId
      * @return The display ID
      */
@@ -1732,7 +1737,7 @@ public class AccessibilityWindowManager {
 
     private void logTraceWM(String methodName, String params) {
         mTraceManager.logTrace("WindowManagerInternal." + methodName,
-                    FLAGS_WINDOW_MANAGER_INTERNAL, params);
+                FLAGS_WINDOW_MANAGER_INTERNAL, params);
     }
 
     private boolean traceIntConnEnabled() {
@@ -1742,14 +1747,14 @@ public class AccessibilityWindowManager {
 
     private void logTraceIntConn(String methodName) {
         mTraceManager.logTrace(
-                    LOG_TAG + "." + methodName, FLAGS_ACCESSIBILITY_INTERACTION_CONNECTION);
+                LOG_TAG + "." + methodName, FLAGS_ACCESSIBILITY_INTERACTION_CONNECTION);
     }
 
     /**
      * Associate the token of the embedded view hierarchy to the host view hierarchy.
      *
      * @param embedded The leash token from the view root of embedded hierarchy
-     * @param host The leash token from the view root of host hierarchy
+     * @param host     The leash token from the view root of host hierarchy
      */
     void associateLocked(IBinder embedded, IBinder host) {
         mHostEmbeddedMap.put(embedded, host);
@@ -1772,7 +1777,7 @@ public class AccessibilityWindowManager {
     /**
      * Register the leash token with its windowId.
      *
-     * @param token The token.
+     * @param token    The token.
      * @param windowId The windowID.
      */
     void registerIdLocked(IBinder token, int windowId) {

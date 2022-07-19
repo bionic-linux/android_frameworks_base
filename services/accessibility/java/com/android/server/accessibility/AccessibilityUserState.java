@@ -67,6 +67,8 @@ import java.util.Set;
 class AccessibilityUserState {
     private static final String LOG_TAG = AccessibilityUserState.class.getSimpleName();
 
+//    private final AccessibilityWindowManager mAccessibilityWindowManager;
+
     final int mUserId;
 
     // Non-transient state.

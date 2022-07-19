@@ -21,6 +21,8 @@ import static android.provider.Settings.Secure.ACCESSIBILITY_BUTTON_MODE_FLOATIN
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_A11Y_BUTTON_CLICKABLE;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_A11Y_BUTTON_LONG_CLICKABLE;
 
+import android.accessibilityservice.AccessibilityServiceInfo;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
@@ -31,9 +33,19 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
 import android.provider.Settings;
+<<<<<<< Updated upstream
+=======
+import android.provider.Settings.Secure;
+import android.util.Log;
+import android.util.SparseArray;
+>>>>>>> Stashed changes
 import android.view.View;
 import android.view.WindowInsets;
+import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.view.accessibility.AccessibilityProxy;
+import android.view.accessibility.AccessibilityWindowInfo;
 
 import androidx.annotation.NonNull;
 
@@ -172,7 +184,122 @@ public final class NavBarHelper implements
     }
 
     /**
+<<<<<<< Updated upstream
      * See {@link QuickStepContract#SYSUI_STATE_A11Y_BUTTON_CLICKABLE} and
+=======
+     * Updates the current accessibility button state. The accessibility button state is only
+     * used for {@link Secure#ACCESSIBILITY_BUTTON_MODE_NAVIGATION_BAR} and
+     * {@link Secure#ACCESSIBILITY_BUTTON_MODE_GESTURE}, otherwise it is reset to 0.
+     */
+    private void updateA11yState() {
+        Log.v("sallyyuen", "update state");
+        final int prevState = mA11yButtonState;
+        final boolean clickable;
+        final boolean longClickable;
+        if (mAccessibilityButtonModeObserver.getCurrentAccessibilityButtonMode()
+                == ACCESSIBILITY_BUTTON_MODE_FLOATING_MENU) {
+            // If accessibility button is floating menu mode, click and long click state should be
+            // disabled.
+            clickable = false;
+            longClickable = false;
+            mA11yButtonState = 0;
+        } else {
+            // AccessibilityManagerService resolves services for the current user since the local
+            // AccessibilityManager is created from a Context with the INTERACT_ACROSS_USERS
+            // permission
+            final List<String> a11yButtonTargets =
+                    mAccessibilityManager.getAccessibilityShortcutTargets(
+                            AccessibilityManager.ACCESSIBILITY_BUTTON);
+            final int requestingServices = a11yButtonTargets.size();
+
+            clickable = requestingServices >= 1;
+
+            // `longClickable` is used to determine whether to pop up the accessibility chooser
+            // dialog or not, and it’s also only for multiple services.
+            longClickable = requestingServices >= 2;
+            mA11yButtonState = (clickable ? SYSUI_STATE_A11Y_BUTTON_CLICKABLE : 0)
+                    | (longClickable ? SYSUI_STATE_A11Y_BUTTON_LONG_CLICKABLE : 0);
+        }
+
+        // Update the system actions if the state has changed
+        if (prevState != mA11yButtonState) {
+            Log.v("sallyyuen", "update state here");
+
+            updateSystemAction(clickable, SYSTEM_ACTION_ID_ACCESSIBILITY_BUTTON);
+            updateSystemAction(longClickable, SYSTEM_ACTION_ID_ACCESSIBILITY_BUTTON_CHOOSER);
+        }
+    }
+
+    /**
+     * Registers/unregisters the given system action id.
+     */
+    private void updateSystemAction(boolean register, int actionId) {
+        if (register) {
+            mSystemActions.register(actionId);
+            if (actionId == SYSTEM_ACTION_ID_ACCESSIBILITY_BUTTON) {
+                Log.v("sallyyuen", "register system action");
+                AccessibilityServiceInfo info = new AccessibilityServiceInfo();
+                info.setComponentName(new ComponentName("Exo package", "Exo class"));
+                // To get events in test, set eventTypes.
+                // To retrieve window content, set capabilities.
+                info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
+                info.setCapabilities(AccessibilityServiceInfo.CAPABILITY_CAN_RETRIEVE_WINDOW_CONTENT);
+                info.flags |= AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
+                AccessibilityProxy proxy = new AccessibilityProxy(15, info) {
+                    @Override
+                    public void onAccessibilityEvent(@NonNull AccessibilityEvent event) {
+                        Log.v("sallyyuen", "meh");
+
+                    }
+
+                    @Override
+                    public void onInterrupt() {
+
+                    }
+
+                    @Override
+                    public void onProxyConnected() {
+                        List<AccessibilityWindowInfo> windows = getWindows();
+                        if (windows.size() > 0) {
+                            Log.v("sallyyuen", "proxy windows: " + windows.size());
+                        } else {
+                            Log.v("sallyyuen", "no windows");
+
+                        }
+                        AccessibilityNodeInfo info = getRootInActiveWindow();
+                        if (info != null) {
+                            Log.v("sallyyuen", info.toString());
+                        } else {
+                                Log.v("sallyyuen", "info is null");
+                        }
+                    }
+                };
+                mAccessibilityManager.registerProxyForDisplay(proxy, 15);
+
+
+
+            }
+
+
+
+        } else {
+            mSystemActions.unregister(actionId);
+            if (actionId == SYSTEM_ACTION_ID_ACCESSIBILITY_BUTTON) {
+                mAccessibilityManager.unregisterProxyForDisplay(15);
+
+
+            }
+        }
+    }
+
+    /**
+     * Gets the accessibility button state based on the {@link Secure#ACCESSIBILITY_BUTTON_MODE}.
+     *
+     * @return the accessibility button state:
+     * 0 = disable state
+     * 16 = {@link QuickStepContract#SYSUI_STATE_A11Y_BUTTON_CLICKABLE}
+     * 48 = the combination of {@link QuickStepContract#SYSUI_STATE_A11Y_BUTTON_CLICKABLE} and
+>>>>>>> Stashed changes
      * {@link QuickStepContract#SYSUI_STATE_A11Y_BUTTON_LONG_CLICKABLE}
      *
      * @return the a11y button clickable and long_clickable states, or 0 if there is no

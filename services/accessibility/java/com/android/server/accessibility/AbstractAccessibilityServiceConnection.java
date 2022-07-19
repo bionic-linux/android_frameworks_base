@@ -65,6 +65,13 @@ import android.os.RemoteCallback;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
+<<<<<<< Updated upstream
+=======
+import android.os.Trace;
+import android.provider.Settings;
+import android.util.Log;
+import android.util.Pair;
+>>>>>>> Stashed changes
 import android.util.Slog;
 import android.util.SparseArray;
 import android.view.Display;
@@ -107,7 +114,7 @@ import java.util.Set;
 abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServiceConnection.Stub
         implements ServiceConnection, IBinder.DeathRecipient, KeyEventDispatcher.KeyEventFilter,
         FingerprintGestureDispatcher.FingerprintGestureClient {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private static final String LOG_TAG = "AbstractAccessibilityServiceConnection";
     private static final String TRACE_SVC_CONN = LOG_TAG + ".IAccessibilityServiceConnection";
     private static final String TRACE_SVC_CLIENT = LOG_TAG + ".IAccessibilityServiceClient";
@@ -419,6 +426,23 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    @Override
+    public void setInstalledAndEnabledServices(List<AccessibilityServiceInfo> infos) {
+        return;
+    }
+
+    @Override
+    public void setAttributionTag(String attributionTag) {
+        mAttributionTag = attributionTag;
+    }
+
+    String getAttributionTag() {
+        return mAttributionTag;
+    }
+
+>>>>>>> Stashed changes
     protected abstract boolean hasRightsToCurrentUserLocked();
 
     @Nullable
@@ -1349,7 +1373,7 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
                 mServiceInterface.init(null, mId, null);
             }
         } catch (RemoteException re) {
-                /* ignore */
+            /* ignore */
         }
         if (mService != null) {
             try {
@@ -1370,6 +1394,9 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
 
     public void notifyAccessibilityEvent(AccessibilityEvent event) {
         synchronized (mLock) {
+            if (DEBUG) {
+                Log.v(LOG_TAG, "notifyAccessibilityEvent: " + event);
+            }
             final int eventType = event.getEventType();
 
             final boolean serviceWantsEvent = wantsEventLocked(event);

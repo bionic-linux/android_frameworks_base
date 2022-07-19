@@ -98,4 +98,23 @@ interface IAccessibilityManager {
     int getFocusStrokeWidth();
 
     int getFocusColor();
+<<<<<<< Updated upstream
+=======
+
+    boolean isAudioDescriptionByDefaultEnabled();
+
+    @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.SET_SYSTEM_AUDIO_CAPTION)")
+    void setSystemAudioCaptioningEnabled(boolean isEnabled, int userId);
+
+    boolean isSystemAudioCaptioningUiEnabled(int userId);
+
+    @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.SET_SYSTEM_AUDIO_CAPTION)")
+    void setSystemAudioCaptioningUiEnabled(boolean isEnabled, int userId);
+
+    // Requires Manifest.permission.MANAGE_ACCESSIBILITY
+    boolean registerAccessibilityProxy(IAccessibilityServiceClient proxy, int displayId);
+
+    // Requires Manifest.permission.MANAGE_ACCESSIBILITY
+    boolean unregisterAccessibilityProxy(int displayId);
+>>>>>>> Stashed changes
 }

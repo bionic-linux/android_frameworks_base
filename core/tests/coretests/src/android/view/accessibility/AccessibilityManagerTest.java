@@ -22,12 +22,15 @@ import static junit.framework.TestCase.assertSame;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.accessibilityservice.IAccessibilityServiceClient;
 import android.app.Instrumentation;
 import android.app.PendingIntent;
 import android.app.RemoteAction;
@@ -35,6 +38,7 @@ import android.content.Intent;
 import android.graphics.drawable.Icon;
 import android.os.UserHandle;
 
+import androidx.annotation.NonNull;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 
@@ -71,6 +75,7 @@ public class AccessibilityManagerTest {
             LABEL,
             DESCRIPTION,
             TEST_PENDING_INTENT);
+    private static final int DISPLAY_ID = 15;
 
     @Mock private IAccessibilityManager mMockService;
     private MessageCapturingHandler mHandler;
@@ -200,7 +205,7 @@ public class AccessibilityManagerTest {
 
     @Test
     public void testSendAccessibilityEvent_AccessibilityDisabled() throws Exception {
-        AccessibilityEvent sentEvent = AccessibilityEvent.obtain();
+        AccessibilityEvent sentEvent = new AccessibilityEvent();
 
         AccessibilityManager manager = createManager(WITH_A11Y_DISABLED);
         mInstrumentation.runOnMainSync(() -> {
@@ -235,5 +240,52 @@ public class AccessibilityManagerTest {
                 manager.getAccessibilityFocusStrokeWidth());
         assertEquals(mFocusColorDefaultValue,
                 manager.getAccessibilityFocusColor());
+    }
+
+    @Test
+    public void testRegisterAccessibilityProxy() throws Exception {
+        // Accessibility does not need to be enabled for a proxy to be registered.
+        AccessibilityManager manager =
+                new AccessibilityManager(mInstrumentation.getContext(), mHandler, mMockService,
+                        UserHandle.USER_CURRENT, true);
+
+        AccessibilityProxy proxy = new AccessibilityProxy(DISPLAY_ID) {
+            @Override
+            public void onAccessibilityEvent(@NonNull AccessibilityEvent event) {
+                // Do nothing
+            }
+
+            @Override
+            public void onInterrupt() {
+                // Do nothing
+            }
+        };
+        manager.registerProxyForDisplay(proxy, proxy.getDisplayId());
+        // Cannot access proxy.mServiceClient directly due to visibility.
+        verify(mMockService).registerAccessibilityProxy(any(IAccessibilityServiceClient.class),
+                eq(proxy.getDisplayId()));
+    }
+
+    @Test
+    public void testUnregisterAccessibilityProxy() throws Exception {
+        // Accessibility does not need to be enabled for a proxy to be registered.
+        AccessibilityManager manager =
+                new AccessibilityManager(mInstrumentation.getContext(), mHandler, mMockService,
+                        UserHandle.USER_CURRENT, true);
+
+        AccessibilityProxy proxy = new AccessibilityProxy(DISPLAY_ID) {
+            @Override
+            public void onAccessibilityEvent(@NonNull AccessibilityEvent event) {
+                // Do nothing
+            }
+
+            @Override
+            public void onInterrupt() {
+                // Do nothing
+            }
+        };
+        manager.registerProxyForDisplay(proxy, proxy.getDisplayId());
+        manager.unregisterProxyForDisplay(proxy.getDisplayId());
+        verify(mMockService).unregisterAccessibilityProxy(proxy.getDisplayId());
     }
 }

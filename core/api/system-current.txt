@@ -403,6 +403,16 @@ package android {
 
 }
 
+package android.accessibilityservice {
+
+  public class AccessibilityServiceInfo implements android.os.Parcelable {
+    method public void setAccessibilityTool(boolean);
+    method public void setCapabilities(int);
+    method public void setComponentName(@NonNull android.content.ComponentName);
+  }
+
+}
+
 package android.accounts {
 
   public class AccountManager {
@@ -14117,10 +14127,43 @@ package android.view.accessibility {
   public final class AccessibilityManager {
     method public int getAccessibilityWindowId(@Nullable android.os.IBinder);
     method @RequiresPermission(android.Manifest.permission.MANAGE_ACCESSIBILITY) public void performAccessibilityShortcut();
+    method @RequiresPermission(android.Manifest.permission.MANAGE_ACCESSIBILITY) public boolean registerProxyForDisplay(@NonNull android.view.accessibility.AccessibilityProxy, int);
     method @RequiresPermission(android.Manifest.permission.MANAGE_ACCESSIBILITY) public void registerSystemAction(@NonNull android.app.RemoteAction, int);
+    method @RequiresPermission(android.Manifest.permission.MANAGE_ACCESSIBILITY) public boolean unregisterProxyForDisplay(int);
     method @RequiresPermission(android.Manifest.permission.MANAGE_ACCESSIBILITY) public void unregisterSystemAction(int);
   }
 
+<<<<<<< Updated upstream
+=======
+  public abstract class AccessibilityProxy {
+    ctor public AccessibilityProxy(int, @NonNull android.accessibilityservice.AccessibilityServiceInfo);
+    method public boolean clearCache();
+    method public boolean clearCachedSubtree(@NonNull android.view.accessibility.AccessibilityNodeInfo);
+    method public void disableSelf();
+    method @Nullable public android.view.accessibility.AccessibilityNodeInfo findFocus(int);
+    method public int getDisplayId();
+    method @Nullable public android.view.accessibility.AccessibilityNodeInfo getRootInActiveWindow();
+    method @Nullable public android.view.accessibility.AccessibilityNodeInfo getRootInActiveWindow(int);
+    method @Nullable public final android.accessibilityservice.AccessibilityServiceInfo getServiceInfo();
+    method @NonNull public java.util.List<android.view.accessibility.AccessibilityWindowInfo> getWindows();
+    method public boolean isCacheEnabled();
+    method public boolean isNodeInCache(@NonNull android.view.accessibility.AccessibilityNodeInfo);
+    method public abstract void onAccessibilityEvent(@NonNull android.view.accessibility.AccessibilityEvent);
+    method public abstract void onInterrupt();
+    method public abstract void onProxyConnected();
+    method public void setAccessibilityFocusAppearance(int, @ColorInt int);
+    method public void setAnimationScale(float);
+    method public boolean setCacheEnabled(boolean);
+    method public void setInstalledAndEnabledServices(@NonNull java.util.List<android.accessibilityservice.AccessibilityServiceInfo>);
+    method public final void setServiceInfo(@NonNull android.accessibilityservice.AccessibilityServiceInfo);
+  }
+
+  public class CaptioningManager {
+    method @RequiresPermission(android.Manifest.permission.SET_SYSTEM_AUDIO_CAPTION) public final void setSystemAudioCaptioningEnabled(boolean);
+    method @RequiresPermission(android.Manifest.permission.SET_SYSTEM_AUDIO_CAPTION) public final void setSystemAudioCaptioningUiEnabled(boolean);
+  }
+
+>>>>>>> Stashed changes
 }
 
 package android.view.autofill {

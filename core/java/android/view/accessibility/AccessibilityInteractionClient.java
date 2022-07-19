@@ -374,6 +374,21 @@ public final class AccessibilityInteractionClient
     }
 
     /**
+     * Gets the info for all windows of the default display.
+     *
+     * @param connectionId The id of a connection for interacting with the system.
+     * @return The {@link AccessibilityWindowInfo} list.
+     */
+    public List<AccessibilityWindowInfo> getWindowsOnDisplay(int connectionId, int displayId) {
+        final SparseArray<List<AccessibilityWindowInfo>> windows =
+                getWindowsOnAllDisplays(connectionId);
+        if (windows.size() > 0) {
+            return windows.valueAt(displayId);
+        }
+        return Collections.emptyList();
+    }
+
+    /**
      * Gets the info for all windows of all displays.
      *
      * @param connectionId The id of a connection for interacting with the system.

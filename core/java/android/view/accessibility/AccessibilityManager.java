@@ -91,7 +91,7 @@ import java.util.List;
  */
 @SystemService(Context.ACCESSIBILITY_SERVICE)
 public final class AccessibilityManager {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final String LOG_TAG = "AccessibilityManager";
 
@@ -663,6 +663,9 @@ public final class AccessibilityManager {
             // app adds a SMS notification and the NotificationManagerService calls this method
             final long identityToken = Binder.clearCallingIdentity();
             try {
+                if (DEBUG) {
+                    Log.i(LOG_TAG, "Sending event through to system");
+                }
                 service.sendAccessibilityEvent(dispatchedEvent, userId);
             } finally {
                 Binder.restoreCallingIdentity(identityToken);
@@ -1836,5 +1839,55 @@ public final class AccessibilityManager {
             }
             return true;
         }
+    }
+
+    /**
+     *
+     * @param proxy
+     * @param displayId
+     * @return
+     *
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.MANAGE_ACCESSIBILITY)
+    public boolean registerProxyForDisplay(@NonNull AccessibilityProxy proxy, int displayId) {
+        final IAccessibilityManager service;
+        synchronized (mLock) {
+            service = getServiceLocked();
+            if (service == null) {
+                return false;
+            }
+        }
+        try {
+            return service.registerAccessibilityProxy(proxy.mServiceClient, displayId);
+        }  catch (RemoteException re) {
+            Log.e(LOG_TAG, "Error while registering proxy. ", re);
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @param displayId
+     * @return
+     * @hide
+     */
+    @SystemApi
+    @RequiresPermission(Manifest.permission.MANAGE_ACCESSIBILITY)
+    public boolean unregisterProxyForDisplay(int displayId)  {
+        final IAccessibilityManager service;
+        synchronized (mLock) {
+            service = getServiceLocked();
+            if (service == null) {
+                return false;
+            }
+        }
+        try {
+           return service.unregisterAccessibilityProxy(displayId);
+        } catch (RemoteException re) {
+            Log.e(LOG_TAG, "Error while registering proxy. ", re);
+        }
+        return false;
     }
 }

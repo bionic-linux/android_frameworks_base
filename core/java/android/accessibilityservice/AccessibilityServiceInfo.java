@@ -24,6 +24,7 @@ import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledAfter;
@@ -757,6 +758,7 @@ public class AccessibilityServiceInfo implements Parcelable {
     }
 
     private boolean isRequestAccessibilityButtonChangeEnabled(IPlatformCompat platformCompat) {
+        // For UiAutomation
         if (mResolveInfo == null) {
             return true;
         }
@@ -773,6 +775,7 @@ public class AccessibilityServiceInfo implements Parcelable {
     /**
      * @hide
      */
+    @SystemApi
     public void setComponentName(@NonNull ComponentName component) {
         mComponentName = component;
     }
@@ -899,7 +902,7 @@ public class AccessibilityServiceInfo implements Parcelable {
      *
      * @hide
      */
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    @SystemApi
     public void setCapabilities(int capabilities) {
         mCapabilities = capabilities;
     }
@@ -1046,6 +1049,16 @@ public class AccessibilityServiceInfo implements Parcelable {
         return ((flags & FLAG_FORCE_DIRECT_BOOT_AWARE) != 0)
                 || mResolveInfo.serviceInfo.directBootAware;
     }
+
+
+    /**
+     * @hide
+     */
+    @SystemApi
+    public void setAccessibilityTool(boolean isAccessibilityTool) {
+        mIsAccessibilityTool = isAccessibilityTool;
+    }
+
 
     /**
      * Indicates if the service is used to assist users with disabilities.
