@@ -16,6 +16,29 @@
       "message": "Previously it looks like we might have return the last write() return value on success, but since https://android-review.googlesource.com/c/platform/system/core/+/1209261/12/liblog/logger_write.cpp the code returns 1.",
       "revId": "fcdafb5df45dd11447203ffcc031224102e4a323",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11f5e6bd_a02781fc",
+        "filename": "core/java/android/util/Log.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-07-19T21:04:34Z",
+      "side": 1,
+      "message": "Hm, does this still end up being a negative number?  (The `written` field is simply collecting the total return value across several `println_native` calls.)\n\nSo perhaps we can still say that negative return values are revealing information about `isLoggable()`?\n\nIn fact, since it looks like we unconditionally call `lbbw.println(msg);`, we\u0027d always try sending at least a `\\n`, which means we\u0027d collect at least one positive/negative return value into `written`.",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 64
+      },
+      "revId": "fcdafb5df45dd11447203ffcc031224102e4a323",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
