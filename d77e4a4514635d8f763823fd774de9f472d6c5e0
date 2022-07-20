@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e74d5b5b_cbfb8310",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-07-20T11:56:52Z",
+      "side": 1,
+      "message": "ActivityRecord.getTaskForActivityLocked will reach here. If it doesn\u0027t have root task, getTaskForActivityLocked will return INVALID_TASK_ID. How does anyTaskForId still return a non null task without root task?",
+      "revId": "d77e4a4514635d8f763823fd774de9f472d6c5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
