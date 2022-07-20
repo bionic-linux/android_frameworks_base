@@ -63,6 +63,30 @@
       },
       "revId": "fcdafb5df45dd11447203ffcc031224102e4a323",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18234b52_efbdc46e",
+        "filename": "core/java/android/util/Log.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1013508
+      },
+      "writtenOn": "2022-07-20T16:45:58Z",
+      "side": 1,
+      "message": "Sweet, looks great, thanks!  😊",
+      "parentUuid": "447fca0f_c144b011",
+      "range": {
+        "startLine": 452,
+        "startChar": 0,
+        "endLine": 452,
+        "endChar": 64
+      },
+      "revId": "fcdafb5df45dd11447203ffcc031224102e4a323",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
