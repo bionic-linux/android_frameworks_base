@@ -16,6 +16,24 @@
       "message": "Hi Yao and Joe, I need your owner vote. Could you take a look?",
       "revId": "f139dc08c4972b8846ab7dfdc00ed712d12a6596",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9722a7d7_e00908ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1132673
+      },
+      "writtenOn": "2022-07-20T15:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5bfa054_99a20336",
+      "revId": "f139dc08c4972b8846ab7dfdc00ed712d12a6596",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
