@@ -51,6 +51,24 @@
       "parentUuid": "e74d5b5b_cbfb8310",
       "revId": "d77e4a4514635d8f763823fd774de9f472d6c5e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b1762cc_7984086f",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2022-07-21T11:16:54Z",
+      "side": 1,
+      "message": "The current AOSP source code doesn\u0027t have a path to perform `wm_finish_activity` for a reason `remove-task`.\nNot sure if your codebase has additional modification with different behavior.\n\nFrom your description, it sounds like a 100% reproduciable issue.\nCould you provide a sample code snippet about the steps? such as\n```\n  moveTaskToBack(true);\n  finishAndRemoveTask();\n  moveTaskToBack(true);\n```\nThough I cannot reproduce with above step.",
+      "parentUuid": "44beb6b7_b273ef1b",
+      "revId": "d77e4a4514635d8f763823fd774de9f472d6c5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
