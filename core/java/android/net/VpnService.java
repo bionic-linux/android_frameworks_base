@@ -31,15 +31,12 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.IPackageManager;
-import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.os.UserHandle;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.net.NetworkUtilsInternal;
@@ -769,17 +766,7 @@ public class VpnService extends Service {
                         AF_INET6);
             }
             return this;
-        }
-
-        private void verifyApp(String packageName) throws PackageManager.NameNotFoundException {
-            IPackageManager pm = IPackageManager.Stub.asInterface(
-                    ServiceManager.getService("package"));
-            try {
-                pm.getApplicationInfo(packageName, 0, UserHandle.getCallingUserId());
-            } catch (RemoteException e) {
-                throw new IllegalStateException(e);
-            }
-        }
+        }        
 
         /**
          * Adds an application that's allowed to access the VPN connection.
@@ -791,24 +778,18 @@ public class VpnService extends Service {
          *
          * A {@link Builder} may have only a set of allowed applications OR a set of disallowed
          * ones, but not both. Calling this method after {@link #addDisallowedApplication} has
-         * already been called, or vice versa, will throw an {@link UnsupportedOperationException}.
-         *
-         * {@code packageName} must be the canonical name of a currently installed application.
-         * {@link PackageManager.NameNotFoundException} is thrown if there's no such application.
-         *
-         * @throws PackageManager.NameNotFoundException If the application isn't installed.
-         *
+         * already been called, or vice versa, will throw an {@link UnsupportedOperationException}.         
+         * {@code packageName} must be the canonical name of a currently installed application. 
+         * 
          * @param packageName The full name (e.g.: "com.google.apps.contacts") of an application.
          *
          * @return this {@link Builder} object to facilitate chaining method calls.
          */
         @NonNull
-        public Builder addAllowedApplication(@NonNull String packageName)
-                throws PackageManager.NameNotFoundException {
+        public Builder addAllowedApplication(@NonNull String packageName) {
             if (mConfig.disallowedApplications != null) {
                 throw new UnsupportedOperationException("addDisallowedApplication already called");
             }
-            verifyApp(packageName);
             if (mConfig.allowedApplications == null) {
                 mConfig.allowedApplications = new ArrayList<String>();
             }
@@ -824,24 +805,18 @@ public class VpnService extends Service {
          *
          * A {@link Builder} may have only a set of allowed applications OR a set of disallowed
          * ones, but not both. Calling this method after {@link #addAllowedApplication} has already
-         * been called, or vice versa, will throw an {@link UnsupportedOperationException}.
-         *
-         * {@code packageName} must be the canonical name of a currently installed application.
-         * {@link PackageManager.NameNotFoundException} is thrown if there's no such application.
-         *
-         * @throws PackageManager.NameNotFoundException If the application isn't installed.
-         *
+         * been called, or vice versa, will throw an {@link UnsupportedOperationException}.        
+         * {@code packageName} must be the canonical name of a currently installed application. 
+         *       
          * @param packageName The full name (e.g.: "com.google.apps.contacts") of an application.
          *
          * @return this {@link Builder} object to facilitate chaining method calls.
          */
         @NonNull
-        public Builder addDisallowedApplication(@NonNull String packageName)
-                throws PackageManager.NameNotFoundException {
+        public Builder addDisallowedApplication(@NonNull String packageName) {
             if (mConfig.allowedApplications != null) {
                 throw new UnsupportedOperationException("addAllowedApplication already called");
             }
-            verifyApp(packageName);
             if (mConfig.disallowedApplications == null) {
                 mConfig.disallowedApplications = new ArrayList<String>();
             }
