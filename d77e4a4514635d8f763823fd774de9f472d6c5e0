@@ -69,6 +69,24 @@
       "parentUuid": "44beb6b7_b273ef1b",
       "revId": "d77e4a4514635d8f763823fd774de9f472d6c5e0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ac4b4ee_647f046b",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1900426
+      },
+      "writtenOn": "2022-07-22T02:49:06Z",
+      "side": 1,
+      "message": "It just in running 24 hours in MONKEY to reproduce 1 time.\n\nStep1:\nApp implementation:\n----------\n            Intent start \u003d new Intent();\n            ComponentName cn \u003d new ComponentName(\"com.miui.mydemo2\", \"com.miui.mydemo2.MainActivity\");\n            start.setFlags(FLAG_ACTIVITY_CLEAR_TASK|FLAG_ACTIVITY_NEW_TASK);\n            start.setComponent(cn);\n            startActivity(start);\n            moveTaskToBack(true);\n\n    @Override\n    public boolean onKeyUp(int keyCode, KeyEvent event) {\n        if (keyCode \u003d\u003d KeyEvent.KEYCODE_BACK \u0026\u0026 event.isTracking()\n                \u0026\u0026 !event.isCanceled()) {\n            onBackPressed();\n            return true;\n        }\n        return false;\n    }\n----------\nStep2:\nSome system process like was powerKeeper invoked removeTask and set taskId.\n----------\n        try {\n            ActivityManager.getService().removeTask(getTaskId());\n        } catch (RemoteException e) {\n            e.printStackTrace();\n        }\n----------",
+      "parentUuid": "3b1762cc_7984086f",
+      "revId": "d77e4a4514635d8f763823fd774de9f472d6c5e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
