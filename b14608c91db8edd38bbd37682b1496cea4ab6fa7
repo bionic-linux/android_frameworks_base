@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "919c2e56_c8b52171",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1960065
+      },
+      "writtenOn": "2022-07-22T15:09:10Z",
+      "side": 1,
+      "message": "Patch verifyApp method to provide a reliable check inside addAllowedApplication/addDisallowedApplication methods. ",
+      "revId": "b14608c91db8edd38bbd37682b1496cea4ab6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
