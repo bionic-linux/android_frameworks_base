@@ -67,6 +67,29 @@
       "message": "This code section is outside my area of expertise, sadly. Julia, does the updated bug have the details you were looking for? (unfortunately it looks like Yuri is OoO for a while)",
       "revId": "4e1f2103373adec8fd97c8f98695fcc425290fc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17f12e7b_9c264eea",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10667,
+      "author": {
+        "id": 1060562
+      },
+      "writtenOn": "2022-07-22T17:57:06Z",
+      "side": 1,
+      "message": "I think this would be cleaner with a mAssistants.isServiceTokenValid(info.service) and having that method grab the internal lock when calling isServiceTokenValidLocked.",
+      "range": {
+        "startLine": 10653,
+        "startChar": 21,
+        "endLine": 10667,
+        "endChar": 21
+      },
+      "revId": "4e1f2103373adec8fd97c8f98695fcc425290fc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
