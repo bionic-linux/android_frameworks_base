@@ -90,6 +90,30 @@
       },
       "revId": "4e1f2103373adec8fd97c8f98695fcc425290fc5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c927a216_68d281ce",
+        "filename": "services/core/java/com/android/server/notification/NotificationManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10667,
+      "author": {
+        "id": 1902133
+      },
+      "writtenOn": "2022-07-25T11:41:08Z",
+      "side": 1,
+      "message": "Good idea! I\u0027ve refactored my change and it\u0027s cleaner now.\nI\u0027ve also checked all invoker of isServiceTokenValidLocked and found that isInteractionVisibleToListener may be called without lock, either. So I made it to call isServiceTokenValid instead. Please review again. Thx!",
+      "parentUuid": "17f12e7b_9c264eea",
+      "range": {
+        "startLine": 10653,
+        "startChar": 21,
+        "endLine": 10667,
+        "endChar": 21
+      },
+      "revId": "4e1f2103373adec8fd97c8f98695fcc425290fc5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
