@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec3186ae_b47cae13",
+        "filename": "core/java/android/view/inspector/PropertyMapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1068658
+      },
+      "writtenOn": "2022-07-25T17:21:08Z",
+      "side": 1,
+      "message": "Should this say: Resources.ID_NULL or 0 (instead of null)",
+      "range": {
+        "startLine": 44,
+        "startChar": 73,
+        "endLine": 44,
+        "endChar": 77
+      },
+      "revId": "4bb4eca93e238d9fc4121162b445e7c875c15341",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
