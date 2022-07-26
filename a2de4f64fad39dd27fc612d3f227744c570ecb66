@@ -33,6 +33,23 @@
       "message": "update",
       "revId": "a2de4f64fad39dd27fc612d3f227744c570ecb66",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49607936_9c106e5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870086
+      },
+      "writtenOn": "2022-07-26T04:50:33Z",
+      "side": 1,
+      "message": "update bug tracker.",
+      "revId": "a2de4f64fad39dd27fc612d3f227744c570ecb66",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
