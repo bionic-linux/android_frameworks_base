@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caf9dd63_79670929",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953962
+      },
+      "writtenOn": "2022-07-29T21:53:53Z",
+      "side": 1,
+      "message": "@Jorim Jaggi, can we merge this or can you suggest some good improvements ?",
+      "revId": "7e5b52fa53588de82de4157d5fec1fd2aeb722af",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
