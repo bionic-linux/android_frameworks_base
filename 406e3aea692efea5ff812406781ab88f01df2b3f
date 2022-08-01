@@ -88,6 +88,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fac133e_b3ccb3e5",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-08-01T09:51:46Z",
+      "side": 1,
+      "message": "Done by aosp/2152518",
+      "parentUuid": "7437dace_1f49164a",
+      "range": {
+        "startLine": 1368,
+        "startChar": 20,
+        "endLine": 1368,
+        "endChar": 79
+      },
+      "revId": "406e3aea692efea5ff812406781ab88f01df2b3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3eb1f6d6_42cb64c1",
@@ -119,6 +143,24 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "3eb1f6d6_42cb64c1",
+      "revId": "406e3aea692efea5ff812406781ab88f01df2b3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "980d0f02_5af703df",
+        "filename": "services/core/java/com/android/server/net/NetworkPolicyManagerService.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 4028,
+      "author": {
+        "id": 1385042
+      },
+      "writtenOn": "2022-08-01T09:51:46Z",
+      "side": 1,
+      "message": "Done by aosp/2149516",
+      "parentUuid": "5ad78855_89e94d0a",
       "revId": "406e3aea692efea5ff812406781ab88f01df2b3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
