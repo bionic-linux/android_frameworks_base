@@ -16,7 +16,10 @@
 
 package android.net;
 
+import static android.Manifest.permission.REQUEST_NETWORK_SCORES;
+
 import android.Manifest.permission;
+import android.annotation.EnforcePermission;
 import android.annotation.SystemApi;
 import android.content.Context;
 import android.os.Build;
@@ -61,7 +64,7 @@ public abstract class NetworkRecommendationProvider {
     public NetworkRecommendationProvider(Context context, Executor executor) {
         Preconditions.checkNotNull(context);
         Preconditions.checkNotNull(executor);
-        mService = new ServiceWrapper(context, executor);
+        mService = new ServiceWrapper(executor);
     }
 
     /**
@@ -85,19 +88,17 @@ public abstract class NetworkRecommendationProvider {
      * A wrapper around INetworkRecommendationProvider that dispatches to the provided Handler.
      */
     private final class ServiceWrapper extends INetworkRecommendationProvider.Stub {
-        private final Context mContext;
         private final Executor mExecutor;
         private final Handler mHandler;
 
-        ServiceWrapper(Context context, Executor executor) {
-            mContext = context;
+        ServiceWrapper(Executor executor) {
             mExecutor = executor;
             mHandler = null;
         }
 
         @Override
+        @EnforcePermission(REQUEST_NETWORK_SCORES)
         public void requestScores(final NetworkKey[] networks) throws RemoteException {
-            enforceCallingPermission();
             if (networks != null && networks.length > 0) {
                 execute(new Runnable() {
                     @Override
@@ -113,13 +114,6 @@ public abstract class NetworkRecommendationProvider {
                 mExecutor.execute(command);
             } else {
                 mHandler.post(command);
-            }
-        }
-
-        private void enforceCallingPermission() {
-            if (mContext != null) {
-                mContext.enforceCallingOrSelfPermission(permission.REQUEST_NETWORK_SCORES,
-                        "Permission denied.");
             }
         }
     }

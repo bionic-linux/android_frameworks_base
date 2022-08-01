@@ -18,12 +18,7 @@ package android.net;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertSame;
-import static junit.framework.Assert.fail;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-
-import android.Manifest.permission;
 import android.content.Context;
 
 import androidx.test.runner.AndroidJUnit4;
@@ -32,7 +27,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.concurrent.CountDownLatch;
@@ -88,20 +82,6 @@ public class NetworkRecommendationProviderTest {
 
         // onRequestScores() should never be called
         assertFalse(mScoreRequestLatch.await(200, TimeUnit.MILLISECONDS));
-    }
-
-    @Test
-    public void testScoreRequest_permissionsEnforced() throws Exception {
-        Mockito.doThrow(new SecurityException())
-                .when(mContext)
-                .enforceCallingOrSelfPermission(eq(permission.REQUEST_NETWORK_SCORES), anyString());
-
-        try {
-            mStub.requestScores(mTestNetworkKeys);
-            fail("SecurityException expected.");
-        } catch (SecurityException e) {
-            // expected
-        }
     }
 
     private static class NetworkRecProvider extends NetworkRecommendationProvider {
