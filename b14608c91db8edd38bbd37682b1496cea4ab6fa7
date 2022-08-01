@@ -16,6 +16,40 @@
       "message": "Patch verifyApp method to provide a reliable check inside addAllowedApplication/addDisallowedApplication methods. ",
       "revId": "b14608c91db8edd38bbd37682b1496cea4ab6fa7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2f38430_499aa0b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-08-01T01:50:29Z",
+      "side": 1,
+      "message": "Thanks for the contribution !\n\nAlthough this is an ugly bug, I think fixing it like this would have app compat implications: starting from target SDK 30, getPackageInfo will not work unless the app has additional permissions, so some VPN apps that did not declare the permission are likely to see exceptions that they were not seeing before, even if the package was actually there.\n\nWe could have the check only for apps targeting U+ to avoid app breakage, but I\u0027m not sure it\u0027s worth asking such apps to declare the additional permissions though; Vpn.java would skip non-existing apps just fine, so maybe removing this check altogether would be better, if it\u0027s not doing anything anyway ?",
+      "revId": "b14608c91db8edd38bbd37682b1496cea4ab6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea700491_ae749793",
+        "filename": "core/java/android/net/VpnService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1288034
+      },
+      "writtenOn": "2022-08-01T01:50:29Z",
+      "side": 1,
+      "message": "It may be better to switch pm to using PackageManager (getPackageManager()) to use the stable interface instead, which is documented to not return null and can\u0027t change",
+      "revId": "b14608c91db8edd38bbd37682b1496cea4ab6fa7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
