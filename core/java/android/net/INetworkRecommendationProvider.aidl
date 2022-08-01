@@ -33,5 +33,6 @@ oneway interface INetworkRecommendationProvider {
      * @param networks an array of {@link NetworkKey}s to score
      * @hide
      */
+    @EnforcePermission("REQUEST_NETWORK_SCORES")
     void requestScores(in NetworkKey[] networks);
 }
